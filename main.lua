@@ -1,0 +1,18 @@
+milkshakeMod = RegisterMod("Milkshake!", 1)
+
+require("loi_milkshake.TSIL").Init("loi_milkshake")
+
+-- Files
+local globinInABucket = require("milkshake_scripts.items.collectibles.globininabucket")
+local blackEye = require("milkshake_scripts.items.collectibles.blackeye")
+local amethystShard = require("milkshake_scripts.items.trinkets.amethystshard")
+local rubyShard = require("milkshake_scripts.items.trinkets.rubyshard")
+local sapphireShard = require("milkshake_scripts.items.trinkets.sapphireshard")
+local amethystOrb = require("milkshake_scripts.items.pick ups.amethystorb")
+local rubyOrb = require("milkshake_scripts.items.pick ups.rubyorb")
+local emeraldOrb = require("milkshake_scripts.items.pick ups.emeraldorb")
+local sapphireOrb = require("milkshake_scripts.items.pick ups.sapphireOrb")
+local goldenShovel = require("milkshake_scripts.items.collectibles.goldenshovel")
+local diceDice = require("milkshake_scripts.items.collectibles.dicedice")
+local milkshake = require("milkshake_scripts.items.collectibles.milkshake")
+local firecrackerRose = require("milkshake_scripts.items.collectibles.firecrackerrose")

@@ -1,0 +1,8 @@
+<pocketitems>
+    <!-- Runes -->
+    <card type="special" pickup="1" description="Placeholder" name="Spirit Of Arcana" hud="Spirit Of Arcana" mimiccharge="3" />
+    <card type="special" pickup="1" description="Placeholder" name="Spirit Of Perception" hud="Spirit Of Perception" mimiccharge="3" />
+    <card type="special" pickup="1" description="Placeholder" name="Sprit Of Foresight" hud="Spirit Of Foresight" mimiccharge="3" />
+    <card type="special" pickup="1" description="Placeholder" name="Spirit Of Wisdom" hud="Spirit Of Wisdom" mimiccharge="3" />
+    
+</pocketitems>
