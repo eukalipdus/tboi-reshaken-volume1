@@ -2,5 +2,6 @@
     <sound name="sharp cursor click">
         <sample weight="1" path="click1.wav"/>
         <sample weight="1" path="click2.wav"/>
+        <sample weight="1" path="click3.wav"/>
     </sound>
 </sounds>
