@@ -6,7 +6,8 @@ enums.Collectibles = {
     GOLDEN_SHOVEL = Isaac.GetItemIdByName("Golden Shovel"),
     DICE_DICE = Isaac.GetItemIdByName("Dice Dice"),
     MILKSHAKE = Isaac.GetItemIdByName("Milkshake!"),
-    FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Rose")
+    FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Rose"),
+    SHARP_CURSOR = Isaac.GetItemIdByName("Sharp Cursor")
 }
 
 enums.Trinkets = {
@@ -21,6 +22,10 @@ enums.Cards = {
     RUBY_ORB = Isaac.GetCardIdByName("Spirit Of Perception"),
     EMERALD_ORB = Isaac.GetCardIdByName("Spirit Of Foresight"),
     SAPPHIRE_ORB = Isaac.GetCardIdByName("Spirit Of Wisdom")
+}
+
+enums.Familiars = {
+    SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor")
 }
 
 return enums
