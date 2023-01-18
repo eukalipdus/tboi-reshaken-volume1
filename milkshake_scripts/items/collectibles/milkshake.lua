@@ -1,6 +1,10 @@
 local milkshake = {}
 local enums = require("milkshake_scripts.enums")
 
+local milkshakeData = {
+    TEAR_COLOR = Color(1, 0, 1, 1, 0.196, 0, 0)
+}
+
 
 ---@param rng RNG
 ---@param itemNum integer
@@ -53,6 +57,10 @@ function milkshake:onCache(player, cacheFlag)
 
     if cacheFlag == CacheFlag.CACHE_SHOTSPEED then
         player.ShotSpeed = player.ShotSpeed * MilkShakeShotSpeed
+    end
+
+    if cacheFlag == CacheFlag.CACHE_TEARCOLOR then
+        player.TearColor = milkshakeData.TEAR_COLOR
     end
 end
 milkshakeMod:AddPriorityCallback(
