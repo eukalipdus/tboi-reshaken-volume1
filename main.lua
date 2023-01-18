@@ -2,6 +2,9 @@ milkshakeMod = RegisterMod("Milkshake!", 1)
 
 require("loi_milkshake.TSIL").Init("loi_milkshake")
 
+local eid = require("milkshake_scripts.modcompatibility.eid")
+eid:addEid()
+
 -- Files
 local globinInABucket = require("milkshake_scripts.items.collectibles.globininabucket")
 local blackEye = require("milkshake_scripts.items.collectibles.blackeye")
@@ -17,3 +20,4 @@ local diceDice = require("milkshake_scripts.items.collectibles.dicedice")
 local milkshake = require("milkshake_scripts.items.collectibles.milkshake")
 local firecrackerRose = require("milkshake_scripts.items.collectibles.firecrackerrose")
 local sharpCursor = require("milkshake_scripts.items.collectibles.sharpcursor")
+
