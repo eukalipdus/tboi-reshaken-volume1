@@ -25,6 +25,12 @@ TSIL.SaveManager.AddPersistentVariable(
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
+TSIL.SaveManager.AddPersistentVariable(
+    milkshakeMod,
+    "SharpCursorFollowMouse",
+    true,
+    TSIL.Enums.VariablePersistenceMode.NONE
+)
 
 ---@class SharpCursorText
 ---@field text string
@@ -34,6 +40,19 @@ TSIL.SaveManager.AddPersistentVariable(
 
 ---@type SharpCursorText[]
 local SharpCursorDamageTexts = {}
+
+
+---@param player EntityPlayer
+---@return boolean
+local function ShouldActivateMouseMode(player)
+    if player.ControllerIndex ~= 0 then return false end
+    if not Options.MouseControl then return false end
+
+    return TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "SharpCursorFollowMouse"
+    )
+end
 
 
 ---@param familiar EntityFamiliar
@@ -85,7 +104,11 @@ function SharpCursor:OnSharpCursorUpdate(familiar)
     end
 
     familiar.DepthOffset = 90
+
     local player = familiar.Player
+
+    --If mouse control is activated, we don't move the cursor ourselves
+    if ShouldActivateMouseMode(player) then return end
 
     local data = GetCursorData(familiar)
 
@@ -128,23 +151,38 @@ milkshakeMod:AddCallback(
     enums.Familiars.SHARP_CURSOR
 )
 
+local WasMousePressed = false
 
 ---@param familiar EntityFamiliar
 function SharpCursor:OnSharpCursorRender(familiar)
     local familiarSpr = familiar:GetSprite()
     local player = familiar.Player
 
-    local shootActions = TSIL.Input.GetShootActions()
-    local isShooting = false
+    local clickButton = false
 
-    for _, action in ipairs(shootActions) do
-        if Input.IsActionTriggered(action, player.ControllerIndex) then
-            isShooting = true
-            break
+    if ShouldActivateMouseMode(player) then
+        local mousePos = Input.GetMousePosition(true)
+        familiar.Velocity = mousePos - familiar.Position
+
+        local isMousePressed = Input.IsMouseBtnPressed(Mouse.MOUSE_BUTTON_1)
+
+        if not WasMousePressed then
+            clickButton = isMousePressed
+        end
+
+        WasMousePressed = isMousePressed
+    else
+        local shootActions = TSIL.Input.GetShootActions()
+
+        for _, action in ipairs(shootActions) do
+            if Input.IsActionTriggered(action, player.ControllerIndex) then
+                clickButton = true
+                break
+            end
         end
     end
 
-    if not isShooting then return end
+    if not clickButton then return end
 
     familiarSpr:Play("Click", true)
 
@@ -175,6 +213,30 @@ milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_FAMILIAR_RENDER,
     SharpCursor.OnSharpCursorRender,
     enums.Familiars.SHARP_CURSOR
+)
+
+
+---@param player EntityPlayer
+function SharpCursor:OnPlayerRender(player)
+    if not Options.MouseControl then return end
+    if not player:HasCollectible(enums.Collectibles.SHARP_CURSOR) then return end
+    if player.ControllerIndex ~= 0 then return end
+    if not Input.IsActionTriggered(ButtonAction.ACTION_DROP, 0) then return end
+
+    local currentFollowMouse = TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "SharpCursorFollowMouse"
+    )
+
+    TSIL.SaveManager.SetPersistentVariable(
+        milkshakeMod,
+        "SharpCursorFollowMouse",
+        not currentFollowMouse
+    )
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_PLAYER_RENDER,
+    SharpCursor.OnPlayerRender
 )
 
 
