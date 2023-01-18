@@ -1,0 +1,211 @@
+local enums = require "milkshake_scripts.enums"
+local SharpCursor = {}
+
+
+local CURSOR_TRAVEL_TIME = 50
+
+
+function SharpCursor:OnFamiliarCache(player)
+    TSIL.Familiars.CheckFamiliarFromCollectibles(
+        player,
+        enums.Collectibles.SHARP_CURSOR,
+        enums.Familiars.SHARP_CURSOR
+    )
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_EVALUATE_CACHE,
+    SharpCursor.OnFamiliarCache,
+    CacheFlag.CACHE_FAMILIARS
+)
+
+
+TSIL.SaveManager.AddPersistentVariable(
+    milkshakeMod,
+    "SharpCursorDataMap",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
+
+---@class SharpCursorText
+---@field text string
+---@field frame integer
+---@field alpha number
+---@field position Vector
+
+---@type SharpCursorText[]
+local SharpCursorDamageTexts = {}
+
+
+---@param familiar EntityFamiliar
+local function GetCursorData(familiar)
+    local SharpCursorDataMap = TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "SharpCursorDataMap"
+    )
+
+    local SharpCursorData = SharpCursorDataMap[tostring(familiar.InitSeed)]
+
+    if SharpCursorData == nil then
+        SharpCursorData = {
+            travelTime = 0,
+            targetEnemy = nil
+        }
+        SharpCursorDataMap[tostring(familiar.InitSeed)] = SharpCursorData
+    end
+
+    return SharpCursorData
+end
+
+
+---@param player EntityPlayer
+---@return EntityNPC?
+local function GetFurthestEnemyFromPlayer(player)
+    local npcs = TSIL.EntitySpecific.GetNPCs(-1, -1, -1, true)
+    local enemies = TSIL.Utils.Tables.Filter(npcs, function (_, npc)
+        return npc:IsVulnerableEnemy()
+    end)
+
+    if #enemies == 0 then return end
+
+    table.sort(enemies, function (a, b)
+        if a == nil then return false end
+        if b == nil then return true end
+        return a.Position:DistanceSquared(player.Position) > b.Position:DistanceSquared(player.Position)
+    end)
+
+    return enemies[1]
+end
+
+
+---@param familiar EntityFamiliar
+function SharpCursor:OnSharpCursorUpdate(familiar)
+    local familiarSpr = familiar:GetSprite()
+    if familiarSpr:IsFinished("Click") then
+        familiarSpr:Play("Idle", true)
+    end
+
+    familiar.DepthOffset = 90
+    local player = familiar.Player
+
+    local data = GetCursorData(familiar)
+
+    local furthestEnemy = GetFurthestEnemyFromPlayer(player)
+
+    --- TODO: Make Idle state when there are no enemies on screen
+    if furthestEnemy == nil then
+        familiar.Velocity = Vector.Zero
+        return
+    end
+
+    if data.targetEnemy == nil or data.targetEnemy ~= GetPtrHash(furthestEnemy) then
+        data.travelTime = 0
+        data.targetEnemy = GetPtrHash(furthestEnemy)
+    end
+
+    if data.travelTime > CURSOR_TRAVEL_TIME then
+        familiar.Position = furthestEnemy.Position
+        familiar.Velocity = furthestEnemy.Velocity
+    else
+        local Ease = TSIL.Utils.Easings.EaseInOutQuad
+        local Lerp = TSIL.Utils.Math.Lerp
+
+        local xStart = familiar.Position.X
+        local xTarget = furthestEnemy.Position.X
+        local xNew = Lerp(xStart, xTarget, Ease(data.travelTime / CURSOR_TRAVEL_TIME))
+
+        local yStart = familiar.Position.Y
+        local yTarget = furthestEnemy.Position.Y
+        local yNew = Lerp(yStart, yTarget, Ease(data.travelTime / CURSOR_TRAVEL_TIME))
+
+        familiar.Velocity = Vector(xNew, yNew) - familiar.Position
+
+        data.travelTime = data.travelTime + 1
+    end
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_FAMILIAR_UPDATE,
+    SharpCursor.OnSharpCursorUpdate,
+    enums.Familiars.SHARP_CURSOR
+)
+
+
+---@param familiar EntityFamiliar
+function SharpCursor:OnSharpCursorRender(familiar)
+    local familiarSpr = familiar:GetSprite()
+    local player = familiar.Player
+
+    local shootActions = TSIL.Input.GetShootActions()
+    local isShooting = false
+
+    for _, action in ipairs(shootActions) do
+        if Input.IsActionTriggered(action, player.ControllerIndex) then
+            isShooting = true
+            break
+        end
+    end
+
+    if not isShooting then return end
+
+    familiarSpr:Play("Click", true)
+
+    local damage = player.Damage * 0.1
+    local damageRounded = TSIL.Utils.Math.Round(damage, 2)
+
+    local nearEnemies = Isaac.FindInRadius(familiar.Position, 10, EntityPartition.ENEMY)
+
+    for _, enemy in ipairs(nearEnemies) do
+        enemy:TakeDamage(
+            damage,
+            0,
+            EntityRef(familiar),
+            -1
+        )
+    end
+
+    if #nearEnemies > 0 then
+        SharpCursorDamageTexts[#SharpCursorDamageTexts+1] = {
+            alpha = 1,
+            frame = math.random(0, 20),
+            text = tostring(damageRounded) .. " DMG",
+            position = Isaac.WorldToScreen(familiar.Position) + Vector(4, 4)
+        }
+    end
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_FAMILIAR_RENDER,
+    SharpCursor.OnSharpCursorRender,
+    enums.Familiars.SHARP_CURSOR
+)
+
+
+function SharpCursor:OnRender()
+    local font = Font()
+    font:Load("font/pftempestasevencondensed.fnt")
+
+    TSIL.Utils.Tables.ForEach(SharpCursorDamageTexts, function (_, sharpCursorText)
+        local color = KColor(1, 0.7, 0.7, sharpCursorText.alpha)
+
+        font:DrawStringScaled(
+            sharpCursorText.text,
+            sharpCursorText.position.X + math.sin(sharpCursorText.frame/6) * 1.6,
+            sharpCursorText.position.Y,
+            0.7,
+            0.7,
+            color
+        )
+
+        if not Game():IsPaused() then
+            sharpCursorText.alpha = sharpCursorText.alpha - 0.01
+            sharpCursorText.frame = sharpCursorText.frame + 1
+            sharpCursorText.position = Vector(sharpCursorText.position.X, sharpCursorText.position.Y - 0.5)
+        end
+    end)
+
+    SharpCursorDamageTexts = TSIL.Utils.Tables.Filter(SharpCursorDamageTexts, function (_, sharpCursorText)
+        return sharpCursorText.alpha > 0
+    end)
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_RENDER,
+    SharpCursor.OnRender
+)
