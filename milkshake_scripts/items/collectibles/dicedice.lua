@@ -1,6 +1,6 @@
 local diceDice = {}
 local enums = require("milkshake_scripts.enums")
-local timesToActive = 3
+local timesToActivate = 3
 
 local diceCollectibles = {
     CollectibleType.COLLECTIBLE_D1,
@@ -19,7 +19,7 @@ local diceCollectibles = {
 function diceDice:onUse(collectible, rng, player)
     if not player then return end
     player:AnimateCollectible(enums.Collectibles.DICE_DICE, "Pickup", "PlayerPickupSparkle")
-    for i = 1, timesToActive do
+    for i = 1, timesToActivate do
         local roll = rng:RandomInt(#diceCollectibles) + 1 -- To remove the possibility of 0
         player:UseActiveItem(diceCollectibles[roll], UseFlag.USE_NOANIM)
     end
