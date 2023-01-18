@@ -3,7 +3,7 @@ local enums = require("milkshake_scripts.enums")
 
 local goldenShovelData = {
 
-    PICKUP_VELOCITY = Vector(2,2),
+    PICKUP_VELOCITY = RandomVector() * math.random(1, 4),
     PIT_STEP = 20
 
 }
@@ -164,8 +164,8 @@ local function transmute(player, entity)
     if not player then return end
   --  Game():GetRoom():TurnGold()
     local pit = Isaac.Spawn(1000, 146,1,player.Position, Vector.Zero, nil) -- Maybe get rid of this when re-entering the room?
-	pit:ToEffect():SetTimeout(1000)
-	pit:GetSprite().Color = Color(0.7, 0.6, 0, 1, 0, 0, 0)
+	  pit:ToEffect():SetTimeout(1000)
+	  pit:GetSprite().Color = Color(0.7, 0.6, 0, 1, 0, 0, 0)
 
     local effect_radius = (shovel_effect_radius * car_bat_mul(player))
     spawn_gold_effects(player, effect_radius)
@@ -174,6 +174,11 @@ local function transmute(player, entity)
     for _0, entity in pairs(affected_entities) do
       transmute(player, entity)
     end
+    local coinAmount = 3*car_bat_mul(player)
+    for i=1, coinAmount, 1 do
+      Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 0, player.Position, RandomVector() * math.random(1, 4), nil)
+    end 
+    
     return {
       Discharge = true,
       Remove = false,
