@@ -1,6 +1,5 @@
 local milkshake = {}
 local enums = require("milkshake_scripts.enums")
-local utility = require("milkshake_scripts.utility")
 
 
 ---@param rng RNG
@@ -25,7 +24,7 @@ function milkshake:onCache(player, cacheFlag)
     local rng = TSIL.RNG.CopyRNG(player:GetCollectibleRNG(enums.Collectibles.MILKSHAKE))
     local itemNum = player:GetCollectibleNum(enums.Collectibles.MILKSHAKE)
 
-    local MilkShakeTears = 1 - (GetStatMultiplier(rng, itemNum) - 1)
+    local MilkShakeTears = 1 / GetStatMultiplier(rng, itemNum)
     local MilkShakeDamage = GetStatMultiplier(rng, itemNum)
     local MilkShakeSpeed = GetStatMultiplier(rng, itemNum)
     local MilkShakeLuck = GetStatMultiplier(rng, itemNum)
@@ -56,4 +55,38 @@ function milkshake:onCache(player, cacheFlag)
         player.ShotSpeed = player.ShotSpeed * MilkShakeShotSpeed
     end
 end
-milkshakeMod:AddPriorityCallback(ModCallbacks.MC_EVALUATE_CACHE, CallbackPriority.LATE + 2000, milkshake.onCache)--Very low priority so the multiplier works with mods
+milkshakeMod:AddPriorityCallback(
+    ModCallbacks.MC_EVALUATE_CACHE,
+    CallbackPriority.LATE + 2000, --Very low priority so the multiplier works with mods
+    milkshake.onCache
+)
+
+
+---@param player EntityPlayer
+function milkshake:OnMilkshakeAdded(player)
+    local rng = TSIL.RNG.CopyRNG(player:GetCollectibleRNG(enums.Collectibles.MILKSHAKE))
+    local itemNum = player:GetCollectibleNum(enums.Collectibles.MILKSHAKE)
+
+    for _ = 1, itemNum, 1 do
+        rng:Next()
+    end
+
+    local chosenHeart = rng:RandomInt(3)
+
+    if chosenHeart == 0 then
+        player:AddMaxHearts(2)
+        player:AddHearts(2)
+    elseif chosenHeart == 1 then
+        player:AddSoulHearts(2)
+    elseif chosenHeart == 2 then
+        player:AddBlackHearts(2)
+    end
+end
+milkshakeMod:AddCallback(
+    TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
+    milkshake.OnMilkshakeAdded,
+    {
+        nil,
+        enums.Collectibles.MILKSHAKE
+    }
+)
