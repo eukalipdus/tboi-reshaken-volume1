@@ -166,7 +166,7 @@ function SharpCursor:OnSharpCursorRender(familiar)
         SharpCursorDamageTexts[#SharpCursorDamageTexts+1] = {
             alpha = 1,
             frame = math.random(0, 20),
-            text = tostring(damageRounded) .. " DMG",
+            text = tostring(damageRounded),
             position = Isaac.WorldToScreen(familiar.Position) + Vector(4, 4)
         }
     end
