@@ -187,10 +187,10 @@ function SharpCursor:OnSharpCursorRender(familiar)
     SFXManager():Play(enums.Sounds.CLICK)
     familiarSpr:Play("Click", true)
 
+    local damage = player.Damage * 0.1
+
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
-        local damage = player.Damage * 0.2
-    else
-        local damage = player.Damage * 0.1
+        damage = damage * 2
     end
     
     local damageRounded = TSIL.Utils.Math.Round(damage, 2)
