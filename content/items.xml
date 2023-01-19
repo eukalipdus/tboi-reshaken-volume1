@@ -7,6 +7,7 @@
     <passive id="5" name="Milkshake!" description="Delicious!"  cache="all" gfx="collectibles_milkshake.png" quality="4" />
     <passive id="6" name="Firecracker Rose" description="Fire Rose" gfx="firecracker_flower2.png" quality="2" />
     <familiar id="7" name="Sharp Cursor" description="Clicky Clicky Click" gfx="collectibles_sharpcursor.png" quality="2" />
+    <passive id="8" name="La Chancla" description="Placeholder" gfx="collectibles_lachancla.png" quality="1" />
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="A glimpse into the future..." gfx="trinkets_amethystshard.png" />
