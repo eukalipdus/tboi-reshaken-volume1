@@ -184,6 +184,7 @@ function SharpCursor:OnSharpCursorRender(familiar)
 
     if not clickButton then return end
 
+    SFXManager():Play(enums.Sounds.CLICK)
     familiarSpr:Play("Click", true)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
