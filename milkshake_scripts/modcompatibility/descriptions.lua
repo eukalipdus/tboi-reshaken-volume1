@@ -7,7 +7,8 @@ descriptions.Collectibles = {
     GLOBIN_IN_A_BUCKET = "",
     GOLDEN_SHOVEL = "",
     MILKSHAKE = "",
-    SHARP_CURSOR = ""
+    SHARP_CURSOR = "",
+    LA_CHANCLA = ""
 }
 
 descriptions.Trinkets = {
