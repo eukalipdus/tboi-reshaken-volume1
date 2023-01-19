@@ -186,7 +186,12 @@ function SharpCursor:OnSharpCursorRender(familiar)
 
     familiarSpr:Play("Click", true)
 
-    local damage = player.Damage * 0.1
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
+        local damage = player.Damage * 0.2
+    else
+        local damage = player.Damage * 0.1
+    end
+    
     local damageRounded = TSIL.Utils.Math.Round(damage, 2)
 
     local nearEnemies = Isaac.FindInRadius(familiar.Position, 10, EntityPartition.ENEMY)
