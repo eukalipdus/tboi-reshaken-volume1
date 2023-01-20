@@ -1,7 +1,7 @@
 <items gfxroot="gfx/items/" version="1">
     <!-- Collectibles -->
     <active id="1" name="Globin In A Bucket" description="Tastes like flesh..." gfx="collectibles_globininabucket.png" maxcharges="6" quality="2" />
-    <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="damage" gfx="collectibles_blackeye.png" quality="3" />
+    <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" quality="3" />
     <active id="3" name="Golden Shovel" description="Struck gold!" gfx="collectibles_goldenshovel.png" maxcharges="12" quality="3" />
     <active id="4" name="Dice Dice" description="Dice dice dice dice dice" gfx="collectibles_dicedice.png" maxcharges="6" quality="4" />
     <passive id="5" name="Milkshake!" description="Delicious!"  cache="all" gfx="collectibles_milkshake.png" quality="4" />

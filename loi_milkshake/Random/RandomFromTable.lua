@@ -29,7 +29,7 @@ function TSIL.Random.GetRandomElementsFromTable(toChoose, numberOfElements, seed
 
 	local choices = {}
 
-	for _, value in pairs(toChoose) do
+	for index, value in pairs(toChoose) do
 		if rng:RandomFloat() < leftToChoose/leftInTable then
 			table.insert(choices, value)
 			leftToChoose = leftToChoose - 1

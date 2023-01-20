@@ -77,7 +77,7 @@ end
 
 
 ---@param player EntityPlayer
----@return EntityNPC?
+---@return Entity?
 local function GetFurthestEnemyFromPlayer(player)
     local npcs = TSIL.EntitySpecific.GetNPCs(-1, -1, -1, true)
     local enemies = TSIL.Utils.Tables.Filter(npcs, function (_, npc)
@@ -114,13 +114,14 @@ function SharpCursor:OnSharpCursorUpdate(familiar)
 
     local furthestEnemy = GetFurthestEnemyFromPlayer(player)
 
-    --- TODO: Make Idle state when there are no enemies on screen
     if furthestEnemy == nil then
-        familiar.Velocity = Vector.Zero
-        return
-    end
+        furthestEnemy = player
 
-    if data.targetEnemy == nil or data.targetEnemy ~= GetPtrHash(furthestEnemy) then
+        if (data.targetEnemy == nil or data.targetEnemy > 0) then
+            data.targetEnemy = -1
+            data.travelTime = 0
+        end
+    elseif data.targetEnemy == nil or data.targetEnemy ~= GetPtrHash(furthestEnemy) then
         data.travelTime = 0
         data.targetEnemy = GetPtrHash(furthestEnemy)
     end
@@ -155,6 +156,8 @@ local WasMousePressed = false
 
 ---@param familiar EntityFamiliar
 function SharpCursor:OnSharpCursorRender(familiar)
+    if Game():IsPaused() then return end
+
     local familiarSpr = familiar:GetSprite()
     local player = familiar.Player
 
@@ -192,7 +195,7 @@ function SharpCursor:OnSharpCursorRender(familiar)
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
         damage = damage * 2
     end
-    
+
     local damageRounded = TSIL.Utils.Math.Round(damage, 2)
 
     local nearEnemies = Isaac.FindInRadius(familiar.Position, 10, EntityPartition.ENEMY)
