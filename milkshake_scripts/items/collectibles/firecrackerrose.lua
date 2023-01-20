@@ -172,7 +172,6 @@ function FirecrackerRose:OnNPCRender(npc)
 
     ---@type Sprite
     local seedSpr = CrackerSeedSprites[npcPtr]
-    seedSpr.Rotation = rng:RandomInt(360)
     local renderPos = Isaac.WorldToScreen(npc.Position) - Vector(0, 10)
     seedSpr:Render(renderPos + Vector(TSIL.Random.GetRandomInt(-6, 6, rng), TSIL.Random.GetRandomInt(-2, 5, rng)))
 
