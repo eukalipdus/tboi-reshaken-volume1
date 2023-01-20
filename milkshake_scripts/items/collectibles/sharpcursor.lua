@@ -113,6 +113,7 @@ function SharpCursor:OnSharpCursorUpdate(familiar)
     local data = GetCursorData(familiar)
 
     local furthestEnemy = GetFurthestEnemyFromPlayer(player)
+    print(furthestEnemy)
 
     --- TODO: Make Idle state when there are no enemies on screen
     if furthestEnemy == nil then
@@ -192,7 +193,7 @@ function SharpCursor:OnSharpCursorRender(familiar)
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
         damage = damage * 2
     end
-    
+
     local damageRounded = TSIL.Utils.Math.Round(damage, 2)
 
     local nearEnemies = Isaac.FindInRadius(familiar.Position, 10, EntityPartition.ENEMY)
