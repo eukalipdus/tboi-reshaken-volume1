@@ -113,10 +113,10 @@ function SharpCursor:OnSharpCursorUpdate(familiar)
     local data = GetCursorData(familiar)
 
     local furthestEnemy = GetFurthestEnemyFromPlayer(player)
-    print(furthestEnemy)
 
     --- TODO: Make Idle state when there are no enemies on screen
     if furthestEnemy == nil then
+        data.targetEnemy = nil
         familiar.Velocity = Vector.Zero
         return
     end
@@ -156,6 +156,8 @@ local WasMousePressed = false
 
 ---@param familiar EntityFamiliar
 function SharpCursor:OnSharpCursorRender(familiar)
+    if Game():IsPaused() then return end
+
     local familiarSpr = familiar:GetSprite()
     local player = familiar.Player
 
