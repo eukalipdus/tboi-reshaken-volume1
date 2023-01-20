@@ -7,6 +7,8 @@ TSIL.SaveManager.AddPersistentVariable(milkshakeMod, "CrackeredEnemies", {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM)
 TSIL.SaveManager.AddPersistentVariable(milkshakeMod, "PetalTears", {}, TSIL.Enums.VariablePersistenceMode.RESET_ROOM)
 
+local CrackerSeedSprites = {}
+
 
 ---@param npc EntityNPC
 ---@param source EntityPlayer?
@@ -75,6 +77,11 @@ local function OnFirecrackerTearCollision(tear, collider)
 
     if crackeredEnemies[colliderPtr] ~= nil then return end
 
+    local seedSprite = Sprite()
+    seedSprite:Load("/gfx/firecracker_bullet.anm2", true)
+    seedSprite:Play("SeedIdle", true)
+    CrackerSeedSprites[colliderPtr] = seedSprite
+
     crackeredEnemies[colliderPtr] = {
         timer = 30 * 5,
         source = TSIL.Players.GetPlayerIndex(player)
@@ -122,8 +129,24 @@ function FirecrackerRose:OnNPCUpdate(npc)
 
     if crackerInfo.timer > 0 then
         crackerInfo.timer = crackerInfo.timer - 1
+
+        ---@type Sprite
+        local seedSpr = CrackerSeedSprites[npcPtr]
+
+        seedSpr:Update()
+
+        if crackerInfo.timer <= 30 * 3 and seedSpr:IsPlaying("SeedIdle") then
+            seedSpr:Play("Bloom", true)
+        end
+
+        if seedSpr:IsFinished("Bloom") then
+            seedSpr:Play("Idle")
+        end
+
         return
     end
+
+    CrackerSeedSprites[npcPtr] = nil
 
     npc.Color = Color(1, 1, 1)
 
@@ -144,6 +167,14 @@ function FirecrackerRose:OnNPCRender(npc)
     local crackerInfo = crackeredEnemies[npcPtr]
 
     if crackerInfo == nil then return end
+
+    local rng = TSIL.RNG.NewRNG(npc.InitSeed)
+
+    ---@type Sprite
+    local seedSpr = CrackerSeedSprites[npcPtr]
+    seedSpr.Rotation = rng:RandomInt(360)
+    local renderPos = Isaac.WorldToScreen(npc.Position) - Vector(0, 10)
+    seedSpr:Render(renderPos + Vector(TSIL.Random.GetRandomInt(-6, 6, rng), TSIL.Random.GetRandomInt(-2, 5, rng)))
 
     local colorAmount = math.abs(math.sin(npc.FrameCount * 0.1) * 0.6)
     local newColor = Color(1, 1, 1, 1, colorAmount)
