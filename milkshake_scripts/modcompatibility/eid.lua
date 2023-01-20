@@ -12,6 +12,7 @@ function eid:addEid()
         EID:addCollectible(enums.Collectibles.GOLDEN_SHOVEL, descriptions.Collectibles.GOLDEN_SHOVEL)
         EID:addCollectible(enums.Collectibles.MILKSHAKE, descriptions.Collectibles.MILKSHAKE)
         EID:addCollectible(enums.Collectibles.SHARP_CURSOR, descriptions.Collectibles.SHARP_CURSOR)
+        EID:addCollectible(enums.Collectibles.SHARP_CURSOR, descriptions.Collectibles.LA_CHANCLA)
 
         -- Trinkets
         EID:addTrinket(enums.Trinkets.AMETHYST_SHARD, descriptions.Trinkets.AMETHYST_SHARD)

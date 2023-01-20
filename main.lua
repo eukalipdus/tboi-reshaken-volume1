@@ -20,4 +20,5 @@ local diceDice = require("milkshake_scripts.items.collectibles.dicedice")
 local milkshake = require("milkshake_scripts.items.collectibles.milkshake")
 local firecrackerRose = require("milkshake_scripts.items.collectibles.firecrackerrose")
 local sharpCursor = require("milkshake_scripts.items.collectibles.sharpcursor")
+local laChancla = require("milkshake_scripts.items.collectibles.lachancla")
 
