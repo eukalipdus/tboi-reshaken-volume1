@@ -1,4 +1,5 @@
 <costumes anm2root="gfx/characters/">
-<costume id="2" anm2path="blackeye.anm2" type="passive" hasSkinAlt="true" />
+	<costume id="2" anm2path="blackeye.anm2" type="passive" hasSkinAlt="false" />
 	<costume id="5" anm2path="milkshake.anm2" type="passive" hasSkinAlt="true" />
+	<costume id="6" anm2path="firecrackerrose.anm2" type="passive" hasSkinAlt="true" />
 </costumes>
