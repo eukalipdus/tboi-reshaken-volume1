@@ -35,6 +35,26 @@ local function FirecrackerExplode(npc, source)
 end
 
 
+---@param npc EntityNPC
+---@param player EntityPlayer
+local function AddCrackered(npc, player)
+    local colliderPtr = GetPtrHash(npc)
+    local crackeredEnemies = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "CrackeredEnemies")
+
+    if crackeredEnemies[colliderPtr] ~= nil then return end
+
+    local seedSprite = Sprite()
+    seedSprite:Load("/gfx/firecracker_bullet.anm2", true)
+    seedSprite:Play("SeedIdle", true)
+    CrackerSeedSprites[colliderPtr] = seedSprite
+
+    crackeredEnemies[colliderPtr] = {
+        timer = 30 * 5,
+        source = TSIL.Players.GetPlayerIndex(player)
+    }
+end
+
+
 ---@param tear EntityTear
 function FirecrackerRose:OnTearInit(tear)
     local tearPtr = GetPtrHash(tear)
@@ -66,26 +86,14 @@ milkshakeMod:AddCallback(
 ---@param tear EntityTear
 ---@param collider Entity
 local function OnFirecrackerTearCollision(tear, collider)
-    if not collider:ToNPC() or not collider:IsVulnerableEnemy() then return end
+    local npc = collider:ToNPC()
+    if not npc or not collider:IsVulnerableEnemy() then return end
 
     local player = TSIL.Players.GetPlayerFromEntity(tear)
 
     if player == nil then return end
 
-    local colliderPtr = GetPtrHash(collider)
-    local crackeredEnemies = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "CrackeredEnemies")
-
-    if crackeredEnemies[colliderPtr] ~= nil then return end
-
-    local seedSprite = Sprite()
-    seedSprite:Load("/gfx/firecracker_bullet.anm2", true)
-    seedSprite:Play("SeedIdle", true)
-    CrackerSeedSprites[colliderPtr] = seedSprite
-
-    crackeredEnemies[colliderPtr] = {
-        timer = 30 * 5,
-        source = TSIL.Players.GetPlayerIndex(player)
-    }
+    AddCrackered(npc, player)
 end
 
 
@@ -212,4 +220,41 @@ end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_ENTITY_REMOVE,
     FirecrackerRose.OnEntityRemove
+)
+
+
+---@param npc EntityNPC
+---@param source EntityRef
+function CheckForFirecrackerLaser(npc, source)
+    if source.Type ~= EntityType.ENTITY_PLAYER then return end
+
+    local player = source.Entity:ToPlayer()
+    if not player:HasCollectible(enums.Collectibles.FIRECRACKER_ROSE) then return end
+
+    local rng = TSIL.RNG.NewRNG(npc.InitSeed)
+
+    local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.15 + 0.05 * player.Luck, 0.02, 0.5)
+
+    if randomChance >= luckThershold then return end
+
+    AddCrackered(npc, player)
+end
+
+
+---@param entity Entity
+---@param flags integer
+---@param source EntityRef
+function FirecrackerRose:OnEntityDamage(entity, _, flags, source)
+    local npc = entity:ToNPC()
+    if not npc or not npc:IsVulnerableEnemy() then return end
+
+    if TSIL.Utils.Flags.HasFlags(flags, DamageFlag.DAMAGE_LASER) then
+        --Check if it can laser can hit
+        CheckForFirecrackerLaser(npc, source)
+    end
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_ENTITY_TAKE_DMG,
+    FirecrackerRose.OnEntityDamage
 )
