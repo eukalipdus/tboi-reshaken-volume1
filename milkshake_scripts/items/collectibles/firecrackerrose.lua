@@ -59,7 +59,13 @@ end
 local function MakeTearFirecrackerSeed(tear)
     local tearPtr = GetPtrHash(tear)
 
-    local newColor = Color(1, 1, 1, 1, 1)
+    tear:ChangeVariant(TearVariant.BONE)
+
+    local tearSpr = tear:GetSprite()
+    tearSpr:Load("/gfx/firecracker_seed.anm2", true)
+    tearSpr:Play("spin", true)
+
+    local newColor = Color(1, 1, 1, 1, 0.5)
     tear.Color = newColor
 
     TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "FirecrackerTears")[tearPtr] = true
