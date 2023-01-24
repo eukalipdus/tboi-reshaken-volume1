@@ -15,7 +15,7 @@ local CrackerSeedSprites = {}
 local function FirecrackerExplode(npc, source)
     if source == nil then return end
 
-    Isaac.Explode(npc.Position, source, 50)
+    Isaac.Explode(npc.Position, source, 35 + 6 * source.Damage)
 
     local npcPtr = GetPtrHash(npc)
     local petalTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PetalTears")
@@ -211,7 +211,7 @@ milkshakeMod:AddCallback(
 ---@param entity Entity
 function FirecrackerRose:OnEntityRemove(entity)
     if TSIL.Rooms.IsLeavingRoom() then return end
-    
+
     local tear = entity:ToTear()
     if tear == nil then return end
     local tearPtr = GetPtrHash(tear)
@@ -220,13 +220,31 @@ function FirecrackerRose:OnEntityRemove(entity)
 
     if not petalTears[tearPtr] then return end
 
+    petalTears[tearPtr] = nil
+
+    local spawner = tear.SpawnerEntity
+    if not spawner then return end
+    local player = spawner:ToPlayer()
+    if not player then return end
+
     local miniExplosion = TSIL.EntitySpecific.SpawnEffect(
         EffectVariant.BOMB_EXPLOSION,
         0,
         tear.Position
-    ):ToEffect()
+    )
 
     miniExplosion.SpriteScale = Vector(0.5, 0.5)
+
+    local nearEnemies = Isaac.FindInRadius(entity.Position, 40, EntityPartition.ENEMY)
+
+    for _, enemy in ipairs(nearEnemies) do
+        enemy:TakeDamage(
+            10 + 2 * player.Damage,
+            DamageFlag.DAMAGE_EXPLOSION,
+            EntityRef(player),
+            -1
+        )
+    end
 
     SFXManager():Stop(SoundEffect.SOUND_EXPLOSION_STRONG)
     SFXManager():Play(SoundEffect.SOUND_EXPLOSION_WEAK)
