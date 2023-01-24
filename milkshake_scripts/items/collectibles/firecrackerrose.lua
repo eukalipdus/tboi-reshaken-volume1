@@ -56,6 +56,17 @@ end
 
 
 ---@param tear EntityTear
+local function MakeTearFirecrackerSeed(tear)
+    local tearPtr = GetPtrHash(tear)
+
+    local newColor = Color(1, 1, 1, 1, 1)
+    tear.Color = newColor
+
+    TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "FirecrackerTears")[tearPtr] = true
+end
+
+
+---@param tear EntityTear
 function FirecrackerRose:OnTearInit(tear)
     local tearPtr = GetPtrHash(tear)
     local petalTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PetalTears")
@@ -72,10 +83,7 @@ function FirecrackerRose:OnTearInit(tear)
     local luckThershold = TSIL.Utils.Math.Clamp(0.15 + 0.05 * player.Luck, 0.02, 0.5)
     if randomChance >= luckThershold then return end
 
-    local newColor = Color(1, 1, 1, 1, 1)
-    tear.Color = newColor
-
-    TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "FirecrackerTears")[tearPtr] = true
+    MakeTearFirecrackerSeed(tear)
 end
 milkshakeMod:AddCallback(
     TSIL.Enums.CustomCallback.POST_TEAR_INIT_LATE,
@@ -278,4 +286,41 @@ end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_ENTITY_TAKE_DMG,
     FirecrackerRose.OnEntityDamage
+)
+
+
+---@param bone EntityKnife
+function FirecrackerRose:OnBoneSwing(bone)
+    local spawner = bone.SpawnerEntity
+    if spawner == nil then return end
+
+    local player = spawner:ToPlayer()
+    if not player then return end
+    if not player:HasCollectible(enums.Collectibles.FIRECRACKER_ROSE) then return end
+
+    local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
+    local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.15 + 0.05 * player.Luck, 0.02, 0.5)
+    if randomChance >= luckThershold then return end
+
+    local tearVelocity = TSIL.Direction.DirectionToVector(player:GetFireDirection())
+    tearVelocity = tearVelocity * 7 * player.ShotSpeed
+    tearVelocity = tearVelocity + player.Velocity
+
+    local tear = player:FireTear(
+        bone.Position,
+        tearVelocity,
+        true,
+        false,
+        false,
+        player
+    )
+
+    tear.FallingAcceleration = player.TearFallingAcceleration
+    tear.FallingSpeed = player.TearFallingSpeed
+    MakeTearFirecrackerSeed(tear)
+end
+milkshakeMod:AddCallback(
+    TSIL.Enums.CustomCallback.POST_BONE_SWING,
+    FirecrackerRose.OnBoneSwing
 )
