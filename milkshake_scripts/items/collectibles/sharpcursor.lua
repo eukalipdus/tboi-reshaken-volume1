@@ -152,13 +152,92 @@ milkshakeMod:AddCallback(
     enums.Familiars.SHARP_CURSOR
 )
 
+
+---@param familiar EntityFamiliar
+---@param player EntityPlayer
+local function ClickDamageEnemies(familiar, player)
+    local damage = player.Damage * 0.1
+
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
+        damage = damage * 2
+    end
+
+    local damageRounded = TSIL.Utils.Math.Round(damage, 2)
+
+    local nearEnemies = Isaac.FindInRadius(familiar.Position, 10, EntityPartition.ENEMY)
+
+    for _, enemy in ipairs(nearEnemies) do
+        enemy:TakeDamage(
+            damage,
+            0,
+            EntityRef(familiar),
+            -1
+        )
+    end
+
+    if #nearEnemies > 0 then
+        SharpCursorDamageTexts[#SharpCursorDamageTexts+1] = {
+            alpha = 1,
+            frame = math.random(0, 20),
+            text = tostring(damageRounded),
+            position = Isaac.WorldToScreen(familiar.Position) + Vector(4, 4)
+        }
+    end
+end
+
+
+local BreakableGridEntities = {
+    [GridEntityType.GRID_ROCK] = true,
+    [GridEntityType.GRID_ROCKT] = true,
+    [GridEntityType.GRID_ROCK_BOMB] = true,
+    [GridEntityType.GRID_ROCK_ALT] = true,
+    [GridEntityType.GRID_ROCK_SS] = true,
+    [GridEntityType.GRID_ROCK_SPIKED] = true,
+    [GridEntityType.GRID_ROCK_ALT2] = true,
+    [GridEntityType.GRID_ROCK_GOLD] = true,
+}
+local DamageableGridEntities = {
+    [GridEntityType.GRID_TNT] = true,
+    [GridEntityType.GRID_POOP] = true
+}
+
+---@param familiar EntityFamiliar
+---@param player EntityPlayer
+local function ClickGridEntities(familiar, player)
+    local room = Game():GetRoom()
+    local gridEntity = room:GetGridEntityFromPos(familiar.Position)
+
+    if not gridEntity then return end
+
+    local gridType = gridEntity:GetType()
+
+    if BreakableGridEntities[gridType] and player:HasCollectible(CollectibleType.COLLECTIBLE_TERRA) then
+        gridEntity:Destroy()
+    elseif DamageableGridEntities[gridType] then
+        gridEntity:Hurt(1)
+    end
+end
+
+
+---@param familiar EntityFamiliar
+local function ClickCursor(familiar)
+    local player = familiar.Player
+    local familiarSpr = familiar:GetSprite()
+
+    SFXManager():Play(enums.Sounds.CLICK)
+    familiarSpr:Play("Click", true)
+
+    ClickDamageEnemies(familiar, player)
+    ClickGridEntities(familiar, player)
+end
+
+
 local WasMousePressed = false
 
 ---@param familiar EntityFamiliar
 function SharpCursor:OnSharpCursorRender(familiar)
     if Game():IsPaused() then return end
 
-    local familiarSpr = familiar:GetSprite()
     local player = familiar.Player
 
     local clickButton = false
@@ -187,36 +266,7 @@ function SharpCursor:OnSharpCursorRender(familiar)
 
     if not clickButton then return end
 
-    SFXManager():Play(enums.Sounds.CLICK)
-    familiarSpr:Play("Click", true)
-
-    local damage = player.Damage * 0.1
-
-    if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
-        damage = damage * 2
-    end
-
-    local damageRounded = TSIL.Utils.Math.Round(damage, 2)
-
-    local nearEnemies = Isaac.FindInRadius(familiar.Position, 10, EntityPartition.ENEMY)
-
-    for _, enemy in ipairs(nearEnemies) do
-        enemy:TakeDamage(
-            damage,
-            0,
-            EntityRef(familiar),
-            -1
-        )
-    end
-
-    if #nearEnemies > 0 then
-        SharpCursorDamageTexts[#SharpCursorDamageTexts+1] = {
-            alpha = 1,
-            frame = math.random(0, 20),
-            text = tostring(damageRounded),
-            position = Isaac.WorldToScreen(familiar.Position) + Vector(4, 4)
-        }
-    end
+    ClickCursor(familiar)
 end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_FAMILIAR_RENDER,
