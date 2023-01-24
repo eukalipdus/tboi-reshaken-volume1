@@ -242,6 +242,26 @@ function CheckForFirecrackerLaser(npc, source)
 end
 
 
+---@param npc EntityNPC
+---@param source EntityRef
+function CheckForFirecrackerKnife(npc, source)
+    if source.SpawnerType ~= EntityType.ENTITY_PLAYER then return end
+
+    local player = source.Entity.SpawnerEntity:ToPlayer()
+
+    if not player:HasCollectible(enums.Collectibles.FIRECRACKER_ROSE) then return end
+
+    local rng = TSIL.RNG.NewRNG(npc.InitSeed)
+
+    local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.15 + 0.05 * player.Luck, 0.02, 0.5)
+
+    if randomChance >= luckThershold then return end
+
+    AddCrackered(npc, player)
+end
+
+
 ---@param entity Entity
 ---@param flags integer
 ---@param source EntityRef
@@ -250,8 +270,9 @@ function FirecrackerRose:OnEntityDamage(entity, _, flags, source)
     if not npc or not npc:IsVulnerableEnemy() then return end
 
     if TSIL.Utils.Flags.HasFlags(flags, DamageFlag.DAMAGE_LASER) then
-        --Check if it can laser can hit
         CheckForFirecrackerLaser(npc, source)
+    elseif source.Type == EntityType.ENTITY_KNIFE then
+        CheckForFirecrackerKnife(npc, source)
     end
 end
 milkshakeMod:AddCallback(
