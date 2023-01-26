@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="24/01/2023 16:04:15" Version="3" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="26/01/2023 14:10:34" Version="4" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="Firecracker_bullet.png" Id="0"/>
+			<Spritesheet Path="tears\Firecracker_bullet.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="seed" Id="0" SpritesheetId="0"/>
