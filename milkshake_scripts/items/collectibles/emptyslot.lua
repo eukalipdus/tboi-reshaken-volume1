@@ -34,7 +34,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player, _, activeSlot)
     playerCoins = playerCoins + 1
     emptySlotCoinsPerPlayer[tostring(playerIndex)] = playerCoins
 
-    if playerCoins > 1 and TSIL.Random.GetRandom(rng) < 0.01 then
+    if playerCoins > 1 and TSIL.Random.GetRandom(rng) < 0.015 then
         local crater = TSIL.EntitySpecific.SpawnEffect(
             EffectVariant.BOMB_CRATER,
             0,
@@ -44,6 +44,8 @@ function EmptySlot:OnEmptySlotUse(_, rng, player, _, activeSlot)
         crater:SetColor(gold_color, 150, 1, false, false)
         SFXManager():Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY)
         SFXManager():Play(SoundEffect.SOUND_BOSS1_EXPLOSIONS)
+
+        playerCoins = playerCoins * 2
 
         while playerCoins > 50 do
             local angle = TSIL.Random.GetRandomInt(0, 360, rng)
@@ -60,7 +62,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player, _, activeSlot)
             playerCoins = playerCoins - 5
         end
 
-        for _ = 1, playerCoins * 2, 1 do
+        for _ = 1, playerCoins, 1 do
             local angle = TSIL.Random.GetRandomInt(0, 360, rng)
             local speed = TSIL.Random.GetRandomFloat(6, 11, rng)
             local velocity = Vector.FromAngle(angle) * speed
