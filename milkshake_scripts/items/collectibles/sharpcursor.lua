@@ -76,6 +76,26 @@ local function GetCursorData(familiar)
 end
 
 
+---@param familiar EntityFamiliar
+---@param player EntityPlayer
+local function GetCursorTravelTime(familiar, player)
+    local familiars = TSIL.Familiars.GetPlayerFamiliars(player)
+    local sharpCursors = TSIL.Utils.Tables.Filter(familiars, function (_, otherFamiliar)
+        return otherFamiliar.Variant == enums.Familiars.SHARP_CURSOR
+    end)
+
+    local travelTime = CURSOR_TRAVEL_TIME
+
+    for _, otherFamiliar in ipairs(sharpCursors) do
+        if otherFamiliar.InitSeed < familiar.InitSeed then
+            travelTime = travelTime + 6
+        end
+    end
+
+    return travelTime
+end
+
+
 ---@param player EntityPlayer
 ---@return Entity?
 local function GetFurthestEnemyFromPlayer(player)
@@ -96,6 +116,7 @@ local function GetFurthestEnemyFromPlayer(player)
 end
 
 
+
 ---@param familiar EntityFamiliar
 function SharpCursor:OnSharpCursorUpdate(familiar)
     local familiarSpr = familiar:GetSprite()
@@ -109,6 +130,8 @@ function SharpCursor:OnSharpCursorUpdate(familiar)
 
     --If mouse control is activated, we don't move the cursor ourselves
     if ShouldActivateMouseMode(player) then return end
+
+    local totalTravelTime = GetCursorTravelTime(familiar, player)
 
     local data = GetCursorData(familiar)
 
@@ -126,7 +149,7 @@ function SharpCursor:OnSharpCursorUpdate(familiar)
         data.targetEnemy = GetPtrHash(furthestEnemy)
     end
 
-    if data.travelTime > CURSOR_TRAVEL_TIME then
+    if data.travelTime > totalTravelTime then
         familiar.Position = furthestEnemy.Position
         familiar.Velocity = furthestEnemy.Velocity
     else
@@ -135,11 +158,11 @@ function SharpCursor:OnSharpCursorUpdate(familiar)
 
         local xStart = familiar.Position.X
         local xTarget = furthestEnemy.Position.X
-        local xNew = Lerp(xStart, xTarget, Ease(data.travelTime / CURSOR_TRAVEL_TIME))
+        local xNew = Lerp(xStart, xTarget, Ease(data.travelTime / totalTravelTime))
 
         local yStart = familiar.Position.Y
         local yTarget = furthestEnemy.Position.Y
-        local yNew = Lerp(yStart, yTarget, Ease(data.travelTime / CURSOR_TRAVEL_TIME))
+        local yNew = Lerp(yStart, yTarget, Ease(data.travelTime / totalTravelTime))
 
         familiar.Velocity = Vector(xNew, yNew) - familiar.Position
 
