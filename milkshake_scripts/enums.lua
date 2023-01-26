@@ -23,7 +23,8 @@ enums.Cards = {
     AMETHYST_ORB = Isaac.GetCardIdByName("Spirit Of Arcana"),
     RUBY_ORB = Isaac.GetCardIdByName("Spirit Of Perception"),
     EMERALD_ORB = Isaac.GetCardIdByName("Spirit Of Foresight"),
-    SAPPHIRE_ORB = Isaac.GetCardIdByName("Spirit Of Wisdom")
+    SAPPHIRE_ORB = Isaac.GetCardIdByName("Spirit Of Wisdom"),
+    TATTERED_PAGE = Isaac.GetCardIdByName("Tattered Page")
 }
 
 enums.Familiars = {

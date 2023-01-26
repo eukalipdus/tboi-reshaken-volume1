@@ -2,4 +2,9 @@
     <entity anm2path="sharp_cursor.anm2" name="Sharp Cursor" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0">
     </entity>
+
+    <entity name="Tattered Page" anm2path="tattered_page.anm2" id="5" variant="300" subtype="473" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+            <preload-snd id="8" />
+    </entity>
 </entities>

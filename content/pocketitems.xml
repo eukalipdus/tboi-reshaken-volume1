@@ -5,4 +5,6 @@
     <card type="special" pickup="1" description="Placeholder" name="Sprit Of Foresight" hud="Spirit Of Foresight" mimiccharge="3" />
     <card type="special" pickup="1" description="Placeholder" name="Spirit Of Wisdom" hud="Spirit Of Wisdom" mimiccharge="3" />
     
+    <!-- Tattered Page -->
+    <card type="special" pickup="473" description="Placeholder" name="Tattered Page" hud="Tattered Page" mimiccharge="3" />
 </pocketitems>
