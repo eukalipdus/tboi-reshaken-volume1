@@ -263,10 +263,10 @@ function CheckForFirecrackerLaser(npc, source)
     local player = source.Entity:ToPlayer()
     if not player:HasCollectible(enums.Collectibles.FIRECRACKER_ROSE) then return end
 
-    local rng = TSIL.RNG.NewRNG(npc.InitSeed)
+    local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
 
     local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
-    local luckThershold = TSIL.Utils.Math.Clamp(0.15 + 0.05 * player.Luck, 0.02, 0.5)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.015 + 0.005 * player.Luck, 0.002, 0.05)
 
     if randomChance >= luckThershold then return end
 
@@ -283,10 +283,10 @@ function CheckForFirecrackerKnife(npc, source)
 
     if not player:HasCollectible(enums.Collectibles.FIRECRACKER_ROSE) then return end
 
-    local rng = TSIL.RNG.NewRNG(npc.InitSeed)
+    local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
 
     local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
-    local luckThershold = TSIL.Utils.Math.Clamp(0.15 + 0.05 * player.Luck, 0.02, 0.5)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.015 + 0.005 * player.Luck, 0.002, 0.05)
 
     if randomChance >= luckThershold then return end
 
