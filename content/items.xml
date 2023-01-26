@@ -9,7 +9,7 @@
     <familiar id="7" name="Sharp Cursor" description="Clicky Clicky Click" gfx="collectibles_sharpcursor.png" quality="2" />
     <passive id="8" name="La Chancla" description="Este nalgaso te va a doler hasta el año que viene" cache="speed" gfx="collectibles_lachancla.png" quality="1" />
     <passive id="9" name="Lyrius" description="Melodic Spirits" gfx="collectibles_lyrius.png" quality="3" />
-    <active id="10" name="Empty Slot" description="99% of gamblers quit before they make it big" gfx="collectibles_emptyslot" maxcharges="0" quality="0" />
+    <active id="10" name="Empty Slot" description="99% of gamblers quit before they make it big" gfx="collectibles_emptyslot.png" maxcharges="0" quality="0" />
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="A glimpse into the future..." gfx="trinkets_amethystcluster.png" />

@@ -17,7 +17,6 @@ function TatteredPage:OnGameStarted(isContinue)
     local availableItems = TSIL.Utils.Tables.Filter(collectibles, function (_, collectible)
         return collectible:IsAvailable()
     end)
-    print(#availableItems)
     local availableItemIDs = TSIL.Utils.Tables.Map(availableItems, function (_, collectible)
         return collectible.ID
     end)

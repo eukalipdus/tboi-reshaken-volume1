@@ -8,7 +8,8 @@ enums.Collectibles = {
     MILKSHAKE = Isaac.GetItemIdByName("Milkshake!"),
     FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Rose"),
     SHARP_CURSOR = Isaac.GetItemIdByName("Sharp Cursor"),
-    LA_CHANCLA = Isaac.GetItemIdByName("La Chancla")
+    LA_CHANCLA = Isaac.GetItemIdByName("La Chancla"),
+    EMPTY_SLOT = Isaac.GetItemIdByName("Empty Slot")
 }
 
 enums.Trinkets = {
