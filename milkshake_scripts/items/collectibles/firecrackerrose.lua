@@ -24,10 +24,16 @@ local function FirecrackerExplode(npc, source)
     local numTears = 5 + rng:RandomInt(3)
 
     for _ = 1, numTears, 1 do
-        local velocity = Vector.FromAngle(rng:RandomInt(360)):Resized(7 * source.ShotSpeed)
+        local angle = rng:RandomInt(360)
+        local velocity = Vector.FromAngle(angle):Resized(7 * source.ShotSpeed)
 
         local tear = source:FireTear(npc.Position, velocity, false, true, false, source, (1/source.Damage) * 5)
         tear.FallingSpeed = tear.FallingSpeed * (4.5 + TSIL.Random.GetRandomFloat(0, 1.5, rng))
+
+        local tearSpr = tear:GetSprite()
+        tearSpr:Load("/gfx/firecracker_petal.anm2", true)
+
+        tearSpr:PlayRandom(tear.InitSeed)
 
         local tearPtr = GetPtrHash(tear)
         petalTears[tearPtr] = npcPtr
@@ -94,6 +100,22 @@ end
 milkshakeMod:AddCallback(
     TSIL.Enums.CustomCallback.POST_TEAR_INIT_LATE,
     FirecrackerRose.OnTearInit
+)
+
+
+---@param tear EntityTear
+function FirecrackerRose:OnTearUpdate(tear)
+    local tearPtr = GetPtrHash(tear)
+    local petalTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PetalTears")
+
+    if not petalTears[tearPtr] then return end
+
+    local angle = tear.Velocity:GetAngleDegrees()
+    tear.SpriteRotation = angle + 180
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_TEAR_UPDATE,
+    FirecrackerRose.OnTearUpdate
 )
 
 
