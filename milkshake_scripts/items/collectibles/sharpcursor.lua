@@ -267,6 +267,21 @@ function SharpCursor:OnSharpCursorRender(familiar)
     if not clickButton then return end
 
     ClickCursor(familiar)
+
+    if ShouldActivateMouseMode(player) then
+        --If mouse controls are activated, manually make all other
+        --sharp cursors click, since the mouse button triggered thing
+        --makes it so it doenst work with multiple of them.
+        local familiars = TSIL.Familiars.GetPlayerFamiliars(player)
+        local sharpCursors = TSIL.Utils.Tables.Filter(familiars, function (_, otherFamiliar)
+            return otherFamiliar.Variant == enums.Familiars.SHARP_CURSOR and
+            otherFamiliar.InitSeed ~= familiar.InitSeed
+        end)
+
+        TSIL.Utils.Tables.ForEach(sharpCursors, function (_, otherFamiliar)
+            ClickCursor(otherFamiliar)
+        end)
+    end
 end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_FAMILIAR_RENDER,
