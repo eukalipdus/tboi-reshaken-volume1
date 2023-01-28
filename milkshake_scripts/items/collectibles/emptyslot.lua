@@ -93,5 +93,5 @@ end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_USE_ITEM,
     EmptySlot.OnEmptySlotUse,
-    enums.Collectibles.em
+    enums.Collectibles.EMPTY_SLOT
 )
