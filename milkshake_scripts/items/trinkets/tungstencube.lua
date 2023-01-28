@@ -13,8 +13,9 @@ function TungstenCube:OnTrinketUpdate(trinket)
     if spr:IsEventTriggered("DropSound") then
         Game():ShakeScreen(10)
         local params = TSIL.ShockWaves.CustomShockwaveParams()
-
-        params.Damage = 35
+        
+        local level = Game():GetLevel()
+        params.Damage = 5 + 2*(level:GetStage()-1)
         params.DamagePlayers = false
 
         TSIL.ShockWaves.CreateShockwaveRing(

@@ -34,7 +34,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player, _, activeSlot)
     playerCoins = playerCoins + 1
     emptySlotCoinsPerPlayer[tostring(playerIndex)] = playerCoins
 
-    if playerCoins > 1 and TSIL.Random.GetRandom(rng) < 0.015 then
+    if playerCoins > 10 and TSIL.Random.GetRandom(rng) < 0.015 or playerCoins > 100 then
         local crater = TSIL.EntitySpecific.SpawnEffect(
             EffectVariant.BOMB_CRATER,
             0,
