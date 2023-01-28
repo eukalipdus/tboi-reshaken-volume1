@@ -16,5 +16,5 @@
     <trinket name="Ruby Shard" description="A glimpse into the other side..." gfx="trinkets_rubycluster.png" />
     <trinket name="Sapphire Shard" description="A glimpse into the mind of oneself..." gfx="trinkets_sapphirecluster.png" />
     <trinket name="Emerald Shard" description="A glimpse into the Past" gfx="trinkets_emeraldcluster.png" />
-    <trinket name="Tungsten Cube" description="Very heavy" gfx="trinkets_tungstencube.png" cache="speed" />
+    <trinket name="Tungsten Cube" description="It's heavy" gfx="trinkets_tungstencube.png" cache="speed" />
 </items>
