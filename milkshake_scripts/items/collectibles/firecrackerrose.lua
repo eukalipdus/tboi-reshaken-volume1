@@ -28,8 +28,8 @@ local function FirecrackerExplode(npc, source)
         local velocity = Vector.FromAngle(angle):Resized(7)
 
         local tear = source:FireTear(npc.Position, velocity, false, true, false, source, (1/source.Damage) * 5)
-        tear.FallingSpeed = tear.FallingSpeed * (TSIL.Random.GetRandomFloat(5, 8, rng))
-        tear.FallingAcceleration = tear.FallingAcceleration * (TSIL.Random.GetRandomFloat(3, 5, rng))
+        tear.FallingSpeed = -3 * (TSIL.Random.GetRandomFloat(5, 8, rng))
+        tear.FallingAcceleration = -0.5 * (TSIL.Random.GetRandomFloat(3, 5, rng))
 
         local tearSpr = tear:GetSprite()
         tearSpr:Load("/gfx/firecracker_petal.anm2", true)

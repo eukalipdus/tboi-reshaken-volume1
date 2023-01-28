@@ -10,7 +10,7 @@ local goldenShovelData = {
     PICKUP_STEP = 30,
     DOUBLE_CHEST_STEP = 10
 }
-
+local skipNextShovelUse = false
 
 ---@param position Vector
 local function SpawnGoldEffects(position)
@@ -33,6 +33,18 @@ local function SpawnGoldEffects(position)
 end
 
 
+---@param position Vector
+local function SpawnDirtPile(position)
+    local pit = TSIL.EntitySpecific.SpawnEffect(
+        EffectVariant.DIRT_PILE,
+        1,
+        position
+    )
+    pit:SetTimeout(1000)
+    pit:GetSprite().Color = Color(0.7, 0.6, 0, 1, 0, 0, 0)
+end
+
+
 ---@param rng RNG
 ---@param position Vector
 function SpawnGoldenPickup(rng, position)
@@ -41,11 +53,33 @@ function SpawnGoldenPickup(rng, position)
     local roll = TSIL.Random.GetRandomInt(0, 2, rng)
 
     if roll == 0 then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN, spawnPos, goldenShovelData.PICKUP_VELOCITY, nil)
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_BOMB,
+            BombSubType.BOMB_GOLDEN,
+            spawnPos,
+            goldenShovelData.PICKUP_VELOCITY
+        )
     elseif roll == 1 then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN, spawnPos, goldenShovelData.PICKUP_VELOCITY, nil)
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_KEY,
+            KeySubType.KEY_GOLDEN,
+            spawnPos,
+            goldenShovelData.PICKUP_VELOCITY
+        )
     elseif roll == 2 then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN, spawnPos, goldenShovelData.PICKUP_VELOCITY, nil)
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_HEART,
+            HeartSubType.HEART_GOLDEN,
+            spawnPos,
+            goldenShovelData.PICKUP_VELOCITY
+        )
+    else
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_COIN,
+            CoinSubType.COIN_GOLDEN,
+            spawnPos,
+            goldenShovelData.PICKUP_VELOCITY
+        )
     end
 end
 
@@ -69,30 +103,44 @@ end
 
 
 ---@param position Vector
+---@return boolean
 local function TrySpawnSecretMemberShop(position)
     local room = Game():GetRoom()
     local gridEntity = room:GetGridEntityFromPos(position)
 
-    if not gridEntity or gridEntity:GetType() ~= GridEntityType.GRID_DECORATION then return end
+    if not gridEntity or gridEntity:GetType() ~= GridEntityType.GRID_DECORATION then return false end
 
+    --Because we update the room, the Use Item callback will trigger again
+    --We need to use a flag to keep track of this
+    skipNextShovelUse = true
     TSIL.GridEntities.SpawnGridEntity(
         GridEntityType.GRID_STAIRS,
         TSIL.Enums.CrawlSpaceVariant.SECRET_SHOP,
         position,
         true
     )
+
+    return true
 end
 
 
 ---@param rng RNG
 ---@param player EntityPlayer
 function goldenShovel:onUse(_, rng, player)
+    if skipNextShovelUse then
+        skipNextShovelUse = false
+        return
+    end
+
     if not player then return end
 
     SpawnGoldEffects(player.Position)
-    SpawnGoldenPickup(rng, player.Position)
-    SpawnGoldenChests(rng, player.Position)
-    TrySpawnSecretMemberShop(player.Position)
+
+    if not TrySpawnSecretMemberShop(player.Position) then
+        SpawnDirtPile(player.Position)
+        SpawnGoldenPickup(rng, player.Position)
+        SpawnGoldenChests(rng, player.Position)
+    end
 
     return true
 end
