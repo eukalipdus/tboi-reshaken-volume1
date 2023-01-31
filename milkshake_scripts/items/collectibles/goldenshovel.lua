@@ -50,7 +50,7 @@ end
 function SpawnGoldenPickup(rng, position)
     local room = Game():GetRoom()
     local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
-    local roll = TSIL.Random.GetRandomInt(0, 2, rng)
+    local roll = TSIL.Random.GetRandomInt(0, 3, rng)
 
     if roll == 0 then
         TSIL.EntitySpecific.SpawnPickup(
