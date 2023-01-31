@@ -7,4 +7,7 @@
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
             <preload-snd id="8" />
     </entity>
+
+    <entity name="Vine" anm2path="vines.anm2" id="1000" collisionMass="8" collisionRadius="8" numGridCollisionPoints="8">
+	</entity>
 </entities>

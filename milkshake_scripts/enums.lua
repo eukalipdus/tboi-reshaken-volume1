@@ -32,6 +32,10 @@ enums.Familiars = {
     SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor")
 }
 
+enums.Effects = {
+    VINES = Isaac.GetEntityVariantByName("Vine")
+}
+
 enums.Sounds = {
     CLICK = Isaac.GetSoundIdByName("sharp cursor click")
 }
