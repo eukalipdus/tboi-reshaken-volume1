@@ -8,7 +8,7 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player)
     local npcs = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, false)
 
     npcs = TSIL.Utils.Tables.Filter(npcs, function (_, npc)
-        return npc:IsVulnerableEnemy() and not npc:IsBoss()
+        return npc:IsVulnerableEnemy()
     end)
 
     TSIL.Utils.Tables.ForEach(npcs, function (_, npc)
@@ -22,8 +22,11 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player)
             player
         )
 
+        local rng = TSIL.RNG.NewRNG(npc.InitSeed)
+
         vine.Target = npc
-        vine.Timeout = 20 * 30
+        local timeout = npc:IsBoss() and 10 or 20
+        vine.Timeout = timeout * 30 + TSIL.Random.GetRandomInt(0, 12, rng)
         vine.DepthOffset = 10
 
         vine:GetSprite():Play("Grow", true)
@@ -67,6 +70,15 @@ function EmeraldOrb:OnVineUpdate(vine)
     if timeout == 0 then
         vineSprite:Play("Hide", true)
     end
+
+    if timeout % 40 == 0 then
+        target:TakeDamage(1, 0, EntityRef(vine.SpawnerEntity), -1)
+        vineSprite:Play("Attack", true)
+    end
+
+    if vineSprite:IsFinished("Attack") then
+        vineSprite:Play("Idle")
+    end
 end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
@@ -88,7 +100,7 @@ function EmeraldOrb:OnNPCDeath(npc)
             if ptr == targetPtr then
                 TSIL.EntitySpecific.SpawnPickup(
                     PickupVariant.PICKUP_HEART,
-                    HeartSubType.HEART_FULL,
+                    HeartSubType.HEART_HALF,
                     npc.Position
                 )
 
