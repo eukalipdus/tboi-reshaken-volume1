@@ -1,4 +1,7 @@
 <entities anm2root="gfx/" version="5">
+    <entity name="www doesnt exist" anm2path="vines.anm2" id="1000" variant="40">
+	</entity>
+
     <entity anm2path="sharp_cursor.anm2" name="Sharp Cursor" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0">
     </entity>
@@ -8,6 +11,10 @@
             <preload-snd id="8" />
     </entity>
 
-    <entity name="Vine" anm2path="vines.anm2" id="1000" collisionMass="8" collisionRadius="8" numGridCollisionPoints="8">
+    <entity name="Vine" anm2path="vines.anm2" id="1000">
+	</entity>
+
+    <entity name="Shattered Orb" anm2path="shattered_orb.anm2" id="1000" shadowSize="8"
+    collisionMass="1" friction="1">
 	</entity>
 </entities>

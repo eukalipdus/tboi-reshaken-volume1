@@ -24,4 +24,5 @@ local laChancla = require("milkshake_scripts.items.collectibles.lachancla")
 local tungstenCube = require("milkshake_scripts.items.trinkets.tungstencube")
 local tatteredPage = require("milkshake_scripts.items.pick ups.tatteredpage")
 local emptySlot = require("milkshake_scripts.items.collectibles.emptyslot")
+local shatteredOrb = require("milkshake_scripts.items.collectibles.shatteredorb")
 

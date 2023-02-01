@@ -9,7 +9,8 @@ enums.Collectibles = {
     FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Rose"),
     SHARP_CURSOR = Isaac.GetItemIdByName("Sharp Cursor"),
     LA_CHANCLA = Isaac.GetItemIdByName("La Chancla"),
-    EMPTY_SLOT = Isaac.GetItemIdByName("Empty Slot")
+    EMPTY_SLOT = Isaac.GetItemIdByName("Empty Slot"),
+    SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb")
 }
 
 enums.Trinkets = {
@@ -33,7 +34,8 @@ enums.Familiars = {
 }
 
 enums.Effects = {
-    VINES = Isaac.GetEntityVariantByName("Vine")
+    VINES = Isaac.GetEntityVariantByName("Vine"),
+    SHATTERED_ORB = Isaac.GetEntityVariantByName("Shattered Orb")
 }
 
 enums.Sounds = {
