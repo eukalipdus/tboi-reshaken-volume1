@@ -11,6 +11,26 @@
             <preload-snd id="8" />
     </entity>
 
+    <entity name="Spirit of Conductivity" anm2path="spirit_conductivity.anm2" id="5" variant="300" subtype="474" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+        <entity name="Spirit of Inferno" anm2path="spirit_inferno.anm2" id="5" variant="300" subtype="475" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+        <entity name="Spirit of Druidity" anm2path="spirit_druidity.anm2" id="5" variant="300" subtype="476" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+        <entity name="Spirit of Clairvoyance" anm2path="spirit_clairvoyance.anm2" id="5" variant="300" subtype="477" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+        <entity name="Spirit of Chaos" anm2path="spirit_chaos.anm2" id="5" variant="300" subtype="478" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
     <entity name="Vine" anm2path="vines.anm2" id="1000">
 	</entity>
 
