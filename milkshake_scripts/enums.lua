@@ -23,10 +23,11 @@ enums.Trinkets = {
 }
 
 enums.Cards = {
-    AMETHYST_ORB = Isaac.GetCardIdByName("Spirit Of Arcana"),
-    RUBY_ORB = Isaac.GetCardIdByName("Spirit Of Perception"),
-    EMERALD_ORB = Isaac.GetCardIdByName("Spirit Of Foresight"),
-    SAPPHIRE_ORB = Isaac.GetCardIdByName("Spirit Of Wisdom"),
+    AMETHYST_ORB = Isaac.GetCardIdByName("Spirit Of Clairvoyance"),
+    RUBY_ORB = Isaac.GetCardIdByName("Spirit Of Inferno"),
+    EMERALD_ORB = Isaac.GetCardIdByName("Sprit Of Druidity"),
+    SAPPHIRE_ORB = Isaac.GetCardIdByName("Spirit Of Conductivity"),
+    RANDOM_ORB = Isaac.GetCardIdByName("Spirit Of Chaos"),
     TATTERED_PAGE = Isaac.GetCardIdByName("Tattered Page")
 }
 

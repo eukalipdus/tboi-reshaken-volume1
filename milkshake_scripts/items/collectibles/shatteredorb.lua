@@ -405,10 +405,7 @@ function GetEntityOrb(entity)
     local rng = TSIL.RNG.NewRNG(entity.InitSeed)
 
     local possibleOrbs = {
-        enums.Cards.AMETHYST_ORB,
-        enums.Cards.EMERALD_ORB,
-        enums.Cards.RUBY_ORB,
-        enums.Cards.SAPPHIRE_ORB
+        enums.Cards.RANDOM_ORB
     }
 
     return TSIL.Random.GetRandomElementsFromTable(possibleOrbs, 1, rng)[1]
@@ -425,7 +422,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     shatteredOrbData.fallingSpeed = shatteredOrbData.fallingSpeed + SHATTERED_ORB_FALL_ACCEL
 
     if shatteredOrb.SpriteOffset.Y >= 0 then
-        SFXManager():Play(SoundEffect.SOUND_POT_BREAK_2, 1, 2, false, 1.3)
+        SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK, 1, 2, false, 1.3)
 
         MusicManager():Pause()
         TSIL.Utils.Functions.RunInFrames(function ()
