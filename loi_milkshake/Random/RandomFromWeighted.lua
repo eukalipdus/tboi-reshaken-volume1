@@ -30,7 +30,7 @@ function TSIL.Random.GetRandomElementFromWeightedList(seedOrRNG, ...)
 	for _, possibility in ipairs(possibles) do
 		local chance = possibility.chance + cumulativeChance
 
-		if chance < randomChance then
+		if chance >= randomChance then
 			result = possibility.value
 			break
 		end
