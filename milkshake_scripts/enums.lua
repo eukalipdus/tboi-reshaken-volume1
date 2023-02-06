@@ -1,4 +1,4 @@
-local enums = {}
+enums = {}
 
 enums.Collectibles = {
     GLOBIN_IN_A_BUCKET = Isaac.GetItemIdByName("Globin In A Bucket"),
@@ -25,7 +25,7 @@ enums.Trinkets = {
 enums.Cards = {
     AMETHYST_ORB = Isaac.GetCardIdByName("Spirit Of Clairvoyance"),
     RUBY_ORB = Isaac.GetCardIdByName("Spirit Of Inferno"),
-    EMERALD_ORB = Isaac.GetCardIdByName("Sprit Of Druidity"),
+    EMERALD_ORB = Isaac.GetCardIdByName("Spirit Of Druidity"),
     SAPPHIRE_ORB = Isaac.GetCardIdByName("Spirit Of Conductivity"),
     RANDOM_ORB = Isaac.GetCardIdByName("Spirit Of Chaos"),
     TATTERED_PAGE = Isaac.GetCardIdByName("Tattered Page")
