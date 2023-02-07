@@ -44,4 +44,8 @@ enums.Sounds = {
     CLICK = Isaac.GetSoundIdByName("sharp cursor click")
 }
 
+enums.Costumes = {
+    CLAIRVOYANCE_ORB = Isaac.GetCostumeIdByPath("gfx/characters/clairvoyance_orb.anm2")
+}
+
 return enums
