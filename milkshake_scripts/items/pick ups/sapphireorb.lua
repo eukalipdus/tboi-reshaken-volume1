@@ -14,7 +14,7 @@ local SLOT_MACHINE_VARIANTS = {
     [TSIL.Enums.SlotVariant.RESTOCK_MACHINE] = true,
 }
 local MACHINE_PAYOUTS = {
-    [1] = {
+    [TSIL.Enums.SlotVariant.SLOT_MACHINE] = {
         --For Slot machines
         { chance = 100, value = {
             variant = PickupVariant.PICKUP_COIN,
@@ -67,7 +67,7 @@ local MACHINE_PAYOUTS = {
             weight = 3
         }},
     },
-    [2] = {
+    [TSIL.Enums.SlotVariant.BLOOD_DONATION_MACHINE] = {
         --For blood donation machines
         { chance = 100, value = {
             variant = PickupVariant.PICKUP_COIN,
@@ -95,8 +95,8 @@ local MACHINE_PAYOUTS = {
             weight = 2
         }},
     },
-    [3] = {
-        --For blood donation machines
+    [TSIL.Enums.SlotVariant.FORTUNE_TELLING_MACHINE] = {
+        --For fortune telling machines
         { chance = 30, value = {
             variant = PickupVariant.PICKUP_HEART,
             subtype = HeartSubType.HEART_SOUL,
@@ -118,8 +118,8 @@ local MACHINE_PAYOUTS = {
             weight = 3
         }},
     },
-    [16] = {
-        --For blood donation machines
+    [TSIL.Enums.SlotVariant.CRANE_GAME] = {
+        --For crane game machines
         { chance = 30, value = {
             variant = PickupVariant.PICKUP_COIN,
             subtype = HeartSubType.COIN_NICKEL,
@@ -378,19 +378,23 @@ milkshakeMod:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, SapphireOrb.OnTearC
 
 ---@param spawnPos Vector
 ---@param rng RNG
-local function SpawnSlotElectrocutionPayouts(spawnPos, rng,slot)
+local function SpawnSlotElectrocutionPayouts(spawnPos, rng, slot)
     local maxWeight = TSIL.Random.GetRandomInt(2, 4, rng)
     local currentWeight = 0
     local ActualPayoutTable = MACHINE_PAYOUTS[slot.Variant] or MACHINE_PAYOUTS[1]
     while currentWeight < maxWeight do
-        
         local rewardToSpawn = TSIL.Random.GetRandomElementFromWeightedList(rng, table.unpack(ActualPayoutTable))
         currentWeight = currentWeight + rewardToSpawn.weight
 
         local velocity = Vector.FromAngle(rng:RandomInt(360)) * TSIL.Random.GetRandomFloat(5, 7, rng)
         if rewardToSpawn.variant == PickupVariant.PICKUP_COLLECTIBLE then
             spawnPos = Isaac.GetFreeNearPosition (spawnPos,5)
-            rewardToSpawn.subtype = Game():GetItemPool():GetCollectible( ItemPoolType.POOL_CRANE_GAME, true, Random(),CollectibleType.COLLECTIBLE_NULL )
+            rewardToSpawn.subtype = Game():GetItemPool():GetCollectible(
+                ItemPoolType.POOL_CRANE_GAME,
+                true,
+                rng:Next(),
+                CollectibleType.COLLECTIBLE_NULL
+            )
         end
         TSIL.EntitySpecific.SpawnPickup(
             rewardToSpawn.variant,
