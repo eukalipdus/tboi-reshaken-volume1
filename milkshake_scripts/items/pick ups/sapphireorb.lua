@@ -13,57 +13,129 @@ local SLOT_MACHINE_VARIANTS = {
     [TSIL.Enums.SlotVariant.FORTUNE_TELLING_MACHINE] = true,
     [TSIL.Enums.SlotVariant.RESTOCK_MACHINE] = true,
 }
-local SLOT_ELECTROCUTION_PAYOUTS = {
-    { chance = 100, value = {
-        variant = PickupVariant.PICKUP_COIN,
-        subtype = CoinSubType.COIN_PENNY,
-        weight = 1
-    }},
-    { chance = 30, value = {
-        variant = PickupVariant.PICKUP_HEART,
-        subtype = HeartSubType.HEART_HALF,
-        weight = 1
-    }},
-    { chance = 30, value = {
-        variant = PickupVariant.PICKUP_HEART,
-        subtype = HeartSubType.HEART_FULL,
-        weight = 1
-    }},
-    { chance = 30, value = {
-        variant = PickupVariant.PICKUP_BOMB,
-        subtype = BombSubType.BOMB_NORMAL,
-        weight = 1
-    }},
-    { chance = 20, value = {
-        variant = PickupVariant.PICKUP_KEY,
-        subtype = KeySubType.KEY_NORMAL,
-        weight = 1
-    }},
-    { chance = 15, value = {
-        variant = PickupVariant.PICKUP_HEART,
-        subtype = HeartSubType.HEART_DOUBLEPACK,
-        weight = 2
-    }},
-    { chance = 10, value = {
-        variant = PickupVariant.PICKUP_BOMB,
-        subtype = BombSubType.BOMB_DOUBLEPACK,
-        weight = 2
-    }},
-    { chance = 10, value = {
-        variant = PickupVariant.PICKUP_KEY,
-        subtype = KeySubType.KEY_DOUBLEPACK,
-        weight = 2
-    }},
-    { chance = 5, value = {
-        variant = PickupVariant.PICKUP_COIN,
-        subtype = CoinSubType.COIN_NICKEL,
-        weight = 2
-    }},
-    { chance = 1, value = {
-        variant = PickupVariant.PICKUP_COIN,
-        subtype = CoinSubType.COIN_DIME,
-        weight = 3
-    }},
+local MACHINE_PAYOUTS = {
+    [1] = {
+        --For Slot machines
+        { chance = 100, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_PENNY,
+            weight = 1
+        }},
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = HeartSubType.HEART_HALF,
+            weight = 1
+        }},
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = HeartSubType.HEART_FULL,
+            weight = 1
+        }},
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_BOMB,
+            subtype = BombSubType.BOMB_NORMAL,
+            weight = 1
+        }},
+        { chance = 20, value = {
+            variant = PickupVariant.PICKUP_KEY,
+            subtype = KeySubType.KEY_NORMAL,
+            weight = 1
+        }},
+        { chance = 15, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = HeartSubType.HEART_DOUBLEPACK,
+            weight = 2
+        }},
+        { chance = 10, value = {
+            variant = PickupVariant.PICKUP_BOMB,
+            subtype = BombSubType.BOMB_DOUBLEPACK,
+            weight = 2
+        }},
+        { chance = 10, value = {
+            variant = PickupVariant.PICKUP_KEY,
+            subtype = KeySubType.KEY_DOUBLEPACK,
+            weight = 2
+        }},
+        { chance = 5, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_NICKEL,
+            weight = 2
+        }},
+        { chance = 1, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_DIME,
+            weight = 3
+        }},
+    },
+    [2] = {
+        --For blood donation machines
+        { chance = 100, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_PENNY,
+            weight = 1
+        }},
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = HeartSubType.HEART_HALF,
+            weight = 1
+        }},
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = HeartSubType.HEART_FULL,
+            weight = 1
+        }},
+        { chance = 15, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = HeartSubType.HEART_DOUBLEPACK,
+            weight = 2
+        }},
+        { chance = 5, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_NICKEL,
+            weight = 2
+        }},
+    },
+    [3] = {
+        --For blood donation machines
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = HeartSubType.HEART_SOUL,
+            weight = 2
+        }},
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = HeartSubType.HEART_BLACK,
+            weight = 2
+        }},
+        { chance = 15, value = {
+            variant = PickupVariant.PICKUP_TAROTCARD,
+            subtype = 0,
+            weight = 3
+        }},
+        { chance = 5, value = {
+            variant = PickupVariant.PICKUP_TRINKET,
+            subtype = 0,
+            weight = 3
+        }},
+    },
+    [16] = {
+        --For blood donation machines
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = HeartSubType.COIN_NICKEL,
+            weight = 2
+        }},
+        { chance = 15, value = {
+            variant = PickupVariant.PICKUP_TRINKET,
+            subtype = 0,
+            weight = 3
+        }},
+        { chance = 5, value = {
+            variant = PickupVariant.PICKUP_COLLECTIBLE,
+            subtype = 0,
+            weight = 6
+        }},
+    },
 }
 
 
@@ -306,16 +378,20 @@ milkshakeMod:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, SapphireOrb.OnTearC
 
 ---@param spawnPos Vector
 ---@param rng RNG
-local function SpawnSlotElectrocutionPayouts(spawnPos, rng)
+local function SpawnSlotElectrocutionPayouts(spawnPos, rng,slot)
     local maxWeight = TSIL.Random.GetRandomInt(2, 4, rng)
     local currentWeight = 0
-
+    local ActualPayoutTable = MACHINE_PAYOUTS[slot.Variant] or MACHINE_PAYOUTS[1]
     while currentWeight < maxWeight do
-        local rewardToSpawn = TSIL.Random.GetRandomElementFromWeightedList(rng, table.unpack(SLOT_ELECTROCUTION_PAYOUTS))
+        
+        local rewardToSpawn = TSIL.Random.GetRandomElementFromWeightedList(rng, table.unpack(ActualPayoutTable))
         currentWeight = currentWeight + rewardToSpawn.weight
 
         local velocity = Vector.FromAngle(rng:RandomInt(360)) * TSIL.Random.GetRandomFloat(5, 7, rng)
-
+        if rewardToSpawn.variant == PickupVariant.PICKUP_COLLECTIBLE then
+            spawnPos = Isaac.GetFreeNearPosition (spawnPos,5)
+            rewardToSpawn.subtype = Game():GetItemPool():GetCollectible( ItemPoolType.POOL_CRANE_GAME, true, Random(),CollectibleType.COLLECTIBLE_NULL )
+        end
         TSIL.EntitySpecific.SpawnPickup(
             rewardToSpawn.variant,
             rewardToSpawn.subtype,
@@ -364,9 +440,9 @@ function SapphireOrb:OnSlotUpdate(slot)
         return
     end
 
-    if currentDuration % 6 ~= 0 then return end
+    if currentDuration % 15 ~= 0 then return end
 
-    SpawnSlotElectrocutionPayouts(slot.Position, slot:GetDropRNG())
+    SpawnSlotElectrocutionPayouts(slot.Position, slot:GetDropRNG(),slot)
 end
 milkshakeMod:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_UPDATE,
