@@ -98,11 +98,19 @@ function EmeraldOrb:OnNPCDeath(npc)
             local targetPtr = GetPtrHash(vine.Target)
 
             if ptr == targetPtr then
-                TSIL.EntitySpecific.SpawnPickup(
+                local heart = TSIL.EntitySpecific.SpawnPickup(
                     PickupVariant.PICKUP_HEART,
                     HeartSubType.HEART_HALF,
                     npc.Position
                 )
+
+                heart.Timeout = 100
+
+                local heartSpr = heart:GetSprite()
+                for i = 0, heartSpr:GetLayerCount()-1, 1 do
+                    heartSpr:ReplaceSpritesheet(i, "gfx/items/pick ups/fruit_heart.png")
+                end
+                heartSpr:LoadGraphics()
 
                 return
             end
