@@ -11,7 +11,8 @@ enums.Collectibles = {
     LA_CHANCLA = Isaac.GetItemIdByName("La Chancla"),
     EMPTY_SLOT = Isaac.GetItemIdByName("Empty Slot"),
     SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb"),
-    GLASS_HEART = Isaac.GetItemIdByName("Glass Heart")
+    GLASS_HEART = Isaac.GetItemIdByName("Glass Heart"),
+    SHATTERED_DICE = Isaac.GetItemIdByName("Shattered Dice")
 }
 
 enums.Trinkets = {

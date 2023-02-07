@@ -12,6 +12,7 @@
     <active id="10" name="Empty Slot" description="99% of gamblers quit before they make it big" gfx="collectibles_emptyslot.png" maxcharges="0" quality="0" />
     <active id="11" name="Shattered Orb" description="Shattered" quality="4" gfx="collectibles_shatteredorb.png" maxcharges="4" />
     <passive id="12" name="Glass Heart" description="Glassy" quality="3" gfx="collectibles_glassheart.png" />
+    <active id="13" name="Shattered Dice" description="Quantity over quality" quality="4" gfx="collectibles_shattereddice.png" maxcharges="6" />
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="A glimpse into the future..." gfx="trinkets_amethystcluster.png" />
