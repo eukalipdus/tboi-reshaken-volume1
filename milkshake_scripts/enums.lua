@@ -1,4 +1,4 @@
-enums = {}
+local enums = {}
 
 enums.Collectibles = {
     GLOBIN_IN_A_BUCKET = Isaac.GetItemIdByName("Globin In A Bucket"),
