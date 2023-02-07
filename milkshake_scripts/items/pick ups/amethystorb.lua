@@ -69,6 +69,8 @@ local function TryReflectProjectile(player)
     )[1]
 
     projectileToReflect.Velocity = -projectileToReflect.Velocity
+    projectileToReflect.FallingSpeed = 0
+    projectileToReflect.FallingAccel = -0.05
     projectileToReflect:AddProjectileFlags(
         ProjectileFlags.HIT_ENEMIES |
         ProjectileFlags.CANT_HIT_PLAYER |
