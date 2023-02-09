@@ -11,14 +11,14 @@ function eid:addEid()
         end
 
         -- Trinkets
-        for trinket, translations in pairs(descriptions.Collectibles) do
+        for trinket, translations in pairs(descriptions.Trinkets) do
             for language, description in pairs(translations) do
                 EID:addTrinket(trinket, description.description, description.name, language)
             end
         end
 
         -- Pickups
-        for card, translations in pairs(descriptions.Collectibles) do
+        for card, translations in pairs(descriptions.Cards) do
             for language, description in pairs(translations) do
                 EID:addCard(card, description.description, description.name, language)
             end

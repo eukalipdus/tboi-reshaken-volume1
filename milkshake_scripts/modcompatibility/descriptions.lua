@@ -84,7 +84,7 @@ descriptions.Collectibles = {
             description = "Activa un efecto de la habitacion de dado aleatorio #De momento sin usar y sin programar, puede que aparezca despues"
         },
     },
-    [enums.Collectibles.FIRE_CRACKER_ROSE] = {
+    [enums.Collectibles.FIRECRACKER_ROSE] = {
         en_us = {
             name = "Firecracker Rose",
             description = "{{Burning}} Chance to shoot a seed tear that inflicts enemies with Kabloom #Kabloomed enemies will explode into exploding petal tears after 5 seconds",
@@ -143,7 +143,7 @@ descriptions.Trinkets = {
 --CARD DESCRIPTIONS
 descriptions.Cards = {
     [enums.Cards.EMERALD_ORB] = {
-        en_use = {
+        en_us = {
             name = "Druidity Orb",
             description = "#Wraps all enemies in the room in vines for 20 seconds, freezing them #Killing a vined enemy spawns a fruit heart"
         },
