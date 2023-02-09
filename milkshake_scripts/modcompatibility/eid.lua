@@ -6,21 +6,21 @@ function eid:addEid()
         -- Collectibles
         for collectible, translations in pairs(descriptions.Collectibles) do
             for language, description in pairs(translations) do
-                EID:addCollectible(collectible, description, language)
+                EID:addCollectible(collectible, description.description, description.name, language)
             end
         end
 
         -- Trinkets
         for trinket, translations in pairs(descriptions.Collectibles) do
             for language, description in pairs(translations) do
-                EID:addTrinket(trinket, description, language)
+                EID:addTrinket(trinket, description.description, description.name, language)
             end
         end
 
         -- Pickups
         for card, translations in pairs(descriptions.Collectibles) do
             for language, description in pairs(translations) do
-                EID:addCard(card, description, language)
+                EID:addCard(card, description.description, description.name, language)
             end
         end
     end
