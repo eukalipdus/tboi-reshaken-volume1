@@ -12,6 +12,7 @@ local SLOT_MACHINE_VARIANTS = {
     [TSIL.Enums.SlotVariant.CRANE_GAME] = true,
     [TSIL.Enums.SlotVariant.FORTUNE_TELLING_MACHINE] = true,
     [TSIL.Enums.SlotVariant.RESTOCK_MACHINE] = true,
+    [TSIL.Enums.SlotVariant.DONATION_MACHINE] = true,
 }
 local MACHINE_PAYOUTS = {
     [TSIL.Enums.SlotVariant.SLOT_MACHINE] = {
@@ -115,6 +116,42 @@ local MACHINE_PAYOUTS = {
         { chance = 5, value = {
             variant = PickupVariant.PICKUP_TRINKET,
             subtype = 0,
+            weight = 3
+        }},
+    },
+    [TSIL.Enums.SlotVariant.RESTOCK_MACHINE] = {
+        --For restock machines
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_PENNY,
+            weight = 2
+        }},
+        { chance = 15, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_NICKEL,
+            weight = 2
+        }},
+        { chance = 15, value = {
+            variant = PickupVariant.PICKUP_TAROTCARD,
+            subtype = Card.CARD_DICE_SHARD,
+            weight = 3
+        }},
+    },
+    [TSIL.Enums.SlotVariant.DONATION_MACHINE] = {
+        --For Donation machines
+        { chance = 30, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_PENNY,
+            weight = 2
+        }},
+        { chance = 15, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_NICKEL,
+            weight = 2
+        }},
+        { chance = 7, value = {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = CoinSubType.COIN_DIME,
             weight = 3
         }},
     },
