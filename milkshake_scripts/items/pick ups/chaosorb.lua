@@ -11,7 +11,7 @@ local ORBS = {
 
 
 ---@param player EntityPlayer
-function ChaosOrb:OnChaosOrbUse(player)
+function ChaosOrb:OnChaosOrbUse(_, player)
     local rng = player:GetCardRNG(enums.Cards.RANDOM_ORB)
 
     local orbToUse = TSIL.Random.GetRandomElementsFromTable(
