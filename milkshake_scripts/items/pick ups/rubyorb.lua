@@ -55,6 +55,7 @@ function RubyOrb:PostPEffectUpdate(player)
 	info.prAng = angle
 
 	angle = angle + rng:RandomInt(angleVariance+1) - (angleVariance/2)
+	---@diagnostic disable-next-line: param-type-mismatch
 	local flame = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HOT_BOMB_FIRE, 0, player.Position + player:GetAimDirection()*fireTearOffset, shotSpeed * Vector.FromAngle(angle+info.angle), player):ToEffect()
 	flame.Scale = fireStartScale
 	flame.Timeout = fireLifespan
