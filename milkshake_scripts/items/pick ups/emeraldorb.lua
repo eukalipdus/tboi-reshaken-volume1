@@ -25,7 +25,7 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player)
         local rng = TSIL.RNG.NewRNG(npc.InitSeed)
 
         vine.Target = npc
-        local timeout = npc:IsBoss() and 10 or 20
+        local timeout = npc:IsBoss() and 8 or 15
         vine.Timeout = timeout * 30 + TSIL.Random.GetRandomInt(0, 12, rng)
         vine.DepthOffset = 10
 
@@ -104,7 +104,7 @@ function EmeraldOrb:OnNPCDeath(npc)
                     npc.Position
                 )
 
-                heart.Timeout = 100
+                heart.Timeout = 35
 
                 local heartSpr = heart:GetSprite()
                 for i = 0, heartSpr:GetLayerCount()-1, 1 do

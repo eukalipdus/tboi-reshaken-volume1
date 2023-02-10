@@ -3,14 +3,14 @@ local enums = require "milkshake_scripts.enums"
 
 --[[Customisation]]
 local fireAngle = 20;
-local fireRange = 120;
+local fireRange = 180;
 local blendAmount = 0.2;
 
-local numShots = 50;
-local shootTime = 150;
+local numShots = 35;
+local shootTime = 70;
 
-local shotSpeed = 15;
-local fireLifespan = 30;
+local shotSpeed = 8;
+local fireLifespan = 25;
 
 --Other Variables
 local clampAngle = (fireRange/2) - (fireAngle/2);
