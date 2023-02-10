@@ -2,55 +2,143 @@ local SapphireOrb = {}
 local enums = require("milkshake_scripts.enums")
 
 
-local defaultRNG = TSIL.RNG.NewRNG()
+local CLAIRVOYANCE_ORB_DURATION = 30 * 60
+local PROJECTILE_REFLECTION_RADIUS = 100
+local PROJECTILE_REFLECTION_INTERVAL = 21
+local FAKE_CENSER_RADIUS = 60
+
 
 TSIL.SaveManager.AddPersistentVariable(
     milkshakeMod,
-    "AmethystOrbRNG",
-    defaultRNG,
-    TSIL.Enums.VariablePersistenceMode.RESET_RUN
+    "ClairvoyanceOrbPlayerFrames",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
-
-function SapphireOrb:OnGameStart(isContinued)
-    if isContinued then return end
-
-    local seed = Game():GetSeeds():GetStartSeed()
-    local newRNG = TSIL.RNG.NewRNG(seed)
-
-    TSIL.SaveManager.SetPersistentVariable(
-        milkshakeMod,
-        "AmethystOrbRNG",
-        newRNG,
-        true
-    )
-end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, SapphireOrb.OnGameStart)
 
 
 ---@param player EntityPlayer
 function SapphireOrb:OnAmethystOrbUse(_, player)
-    local rng = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "SapphireOrbRNG")
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
-    local itemConfig = Isaac.GetItemConfig()
-    local cards = itemConfig:GetCards()
+    player:AddNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
 
-    ---@type Card[]
-    local possibleRunes = {}
+    local clairvoyanceOrbPlayerFrames = TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "ClairvoyanceOrbPlayerFrames"
+    )
+    local frameCount = Game():GetFrameCount()
+    clairvoyanceOrbPlayerFrames[tostring(playerIndex)] = frameCount
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_USE_CARD,
+    SapphireOrb.OnAmethystOrbUse,
+    enums.Cards.AMETHYST_ORB
+)
 
-    for i = 0, cards.Size-1, 1 do
-        local cardConfig = itemConfig:GetCard(i)
 
-        if cardConfig ~= nil and
-        cardConfig.CardType == ItemConfig.CARDTYPE_RUNE and
-        cardConfig:IsAvailable() then
-            possibleRunes[#possibleRunes+1] = cardConfig.ID
+---@param player EntityPlayer
+local function TryReflectProjectile(player)
+    local rng = player:GetCardRNG(enums.Cards.AMETHYST_ORB)
+
+    local nearProjectiles = Isaac.FindInRadius(
+        player.Position,
+        PROJECTILE_REFLECTION_RADIUS,
+        EntityPartition.BULLET
+    )
+
+    if #nearProjectiles == 0 then
+        return
+    end
+
+    nearProjectiles = TSIL.Utils.Tables.Map(nearProjectiles, function (_, projectile)
+        return projectile:ToProjectile()
+    end)
+
+    nearProjectiles = TSIL.Utils.Tables.Filter(nearProjectiles, function (_, projectile)
+        return not projectile:HasProjectileFlags(ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER)
+    end)
+
+    if #nearProjectiles == 0 then
+        return
+    end
+
+    local projectileToReflect = TSIL.Random.GetRandomElementsFromTable(
+        nearProjectiles,
+        1,
+        rng
+    )[1]
+
+    projectileToReflect.Velocity = -projectileToReflect.Velocity
+    projectileToReflect.FallingSpeed = 0
+    projectileToReflect.FallingAccel = -0.05
+    projectileToReflect:AddProjectileFlags(
+        ProjectileFlags.HIT_ENEMIES |
+        ProjectileFlags.CANT_HIT_PLAYER |
+        ProjectileFlags.SMART
+    )
+end
+
+
+local function FakeCenserEffect(player)
+    local nearProjectiles = Isaac.FindInRadius(
+        player.Position,
+        FAKE_CENSER_RADIUS,
+        EntityPartition.BULLET
+    )
+
+    for _, entity in ipairs(nearProjectiles) do
+        local projectile = entity:ToProjectile()
+
+        if not projectile:HasProjectileFlags(
+        ProjectileFlags.HIT_ENEMIES |
+        ProjectileFlags.CANT_HIT_PLAYER) then
+            projectile:AddProjectileFlags(ProjectileFlags.SLOWED)
         end
     end
-
-    local chosenRunes = TSIL.Random.GetRandomElementsFromTable(possibleRunes, 2, rng)
-
-    for _, chosenRune in ipairs(chosenRunes) do
-        player:UseCard(chosenRune, UseFlag.USE_NOANIM)
-    end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_USE_CARD, SapphireOrb.OnAmethystOrbUse, enums.Cards.AMETHYST_ORB)
+
+
+---@param player EntityPlayer
+function SapphireOrb:OnPeffectUpdate(player)
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+
+    local clairvoyanceOrbPlayerFrames = TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "ClairvoyanceOrbPlayerFrames"
+    )
+    local playerUsedClairvoyanceFrame = clairvoyanceOrbPlayerFrames[tostring(playerIndex)]
+
+    if not playerUsedClairvoyanceFrame then return end
+
+    local currentFrame = Game():GetFrameCount()
+    local orbDuration = currentFrame - playerUsedClairvoyanceFrame
+
+    if orbDuration >= CLAIRVOYANCE_ORB_DURATION then
+        player:TryRemoveNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
+        clairvoyanceOrbPlayerFrames[tostring(playerIndex)] = nil
+        return
+    end
+
+    if orbDuration % PROJECTILE_REFLECTION_INTERVAL == 0 then
+        TryReflectProjectile(player)
+    end
+
+    FakeCenserEffect(player)
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_PEFFECT_UPDATE,
+    SapphireOrb.OnPeffectUpdate
+)
+
+
+function SapphireOrb:OnNewRoom()
+    local players = TSIL.Players.GetPlayers()
+
+    TSIL.Utils.Tables.ForEach(players, function (_, player)
+        player:TryRemoveNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
+    end)
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_NEW_ROOM,
+    SapphireOrb.OnNewRoom
+)

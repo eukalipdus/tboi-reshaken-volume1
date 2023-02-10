@@ -1,8 +1,11 @@
 <pocketitems>
     <!-- Runes -->
-    <card type="special" pickup="1" description="Placeholder" name="Spirit Of Arcana" hud="Spirit Of Arcana" mimiccharge="3" />
-    <card type="special" pickup="1" description="Placeholder" name="Spirit Of Perception" hud="Spirit Of Perception" mimiccharge="3" />
-    <card type="special" pickup="1" description="Placeholder" name="Sprit Of Foresight" hud="Spirit Of Foresight" mimiccharge="3" />
-    <card type="special" pickup="1" description="Placeholder" name="Spirit Of Wisdom" hud="Spirit Of Wisdom" mimiccharge="3" />
+    <card type="special" pickup="474" description="Placeholder" name="Spirit Of Conductivity" hud="Spirit Of Conductivity" mimiccharge="6" />
+    <card type="special" pickup="475" description="Placeholder" name="Spirit Of Inferno" hud="Spirit Of Inferno" mimiccharge="6" />
+    <card type="special" pickup="476" description="Placeholder" name="Spirit Of Druidity" hud="Spirit Of Druidity" mimiccharge="6" />
+    <card type="special" pickup="477" description="Placeholder" name="Spirit Of Clairvoyance" hud="Spirit Of Clairvoyance" mimiccharge="6" />
+    <card type="special" pickup="478" description="Placeholder" name="Spirit Of Chaos" hud="Spirit Of Chaos" mimiccharge="6" />
     
+    <!-- Tattered Page -->
+    <card type="special" pickup="473" description="Placeholder" name="Tattered Page" hud="Tattered Page" mimiccharge="3" />
 </pocketitems>

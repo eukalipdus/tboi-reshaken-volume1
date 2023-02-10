@@ -1,5 +1,40 @@
 <entities anm2root="gfx/" version="5">
+    <entity name="www doesnt exist" anm2path="vines.anm2" id="1000" variant="40">
+	</entity>
+
     <entity anm2path="sharp_cursor.anm2" name="Sharp Cursor" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0">
     </entity>
+
+    <entity name="Tattered Page" anm2path="tattered_page.anm2" id="5" variant="300" subtype="473" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+            <preload-snd id="8" />
+    </entity>
+
+    <entity name="Spirit of Conductivity" anm2path="spirit_conductivity.anm2" id="5" variant="300" subtype="474" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+        <entity name="Spirit of Inferno" anm2path="spirit_inferno.anm2" id="5" variant="300" subtype="475" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+        <entity name="Spirit of Druidity" anm2path="spirit_druidity.anm2" id="5" variant="300" subtype="476" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+        <entity name="Spirit of Clairvoyance" anm2path="spirit_clairvoyance.anm2" id="5" variant="300" subtype="477" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+        <entity name="Spirit of Chaos" anm2path="spirit_chaos.anm2" id="5" variant="300" subtype="478" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+    <entity name="Vine" anm2path="vines.anm2" id="1000">
+	</entity>
+
+    <entity name="Shattered Orb" anm2path="shattered_orb.anm2" id="1000" shadowSize="8"
+    collisionMass="1" friction="1">
+	</entity>
 </entities>
