@@ -60,6 +60,7 @@ function RubyOrb:PostPEffectUpdate(player)
 	flame.Scale = fireStartScale
 	flame.Timeout = fireLifespan
 	flame.CollisionDamage = (10 + 3*player.Damage)/flame.Scale
+	flame:Update();
 	NotGetData[GetPtrHash(flame)] = true
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, RubyOrb.PostPEffectUpdate)
