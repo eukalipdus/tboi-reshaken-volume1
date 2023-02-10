@@ -49,4 +49,8 @@ enums.Costumes = {
     CLAIRVOYANCE_ORB = Isaac.GetCostumeIdByPath("gfx/characters/clairvoyance_orb.anm2")
 }
 
+enums.Hearts = {
+    FRUIT_HEART = 743
+}
+
 return enums

@@ -1,6 +1,8 @@
 local EmeraldOrb = {}
 local enums = require("milkshake_scripts.enums")
 
+local VINE_DURATION = 1
+
 ---@param player EntityPlayer
 function EmeraldOrb:OnEmeraldOrbUse(_, player)
     if not player then return end
@@ -25,7 +27,7 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player)
         local rng = TSIL.RNG.NewRNG(npc.InitSeed)
 
         vine.Target = npc
-        local timeout = npc:IsBoss() and 8 or 15
+        local timeout = npc:IsBoss() and 8 or VINE_DURATION
         vine.Timeout = timeout * 30 + TSIL.Random.GetRandomInt(0, 12, rng)
         vine.DepthOffset = 10
 
@@ -71,6 +73,7 @@ function EmeraldOrb:OnVineUpdate(vine)
 
     if timeout == 0 then
         vineSprite:Play("Hide", true)
+        return
     end
 
     if timeout % 40 == 0 then
@@ -102,7 +105,7 @@ function EmeraldOrb:OnNPCDeath(npc)
             if ptr == targetPtr then
                 local heart = TSIL.EntitySpecific.SpawnPickup(
                     PickupVariant.PICKUP_HEART,
-                    HeartSubType.HEART_HALF,
+                    enums.Hearts.FRUIT_HEART,
                     npc.Position
                 )
 

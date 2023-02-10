@@ -1,4 +1,5 @@
 <entities anm2root="gfx/" version="5">
+    <!-- Effects with variant 40 get instanly removed after being spawned -->
     <entity name="www doesnt exist" anm2path="vines.anm2" id="1000" variant="40">
 	</entity>
 
@@ -15,19 +16,19 @@
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
-        <entity name="Spirit of Inferno" anm2path="spirit_inferno.anm2" id="5" variant="300" subtype="475" 
+    <entity name="Spirit of Inferno" anm2path="spirit_inferno.anm2" id="5" variant="300" subtype="475" 
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
-        <entity name="Spirit of Druidity" anm2path="spirit_druidity.anm2" id="5" variant="300" subtype="476" 
+    <entity name="Spirit of Druidity" anm2path="spirit_druidity.anm2" id="5" variant="300" subtype="476" 
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
-        <entity name="Spirit of Clairvoyance" anm2path="spirit_clairvoyance.anm2" id="5" variant="300" subtype="477" 
+    <entity name="Spirit of Clairvoyance" anm2path="spirit_clairvoyance.anm2" id="5" variant="300" subtype="477" 
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
-        <entity name="Spirit of Chaos" anm2path="spirit_chaos.anm2" id="5" variant="300" subtype="478" 
+    <entity name="Spirit of Chaos" anm2path="spirit_chaos.anm2" id="5" variant="300" subtype="478" 
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
@@ -37,4 +38,9 @@
     <entity name="Shattered Orb" anm2path="shattered_orb.anm2" id="1000" shadowSize="8"
     collisionMass="1" friction="1">
 	</entity>
+
+    <entity anm2path="fruit_heart.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Fruit Heart" numGridCollisionPoints="24" shadowSize="17" stageHP="0" variant="10" subtype="743">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="185" /> <!-- BOSS2_BUBBLES -->
+    </entity>
 </entities>

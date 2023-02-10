@@ -28,3 +28,4 @@ local shatteredOrb = require("milkshake_scripts.items.collectibles.shatteredorb"
 local glassHeart = require("milkshake_scripts.items.collectibles.glassheart")
 local chaosOrb = require("milkshake_scripts.items.pick ups.chaosorb")
 local shatteredDice = require("milkshake_scripts.items.collectibles.shattereddice")
+local fruitHeart = require("milkshake_scripts.items.pick ups.fruitheart")
