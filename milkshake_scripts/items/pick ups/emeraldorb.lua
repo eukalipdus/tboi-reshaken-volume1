@@ -12,7 +12,7 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player)
     end)
 
     TSIL.Utils.Tables.ForEach(npcs, function (_, npc)
-        npc:AddFreeze(EntityRef(player), 3)
+        npc:AddFreeze(EntityRef(player), npc:IsBoss() and 150 or 3)
 
         local vine = TSIL.EntitySpecific.SpawnEffect(
             enums.Effects.VINES,
@@ -59,7 +59,9 @@ function EmeraldOrb:OnVineUpdate(vine)
 
     target.Velocity = Vector.Zero
     target.Position = vine.Position
-    target:AddFreeze(EntityRef(vine.SpawnerEntity), 1)
+    if not target:IsBoss() then
+        target:AddFreeze(EntityRef(vine.SpawnerEntity), 1)
+    end
 
     if vineSprite:IsPlaying("Grow") then return end
 
