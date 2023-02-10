@@ -3,7 +3,7 @@ local ShatteredOrb = {}
 
 local SHATTERED_ORB_THROW_SPEED = 8
 local SHATTERED_ORB_FALL_ACCEL = 0.1
-local SHATTERED_ORB_RADIUS = 16
+local SHATTERED_ORB_RADIUS = 20
 
 
 local OrbsPerEnemy = {
@@ -439,7 +439,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     end)
 
     for _, npc in ipairs(npcs) do
-        local distanceSqr = npc.Position:DistanceSquared(shatteredOrb.Position + shatteredOrb.SpriteOffset)
+        local distanceSqr = npc.Position:DistanceSquared(shatteredOrb.Position)
         local distanceToCollide = npc.Size + SHATTERED_ORB_RADIUS
         distanceToCollide = distanceToCollide ^ 2
 
