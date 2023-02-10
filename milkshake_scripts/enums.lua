@@ -38,7 +38,8 @@ enums.Familiars = {
 
 enums.Effects = {
     VINES = Isaac.GetEntityVariantByName("Vine"),
-    SHATTERED_ORB = Isaac.GetEntityVariantByName("Shattered Orb")
+    SHATTERED_ORB = Isaac.GetEntityVariantByName("Shattered Orb"),
+    CLAIRVOYANCE_AURA = Isaac.GetEntityVariantByName("Clairvoyance Aura")
 }
 
 enums.Sounds = {

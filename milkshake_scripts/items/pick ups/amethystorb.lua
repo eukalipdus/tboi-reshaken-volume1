@@ -2,7 +2,7 @@ local SapphireOrb = {}
 local enums = require("milkshake_scripts.enums")
 
 
-local CLAIRVOYANCE_ORB_DURATION = 30 * 60
+local CLAIRVOYANCE_ORB_DURATION = 10 * 30
 local PROJECTILE_REFLECTION_RADIUS = 100
 local PROJECTILE_REFLECTION_INTERVAL = 21
 local FAKE_CENSER_RADIUS = 60
@@ -28,6 +28,15 @@ function SapphireOrb:OnAmethystOrbUse(_, player)
     )
     local frameCount = Game():GetFrameCount()
     clairvoyanceOrbPlayerFrames[tostring(playerIndex)] = frameCount
+
+    local aura = TSIL.EntitySpecific.SpawnEffect(
+        enums.Effects.CLAIRVOYANCE_AURA,
+        0,
+        player.Position
+    )
+    aura.Parent = player
+    aura:FollowParent(player)
+    aura.DepthOffset = -100
 end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_USE_CARD,
@@ -69,6 +78,7 @@ local function TryReflectProjectile(player)
     )[1]
 
     projectileToReflect.Velocity = -projectileToReflect.Velocity
+    projectileToReflect.SpawnerEntity = nil
     projectileToReflect.FallingSpeed = 0
     projectileToReflect.FallingAccel = -0.05
     projectileToReflect:AddProjectileFlags(
@@ -141,4 +151,34 @@ end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     SapphireOrb.OnNewRoom
+)
+
+
+---@param effect EntityEffect
+function SapphireOrb:OnClairvoyanceAuraUpdate(effect)
+    if not effect.Parent then return end
+
+    local player = effect.Parent:ToPlayer()
+
+    if not player then return end
+
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+
+    local clairvoyanceOrbPlayerFrames = TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "ClairvoyanceOrbPlayerFrames"
+    )
+    local playerUsedClairvoyanceFrame = clairvoyanceOrbPlayerFrames[tostring(playerIndex)]
+
+    if not playerUsedClairvoyanceFrame then
+        effect:Remove()
+        return
+    end
+
+    effect:FollowParent(effect.Parent)
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_UPDATE,
+    SapphireOrb.OnClairvoyanceAuraUpdate,
+    enums.Effects.CLAIRVOYANCE_AURA
 )

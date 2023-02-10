@@ -35,6 +35,9 @@
     <entity name="Vine" anm2path="vines.anm2" id="1000">
 	</entity>
 
+    <entity name="Clairvoyance Aura" anm2path="clairvoyance_aura.anm2" id="1000">
+	</entity>
+
     <entity name="Shattered Orb" anm2path="shattered_orb.anm2" id="1000" shadowSize="8"
     collisionMass="1" friction="1">
 	</entity>
