@@ -56,6 +56,5 @@ function RubyOrb:PostPEffectUpdate(player)
 	flame.Height = player.TearHeight
 	flame.CollisionDamage = 5 + 3*player.Damage
 	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER
-	flame.CollisionDamage = -5
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, RubyOrb.PostPEffectUpdate)
