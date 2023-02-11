@@ -396,6 +396,7 @@ function GetEntityOrb(entity)
 
     if entityOrb then return entityOrb end
 
+	---@diagnostic disable-next-line: undefined-global
     if FiendFolio then
         entityOrb = GetMathchingOrbFromEntity(entity, OrbsPerFiendFolioEntities)
 
