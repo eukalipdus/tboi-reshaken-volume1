@@ -16,11 +16,13 @@ function utility:shardTrinkets(trinket, player)
                 if trinket == enums.Trinkets.AMETHYST_SHARD then
                     local rune = Game():GetItemPool():GetCard(Random() + 1, false, true, true)
                     if roll <= BASE_CHANCE then
+						---@diagnostic disable-next-line: param-type-mismatch
                         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, grid.Position, velocity, nil)
                     end
 
                 elseif trinket == enums.Trinkets.RUBY_SHARD then
                     if roll <= BASE_CHANCE then
+						---@diagnostic disable-next-line: param-type-mismatch
                         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_CRACKED_KEY, grid.Position, velocity, nil)
                     end
                 
@@ -33,6 +35,7 @@ function utility:shardTrinkets(trinket, player)
 
                         local rng = player:GetTrinketRNG(trinket)
                         local randomCard = rng:RandomInt(#cardsRollable)
+						---@diagnostic disable-next-line: param-type-mismatch
                         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, randomCard, grid.Position, velocity, nil)
                     end
                 end
@@ -55,5 +58,27 @@ function utility:TearsUp(firedelay, val)
     return math.max((30 / newTears) - 1, -0.99)
 end
 
+local NotGetData = {}
+---Acts as a replacement for Entity:GetData()
+---@param entity Entity
+---@param identifier string
+---@return table
+function utility:GetData(entity, identifier)
+	if (not NotGetData[GetPtrHash(entity)]) then NotGetData[GetPtrHash(entity)] = {} end
+	return NotGetData[GetPtrHash(entity)][identifier]
+end
+---Acts as a replacement for Entity:GetData()
+---@param entity Entity
+---@param identifier string
+---@param data table
+---@return nil
+function utility:SetData(entity, identifier, data)
+	NotGetData[GetPtrHash(entity)][identifier] = data
+end
+
+function utility:PreGameExit()
+	NotGetData = {}
+end
+milkshakeMod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, utility.PreGameExit)
 
 return utility
