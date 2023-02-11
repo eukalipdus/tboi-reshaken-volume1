@@ -1,7 +1,7 @@
 local EmeraldOrb = {}
 local enums = require("milkshake_scripts.enums")
 
-local VINE_DURATION = 1
+local VINE_DURATION = 12
 
 ---@param player EntityPlayer
 function EmeraldOrb:OnEmeraldOrbUse(_, player)
@@ -109,7 +109,7 @@ function EmeraldOrb:OnNPCDeath(npc)
                     npc.Position
                 )
 
-                heart.Timeout = 35
+                heart.Timeout = 45
 
                 local heartSpr = heart:GetSprite()
                 for i = 0, heartSpr:GetLayerCount()-1, 1 do

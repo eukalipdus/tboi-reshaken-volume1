@@ -2,10 +2,10 @@ local SapphireOrb = {}
 local enums = require("milkshake_scripts.enums")
 
 
-local CLAIRVOYANCE_ORB_DURATION = 10 * 30
+local CLAIRVOYANCE_ORB_DURATION = 30 * 100
 local PROJECTILE_REFLECTION_RADIUS = 100
-local PROJECTILE_REFLECTION_INTERVAL = 21
-local FAKE_CENSER_RADIUS = 60
+local PROJECTILE_REFLECTION_INTERVAL = 10
+local FAKE_CENSER_RADIUS = 70
 
 
 TSIL.SaveManager.AddPersistentVariable(
