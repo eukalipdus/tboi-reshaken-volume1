@@ -43,6 +43,7 @@ function shatteredDice:onUse(collectible, rng, player)
                         spawnPosition = collectible.Position + SHIFT_RIGHT
                     end
         
+					---@diagnostic disable-next-line: param-type-mismatch
                     local shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
                     
                     if i == 0 then
