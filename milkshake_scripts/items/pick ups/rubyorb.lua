@@ -1,7 +1,6 @@
 local RubyOrb = {}
-local enums = require "milkshake_scripts.enums"
-
-local NotGetData = {}
+local enums = require("milkshake_scripts.enums")
+local utility = require("milkshake_scripts.utility")
 
 --[[Customisation]]
 local angleVariance = 20;
@@ -12,9 +11,6 @@ local numShots = 35;
 local shootTime = 70;
 
 local shotSpeed = 8;
-local fireLifespan = 25;
-local fireStartScale = 0.1; --Greater than 0.
-local fireTearOffset = 5;
 
 --Other Variables
 local clampAngle = (maxAngle/2) - (angleVariance/2);
@@ -25,18 +21,18 @@ function RubyOrb:UseCard(_, player, flags)
 	local angle = aimDir:GetAngleDegrees()
 	if (aimDir:Length() == 0) then angle = 90.0 end
 	
-	NotGetData[GetPtrHash(player)] = {
+	utility:SetData(player, "RubyOrb", {
 		["angle"] = angle,
-		["count"] = NotGetData[GetPtrHash(player)].count + numShots,
+		["count"] = (utility:GetData(player, "RubyOrb") and utility:GetData(player, "RubyOrb").count or 0) + numShots,
 		["timer"] = 0,
 		["prAng"] = 0;
-	}
+	})
 	SFXManager():Play(SoundEffect.SOUND_GHOST_ROAR)
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_USE_CARD, RubyOrb.UseCard, enums.Cards.RUBY_ORB)
 
 function RubyOrb:PostPEffectUpdate(player)
-	local info = NotGetData[GetPtrHash(player)]
+	local info = utility:GetData(player, "RubyOrb")
 	if (not info or info.count <= 0) then return end
 	info.timer  = info.timer - 1
 	if (info.timer > 0) then return end
@@ -56,42 +52,10 @@ function RubyOrb:PostPEffectUpdate(player)
 
 	angle = angle + rng:RandomInt(angleVariance+1) - (angleVariance/2)
 	---@diagnostic disable-next-line: param-type-mismatch
-	local flame = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HOT_BOMB_FIRE, 0, player.Position + player:GetAimDirection()*fireTearOffset, shotSpeed * Vector.FromAngle(angle+info.angle), player):ToEffect()
-	flame.Scale = fireStartScale
-	flame.Timeout = fireLifespan
-	flame.CollisionDamage = (10 + 3*player.Damage)/flame.Scale
-	flame:Update();
-	NotGetData[GetPtrHash(flame)] = true
+	local flame = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_FIRE, 0, player.Position, shotSpeed * Vector.FromAngle(angle+info.angle), player):ToProjectile()
+	flame.Height = player.TearHeight
+	flame.CollisionDamage = 5 + 3*player.Damage
+	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER
+	flame.CollisionDamage = -5
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, RubyOrb.PostPEffectUpdate)
-
-function RubyOrb:PostEffectUpdate(flame)
-	if not NotGetData[GetPtrHash(flame)] then return end
-	flame.Scale = ((fireLifespan-flame.Timeout)/fireLifespan)*(1-fireStartScale) + fireStartScale
-	flame.CollisionDamage = (10 + 3*flame.SpawnerEntity:ToPlayer().Damage)/flame.Scale
-	if (flame.Timeout == 0) then 
-		NotGetData[GetPtrHash(flame)] = nil 
-		flame:Remove()
-	end
-end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, RubyOrb.PostEffectUpdate, EffectVariant.HOT_BOMB_FIRE)
-
-function RubyOrb:PostPlayerInit(player)
-	NotGetData[GetPtrHash(player)] = {
-		["angle"] = 0,
-		["count"] = 0,
-		["timer"] = 0,
-		["prAng"] = 0;
-	}
-end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, RubyOrb.PostPlayerInit)
-
-function RubyOrb:PreGameExit()
-	NotGetData = {}
-end
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, RubyOrb.PreGameExit)
-
-function RubyOrb:PostEffectInit(flame)
-	if not NotGetData[GetPtrHash(flame)] then return end
-end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, RubyOrb.PostEffectInit, EffectVariant.HOT_BOMB_FIRE)
