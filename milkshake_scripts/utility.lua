@@ -83,56 +83,16 @@ function utility:PreGameExit()
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, utility.PreGameExit)
 
-local BumFamiliars = {}
----Custom function to define a familiar variant as a "Bum Familiar"
----
-function utility:AddBumFamiliar(familiarVariant)
-	BumFamiliars[familiarVariant] = true
+---Concatenates 2 tables into 1
+---https://stackoverflow.com/a/15278426
+---@param t1 table
+---@param t2 table
+---@return table
+function utility:TableConcat(t1,t2)
+    for i=1,#t2 do
+        t1[#t1+1] = t2[i]
+    end
+    return t1
 end
-
----@param familiar EntityFamiliar
-function utility:BumFamiliarInit(familiar)
-	if (BumFamiliars[familiar.Variant]) then
-		local player = familiar.SpawnerEntity
-		---@diagnostic disable-next-line: param-type-mismatch
-		local BumChain = utility:GetData(player, "BumChain") or (utility:SetData(player, "BumChain", {}) and utility:GetData(player, "BumChain"))
-		
-		---@diagnostic disable-next-line: assign-type-mismatch
-		if #BumChain == 0 then familiar.Parent = player
-		else familiar.Parent = BumChain[#BumChain] end
-
-		BumChain[#BumChain+1] = familiar
-	end
-end
-milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, utility.BumFamiliarInit)
-
----@param familiar EntityFamiliar
-function utility:BumFamiliarUpdate(familiar)
-	if (BumFamiliars[familiar.Variant] and (familiar.Variant ~= FamiliarVariant.BUMBO or familiar.Coins < 6))then
-		local newPos = familiar.Parent.Position - familiar.Position
-		if (familiar.Parent:ToPlayer() and newPos:DistanceSquared(Vector.Zero) < 65*65) then newPos = Vector.Zero
-		elseif (newPos:DistanceSquared(Vector.Zero) < 40*40) then newPos = Vector.Zero end
-		newPos:Resize(3)
-		---@diagnostic disable-next-line: assign-type-mismatch
-		--familiar.Position = familiar.Position + newPos
-	end
-end
-milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, utility.BumFamiliarUpdate)
-
----@param familiar EntityFamiliar
----@param collider Entity
----@param low boolean
-function utility:BumFamiliarCollide(familiar, collider, low)
-	if (BumFamiliars[familiar.Variant] and (familiar.Variant ~= FamiliarVariant.BUMBO or familiar.Coins < 6))then
-		return false
-	end
-end
-milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, utility.BumFamiliarCollide)
-
-utility:AddBumFamiliar(FamiliarVariant.BUMBO) --Hm.
-utility:AddBumFamiliar(FamiliarVariant.BUM_FRIEND)
---utility:AddBumFamiliar(FamiliarVariant.DARK_BUM)
---utility:AddBumFamiliar(FamiliarVariant.KEY_BUM)
-utility:AddBumFamiliar(FamiliarVariant.SUPER_BUM)
 
 return utility

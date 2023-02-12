@@ -10,6 +10,21 @@
     <entity anm2path="familiar_bomb bum.anm2" name="Bomb Bum Familiar" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
     </entity>
+    <entity anm2path="003.102_SuperBum.anm2" name="Super Bum Familiar" id="3" tags="cansacrifice"
+    collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
+    <entity anm2path="003.024_Bum Fiend.anm2" name="Bum Friend Familiar" id="3" tags="cansacrifice"
+    collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
+    <entity anm2path="003.278_darkbum.anm2" name="Dark Bum Familiar" id="3" tags="cansacrifice"
+    collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
+    <entity anm2path="003.088_Bumbo.anm2" name="Bumbo Familiar" id="3" tags="cansacrifice"
+    collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
+    <entity anm2path="003.090_Key Bum.anm2" name="Key Bum Familiar" id="3" tags="cansacrifice"
+    collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
 
     <entity name="Tattered Page" anm2path="tattered_page.anm2" id="5" variant="300" subtype="473" 
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
