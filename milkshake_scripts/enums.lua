@@ -1,18 +1,19 @@
 local enums = {}
 
 enums.Collectibles = {
-    GLOBIN_IN_A_BUCKET = Isaac.GetItemIdByName("Globin In A Bucket"),
     BLACK_EYE = Isaac.GetItemIdByName("Black Eye"),
-    GOLDEN_SHOVEL = Isaac.GetItemIdByName("Golden Shovel"),
+    BOMB_BUDDY = Isaac.GetItemIdByName("Bomb Buddy"),
     DICE_DICE = Isaac.GetItemIdByName("Dice Dice"),
-    MILKSHAKE = Isaac.GetItemIdByName("Milkshake!"),
-    FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Rose"),
-    SHARP_CURSOR = Isaac.GetItemIdByName("Sharp Cursor"),
-    LA_CHANCLA = Isaac.GetItemIdByName("La Chancla"),
     EMPTY_SLOT = Isaac.GetItemIdByName("Empty Slot"),
-    SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb"),
+    FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Rose"),
     GLASS_HEART = Isaac.GetItemIdByName("Glass Heart"),
-    SHATTERED_DICE = Isaac.GetItemIdByName("Shattered Dice")
+    GLOBIN_IN_A_BUCKET = Isaac.GetItemIdByName("Globin In A Bucket"),
+    GOLDEN_SHOVEL = Isaac.GetItemIdByName("Golden Shovel"),
+    LA_CHANCLA = Isaac.GetItemIdByName("La Chancla"),
+    MILKSHAKE = Isaac.GetItemIdByName("Milkshake!"),
+    SHARP_CURSOR = Isaac.GetItemIdByName("Sharp Cursor"),
+    SHATTERED_DICE = Isaac.GetItemIdByName("Shattered Dice"),
+    SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb"),
 }
 
 enums.Trinkets = {
@@ -20,38 +21,39 @@ enums.Trinkets = {
     RUBY_SHARD = Isaac.GetTrinketIdByName("Ruby Shard"),
     SAPPHIRE_SHARD = Isaac.GetTrinketIdByName("Sapphire Shard"),
     EMERALD_SHARD = Isaac.GetTrinketIdByName("Emerald Shard"),
-    TUNGSTEN_CUBE = Isaac.GetTrinketIdByName("Tungsten Cube")
+    TUNGSTEN_CUBE = Isaac.GetTrinketIdByName("Tungsten Cube"),
 }
 
 enums.Cards = {
     AMETHYST_ORB = Isaac.GetCardIdByName("Spirit Of Clairvoyance"),
-    RUBY_ORB = Isaac.GetCardIdByName("Spirit Of Inferno"),
-    EMERALD_ORB = Isaac.GetCardIdByName("Spirit Of Druidity"),
-    SAPPHIRE_ORB = Isaac.GetCardIdByName("Spirit Of Conductivity"),
     RANDOM_ORB = Isaac.GetCardIdByName("Spirit Of Chaos"),
-    TATTERED_PAGE = Isaac.GetCardIdByName("Tattered Page")
+    EMERALD_ORB = Isaac.GetCardIdByName("Spirit Of Druidity"),
+    RUBY_ORB = Isaac.GetCardIdByName("Spirit Of Inferno"),
+    SAPPHIRE_ORB = Isaac.GetCardIdByName("Spirit Of Conductivity"),
+    TATTERED_PAGE = Isaac.GetCardIdByName("Tattered Page"),
 }
 
 enums.Familiars = {
-    SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor")
+    SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor"),
+    BOMB_BUDDY = Isaac.GetEntityVariantByName("Bomb Buddy"),
 }
 
 enums.Effects = {
     VINES = Isaac.GetEntityVariantByName("Vine"),
     SHATTERED_ORB = Isaac.GetEntityVariantByName("Shattered Orb"),
-    CLAIRVOYANCE_AURA = Isaac.GetEntityVariantByName("Clairvoyance Aura")
+    CLAIRVOYANCE_AURA = Isaac.GetEntityVariantByName("Clairvoyance Aura"),
 }
 
 enums.Sounds = {
-    CLICK = Isaac.GetSoundIdByName("sharp cursor click")
+    CLICK = Isaac.GetSoundIdByName("sharp cursor click"),
 }
 
 enums.Costumes = {
-    CLAIRVOYANCE_ORB = Isaac.GetCostumeIdByPath("gfx/characters/clairvoyance_orb.anm2")
+    CLAIRVOYANCE_ORB = Isaac.GetCostumeIdByPath("gfx/characters/clairvoyance_orb.anm2"),
 }
 
 enums.Hearts = {
-    FRUIT_HEART = 743
+    FRUIT_HEART = 743,
 }
 
 return enums
