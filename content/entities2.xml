@@ -7,7 +7,7 @@
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0">
     </entity>
 	
-    <entity anm2path="familiar_bomb bum.anm2" name="Bomb Buddy" id="3" tags="cansacrifice"
+    <entity anm2path="familiar_bomb bum.anm2" name="Bomb Bum" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0">
     </entity>
 

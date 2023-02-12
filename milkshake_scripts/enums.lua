@@ -2,7 +2,7 @@ local enums = {}
 
 enums.Collectibles = {
     BLACK_EYE = Isaac.GetItemIdByName("Black Eye"),
-    BOMB_BUDDY = Isaac.GetItemIdByName("Bomb Buddy"),
+    BOMB_BUDDY = Isaac.GetItemIdByName("Bomb Bum"),
     DICE_DICE = Isaac.GetItemIdByName("Dice Dice"),
     EMPTY_SLOT = Isaac.GetItemIdByName("Empty Slot"),
     FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Rose"),
@@ -35,7 +35,7 @@ enums.Cards = {
 
 enums.Familiars = {
     SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor"),
-    BOMB_BUDDY = Isaac.GetEntityVariantByName("Bomb Buddy"),
+    BOMB_BUDDY = Isaac.GetEntityVariantByName("Bomb Bum"),
 }
 
 enums.Effects = {
