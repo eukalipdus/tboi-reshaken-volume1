@@ -422,7 +422,7 @@ local function SpawnSlotElectrocutionPayouts(spawnPos, rng, slot)
     local currentWeight = 0
     local ActualPayoutTable = MACHINE_PAYOUTS[slot.Variant] or MACHINE_PAYOUTS[1]
     while currentWeight < maxWeight do
-        local rewardToSpawn = TSIL.Random.GetRandomElementFromWeightedList(rng, table.unpack(ActualPayoutTable))
+        local rewardToSpawn = TSIL.Random.GetRandomElementFromWeightedList(rng, ActualPayoutTable)
         currentWeight = currentWeight + rewardToSpawn.weight
 
         local velocity = Vector.FromAngle(rng:RandomInt(360)) * TSIL.Random.GetRandomFloat(5, 7, rng)
