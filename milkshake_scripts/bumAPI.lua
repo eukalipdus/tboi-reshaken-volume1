@@ -22,15 +22,16 @@ FamiliarVariant.SUPER_BUM = Isaac.GetEntityVariantByName("Super Bum Familiar")
 ---@param familiarVariant FamiliarVariant
 ---@param collectibleType CollectibleType
 ---@param contributesToSuperBum boolean
+---@param payoutCost number 
 ---@param pickups table 
 ---@param drops table
-function bumAPI:AddBumFamiliar(familiarVariant, collectibleType, contributesToSuperBum, pickups, drops)
-	BumFamiliars[familiarVariant] = {collectibleType, contributesToSuperBum, pickups, drops}
+function bumAPI:AddBumFamiliar(familiarVariant, collectibleType, contributesToSuperBum, payoutCost, pickups, drops)
+	BumFamiliars[familiarVariant] = {collectibleType, contributesToSuperBum, payoutCost, pickups, drops}
 end
 
 ---@param familiar EntityFamiliar
 local function BumFamiliarInit(_, familiar)
-	print(familiar.Type, familiar.Variant)
+	--print(familiar.Type, familiar.Variant)
 	if (familiar.Variant == bumboVariant) then familiar:Remove() return
 	elseif (familiar.Variant == bumFriendVariant) then familiar:Remove() return
 	elseif (familiar.Variant == darkBumVariant) then familiar:Remove() return
@@ -53,74 +54,90 @@ local function BumFamiliarInit(_, familiar)
 		familiar.Parent = aa
 		aa.Child = familiar
 	end
-	print("a")
+	--print("a")
 	if (familiar.Variant == FamiliarVariant.SUPER_BUM) then
 		superBumSprite:Play("Main", true)
 		--Isaac.GetPlayer():UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, UseFlag.USE_NOANIM)
 		--I have no idea why i can't do this here but when i try i get C-stack size errors
 	end
-	print("b")
+	--print("b")
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, BumFamiliarInit)
 
 ---@param familiar EntityFamiliar
 local function BumFamiliarUpdate(_, familiar)
 	if (familiar:GetSprite():IsFinished("IdleDown")) then familiar:GetSprite():Play("FloatDown", true) end
-	if (BumFamiliars[familiar.Variant] and (familiar.Variant ~= FamiliarVariant.BUMBO or familiar.Coins < 6)) then
+	local bumInfo = BumFamiliars[familiar.Variant]
+	if (bumInfo and (familiar.Variant ~= FamiliarVariant.BUMBO or familiar.Coins < 6)) then
 		local newPos = familiar.Parent.Position - familiar.Position
-		if (familiar.Parent:ToPlayer() and newPos:DistanceSquared(Vector.Zero) < 65*65) then newPos = Vector.Zero
-		elseif (newPos:DistanceSquared(Vector.Zero) < 40*40) then newPos = Vector.Zero end
-
-		local viablePickups = TSIL.Utils.Tables.Filter(TSIL.Entities.GetEntities(nil, nil, nil, nil), function(_, entity)
-			for _, pickup in pairs(BumFamiliars[familiar.Variant][3]) do
-				if entity:ToPickup() and entity:ToPickup().Price == 0 and entity.Type == pickup[1] and entity.Variant == pickup[2] and entity.SubType == pickup[3] then
-					return true
+		local closestDist = 10000000000000000
+		local closestEnt = nil
+		for _, entity in pairs(TSIL.Entities.GetEntities(nil, nil, nil, nil)) do
+			for _, pickup in pairs(bumInfo[4]) do
+				if entity:Exists() and entity:ToPickup() and entity:ToPickup().Price == 0 and entity.Type == pickup[1] and entity.Variant == pickup[2] and entity.SubType == pickup[3] then
+					if (entity.Position - familiar.Position):LengthSquared() < closestDist then
+						closestEnt = entity:ToPickup()
+						closestDist = (entity.Position - familiar.Position):LengthSquared()
+					end
 				end
 			end
-			return false
-		end)
-		if #viablePickups > 0 then
-			local random = RNG();
-			random:SetSeed(GetPtrHash(familiar), 0)
-			--print("Seed",random:GetSeed())
-			local randNum = random:RandomInt(#viablePickups)+1
-			--print("Index",randNum)
-			local target = viablePickups[randNum]:ToPickup()
-			--print("Target",target)
-			for _, pickup in pairs(BumFamiliars[familiar.Variant][3]) do
-				if target.Type == pickup[1] and target.Variant == pickup[2] and target.SubType == pickup[3] then
-					newPos = target.Position - familiar.Position
+		end
+
+		if familiar:GetSprite():IsPlaying("PreSpawn") or familiar:GetSprite():IsPlaying("Spawn") then
+			newPos = Vector.Zero
+		elseif familiar:GetSprite():IsFinished("PreSpawn") then
+			familiar:GetSprite():Play("Spawn")
+			local reward = TSIL.Random.GetRandomElementFromWeightedList(familiar:GetDropRNG(), bumInfo[5])
+			Isaac.Spawn(reward[1], reward[2], reward[3], familiar.Position, Vector.Zero, familiar)
+			familiar.Coins = familiar.Coins - bumInfo[3]
+			newPos = Vector.Zero
+		elseif familiar:GetSprite():IsFinished("Spawn") then
+			familiar:GetSprite():Play("FloatDown")
+			newPos = Vector.Zero
+		elseif closestEnt then
+			for _, pickup in pairs(bumInfo[4]) do
+				if closestEnt.Type == pickup[1] and closestEnt.Variant == pickup[2] and closestEnt.SubType == pickup[3] then
+					newPos = closestEnt.Position - familiar.Position
 					if (newPos:LengthSquared() < 100 and pickup[4] > 0) then 
 						familiar.Coins = familiar.Coins + pickup[4]
 						if (pickup[5]) then Isaac.Spawn(pickup[5][1], pickup[5][2], pickup[5][3], familiar.Position, Vector.Zero, familiar) end
-						target:PlayPickupSound()
-						target.Velocity = Vector(0, 0)
-						target.EntityCollisionClass = 0
-						local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, target.Position, Vector.Zero, target):ToEffect()
-						effect.Timeout = target.Timeout
+						closestEnt:PlayPickupSound()
+						closestEnt.Velocity = Vector(0, 0)
+						closestEnt.EntityCollisionClass = 0
+						local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, closestEnt.Position, Vector.Zero, closestEnt):ToEffect()
+						effect.Timeout = closestEnt.Timeout
 						local sprite = effect:GetSprite()
-						sprite:Load(target:GetSprite():GetFilename(), true)
+						sprite:Load(closestEnt:GetSprite():GetFilename(), true)
 						sprite:Play("Collect", true)
-						--Mod:KillChoice(target) -- get rid of pickups with same options index
-						target:Remove()
-						--print("Indices can change")
+						--Mod:KillChoice(closestEnt) -- get rid of pickups with same options index
+						closestEnt:Remove()
+						--print("Picked up")
 					end
 					break
 				end
 			end
+		elseif (familiar.Coins >= bumInfo[3] and familiar.Position:DistanceSquared(familiar.SpawnerEntity.Position) < 65*65) 
+				and not (familiar:GetSprite():IsPlaying("PreSpawn") or familiar:GetSprite():IsPlaying("Spawn"))  then
+			familiar:GetSprite():Play("PreSpawn", true)
+			newPos = Vector.Zero
+		elseif (familiar.Parent:ToPlayer() and newPos:DistanceSquared(Vector.Zero) < 65*65) then
+			newPos = Vector.Zero
+		elseif (newPos:DistanceSquared(Vector.Zero) < 40*40) then
+			newPos = Vector.Zero
 		end
 
 		newPos:Resize(3)
 		---@diagnostic disable-next-line: assign-type-mismatch, param-type-mismatch
 		familiar.Velocity = TSIL.Utils.Math.Lerp(familiar.Velocity, newPos, 0.25)
-		--print(familiar.Coins)
+		--print(GetPtrHash(familiar), familiar.Coins)
+		--print(Game():GetFrameCount())
 	end
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, BumFamiliarUpdate)
 
 ---@param player EntityPlayer
 local function EvaluateCache(_, player)
-	print("c")
+	--print("c")
     TSIL.Familiars.CheckFamiliarFromCollectibles(
         player,
         CollectibleType.COLLECTIBLE_BUMBO,
@@ -173,7 +190,9 @@ milkshakeMod:AddCallback(ModCallbacks.MC_INPUT_ACTION, function(_, entity, hook,
 	---@diagnostic disable-next-line: missing-parameter
 	if superBumSprite:IsPlaying() and action ~= ButtonAction.ACTION_CONSOLE then
 		return 0
-	elseif action == ButtonAction.ACTION_SHOOTDOWN then
+	---@diagnostic disable-next-line: missing-parameter
+	elseif superBumSprite:IsFinished() and action == ButtonAction.ACTION_SHOOTDOWN then
+		superBumSprite:Stop()
 		return 0.75
 	end
 end, InputHook.GET_ACTION_VALUE)
@@ -203,19 +222,35 @@ end
 
 
 
-bumAPI:AddBumFamiliar(FamiliarVariant.BUMBO, CollectibleType.COLLECTIBLE_BUMBO, false, {
+bumAPI:AddBumFamiliar(FamiliarVariant.BUMBO, CollectibleType.COLLECTIBLE_BUMBO, false, 1, {
 	{5, 20, 1, 1}, {5, 20, 2, 5}, {5, 20, 3, 10}, {5, 20, 4, 2}, {5, 20, 5, 1}, {5, 20, 6, -1}, {5, 20, 7, 1}
 }, {})
-bumAPI:AddBumFamiliar(FamiliarVariant.BUM_FRIEND, CollectibleType.COLLECTIBLE_BUM_FRIEND, true, {
+bumAPI:AddBumFamiliar(FamiliarVariant.BUM_FRIEND, CollectibleType.COLLECTIBLE_BUM_FRIEND, true, 1, {
 	{5, 20, 1, 1}, {5, 20, 2, 5}, {5, 20, 3, 10}, {5, 20, 4, 2}, {5, 20, 5, 1}, {5, 20, 7, 1}
 }, {})
-bumAPI:AddBumFamiliar(FamiliarVariant.DARK_BUM, CollectibleType.COLLECTIBLE_DARK_BUM, true, {
-	{5, 10, 1, 2}, {5, 10, 2, 1}, {5, 10, 5, 4}, {5, 10, 9, 2}
-}, {})
-bumAPI:AddBumFamiliar(FamiliarVariant.KEY_BUM, CollectibleType.COLLECTIBLE_KEY_BUM, true, {
-	{5, 30, 1, 1}, {5, 30, 3, 2}, {5, 30, 4, 1, {5, 90, 1}}
-}, {})
+bumAPI:AddBumFamiliar(FamiliarVariant.DARK_BUM, CollectibleType.COLLECTIBLE_DARK_BUM, true, 3, {
+	{5, 10, 1, 2},
+	{5, 10, 2, 1},
+	{5, 10, 5, 4},
+	{5, 10, 9, 2},
+}, {
+	{chance = 40, value = {5, 10, 6}},
+	{chance = 20, value = {5, 300, -1}},
+	{chance = 20, value = {5, 70, -1}},
+	{chance = 10, value = {3, 73, 0}},
+	{chance = 10, value = {85, 0, 0}},
+})
+bumAPI:AddBumFamiliar(FamiliarVariant.KEY_BUM, CollectibleType.COLLECTIBLE_KEY_BUM, true, 1, {
+	{5, 30, 1, 1},
+	{5, 30, 3, 2},
+	{5, 30, 4, 1, {5, 90, 1}},
+}, {
+	{chance = 40, value = {5, 50, 0}},
+	{chance = 30, value = {5, 360, 0}},
+	{chance = 20, value = {5, 60, 0}},
+	{chance = 10, value = {5, 69, 1}},
+})
 ---@diagnostic disable-next-line: param-type-mismatch
-bumAPI:AddBumFamiliar(FamiliarVariant.SUPER_BUM, -1, false, {}, {})
+bumAPI:AddBumFamiliar(FamiliarVariant.SUPER_BUM, -1, false, 1, {}, {})
 
 return bumAPI
