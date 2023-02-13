@@ -1,5 +1,6 @@
 local SapphireOrb = {}
 local enums = require("milkshake_scripts.enums")
+local Utilities = require("milkshake_scripts.utility")
 
 
 local CLAIRVOYANCE_ORB_DURATION = 30 * 100
@@ -76,6 +77,25 @@ local function TryReflectProjectile(player)
         1,
         rng
     )[1]
+
+    local laserSpawnPoint = player.Position + Vector(0, -40)
+    local laserTargetPoint = projectileToReflect.Position + Vector(0, projectileToReflect.Height)
+    local laserAngle = (laserTargetPoint - laserSpawnPoint):GetAngleDegrees()
+    local laserLength = laserSpawnPoint:Distance(laserTargetPoint)
+
+    local laser = EntityLaser.ShootAngle(
+        LaserVariant.TRACTOR_BEAM,
+        laserSpawnPoint,
+        laserAngle,
+        10,
+        Vector.Zero,
+        player
+    )
+    laser.Color = Color(1.4, 1, 1, 1, 1, 0, 0.7)
+    laser:SetMaxDistance(laserLength)
+
+    Utilities:SetData(laser, "IsClairvoyanceLaser", true)
+    Utilities:SetData(laser, "LinkedProjectile", projectileToReflect)
 
     projectileToReflect.Velocity = -projectileToReflect.Velocity
     projectileToReflect.SpawnerEntity = nil
@@ -181,4 +201,30 @@ milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
     SapphireOrb.OnClairvoyanceAuraUpdate,
     enums.Effects.CLAIRVOYANCE_AURA
+)
+
+
+---@param laser EntityLaser
+function SapphireOrb:OnLaserUpdate(laser)
+    print("Hola")
+    if not Utilities:GetData(laser, "IsClairvoyanceLaser") then return end
+
+    print("Hola")
+
+    local player = laser.SpawnerEntity
+    if not player then return end
+    ---@type EntityProjectile
+    local projectile = Utilities:GetData(laser, "LinkedProjectile")
+
+    local laserSpawnPoint = player.Position + Vector(0, -40)
+    local laserTargetPoint = projectile.Position + Vector(0, projectile.Height)
+    local laserAngle = (laserTargetPoint - laserSpawnPoint):GetAngleDegrees()
+    local laserLength = laserSpawnPoint:Distance(laserTargetPoint)
+
+    laser.AngleDegrees = laserAngle
+    laser:SetMaxDistance(laserLength)
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_LASER_UPDATE,
+    SapphireOrb.OnLaserUpdate
 )

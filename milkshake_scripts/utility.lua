@@ -73,9 +73,13 @@ end
 ---@param data nil
 ---@return boolean
 function utility:SetData(entity, identifier, data)
-	if (not NotGetData[GetPtrHash(entity)]) then NotGetData[GetPtrHash(entity)] = {} return false end
+    local existedBefore = true
+	if (not NotGetData[GetPtrHash(entity)]) then
+        NotGetData[GetPtrHash(entity)] = {}
+        existedBefore = false
+    end
 	NotGetData[GetPtrHash(entity)][identifier] = data
-	return true
+	return existedBefore
 end
 
 local function PreGameExit()
