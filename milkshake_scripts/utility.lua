@@ -62,7 +62,7 @@ local NotGetData = {}
 ---Acts as a replacement for Entity:GetData()
 ---@param entity Entity
 ---@param identifier string
----@return table
+---@return any
 function utility:GetData(entity, identifier)
 	if (not NotGetData[GetPtrHash(entity)]) then NotGetData[GetPtrHash(entity)] = {} end
 	return NotGetData[GetPtrHash(entity)][identifier]
@@ -70,7 +70,7 @@ end
 ---Acts as a replacement for Entity:GetData()
 ---@param entity Entity
 ---@param identifier string
----@param data nil
+---@param data any
 ---@return boolean
 function utility:SetData(entity, identifier, data)
     local existedBefore = true

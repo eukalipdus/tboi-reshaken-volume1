@@ -3,7 +3,7 @@ local enums = require("milkshake_scripts.enums")
 local Utilities = require("milkshake_scripts.utility")
 
 
-local CLAIRVOYANCE_ORB_DURATION = 30 * 100
+local CLAIRVOYANCE_ORB_DURATION = 30 * 15
 local PROJECTILE_REFLECTION_RADIUS = 100
 local PROJECTILE_REFLECTION_INTERVAL = 10
 local FAKE_CENSER_RADIUS = 70
@@ -87,25 +87,39 @@ local function TryReflectProjectile(player)
         LaserVariant.TRACTOR_BEAM,
         laserSpawnPoint,
         laserAngle,
-        10,
+        11,
         Vector.Zero,
         player
     )
     laser.Color = Color(1.4, 1, 1, 1, 1, 0, 0.7)
     laser:SetMaxDistance(laserLength)
+    laser.DepthOffset = -100
 
     Utilities:SetData(laser, "IsClairvoyanceLaser", true)
     Utilities:SetData(laser, "LinkedProjectile", projectileToReflect)
 
-    projectileToReflect.Velocity = -projectileToReflect.Velocity
+    Utilities:SetData(projectileToReflect, "ReflectedVelocity", -projectileToReflect.Velocity)
     projectileToReflect.SpawnerEntity = nil
     projectileToReflect.FallingSpeed = 0
-    projectileToReflect.FallingAccel = -0.05
+    projectileToReflect.FallingAccel = -0.1
     projectileToReflect:AddProjectileFlags(
-        ProjectileFlags.HIT_ENEMIES |
         ProjectileFlags.CANT_HIT_PLAYER |
         ProjectileFlags.SMART
     )
+    projectileToReflect:ClearProjectileFlags(
+        ProjectileFlags.SLOWED
+    )
+
+    projectileToReflect.CollisionDamage = player.Damage
+
+    local glow = TSIL.EntitySpecific.SpawnEffect(
+        enums.Effects.REFLECTED_PROJECTILE_GLOW,
+        0,
+        projectileToReflect.Position
+    )
+    glow.SpriteScale = glow.SpriteScale * projectileToReflect.Scale
+    glow.Parent = projectileToReflect
+    glow.DepthOffset = -20
 end
 
 
@@ -123,6 +137,18 @@ local function FakeCenserEffect(player)
         ProjectileFlags.HIT_ENEMIES |
         ProjectileFlags.CANT_HIT_PLAYER) then
             projectile:AddProjectileFlags(ProjectileFlags.SLOWED)
+        end
+    end
+
+    local nearEnemies = Isaac.FindInRadius(
+        player.Position,
+        FAKE_CENSER_RADIUS,
+        EntityPartition.ENEMY
+    )
+
+    for _, enemy in ipairs(nearEnemies) do
+        if not enemy:IsBoss() then
+            enemy:AddSlowing(EntityRef(player), 3, 1, Color(1, 1, 1))
         end
     end
 end
@@ -206,15 +232,37 @@ milkshakeMod:AddCallback(
 
 ---@param laser EntityLaser
 function SapphireOrb:OnLaserUpdate(laser)
-    print("Hola")
     if not Utilities:GetData(laser, "IsClairvoyanceLaser") then return end
-
-    print("Hola")
 
     local player = laser.SpawnerEntity
     if not player then return end
     ---@type EntityProjectile
     local projectile = Utilities:GetData(laser, "LinkedProjectile")
+    local targetVelocity = Utilities:GetData(projectile, "ReflectedVelocity")
+
+    if laser.Timeout == 0 then
+        projectile.Velocity = targetVelocity
+        projectile.FallingAccel = -0.05
+        projectile:AddProjectileFlags(ProjectileFlags.HIT_ENEMIES)
+    elseif laser.Timeout > 0 then
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        projectile.Velocity = TSIL.Utils.Math.Lerp(
+            targetVelocity,
+            ---@diagnostic disable-next-line: param-type-mismatch
+            projectile.Velocity,
+            TSIL.Utils.Easings.EaseOutCirc(laser.Timeout/9)
+        )
+    else
+        laser.Color = Color(
+            laser.Color.R,
+            laser.Color.G,
+            laser.Color.B,
+            laser.Color.A - 0.2,
+            laser.Color.RO,
+            laser.Color.GO,
+            laser.Color.BO
+        )
+    end
 
     local laserSpawnPoint = player.Position + Vector(0, -40)
     local laserTargetPoint = projectile.Position + Vector(0, projectile.Height)
@@ -227,4 +275,20 @@ end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_LASER_UPDATE,
     SapphireOrb.OnLaserUpdate
+)
+
+
+---@param glow EntityEffect
+function SapphireOrb:OnReflectedProjectileGlowUpdate(glow)
+    local projectile = glow.Parent:ToProjectile()
+    glow.Position = projectile.Position + Vector(0, projectile.Height)
+
+    if glow:GetSprite():IsFinished("Idle") then
+        glow:Remove()
+    end
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_UPDATE,
+    SapphireOrb.OnReflectedProjectileGlowUpdate,
+    enums.Effects.REFLECTED_PROJECTILE_GLOW
 )

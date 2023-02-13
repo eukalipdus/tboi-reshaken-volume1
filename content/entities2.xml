@@ -57,6 +57,9 @@
     <entity name="Clairvoyance Aura" anm2path="clairvoyance_aura.anm2" id="1000">
 	</entity>
 
+    <entity name="Reflected Projectile Glow" anm2path="reflected_projectile_glow.anm2" id="1000">
+	</entity>
+
     <entity name="Shattered Orb" anm2path="shattered_orb.anm2" id="1000" shadowSize="8"
     collisionMass="1" friction="1">
 	</entity>

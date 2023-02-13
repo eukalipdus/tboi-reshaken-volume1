@@ -262,6 +262,8 @@ local function SpawnConductiveTear(player, rng)
     ---@diagnostic disable-next-line: param-type-mismatch
     tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL)
 
+    tear.CollisionDamage = TSIL.Stage.GetEffectiveStage() * 4
+
     local conductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ConductivityTears")
     local ptrHash = GetPtrHash(tear)
     conductivityTears[tostring(ptrHash)] = true
