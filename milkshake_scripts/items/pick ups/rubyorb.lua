@@ -47,7 +47,7 @@ function RubyOrb:PostPEffectUpdate(player)
 	angle = ((angle + 540 - info.angle)%360) - 180
 	angle = math.min(math.max(angle, -clampAngle), clampAngle)
 
-	angle = (1-blendAmount) * info.prAng + blendAmount * angle
+	angle = TSIL.Utils.Math.Lerp(info.prAng, angle, blendAmount)
 	info.prAng = angle
 
 	angle = angle + rng:RandomInt(angleVariance+1) - (angleVariance/2)
