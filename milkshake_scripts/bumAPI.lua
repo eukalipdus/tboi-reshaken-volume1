@@ -222,12 +222,16 @@ end
 
 
 
-bumAPI:AddBumFamiliar(FamiliarVariant.BUMBO, CollectibleType.COLLECTIBLE_BUMBO, false, 1, {
+bumAPI:AddBumFamiliar(FamiliarVariant.BUMBO, CollectibleType.COLLECTIBLE_BUMBO, false, 5, {
 	{5, 20, 1, 1}, {5, 20, 2, 5}, {5, 20, 3, 10}, {5, 20, 4, 2}, {5, 20, 5, 1}, {5, 20, 6, -1}, {5, 20, 7, 1}
-}, {})
-bumAPI:AddBumFamiliar(FamiliarVariant.BUM_FRIEND, CollectibleType.COLLECTIBLE_BUM_FRIEND, true, 1, {
+}, {
+	{chance = 100, value = {5, 20, 2}},
+})
+bumAPI:AddBumFamiliar(FamiliarVariant.BUM_FRIEND, CollectibleType.COLLECTIBLE_BUM_FRIEND, true, 5, {
 	{5, 20, 1, 1}, {5, 20, 2, 5}, {5, 20, 3, 10}, {5, 20, 4, 2}, {5, 20, 5, 1}, {5, 20, 7, 1}
-}, {})
+}, {
+	{chance = 100, value = {5, 20, 2}},
+})
 bumAPI:AddBumFamiliar(FamiliarVariant.DARK_BUM, CollectibleType.COLLECTIBLE_DARK_BUM, true, 3, {
 	{5, 10, 1, 2},
 	{5, 10, 2, 1},
