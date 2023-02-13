@@ -78,10 +78,18 @@ function utility:SetData(entity, identifier, data)
 	return true
 end
 
-function utility:PreGameExit()
+local function PreGameExit()
 	NotGetData = {}
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, utility.PreGameExit)
+milkshakeMod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, PreGameExit)
+
+---@param entity Entity
+local function OnEntityRemoved(_, entity)
+    local ptrHash = GetPtrHash(entity)
+
+    NotGetData[ptrHash] = nil
+end
+milkshakeMod:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, OnEntityRemoved)
 
 ---Concatenates 2 tables into 1
 ---https://stackoverflow.com/a/15278426
