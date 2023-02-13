@@ -30,27 +30,36 @@ end
 
 ---@param familiar EntityFamiliar
 local function BumFamiliarInit(_, familiar)
-	if (familiar.Variant == bumboVariant) then familiar:Remove()
-	elseif (familiar.Variant == bumFriendVariant) then familiar:Remove()
-	elseif (familiar.Variant == darkBumVariant) then familiar:Remove()
-	elseif (familiar.Variant == keyBumVariant) then familiar:Remove()
-	elseif (familiar.Variant == superBumVariant) then familiar:Remove()
-	elseif (familiar.Variant == FamiliarVariant.SUPER_BUM) then
-		superBumSprite:Play("Main", true)
-		Isaac.GetPlayer():UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, UseFlag.USE_NOANIM)
+	print(familiar.Type, familiar.Variant)
+	if (familiar.Variant == bumboVariant) then familiar:Remove() return
+	elseif (familiar.Variant == bumFriendVariant) then familiar:Remove() return
+	elseif (familiar.Variant == darkBumVariant) then familiar:Remove() return
+	elseif (familiar.Variant == keyBumVariant) then familiar:Remove() return
+	elseif (familiar.Variant == superBumVariant) then familiar:Remove() return
 	end
 
 	if (BumFamiliars[familiar.Variant]) then
 		local player = familiar.SpawnerEntity
 		---@diagnostic disable-next-line: param-type-mismatch
-		local BumChain = utility:GetData(player, "BumChain") or (utility:SetData(player, "BumChain", {}) and utility:GetData(player, "BumChain"))
+		--local BumChain = utility:GetData(player, "BumChain") or (utility:SetData(player, "BumChain", {}) and utility:GetData(player, "BumChain"))
 		
+		local aa = player
+		---@diagnostic disable-next-line: need-check-nil
+		while aa.Child ~= nil do
+			---@diagnostic disable-next-line: need-check-nil
+			aa = aa.Child
+		end
 		---@diagnostic disable-next-line: assign-type-mismatch
-		if #BumChain == 0 then familiar.Parent = player
-		else familiar.Parent = BumChain[#BumChain] end
-
-		BumChain[#BumChain+1] = familiar
+		familiar.Parent = aa
+		aa.Child = familiar
 	end
+	print("a")
+	if (familiar.Variant == FamiliarVariant.SUPER_BUM) then
+		superBumSprite:Play("Main", true)
+		--Isaac.GetPlayer():UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, UseFlag.USE_NOANIM)
+		--I have no idea why i can't do this here but when i try i get C-stack size errors
+	end
+	print("b")
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, BumFamiliarInit)
 
@@ -61,15 +70,48 @@ local function BumFamiliarUpdate(_, familiar)
 		local newPos = familiar.Parent.Position - familiar.Position
 		if (familiar.Parent:ToPlayer() and newPos:DistanceSquared(Vector.Zero) < 65*65) then newPos = Vector.Zero
 		elseif (newPos:DistanceSquared(Vector.Zero) < 40*40) then newPos = Vector.Zero end
+
+		local viablePickups = TSIL.Utils.Tables.Filter(TSIL.Entities.GetEntities(nil, nil, nil, nil), function(_, entity)
+			for _, pickup in pairs(BumFamiliars[familiar.Variant][3]) do
+				if entity:ToPickup() and entity:ToPickup().Price == 0 and entity.Type == pickup[1] and entity.Variant == pickup[2] and entity.SubType == pickup[3] then
+					return true
+				end
+			end
+			return false
+		end)
+		if #viablePickups > 0 then
+			local random = RNG();
+			random:SetSeed(GetPtrHash(familiar), 0)
+			print("Seed",random:GetSeed())
+			local randNum = random:RandomInt(#viablePickups)+1
+			print("Index",randNum)
+			local target = viablePickups[randNum]
+			print("Target",target)
+			for _, pickup in pairs(BumFamiliars[familiar.Variant][3]) do
+				if target.Type == pickup[1] and target.Variant == pickup[2] and target.SubType == pickup[3] then
+					newPos = target.Position - familiar.Position
+					if (newPos:LengthSquared() < 100 and pickup[4] > 0) then 
+						familiar.Coins = familiar.Coins + pickup[4]
+						if (pickup[5]) then Isaac.Spawn(pickup[5][1], pickup[5][2], pickup[5][3], familiar.Position, Vector.Zero, familiar) end
+						target:Remove()
+						print("Indices can change")
+					end
+					break
+				end
+			end
+		end
+
 		newPos:Resize(3)
 		---@diagnostic disable-next-line: assign-type-mismatch
 		familiar.Velocity = familiar.Velocity*0.75 + newPos*0.25
+		--print(familiar.Coins)
 	end
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, BumFamiliarUpdate)
 
 ---@param player EntityPlayer
 local function EvaluateCache(_, player)
+	print("c")
     TSIL.Familiars.CheckFamiliarFromCollectibles(
         player,
         CollectibleType.COLLECTIBLE_BUMBO,
@@ -86,7 +128,17 @@ local function EvaluateCache(_, player)
 		end
 	end
 	if (numBums >= 3) then
-		Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.SUPER_BUM, 0, player.Position, Vector.Zero, player)
+		local hasSuper = false
+		for _, familiar in pairs(TSIL.Familiars.GetPlayerFamiliars(player)) do
+			if (BumFamiliars[familiar.Variant] and BumFamiliars[familiar.Variant][2]) then
+				familiar.Parent.Child = familiar.Child
+				if (familiar.Child) then familiar.Child.Parent = familiar.Parent end
+				familiar:Remove()
+			elseif (BumFamiliars[familiar.Variant] and familiar.Variant == FamiliarVariant.SUPER_BUM) then
+				hasSuper = true
+			end
+		end
+		if not hasSuper then Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.SUPER_BUM, 0, player.Position, Vector.Zero, player) end
 	else
 		for familiarType, info in pairs(BumFamiliars) do
 			TSIL.Familiars.CheckFamiliarFromCollectibles(
@@ -100,6 +152,8 @@ end
 milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, EvaluateCache, CacheFlag.CACHE_FAMILIARS)
 
 local function Update()
+	---@diagnostic disable-next-line: missing-parameter
+	if (superBumSprite:IsPlaying()) then Isaac.GetPlayer():UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, UseFlag.USE_NOANIM) end
 	superBumSprite:Update()
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_UPDATE, Update)
@@ -140,10 +194,18 @@ end
 
 
 
-bumAPI:AddBumFamiliar(FamiliarVariant.BUMBO, CollectibleType.COLLECTIBLE_BUMBO, false, {}, {})
-bumAPI:AddBumFamiliar(FamiliarVariant.BUM_FRIEND, CollectibleType.COLLECTIBLE_BUM_FRIEND, true, {}, {})
-bumAPI:AddBumFamiliar(FamiliarVariant.DARK_BUM, CollectibleType.COLLECTIBLE_DARK_BUM, true, {}, {})
-bumAPI:AddBumFamiliar(FamiliarVariant.KEY_BUM, CollectibleType.COLLECTIBLE_KEY_BUM, true, {}, {})
+bumAPI:AddBumFamiliar(FamiliarVariant.BUMBO, CollectibleType.COLLECTIBLE_BUMBO, false, {
+	{5, 20, 1, 1}, {5, 20, 2, 5}, {5, 20, 3, 10}, {5, 20, 4, 2}, {5, 20, 5, 1}, {5, 20, 6, -1}, {5, 20, 7, 1}
+}, {})
+bumAPI:AddBumFamiliar(FamiliarVariant.BUM_FRIEND, CollectibleType.COLLECTIBLE_BUM_FRIEND, true, {
+	{5, 20, 1, 1}, {5, 20, 2, 5}, {5, 20, 3, 10}, {5, 20, 4, 2}, {5, 20, 5, 1}, {5, 20, 7, 1}
+}, {})
+bumAPI:AddBumFamiliar(FamiliarVariant.DARK_BUM, CollectibleType.COLLECTIBLE_DARK_BUM, true, {
+	{5, 10, 1, 2}, {5, 10, 2, 1}, {5, 10, 5, 4}, {5, 10, 9, 2}
+}, {})
+bumAPI:AddBumFamiliar(FamiliarVariant.KEY_BUM, CollectibleType.COLLECTIBLE_KEY_BUM, true, {
+	{5, 30, 1, 1}, {5, 30, 3, 2}, {5, 30, 4, 1, {5, 90, 1}}
+}, {})
 ---@diagnostic disable-next-line: param-type-mismatch
 bumAPI:AddBumFamiliar(FamiliarVariant.SUPER_BUM, -1, false, {}, {})
 

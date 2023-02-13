@@ -94,5 +94,18 @@ function utility:TableConcat(t1,t2)
     end
     return t1
 end
+---Shuffles a table
+---
+---@param tbl table
+---@param seed integer
+---@return table
+function utility:Shuffle(tbl, seed)
+	math.randomseed(seed)
+	for i = #tbl, 2, -1 do
+	  local j = math.random(i)
+	  tbl[i], tbl[j] = tbl[j], tbl[i]
+	end
+	return tbl
+end
 
 return utility
