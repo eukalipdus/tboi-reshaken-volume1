@@ -82,19 +82,28 @@ local function BumFamiliarUpdate(_, familiar)
 		if #viablePickups > 0 then
 			local random = RNG();
 			random:SetSeed(GetPtrHash(familiar), 0)
-			print("Seed",random:GetSeed())
+			--print("Seed",random:GetSeed())
 			local randNum = random:RandomInt(#viablePickups)+1
-			print("Index",randNum)
-			local target = viablePickups[randNum]
-			print("Target",target)
+			--print("Index",randNum)
+			local target = viablePickups[randNum]:ToPickup()
+			--print("Target",target)
 			for _, pickup in pairs(BumFamiliars[familiar.Variant][3]) do
 				if target.Type == pickup[1] and target.Variant == pickup[2] and target.SubType == pickup[3] then
 					newPos = target.Position - familiar.Position
 					if (newPos:LengthSquared() < 100 and pickup[4] > 0) then 
 						familiar.Coins = familiar.Coins + pickup[4]
 						if (pickup[5]) then Isaac.Spawn(pickup[5][1], pickup[5][2], pickup[5][3], familiar.Position, Vector.Zero, familiar) end
+						target:PlayPickupSound()
+						target.Velocity = Vector(0, 0)
+						target.EntityCollisionClass = 0
+						local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, target.Position, Vector.Zero, target):ToEffect()
+						effect.Timeout = target.Timeout
+						local sprite = effect:GetSprite()
+						sprite:Load(target:GetSprite():GetFilename(), true)
+						sprite:Play("Collect", true)
+						--Mod:KillChoice(target) -- get rid of pickups with same options index
 						target:Remove()
-						print("Indices can change")
+						--print("Indices can change")
 					end
 					break
 				end
@@ -102,8 +111,8 @@ local function BumFamiliarUpdate(_, familiar)
 		end
 
 		newPos:Resize(3)
-		---@diagnostic disable-next-line: assign-type-mismatch
-		familiar.Velocity = familiar.Velocity*0.75 + newPos*0.25
+		---@diagnostic disable-next-line: assign-type-mismatch, param-type-mismatch
+		familiar.Velocity = TSIL.Utils.Math.Lerp(familiar.Velocity, newPos, 0.25)
 		--print(familiar.Coins)
 	end
 end
