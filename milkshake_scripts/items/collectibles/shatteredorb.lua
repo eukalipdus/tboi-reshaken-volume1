@@ -162,6 +162,7 @@ local OrbsPerFiendFolioEntities = {
     {trinket=enums.Cards.RUBY_ORB, type=451, variant=41, },
     {trinket=enums.Cards.RUBY_ORB, type=451, variant=42, },
     {trinket=enums.Cards.RUBY_ORB, type=170, variant=110, },
+    {trinket=enums.Cards.SAPPHIRE_ORB, type=61, variant=5, },
     {trinket=enums.Cards.SAPPHIRE_ORB, type=160, variant=640, },
     {trinket=enums.Cards.SAPPHIRE_ORB, type=160, variant=641, },
     {trinket=enums.Cards.SAPPHIRE_ORB, type=170, variant=30, },

@@ -3,10 +3,10 @@ local enums = require("milkshake_scripts.enums")
 local Utilities = require("milkshake_scripts.utility")
 
 
-local CLAIRVOYANCE_ORB_DURATION = 30 * 15
-local PROJECTILE_REFLECTION_RADIUS = 100
+local CLAIRVOYANCE_ORB_DURATION = 30 * 75
+local PROJECTILE_REFLECTION_RADIUS = 135
 local PROJECTILE_REFLECTION_INTERVAL = 10
-local FAKE_CENSER_RADIUS = 70
+local FAKE_CENSER_RADIUS = 65
 
 
 TSIL.SaveManager.AddPersistentVariable(
