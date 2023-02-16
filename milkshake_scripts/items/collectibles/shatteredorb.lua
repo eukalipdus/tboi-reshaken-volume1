@@ -366,6 +366,7 @@ function ShatteredOrb:OnPlayerUpdate(player)
     shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
     shatteredOrb:GetSprite():Play("Thrown", true)
 
+    print(shootingDir)
     local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + player.Velocity
     AddShatteredOrbData(shatteredOrb, direction)
 end
@@ -415,6 +416,18 @@ end
 
 ---@param shatteredOrb EntityEffect
 function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
+    local sprite = shatteredOrb:GetSprite()
+
+    if sprite:IsPlaying("shatter") or sprite:IsPlaying("capture") then
+        shatteredOrb.Velocity = Vector.Zero
+        return
+    end
+
+    if sprite:IsFinished("shatter") or sprite:IsFinished("capture") then
+        shatteredOrb:Remove()
+        return
+    end
+
     local shatteredOrbData = GetShatteredOrbData(shatteredOrb)
 
     shatteredOrb.Velocity = shatteredOrbData.direction
@@ -423,6 +436,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     shatteredOrbData.fallingSpeed = shatteredOrbData.fallingSpeed + SHATTERED_ORB_FALL_ACCEL
 
     if shatteredOrb.SpriteOffset.Y >= 0 then
+        print(sprite:GetAnimation())
         SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK, 1, 2, false, 1.3)
 
         MusicManager():Pause()
@@ -430,7 +444,9 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
             MusicManager():Resume()
         end, 30 * 2)
 
-        shatteredOrb:Remove()
+        sprite:Load("/gfx/shattered_orb_effects.anm2", true)
+        sprite:Play("shatter", true)
+
         return
     end
 
@@ -445,7 +461,6 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
         distanceToCollide = distanceToCollide ^ 2
 
         if distanceSqr < distanceToCollide then
-            shatteredOrb:Remove()
             npc:Remove()
 
             local orbToSpawn = GetEntityOrb(npc)
@@ -455,6 +470,9 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
                 orbToSpawn,
                 npc.Position
             )
+
+            sprite:Load("/gfx/shattered_orb_effects.anm2", true)
+            sprite:Play("capture", true)
             break
         end
     end

@@ -192,6 +192,7 @@ milkshakeMod:AddCallback(ModCallbacks.MC_INPUT_ACTION, function(_, entity, hook,
 		return 0
 	---@diagnostic disable-next-line: missing-parameter
 	elseif superBumSprite:IsFinished() and action == ButtonAction.ACTION_SHOOTDOWN then
+		print("Pressing down")
 		superBumSprite:Stop()
 		return 0.75
 	end
