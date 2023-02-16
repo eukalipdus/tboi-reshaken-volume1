@@ -191,8 +191,7 @@ milkshakeMod:AddCallback(ModCallbacks.MC_INPUT_ACTION, function(_, entity, hook,
 	if superBumSprite:IsPlaying() and action ~= ButtonAction.ACTION_CONSOLE then
 		return 0
 	---@diagnostic disable-next-line: missing-parameter
-	elseif superBumSprite:IsFinished() and action == ButtonAction.ACTION_SHOOTDOWN then
-		superBumSprite:Stop()
+	elseif superBumSprite:IsFinished("Main") and action == ButtonAction.ACTION_SHOOTDOWN then
 		return 0.75
 	end
 end, InputHook.GET_ACTION_VALUE)
