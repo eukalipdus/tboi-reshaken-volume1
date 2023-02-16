@@ -66,9 +66,9 @@ milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, BumFamiliarInit)
 
 ---@param familiar EntityFamiliar
 local function BumFamiliarUpdate(_, familiar)
-	if (familiar:GetSprite():IsFinished("IdleDown")) then familiar:GetSprite():Play("FloatDown", true) end
 	local bumInfo = BumFamiliars[familiar.Variant]
 	if (bumInfo and (familiar.Variant ~= FamiliarVariant.BUMBO or familiar.Coins < 6)) then
+		if (familiar:GetSprite():IsFinished("IdleDown")) then familiar:GetSprite():Play("FloatDown", true) end
 		local newPos = familiar.Parent.Position - familiar.Position
 		local closestDist = 10000000000000000
 		local closestEnt = nil

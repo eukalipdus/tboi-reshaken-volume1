@@ -5,6 +5,7 @@ enums.Collectibles = {
     BOMB_BUM = Isaac.GetItemIdByName("Bomb Bum"),
     DICE_DICE = Isaac.GetItemIdByName("Dice Dice"),
     EMPTY_SLOT = Isaac.GetItemIdByName("Empty Slot"),
+    FINGORE = Isaac.GetItemIdByName("Scripulous Fingore"),
     FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Rose"),
     GLASS_HEART = Isaac.GetItemIdByName("Glass Heart"),
     GLOBIN_IN_A_BUCKET = Isaac.GetItemIdByName("Globin In A Bucket"),
@@ -34,15 +35,16 @@ enums.Cards = {
 }
 
 enums.Familiars = {
-    SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor"),
     BOMB_BUM = Isaac.GetEntityVariantByName("Bomb Bum Familiar"),
+    FINGORE = Isaac.GetEntityVariantByName("Scripulous Fingore"),
+    SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor"),
 }
 
 enums.Effects = {
     VINES = Isaac.GetEntityVariantByName("Vine"),
     SHATTERED_ORB = Isaac.GetEntityVariantByName("Shattered Orb"),
     CLAIRVOYANCE_AURA = Isaac.GetEntityVariantByName("Clairvoyance Aura"),
-    REFLECTED_PROJECTILE_GLOW = Isaac.GetEntityVariantByName("Reflected Projectile Glow")
+    REFLECTED_PROJECTILE_GLOW = Isaac.GetEntityVariantByName("Reflected Projectile Glow"),
 }
 
 enums.Sounds = {
