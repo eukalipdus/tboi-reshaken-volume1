@@ -48,7 +48,7 @@ function fingore:FamiliarUpdate(familiar)
 		end)
 		local target = entities[rng:RandomInt(#entities)]
 		local escape = Vector.FromAngle(rng:RandomInt(360))*1000
-		familiar.Position = Vector.FromAngle(rng:RandomInt(360))*1000
+		familiar.Position = familiar.SpawnerEntity.Position +  Vector.FromAngle(rng:RandomInt(360))*1000
 
 		fingoreData.sprite:Play("Point", true)
 
