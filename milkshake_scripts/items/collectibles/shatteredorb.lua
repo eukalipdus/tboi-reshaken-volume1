@@ -366,7 +366,6 @@ function ShatteredOrb:OnPlayerUpdate(player)
     shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
     shatteredOrb:GetSprite():Play("Thrown", true)
 
-    print(shootingDir)
     local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + player.Velocity
     AddShatteredOrbData(shatteredOrb, direction)
 end
@@ -418,12 +417,17 @@ end
 function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     local sprite = shatteredOrb:GetSprite()
 
-    if sprite:IsPlaying("shatter") or sprite:IsPlaying("capture") then
+    if sprite:IsPlaying("Shatter") or sprite:IsPlaying("Capture") or sprite:IsPlaying("Broken") then
         shatteredOrb.Velocity = Vector.Zero
         return
     end
 
-    if sprite:IsFinished("shatter") or sprite:IsFinished("capture") then
+    if sprite:IsFinished("Shatter") then
+        sprite:Play("Broken", true)
+        return
+    end
+
+    if sprite:IsFinished("Capture") then
         shatteredOrb:Remove()
         return
     end
@@ -436,7 +440,6 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     shatteredOrbData.fallingSpeed = shatteredOrbData.fallingSpeed + SHATTERED_ORB_FALL_ACCEL
 
     if shatteredOrb.SpriteOffset.Y >= 0 then
-        print(sprite:GetAnimation())
         SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK, 1, 2, false, 1.3)
 
         MusicManager():Pause()
@@ -445,7 +448,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
         end, 30 * 2)
 
         sprite:Load("/gfx/shattered_orb_effects.anm2", true)
-        sprite:Play("shatter", true)
+        sprite:Play("Shatter", true)
 
         return
     end
@@ -472,7 +475,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
             )
 
             sprite:Load("/gfx/shattered_orb_effects.anm2", true)
-            sprite:Play("capture", true)
+            sprite:Play("Capture", true)
             break
         end
     end
