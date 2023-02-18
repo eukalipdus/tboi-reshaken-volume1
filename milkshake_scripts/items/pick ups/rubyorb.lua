@@ -20,16 +20,28 @@ function RubyOrb:UseCard(_, player, flags)
 	local aimDir = player:GetAimDirection()
 	local angle = aimDir:GetAngleDegrees()
 	if (aimDir:Length() == 0) then angle = 90.0 end
-	
+
 	utility:SetData(player, "RubyOrb", {
-		["angle"] = angle,
-		["count"] = (utility:GetData(player, "RubyOrb") and utility:GetData(player, "RubyOrb").count or 0) + numShots,
-		["timer"] = 0,
-		["prAng"] = 0;
+		angle = angle,
+		count = (utility:GetData(player, "RubyOrb") and utility:GetData(player, "RubyOrb").count or 0) + numShots,
+		timer = 0,
+		prAng = 0,
 	})
 	SFXManager():Play(SoundEffect.SOUND_GHOST_ROAR)
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_USE_CARD, RubyOrb.UseCard, enums.Cards.RUBY_ORB)
+
+function RubyOrb:PostNewRoom()
+	for i = 0, Game():GetNumPlayers() do
+		utility:SetData(Isaac.GetPlayer(i), "RubyOrb", {
+			angle = 0,
+			count = 0,
+			timer = 0,
+			prAng = 0,
+		})
+	end
+end
+milkshakeMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, RubyOrb.PostNewRoom)
 
 function RubyOrb:PostPEffectUpdate(player)
 	local info = utility:GetData(player, "RubyOrb")
