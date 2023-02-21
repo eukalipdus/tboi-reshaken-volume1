@@ -1,5 +1,5 @@
-local bumAPI = {}
-local utility = require("milkshake_scripts.utility")
+milkshakeMod.bumAPI = {}
+local bumAPI = milkshakeMod.bumAPI
 
 local BumFamiliars = {}
 local superBumSprite = Sprite()
@@ -255,5 +255,3 @@ bumAPI:AddBumFamiliar(FamiliarVariant.KEY_BUM, CollectibleType.COLLECTIBLE_KEY_B
 })
 ---@diagnostic disable-next-line: param-type-mismatch
 bumAPI:AddBumFamiliar(FamiliarVariant.SUPER_BUM, -1, false, 1, {}, {})
-
-return bumAPI

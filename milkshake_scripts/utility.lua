@@ -1,5 +1,6 @@
-local utility = {}
-local enums = require("milkshake_scripts.enums")
+milkshakeMod.utility = {}
+local utility = milkshakeMod.utility
+local enums = milkshakeMod.enums
 
 -- Used specifically for the shard set of trinkets, will spawn their respective drop alongside tinted rock drops
 function utility:shardTrinkets(trinket, player)
@@ -117,5 +118,3 @@ function utility:Shuffle(tbl, seed)
 	end
 	return tbl
 end
-
-return utility

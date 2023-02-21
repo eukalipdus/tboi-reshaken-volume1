@@ -1,4 +1,5 @@
-local enums = {}
+milkshakeMod.enums = {}
+local enums = milkshakeMod.enums
 
 enums.Collectibles = {
     BLACK_EYE = Isaac.GetItemIdByName("Black Eye"),
@@ -58,5 +59,3 @@ enums.Costumes = {
 enums.Hearts = {
     FRUIT_HEART = 743,
 }
-
-return enums
