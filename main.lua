@@ -24,6 +24,7 @@ local shatteredOrb = require("milkshake_scripts.items.collectibles.shatteredorb"
 local amethystShard = require("milkshake_scripts.items.trinkets.amethystshard")
 local rubyShard = require("milkshake_scripts.items.trinkets.rubyshard")
 local sapphireShard = require("milkshake_scripts.items.trinkets.sapphireshard")
+local emeraldShard = require("milkshake_scripts.items.trinkets.emeraldshard")
 local tungstenCube = require("milkshake_scripts.items.trinkets.tungstencube")
 --Pick ups
 local amethystOrb = require("milkshake_scripts.items.pick ups.amethystorb")
