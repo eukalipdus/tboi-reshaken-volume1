@@ -1,5 +1,5 @@
 local SapphireOrb = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 local SAPPHIRE_ORB_DURATION = 20
 local CONDUCTIVITY_TEAR_LIFESPAN = 20

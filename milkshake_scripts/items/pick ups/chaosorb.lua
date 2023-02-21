@@ -1,5 +1,5 @@
 local ChaosOrb = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 
 local ORBS = {

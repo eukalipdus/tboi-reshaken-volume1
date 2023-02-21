@@ -1,5 +1,5 @@
 local EmeraldOrb = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 local VINE_DURATION = 12
 

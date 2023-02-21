@@ -1,5 +1,5 @@
 local FruitHeart = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 
 ---@param player EntityPlayer

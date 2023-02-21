@@ -1,6 +1,6 @@
 local RubyOrb = {}
-local enums = require("milkshake_scripts.enums")
-local utility = require("milkshake_scripts.utility")
+local enums = milkshakeMod.enums
+local utility = milkshakeMod.utility
 
 --[[Customisation]]
 local angleVariance = 20;

@@ -1,6 +1,6 @@
 local SapphireOrb = {}
-local enums = require("milkshake_scripts.enums")
-local Utilities = require("milkshake_scripts.utility")
+local enums = milkshakeMod.enums
+local Utilities = milkshakeMod.utility
 
 
 local CLAIRVOYANCE_ORB_DURATION = 30 * 75
