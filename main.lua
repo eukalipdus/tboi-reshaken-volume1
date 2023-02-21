@@ -2,12 +2,12 @@ milkshakeMod = RegisterMod("Milkshake!", 1)
 
 require("loi_milkshake.TSIL").Init("loi_milkshake")
 
-local eid = require("milkshake_scripts.modcompatibility.eid")
-eid:addEid()
-
 require("milkshake_scripts.enums")
 require("milkshake_scripts.utility")
 require("milkshake_scripts.bumAPI")
+
+local eid = require("milkshake_scripts.modcompatibility.eid")
+eid:addEid()
 
 -- Collectibles
 local blackEye = require("milkshake_scripts.items.collectibles.blackeye")
