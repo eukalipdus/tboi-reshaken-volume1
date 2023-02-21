@@ -14,29 +14,27 @@ function utility:shardTrinkets(trinket, player)
                 local roll = rng:RandomInt(100)
 
                 if trinket == enums.Trinkets.AMETHYST_SHARD then
-                    local rune = Game():GetItemPool():GetCard(Random() + 1, false, true, true)
                     if roll <= BASE_CHANCE then
 						---@diagnostic disable-next-line: param-type-mismatch
-                        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, grid.Position, velocity, nil)
+                        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.AMETHYST_ORB, grid.Position, velocity, nil)
                     end
 
                 elseif trinket == enums.Trinkets.RUBY_SHARD then
                     if roll <= BASE_CHANCE then
 						---@diagnostic disable-next-line: param-type-mismatch
-                        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_CRACKED_KEY, grid.Position, velocity, nil)
+                        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.RUBY_ORB, grid.Position, velocity, nil)
                     end
                 
                 elseif trinket == enums.Trinkets.SAPPHIRE_SHARD then
                     if roll <= BASE_CHANCE then
-                        local cardsRollable = {}
-                        for i = 1, 21 do -- Create table of tarot cards only
-                            cardsRollable[i] = i
-                        end
-
-                        local rng = player:GetTrinketRNG(trinket)
-                        local randomCard = rng:RandomInt(#cardsRollable)
 						---@diagnostic disable-next-line: param-type-mismatch
-                        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, randomCard, grid.Position, velocity, nil)
+                        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.SAPPHIRE_ORB, grid.Position, velocity, nil)
+                    end
+
+                elseif trinket == enums.Trinkets.EMERALD_SHARD then
+                    if roll <= BASE_CHANCE then
+						---@diagnostic disable-next-line: param-type-mismatch
+                        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.EMERALD_ORB, grid.Position, velocity, nil)
                     end
                 end
                 grid.State = -1
