@@ -1,5 +1,5 @@
 local TungstenCube = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 
 ---@param trinket EntityPickup

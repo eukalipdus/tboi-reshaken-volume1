@@ -1,6 +1,6 @@
 local sapphireShard = {}
-local enums = require("milkshake_scripts.enums")
-local utility = require("milkshake_scripts.utility")
+local enums = milkshakeMod.enums
+local utility = milkshakeMod.utility
 
 function sapphireShard:onPlayerUpdate(player)
     if not player then return end
