@@ -1,4 +1,4 @@
-local shatteredDice = {}
+local prismaticDice = {}
 local enums = require("milkshake_scripts.enums")
 
 local SHIFT_RIGHT = Vector(40, 0)
@@ -17,7 +17,7 @@ local function getCollectibleCount()
 end
 
 
-function shatteredDice:onUse(collectible, rng, player)
+function prismaticDice:onUse(collectible, rng, player)
     local collectibleCount = getCollectibleCount()
     for i, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
@@ -61,5 +61,5 @@ function shatteredDice:onUse(collectible, rng, player)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_USE_ITEM, shatteredDice.onUse, enums.Collectibles.SHATTERED_DICE)
-return shatteredDice
+milkshakeMod:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
+return prismaticDice

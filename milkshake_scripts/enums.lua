@@ -6,14 +6,14 @@ enums.Collectibles = {
     DICE_DICE = Isaac.GetItemIdByName("Dice Dice"),
     EMPTY_SLOT = Isaac.GetItemIdByName("Empty Slot"),
     FINGORE = Isaac.GetItemIdByName("Scripulous Fingore"),
-    FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Rose"),
+    FIRECRACKER_ROSE = Isaac.GetItemIdByName("Firecracker Flower"),
     GLASS_HEART = Isaac.GetItemIdByName("Glass Heart"),
     GLOBIN_IN_A_BUCKET = Isaac.GetItemIdByName("Globin In A Bucket"),
     GOLDEN_SHOVEL = Isaac.GetItemIdByName("Golden Shovel"),
     LA_CHANCLA = Isaac.GetItemIdByName("La Chancla"),
     MILKSHAKE = Isaac.GetItemIdByName("Milkshake!"),
     SHARP_CURSOR = Isaac.GetItemIdByName("Sharp Cursor"),
-    SHATTERED_DICE = Isaac.GetItemIdByName("Shattered Dice"),
+    PRISMATIC_DICE = Isaac.GetItemIdByName("Prismatic Dice"),
     SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb"),
 }
 

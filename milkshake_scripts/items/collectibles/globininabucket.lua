@@ -16,4 +16,8 @@ end
 
 milkshakeMod:AddCallback(ModCallbacks.MC_USE_ITEM, globinInABucket.onUse, enums.Collectibles.GLOBIN_IN_A_BUCKET)
 
-return globinInABucket
+return {
+    Discharge = true,
+    Remove = false,
+    ShowAnim = true,
+}
