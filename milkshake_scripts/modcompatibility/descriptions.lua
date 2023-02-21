@@ -86,11 +86,11 @@ descriptions.Collectibles = {
     },
     [enums.Collectibles.FIRECRACKER_ROSE] = {
         en_us = {
-            name = "Firecracker Rose",
+            name = "Firecracker Flower",
             description = "{{Burning}} Chance to shoot a seed tear that inflicts enemies with Kabloom #Kabloomed enemies will explode into exploding petal tears after 5 seconds",
         },
         spa = {
-            name = "Rosa De Fuego",
+            name = "Flor De Fuego",
             description = "{{Burning}} Posibilidad de disparar una semilla que inflinge a los enemigos con Kabloom. #Los enemigos con Kabloom explotan en petalos despues de 5 segundos"
         },
     },
