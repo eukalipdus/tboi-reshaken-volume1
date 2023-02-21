@@ -1,5 +1,5 @@
 local globinInABucket = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 local globinTypes = {
     [1] = EntityType.ENTITY_GLOBIN,

@@ -1,5 +1,5 @@
 local GlassHeart = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 
 TSIL.SaveManager.AddPersistentVariable(

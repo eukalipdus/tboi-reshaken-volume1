@@ -1,4 +1,4 @@
-local enums = require "milkshake_scripts.enums"
+local enums = milkshakeMod.enums
 local ShatteredOrb = {}
 
 local SHATTERED_ORB_THROW_SPEED = 8

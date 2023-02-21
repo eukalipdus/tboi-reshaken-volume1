@@ -1,5 +1,5 @@
 local prismaticDice = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 local SHIFT_RIGHT = Vector(40, 0)
 local SHIFT_LEFT = Vector(-40, 0)

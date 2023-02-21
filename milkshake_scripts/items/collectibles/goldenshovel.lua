@@ -1,5 +1,5 @@
 local goldenShovel = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 local goldenShovelData = {
     FREEZE_DURATION = 180,

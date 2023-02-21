@@ -1,5 +1,5 @@
 local milkshake = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 local milkshakeData = {
     TEAR_COLOR = Color(1, 0, 1, 1, 0.196, 0, 0)

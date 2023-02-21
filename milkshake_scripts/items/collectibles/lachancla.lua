@@ -1,5 +1,5 @@
 local laChancla = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 local SPEED_UP = 0.3
 

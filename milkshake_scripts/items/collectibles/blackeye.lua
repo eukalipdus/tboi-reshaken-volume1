@@ -1,5 +1,5 @@
 local blackEye = {}
-local Enums = require("milkshake_scripts.enums")
+local Enums = milkshakeMod.enums
 
 local blackEyeData = {
     FIRE_DELAY = 1.50

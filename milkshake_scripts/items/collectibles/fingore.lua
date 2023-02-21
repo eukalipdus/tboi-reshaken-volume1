@@ -1,6 +1,6 @@
 local fingore = {}
-local enums = require("milkshake_scripts.enums")
-local utility = require("milkshake_scripts.utility")
+local enums = milkshakeMod.enums
+local utility = milkshakeMod.utility
 
 local offset = Vector(75, -50)
 local entranceSpeed = 0.05

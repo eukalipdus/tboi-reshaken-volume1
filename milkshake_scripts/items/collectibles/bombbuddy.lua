@@ -1,4 +1,4 @@
-local enums = require("milkshake_scripts.enums")
-local bumAPI = require("milkshake_scripts.bumAPI")
+local enums = milkshakeMod.enums
+local bumAPI = milkshakeMod.bumAPI
 
 bumAPI:AddBumFamiliar(enums.Familiars.BOMB_BUM, enums.Collectibles.BOMB_BUM, true, 3, {}, {})

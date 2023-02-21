@@ -1,5 +1,5 @@
 local FirecrackerRose = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 
 TSIL.SaveManager.AddPersistentVariable(milkshakeMod, "FirecrackerTears", {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM)

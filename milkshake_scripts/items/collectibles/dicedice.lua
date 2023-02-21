@@ -1,5 +1,5 @@
 local diceDice = {}
-local enums = require("milkshake_scripts.enums")
+local enums = milkshakeMod.enums
 local timesToActivate = 3
 
 local diceCollectibles = {
