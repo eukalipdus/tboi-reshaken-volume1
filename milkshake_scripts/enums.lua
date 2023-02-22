@@ -1,5 +1,4 @@
-milkshakeMod.enums = {}
-local enums = milkshakeMod.enums
+local enums = {}
 
 enums.Collectibles = {
     BLACK_EYE = Isaac.GetItemIdByName("Black Eye"),
@@ -16,6 +15,7 @@ enums.Collectibles = {
     SHARP_CURSOR = Isaac.GetItemIdByName("Sharp Cursor"),
     PRISMATIC_DICE = Isaac.GetItemIdByName("Prismatic Dice"),
     SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb"),
+    LYRA = Isaac.GetItemIdByName("Lyra"),
 }
 
 enums.Trinkets = {
@@ -59,3 +59,5 @@ enums.Costumes = {
 enums.Hearts = {
     FRUIT_HEART = 743,
 }
+
+milkshakeMod.enums = enums
