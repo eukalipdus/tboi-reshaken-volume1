@@ -116,7 +116,7 @@
 		<Item Name="Bomb Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="planetarium">
-		<Item Name="Lyrius" Weight="1" DeceaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Lyra" Weight="1" DeceaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="oldChest">
 
