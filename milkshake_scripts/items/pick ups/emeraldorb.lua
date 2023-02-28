@@ -1,11 +1,17 @@
 local EmeraldOrb = {}
 local enums = milkshakeMod.enums
+local utility = milkshakeMod.utility
 
 local VINE_DURATION = 12
 
 ---@param player EntityPlayer
 function EmeraldOrb:OnEmeraldOrbUse(_, player)
-    if not player then return end
+    local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
+
+    if playerUsingLyraData then return end
+
+    local isDoublePower = utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
+    utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
 
     local npcs = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, false)
 

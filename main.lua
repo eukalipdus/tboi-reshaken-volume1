@@ -24,6 +24,7 @@ local milkshake = require("milkshake_scripts.items.collectibles.milkshake")
 local sharpCursor = require("milkshake_scripts.items.collectibles.sharpcursor")
 local prismaticDice = require("milkshake_scripts.items.collectibles.prismaticDice")
 local shatteredOrb = require("milkshake_scripts.items.collectibles.shatteredorb")
+require("milkshake_scripts.items.collectibles.lyra")
 -- Trinkets
 local amethystShard = require("milkshake_scripts.items.trinkets.amethystshard")
 local rubyShard = require("milkshake_scripts.items.trinkets.rubyshard")

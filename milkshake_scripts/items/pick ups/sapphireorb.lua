@@ -1,5 +1,6 @@
 local SapphireOrb = {}
 local enums = milkshakeMod.enums
+local utility = milkshakeMod.utility
 
 local SAPPHIRE_ORB_DURATION = 20
 local CONDUCTIVITY_TEAR_LIFESPAN = 20
@@ -214,6 +215,13 @@ TSIL.SaveManager.AddPersistentVariable(
 
 ---@param player EntityPlayer
 function SapphireOrb:OnSapphireOrbUse(_, player)
+    local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
+
+    if playerUsingLyraData then return end
+
+    local isDoublePower = utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
+    utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
+
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local playersUsingSapphireOrbFrames = TSIL.SaveManager.GetPersistentVariable(
@@ -221,7 +229,12 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
         "PlayersUsingSapphireOrbFrames"
     )
 
-    playersUsingSapphireOrbFrames[tostring(playerIndex)] = Game():GetFrameCount()
+    local frameCount = Game():GetFrameCount()
+    if isDoublePower then
+        playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount + SAPPHIRE_ORB_DURATION
+    else
+        playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount
+    end
 
     local tear = TSIL.EntitySpecific.SpawnTear(
         TearVariant.BLUE,

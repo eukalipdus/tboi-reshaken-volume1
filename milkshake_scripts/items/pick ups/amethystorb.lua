@@ -19,6 +19,13 @@ TSIL.SaveManager.AddPersistentVariable(
 
 ---@param player EntityPlayer
 function SapphireOrb:OnAmethystOrbUse(_, player)
+    local playerUsingLyraData = Utilities:GetTemporaryPlayerData(player, "UsingLyraData")
+
+    if playerUsingLyraData then return end
+
+    local isDoublePower = Utilities:GetTemporaryPlayerData(player, "IsUsingDoublePowerOrb")
+    Utilities:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
+
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     player:AddNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
@@ -28,7 +35,11 @@ function SapphireOrb:OnAmethystOrbUse(_, player)
         "ClairvoyanceOrbPlayerFrames"
     )
     local frameCount = Game():GetFrameCount()
-    clairvoyanceOrbPlayerFrames[tostring(playerIndex)] = frameCount
+    if isDoublePower then
+        clairvoyanceOrbPlayerFrames[tostring(playerIndex)] = frameCount + CLAIRVOYANCE_ORB_DURATION
+    else
+        clairvoyanceOrbPlayerFrames[tostring(playerIndex)] = frameCount
+    end
 
     local aura = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.CLAIRVOYANCE_AURA,

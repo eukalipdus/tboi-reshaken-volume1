@@ -17,6 +17,13 @@ local clampAngle = (maxAngle/2) - (angleVariance/2);
 local shotDelay = shootTime/numShots;
 
 function RubyOrb:UseCard(_, player, flags)
+	local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
+
+    if playerUsingLyraData then return end
+
+	local isDoublePower = utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
+	utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
+
 	local aimDir = player:GetAimDirection()
 	local angle = aimDir:GetAngleDegrees()
 	if (aimDir:Length() == 0) then angle = 90.0 end

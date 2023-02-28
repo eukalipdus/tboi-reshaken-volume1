@@ -1,5 +1,4 @@
-milkshakeMod.utility = {}
-local utility = milkshakeMod.utility
+local utility = {}
 local enums = milkshakeMod.enums
 
 -- Used specifically for the shard set of trinkets, will spawn their respective drop alongside tinted rock drops
@@ -105,6 +104,7 @@ function utility:TableConcat(t1,t2)
     end
     return t1
 end
+
 ---Shuffles a table
 ---
 ---@param tbl table
@@ -118,3 +118,50 @@ function utility:Shuffle(tbl, seed)
 	end
 	return tbl
 end
+
+local tempPlayerData = {}
+
+---Gets some temporary player data.
+---
+---Temporary player data gets removed when entering a new room or
+---when exiting the game
+---@param player EntityPlayer
+---@param field string
+---@return unknown?
+function utility:GetTemporaryPlayerData(player, field)
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local playerData = tempPlayerData[playerIndex]
+    if not playerData then
+        playerData = {}
+        tempPlayerData[playerIndex] = playerData
+    end
+    return playerData[field]
+end
+
+---Sets some temporary player data.
+---
+---Temporary player data gets removed when entering a new room or
+---when exiting the game
+---@param player EntityPlayer
+---@param field string
+---@param value unknown
+function utility:SetTemporaryPlayerData(player, field, value)
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local playerData = tempPlayerData[playerIndex]
+    if not playerData then
+        playerData = {}
+        tempPlayerData[playerIndex] = playerData
+    end
+    playerData[field] = value
+end
+
+local function OnNewRoom()
+    tempPlayerData = {}
+end
+milkshakeMod:AddPriorityCallback(
+    ModCallbacks.MC_POST_NEW_ROOM,
+    CallbackPriority.IMPORTANT,
+    OnNewRoom
+)
+
+milkshakeMod.utility = utility
