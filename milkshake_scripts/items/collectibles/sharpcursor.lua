@@ -101,7 +101,9 @@ end
 local function GetFurthestEnemyFromPlayer(player)
     local npcs = TSIL.EntitySpecific.GetNPCs(-1, -1, -1, true)
     local enemies = TSIL.Utils.Tables.Filter(npcs, function (_, npc)
-        return npc:IsVulnerableEnemy()
+        return npc:IsVulnerableEnemy() and
+        not (npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) or
+        npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY_BALL))
     end)
 
     if #enemies == 0 then return end

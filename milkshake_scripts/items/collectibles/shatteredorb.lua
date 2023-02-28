@@ -455,7 +455,9 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
 
     local npcs = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
     npcs = TSIL.Utils.Tables.Filter(npcs, function (_, npc)
-        return npc:IsVulnerableEnemy() and not npc:IsBoss()
+        return npc:IsVulnerableEnemy() and not npc:IsBoss() and
+        not (npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) or
+        npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY_BALL))
     end)
 
     for _, npc in ipairs(npcs) do
