@@ -1,17 +1,15 @@
 <items gfxroot="gfx/items/" version="1">
     <!-- Collectibles -->
     <active id="1" name="Globin In A Bucket" description="Fleshy Friends" gfx="collectibles_globininabucket.png" maxcharges="6" quality="2" />
-    <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" quality="3" />
     <active id="3" name="Golden Shovel" description="Struck gold!" gfx="collectibles_goldenshovel.png" maxcharges="12" quality="4" />
-    <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" quality="1" /> 
     <passive id="5" name="Milkshake!" description="All Stats Shaken Up!"  cache="all" gfx="collectibles_milkshake.png" quality="4" />
-    <passive id="6" name="Firecracker Flower" description="Bloom and Doom" gfx="collectibles_firecrackerflower.png" quality="2" />
+    <passive id="6" name="Firecracker Flower" description="Bloom and Doom" gfx="collectibles_firecrackerflower.png" quality="3" />
     <familiar id="7" name="Sharp Cursor" description="Clicky Clicky Click" gfx="collectibles_sharpcursor.png" quality="2" />
     <passive id="8" name="La Chancla" description="Este nalgaso te va a doler hasta el año que viene" cache="speed" gfx="collectibles_lachancla.png" quality="1" />
     <passive id="9" name="Lyra" description="Melodic Spirits" gfx="collectibles_lyrius.png" quality="3" />
     <active id="10" name="Empty Slot" description="99% of gamblers quit before they make it big" gfx="collectibles_emptyslot.png" maxcharges="0" quality="0" />
-    <active id="11" name="Shattered Orb" description="Fragile Vessel" quality="4" gfx="collectibles_shatteredorb.png" maxcharges="4" />
-    <passive id="12" name="Glass Heart" description="Glassy" quality="3" gfx="collectibles_glassheart.png" />
+    <active id="11" name="Shattered Orb" description="Fragile Vessel" quality="3" gfx="collectibles_shatteredorb.png" maxcharges="4" />
+    <passive id="12" name="Glass Heart" description="Glassy" quality="2" gfx="collectibles_glassheart.png" />
     <active id="13" name="Prismatic Dice" description="Quantity over quality" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" />
     <familiar id="14" name="Bomb Bum" description="He wants your bombs" gfx="BombBum.png" quality="0" />
     <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" quality="1" />
@@ -22,4 +20,8 @@
     <trinket name="Sapphire Shard" description="A glimpse into the mind of oneself..." gfx="trinkets_sapphirecluster.png" />
     <trinket name="Emerald Shard" description="A glimpse into the Past" gfx="trinkets_emeraldcluster.png" />
     <trinket name="Tungsten Cube" description="It's heavy" gfx="trinkets_tungstencube.png" cache="speed" />
+
+    <!-- unused -->
+    <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" quality="1" /> 
+    <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" quality="3" />
 </items>
