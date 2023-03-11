@@ -32,6 +32,14 @@ local NOTE_DIRECTION = {
     LEFT = "Left",
     RIGHT = "Right"
 }
+local ALLOWED_INPUTS_DURING_LYRA = {
+    [ButtonAction.ACTION_LEFT] = true,
+    [ButtonAction.ACTION_RIGHT] = true,
+    [ButtonAction.ACTION_UP] = true,
+    [ButtonAction.ACTION_DOWN] = true,
+    [ButtonAction.ACTION_PAUSE] = true,
+    [ButtonAction.ACTION_MAP] = true
+}
 local PILL_CARD_REPLACE_CHANCE = 20
 local NOTE_MARKER_ANM2 = "/gfx/lyra_note_marks.anm2"
 local NOTE_SPEED = 0.6
@@ -183,7 +191,7 @@ function Lyra:OnOrbUse(orb, player)
         notes = currentSongNotes
     }
     utility:SetTemporaryPlayerData(player, "UsingLyraData", playerUsingLyraData)
-    player.ControlsEnabled = false
+    --player.ControlsEnabled = false
 
     player:AnimateCollectible(enums.Collectibles.LYRA, "LiftItem", "PlayerPickup")
 end
@@ -250,11 +258,13 @@ local function HandleLyraInput(player, playerUsingLyraData)
 
     if firstNote.height < -INPUT_FORGIVENESS then
         StopUsingLyra(player, playerUsingLyraData)
+        player:AnimateSad()
         return
     end
 
     if IsPlayingWrongInput(inputToCheck, controllerIndex) then
         StopUsingLyra(player, playerUsingLyraData)
+        player:AnimateSad()
         return
     end
 
@@ -267,9 +277,11 @@ local function HandleLyraInput(player, playerUsingLyraData)
             if #playerUsingLyraData.notes == 0 then
                 utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
                 StopUsingLyra(player, playerUsingLyraData)
+                player:AnimateHappy()
             end
         else
             StopUsingLyra(player, playerUsingLyraData)
+            player:AnimateSad()
         end
     end
 end
@@ -289,3 +301,26 @@ function Lyra:OnPlayerRender(player)
     HandleLyraInput(player, playerUsingLyraData)
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Lyra.OnPlayerRender)
+
+
+---@param entity Entity
+---@param inputHook InputHook
+---@param buttonAction ButtonAction
+function Lyra:OnInput(entity, inputHook, buttonAction)
+    if not entity then return end
+    local player = entity:ToPlayer()
+    if not player then return end
+
+    local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
+
+    if not playerUsingLyraData then return end
+
+    if ALLOWED_INPUTS_DURING_LYRA[buttonAction] then return end
+
+    if inputHook == InputHook.GET_ACTION_VALUE then
+        return 0
+    else
+        return false
+    end
+end
+milkshakeMod:AddCallback(ModCallbacks.MC_INPUT_ACTION, Lyra.OnInput)
