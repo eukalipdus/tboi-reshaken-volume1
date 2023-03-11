@@ -315,12 +315,28 @@ milkshakeMod:AddCallback(
 )
 
 
+local DOUBLE_TAP_FRAME_WINDOW = 8
+local doubleTapFrame = 0
+
+function SharpCursor:OnUpdate()
+    if doubleTapFrame > 0 then
+        doubleTapFrame = doubleTapFrame - 1
+    end
+end
+milkshakeMod:AddCallback(ModCallbacks.MC_POST_UPDATE, SharpCursor.OnUpdate)
+
+
 ---@param player EntityPlayer
 function SharpCursor:OnPlayerRender(player)
     if not Options.MouseControl then return end
     if not player:HasCollectible(enums.Collectibles.SHARP_CURSOR) then return end
     if player.ControllerIndex ~= 0 then return end
     if not Input.IsActionTriggered(ButtonAction.ACTION_DROP, 0) then return end
+
+    if doubleTapFrame <= 0 then
+        doubleTapFrame = DOUBLE_TAP_FRAME_WINDOW
+        return
+    end
 
     local currentFollowMouse = TSIL.SaveManager.GetPersistentVariable(
         milkshakeMod,
