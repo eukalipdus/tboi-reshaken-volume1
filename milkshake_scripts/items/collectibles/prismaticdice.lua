@@ -85,6 +85,7 @@ function prismaticDice:onUse(_, _, player)
             end
         end
     end
+    return true
 end
 
 milkshakeMod:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
