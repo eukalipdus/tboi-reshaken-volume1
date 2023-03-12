@@ -1,61 +1,87 @@
 local prismaticDice = {}
 local enums = milkshakeMod.enums
 
-local SHIFT_RIGHT = Vector(40, 0)
-local SHIFT_LEFT = Vector(-40, 0)
+local SHIFT_RIGHT = 40
+local SHIFT_LEFT = -40
 local PICKUPS_TO_SPAWN = 6
 
-local function getCollectibleCount()
-    local collectibleCount = 0
-    for i, entity in pairs(Isaac.GetRoomEntities()) do
-        if entity.Type == EntityType.ENTITY_PICKUP
-        and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE then
-            collectibleCount = collectibleCount + 1
+---Returns the amount of collectibles in the current room 
+---@return number
+-- local function getCollectibleCount()
+--     local collectibleCount = 0
+--     for i, entity in pairs(Isaac.GetRoomEntities()) do
+--         if entity.Type == EntityType.ENTITY_PICKUP
+--         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE then
+--             collectibleCount = collectibleCount + 1
+--         end
+--     end
+--     return collectibleCount
+-- end
+
+---Actives the prismatic dice effect of giving you two items for one, of lower quality
+---@param player EntityPlayer
+---@param collectible EntityPickup
+---@param quality number
+---@param newCollectibleID number
+local function splitCollectible(player, collectible, quality, newCollectibleID)
+    if quality - 1 >= 0 then
+        for i = 0, 1 do
+            repeat
+                local itemPool = Game():GetItemPool()
+                newCollectibleID = itemPool:GetCollectible(itemPool:GetLastPool())
+            until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == quality - 1
+
+            local spawnPosition
+
+            if i == 0 then
+                spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
+            elseif i == 1 then
+                spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
+            end
+
+            ---@diagnostic disable-next-line: param-type-mismatch
+            local shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
+            
+            if collectible.Price then
+                shatteredCollectible.AutoUpdatePrice = false
+                shatteredCollectible.Price = math.floor(collectible.Price / 2)
+            end
+
+            if i == 0 then
+                shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
+            elseif i == 1 then
+                shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
+            end
+        end
+    else
+        for i = 1, PICKUPS_TO_SPAWN do
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collectible.Position, RandomVector(), player)
         end
     end
-    return collectibleCount
 end
 
+function prismaticDice:preItemuse(_, _, _, useFlags)
+    if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return true end
+end
+milkshakeMod:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, prismaticDice.preItemuse, enums.Collectibles.PRISMATIC_DICE)
 
-function prismaticDice:onUse(collectible, rng, player)
-    local collectibleCount = getCollectibleCount()
+function prismaticDice:onUse(_, _, player)
+    --local collectibleCount = getCollectibleCount()
     for i, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE then
             local collectible = entity:ToPickup()
-            local collectibleQuality =  Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality
+
+            local collectibleQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality
             collectible:Remove()
 
             local newCollectibleID
-            if collectibleQuality - 1 >= 0 then
-                for i = 0, 1 do
-                    
-                    repeat
-                        local itemPool = Game():GetItemPool()
-                        newCollectibleID = itemPool:GetCollectible(itemPool:GetLastPool())
-                    until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == collectibleQuality - 1
-
-                    local spawnPosition
-
-                    if i == 0 then
-                        spawnPosition = collectible.Position + SHIFT_LEFT
-                    elseif i == 1 then
-                        spawnPosition = collectible.Position + SHIFT_RIGHT
-                    end
-        
-					---@diagnostic disable-next-line: param-type-mismatch
-                    local shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
-                    
-                    if i == 0 then
-                        shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
-                    elseif i == 1 then
-                        shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
-                    end
+            if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+                for i = 1, 2 do
+                    splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
                 end
             else
-                for i = 1, PICKUPS_TO_SPAWN do
-                    Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collectible.Position, RandomVector(), player)
-                end
+                splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
             end
         end
     end
