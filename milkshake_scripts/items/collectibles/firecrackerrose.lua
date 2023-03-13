@@ -269,9 +269,10 @@ function FirecrackerRose:OnEntityRemove(entity)
             -1
         )
     end
-
+    SFXManager():Play(SoundEffect.SOUND_ROCKET_LAUNCH_TINY)
     SFXManager():Stop(SoundEffect.SOUND_EXPLOSION_STRONG)
     SFXManager():Play(SoundEffect.SOUND_EXPLOSION_WEAK)
+
 end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_ENTITY_REMOVE,

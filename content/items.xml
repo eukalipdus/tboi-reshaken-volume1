@@ -14,6 +14,8 @@
     <familiar id="14" name="Bomb Bum" description="He wants your bombs" gfx="BombBum.png" quality="0" />
     <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" quality="1" />
     <passive id="16" name="Inner Reflection" description="Did you know? It is impossible to outrun your own reflection." gfx="InnerReflection.png" quality="0" />
+    <passive id="17" name="Sickle Cell" description="Sharp Blood"  cache="all" gfx="sickle_cell.png" quality="2" />
+
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="A glimpse into the future..." gfx="trinkets_amethystcluster.png" />

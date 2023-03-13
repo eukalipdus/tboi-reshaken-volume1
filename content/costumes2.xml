@@ -4,6 +4,7 @@
 	<costume id="5" anm2path="milkshake.anm2" type="passive" hasSkinAlt="true" />
 	<costume id="6" anm2path="firecrackerrose.anm2" type="passive" hasSkinAlt="false" />
 	<costume id="8" anm2path="lachancla.anm2" type="passive" hasSkinAlt="false" />
+	<costume id="17" anm2path="sicklecell.anm2" type="passive" hasSkinAlt="false" />
 
 	<!-- OTHER COSTUMES -->
 	<costume anm2path="clairvoyance_orb.anm2" priority="30" type="none" hasSkinAlt="false" hasOverlay="true" />
