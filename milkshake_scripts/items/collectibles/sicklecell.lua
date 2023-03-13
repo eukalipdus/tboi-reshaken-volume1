@@ -140,7 +140,7 @@ milkshakeMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, function(_, ent, damag
 end)
 
 milkshakeMod:AddPriorityCallback(ModCallbacks.MC_EVALUATE_CACHE, CallbackPriority.LATE + 2001, -- Very low priority so the multiplier works with mods
-    SickleCell.onCache)
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, SickleCell.replaceTear)
+milkshakeMod.onCache)
+milkshakeMod:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, milkshakeMod.replaceTear)
 
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, SickleCell.tearDie)
+milkshakeMod:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, milkshakeMod.tearDie)
