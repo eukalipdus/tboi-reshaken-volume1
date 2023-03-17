@@ -15,6 +15,10 @@
     <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" quality="1" />
     <passive id="16" name="Inner Reflection" description="Did you know? It is impossible to outrun your own reflection." gfx="InnerReflection.png" quality="0" />
     <passive id="17" name="Sickle Cell" description="Sharp Blood"  cache="all" gfx="sickle_cell.png" quality="2" />
+    <passive id="18" name="Rotten Breakfast" description="HP up?" gfx="breakfast0.png" quality="0" />
+    <passive id="19" name="Healthy Breakfast" description="HP + luck up!" cache="luck" soulhearts="2" gfx="breakfast2.png" quality="2" />
+    <passive id="20" name="Decadent Breakfast" description="HP + DMG + luck up!" cache="damage luck" soulhearts="2" gfx="breakfast3.png" quality="3" />
+    <passive id="21" name="Pot of Gold" description="Rainbow pennies!" quality="3" />
 
 
     <!-- Trinkets -->
