@@ -4,6 +4,7 @@ local enums = milkshakeMod.enums
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
 local PICKUPS_TO_SPAWN = 6
+local TIMES_CAN_FAIL = 50
 
 ---Returns the amount of collectibles in the current room 
 ---@return number
@@ -26,9 +27,16 @@ local PICKUPS_TO_SPAWN = 6
 local function splitCollectible(player, collectible, quality, newCollectibleID)
     if quality - 1 >= 0 then
         for i = 0, 1 do
+            local counter = 0
             repeat
+                counter = counter + 1
                 local itemPool = Game():GetItemPool()
                 newCollectibleID = itemPool:GetCollectible(itemPool:GetLastPool())
+                if newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST -- Might be temporary
+                and player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BREAKFAST, true) >= 1 then
+                    
+                end
+                if counter == TIMES_CAN_FAIL then goto failsafe end -- Temporary fix for sacred orb
             until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == quality - 1
 
             local spawnPosition
@@ -58,6 +66,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
             Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collectible.Position, RandomVector(), player)
         end
     end
+    ::failsafe::
 end
 
 function prismaticDice:preItemuse(_, _, _, useFlags)
