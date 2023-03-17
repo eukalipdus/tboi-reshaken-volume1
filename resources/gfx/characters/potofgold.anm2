@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="" CreatedOn="3/9/2023 2:16:57 AM" Version="116" Fps="30"/>
+	<Info CreatedBy="" CreatedOn="3/17/2023 3:52:02 PM" Version="117" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="costumes\potogold_costume.png" Id="0"/>
+			<Spritesheet Path="costumes\potofgoldcostume.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="head" Id="0" SpritesheetId="0"/>
