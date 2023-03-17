@@ -1,3 +1,5 @@
+local enums = milkshakeMod.enums
+
 local PENNY_TYPE_COUNT = 11
 
 local pennyTypes = {
