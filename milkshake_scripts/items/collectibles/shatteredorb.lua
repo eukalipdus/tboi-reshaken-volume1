@@ -118,6 +118,7 @@ local OrbsPerFiendFolioEntities = {
     {trinket=enums.Cards.AMETHYST_ORB, type=112, variant=1, },
     {trinket=enums.Cards.AMETHYST_ORB, type=956, variant=666, },
     {trinket=enums.Cards.AMETHYST_ORB, type=160, variant=822, subtype=2, },
+    {trinket=enums.Cards.AMETHYST_ORB_ORB, type=160, variant=80, subtype=3, },
     {trinket=enums.Cards.AMETHYST_ORB, type=120, variant=232, subtype=1, },
     {trinket=enums.Cards.RUBY_ORB, type=151, variant=5, },
     {trinket=enums.Cards.RUBY_ORB, type=160, variant=310, },
