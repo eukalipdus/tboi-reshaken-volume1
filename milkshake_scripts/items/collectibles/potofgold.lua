@@ -24,7 +24,7 @@ local spritePaths = {
     [7] = "gfx/items/pick ups/bloodypenny_pickup.png",
     [8] = "gfx/items/pick ups/blessedpenny_pickup.png",
     [9] = "gfx/items/pick ups/counterfeitpenny_pickup.png",
-    [10] = "gfx/items/pick ups/poisonedpenny_pickup.png",
+    [10] = "gfx/items/pick ups/acidpenny_pickup.png",
     [11] = "gfx/items/pick ups/crystalpenny_pickup.png"
 }
 
@@ -43,13 +43,13 @@ end
 
 function milkshakeMod:onPlayerEffectUpdate(player)
     if not player then return end
-    if player:HasCollectible(milkshakeMod.POT_OF_GOLD) then
+    if player:HasCollectible(milkshakeMod.enums.Collectibles.POT_OF_GOLD) then
         for i, entity in pairs(Isaac.GetRoomEntities()) do
             if entity.Type == EntityType.ENTITY_PICKUP then
                 local pickup = entity:ToPickup()
                 if (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB) then
                     pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, false, true, true)
-                    local rng = player:GetCollectibleRNG(milkshakeMod.POT_OF_GOLD)
+                    local rng = player:GetCollectibleRNG(milkshakeMod.enums.Collectibles.POT_OF_GOLD)
                     local roll = rng:RandomInt(PENNY_TYPE_COUNT) + 1
                     pickup:GetSprite():ReplaceSpritesheet(0, spritePaths[roll])
                     pickup:GetSprite():LoadGraphics()
@@ -98,7 +98,7 @@ function milkshakeMod:onPickupCollision(pickup, collider)
         player:AddBombs(1)
 
     elseif potPennyVariant == pennyTypes.BUTT then
-        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.FART, 0, player.Position, Vector.Zero, nil)
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_BUTTER_BEAN, UseFlag.USE_NOANIM)
 
     elseif potPennyVariant == pennyTypes.CHARGED then
         player:SetActiveCharge(player:GetActiveCharge() + 1)
@@ -107,23 +107,27 @@ function milkshakeMod:onPickupCollision(pickup, collider)
     elseif potPennyVariant == pennyTypes.CURSED then
         player:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE, EntityRef(pickup), 0)
         player:AddCoins(1)
+        Game():MoveToRandomRoom(true, Game():GetRoom():GetAwardSeed(), player)
 
     elseif potPennyVariant == pennyTypes.BLOODY then
         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_HALF, spawnPos, Vector.Zero, nil)
 
     elseif potPennyVariant == pennyTypes.BLESSED then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_HALF_SOUL, spawnPos, Vector.Zero, nil)
+        --Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_HALF_SOUL, spawnPos, Vector.Zero, nil)
+        player:AddSoulHearts(1)
 
     elseif potPennyVariant == pennyTypes.COUNTERFEIT then
         player:AddCoins(1)
     
     elseif potPennyVariant == pennyTypes.POISONED then
         local randomPill = Game():GetItemPool():GetPill(Random() + 1)
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_PILL, randomPill, spawnPos, Vector.Zero, nil)
+        --Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_PILL, randomPill, spawnPos, Vector.Zero, nil)
+        player:AddPill(randomPill)
 
     elseif potPennyVariant == pennyTypes.CRYSTAL then
         local randomCard = Game():GetItemPool():GetCard(Random() + 1, true, true, false)
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, randomCard, spawnPos, Vector.Zero, nil)
+        --Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, randomCard, spawnPos, Vector.Zero, nil)
+        player:AddCard(randomCard)
     end
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, milkshakeMod.onPickupCollision)
