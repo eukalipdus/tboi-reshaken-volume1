@@ -26,6 +26,7 @@ local prismaticDice = require("milkshake_scripts.items.collectibles.prismaticDic
 local shatteredOrb = require("milkshake_scripts.items.collectibles.shatteredorb")
 local sickleCell = require("milkshake_scripts.items.collectibles.sicklecell")
 require("milkshake_scripts.items.collectibles.lyra")
+require("milkshake_scripts.items.collectibles.potofgold")
 -- Trinkets
 local amethystShard = require("milkshake_scripts.items.trinkets.amethystshard")
 local rubyShard = require("milkshake_scripts.items.trinkets.rubyshard")
