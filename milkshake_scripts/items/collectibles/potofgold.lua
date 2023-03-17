@@ -1,3 +1,5 @@
+local enums = milkshakeMod.enums
+
 local PENNY_TYPE_COUNT = 11
 
 local pennyTypes = {
@@ -24,7 +26,7 @@ local spritePaths = {
     [7] = "gfx/items/pick ups/bloodypenny_pickup.png",
     [8] = "gfx/items/pick ups/blessedpenny_pickup.png",
     [9] = "gfx/items/pick ups/counterfeitpenny_pickup.png",
-    [10] = "gfx/items/pick ups/poisonedpenny_pickup.png",
+    [10] = "gfx/items/pick ups/acidpenny_pickup.png",
     [11] = "gfx/items/pick ups/crystalpenny_pickup.png"
 }
 
@@ -43,13 +45,13 @@ end
 
 function milkshakeMod:onPlayerEffectUpdate(player)
     if not player then return end
-    if player:HasCollectible(milkshakeMod.POT_OF_GOLD) then
+    if player:HasCollectible(enums.Collectibles.POT_OF_GOLD) then
         for i, entity in pairs(Isaac.GetRoomEntities()) do
             if entity.Type == EntityType.ENTITY_PICKUP then
                 local pickup = entity:ToPickup()
                 if (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB) then
                     pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, false, true, true)
-                    local rng = player:GetCollectibleRNG(milkshakeMod.POT_OF_GOLD)
+                    local rng = player:GetCollectibleRNG(enums.Collectibles.POT_OF_GOLD)
                     local roll = rng:RandomInt(PENNY_TYPE_COUNT) + 1
                     pickup:GetSprite():ReplaceSpritesheet(0, spritePaths[roll])
                     pickup:GetSprite():LoadGraphics()
