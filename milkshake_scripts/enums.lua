@@ -16,6 +16,7 @@ enums.Collectibles = {
     PRISMATIC_DICE = Isaac.GetItemIdByName("Prismatic Dice"),
     SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb"),
     LYRA = Isaac.GetItemIdByName("Lyra"),
+    POT_OF_GOLD = Isaac.GetItemIdByName("Pot of Gold")
 }
 
 enums.Trinkets = {
