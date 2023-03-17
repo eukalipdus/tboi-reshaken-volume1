@@ -92,6 +92,8 @@ function prismaticDice:onUse(_, _, player)
             else
                 splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
             end
+
+            SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
         end
     end
     return true

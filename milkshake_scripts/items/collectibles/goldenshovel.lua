@@ -26,6 +26,7 @@ local function SpawnGoldEffects(position)
     craterSprite.Scale = (Vector.One * 1.5)
 
     SFXManager():Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY)
+    SFXManager():Play(SoundEffect.SOUND_SHOVEL_DIG)
 
     local particle_speed = 4
     Game():SpawnParticles(position, EffectVariant.COIN_PARTICLE, 20, particle_speed)

@@ -19,6 +19,7 @@ function GlassHeart:CrystalHeart(entity, _, damageFlags)
     if TSIL.Utils.Flags.HasFlags(damageFlags, DamageFlag.DAMAGE_NO_MODIFIERS) then return end
     if TSIL.Utils.Flags.HasFlags(damageFlags, DamageFlag.DAMAGE_NO_PENALTIES) then return end
     if TSIL.Utils.Flags.HasFlags(damageFlags, DamageFlag.DAMAGE_FAKE) then return end
+    if TSIL.Utils.Flags.HasFlags(damageFlags, DamageFlag.DAMAGE_RED_HEARTS) then return end
 
     local player = entity:ToPlayer()
     if not player then return end
@@ -36,7 +37,8 @@ function GlassHeart:CrystalHeart(entity, _, damageFlags)
     playersTookDamage[#playersTookDamage+1] = playerIndex
 
     IsTakingExtraDamage = true
-    player:TakeDamage(4, DamageFlag.DAMAGE_NO_MODIFIERS, EntityRef(player), -1)
+    player:TakeDamage(4, DamageFlag.DAMAGE_NOKILL, EntityRef(player), -1)
+    SFXManager():Play(SoundEffect.SOUND_GLASS_BREAK)
     IsTakingExtraDamage = false
 end
 milkshakeMod:AddCallback(
@@ -59,9 +61,14 @@ local function OnPlayerRoomClear(player)
     --Player took damage
     if TSIL.Utils.Tables.IsIn(playersTookDamage, playerIndex) then return end
 
-    local redHeartsToAdd = math.min(2, player:GetMaxHearts() - player:GetHearts())
-    local soulHeartsToAdd = 2 - redHeartsToAdd
+    local redHeartsToAdd = math.min(1, player:GetMaxHearts() - player:GetHearts())
+    local soulHeartsToAdd = 1 - redHeartsToAdd
 
+    if player:GetMaxHearts() - player:GetHearts() == 0 then
+        SFXManager():Play(SoundEffect.SOUND_HOLY)
+    else 
+        SFXManager():Play(SoundEffect.SOUND_VAMP_GULP)
+    end
     player:AddHearts(redHeartsToAdd)
     player:AddSoulHearts(soulHeartsToAdd)
 end

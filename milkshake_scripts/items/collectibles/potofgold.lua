@@ -95,41 +95,49 @@ function milkshakeMod:onPickupCollision(pickup, collider)
         
     elseif potPennyVariant == pennyTypes.FLAT then
         player:AddKeys(1)
+        SFXManager():Play(SoundEffect.SOUND_KEYPICKUP_GAUNTLET)
+        --SoundEffect.SOUND_KEY_DROP0
 
     elseif potPennyVariant == pennyTypes.BURNT then
         player:AddBombs(1)
+        SFXManager():Play(SoundEffect.SOUND_FETUS_FEET)
 
     elseif potPennyVariant == pennyTypes.BUTT then
         player:UseActiveItem(CollectibleType.COLLECTIBLE_BUTTER_BEAN, UseFlag.USE_NOANIM)
 
     elseif potPennyVariant == pennyTypes.CHARGED then
         player:SetActiveCharge(player:GetActiveCharge() + 1)
-        SFXManager():Play(SoundEffect.SOUND_BATTERYCHARGE)
+        SFXManager():Play(SoundEffect.SOUND_BEEP)
         
     elseif potPennyVariant == pennyTypes.CURSED then
-        player:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE, EntityRef(pickup), 0)
-        player:AddCoins(1)
-        Game():MoveToRandomRoom(true, Game():GetRoom():GetAwardSeed(), player)
+-- SoundEffect.SOUND_GOOATTACH0 (spike)
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_TELEPORT, UseFlag.USE_NOANIM)
 
     elseif potPennyVariant == pennyTypes.BLOODY then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_HALF, spawnPos, Vector.Zero, nil)
+        --Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_HALF, spawnPos, Vector.Zero, nil)
+        player:AddHearts(1)
+        SFXManager():Play(SoundEffect.SOUND_BOSS2_BUBBLES)
 
     elseif potPennyVariant == pennyTypes.BLESSED then
         --Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_HALF_SOUL, spawnPos, Vector.Zero, nil)
         player:AddSoulHearts(1)
+        SFXManager():Play(SoundEffect.SOUND_HOLY)
 
     elseif potPennyVariant == pennyTypes.COUNTERFEIT then
         player:AddCoins(1)
+        SFXManager():Play(SoundEffect.SOUND_CASH_REGISTER)
     
     elseif potPennyVariant == pennyTypes.POISONED then
         local randomPill = Game():GetItemPool():GetPill(Random() + 1)
         --Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_PILL, randomPill, spawnPos, Vector.Zero, nil)
         player:AddPill(randomPill)
+        SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 
     elseif potPennyVariant == pennyTypes.CRYSTAL then
         local randomCard = Game():GetItemPool():GetCard(Random() + 1, true, true, false)
         --Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, randomCard, spawnPos, Vector.Zero, nil)
         player:AddCard(randomCard)
+        SFXManager():Play(SoundEffect.SOUND_MENU_NOTE_APPEAR)
     end
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, milkshakeMod.onPickupCollision)
