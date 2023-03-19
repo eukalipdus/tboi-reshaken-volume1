@@ -165,3 +165,28 @@ milkshakeMod:AddPriorityCallback(
 )
 
 milkshakeMod.utility = utility
+
+
+---@return number
+function utility:GetCurrentChapter()
+    local level = Game():GetLevel()
+    local levelStage = level:GetStage()
+
+    if levelStage <= LevelStage.STAGE4_2 then
+        local chapter = math.floor(levelStage / 2)
+
+        if TSIL.Stage.OnRepentanceStage() then
+            chapter = chapter + 0.5
+        end
+
+        return chapter
+    elseif levelStage == LevelStage.STAGE4_3 then
+        return 4.5
+    elseif levelStage >= LevelStage.STAGE5 and levelStage <= LevelStage.STAGE6 then
+        return levelStage - 5
+    elseif levelStage == LevelStage.STAGE8 then
+        return 7
+    end
+
+    return 0
+end

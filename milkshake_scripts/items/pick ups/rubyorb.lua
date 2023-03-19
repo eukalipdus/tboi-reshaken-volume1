@@ -74,7 +74,7 @@ function RubyOrb:PostPEffectUpdate(player)
 	local flame = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_FIRE, 0, player.Position, shotSpeed * Vector.FromAngle(angle+info.angle), player):ToProjectile()
 	flame.Height = player.TearHeight
 	--flame.CollisionDamage = 5 + 3*player.Damage
-	flame.CollisionDamage = 5 * TSIL.Stage.GetEffectiveStage()
+	flame.CollisionDamage = 5 * utility:GetCurrentChapter()
 	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER |ProjectileFlags.DECELERATE  | ProjectileFlags.NO_WALL_COLLIDE | ProjectileFlags.FIRE_SPAWN 
 	utility:SetData(
 		flame,
