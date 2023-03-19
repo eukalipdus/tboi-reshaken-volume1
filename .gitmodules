@@ -1,0 +1,3 @@
+[submodule "loi_milkshake"]
+	path = loi_milkshake
+	url = https://github.com/Team-Compliance/libraryofisaac
