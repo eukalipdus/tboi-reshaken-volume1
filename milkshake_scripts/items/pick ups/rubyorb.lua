@@ -75,7 +75,7 @@ function RubyOrb:PostPEffectUpdate(player)
 	flame.Height = player.TearHeight
 	--flame.CollisionDamage = 5 + 3*player.Damage
 	flame.CollisionDamage = 5 * utility:GetCurrentChapter()
-	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER |ProjectileFlags.DECELERATE  | ProjectileFlags.NO_WALL_COLLIDE | ProjectileFlags.FIRE_SPAWN 
+	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER |ProjectileFlags.DECELERATE  | ProjectileFlags.NO_WALL_COLLIDE
 	utility:SetData(
 		flame,
 		"IsRubyOrbFireProjectile",
