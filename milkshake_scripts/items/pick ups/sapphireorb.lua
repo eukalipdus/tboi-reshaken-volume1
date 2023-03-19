@@ -248,6 +248,7 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
     tear.Visible = false
     ---@diagnostic disable-next-line: param-type-mismatch
     tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL)
+    tear.CollisionDamage = 4 * utility:GetCurrentChapter()
 
     local playerConductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PlayerSelfConductivityTear")
     local ptrHash = GetPtrHash(tear)
