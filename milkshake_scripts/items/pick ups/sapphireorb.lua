@@ -2,9 +2,9 @@ local SapphireOrb = {}
 local enums = milkshakeMod.enums
 local utility = milkshakeMod.utility
 
-local SAPPHIRE_ORB_DURATION = 20
-local CONDUCTIVITY_TEAR_LIFESPAN = 20
-local CONDUCTIVITY_PARASITE_TEAR_LIFESPAN = 3
+local SAPPHIRE_ORB_DURATION = 25
+local CONDUCTIVITY_TEAR_LIFESPAN = 30
+local CONDUCTIVITY_PARASITE_TEAR_LIFESPAN = 4
 local SLOT_ELECTROCUTE_RADIUS = 120
 local SLOT_ELECTROCUTION_DURATION = 30
 local SLOT_MACHINE_VARIANTS = {
@@ -248,7 +248,7 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
     tear.Visible = false
     ---@diagnostic disable-next-line: param-type-mismatch
     tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL)
-    tear.CollisionDamage = 4 * utility:GetCurrentChapter()
+    tear.CollisionDamage = 3.5 * utility:GetCurrentChapter()
 
     local playerConductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PlayerSelfConductivityTear")
     local ptrHash = GetPtrHash(tear)
@@ -276,7 +276,7 @@ local function SpawnConductiveTear(player, rng)
     ---@diagnostic disable-next-line: param-type-mismatch
     tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL)
 
-    tear.CollisionDamage = TSIL.Stage.GetEffectiveStage() * 4
+    tear.CollisionDamage = TSIL.Stage.GetEffectiveStage() * 3.5
 
     local conductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ConductivityTears")
     local ptrHash = GetPtrHash(tear)
