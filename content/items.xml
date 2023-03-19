@@ -1,7 +1,7 @@
 <items gfxroot="gfx/items/" version="1">
     <!-- Collectibles -->
     <active id="1" name="Globin In A Bucket" description="Fleshy Friends" gfx="collectibles_globininabucket.png" maxcharges="6" quality="2" />
-    <active id="3" name="Golden Shovel" description="Struck gold!" gfx="collectibles_goldenshovel.png" maxcharges="12" quality="4" />
+    <active id="3" name="Golden Shovel" description="Strike gold!" gfx="collectibles_goldenshovel.png" maxcharges="12" quality="4" />
     <passive id="5" name="Milkshake!" description="All Stats Shaken Up!"  cache="all" gfx="collectibles_milkshake.png" quality="4" />
     <passive id="6" name="Firecracker Flower" description="Bloom and Doom" gfx="collectibles_firecrackerflower.png" quality="3" />
     <familiar id="7" name="Sharp Cursor" description="Clicky Clicky Click" gfx="collectibles_sharpcursor.png" quality="2" />
@@ -13,11 +13,11 @@
     <active id="13" name="Prismatic Dice" description="Quantity over quality" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" />
     <familiar id="14" name="Bomb Bum" description="He wants your bombs" gfx="BombBum.png" quality="0" />
     <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" quality="1" />
-    <passive id="16" name="Inner Reflection" description="Did you know? It is impossible to outrun your own reflection." gfx="InnerReflection.png" quality="0" />
-    <passive id="17" name="Sickle Cell" description="Sharp Blood"  cache="all" gfx="sickle_cell.png" quality="2" />
-    <passive id="18" name="Rotten Breakfast" description="HP up?" gfx="breakfast0.png" quality="0" />
-    <passive id="19" name="Healthy Breakfast" description="HP + luck up!" cache="luck" soulhearts="2" gfx="breakfast2.png" quality="2" />
-    <passive id="20" name="Decadent Breakfast" description="HP + DMG + luck up!" cache="damage luck" soulhearts="2" gfx="breakfast3.png" quality="3" />
+    <passive id="16" name="Inner Reflection" description="It is impossible to outrun your own reflection." gfx="InnerReflection.png" quality="0" />
+    <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" quality="2" />
+    <passive id="18" name="Spoiled Breakfast" description="HP up?" gfx="spoiled_breakfast.png" quality="0" />
+    <passive id="19" name="Balanced Breakfast" description="HP + luck up!" cache="luck" soulhearts="2" gfx="balanced_breakfast.png" quality="2" />
+    <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" cache="damage luck" soulhearts="2" gfx="tasty_breakfast.png" quality="3" />
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" quality="3" gfx="potofgold.png"/>
 
 

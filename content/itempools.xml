@@ -65,7 +65,7 @@
 	<Pool Name="greedTreasure">
 		<Item Name="Sharp Cursor" Weight="1" DecreaseBy="0" RemoveOn="0.1"/>
 		<Item Name="Milkshake!" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Golden Shovel" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Golden Shovel" Weight="0.5" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Bomb Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
