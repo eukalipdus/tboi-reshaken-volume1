@@ -173,6 +173,7 @@ function utility:GetCurrentChapter()
     local levelStage = level:GetStage()
 
     if levelStage <= LevelStage.STAGE4_2 then
+        ---@type number
         local chapter = math.floor(levelStage / 2)
 
         if TSIL.Stage.OnRepentanceStage() then
@@ -182,9 +183,9 @@ function utility:GetCurrentChapter()
         return chapter
     elseif levelStage == LevelStage.STAGE4_3 then
         return 4.5
-    elseif levelStage >= LevelStage.STAGE5 and levelStage <= LevelStage.STAGE6 then
+    elseif levelStage == LevelStage.STAGE5 or levelStage == LevelStage.STAGE6 then
         return levelStage - 5
-    elseif levelStage == LevelStage.STAGE8 then
+    elseif levelStage == LevelStage.STAGE7 or levelStage == LevelStage.STAGE8 then
         return 7
     end
 

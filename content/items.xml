@@ -19,6 +19,7 @@
     <passive id="19" name="Balanced Breakfast" description="HP + luck up!" cache="luck" soulhearts="2" gfx="balanced_breakfast.png" quality="2" />
     <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" cache="damage luck" soulhearts="2" gfx="tasty_breakfast.png" quality="3" />
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" quality="3" gfx="potofgold.png"/>
+    <familiar id="22" name="Fragile Mirror" description="Care for your reflection" quality="3" gfx="fragile_mirror.png"/>
 
 
     <!-- Trinkets -->

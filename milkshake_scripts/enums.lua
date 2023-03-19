@@ -16,7 +16,8 @@ enums.Collectibles = {
     PRISMATIC_DICE = Isaac.GetItemIdByName("Prismatic Dice"),
     SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb"),
     LYRA = Isaac.GetItemIdByName("Lyra"),
-    POT_OF_GOLD = Isaac.GetItemIdByName("Pot of Gold")
+    POT_OF_GOLD = Isaac.GetItemIdByName("Pot of Gold"),
+    FRAGILE_MIRROR = Isaac.GetItemIdByName("Fragile Mirror")
 }
 
 enums.Trinkets = {
@@ -40,6 +41,7 @@ enums.Familiars = {
     BOMB_BUM = Isaac.GetEntityVariantByName("Bomb Bum Familiar"),
     FINGORE = Isaac.GetEntityVariantByName("Scripulous Fingore"),
     SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor"),
+    FRAGILE_MIRROR = Isaac.GetEntityVariantByName("Fragile Mirror")
 }
 
 enums.Effects = {
