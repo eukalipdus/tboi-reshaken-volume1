@@ -73,7 +73,43 @@ function RubyOrb:PostPEffectUpdate(player)
 	---@diagnostic disable-next-line: param-type-mismatch
 	local flame = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_FIRE, 0, player.Position, shotSpeed * Vector.FromAngle(angle+info.angle), player):ToProjectile()
 	flame.Height = player.TearHeight
-	flame.CollisionDamage = 5 + 3*player.Damage
+	--flame.CollisionDamage = 5 + 3*player.Damage
+	flame.CollisionDamage = 5 * TSIL.Stage.GetEffectiveStage()
 	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER |ProjectileFlags.DECELERATE  | ProjectileFlags.NO_WALL_COLLIDE | ProjectileFlags.FIRE_SPAWN 
+	utility:SetData(
+		flame,
+		"IsRubyOrbFireProjectile",
+		true
+	)
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, RubyOrb.PostPEffectUpdate)
+
+local isTakingBossArmorDamage = false
+
+---@param entity Entity
+---@param amount integer
+---@param flags DamageFlag
+---@param source EntityRef
+---@param countdownFrames integer
+function RubyOrb:OnEntityTakeDamage(entity, amount, flags, source, countdownFrames)
+	if isTakingBossArmorDamage then return end
+
+	local sourceEntity = source.Entity
+
+	local isRubyOrbProjectile = utility:GetData(
+		sourceEntity,
+		"IsRubyOrbFireProjectile"
+	)
+
+	if not isRubyOrbProjectile then return end
+
+	isTakingBossArmorDamage = true
+	entity:TakeDamage(amount, flags | DamageFlag.DAMAGE_IGNORE_ARMOR, source, countdownFrames)
+	isTakingBossArmorDamage = false
+
+	return false
+end
+milkshakeMod:AddCallback(
+	ModCallbacks.MC_ENTITY_TAKE_DMG,
+	RubyOrb.OnEntityTakeDamage
+)
