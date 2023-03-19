@@ -10,7 +10,7 @@ local blendAmount = 0.2;
 local numShots = 35;
 local shootTime = 70;
 
-local shotSpeed = 8;
+local shotSpeed = 7;
 
 --Other Variables
 local clampAngle = (maxAngle/2) - (angleVariance/2);
@@ -74,6 +74,6 @@ function RubyOrb:PostPEffectUpdate(player)
 	local flame = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_FIRE, 0, player.Position, shotSpeed * Vector.FromAngle(angle+info.angle), player):ToProjectile()
 	flame.Height = player.TearHeight
 	flame.CollisionDamage = 5 + 3*player.Damage
-	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER
+	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER |ProjectileFlags.DECELERATE  | ProjectileFlags.NO_WALL_COLLIDE | ProjectileFlags.FIRE_SPAWN 
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, RubyOrb.PostPEffectUpdate)
