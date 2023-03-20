@@ -96,6 +96,8 @@ function RubyOrb:OnEntityTakeDamage(entity, amount, flags, source, countdownFram
 
 	local sourceEntity = source.Entity
 
+	if not sourceEntity then return end
+
 	local isRubyOrbProjectile = utility:GetData(
 		sourceEntity,
 		"IsRubyOrbFireProjectile"
