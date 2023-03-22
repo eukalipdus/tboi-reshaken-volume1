@@ -3,7 +3,7 @@ local enums = milkshakeMod.enums
 local utility = milkshakeMod.utility
 
 --[[Customisation]]
-local INHALING_DURATION = 46
+local INHALING_DURATION = 30
 local angleVariance = 32;
 local maxAngle = 180;
 local blendAmount = 0.2;
@@ -49,7 +49,7 @@ function RubyOrb:UseCard(_, player, _)
 		doublePower = isDoublePower
 	}
 
-	SFXManager():Play(SoundEffect.SOUND_INHALE)
+	SFXManager():Play(SoundEffect.SOUND_LOW_INHALE)
 end
 
 milkshakeMod:AddCallback(ModCallbacks.MC_USE_CARD, RubyOrb.UseCard, enums.Cards.RUBY_ORB)
