@@ -8,7 +8,7 @@ Warhamm2000: marise, andre1, andre2, sinister original design
 
 Ferpe: wario, yippie
 
-TheSilentGamer: thinker, shattering_of_humanity, checkmate, sinister, greg
+TheSilentGamer: thinker, shattering_of_humanity, checkmate, sinister, greg, trophy, fused_souls, big_ben
 
 Bardia: grayfruit, wayne
 
@@ -32,8 +32,18 @@ Unnamed System: pawn
 
 Foiled Again: whimsy
 
+Derico Den: glizzy_chin
+
 Visi: cirno
 
 IsaacTheBacon: numbers
 
 Dool: mr_uncanny
+
+Hooviey: host
+
+Firey: horfy
+
+Aladar: apollo
+
+wons: red_baby, seth
