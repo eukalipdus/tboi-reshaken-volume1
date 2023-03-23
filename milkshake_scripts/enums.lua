@@ -17,7 +17,10 @@ enums.Collectibles = {
     SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb"),
     LYRA = Isaac.GetItemIdByName("Lyra"),
     POT_OF_GOLD = Isaac.GetItemIdByName("Pot of Gold"),
-    FRAGILE_MIRROR = Isaac.GetItemIdByName("Fragile Mirror")
+    FRAGILE_MIRROR = Isaac.GetItemIdByName("Fragile Mirror"),
+    SPOILED_BREAKFAST = Isaac.GetItemIdByName("Spoiled Breakfast"),
+    BALANCED_BREAKFAST = Isaac.GetItemIdByName("Balanced Breakfast"),
+    HEARTY_BREAKFAST = Isaac.GetItemIdByName("Hearty Breakfast"),
 }
 
 enums.Trinkets = {

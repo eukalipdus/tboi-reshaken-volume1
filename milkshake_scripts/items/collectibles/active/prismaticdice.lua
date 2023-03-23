@@ -25,6 +25,7 @@ local TIMES_CAN_FAIL = 50
 ---@param quality number
 ---@param newCollectibleID number
 local function splitCollectible(player, collectible, quality, newCollectibleID)
+    local willBreakfast = true
     if quality - 1 >= 0 then
         for i = 0, 1 do
             local counter = 0
@@ -33,11 +34,13 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 local itemPool = Game():GetItemPool()
                 newCollectibleID = itemPool:GetCollectible(itemPool:GetLastPool())
                 if newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST -- Might be temporary
-                and player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BREAKFAST, true) >= 1 then
-                    
+                and player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BREAKFAST, true) > 0
+                and counter == TIMES_CAN_FAIL then goto failsafe
+                elseif counter == TIMES_CAN_FAIL then goto failsafe
                 end
-                if counter == TIMES_CAN_FAIL then goto failsafe end -- Temporary fix for sacred orb
             until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == quality - 1
+
+            willBreakfast = false
 
             local spawnPosition
 
@@ -67,6 +70,16 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
         end
     end
     ::failsafe::
+    print(willBreakfast)
+    if willBreakfast == true then
+        if quality == 0 then
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, collectible.Position, Vector(0,0), nil)
+        elseif quality == 2 then
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, collectible.Position, Vector(0,0), nil)
+        elseif quality == 3 then
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, collectible.Position, Vector(0,0), nil)
+        end
+    end
 end
 
 function prismaticDice:preItemuse(_, _, _, useFlags)
