@@ -2,36 +2,38 @@ local utility = {}
 local enums = milkshakeMod.enums
 
 -- Used specifically for the shard set of trinkets, will spawn their respective drop alongside tinted rock drops
-function utility:shardTrinkets(trinket, player)
-    local BASE_CHANCE = 50
+function utility:shardTrinkets(player, rng)
+    local BASE_CHANCE = 100
     local velocity = Vector(2,2)
     for gridIndex = 1, Game():GetRoom():GetGridSize() do
         local grid = Game():GetRoom():GetGridEntity(gridIndex)
         if grid then
             if grid:GetType() == GridEntityType.GRID_ROCKT and grid.State == 2 then -- Destroyed
 
-                local rng = player:GetTrinketRNG(trinket)
                 local roll = rng:RandomInt(100)
 
-                if trinket == enums.Trinkets.AMETHYST_SHARD then
+                if player:HasTrinket(enums.Trinkets.AMETHYST_SHARD)  then
                     if roll <= BASE_CHANCE then
 						---@diagnostic disable-next-line: param-type-mismatch
                         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.AMETHYST_ORB, grid.Position, velocity, nil)
                     end
+                end
 
-                elseif trinket == enums.Trinkets.RUBY_SHARD then
+                if player:HasTrinket(enums.Trinkets.RUBY_SHARD) then
                     if roll <= BASE_CHANCE then
 						---@diagnostic disable-next-line: param-type-mismatch
                         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.RUBY_ORB, grid.Position, velocity, nil)
                     end
+                end
                 
-                elseif trinket == enums.Trinkets.SAPPHIRE_SHARD then
+                if player:HasTrinket(enums.Trinkets.SAPPHIRE_SHARD) then
                     if roll <= BASE_CHANCE then
 						---@diagnostic disable-next-line: param-type-mismatch
                         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.SAPPHIRE_ORB, grid.Position, velocity, nil)
                     end
+                end
 
-                elseif trinket == enums.Trinkets.EMERALD_SHARD then
+                if player:HasTrinket(enums.Trinkets.EMERALD_SHARD) then
                     if roll <= BASE_CHANCE then
 						---@diagnostic disable-next-line: param-type-mismatch
                         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.EMERALD_ORB, grid.Position, velocity, nil)
