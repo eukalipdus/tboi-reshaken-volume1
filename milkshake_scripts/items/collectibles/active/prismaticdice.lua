@@ -5,6 +5,7 @@ local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
 local PICKUPS_TO_SPAWN = 6
 local TIMES_CAN_FAIL = 50
+local RANDOM_PICKUPS_NOCOL = 2
 
 ---Returns the amount of collectibles in the current room 
 ---@return number
@@ -70,12 +71,12 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
             end
         end
     else
+        willBreakfast = false
         for i = 1, PICKUPS_TO_SPAWN do
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collectible.Position, RandomVector(), player)
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, RANDOM_PICKUPS_NOCOL, collectible.Position, RandomVector(), player)
         end
     end
     ::failsafe::
-    print(willBreakfast)
     if willBreakfast == true then
         if quality == 0 then
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, collectible.Position, Vector(0,0), nil)
