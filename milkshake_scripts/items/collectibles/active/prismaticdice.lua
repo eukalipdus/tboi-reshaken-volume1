@@ -36,7 +36,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 local seed = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE):GetSeed()
                 local roomPool = itemPool:GetPoolForRoom(roomType, seed)
                 newCollectibleID = itemPool:GetCollectible(roomPool, false)
-                
+
                 if newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST -- Might be temporary
                 and player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BREAKFAST, true) > 0
                 and counter == TIMES_CAN_FAIL then goto failsafe
@@ -56,7 +56,8 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
 
             ---@diagnostic disable-next-line: param-type-mismatch
             local shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
-            
+            itemPool:RemoveCollectible(newCollectibleID)
+
             if collectible.Price then
                 shatteredCollectible.AutoUpdatePrice = false
                 shatteredCollectible.Price = math.floor(collectible.Price / 2)
