@@ -26,13 +26,17 @@ local TIMES_CAN_FAIL = 50
 ---@param newCollectibleID number
 local function splitCollectible(player, collectible, quality, newCollectibleID)
     local willBreakfast = true
+    local itemPool = Game():GetItemPool()
     if quality - 1 >= 0 then
         for i = 0, 1 do
             local counter = 0
             repeat
                 counter = counter + 1
-                local itemPool = Game():GetItemPool()
-                newCollectibleID = itemPool:GetCollectible(itemPool:GetLastPool())
+                local roomType = Game():GetRoom():GetType()
+                local seed = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE):GetSeed()
+                local roomPool = itemPool:GetPoolForRoom(roomType, seed)
+                newCollectibleID = itemPool:GetCollectible(roomPool, false)
+                
                 if newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST -- Might be temporary
                 and player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BREAKFAST, true) > 0
                 and counter == TIMES_CAN_FAIL then goto failsafe
