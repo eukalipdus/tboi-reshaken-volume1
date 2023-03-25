@@ -1,9 +1,11 @@
 local utility = {}
 local enums = milkshakeMod.enums
 
--- Used specifically for the shard set of trinkets, will spawn their respective drop alongside tinted rock drops
+--- Used to spawn spirit orbs for the shard series of trinkets
+---@param player EntityPlayer
+---@param rng RNG
 function utility:shardTrinkets(player, rng)
-    local BASE_CHANCE = 100
+    local BASE_CHANCE = 50
     local velocity = Vector(2,2)
     for gridIndex = 1, Game():GetRoom():GetGridSize() do
         local grid = Game():GetRoom():GetGridEntity(gridIndex)
