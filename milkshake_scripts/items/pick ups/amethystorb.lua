@@ -6,7 +6,7 @@ local Utilities = milkshakeMod.utility
 local CLAIRVOYANCE_ORB_DURATION = 30 * 75
 local PROJECTILE_REFLECTION_RADIUS = 135
 local PROJECTILE_REFLECTION_INTERVAL = 10
-local FAKE_CENSER_RADIUS = 65
+local FAKE_CENSER_RADIUS = 70
 
 
 TSIL.SaveManager.AddPersistentVariable(

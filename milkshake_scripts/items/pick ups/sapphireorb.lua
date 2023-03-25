@@ -247,7 +247,7 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
 
     tear.Visible = false
     ---@diagnostic disable-next-line: param-type-mismatch
-    tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL)
+    tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_BOUNCE | TearFlags.TEAR_TURN_HORIZONTAL)
     tear.CollisionDamage = 3.5 * utility:GetCurrentChapter()
 
     local playerConductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PlayerSelfConductivityTear")
@@ -274,7 +274,7 @@ local function SpawnConductiveTear(player, rng)
 
     tear.Visible = false
     ---@diagnostic disable-next-line: param-type-mismatch
-    tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL)
+    tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_BOUNCE | TearFlags.TEAR_TURN_HORIZONTAL)
 
     tear.CollisionDamage = TSIL.Stage.GetEffectiveStage() * 3.5
 
@@ -361,7 +361,7 @@ local function SpawnFakeParasiteTear(tear, velocity)
 
     parasiteTear.Visible = false
     ---@diagnostic disable-next-line: param-type-mismatch
-    parasiteTear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL)
+    parasiteTear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_BOUNCE | TearFlags.TEAR_TURN_HORIZONTAL)
 
     local conductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ConductivityParasiteTears")
     local ptrHash = GetPtrHash(parasiteTear)
