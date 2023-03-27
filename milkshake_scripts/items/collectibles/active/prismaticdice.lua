@@ -38,7 +38,8 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 local roomPool = itemPool:GetPoolForRoom(roomType, seed)
                 newCollectibleID = itemPool:GetCollectible(roomPool, false)
 
-                if newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST -- Might be temporary
+                if newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST
+                or newCollectibleID == 0
                 and player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BREAKFAST, true) > 0
                 and counter == TIMES_CAN_FAIL then goto failsafe
                 elseif counter == TIMES_CAN_FAIL then goto failsafe
@@ -78,13 +79,14 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     end
     ::failsafe::
     if willBreakfast == true then
-        if quality == 0 then
+        local splitQuality = quality - 1
+        if splitQuality == 0 then
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, collectible.Position, Vector(0,0), nil)
-        elseif quality == 1 then
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BREAKFAST, collectible.Position, Vector(0,0), nil)
-        elseif quality == 2 then
+        elseif splitQuality == 1 then
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, collectible.Position, Vector(0,0), nil)
+        elseif splitQuality == 2 then
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, collectible.Position, Vector(0,0), nil)
-        elseif quality == 3 then
+        elseif splitQuality == 3 then
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, collectible.Position, Vector(0,0), nil)
         end
     end
