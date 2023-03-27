@@ -69,7 +69,6 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
             elseif i == 1 and collectible.OptionsPickupIndex > 0 then
                 shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
             end
-            print(newCollectibleID .. " has options index " .. shatteredCollectible.OptionsPickupIndex)
         end
     else
         willBreakfast = false
