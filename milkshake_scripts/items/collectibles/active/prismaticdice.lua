@@ -66,9 +66,10 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
 
             if i == 0 then
                 shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
-            elseif i == 1 then
+            elseif i == 1 and collectible.OptionsPickupIndex > 0 then
                 shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
             end
+            print(newCollectibleID .. " has options index " .. shatteredCollectible.OptionsPickupIndex)
         end
     else
         willBreakfast = false
@@ -80,6 +81,8 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     if willBreakfast == true then
         if quality == 0 then
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, collectible.Position, Vector(0,0), nil)
+        elseif quality == 1 then
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BREAKFAST, collectible.Position, Vector(0,0), nil)
         elseif quality == 2 then
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, collectible.Position, Vector(0,0), nil)
         elseif quality == 3 then
