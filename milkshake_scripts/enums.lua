@@ -10,6 +10,7 @@ enums.Collectibles = {
     GLASS_HEART = Isaac.GetItemIdByName("Glass Heart"),
     GLOBIN_IN_A_BUCKET = Isaac.GetItemIdByName("Globin In A Bucket"),
     GOLDEN_SHOVEL = Isaac.GetItemIdByName("Golden Shovel"),
+	INNER_REFLECTION = Isaac.GetItemIdByName("Inner Reflection"),
     LA_CHANCLA = Isaac.GetItemIdByName("La Chancla"),
     MILKSHAKE = Isaac.GetItemIdByName("Milkshake!"),
     SHARP_CURSOR = Isaac.GetItemIdByName("Sharp Cursor"),
@@ -44,7 +45,8 @@ enums.Familiars = {
     BOMB_BUM = Isaac.GetEntityVariantByName("Bomb Bum Familiar"),
     FINGORE = Isaac.GetEntityVariantByName("Scripulous Fingore"),
     SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor"),
-    FRAGILE_MIRROR = Isaac.GetEntityVariantByName("Fragile Mirror")
+    FRAGILE_MIRROR = Isaac.GetEntityVariantByName("Fragile Mirror"),
+    INNER_REFLECTION = Isaac.GetEntityVariantByName("Inner Reflection"),
 }
 
 enums.Effects = {

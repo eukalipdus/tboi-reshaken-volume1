@@ -13,7 +13,7 @@
     <active id="13" name="Prismatic Dice" description="Quantity over quality" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" />
     <familiar id="14" name="Bomb Bum" description="He wants your bombs" gfx="BombBum.png" quality="0" />
     <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" quality="1" />
-    <passive id="16" name="Inner Reflection" description="It is impossible to outrun your own reflection." gfx="InnerReflection.png" quality="0" />
+    <familiar id="16" name="Inner Reflection" description="It's impossible to outrun your own reflection." gfx="InnerReflection.png" quality="0" />
     <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" quality="2" />
     <passive id="18" name="Spoiled Breakfast" description="HP up?" gfx="spoiled_breakfast.png" quality="0" />
     <passive id="19" name="Balanced Breakfast" description="HP + luck up!" cache="luck" soulhearts="2" gfx="balanced_breakfast.png" quality="2" />
