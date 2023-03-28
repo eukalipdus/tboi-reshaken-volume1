@@ -26,6 +26,7 @@ local RANDOM_PICKUPS_NOCOL = 2
 ---@param quality number
 ---@param newCollectibleID number
 local function splitCollectible(player, collectible, quality, newCollectibleID)
+    local shatteredCollectible
     local willBreakfast = true
     local itemPool = Game():GetItemPool()
     if quality - 1 >= 0 then
@@ -57,13 +58,8 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
             end
 
             ---@diagnostic disable-next-line: param-type-mismatch
-            local shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
             itemPool:RemoveCollectible(newCollectibleID)
-
-            if collectible.Price then
-                shatteredCollectible.AutoUpdatePrice = false
-                shatteredCollectible.Price = math.floor(collectible.Price / 2)
-            end
 
             if i == 0 then
                 shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
@@ -81,14 +77,19 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     if willBreakfast == true then
         local splitQuality = quality - 1
         if splitQuality == 0 then
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, collectible.Position, Vector(0,0), nil)
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, collectible.Position, Vector(0,0), nil)
         elseif splitQuality == 1 then
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, collectible.Position, Vector(0,0), nil)
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, collectible.Position, Vector(0,0), nil)
         elseif splitQuality == 2 then
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, collectible.Position, Vector(0,0), nil)
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, collectible.Position, Vector(0,0), nil)
         elseif splitQuality == 3 then
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, collectible.Position, Vector(0,0), nil)
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, collectible.Position, Vector(0,0), nil)
         end
+    end
+    
+    if collectible.Price then
+        shatteredCollectible.AutoUpdatePrice = false
+        shatteredCollectible.Price = math.floor(collectible.Price / 2)
     end
 end
 
