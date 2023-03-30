@@ -37,12 +37,17 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 local roomType = Game():GetRoom():GetType()
                 local seed = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE):GetSeed()
                 local roomPool = itemPool:GetPoolForRoom(roomType, seed)
+
+                if roomPool == ItemPoolType.POOL_NULL then
+                    roomPool = ItemPoolType.POOL_TREASURE
+                end
+                
                 newCollectibleID = itemPool:GetCollectible(roomPool, false)
 
-                if newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST
-                or newCollectibleID == 0
+                if ((newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST or newCollectibleID == 0)
                 and player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BREAKFAST, true) > 0
-                and counter == TIMES_CAN_FAIL then goto failsafe
+                and counter == TIMES_CAN_FAIL)
+                or newCollectibleID == 0 then goto failsafe
                 elseif counter == TIMES_CAN_FAIL then goto failsafe
                 end
             until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == quality - 1
