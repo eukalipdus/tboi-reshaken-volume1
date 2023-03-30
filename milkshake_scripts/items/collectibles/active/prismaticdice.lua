@@ -22,6 +22,22 @@ local FINAL_BREAKFAST_CHECK = 50
 --     return collectibleCount
 -- end
 
+--- Gets a spawn position for a split collectible
+---@param index number
+---@param first number
+---@param second number
+---@param collectible EntityPickup
+---@return Vector
+local function getSplitPosition(index, first, second, collectible)
+    local spawnPosition
+    if index == first then
+        spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
+    elseif index == second then
+        spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
+    end
+    return spawnPosition
+end
+
 ---Actives the prismatic dice effect of giving you two items for one, of lower quality
 ---@param player EntityPlayer
 ---@param collectible EntityPickup
@@ -62,13 +78,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
 
             willBreakfast = false
 
-            local spawnPosition
-
-            if i == 0 then
-                spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
-            elseif i == 1 then
-                spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
-            end
+            local spawnPosition = getSplitPosition(i, 0, 1, collectible)
 
             ---@diagnostic disable-next-line: param-type-mismatch
             shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
