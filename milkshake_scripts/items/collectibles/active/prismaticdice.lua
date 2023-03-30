@@ -90,18 +90,27 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     if willBreakfast == true then
         for i = 1, 2 do
             local splitQuality = quality - 1
+            local spawnPosition = getSplitPosition(i, 1, 2, collectible)
+
             if splitQuality == 0 then
-                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, collectible.Position, Vector(0,0), nil)
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
             
             elseif splitQuality == 1 then
-                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, collectible.Position, Vector(0,0), nil)
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
             
             elseif splitQuality == 2 then
-                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, collectible.Position, Vector(0,0), nil)
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
             
             elseif splitQuality == 3 then
-                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, collectible.Position, Vector(0,0), nil)
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
             end
+
+            if i == 1 then
+                shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
+            elseif i == 2 and collectible.OptionsPickupIndex > 0 then
+                shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
+            end
+
         end
     end
     
