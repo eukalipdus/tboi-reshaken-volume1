@@ -87,7 +87,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
         end
     end
     
-    if collectible.Price then
+    if collectible:IsShopItem() then
         shatteredCollectible.AutoUpdatePrice = false
         shatteredCollectible.Price = math.floor(collectible.Price / 2)
     end
