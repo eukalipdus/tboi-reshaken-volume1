@@ -4,8 +4,10 @@ local enums = milkshakeMod.enums
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
 local PICKUPS_TO_SPAWN = 6
-local TIMES_CAN_FAIL = 50
+local TIMES_CAN_FAIL = 100
 local RANDOM_PICKUPS_NOCOL = 2
+local INITIAL_BREAKFAST_CHECK = 10
+local FINAL_BREAKFAST_CHECK = 50
 
 ---Returns the amount of collectibles in the current room 
 ---@return number
@@ -32,24 +34,30 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     if quality - 1 >= 0 then
         for i = 0, 1 do
             local counter = 0
+            local breakfasts = 0
             repeat
                 counter = counter + 1
                 local roomType = Game():GetRoom():GetType()
                 local seed = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE):GetSeed()
                 local roomPool = itemPool:GetPoolForRoom(roomType, seed)
 
-                if roomPool == ItemPoolType.POOL_NULL then
+                if roomPool == ItemPoolType.POOL_NULL
+                or breakfasts == INITIAL_BREAKFAST_CHECK then
                     roomPool = ItemPoolType.POOL_TREASURE
                 end
-                
+
                 newCollectibleID = itemPool:GetCollectible(roomPool, false)
 
-                if ((newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST or newCollectibleID == 0)
-                and player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BREAKFAST, true) > 0
-                and counter == TIMES_CAN_FAIL)
-                or newCollectibleID == 0 then goto failsafe
-                elseif counter == TIMES_CAN_FAIL then goto failsafe
+                if newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST then
+                    breakfasts = breakfasts + 1
                 end
+
+                if counter == TIMES_CAN_FAIL
+                or newCollectibleID == 0 -- Null collectible is rolled, shouldn't happen
+                or breakfasts == FINAL_BREAKFAST_CHECK -- Pool is breakfasted
+                or counter == TIMES_CAN_FAIL then goto failsafe
+                end
+
             until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == quality - 1
 
             willBreakfast = false
@@ -80,15 +88,6 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     end
     ::failsafe::
     if willBreakfast == true then
-        local splitQuality = quality - 1
-        if splitQuality == 0 then
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, collectible.Position, Vector(0,0), nil)
-        elseif splitQuality == 1 then
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, collectible.Position, Vector(0,0), nil)
-        elseif splitQuality == 2 then
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, collectible.Position, Vector(0,0), nil)
-        elseif splitQuality == 3 then
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, collectible.Position, Vector(0,0), nil)
         end
     end
     
