@@ -88,6 +88,20 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     end
     ::failsafe::
     if willBreakfast == true then
+        for i = 1, 2 do
+            local splitQuality = quality - 1
+            if splitQuality == 0 then
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, collectible.Position, Vector(0,0), nil)
+            
+            elseif splitQuality == 1 then
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, collectible.Position, Vector(0,0), nil)
+            
+            elseif splitQuality == 2 then
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, collectible.Position, Vector(0,0), nil)
+            
+            elseif splitQuality == 3 then
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, collectible.Position, Vector(0,0), nil)
+            end
         end
     end
     
