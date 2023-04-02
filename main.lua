@@ -11,7 +11,7 @@ eid:addEid()
 
 -- Collectibles
 require("milkshake_scripts.items.collectibles.passive.blackeye")
-require("milkshake_scripts.items.collectibles.familiars.bombbuddy")
+require("milkshake_scripts.items.collectibles.familiars.spiritbum")
 require("milkshake_scripts.items.collectibles.active.dicedice")
 require("milkshake_scripts.items.collectibles.active.emptyslot")
 require("milkshake_scripts.items.collectibles.familiars.fingore")

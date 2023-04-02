@@ -11,7 +11,7 @@
     <active id="11" name="Shattered Orb" description="Fragile Vessel" quality="3" gfx="collectibles_shatteredorb.png" maxcharges="4" />
     <passive id="12" name="Glass Heart" description="Glassy" quality="2" gfx="collectibles_glassheart.png" />
     <active id="13" name="Prismatic Dice" description="Quantity over quality" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" />
-    <familiar id="14" name="Bomb Bum" description="He wants your bombs" gfx="BombBum.png" quality="0" />
+    <familiar id="14" name="Spirit Bum" description="He wants your soul." gfx="collectibles_spiritbum.png" quality="0" />
     <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" quality="1" />
     <familiar id="16" name="Inner Reflection" description="It's impossible to outrun your own reflection." gfx="InnerReflection.png" quality="0" />
     <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" quality="2" />

@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="3/30/2023 3:00:12 AM" Version="104" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="4/2/2023 12:22:20 AM" Version="105" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="..\..\mods\tboi-milkshake\resources\gfx\familiar\familiar_spawners_spirit bum.png" Id="0"/>
+			<Spritesheet Path="familiar\familiar_spirit bum.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

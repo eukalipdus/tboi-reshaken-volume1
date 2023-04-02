@@ -19,7 +19,7 @@
 	collisionDamage="10" collisionMass="5" collisionRadius="10" friction="1" numGridCollisionPoints="40" shadowSize="16">
     </entity>
 	
-    <entity anm2path="familiar_bomb bum.anm2" name="Bomb Bum Familiar" id="3" tags="cansacrifice"
+    <entity anm2path="familiar_spirit_bum.anm2" name="Spirit Bum Familiar" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
     </entity>
     <entity anm2path="003.102_SuperBum.anm2" name="Super Bum Familiar" id="3" tags="cansacrifice"
