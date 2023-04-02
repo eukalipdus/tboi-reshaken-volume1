@@ -168,9 +168,6 @@ milkshakeMod:AddPriorityCallback(
     OnNewRoom
 )
 
-milkshakeMod.utility = utility
-
-
 ---@return number
 function utility:GetCurrentChapter()
     local level = Game():GetLevel()
@@ -195,3 +192,5 @@ function utility:GetCurrentChapter()
 
     return 0
 end
+
+return utility

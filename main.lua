@@ -2,9 +2,9 @@ milkshakeMod = RegisterMod("Milkshake!", 1)
 
 require("loi_milkshake.TSIL").Init("loi_milkshake")
 
-require("milkshake_scripts.enums")
-require("milkshake_scripts.utility")
-require("milkshake_scripts.bumAPI")
+milkshakeMod.enums = require("milkshake_scripts.enums")
+milkshakeMod.utility = require("milkshake_scripts.utility")
+milkshakeMod.bumAPI = require("milkshake_scripts.bumAPI")
 
 local eid = require("milkshake_scripts.modcompatibility.eid")
 eid:addEid()

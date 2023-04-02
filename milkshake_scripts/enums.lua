@@ -68,4 +68,4 @@ enums.Hearts = {
     FRUIT_HEART = 743,
 }
 
-milkshakeMod.enums = enums
+return enums
