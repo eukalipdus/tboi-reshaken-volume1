@@ -89,6 +89,12 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
             elseif i == 1 and collectible.OptionsPickupIndex > 0 then
                 shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
             end
+
+            if collectible:IsShopItem() then
+                shatteredCollectible.AutoUpdatePrice = false
+                shatteredCollectible.Price = math.floor(collectible.Price / 2)
+            end
+            
         end
     else
         willBreakfast = false
@@ -121,12 +127,12 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
             end
 
+            if collectible:IsShopItem() then
+                shatteredCollectible.AutoUpdatePrice = false
+                shatteredCollectible.Price = math.floor(collectible.Price / 2)
+            end
+
         end
-    end
-    
-    if collectible:IsShopItem() then
-        shatteredCollectible.AutoUpdatePrice = false
-        shatteredCollectible.Price = math.floor(collectible.Price / 2)
     end
 end
 
