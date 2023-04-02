@@ -28,8 +28,8 @@ FamiliarVariant.SUPER_BUM = Isaac.GetEntityVariantByName("Super Bum Familiar")
 ---@field collectible CollectibleType
 ---@field superBum boolean
 ---@field cost number
----@field pickups bumPickups
----@field payouts bumPayouts
+---@field pickups bumPickups[]
+---@field payouts bumPayouts[]
 
 ---Custom function to define a familiar variant as a "Bum Familiar"
 ---@param familiarVariant FamiliarVariant
