@@ -50,7 +50,6 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     if quality - 1 >= 0 then
         for i = 0, 1 do
             local counter = 0
-            local breakfasts = 0
             repeat
                 counter = counter + 1
                 local roomType = Game():GetRoom():GetType()
@@ -58,19 +57,14 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 local roomPool = itemPool:GetPoolForRoom(roomType, seed)
 
                 if roomPool == ItemPoolType.POOL_NULL
-                or breakfasts == INITIAL_BREAKFAST_CHECK then
-                    roomPool = ItemPoolType.POOL_TREASURE
+                or counter >= INITIAL_BREAKFAST_CHECK then
+                    roomPool = itemPool:GetPoolForRoom(RoomType.ROOM_TREASURE, seed)
                 end
 
                 newCollectibleID = itemPool:GetCollectible(roomPool, false)
 
-                if newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST then
-                    breakfasts = breakfasts + 1
-                end
-
                 if counter == TIMES_CAN_FAIL
                 or newCollectibleID == 0 -- Null collectible is rolled, shouldn't happen
-                or breakfasts == FINAL_BREAKFAST_CHECK -- Pool is breakfasted
                 or counter == TIMES_CAN_FAIL then goto failsafe
                 end
 
@@ -94,7 +88,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 shatteredCollectible.AutoUpdatePrice = false
                 shatteredCollectible.Price = math.floor(collectible.Price / 2)
             end
-            
+
         end
     else
         willBreakfast = false
