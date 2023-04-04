@@ -55,7 +55,7 @@ local INPUT_PER_NOTE_DIRECTION = {
     [NOTE_DIRECTION.RIGHT] = ButtonAction.ACTION_SHOOTRIGHT,
     [NOTE_DIRECTION.UP] = ButtonAction.ACTION_SHOOTUP
 }
-local INPUT_FORGIVENESS = 4
+local INPUT_FORGIVENESS = 6
 ---@type table<NoteDirection, Sprite>
 local NOTE_SPRITES_PER_DIRECTION = {}
 do
@@ -126,8 +126,13 @@ local SONGS = {
 
 
 ---@param pickup EntityPickup
-function Lyra:OnPickupInitFirst(pickup)
+function Lyra:OnPickupInitFirst(pickup)    
     if not TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA) then return end
+
+    --It's already an orb
+    if TSIL.Utils.Tables.IsIn(ORBS, pickup.SubType) then
+        return
+    end
 
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local chance = TSIL.Random.GetRandomInt(1, 100, rng)
