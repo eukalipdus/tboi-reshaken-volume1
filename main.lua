@@ -29,6 +29,7 @@ require("milkshake_scripts.items.collectibles.active.prismaticDice")
 require("milkshake_scripts.items.collectibles.familiars.sharpcursor")
 require("milkshake_scripts.items.collectibles.active.shatteredorb")
 require("milkshake_scripts.items.collectibles.passive.sicklecell")
+require("milkshake_scripts.items.collectibles.active.leviticus")
 
 -- Trinkets
 require("milkshake_scripts.items.trinkets.amethystshard")
