@@ -212,7 +212,7 @@ function utility:recycleCollectible(collectible, player, roomType, itemPool, see
     end
 
     for _ = 1, keysBombsHearts do
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 3, collectible.Position, RandomVector() * mulVecBy, player)
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 4, collectible.Position, RandomVector() * mulVecBy, player)
     end
 
     if roomType == RoomType.ROOM_ANGEL then
