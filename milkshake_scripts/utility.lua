@@ -196,8 +196,11 @@ end
 --- Recreation of Tainted Cain's item to pickup effect
 ---@param collectible EntityPickup
 ---@param player EntityPlayer
+---@param roomType integer
+---@param itemPool ItemPool
+---@param seed integer
 ---@param rng RNG
-function utility:recycleCollectible(collectible, player, rng)
+function utility:recycleCollectible(collectible, player, roomType, itemPool, seed, rng)
     local coins = rng:RandomInt(7)
     local keysBombsHearts = rng:RandomInt(4) + 1
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, collectible.Position, Vector.Zero, player)
@@ -209,6 +212,23 @@ function utility:recycleCollectible(collectible, player, rng)
 
     for _ = 1, keysBombsHearts do
         Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 3, collectible.Position, RandomVector(), player)
+    end
+
+    if roomType == RoomType.ROOM_ANGEL then
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ETERNAL, collectible.Position, RandomVector(), player)
+    
+    elseif roomType == RoomType.ROOM_DEVIL then
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collectible.Position, RandomVector(), player)
+    
+    elseif roomType == RoomType.ROOM_SECRET then
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BONE, collectible.Position, RandomVector(), player)
+    
+    elseif roomType == RoomType.ROOM_CURSE then
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, collectible.Position, RandomVector(), player)
+        
+    elseif roomType == RoomType.ROOM_PLANETARIUM then
+        local rune = itemPool:GetCard(seed, false, true, true)
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, collectible.Position, RandomVector(), player)
     end
 end
 
