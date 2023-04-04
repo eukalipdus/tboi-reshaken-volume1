@@ -1,5 +1,6 @@
 local prismaticDice = {}
 local enums = milkshakeMod.enums
+local utility = milkshakeMod.utility
 
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
@@ -92,9 +93,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
         end
     else
         willBreakfast = false
-        for i = 1, PICKUPS_TO_SPAWN do
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, RANDOM_PICKUPS_NOCOL, collectible.Position, RandomVector(), player)
-        end
+        utility:recycleCollectible(collectible, player, player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE))
     end
     ::failsafe::
     if willBreakfast == true then
