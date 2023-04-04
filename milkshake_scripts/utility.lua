@@ -193,4 +193,23 @@ function utility:GetCurrentChapter()
     return 0
 end
 
+--- Recreation of Tainted Cain's item to pickup effect
+---@param collectible EntityPickup
+---@param player EntityPlayer
+---@param rng RNG
+function utility:recycleCollectible(collectible, player, rng)
+    local coins = rng:RandomInt(7)
+    local keysBombsHearts = rng:RandomInt(4) + 1
+    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, collectible.Position, Vector.Zero, player)
+    SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
+
+    for _ = 1, coins do
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 0, collectible.Position, RandomVector(), player)
+    end
+
+    for _ = 1, keysBombsHearts do
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 3, collectible.Position, RandomVector(), player)
+    end
+end
+
 return utility
