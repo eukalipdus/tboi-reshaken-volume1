@@ -166,15 +166,9 @@ end
 function leviticus:onItemSpawn(itemPoolType, decrease, _)
 
     local roomType = Game():GetRoom():GetType()
-    if roomType ~= RoomType.ROOM_BOSS then
-        return
-    end
-    if itemPoolType ~= ItemPoolType.POOL_BOSS then
-        return
-    end
-    if usedLeviticus == 0 then
-        return
-    end
+    if roomType ~= RoomType.ROOM_BOSS then return end
+    if itemPoolType ~= ItemPoolType.POOL_BOSS then return end
+    if usedLeviticus == 0 then return end
 
     local ItemPool = Game():GetItemPool()
 
@@ -182,6 +176,22 @@ function leviticus:onItemSpawn(itemPoolType, decrease, _)
 
     return randomAngelItemID
 
+end
+
+function leviticus:onAngelBossItemSpawn(pickup)
+
+    if pickup.Variant ~= PickupVariant.PICKUP_COLLECTIBLE then return end
+    if pickup.SubType == CollectibleType.COLLECTIBLE_NULL then return end
+    local roomType = Game():GetRoom():GetType()
+    if roomType ~= RoomType.ROOM_BOSS then return end
+    if usedLeviticus == 0 then return end
+    if Game():GetItemPool():GetLastPool() ~= ItemPoolType.POOL_ANGEL then return end
+    if Game():GetDevilRoomDeals() < 1 then return end
+    if pickup:IsShopItem() then return end
+    print("Variant1: " .. pickup.Variant)
+    pickup.AutoUpdatePrice = false
+    pickup.Price = 15
+    print("Variant2: " .. pickup.Variant)
 end
 
 function leviticus:OnHealthChanged(player, healthType, old, new)
@@ -221,5 +231,7 @@ milkshakeMod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, leviticus.onPicku
 milkshakeMod:AddCallback(ModCallbacks.MC_USE_ITEM, leviticus.onLeviticusUse, enums.Collectibles.LEVITICUS)
 
 milkshakeMod:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, leviticus.onItemSpawn)
+
+milkshakeMod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, leviticus.onAngelBossItemSpawn)
 
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, leviticus.newFloor)
