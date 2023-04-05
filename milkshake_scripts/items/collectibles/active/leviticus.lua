@@ -1,10 +1,6 @@
 local enums = milkshakeMod.enums
 local leviticus = {}
 
-
-
-
-
 local usedLeviticus = 0
 
 local LEVITICUS_MAX_CHARGES = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.LEVITICUS).MaxCharges

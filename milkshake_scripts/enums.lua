@@ -22,7 +22,8 @@ enums.Collectibles = {
     SPOILED_BREAKFAST = Isaac.GetItemIdByName("Spoiled Breakfast"),
     BALANCED_BREAKFAST = Isaac.GetItemIdByName("Balanced Breakfast"),
     HEARTY_BREAKFAST = Isaac.GetItemIdByName("Hearty Breakfast"),
-    LEVITICUS = Isaac.GetItemIdByName("Leviticus")
+    LEVITICUS = Isaac.GetItemIdByName("Leviticus"),
+    SICKLE_CELL = Isaac.GetItemIdByName("Sickle Cell")
 }
 
 enums.Trinkets = {

@@ -1,14 +1,22 @@
 local enums = milkshakeMod.enums
 local SickleCell = {}
 
-local sickle = Isaac.GetItemIdByName("Sickle Cell");
-local ironbar = Isaac.GetItemIdByName("Iron Bar");
-local ludovico = Isaac.GetItemIdByName("The Ludovico Technique");
-local deathstouch = Isaac.GetItemIdByName("Death's Touch");
-local sickleTear = Isaac.GetEntityVariantByName("Sickle Cell Tear")
-StoneTearAnimScaleThresholds = {0, 0.675, 0.925, 1.2, 1.695, 2.275}
+local BLEED_DURATION = 30 * 6 --30 fps * 6 seconds
+local StoneTearAnimScaleThresholds = { 0, 0.675, 0.925, 1.2, 1.695, 2.275 }
 
-function milkshakeMod:GetTearAnimationNumber(tear)
+
+---@param tear Entity
+---@return boolean
+local function IsSickleTear(tear)
+    return TSIL.Entities.GetEntityData(
+        milkshakeMod,
+        tear,
+        "IsSickleTear"
+    ) == true --So we don't return nil
+end
+
+
+local function GetTearAnimationNumber(tear)
     local size = 1
     local list = StoneTearAnimScaleThresholds
     for i = 1, #list do
@@ -19,11 +27,36 @@ function milkshakeMod:GetTearAnimationNumber(tear)
     return size
 end
 
+
+local function MakeTearSickle(tear)
+    TSIL.Entities.SetEntityData(
+        milkshakeMod,
+        tear,
+        "IsSickleTear",
+        true
+    )
+
+    local tearSizeMult = 1.2
+    if tear.Variant == TearVariant.SCHYTHE then
+        tear:ChangeVariant(TearVariant.BLUE)
+    end
+
+    if tear.Variant ~= TearVariant.BLUE then return end
+
+    tear.Scale = tear.Scale * tearSizeMult
+
+    local sprite = tear:GetSprite()
+    sprite:Load("gfx/tears/tear_sicklecell.anm2", true)
+    local animNum = GetTearAnimationNumber(tear)
+    sprite:Play("Stone" .. animNum .. "Move", true)
+end
+
+
 -- changes tear color and gives piercing if you have sickle cell
 ---@param player EntityPlayer
 ---@param cacheFlag CacheFlag
-function milkshakeMod:onCache(player, cacheFlag)
-    if not player:HasCollectible(sickle) then
+function SickleCell:onCache(player, cacheFlag)
+    if not player:HasCollectible(enums.Collectibles.SICKLE_CELL) then
         return
     end
 
@@ -35,112 +68,172 @@ function milkshakeMod:onCache(player, cacheFlag)
         player.TearFlags = player.TearFlags | TearFlags.TEAR_PIERCING
     end
 end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_EVALUATE_CACHE,
+    SickleCell.onCache
+)
+
 
 -- On frame 1 of tear update, Multipies Tear size by 1.2, or 1.4 if you have death's touch, Visually changes the sickle cell tear sprite and animation based on the tear size
-function milkshakeMod:replaceTear(tear)
+---@param tear EntityTear
+function SickleCell:replaceTear(tear)
     local player = TSIL.Players.GetPlayerFromEntity(tear)
-    if player == nil then
-        return
-    end
-    if not player:HasCollectible(sickle) then
-        return
-    end
-    local data = tear:GetData()
-    if tear.Variant ~= sickleTear then
-        return
-    end
-    if tear.FrameCount > 0 then
-        return
-    end
+    if player == nil then return end
+    if not player:HasCollectible(enums.Collectibles.SICKLE_CELL) then return end
 
-    data.isSickleTear = true
-    local tearSizeMult = 1.2
-    if player:HasCollectible(deathstouch) then
-        tearSizeMult = 1.4
-    end
+    MakeTearSickle(tear)
+end
+milkshakeMod:AddCallback(
+    TSIL.Enums.CustomCallback.POST_TEAR_INIT_LATE,
+    SickleCell.replaceTear
+)
 
-    tear:GetSprite():Play("Stone" .. milkshakeMod:GetTearAnimationNumber(tear) .. "Move")
-    --  print(GetTearAnimationNumber(tear))
-    tear.Scale = math.max(1.0, tear.Scale * tearSizeMult)
 
-    if tear.Scale > 4.0 then
-        tear.SpriteScale = Vector(math.max(0.3, tear.Scale * 0.03), math.max(0.3, tear.Scale * 0.03))
-    else
-        tear.SpriteScale = Vector.One / tear.Scale
-    end
-    -- print(tear.Scale)
-    -- print(tear.SpriteScale)
+---@param entity Entity
+local function AddSickleBleed(entity)
+    entity:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT)
+    entity:SetColor(Color(1.2, 0.6, 0.6, 1, 0, 0, 0), BLEED_DURATION, 2, false, false)
+    entity:BloodExplode()
 
+    TSIL.Entities.SetEntityData(
+        milkshakeMod,
+        entity,
+        "SickleCellBleedFrame",
+        Game():GetFrameCount()
+    )
 end
 
--- changes tear variant to sickle tear on tear init
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_TEAR_INIT, function(_, tear)
-    local spawner = tear.SpawnerEntity
-    if not spawner then
-        return
-    end
-    local player = spawner:ToPlayer()
-    if not player then
-        return
-    end
-    if not player:HasCollectible(sickle) then
-        return
-    end
-    tear:ChangeVariant(sickleTear)
-    tear:Update()
 
-end)
+---@param entity Entity
+---@param source Entity
+local function OnTearDamage(entity, source)
+    if not IsSickleTear(source) then return end
 
--- plays sound and effect when sickle tear dies
-function milkshakeMod:tearDie(tear)
-    if tear.Type ~= EntityType.ENTITY_TEAR then
-        return
-    end
-    -- if TSIL.Rooms.IsLeavingRoom() == true then return end
-    if tear.Variant ~= sickleTear then
-        return
-    end
-    local poof = TSIL.EntitySpecific.SpawnEffect(EffectVariant.TEAR_POOF_A, 0, tear.Position)
-    local newColor = Color(0.75, 0, 0, 1, 0.2, 0, 0)
-    poof.Color = newColor
-    SFXManager():Play(SoundEffect.SOUND_TEARIMPACTS)
+    AddSickleBleed(entity)
 end
 
---applies bleed on entity damaged by sickle tear, plays sound effect 
-function milkshakeMod:onGenericDamage(source, entity, data)
-    if data.isSickleTear == true then
-        if entity:IsEnemy() and entity:IsVulnerableEnemy() then
-            SFXManager():Play(SoundEffect.SOUND_MEATY_DEATHS)
 
-            if not (entity:HasEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS) or
-                entity:HasEntityFlags(EntityFlag.FLAG_BLEED_OUT)) then
-                entity:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT)
-                entity:SetColor(Color(10, 0, 0, 1, 0, 0, 0), 10, 2, true, false)
-                entity:BloodExplode()
-            end
-        end
-    end
+---@param entity Entity
+---@param source Entity
+local function OnKnifeDamage(entity, source)
+    local player = TSIL.Players.GetPlayerFromEntity(source)
+
+    if not player then return end
+    if not player:HasCollectible(enums.Collectibles.SICKLE_CELL) then return end
+
+    AddSickleBleed(entity)
 end
+
+
+---@param entity Entity
+---@param source Entity
+local function OnLaserDamage(entity, source)
+    local player = source:ToPlayer()
+    if not player then return end
+
+    if not player:HasCollectible(enums.Collectibles.SICKLE_CELL) then return end
+
+    AddSickleBleed(entity)
+end
+
+
+---@param entity Entity
+---@param source Entity
+local function OnBombDamage(entity, source)
+    local bomb = source:ToBomb()
+    if not bomb.IsFetus then return end
+
+    local player = TSIL.Players.GetPlayerFromEntity(source)
+
+    if not player then return end
+    if not player:HasCollectible(enums.Collectibles.SICKLE_CELL) then return end
+
+    AddSickleBleed(entity)
+end
+
 
 --checks if entity was damaged by tear, bomb, or effect(?) idk i copied this lol
-milkshakeMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, function(_, ent, damage, flags, source, countdown)
-    local data = ent:GetData()
-    if ent:ToNPC() then
-        if source == nil then
-            -- do nothing
-        elseif source.Type == EntityType.ENTITY_TEAR or
-            (source.Type == EntityType.ENTITY_BOMBDROP and flags == flags | DamageFlag.DAMAGE_EXPLOSION) or
-            (source.Type == EntityType.ENTITY_EFFECT and source.Variant == EffectVariant.PLAYER_CREEP_HOLYWATER_TRAIL) or
-            (source.Type == EntityType.ENTITY_EFFECT and source.Variant == EffectVariant.ROCKET) then
-            local data = source.Entity:GetData()
-            milkshakeMod:onGenericDamage(source, ent, data)
-
-        end
+---@param entity Entity
+---@param flags integer
+---@param source EntityRef
+function SickleCell:OnEntityDamage(entity, _, flags, source)
+    if not entity:ToNPC() then return end
+    if not (entity:IsEnemy() and entity:IsVulnerableEnemy()) then return end
+    if entity:HasEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS) or
+        entity:HasEntityFlags(EntityFlag.FLAG_BLEED_OUT) then
+        return
     end
-end)
 
-milkshakeMod:AddPriorityCallback(ModCallbacks.MC_EVALUATE_CACHE, CallbackPriority.LATE + 2001, -- Very low priority so the multiplier works with mods
-milkshakeMod.onCache)
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, milkshakeMod.replaceTear)
+    if source.Type == EntityType.ENTITY_TEAR then
+        OnTearDamage(entity, source.Entity)
+    elseif source.Type == EntityType.ENTITY_KNIFE then
+        OnKnifeDamage(entity, source.Entity)
+    elseif TSIL.Utils.Flags.HasFlags(flags, DamageFlag.DAMAGE_LASER) then
+        OnLaserDamage(entity, source.Entity)
+    elseif source.Type == EntityType.ENTITY_BOMB then
+        OnBombDamage(entity, source.Entity)
+    end
+end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, milkshakeMod.tearDie)
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_ENTITY_TAKE_DMG,
+    SickleCell.OnEntityDamage
+)
+
+
+---@param npc EntityNPC
+function SickleCell:OnNPCUpdate(npc)
+    local sickleCellBleedFrame = TSIL.Entities.GetEntityData(
+        milkshakeMod,
+        npc,
+        "SickleCellBleedFrame"
+    )
+    if not sickleCellBleedFrame then return end
+
+    local currentFrame = Game():GetFrameCount()
+    local currentDuration = currentFrame - sickleCellBleedFrame
+
+    if currentDuration >= BLEED_DURATION then
+        npc:ClearEntityFlags(EntityFlag.FLAG_BLEED_OUT)
+        TSIL.Entities.SetEntityData(
+            milkshakeMod,
+            npc,
+            "SickleCellBleedFrame",
+            nil
+        )
+    end
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_NPC_UPDATE,
+    SickleCell.OnNPCUpdate
+)
+
+
+---@param player EntityPlayer
+function SickleCell:OnSickleCellItemAdded(player)
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+
+    local tears = TSIL.EntitySpecific.GetTears()
+
+    local ludoTears = TSIL.Utils.Tables.Filter(tears, function (_, tear)
+        local tearSpawner = TSIL.Players.GetPlayerFromEntity(tear)
+        ---@diagnostic disable-next-line: param-type-mismatch
+        return tear:HasTearFlags(TearFlags.TEAR_LUDOVICO) and
+            not IsSickleTear(tear) and
+            tearSpawner ~= nil and
+            TSIL.Players.GetPlayerIndex(tearSpawner) == playerIndex
+    end)
+
+    TSIL.Utils.Tables.ForEach(ludoTears, function (_, tear)
+        MakeTearSickle(tear)
+    end)
+end
+milkshakeMod:AddCallback(
+    TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
+    SickleCell.OnSickleCellItemAdded,
+    {
+        nil,
+        nil,
+        enums.Collectibles.SICKLE_CELL
+    }
+)
