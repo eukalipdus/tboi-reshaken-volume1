@@ -1,10 +1,10 @@
 <pocketitems>
     <!-- Runes -->
-    <card type="special" pickup="474" description="Conductive Power" name="Spirit Of Conductivity" hud="Spirit Of Conductivity" mimiccharge="6" />
-    <card type="special" pickup="475" description="Infernal Power" name="Spirit Of Inferno" hud="Spirit Of Inferno" mimiccharge="6" />
-    <card type="special" pickup="476" description="Druidic Power" name="Spirit Of Druidity" hud="Spirit Of Druidity" mimiccharge="6" />
-    <card type="special" pickup="477" description="Clairvoyant Power" name="Spirit Of Clairvoyance" hud="Spirit Of Clairvoyance" mimiccharge="6" />
-    <card type="special" pickup="478" description="Unfocused Power" name="Spirit Of Chaos" hud="Spirit Of Chaos" mimiccharge="6" />
+    <card type="object" pickup="474" description="Conductive Power" name="Spirit Of Conductivity" hud="Spirit Of Conductivity" mimiccharge="6" />
+    <card type="object" pickup="475" description="Infernal Power" name="Spirit Of Inferno" hud="Spirit Of Inferno" mimiccharge="6" />
+    <card type="object" pickup="476" description="Druidic Power" name="Spirit Of Druidity" hud="Spirit Of Druidity" mimiccharge="6" />
+    <card type="object" pickup="477" description="Clairvoyant Power" name="Spirit Of Clairvoyance" hud="Spirit Of Clairvoyance" mimiccharge="6" />
+    <card type="object" pickup="478" description="Unfocused Power" name="Spirit Of Chaos" hud="Spirit Of Chaos" mimiccharge="6" />
     
     <!-- Tattered Page -->
     <card type="special" pickup="473" description="Discarded Archive" name="Tattered Page" hud="Tattered Page" mimiccharge="3" />
