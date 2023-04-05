@@ -4,11 +4,8 @@ local utility = milkshakeMod.utility
 
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
-local PICKUPS_TO_SPAWN = 6
 local TIMES_CAN_FAIL = 100
-local RANDOM_PICKUPS_NOCOL = 2
 local INITIAL_BREAKFAST_CHECK = 10
-local FINAL_BREAKFAST_CHECK = 50
 
 ---Returns the amount of collectibles in the current room 
 ---@return number
