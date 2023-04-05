@@ -14,7 +14,7 @@ Bardia: grayfruit, wayne
 
 Fewer: peat, fiend, golden_fiend, gate, totem, house, saxxy
 
-BrendenPerson?: heart, milkshake
+BrendenPerson?: heart, milkshake, warpheart
 
 Fridge: error, balloon_baby, eggplant, awooga
 

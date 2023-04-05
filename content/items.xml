@@ -20,6 +20,7 @@
     <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="1" hearts="24" cache="damage luck" soulhearts="2" gfx="tasty_breakfast.png" quality="3" />
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" quality="3" gfx="potofgold.png"/>
     <familiar id="22" name="Fragile Mirror" description="Care for your reflection" quality="3" gfx="fragile_mirror.png"/>
+    <active id="23" name="Leviticus" description="Purify your Soul" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
 
 
     <!-- Trinkets -->

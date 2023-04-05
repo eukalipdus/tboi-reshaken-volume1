@@ -4,11 +4,8 @@ local utility = milkshakeMod.utility
 
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
-local PICKUPS_TO_SPAWN = 6
 local TIMES_CAN_FAIL = 100
-local RANDOM_PICKUPS_NOCOL = 2
 local INITIAL_BREAKFAST_CHECK = 10
-local FINAL_BREAKFAST_CHECK = 50
 
 ---Returns the amount of collectibles in the current room 
 ---@return number
@@ -93,7 +90,10 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
         end
     else
         willBreakfast = false
-        utility:recycleCollectible(collectible, player, player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE))
+        local rng = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE)
+        local seed = rng:GetSeed()
+        local roomType = Game():GetRoom():GetType()
+        utility:recycleCollectible(collectible, player, roomType, itemPool, seed, rng)
     end
     ::failsafe::
     if willBreakfast == true then
@@ -138,7 +138,8 @@ function prismaticDice:onUse(_, _, player)
     --local collectibleCount = getCollectibleCount()
     for i, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
-        and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE then
+        and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
+        and entity.SubType ~= CollectibleType.COLLECTIBLE_NULL then
             local collectible = entity:ToPickup()
 
             local collectibleQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality
