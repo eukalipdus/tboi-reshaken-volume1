@@ -141,7 +141,8 @@ function prismaticDice:onUse(_, _, player)
     --local collectibleCount = getCollectibleCount()
     for i, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
-        and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE then
+        and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
+        and entity.SubType ~= CollectibleType.COLLECTIBLE_NULL then
             local collectible = entity:ToPickup()
 
             local collectibleQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality
