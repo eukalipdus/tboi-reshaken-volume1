@@ -2,7 +2,7 @@ local enums = milkshakeMod.enums
 local SickleCell = {}
 
 local BLEED_DURATION = 30 * 6 --30 fps * 6 seconds
-local StoneTearAnimScaleThresholds = { 0, 0.675, 0.925, 1.2, 1.695, 2.275 }
+local StoneTearAnimScaleThresholds = { 0, 0.675, 0.925, 1.2, 1.695, 2.275, 2.8 }
 
 
 ---@param tear Entity
@@ -21,8 +21,9 @@ local function GetTearAnimationNumber(tear)
     local list = StoneTearAnimScaleThresholds
     for i = 1, #list do
         if tear.Scale > list[i] then
-            size = i
+            size = i-1
         end
+        size = math.max(1, size)
     end
     return size
 end
@@ -44,6 +45,7 @@ local function MakeTearSickle(tear)
     if tear.Variant ~= TearVariant.BLUE then return end
 
     tear.Scale = tear.Scale * tearSizeMult
+    tear.Scale = math.max(0.658, tear.Scale)
 
     local sprite = tear:GetSprite()
     sprite:Load("gfx/tears/tear_sicklecell.anm2", true)
@@ -159,6 +161,11 @@ end
 function SickleCell:OnEntityDamage(entity, _, flags, source)
     if not entity:ToNPC() then return end
     if not (entity:IsEnemy() and entity:IsVulnerableEnemy()) then return end
+
+    if source.Type == EntityType.ENTITY_TEAR and IsSickleTear(source.Entity)  then
+        SFXManager():Play(SoundEffect.SOUND_MEATY_DEATHS)
+        
+    end
     if entity:HasEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS) or
         entity:HasEntityFlags(EntityFlag.FLAG_BLEED_OUT) then
         return
