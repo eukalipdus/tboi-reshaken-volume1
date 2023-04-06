@@ -312,12 +312,6 @@ function Leviticus:onItemSpawn(itemPoolType, _, seed)
 
     if not usedLeviticus then return end
 
-    TSIL.SaveManager.SetPersistentVariable(
-        milkshakeMod,
-        "UsedLeviticus",
-        false
-    )
-
     local ItemPool = Game():GetItemPool()
 
     local randomAngelItemID = ItemPool:GetCollectible(ItemPoolType.POOL_ANGEL, true, seed)
@@ -327,12 +321,4 @@ end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_PRE_GET_COLLECTIBLE,
     Leviticus.onItemSpawn
-)
-
-
-function Leviticus:cleanroom()
-end
-milkshakeMod:AddCallback(
-    ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD,
-    Leviticus.cleanroom
 )
