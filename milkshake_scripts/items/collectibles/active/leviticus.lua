@@ -362,3 +362,33 @@ milkshakeMod:AddCallback(
     ModCallbacks.MC_PRE_GET_COLLECTIBLE,
     Leviticus.onItemSpawn
 )
+
+
+function Leviticus:onAngelBossItemSpawn(pickup)
+
+    if pickup.Variant ~= PickupVariant.PICKUP_COLLECTIBLE then return end
+    if pickup.SubType == CollectibleType.COLLECTIBLE_NULL then return end
+    local roomType = Game():GetRoom():GetType()
+    if roomType ~= RoomType.ROOM_BOSS then return end
+    local usedLeviticus = TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "UsedLeviticus"
+    )
+
+    if not usedLeviticus then return end
+    if Game():GetItemPool():GetLastPool() ~= ItemPoolType.POOL_ANGEL then return end
+    if Game():GetDevilRoomDeals() < 1 then return end
+    if pickup:IsShopItem() then return end
+
+    pickup.AutoUpdatePrice = false
+    pickup.Price = 15
+    if Isaac.GetItemConfig():GetCollectible(pickup.SubType).Quality > 3 then
+        pickup.Price = 30
+    end
+    pickup.ShopItemId = -1
+
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_PICKUP_INIT, 
+    Leviticus.onAngelBossItemSpawn
+)
