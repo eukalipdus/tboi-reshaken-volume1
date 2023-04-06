@@ -54,6 +54,8 @@ local VANILLA_SOUL_HEARTS = {
 
 ---@type table<PickupVariant, LeviticusSoulHeartInfo>
 local FF_SOUL_HEARTS = {}
+---@type table<CollectibleType, boolean>
+local IMMORAL_ITEMS = {}
 if FiendFolio then
     FF_SOUL_HEARTS = {
         [FiendFolio.PICKUP.VARIANT.HALF_IMMORAL_HEART] = {
@@ -86,6 +88,11 @@ if FiendFolio then
             extraHeart = EXTRA_HEART_TYPES.BLACK,
             isBlended = true
         },
+    }
+
+    IMMORAL_ITEMS = {
+        [FiendFolio.ITEM.COLLECTIBLE.FIEND_HEART] = true,
+        [FiendFolio.ITEM.COLLECTIBLE.DEVILLED_EGG] = true
     }
 end
 
@@ -231,7 +238,36 @@ milkshakeMod:AddCallback(
 
 
 if FiendFolio then
+    local playersPickedUpImmoralItems = {}
+
+    ---@param player EntityPlayer
+    ---@param item CollectibleType
+    function Leviticus.PreCollectiblePickup(player, item)
+        if IMMORAL_ITEMS[item] then
+            local playerIndex = TSIL.Players.GetPlayerIndex(player)
+            playersPickedUpImmoralItems[playerIndex] = true
+        end
+    end
+    milkshakeMod:AddCallback(
+        TSIL.Enums.CustomCallback.PRE_ITEM_PICKUP,
+        Leviticus.PreCollectiblePickup,
+        {
+            nil,
+            nil,
+            nil,
+            TSIL.Enums.InventoryType.COLLECTIBLE
+        }
+    )
+
     function Leviticus.PreHealthAddCHAPI(player, key, hp)
+        local playerIndex = TSIL.Players.GetPlayerIndex(player)
+        if key == "SOUL_HEART" and hp == 2 and playersPickedUpImmoralItems[playerIndex] then
+            playersPickedUpImmoralItems[playerIndex] = nil
+            return
+        end
+        
+        if hp < 0 then return end
+
         if key == "SOUL_HEART" then
             AddSoulHeartCharges(player, {
                 charges = hp,
