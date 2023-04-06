@@ -136,7 +136,7 @@ local function AddSoulHeartCharges(player, soulHeartInfo)
     end
 
     for _ = 0, soulHeartInfo.charges - 1, 1 do
-        if player:GetActiveCharge(slot) < LEVITICUS_MAX_CHARGES then
+        if slot and player:GetActiveCharge(slot) < LEVITICUS_MAX_CHARGES then
             player:SetActiveCharge(player:GetActiveCharge(slot) + 1, slot)
         else
             if soulHeartInfo.extraHeart == EXTRA_HEART_TYPES.SOUL then
@@ -147,6 +147,8 @@ local function AddSoulHeartCharges(player, soulHeartInfo)
                 FiendFolio:AddImmoralHearts(player, 1)
             end
         end
+
+        slot = CheckLeviticusActiveSlot(player)
     end
 end
 
@@ -325,4 +327,12 @@ end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_PRE_GET_COLLECTIBLE,
     Leviticus.onItemSpawn
+)
+
+
+function Leviticus:cleanroom()
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD,
+    Leviticus.cleanroom
 )
