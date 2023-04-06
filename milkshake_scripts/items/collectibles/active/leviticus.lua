@@ -97,7 +97,11 @@ if FiendFolio then
 end
 
 function Leviticus:onLeviticusUse(_, _, player)
-    player:AddEternalHearts(1)
+    if ComplianceImmortal then
+        ComplianceImmortal.AddImmortalHearts(player, 2)
+    else
+        player:AddEternalHearts(1)
+    end
     SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
 
     TSIL.SaveManager.SetPersistentVariable(
