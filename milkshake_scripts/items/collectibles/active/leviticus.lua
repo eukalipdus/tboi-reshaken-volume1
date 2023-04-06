@@ -1,7 +1,7 @@
 local enums = milkshakeMod.enums
 local leviticus = {}
 
-local usedLeviticus = 0
+local usedLeviticus = 0 -- make it a floor save, this resets on room continue
 
 local LEVITICUS_MAX_CHARGES = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.LEVITICUS).MaxCharges
 
@@ -10,7 +10,9 @@ local VANILLA_SOUL_HEARTS = {
     [HeartSubType.HEART_BLACK] = true,
     [HeartSubType.HEART_BLENDED] = true,
     [HeartSubType.HEART_HALF_SOUL] = true
-  }
+}
+
+--[[ to be moved to the patch
 if FiendFolio then
 local FF_SOUL_HEARTS = {
     [FiendFolio.PICKUP.VARIANT.HALF_IMMORAL_HEART] = true,
@@ -20,7 +22,7 @@ local FF_SOUL_HEARTS = {
     [FiendFolio.PICKUP.VARIANT.HALF_BLACK_HEART] = true,
     
 }
-end
+end]]
 
 function leviticus:onLeviticusUse(item, _, player)
     player:AddEternalHearts(1)
@@ -191,6 +193,10 @@ function leviticus:onAngelBossItemSpawn(pickup)
     print("Variant1: " .. pickup.Variant)
     pickup.AutoUpdatePrice = false
     pickup.Price = 15
+    if Isaac.GetItemConfig():GetCollectible(pickup.SubType).Quality > 2 then
+        pickup.Price = 30
+    end
+    pickup.ShopItemId = -1
     print("Variant2: " .. pickup.Variant)
 end
 
