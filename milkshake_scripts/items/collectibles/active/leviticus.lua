@@ -116,7 +116,6 @@ function Leviticus:onLeviticusUse(_, _, player)
         ShowAnim = true
     }
 end
-
 milkshakeMod:AddCallback(
     ModCallbacks.MC_USE_ITEM,
     Leviticus.onLeviticusUse,
@@ -241,7 +240,7 @@ milkshakeMod:AddCallback(
 )
 
 
-if FiendFolio then
+if CustomHealthAPI then
     local playersPickedUpImmoralItems = {}
 
     ---@param player EntityPlayer
@@ -269,7 +268,12 @@ if FiendFolio then
             playersPickedUpImmoralItems[playerIndex] = nil
             return
         end
-        
+
+        if not player:HasCollectible(enums.Collectibles.LEVITICUS) then return end
+
+        local leviticus_slot = CheckLeviticusActiveSlot(player)
+        if leviticus_slot == nil then return end
+
         if hp < 0 then return end
 
         if key == "SOUL_HEART" then
@@ -309,6 +313,7 @@ else
     ---@param new integer
     function Leviticus:OnHealthChanged(player, healthType, old, new)
         if not player:HasCollectible(enums.Collectibles.LEVITICUS) then return end
+
         local leviticus_slot = CheckLeviticusActiveSlot(player)
         if leviticus_slot == nil then return end
     
