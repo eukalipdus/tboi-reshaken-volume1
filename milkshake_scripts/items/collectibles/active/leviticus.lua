@@ -370,6 +370,8 @@ milkshakeMod:AddCallback(
 
 
 function Leviticus:onAngelBossItemSpawn(pickup)
+    if TSIL.Players.DoesAnyPlayerHasItem(CollectibleType.COLLECTIBLE_ACT_OF_CONTRITION) then return end
+
     if pickup.Variant ~= PickupVariant.PICKUP_COLLECTIBLE then return end
     if pickup.SubType == CollectibleType.COLLECTIBLE_NULL then return end
     local roomType = Game():GetRoom():GetType()
