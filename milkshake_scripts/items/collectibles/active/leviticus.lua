@@ -370,7 +370,6 @@ milkshakeMod:AddCallback(
 
 
 function Leviticus:onAngelBossItemSpawn(pickup)
-
     if pickup.Variant ~= PickupVariant.PICKUP_COLLECTIBLE then return end
     if pickup.SubType == CollectibleType.COLLECTIBLE_NULL then return end
     local roomType = Game():GetRoom():GetType()
@@ -391,9 +390,8 @@ function Leviticus:onAngelBossItemSpawn(pickup)
         pickup.Price = 30
     end
     pickup.ShopItemId = -1
-
 end
 milkshakeMod:AddCallback(
-    ModCallbacks.MC_POST_PICKUP_INIT, 
+    ModCallbacks.MC_POST_PICKUP_INIT,
     Leviticus.onAngelBossItemSpawn
 )
