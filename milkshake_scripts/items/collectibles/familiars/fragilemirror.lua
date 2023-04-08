@@ -49,6 +49,7 @@ local FRAGILE_MIRROR_SPRITES = {
     "pepperman",
     "pizzahead",
     "red_baby",
+    "red_baby2",
     "robobaby",
     "saxxy",
     "seth",
@@ -70,7 +71,7 @@ local FRAGILE_MIRROR_SPRITES = {
     "yippie"
 }
 local MAX_HITPOINTS = 3
-local ROOMS_UNTIL_UNBROKEN = 3
+local ROOMS_UNTIL_UNBROKEN = 1
 
 TSIL.SaveManager.AddPersistentVariable(
     milkshakeMod,
