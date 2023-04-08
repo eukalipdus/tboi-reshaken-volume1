@@ -65,7 +65,7 @@ local FRAGILE_MIRROR_SPRITES = {
     "wario",
     "warpheart",
     "wayne",
-    "whymsy",
+    "whimsy",
     "worm",
     "yippie"
 }
