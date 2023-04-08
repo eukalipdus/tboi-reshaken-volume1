@@ -96,6 +96,13 @@ if FiendFolio then
     }
 end
 
+local CHARACTERS_CANT_PICKUP_SOUL_HEARTS = {
+    [PlayerType.PLAYER_THELOST] = true,
+    [PlayerType.PLAYER_THELOST_B] = true,
+    [PlayerType.PLAYER_KEEPER] = true,
+    [PlayerType.PLAYER_KEEPER_B] = true
+}
+
 function Leviticus:onLeviticusUse(_, _, player)
     if ComplianceImmortal then
         ComplianceImmortal.AddImmortalHearts(player, 2)
@@ -343,6 +350,38 @@ else
         Leviticus.OnHealthChanged
     )
 end
+
+---@param player EntityPlayer
+---@param collectibleType CollectibleType
+function Leviticus:OnItemAdded(player, collectibleType)
+    local playerType = player:GetPlayerType()
+    if not CHARACTERS_CANT_PICKUP_SOUL_HEARTS[playerType] then return end
+
+    local itemConfig = Isaac.GetItemConfig()
+    local collectibleConfig = itemConfig:GetCollectible(collectibleType)
+
+    if not collectibleConfig then return end
+
+    if collectibleConfig.AddSoulHearts > 0 then
+        AddSoulHeartCharges(player, {
+            charges = collectibleConfig.AddSoulHearts,
+            soundEffect = -1,
+            extraHeart = EXTRA_HEART_TYPES.SOUL
+        })
+    end
+
+    if collectibleConfig.AddBlackHearts > 0 then
+        AddSoulHeartCharges(player, {
+            charges = collectibleConfig.AddBlackHearts,
+            soundEffect = -1,
+            extraHeart = EXTRA_HEART_TYPES.BLACK
+        })
+    end
+end
+milkshakeMod:AddCallback(
+    TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
+    Leviticus.OnItemAdded
+)
 
 
 function Leviticus:onItemSpawn(itemPoolType, _, seed)
