@@ -13,7 +13,6 @@
 	<Pool Name="shop">
 		<Item Name="Sharp Cursor" Weight="1" DecreaseBy="0" RemoveOn="0.1"/>
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Shattered Orb" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="boss">
@@ -81,7 +80,6 @@
 		<Item Name="La Chancla" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Golden Shovel" Weight="0.1" DecreaseBy="0.1" RemoveOn="0.01"/>
-		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="greedCurse">
@@ -106,14 +104,12 @@
 		<Item Name="Sharp Cursor" Weight="1" DecreaseBy="0" RemoveOn="0.1"/>
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="ultraSecret">
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="bombBum">
-		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="planetarium">
 		<Item Name="Lyra" Weight="1" DeceaseBy="1" RemoveOn="0.1"/>
