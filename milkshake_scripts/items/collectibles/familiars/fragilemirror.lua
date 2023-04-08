@@ -72,10 +72,18 @@ local FRAGILE_MIRROR_SPRITES = {
 }
 local MAX_HITPOINTS = 3
 local ROOMS_UNTIL_UNBROKEN = 1
+local INVINCIBILITY_FRAMES = 30
 
 TSIL.SaveManager.AddPersistentVariable(
     milkshakeMod,
     "FragileMirrorHitPoints",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
+
+TSIL.SaveManager.AddPersistentVariable(
+    milkshakeMod,
+    "FragileMirrorIFrames",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
@@ -292,6 +300,24 @@ milkshakeMod:AddCallback(
 
 ---@param familiar EntityFamiliar
 function FragileMirror:OnFamiliarUpdate(familiar)
+    local fragileMirrorIFrames = TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "FragileMirrorIFrames"
+    )
+
+    local initSeed = familiar.InitSeed
+    local iFrames = fragileMirrorIFrames[initSeed]
+
+    if iFrames then
+        iFrames = iFrames - 1
+
+        if iFrames <= 0 then
+            iFrames = nil
+        end
+
+        fragileMirrorIFrames[initSeed] = iFrames
+    end
+
     familiar:FollowParent()
 end
 milkshakeMod:AddCallback(
@@ -308,6 +334,17 @@ local function CheckCollisionWithProjectile(familiar, projectile)
     projectile:Die()
 
     local initSeed = familiar.InitSeed
+
+    local fragileMirrorIFrames = TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "FragileMirrorIFrames"
+    )
+    local iFrames = fragileMirrorIFrames[initSeed]
+
+    if iFrames then return end
+
+    fragileMirrorIFrames[initSeed] = INVINCIBILITY_FRAMES
+
     local hitPointsPerFamiliar = TSIL.SaveManager.GetPersistentVariable(
         milkshakeMod,
         "FragileMirrorHitPoints"
@@ -435,4 +472,17 @@ end
 milkshakeMod:AddCallback(
     ModCallbacks.MC_POST_NEW_LEVEL,
     FragileMirror.OnNewLevel
+)
+
+
+function FragileMirror:OnNewRoom()
+    local fragileMirrors = TSIL.EntitySpecific.GetFamiliars(enums.Familiars.FRAGILE_MIRROR)
+
+    for _, familiar in ipairs(fragileMirrors) do
+        TryUpdateAnimation(familiar)
+    end
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_POST_NEW_ROOM,
+    FragileMirror.OnNewRoom
 )
