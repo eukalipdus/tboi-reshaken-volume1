@@ -158,7 +158,7 @@ local function BreakMirror(familiar, isRevive)
 
     SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK, 1, 2, false, 1.3)
     familiar:Remove()
-    player:AddCacheFlags(CacheFlag.CACHE_FAMILIARS)
+    player:AddCacheFlags(CacheFlag.CACHE_FAMILIARS | CacheFlag.CACHE_LUCK)
     player:EvaluateItems()
 end
 
@@ -247,6 +247,28 @@ milkshakeMod:AddCallback(
     CacheFlag.CACHE_FAMILIARS
 )
 
+---@param player EntityPlayer
+function FragileMirror:OnLuckCache(player)
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+
+    local mirrorsBrokenPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+        milkshakeMod,
+        "FragileMirrorsBrokenPerPlayer"
+    )
+
+    local mirrorsBroken = mirrorsBrokenPerPlayer[playerIndex]
+    if mirrorsBroken == nil then
+        mirrorsBroken = {}
+    end
+
+    player.Luck = player.Luck - #mirrorsBroken
+end
+milkshakeMod:AddCallback(
+    ModCallbacks.MC_EVALUATE_CACHE,
+    FragileMirror.OnLuckCache,
+    CacheFlag.CACHE_LUCK
+)
+
 
 ---@param familiar EntityFamiliar
 function FragileMirror:OnFamiliarInit(familiar)
@@ -282,7 +304,7 @@ milkshakeMod:AddCallback(
 local function CheckCollisionWithProjectile(familiar, projectile)
     if projectile:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER) then return end
 
-    projectile:Kill()
+    projectile:Die()
 
     local initSeed = familiar.InitSeed
     local hitPointsPerFamiliar = TSIL.SaveManager.GetPersistentVariable(
@@ -349,6 +371,8 @@ milkshakeMod:AddCallback(
 function FragileMirror:PostCustomRevive(player)
     if not isRevivingWithFragileMirror then return end
 
+    SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
+    player:AddSoulHearts(2)
     player:AnimateCollectible(enums.Collectibles.FRAGILE_MIRROR)
     local mirrorUsed = table.remove(familiarsUsed, 1)
     BreakMirror(mirrorUsed, true)
@@ -388,7 +412,7 @@ function FragileMirror:OnRoomClear()
             end
         end
 
-        player:AddCacheFlags(CacheFlag.CACHE_FAMILIARS)
+        player:AddCacheFlags(CacheFlag.CACHE_FAMILIARS | CacheFlag.CACHE_LUCK)
         player:EvaluateItems()
     end
 end
@@ -403,7 +427,7 @@ function FragileMirror:OnNewLevel()
     local players = TSIL.Players.GetPlayers()
 
     for _, player in ipairs(players) do
-        player:AddCacheFlags(CacheFlag.CACHE_FAMILIARS)
+        player:AddCacheFlags(CacheFlag.CACHE_FAMILIARS | CacheFlag.CACHE_LUCK)
         player:EvaluateItems()
     end
 end
