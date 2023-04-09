@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="27/02/2023 17:46:34" Version="11" Fps="18"/>
+	<Info CreatedBy="Unknown" CreatedOn="09/04/2023 16:58:42" Version="12" Fps="18"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="effects\lyrius_arrows.png" Id="0"/>
