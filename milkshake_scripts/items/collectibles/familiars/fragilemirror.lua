@@ -10,6 +10,7 @@ local FRAGILE_MIRROR_SPRITES = {
     "apollo",
     "awooga",
     "balloon_baby",
+    "bedman",
     "big_ben",
     "birdley",
     "block",
