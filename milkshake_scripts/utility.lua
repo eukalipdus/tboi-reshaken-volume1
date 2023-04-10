@@ -5,7 +5,7 @@ local enums = milkshakeMod.enums
 ---@param player EntityPlayer
 ---@param rng RNG
 function utility:shardTrinkets(player, rng)
-    local BASE_CHANCE = 50
+    local BASE_CHANCE = 75
     local velocity = Vector(2,2)
     for gridIndex = 1, Game():GetRoom():GetGridSize() do
         local grid = Game():GetRoom():GetGridEntity(gridIndex)
