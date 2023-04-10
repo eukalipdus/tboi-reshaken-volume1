@@ -12,7 +12,6 @@ function utility:shardTrinkets(player, rng, trinketMul)
         local grid = Game():GetRoom():GetGridEntity(gridIndex)
         if grid then
             if grid:GetType() == GridEntityType.GRID_ROCKT and grid.State == 2 then -- Destroyed
-                print(trinketMul)
                 for _ = 1, trinketMul do
                     local roll = rng:RandomInt(100)
 
