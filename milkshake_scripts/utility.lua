@@ -7,13 +7,13 @@ local enums = milkshakeMod.enums
 ---@param trinketMul integer
 function utility:shardTrinkets(player, rng, trinketMul)
     local BASE_CHANCE = 75
-    local velocity = Vector(2,2)
     for gridIndex = 1, Game():GetRoom():GetGridSize() do
         local grid = Game():GetRoom():GetGridEntity(gridIndex)
         if grid then
             if grid:GetType() == GridEntityType.GRID_ROCKT and grid.State == 2 then -- Destroyed
                 for _ = 1, trinketMul do
                     local roll = rng:RandomInt(100)
+                    local velocity = RandomVector()
 
                     if player:HasTrinket(enums.Trinkets.AMETHYST_SHARD)  then
                         if roll <= BASE_CHANCE then
