@@ -72,4 +72,8 @@ enums.Hearts = {
     FRUIT_HEART = 743,
 }
 
+enums.Slots = {
+    SPIRIT_KLIN_BRENDA = Isaac.GetEntityVariantByName("Spirit Klin Brenda")
+}
+
 return enums

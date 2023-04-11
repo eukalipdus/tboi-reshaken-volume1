@@ -51,3 +51,7 @@ require("milkshake_scripts.items.pick ups.fruitheart")
 require("milkshake_scripts.items.pick ups.rubyorb")
 require("milkshake_scripts.items.pick ups.sapphireOrb")
 require("milkshake_scripts.items.pick ups.tatteredpage")
+
+
+--Slots
+require("milkshake_scripts.slots.spiritklinbrenda")
