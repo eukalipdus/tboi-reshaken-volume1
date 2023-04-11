@@ -214,6 +214,58 @@ TSIL.SaveManager.AddPersistentVariable(
 
 
 ---@param player EntityPlayer
+---@param velocity Vector
+---@return EntityTear
+local function SpawnConductiveTearWithVelocity(player, velocity)
+    local tear = TSIL.EntitySpecific.SpawnTear(
+        TearVariant.BLUE,
+        0,
+        player.Position,
+        velocity,
+        player
+    )
+
+    tear.Visible = false
+    ---@diagnostic disable-next-line: param-type-mismatch
+    tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_BOUNCE | TearFlags.TEAR_TURN_HORIZONTAL)
+
+    tear.CollisionDamage = TSIL.Stage.GetEffectiveStage() * 3.5
+
+    return tear
+end
+
+
+---@param player EntityPlayer
+---@param rng RNG
+local function SpawnConductiveTear(player, rng)
+    local velocity = Vector.FromAngle(TSIL.Random.GetRandomInt(0, 360, rng)) * TSIL.Random.GetRandomFloat(8, 12, rng)
+
+    local tear = SpawnConductiveTearWithVelocity(player, velocity)
+
+    TSIL.Entities.SetEntityData(
+        milkshakeMod,
+        tear,
+        "IsConductivityTear",
+        true
+    )
+end
+
+
+---@param tear EntityTear
+---@param velocity Vector
+local function SpawnFakeParasiteTear(tear, velocity)
+    local parasiteTear = SpawnConductiveTearWithVelocity(tear.SpawnerEntity:ToPlayer(), velocity)
+
+    TSIL.Entities.SetEntityData(
+        milkshakeMod,
+        parasiteTear,
+        "IsConductivityParasiteTear",
+        true
+    )
+end
+
+
+---@param player EntityPlayer
 function SapphireOrb:OnSapphireOrbUse(_, player)
     local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
 
@@ -236,52 +288,31 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount
     end
 
-    local tear = TSIL.EntitySpecific.SpawnTear(
-        TearVariant.BLUE,
-        0,
-        player.Position,
-        player.Velocity,
-        player,
-        player:GetCardRNG(enums.Cards.SAPPHIRE_ORB)
+    local selfTear = SpawnConductiveTearWithVelocity(player, player.Velocity)
+
+    TSIL.Entities.SetEntityData(
+        milkshakeMod,
+        selfTear,
+        "IsPlayerSelfConductivityTear",
+        true
     )
 
-    tear.Visible = false
-    ---@diagnostic disable-next-line: param-type-mismatch
-    tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_BOUNCE | TearFlags.TEAR_TURN_HORIZONTAL)
-    tear.CollisionDamage = 3.5 * utility:GetCurrentChapter()
+    local rng = player:GetCardRNG(enums.Cards.SAPPHIRE_ORB)
 
-    local playerConductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PlayerSelfConductivityTear")
-    local ptrHash = GetPtrHash(tear)
-    playerConductivityTears[tostring(ptrHash)] = playerIndex
+    for angle = 0, 359, 90 do
+        local velocity = Vector.FromAngle(angle) * TSIL.Random.GetRandomFloat(8, 12, rng)
+        local tear = SpawnConductiveTearWithVelocity(player, velocity)
+
+        TSIL.Entities.SetEntityData(
+            milkshakeMod,
+            tear,
+            "IsConductivityTear",
+            true
+        )
+    end
 end
-
 milkshakeMod:AddCallback(ModCallbacks.MC_USE_CARD, SapphireOrb.OnSapphireOrbUse, enums.Cards.SAPPHIRE_ORB)
 
-
----@param player EntityPlayer
----@param rng RNG
-local function SpawnConductiveTear(player, rng)
-    local velocity = Vector.FromAngle(TSIL.Random.GetRandomInt(0, 360, rng)) * TSIL.Random.GetRandomFloat(8, 12, rng)
-
-    local tear = TSIL.EntitySpecific.SpawnTear(
-        TearVariant.BLUE,
-        0,
-        player.Position,
-        velocity,
-        player,
-        rng
-    )
-
-    tear.Visible = false
-    ---@diagnostic disable-next-line: param-type-mismatch
-    tear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_BOUNCE | TearFlags.TEAR_TURN_HORIZONTAL)
-
-    tear.CollisionDamage = TSIL.Stage.GetEffectiveStage() * 3.5
-
-    local conductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ConductivityTears")
-    local ptrHash = GetPtrHash(tear)
-    conductivityTears[tostring(ptrHash)] = true
-end
 
 ---@param slot Entity
 ---@return boolean
@@ -345,87 +376,114 @@ function SapphireOrb:OnPeffectUpdate(player)
 
     ElectrocuteSlots(player, rng)
 end
-
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, SapphireOrb.OnPeffectUpdate)
 
 
-local function SpawnFakeParasiteTear(tear, velocity)
-    local parasiteTear = TSIL.EntitySpecific.SpawnTear(
-        TearVariant.BLUE,
-        0,
-        tear.Position,
-        velocity,
-        tear.SpawnerEntity,
-        tear.InitSeed
-    )
-
-    parasiteTear.Visible = false
-    ---@diagnostic disable-next-line: param-type-mismatch
-    parasiteTear:AddTearFlags(TearFlags.TEAR_JACOBS | TearFlags.TEAR_LASER | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_BOUNCE | TearFlags.TEAR_TURN_HORIZONTAL)
-
-    local conductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ConductivityParasiteTears")
-    local ptrHash = GetPtrHash(parasiteTear)
-    conductivityTears[tostring(ptrHash)] = true
-end
-
 ---@param tear EntityTear
-function SapphireOrb:OnTearUpdate(tear)
-    local playerConductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PlayerSelfConductivityTear")
-    local conductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ConductivityTears")
-    local conductivityParasiteTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ConductivityParasiteTears")
-    local ptrHash = GetPtrHash(tear)
-
-    if playerConductivityTears[tostring(ptrHash)] then
-        local playerIndex = playerConductivityTears[tostring(ptrHash)]
-
-        local player = TSIL.Players.GetPlayerByIndex(playerIndex)
-        if not player or tear.FrameCount >= SAPPHIRE_ORB_DURATION then
-            playerConductivityTears[tostring(ptrHash)] = nil
-            tear:Remove()
-            return
-        end
-
-        tear.FallingAcceleration = -0.1
-        tear.FallingSpeed = 0
-        tear.Position = player.Position
-        tear.Velocity = player.Velocity
-
-        return
-    end
-
-    if conductivityParasiteTears[tostring(ptrHash)] then
-        if tear.FrameCount <= CONDUCTIVITY_PARASITE_TEAR_LIFESPAN then return end
-        conductivityParasiteTears[tostring(ptrHash)] = nil
+local function UpdatePlayerConductivityTear(tear)
+    local spawner = tear.SpawnerEntity
+    if not spawner then
         tear:Remove()
         return
     end
 
-    if not conductivityTears[tostring(ptrHash)] then return end
+    local player = spawner:ToPlayer()
+    if not player then
+        tear:Remove()
+        return
+    end
+
+    if tear.FrameCount >= SAPPHIRE_ORB_DURATION then
+        tear:Remove()
+    else
+        tear.Position = player.Position
+        tear.Velocity = player.Velocity
+    end
+end
+
+
+---@param tear EntityTear
+local function UpdateConductivityTear(tear)
     if tear.FrameCount <= CONDUCTIVITY_TEAR_LIFESPAN then return end
 
-    if tear:GetDropRNG():RandomFloat() < 0.7 then
+    local rng = TSIL.RNG.NewRNG(tear.InitSeed)
+
+    if rng:RandomFloat() < 0.7 then
         SpawnFakeParasiteTear(tear, tear.Velocity:Normalized():Rotated(90) * 15)
         SpawnFakeParasiteTear(tear, tear.Velocity:Normalized():Rotated(-90) * 15)
     end
 
     tear:Remove()
-    conductivityTears[tostring(ptrHash)] = nil
 end
 
+
+---@param tear EntityTear
+local function UpdateParasiteTear(tear)
+    if tear.FrameCount <= CONDUCTIVITY_PARASITE_TEAR_LIFESPAN then return end
+
+    tear:Remove()
+end
+
+
+---@param tear EntityTear
+function SapphireOrb:OnTearUpdate(tear)
+    local isPlayerConductivity = TSIL.Entities.GetEntityData(
+        milkshakeMod,
+        tear,
+        "IsPlayerSelfConductivityTear"
+    )
+    local isConductivityTear = TSIL.Entities.GetEntityData(
+        milkshakeMod,
+        tear,
+        "IsConductivityTear"
+    )
+    local isParasiteTear = TSIL.Entities.GetEntityData(
+        milkshakeMod,
+        tear,
+        "IsConductivityParasiteTear"
+    )
+
+    if isPlayerConductivity or isConductivityTear or isParasiteTear then
+        --If it's any of the conductivity tears, we need it to float indefinetely
+        tear.FallingAcceleration = -0.1
+        tear.FallingSpeed = 0
+    else
+        return
+    end
+
+    if isPlayerConductivity then
+        UpdatePlayerConductivityTear(tear)
+    elseif isConductivityTear then
+        UpdateConductivityTear(tear)
+    else
+        UpdateParasiteTear(tear)
+    end
+end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, SapphireOrb.OnTearUpdate)
 
 
 ---@param tear EntityTear
 function SapphireOrb:OnTearCollision(tear)
-    local conductivityTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ConductivityTears")
-    local conductivityParasiteTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ConductivityParasiteTears")
-    local ptrHash = GetPtrHash(tear)
+    local isPlayerConductivity = TSIL.Entities.GetEntityData(
+        milkshakeMod,
+        tear,
+        "IsPlayerSelfConductivityTear"
+    )
+    local isConductivityTear = TSIL.Entities.GetEntityData(
+        milkshakeMod,
+        tear,
+        "IsConductivityTear"
+    )
+    local isParasiteTear = TSIL.Entities.GetEntityData(
+        milkshakeMod,
+        tear,
+        "IsConductivityParasiteTear"
+    )
 
-    if not conductivityTears[tostring(ptrHash)] and not conductivityParasiteTears[tostring(ptrHash)] then return end
-
-    return true
+    if isPlayerConductivity or isConductivityTear or isParasiteTear then
+        return true
+    end
 end
-
 milkshakeMod:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, SapphireOrb.OnTearCollision)
 
 
