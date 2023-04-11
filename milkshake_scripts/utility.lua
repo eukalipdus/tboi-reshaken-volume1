@@ -2,53 +2,26 @@ local utility = {}
 local enums = milkshakeMod.enums
 
 --- Used to spawn spirit orbs for the shard series of trinkets
----@param player EntityPlayer
----@param rng RNG
----@param trinketMul integer
-function utility:shardTrinkets(player, rng, trinketMul)
-    local BASE_CHANCE = 75
-    for gridIndex = 1, Game():GetRoom():GetGridSize() do
-        local grid = Game():GetRoom():GetGridEntity(gridIndex)
-        if grid then
-            if grid:GetType() == GridEntityType.GRID_ROCKT and grid.State == 2 then -- Destroyed
-                for _ = 1, trinketMul do
-                    local roll = rng:RandomInt(100)
+---@param trinketType integer
+---@param cardType integer
+---@param gridEntity GridEntity
+function utility:shardTrinkets(trinketType, cardType, gridEntity, chance)
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        if player:HasTrinket(trinketType)
+        and gridEntity:GetType() == GridEntityType.GRID_ROCKT then
+            local rng = player:GetTrinketRNG(trinketType)
+            for _ = 1, player:GetTrinketMultiplier(trinketType) do
+                local roll = rng:RandomInt(100)
+                if roll <= chance then
                     local velocity = RandomVector()
-
-                    if player:HasTrinket(enums.Trinkets.AMETHYST_SHARD)  then
-                        if roll <= BASE_CHANCE then
-                            ---@diagnostic disable-next-line: param-type-mismatch
-                            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.AMETHYST_ORB, grid.Position, velocity, nil)
-                        end
-                    end
-
-                    if player:HasTrinket(enums.Trinkets.RUBY_SHARD) then
-                        if roll <= BASE_CHANCE then
-                            ---@diagnostic disable-next-line: param-type-mismatch
-                            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.RUBY_ORB, grid.Position, velocity, nil)
-                        end
-                    end
-                    
-                    if player:HasTrinket(enums.Trinkets.SAPPHIRE_SHARD) then
-                        if roll <= BASE_CHANCE then
-                            ---@diagnostic disable-next-line: param-type-mismatch
-                            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.SAPPHIRE_ORB, grid.Position, velocity, nil)
-                        end
-                    end
-
-                    if player:HasTrinket(enums.Trinkets.EMERALD_SHARD) then
-                        if roll <= BASE_CHANCE then
-                            ---@diagnostic disable-next-line: param-type-mismatch
-                            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, enums.Cards.EMERALD_ORB, grid.Position, velocity, nil)
-                        end
-                    end
+                    ---@diagnostic disable-next-line: param-type-mismatch
+                    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardType, gridEntity.Position, velocity, nil)
                 end
-                grid.State = -1
             end
         end
     end
 end
-
 
 ---Returns the tears stat after adding some value
 ---
