@@ -9,6 +9,11 @@ local utility = milkshakeMod.utility
 ---@field noteMarkerSprite Sprite
 ---@field notes NoteData[]
 
+---@class NoteSplashData
+---@field sprite Sprite
+---@field position Vector
+---@field direction NoteDirection
+
 ---@class NoteData
 ---@field direction NoteDirection
 ---@field height number
@@ -55,29 +60,20 @@ local INPUT_PER_NOTE_DIRECTION = {
     [NOTE_DIRECTION.RIGHT] = ButtonAction.ACTION_SHOOTRIGHT,
     [NOTE_DIRECTION.UP] = ButtonAction.ACTION_SHOOTUP
 }
+local NOTE_ANIM_PER_DIRECTION = {
+    [NOTE_DIRECTION.DOWN] = "Down",
+    [NOTE_DIRECTION.LEFT] = "Left",
+    [NOTE_DIRECTION.RIGHT] = "Right",
+    [NOTE_DIRECTION.UP] = "Up"
+}
 local INPUT_FORGIVENESS = 6
 ---@type table<NoteDirection, Sprite>
 local NOTE_SPRITES_PER_DIRECTION = {}
-do
-    local upSprite = Sprite()
-    upSprite:Load("/gfx/lyra_notes.anm2", true)
-    upSprite:Play("Up")
-    NOTE_SPRITES_PER_DIRECTION[NOTE_DIRECTION.UP] = upSprite
-
-    local downSprite = Sprite()
-    downSprite:Load("/gfx/lyra_notes.anm2", true)
-    downSprite:Play("Down")
-    NOTE_SPRITES_PER_DIRECTION[NOTE_DIRECTION.DOWN] = downSprite
-
-    local leftSprite = Sprite()
-    leftSprite:Load("/gfx/lyra_notes.anm2", true)
-    leftSprite:Play("Left")
-    NOTE_SPRITES_PER_DIRECTION[NOTE_DIRECTION.LEFT] = leftSprite
-
-    local rightSprite = Sprite()
-    rightSprite:Load("/gfx/lyra_notes.anm2", true)
-    rightSprite:Play("Right")
-    NOTE_SPRITES_PER_DIRECTION[NOTE_DIRECTION.RIGHT] = rightSprite
+for dir, anim in pairs(NOTE_ANIM_PER_DIRECTION) do
+    local sprite = Sprite()
+    sprite:Load("/gfx/lyra_notes.anm2", true)
+    sprite:Play(anim)
+    NOTE_SPRITES_PER_DIRECTION[dir] = sprite
 end
 
 
@@ -125,8 +121,27 @@ local SONGS = {
 }
 
 
+---@type NoteSplashData[]
+local noteSplashes = {}
+
+
+---@param dir NoteDirection
+---@param pos Vector
+local function CreateNoteSplash(dir, pos)
+    local sprite = Sprite()
+    sprite:Load("gfx/lyra_note_splashes.anm2", true)
+    local anim = NOTE_ANIM_PER_DIRECTION[dir]
+    sprite:Play(anim, true)
+    noteSplashes[#noteSplashes+1] = {
+        direction = dir,
+        position = pos,
+        sprite = sprite
+    }
+end
+
+
 ---@param pickup EntityPickup
-function Lyra:OnPickupInitFirst(pickup)    
+function Lyra:OnPickupInitFirst(pickup)
     if not TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA) then return end
 
     --It's already an orb
@@ -277,6 +292,9 @@ local function HandleLyraInput(player, playerUsingLyraData)
         local difference = math.abs(firstNote.height)
 
         if difference <= INPUT_FORGIVENESS then
+            local renderPos = Isaac.WorldToScreen(player.Position)
+            local baseYPos = -40 * player.SpriteScale.Y
+            CreateNoteSplash(firstNote.direction, renderPos + Vector(0, baseYPos - firstNote.height))
             table.remove(playerUsingLyraData.notes, 1)
 
             if #playerUsingLyraData.notes == 0 then
@@ -329,3 +347,29 @@ function Lyra:OnInput(entity, inputHook, buttonAction)
     end
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_INPUT_ACTION, Lyra.OnInput)
+
+
+function Lyra:OnRender()
+    local filteredSplashes = {}
+
+    TSIL.Utils.Tables.ForEach(noteSplashes, function (_, noteSplash)
+        local anim = NOTE_ANIM_PER_DIRECTION[noteSplash.direction]
+
+        if noteSplash.sprite:IsFinished(anim) then
+            return
+        end
+
+        noteSplash.sprite:Render(noteSplash.position)
+        noteSplash.sprite:Update()
+        filteredSplashes[#filteredSplashes+1] = noteSplash
+    end)
+
+    noteSplashes = filteredSplashes
+end
+milkshakeMod:AddCallback(ModCallbacks.MC_POST_RENDER, Lyra.OnRender)
+
+
+function Lyra:OnNewRoom()
+    noteSplashes = {}
+end
+milkshakeMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Lyra.OnNewRoom)

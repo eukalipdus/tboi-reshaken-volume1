@@ -7,13 +7,12 @@
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Glass Heart" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+
 		<Item Name="Shattered Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="shop">
 		<Item Name="Sharp Cursor" Weight="1" DecreaseBy="0" RemoveOn="0.1"/>
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Shattered Orb" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="boss">
@@ -30,7 +29,7 @@
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Golden Shovel" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Glass Heart" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+
 		<Item Name="Shattered Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="library">
@@ -43,7 +42,7 @@
 		<Item Name="La Chancla" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="redChest">
-		<Item Name="Glass Heart" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+
 	</Pool>
 	<Pool Name="beggar">
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
@@ -53,7 +52,7 @@
 	</Pool>
 	<Pool Name="curse">
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Glass Heart" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+
 	</Pool>
 	<Pool Name="keyMaster">
 		
@@ -69,7 +68,7 @@
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Glass Heart" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+
 	</Pool>
 	<Pool Name="greedBoss">
 		<Item Name="La Chancla" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
@@ -81,12 +80,11 @@
 		<Item Name="La Chancla" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Golden Shovel" Weight="0.1" DecreaseBy="0.1" RemoveOn="0.01"/>
-		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="greedCurse">
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Glass Heart" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+
 	</Pool>
 	<Pool Name="greedDevil">
 		<Item Name="Firecracker Flower" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
@@ -98,22 +96,20 @@
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Glass Heart" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		--<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+
 		<Item Name="Shattered Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="craneGame">
 		<Item Name="Sharp Cursor" Weight="1" DecreaseBy="0" RemoveOn="0.1"/>
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="ultraSecret">
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="bombBum">
-		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="planetarium">
 		<Item Name="Lyra" Weight="1" DeceaseBy="1" RemoveOn="0.1"/>
@@ -136,7 +132,7 @@
 	<Pool Name="glass">
 		<Item Name="Milkshake!" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Glass Heart" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+
 		<Item Name="Shattered Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 </ItemPools>

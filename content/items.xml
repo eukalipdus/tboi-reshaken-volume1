@@ -14,12 +14,12 @@
     <familiar id="14" name="Spirit Bum" description="He wants your soul." gfx="collectibles_spiritbum.png" quality="0" />
     <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" quality="1" />
     <familiar id="16" name="Inner Reflection" description="It's impossible to outrun your own reflection." gfx="InnerReflection.png" quality="0" />
-    <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" quality="2" />
-    <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="1" hearts="-2" gfx="spoiled_breakfast.png" quality="0" />
+    <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" quality="3" />
+    <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="1" gfx="spoiled_breakfast.png" quality="0" />
     <passive id="19" name="Balanced Breakfast" description="HP + luck up!" maxhearts="1" hearts="2" cache="luck" soulhearts="2" gfx="balanced_breakfast.png" quality="2" />
-    <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="1" hearts="24" cache="damage luck" soulhearts="2" gfx="tasty_breakfast.png" quality="3" />
+    <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="1" hearts="24" cache="damage luck firedelay" soulhearts="2" gfx="tasty_breakfast.png" quality="3" />
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" quality="3" gfx="potofgold.png"/>
-    <familiar id="22" name="Fragile Mirror" description="Care for your reflection" quality="3" gfx="fragile_mirror.png"/>
+    <familiar id="22" name="Glass Idol" description="Care for your reflection" quality="3" gfx="glass_idol.png"/>
     <active id="23" name="Leviticus" description="Purify your Soul" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
 
 

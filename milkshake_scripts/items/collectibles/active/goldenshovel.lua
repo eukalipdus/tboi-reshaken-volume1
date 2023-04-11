@@ -48,7 +48,7 @@ end
 
 ---@param rng RNG
 ---@param position Vector
-function SpawnGoldenPickup(rng, position)
+local function SpawnGoldenPickup(rng, position)
     local room = Game():GetRoom()
     local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
     local roll = TSIL.Random.GetRandomInt(0, 3, rng)
@@ -87,7 +87,7 @@ end
 
 ---@param rng RNG
 ---@param position Vector
-function SpawnGoldenChests(rng, position)
+local function SpawnGoldenChests(rng, position)
     local room = Game():GetRoom()
     local roll = TSIL.Random.GetRandomInt(0, 1, rng)
 

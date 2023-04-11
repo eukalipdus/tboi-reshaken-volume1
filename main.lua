@@ -30,6 +30,9 @@ require("milkshake_scripts.items.collectibles.familiars.sharpcursor")
 require("milkshake_scripts.items.collectibles.active.shatteredorb")
 require("milkshake_scripts.items.collectibles.passive.sicklecell")
 require("milkshake_scripts.items.collectibles.active.leviticus")
+require("milkshake_scripts.items.collectibles.passive.balancedbreakfast")
+require("milkshake_scripts.items.collectibles.passive.heartybreakfast")
+require("milkshake_scripts.items.collectibles.passive.spoiledbreakfast")
 
 -- Trinkets
 require("milkshake_scripts.items.trinkets.amethystshard")
@@ -48,3 +51,7 @@ require("milkshake_scripts.items.pick ups.fruitheart")
 require("milkshake_scripts.items.pick ups.rubyorb")
 require("milkshake_scripts.items.pick ups.sapphireOrb")
 require("milkshake_scripts.items.pick ups.tatteredpage")
+
+
+--Slots
+require("milkshake_scripts.slots.spiritklinbrenda")

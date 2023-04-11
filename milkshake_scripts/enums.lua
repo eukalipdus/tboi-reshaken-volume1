@@ -18,7 +18,7 @@ enums.Collectibles = {
     SHATTERED_ORB = Isaac.GetItemIdByName("Shattered Orb"),
     LYRA = Isaac.GetItemIdByName("Lyra"),
     POT_OF_GOLD = Isaac.GetItemIdByName("Pot of Gold"),
-    FRAGILE_MIRROR = Isaac.GetItemIdByName("Fragile Mirror"),
+    FRAGILE_MIRROR = Isaac.GetItemIdByName("Glass Idol"),
     SPOILED_BREAKFAST = Isaac.GetItemIdByName("Spoiled Breakfast"),
     BALANCED_BREAKFAST = Isaac.GetItemIdByName("Balanced Breakfast"),
     HEARTY_BREAKFAST = Isaac.GetItemIdByName("Hearty Breakfast"),
@@ -70,6 +70,10 @@ enums.Costumes = {
 
 enums.Hearts = {
     FRUIT_HEART = 743,
+}
+
+enums.Slots = {
+    SPIRIT_KLIN_BRENDA = Isaac.GetEntityVariantByName("Spirit Klin Brenda")
 }
 
 return enums

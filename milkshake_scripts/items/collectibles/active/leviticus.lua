@@ -96,6 +96,13 @@ if FiendFolio then
     }
 end
 
+local CHARACTERS_CANT_PICKUP_SOUL_HEARTS = {
+    [PlayerType.PLAYER_THELOST] = true,
+    [PlayerType.PLAYER_THELOST_B] = true,
+    [PlayerType.PLAYER_KEEPER] = true,
+    [PlayerType.PLAYER_KEEPER_B] = true
+}
+
 function Leviticus:onLeviticusUse(_, _, player)
     if ComplianceImmortal then
         ComplianceImmortal.AddImmortalHearts(player, 2)
@@ -116,7 +123,6 @@ function Leviticus:onLeviticusUse(_, _, player)
         ShowAnim = true
     }
 end
-
 milkshakeMod:AddCallback(
     ModCallbacks.MC_USE_ITEM,
     Leviticus.onLeviticusUse,
@@ -241,7 +247,7 @@ milkshakeMod:AddCallback(
 )
 
 
-if FiendFolio then
+if CustomHealthAPI then
     local playersPickedUpImmoralItems = {}
 
     ---@param player EntityPlayer
@@ -269,7 +275,12 @@ if FiendFolio then
             playersPickedUpImmoralItems[playerIndex] = nil
             return
         end
-        
+
+        if not player:HasCollectible(enums.Collectibles.LEVITICUS) then return end
+
+        local leviticus_slot = CheckLeviticusActiveSlot(player)
+        if leviticus_slot == nil then return end
+
         if hp < 0 then return end
 
         if key == "SOUL_HEART" then
@@ -309,6 +320,7 @@ else
     ---@param new integer
     function Leviticus:OnHealthChanged(player, healthType, old, new)
         if not player:HasCollectible(enums.Collectibles.LEVITICUS) then return end
+
         local leviticus_slot = CheckLeviticusActiveSlot(player)
         if leviticus_slot == nil then return end
     
@@ -339,6 +351,38 @@ else
     )
 end
 
+---@param player EntityPlayer
+---@param collectibleType CollectibleType
+function Leviticus:OnItemAdded(player, collectibleType)
+    local playerType = player:GetPlayerType()
+    if not CHARACTERS_CANT_PICKUP_SOUL_HEARTS[playerType] then return end
+
+    local itemConfig = Isaac.GetItemConfig()
+    local collectibleConfig = itemConfig:GetCollectible(collectibleType)
+
+    if not collectibleConfig then return end
+
+    if collectibleConfig.AddSoulHearts > 0 then
+        AddSoulHeartCharges(player, {
+            charges = collectibleConfig.AddSoulHearts,
+            soundEffect = -1,
+            extraHeart = EXTRA_HEART_TYPES.SOUL
+        })
+    end
+
+    if collectibleConfig.AddBlackHearts > 0 then
+        AddSoulHeartCharges(player, {
+            charges = collectibleConfig.AddBlackHearts,
+            soundEffect = -1,
+            extraHeart = EXTRA_HEART_TYPES.BLACK
+        })
+    end
+end
+milkshakeMod:AddCallback(
+    TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
+    Leviticus.OnItemAdded
+)
+
 
 function Leviticus:onItemSpawn(itemPoolType, _, seed)
     local roomType = Game():GetRoom():GetType()
@@ -365,6 +409,7 @@ milkshakeMod:AddCallback(
 
 
 function Leviticus:onAngelBossItemSpawn(pickup)
+    if TSIL.Players.DoesAnyPlayerHasItem(CollectibleType.COLLECTIBLE_ACT_OF_CONTRITION) then return end
 
     if pickup.Variant ~= PickupVariant.PICKUP_COLLECTIBLE then return end
     if pickup.SubType == CollectibleType.COLLECTIBLE_NULL then return end
@@ -386,9 +431,8 @@ function Leviticus:onAngelBossItemSpawn(pickup)
         pickup.Price = 30
     end
     pickup.ShopItemId = -1
-
 end
 milkshakeMod:AddCallback(
-    ModCallbacks.MC_POST_PICKUP_INIT, 
+    ModCallbacks.MC_POST_PICKUP_INIT,
     Leviticus.onAngelBossItemSpawn
 )
