@@ -2,11 +2,8 @@ local sapphireShard = {}
 local enums = milkshakeMod.enums
 local utility = milkshakeMod.utility
 
-function sapphireShard:onPlayerUpdate(player)
-    if not player then return end
-    if player:HasTrinket(enums.Trinkets.SAPPHIRE_SHARD) then
-        utility:shardTrinkets(player, player:GetTrinketRNG(enums.Trinkets.SAPPHIRE_SHARD), player:GetTrinketMultiplier(enums.Trinkets.SAPPHIRE_SHARD))
-    end
+function sapphireShard:postGridEntityBroken(gridEntity)
+    utility:shardTrinkets(enums.Trinkets.SAPPHIRE_SHARD, enums.Cards.SAPPHIRE_ORB, gridEntity, 75)
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, sapphireShard.onPlayerUpdate)
+milkshakeMod:AddCallback(TSIL.Enums.CustomCallback.POST_GRID_ENTITY_BROKEN, sapphireShard.postGridEntityBroken)
 return sapphireShard

@@ -2,11 +2,8 @@ local rubyShard = {}
 local enums = milkshakeMod.enums
 local utility = milkshakeMod.utility
 
-function rubyShard:onPlayerUpdate(player)
-    if not player then return end
-    if player:HasTrinket(enums.Trinkets.RUBY_SHARD) then
-        utility:shardTrinkets(player, player:GetTrinketRNG(enums.Trinkets.RUBY_SHARD), player:GetTrinketMultiplier(enums.Trinkets.RUBY_SHARD))
-    end
+function rubyShard:postGridEntityBroken(gridEntity)
+    utility:shardTrinkets(enums.Trinkets.RUBY_SHARD, enums.Cards.RUBY_ORB, gridEntity, 75)
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, rubyShard.onPlayerUpdate)
+milkshakeMod:AddCallback(TSIL.Enums.CustomCallback.POST_GRID_ENTITY_BROKEN, rubyShard.postGridEntityBroken)
 return rubyShard
