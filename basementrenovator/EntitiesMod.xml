@@ -1,0 +1,6 @@
+	
+	<entity Group="Consumables" ID="5" Image="MilkshakeSprites/ElectricSpirit.png" Kind="Milkshake!" Name="Spirit of Conductivity" Subtype="474" Variant="300" />
+    <entity Group="Consumables" ID="5" Image="MilkshakeSprites/FireSpirit.png"     Kind="Milkshake!" Name="Spirit of Inferno"      Subtype="475" Variant="300" />
+    <entity Group="Consumables" ID="5" Image="MilkshakeSprites/NatureSpirit.png"   Kind="Milkshake!" Name="Spirit of Druidity"     Subtype="476" Variant="300" />
+    <entity Group="Consumables" ID="5" Image="MilkshakeSprites/PsychicSpirit.png"  Kind="Milkshake!" Name="Spirit of Clairvoyance" Subtype="477" Variant="300" />
+    <entity Group="Consumables" ID="5" Image="MilkshakeSprites/RandomSpirit.png"   Kind="Milkshake!" Name="Spirit of Chaos"        Subtype="478" Variant="300" />
