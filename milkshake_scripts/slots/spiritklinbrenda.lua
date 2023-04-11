@@ -11,8 +11,14 @@ local ORBS = {
 }
 
 
+---@param brenda Entity
 function SpiritKlin:OnBrendaUpdate(brenda)
     local sprite = brenda:GetSprite()
+
+    if brenda.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND then
+        sprite:Play("Broken", false)
+        return
+    end
 
     if sprite:IsFinished("Wiggle") then
         sprite:Play("Prize", true)
