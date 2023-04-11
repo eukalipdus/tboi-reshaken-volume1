@@ -31,6 +31,7 @@ require("milkshake_scripts.items.collectibles.active.shatteredorb")
 require("milkshake_scripts.items.collectibles.passive.sicklecell")
 require("milkshake_scripts.items.collectibles.active.leviticus")
 require("milkshake_scripts.items.collectibles.passive.balancedbreakfast")
+require("milkshake_scripts.items.collectibles.passive.heartybreakfast")
 
 -- Trinkets
 require("milkshake_scripts.items.trinkets.amethystshard")
