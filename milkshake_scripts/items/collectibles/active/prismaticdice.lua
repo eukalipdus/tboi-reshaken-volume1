@@ -37,11 +37,17 @@ local SCHEDULE_FRAMES = 2
 ---@return Vector
 local function getSplitPosition(index, first, second, collectible)
     local spawnPosition
+    
     if index == first then
         spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
     elseif index == second then
         spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
     end
+
+    if not spawnPosition then
+        spawnPosition = collectible.Position
+    end
+
     return spawnPosition
 end
 
