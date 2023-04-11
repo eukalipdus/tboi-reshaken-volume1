@@ -2,8 +2,8 @@ local utility = {}
 local enums = milkshakeMod.enums
 
 --- Used to spawn spirit orbs for the shard series of trinkets
----@param trinketType integer
----@param cardType integer
+---@param trinketType TrinketType
+---@param cardType Card
 ---@param gridEntity GridEntity
 function utility:shardTrinkets(trinketType, cardType, gridEntity, chance)
     for i = 0, Game():GetNumPlayers() - 1 do
