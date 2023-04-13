@@ -88,7 +88,7 @@ local function BumFamiliarUpdate(_, familiar)
 		local closestEnt = nil
 		for _, entity in pairs(TSIL.Entities.GetEntities(nil, nil, nil, nil)) do
 			for _, pickup in pairs(bumInfo.pickups) do
-				if entity:Exists() and entity:ToPickup() and entity:ToPickup().Price == 0 and entity.Type == pickup.value[1] and entity.Variant == pickup.value[2] and entity.SubType == pickup.value[3] then
+				if entity:Exists() and not entity:IsDead() and entity:ToPickup() and entity:ToPickup().Price == 0 and entity.Type == pickup.value[1] and entity.Variant == pickup.value[2] and entity.SubType == pickup.value[3] then
 					if (entity.Position - familiar.Position):LengthSquared() < closestDist then
 						closestEnt = entity:ToPickup()
 						closestDist = (entity.Position - familiar.Position):LengthSquared()
@@ -118,13 +118,15 @@ local function BumFamiliarUpdate(_, familiar)
 						closestEnt:PlayPickupSound()
 						closestEnt.Velocity = Vector(0, 0)
 						closestEnt.EntityCollisionClass = 0
-						local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, closestEnt.Position, Vector.Zero, closestEnt):ToEffect()
-						effect.Timeout = closestEnt.Timeout
-						local sprite = effect:GetSprite()
-						sprite:Load(closestEnt:GetSprite():GetFilename(), true)
-						sprite:Play("Collect", true)
+						closestEnt:GetSprite():Play("Collect", true)
+						closestEnt:Die()
+						-- local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, closestEnt.Position, Vector.Zero, closestEnt):ToEffect()
+						-- effect.Timeout = closestEnt.Timeout
+						-- local sprite = effect:GetSprite()
+						-- sprite:Load(closestEnt:GetSprite():GetFilename(), true)
+						--sprite:Play("Collect", true)
 						--Mod:KillChoice(closestEnt) -- get rid of pickups with same options index
-						closestEnt:Remove()
+						--closestEnt:Remove()
 						--print("Picked up")
 					end
 					break
