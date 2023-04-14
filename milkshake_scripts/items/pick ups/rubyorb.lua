@@ -3,15 +3,15 @@ local enums = milkshakeMod.enums
 local utility = milkshakeMod.utility
 
 --[[Customisation]]
-local INHALING_DURATION = 50
-local angleVariance = 32;
+local INHALING_DURATION = 40
+local angleVariance = 28;
 local maxAngle = 180;
-local blendAmount = 0.2;
+local blendAmount = 0.4;
 
-local numShots = 35;
+local numShots = 40;
 local shootTime = 70;
 
-local shotSpeed = 9;
+local shotSpeed = 8;
 
 --Other Variables
 local clampAngle = (maxAngle / 2) - (angleVariance / 2);
