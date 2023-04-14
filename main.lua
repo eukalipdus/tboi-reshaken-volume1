@@ -4,7 +4,7 @@ require("loi_milkshake.TSIL").Init("loi_milkshake")
 
 milkshakeMod.enums = require("milkshake_scripts.enums")
 milkshakeMod.utility = require("milkshake_scripts.utility")
-milkshakeMod.bumAPI = require("milkshake_scripts.bumAPI")
+require("milkshake_scripts.bumAPI.core")
 
 local eid = require("milkshake_scripts.modcompatibility.eid")
 eid:addEid()
