@@ -3,7 +3,7 @@ local enums = milkshakeMod.enums
 local utility = milkshakeMod.utility
 
 --[[Customisation]]
-local INHALING_DURATION = 30
+local INHALING_DURATION = 50
 local angleVariance = 32;
 local maxAngle = 180;
 local blendAmount = 0.2;
@@ -194,6 +194,8 @@ function RubyOrb:OnPlayerRender(player)
 	local inhalingInfo = inhalingInfoPerPlayer[playerIndex]
 
 	if not inhalingInfo then return end
+
+	if not player:IsExtraAnimationFinished() then return end
 
 	local renderPos = Isaac.WorldToScreen(player.Position)
 
