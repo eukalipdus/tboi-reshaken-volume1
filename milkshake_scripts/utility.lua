@@ -208,4 +208,17 @@ function utility:recycleCollectible(collectible, player, roomType, itemPool, see
     end
 end
 
+--- Check if a value is inside of a table
+---@param table table
+---@param val any
+function utility:hasValue(table, val)
+    for i, value in pairs(table) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
 return utility
