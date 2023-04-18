@@ -110,8 +110,10 @@ function Leviticus:onLeviticusUse(_, _, player)
         player:AddEternalHearts(1)
     end
     if LibraryExpanded then
-        for i = 1, LibraryExpanded:GetTBOATB(player) + 2 do
-            player:UseActiveItem(CollectibleType.COLLECTIBLE_CRACK_THE_SKY, UseFlag.USE_NOANIM | UseFlag.USE_MIMIC)
+        if LibraryExpanded:GetTBOATB(player) > 0 then
+            for i = 1, LibraryExpanded:GetTBOATB(player) + 2 do
+                player:UseActiveItem(CollectibleType.COLLECTIBLE_CRACK_THE_SKY, UseFlag.USE_NOANIM | UseFlag.USE_MIMIC)
+            end
         end
     end
     SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
