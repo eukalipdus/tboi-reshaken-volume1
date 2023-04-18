@@ -77,4 +77,18 @@ enums.Slots = {
     SPIRIT_KLIN_BRENDA = Isaac.GetEntityVariantByName("Spirit Klin Brenda")
 }
 
+enums.Coins = {
+    ROTTEN_PENNY = 3405,
+    FLAT_PENNY = 3406,
+    BURNT_PENNY = 3407,
+    BUTT_PENNY = 3408,
+    CHARGED_PENNY = 3409,
+    CURSED_PENNY = 3410,
+    BLOODY_PENNY = 3411,
+    BLESSED_PENNY = 3412,
+    COUNTERFEIT_PENNY = 3413,
+    ACID_PENNY = 3414,
+    CRYSTAL_PENNY = 3415,
+}
+
 return enums

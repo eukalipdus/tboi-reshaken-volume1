@@ -86,4 +86,70 @@
     numGridCollisionPoints="24" shadowSize="33" stageHP="0" id="6" variant="3270">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
     </entity>
+
+    <entity anm2path="rotten_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Rotten Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3405">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="flat_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Flat Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3406">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="burnt_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Burnt Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3407">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="butt_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Butt Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3408">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="charged_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Charged Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3409">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="cursed_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Cursed Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3410">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="bloody_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Bloody Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3411">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="blessed_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Blessed Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3412">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="counterfeit_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Counterfeit Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3413">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="acid_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Acid Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3414">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="crystal_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Crystal Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3415">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
 </entities>
