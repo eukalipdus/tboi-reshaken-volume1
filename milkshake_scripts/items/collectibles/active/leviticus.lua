@@ -109,6 +109,11 @@ function Leviticus:onLeviticusUse(_, _, player)
     else
         player:AddEternalHearts(1)
     end
+    if LibraryExpanded then
+        for i = 1, LibraryExpanded:GetTBOATB(player) + 2 do
+            player:UseActiveItem(CollectibleType.COLLECTIBLE_CRACK_THE_SKY, UseFlag.USE_NOANIM | UseFlag.USE_MIMIC)
+        end
+    end
     SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
 
     TSIL.SaveManager.SetPersistentVariable(
