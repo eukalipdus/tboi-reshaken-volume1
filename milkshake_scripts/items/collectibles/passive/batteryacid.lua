@@ -20,7 +20,8 @@ function batteryAcid:preSpawnCleanAward()
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, batteryAcid.preSpawnCleanAward)
 
-function batteryAcid:entityTakeDmg(player)
+function batteryAcid:entityTakeDmg(entity)
+    local player = entity:ToPlayer()
     if player:HasCollectible(enums.Collectibles.BATTERY_ACID) then
         local newCharge = player:GetActiveCharge() + player:GetBatteryCharge() - 3
         player:SetActiveCharge(newCharge)
