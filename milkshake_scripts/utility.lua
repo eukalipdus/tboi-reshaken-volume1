@@ -169,42 +169,48 @@ function utility:GetCurrentChapter()
 end
 
 --- Recreation of Tainted Cain's item to pickup effect
----@param collectible EntityPickup
+---@param position Vector
 ---@param player EntityPlayer
 ---@param roomType integer
 ---@param itemPool ItemPool
 ---@param seed integer
 ---@param rng RNG
-function utility:recycleCollectible(collectible, player, roomType, itemPool, seed, rng)
+function utility:RecycleCollectible(position, player, roomType, itemPool, seed, rng)
     local mulVecBy = 4
     local coins = rng:RandomInt(7)
     local keysBombsHearts = rng:RandomInt(4) + 1
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, collectible.Position, Vector.Zero, player)
+    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, position, Vector.Zero, player)
     SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
 
     for _ = 1, coins do
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 0, collectible.Position, RandomVector() * mulVecBy, player)
+        TSIL.PickupSpecific.SpawnCoin(0, position, RandomVector() * mulVecBy, player, rng)
     end
 
     for _ = 1, keysBombsHearts do
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 4, collectible.Position, RandomVector() * mulVecBy, player)
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_NULL,
+            TSIL.Enums.PickupNullSubType.EXCLUDE_COLLECTIBLES_TRINKETS_CHESTS,
+            position,
+            RandomVector() * mulVecBy,
+            player
+        )
     end
 
     if roomType == RoomType.ROOM_ANGEL then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ETERNAL, collectible.Position, RandomVector() * mulVecBy, player)
+        TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_ETERNAL, position, RandomVector() * mulVecBy, player)
     
     elseif roomType == RoomType.ROOM_DEVIL then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collectible.Position, RandomVector() * mulVecBy, player)
+        TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_BLACK, position, RandomVector() * mulVecBy, player)
     
     elseif roomType == RoomType.ROOM_SECRET then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BONE, collectible.Position, RandomVector() * mulVecBy, player)
+        TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_BONE, position, RandomVector() * mulVecBy, player)
     
     elseif roomType == RoomType.ROOM_CURSE then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, collectible.Position, RandomVector() * mulVecBy, player)
+        TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_ROTTEN, position, RandomVector() * mulVecBy, player)
         
     elseif roomType == RoomType.ROOM_PLANETARIUM then
         local rune = itemPool:GetCard(seed, false, true, true)
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, collectible.Position, RandomVector() * mulVecBy, player)
+        TSIL.PickupSpecific.SpawnCard(rune, position, RandomVector() * mulVecBy, player, rng)
     end
 end
 
