@@ -41,8 +41,9 @@ require("milkshake_scripts.items.trinkets.rubyshard")
 require("milkshake_scripts.items.trinkets.sapphireshard")
 require("milkshake_scripts.items.trinkets.emeraldshard")
 require("milkshake_scripts.items.trinkets.tungstencube")
-require("milkshake_scripts.items.trinkets.acidpenny.lua")
-require("milkshake_scripts.items.trinkets.crystalpenny.lua")
+require("milkshake_scripts.items.trinkets.acidpenny")
+require("milkshake_scripts.items.trinkets.crystalpenny")
+require("milkshake_scripts.items.trinkets.rockwheel")
 
 --Pick ups
 require("milkshake_scripts.items.pick ups.amethystorb")

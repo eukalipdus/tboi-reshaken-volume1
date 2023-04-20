@@ -35,6 +35,7 @@ enums.Trinkets = {
     TUNGSTEN_CUBE = Isaac.GetTrinketIdByName("Tungsten Cube"),
     ACID_PENNY = Isaac.GetTrinketIdByName("Acid Penny"),
     CRYSTAL_PENNY = Isaac.GetTrinketIdByName("Crystal Penny"),
+    ROCK_WHEEL = Isaac.GetTrinketIdByName("Rock Wheel"),
 }
 
 enums.Cards = {
