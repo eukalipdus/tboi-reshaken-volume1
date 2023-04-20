@@ -1,8 +1,9 @@
 local game = Game()
 local rng = RNG()
 local enums = milkshakeMod.enums
+local CrystalPenny = {}
 
-function milkshakeMod:PrePickupCollision(Pickup, Collider, _)
+function CrystalPenny:PrePickupCollision(Pickup, Collider, _)
 	if Collider:ToPlayer() and Pickup.SubType ~= 6 then
         local player = Collider:ToPlayer()
         if player:HasTrinket(enums.Trinkets.CRYSTAL_PENNY) then
@@ -26,4 +27,5 @@ function milkshakeMod:PrePickupCollision(Pickup, Collider, _)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, milkshakeMod.PrePickupCollision, PickupVariant.PICKUP_COIN)
+milkshakeMod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CrystalPenny.PrePickupCollision, PickupVariant.PICKUP_COIN)
+return CrystalPenny

@@ -30,7 +30,8 @@
     <trinket name="Emerald Shard" description="A glimpse into the Past" gfx="trinkets_emeraldcluster.png" />
     <trinket name="Tungsten Cube" description="It's heavy" gfx="trinkets_tungstencube.png" cache="speed" />
     <trinket name="Acid Penny"    description="[RACIST PLACEHOLDER]" gfx="trinkets_acidpenny.png" />
-    <trinket name="Crystal Penny" description="Wealth of Knowledge" gfx="trinkets_crystalpenny.png" />
+    <trinket name="Crystal Penny" description="Wealth of Knowledge"  gfx="trinkets_crystalpenny.png" />
+    <trinket name="Rock Wheel"    description="Stone Aged Allies"    gfx="rock_wheel.png" cache="speed"/>
 
     <!-- unused -->
     <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" quality="1" /> 
