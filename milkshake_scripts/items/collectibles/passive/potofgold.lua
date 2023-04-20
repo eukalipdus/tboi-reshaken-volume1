@@ -23,7 +23,7 @@ function potOfGold:onPlayerEffectUpdate(player)
                 local pickup = entity:ToPickup()
                 if (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB) then
                     local rng = player:GetCollectibleRNG(enums.Collectibles.POT_OF_GOLD)
-                    local roll = rng:RandomInt(#rainbowPennies)
+                    local roll = rng:RandomInt(#rainbowPennies + 1)
                     pickup:Remove()
                     TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, rainbowPennies[roll], pickup.Position, Vector.Zero, player)
                 end

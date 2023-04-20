@@ -5,7 +5,7 @@ local utility = milkshakeMod.utility
 function specialPennies:prePickupCollision(pickup, collider)
     if pickup.Type == EntityType.ENTITY_PICKUP
     and pickup.Variant == PickupVariant.PICKUP_COIN
-    and utility:hasValue(enums.Coins, pickup.SubType)
+    and utility:HasValue(enums.Coins, pickup.SubType)
     and collider.Type == EntityType.ENTITY_PLAYER then
         
         pickup:Die()

@@ -54,7 +54,7 @@ require("milkshake_scripts.items.pick ups.rubyorb")
 require("milkshake_scripts.items.pick ups.sapphireOrb")
 require("milkshake_scripts.items.pick ups.spiritorbs")
 require("milkshake_scripts.items.pick ups.tatteredpage")
-require("milkshake_scripts.pickups.specialpennies")
+require("milkshake_scripts.items.pick ups.specialpennies")
 
 
 --Slots
