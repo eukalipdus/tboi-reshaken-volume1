@@ -22,6 +22,11 @@
     <familiar id="22" name="Glass Idol" description="Care for your reflection" quality="3" gfx="glass_idol.png"/>
     <active id="23" name="Leviticus" description="Purify your Soul" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
     <passive id="24" name="Battery Acid" description="PH down" quality="2" gfx="batteryacid.png"/>
+    <passive id="25" name="Doggy Bag" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="3"/>
+    <passive id="26" name="Dad's Mitt" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="2"/>
+    <passive id="27" name="Lil Bishop" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="2"/>
+    <passive id="28" name="Lucky Clover" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="1"/>
+    <passive id="29" name="MilkCrate" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="3"/>
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="A glimpse into the future..." gfx="trinkets_amethystcluster.png" />
