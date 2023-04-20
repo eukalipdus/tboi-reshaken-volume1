@@ -5,7 +5,7 @@ local enums = milkshakeMod.enums
 ---@param trinketType TrinketType
 ---@param cardType Card
 ---@param gridEntity GridEntity
-function utility:shardTrinkets(trinketType, cardType, gridEntity, chance)
+function utility:ShardTrinkets(trinketType, cardType, gridEntity, chance)
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
         if player:HasTrinket(trinketType)
@@ -217,7 +217,7 @@ end
 --- Check if a value is inside of a table
 ---@param table table
 ---@param val any
-function utility:hasValue(table, val)
+function utility:HasValue(table, val)
     for i, value in pairs(table) do
         if value == val then
             return true
