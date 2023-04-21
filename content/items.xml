@@ -1,32 +1,32 @@
 <items gfxroot="gfx/items/" version="1">
     <!-- Collectibles -->
-    <active id="1" name="Globin In A Bucket" description="Fleshy Friends" gfx="collectibles_globininabucket.png" maxcharges="4" quality="2" />
-    <active id="3" name="Golden Shovel" description="Strike gold!" gfx="collectibles_goldenshovel.png" maxcharges="8" shopprice="30" quality="4" />
-    <passive id="5" name="Milkshake!" description="All Stats Shaken Up!"  cache="all" gfx="collectibles_milkshake.png" quality="4" />
-    <passive id="6" name="Firecracker Flower" description="Bloom and Doom" gfx="collectibles_firecrackerflower.png" devilprice="2" quality="3" />
-    <familiar id="7" name="Sharp Cursor" description="Clicky Clicky Click" gfx="collectibles_sharpcursor.png" quality="2" />
-    <passive id="8" name="La Chancla" description="Este nalgaso te va a doler hasta el año que viene" cache="speed" gfx="collectibles_lachancla.png" quality="1" />
+    <active id="1" name="Globin In A Bucket" description="Fleshy Friends" gfx="collectibles_globininabucket.png" maxcharges="4" tags="" quality="2" />
+    <active id="3" name="Golden Shovel" description="Strike gold!" gfx="collectibles_goldenshovel.png" maxcharges="8" shopprice="30" tags="" quality="4" />
+    <passive id="5" name="Milkshake!" description="All Stats Shaken Up!"  cache="all" gfx="collectibles_milkshake.png" tags="" quality="4" />
+    <passive id="6" name="Firecracker Flower" description="Bloom and Doom" gfx="collectibles_firecrackerflower.png" devilprice="2" tags="" quality="3" />
+    <familiar id="7" name="Sharp Cursor" description="Clicky Clicky Click" gfx="collectibles_sharpcursor.png" tags="" quality="2" />
+    <passive id="8" name="La Chancla" description="Este nalgaso te va a doler hasta el año que viene" cache="speed" gfx="collectibles_lachancla.png" tags="" quality="1" />
     <passive id="9" name="Lyra" description="Melodic Spirits" gfx="collectibles_lyrius.png" quality="3" />
-    <active id="10" name="Empty Slot" description="99% of gamblers quit before they make it big" gfx="collectibles_emptyslot.png" shopprice="10" maxcharges="0" quality="0" />
-    <active id="11" name="Shattered Orb" description="Fragile Vessel" quality="3" gfx="collectibles_shatteredorb.png" maxcharges="4" />
-    <passive id="12" name="Glass Heart" description="Glassy" quality="2" gfx="collectibles_glassheart.png" />
-    <active id="13" name="Prismatic Dice" description="Quantity over quality" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" />
+    <active id="10" name="Empty Slot" description="99% of gamblers quit before they make it big" gfx="collectibles_emptyslot.png" shopprice="10" maxcharges="0" tags="" quality="0" />
+    <active id="11" name="Shattered Orb" description="Fragile Vessel" tags="" quality="3" gfx="collectibles_shatteredorb.png" maxcharges="4" />
+    <passive id="12" name="Glass Heart" description="Glassy" tags="" quality="2" gfx="collectibles_glassheart.png" />
+    <active id="13" name="Prismatic Dice" description="Quantity over quality" tags="" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" />
     <familiar id="14" name="Spirit Bum" description="He wants your soul." gfx="collectibles_spiritbum.png" quality="0" />
-    <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" quality="1" />
-    <familiar id="16" name="Inner Reflection" description="It's impossible to outrun your own reflection." gfx="InnerReflection.png" quality="0" />
-    <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" quality="3" />
-    <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="1" gfx="spoiled_breakfast.png" quality="0" />
-    <passive id="19" name="Balanced Breakfast" description="HP + luck up!" maxhearts="1" hearts="2" cache="luck" soulhearts="2" gfx="balanced_breakfast.png" quality="2" />
-    <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="1" hearts="24" cache="damage luck firedelay" soulhearts="2" gfx="tasty_breakfast.png" quality="3" />
-    <passive id="21" name="Pot of Gold" description="Rainbow pennies!" quality="3" gfx="potofgold.png"/>
+    <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" tags="" quality="1" />
+    <familiar id="16" name="Inner Reflection" description="It's impossible to outrun your own reflection." gfx="InnerReflection.png" tags="" quality="0" />
+    <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" tags="" quality="3" />
+    <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="1" gfx="spoiled_breakfast.png" tags="food" quality="0" />
+    <passive id="19" name="Balanced Breakfast" description="HP + luck up!" maxhearts="1" hearts="2" cache="luck" soulhearts="2" gfx="balanced_breakfast.png" tags="food" quality="2" />
+    <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="1" hearts="24" cache="damage luck firedelay" soulhearts="2" gfx="tasty_breakfast.png" tags="food" quality="3" />
+    <passive id="21" name="Pot of Gold" description="Rainbow pennies!" tags="" quality="3" gfx="potofgold.png"/>
     <familiar id="22" name="Glass Idol" description="Care for your reflection" quality="3" gfx="glass_idol.png"/>
-    <active id="23" name="Leviticus" description="Purify your Soul" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
-    <passive id="24" name="Battery Acid" description="PH down" quality="2" gfx="batteryacid.png"/>
-    <passive id="25" name="Doggy Bag" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="3"/>
-    <passive id="26" name="Dad's Mitt" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="2"/>
-    <passive id="27" name="Lil Bishop" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="2"/>
-    <passive id="28" name="Lucky Clover" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="1"/>
-    <passive id="29" name="MilkCrate" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" quality="3"/>
+    <active id="23" name="Leviticus" description="Purify your Soul" tags="book" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
+    <passive id="24" name="Battery Acid" description="PH down" tags="battery" quality="2" gfx="batteryacid.png"/>
+    <passive id="25" name="Doggy Bag" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="" quality="1"/>
+    <passive id="26" name="Dad's Mitt" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="" quality="2"/>
+    <passive id="27" name="Lil Bishop" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="" quality="2"/>
+    <passive id="28" name="Lucky Clover" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="" quality="0"/>
+    <passive id="29" name="MilkCrate" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="" quality="3"/>
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="A glimpse into the future..." gfx="trinkets_amethystcluster.png" />
