@@ -9,10 +9,8 @@
     <passive id="9" name="Lyra" description="Melodic Spirits" gfx="collectibles_lyrius.png" tags="lazarussharedglobal nocantrip offensive stars summonable" quality="3" />
     <active id="10" name="Empty Slot" description="99% of gamblers quit before they make it big" gfx="collectibles_emptyslot.png" shopprice="10" maxcharges="0" tags="nocantrip offensive" quality="0" />
     <active id="11" name="Shattered Orb" description="Fragile Vessel" tags="offensive" quality="3" gfx="collectibles_shatteredorb.png" maxcharges="4" />
-    <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip nolostbr summonable" quality="2" gfx="collectibles_glassheart.png" />
     <active id="13" name="Prismatic Dice" description="Quantity over quality" tags="nocantrip offensive" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" />
     <familiar id="14" name="Spirit Bum" description="He wants your soul." gfx="collectibles_spiritbum.png" tags="offensive summonable" quality="0" />
-    <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" tags="monstermanual offensive" quality="1" />
     <familiar id="16" name="Inner Reflection" description="It's impossible to outrun your own reflection." gfx="InnerReflection.png" tags="monstermanual offensive summonable" quality="0" />
     <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" tags="offensive summonable" quality="3" />
     <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="1" gfx="spoiled_breakfast.png" tags="food nocantrip noeden" quality="0" />
@@ -39,6 +37,8 @@
     <trinket name="Rock Wheel"    description="Stone Aged Allies"    gfx="rock_wheel.png" cache="speed" tags="nogreed"/>
 
     <!-- unused -->
-    <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" quality="1" /> 
-    <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" quality="3" />
+    <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true"/> 
+    <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true"/>
+    <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip nolostbr summonable" tags="noeden" quality="2" gfx="collectibles_glassheart.png" hidden="true"/>
+    <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" tags="noeden" quality="1" hidden="true"/>
 </items>
