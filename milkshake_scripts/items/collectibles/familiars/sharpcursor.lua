@@ -268,7 +268,12 @@ function SharpCursor:OnSharpCursorRender(familiar)
     local clickButton = false
 
     if ShouldActivateMouseMode(player) then
-        local mousePos = Input.GetMousePosition(true)
+        local mousePos = Input.GetMousePosition(false)
+        local og = TSIL.Vector.CopyVector(mousePos)
+        if Game():GetRoom():IsMirrorWorld() then
+            mousePos = Vector(Isaac.GetScreenWidth() * Isaac.GetScreenPointScale() - mousePos.X, mousePos.Y)
+        end
+        mousePos = Isaac.ScreenToWorld(mousePos)
         familiar.Velocity = mousePos - familiar.Position
 
         local isMousePressed = Input.IsMouseBtnPressed(Mouse.MOUSE_BUTTON_1)
