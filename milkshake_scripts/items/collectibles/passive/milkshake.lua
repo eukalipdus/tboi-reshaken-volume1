@@ -171,11 +171,18 @@ local function RenderMultiplier(player, startingFrame)
     local baseYPos = 87
     local alpha = 0.5
 
+    if Game().Difficulty ~= Difficulty.DIFFICULTY_NORMAL or not TSIL.Run.CanRunUnlockAchievements() then
+        --If there are any simbols (Hard mode, greed, achievements disabled, etc..) move the ui up
+        baseYPos = baseYPos - 20
+    end
+
     if TSIL.Players.IsBethany(player) then
+        --If the player is playing bethany, account for the soul/red health charge
         baseYPos = baseYPos + 10
     end
 
     if TSIL.Players.IsJacobOrEsau(player) then
+        --If it's jacob and esau lower it a bit
         baseYPos = baseYPos + 16
     end
 
