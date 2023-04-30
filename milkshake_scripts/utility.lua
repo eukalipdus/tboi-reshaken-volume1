@@ -227,4 +227,18 @@ function utility:HasValue(table, val)
     return false
 end
 
+
+--- Checks if a player is the main player, i.e. the one who started the run.
+--- Useful because it's the only one whose stats are rendered.
+---@param player EntityPlayer
+function utility:IsFirstPlayer(player)
+    local mainTwin = player:GetMainTwin()
+    local playerIndex = TSIL.Players.GetPlayerIndex(mainTwin)
+
+    local firstPlayer = Isaac.GetPlayer()
+    local firstPlayerIndex = TSIL.Players.GetPlayerIndex(firstPlayer)
+
+    return playerIndex == firstPlayerIndex
+end
+
 return utility
