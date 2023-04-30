@@ -39,12 +39,12 @@ function milkshake:onCache(player, cacheFlag)
     local rng = TSIL.RNG.CopyRNG(player:GetCollectibleRNG(enums.Collectibles.MILKSHAKE))
     local itemNum = player:GetCollectibleNum(enums.Collectibles.MILKSHAKE)
 
+    local MilkShakeSpeed = GetStatMultiplier(rng, itemNum)
     local MilkShakeTears = 1 / GetStatMultiplier(rng, itemNum)
     local MilkShakeDamage = GetStatMultiplier(rng, itemNum)
-    local MilkShakeSpeed = GetStatMultiplier(rng, itemNum)
-    local MilkShakeLuck = GetStatMultiplier(rng, itemNum)
     local MilkShakeRange = GetStatMultiplier(rng, itemNum)
     local MilkShakeShotSpeed = GetStatMultiplier(rng, itemNum)
+    local MilkShakeLuck = GetStatMultiplier(rng, itemNum)
 
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then
         player.MaxFireDelay = player.MaxFireDelay * MilkShakeTears
@@ -170,6 +170,10 @@ local function RenderMultiplier(player, startingFrame)
     local baseXPos = 75
     local baseYPos = 87
     local alpha = 0.5
+
+    if TSIL.Players.IsBethany(player) then
+        baseYPos = baseYPos + 10
+    end
 
     if duration <= STAT_COUNTER_MOVEMENT_DURATION then
         local percent = duration / STAT_COUNTER_MOVEMENT_DURATION
