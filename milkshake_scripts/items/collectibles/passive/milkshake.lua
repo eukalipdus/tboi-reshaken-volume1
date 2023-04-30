@@ -71,7 +71,10 @@ milkshakeMod:AddPriorityCallback(
 
 
 ---@param player EntityPlayer
-function milkshake:OnMilkshakeAdded(player)
+---@param firstTime boolean
+function milkshake:OnMilkshakeAdded(player, _, firstTime)
+    if player:GetPlayerType() == PlayerType.PLAYER_ISAAC_B and not firstTime then return end
+
     local rng = TSIL.RNG.CopyRNG(player:GetCollectibleRNG(enums.Collectibles.MILKSHAKE))
     local itemNum = player:GetCollectibleNum(enums.Collectibles.MILKSHAKE)
 
