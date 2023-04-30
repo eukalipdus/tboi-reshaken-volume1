@@ -175,6 +175,10 @@ local function RenderMultiplier(player, startingFrame)
         baseYPos = baseYPos + 10
     end
 
+    if TSIL.Players.IsJacobOrEsau(player) then
+        baseYPos = baseYPos + 16
+    end
+
     if duration <= STAT_COUNTER_MOVEMENT_DURATION then
         local percent = duration / STAT_COUNTER_MOVEMENT_DURATION
         local movementPercent = TSIL.Utils.Easings.EaseOutSine(percent)
@@ -191,9 +195,20 @@ local function RenderMultiplier(player, startingFrame)
         alpha = TSIL.Utils.Math.Lerp(0, 0.5, percent)
     end
 
-    for _, mult in ipairs(statMultipliers) do
+    for index, mult in ipairs(statMultipliers) do
         RenderStat(mult, Vector(baseXPos, baseYPos), alpha)
-        baseYPos = baseYPos + 12
+
+        if index == 1 then
+            if player:GetPlayerType() == PlayerType.PLAYER_JACOB then
+                baseYPos = baseYPos + 8
+            elseif player:GetPlayerType() == PlayerType.PLAYER_ESAU then
+                baseYPos = baseYPos + 16
+            end
+        elseif TSIL.Players.IsJacobOrEsau(player) then
+            baseYPos = baseYPos + 14
+        else
+            baseYPos = baseYPos + 12
+        end
     end
 
     return false
