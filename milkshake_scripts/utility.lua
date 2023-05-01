@@ -231,6 +231,7 @@ end
 --- Checks if a player is the main player, i.e. the one who started the run.
 --- Useful because it's the only one whose stats are rendered.
 ---@param player EntityPlayer
+---@return boolean
 function utility:IsFirstPlayer(player)
     local mainTwin = player:GetMainTwin()
     local playerIndex = TSIL.Players.GetPlayerIndex(mainTwin)
@@ -239,6 +240,67 @@ function utility:IsFirstPlayer(player)
     local firstPlayerIndex = TSIL.Players.GetPlayerIndex(firstPlayer)
 
     return playerIndex == firstPlayerIndex
+end
+
+
+---Checks if a player's stats are in the found HUD.
+---@param player EntityPlayer
+---@return boolean
+function utility:IsPlayerShowingStatsUI(player)
+    --Child players never show stats
+    if TSIL.Players.IsChildPlayer(player) then return false end
+
+    --The first player always shows their stats
+    if utility:IsFirstPlayer(player) then return true end
+
+    --If the first player is jacob and esau, the player 2 stats don't show
+    local firstPlayer = Isaac.GetPlayer()
+    if firstPlayer:GetPlayerType() == PlayerType.PLAYER_JACOB then return false end
+
+    local initialControllerIndex = firstPlayer.ControllerIndex
+    local mainSecondPlayer = nil
+    for i = 0, Game():GetNumPlayers() - 1, 1 do
+        local otherPlayer = Game():GetPlayer(i)
+        local otherControllerIndex = otherPlayer.ControllerIndex
+
+        if initialControllerIndex ~= otherControllerIndex then
+            mainSecondPlayer = otherPlayer
+            break
+        end
+    end
+
+    if not mainSecondPlayer then return false end
+
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local secondPlayerIndex = TSIL.Players.GetPlayerIndex(mainSecondPlayer)
+
+    return playerIndex == secondPlayerIndex
+end
+
+
+---Checks if there is more than one real player in the run
+---@return boolean
+function utility:IsMultiplayer()
+    local players = TSIL.Players.GetPlayers()
+
+    local firstPlayer = Isaac.GetPlayer()
+    local initialControllerIndex = firstPlayer.ControllerIndex
+
+    return TSIL.Utils.Tables.Some(players, function (player)
+        return initialControllerIndex ~= player.ControllerIndex
+    end)
+end
+
+
+---Checks if any player is the given player type
+---@param character PlayerType
+---@return boolean
+function utility:AnyPlayerIsCharacter(character)
+    local players = TSIL.Players.GetPlayers()
+
+    return TSIL.Utils.Tables.Some(players, function (player)
+        return player:GetPlayerType() == character
+    end)
 end
 
 return utility

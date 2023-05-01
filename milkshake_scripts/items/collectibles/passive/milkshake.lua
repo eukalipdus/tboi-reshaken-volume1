@@ -84,7 +84,7 @@ milkshakeMod:AddPriorityCallback(
 ---@param player EntityPlayer
 ---@param firstTime boolean
 function milkshake:OnMilkshakeAdded(player, _, firstTime)
-    if utility:IsFirstPlayer(player) then
+    if utility:IsPlayerShowingStatsUI(player) then
         local playerIndex = TSIL.Players.GetPlayerIndex(player)
         local multiplierCounterFramesPerPlayer = TSIL.SaveManager.GetPersistentVariable(
             milkshakeMod,
@@ -142,6 +142,11 @@ local function RenderStat(mult, pos, alpha)
 end
 
 
+local function IsDisplayingMultiplayerStats()
+    return utility:IsMultiplayer() and not TSIL.Players.IsJacobOrEsau(Isaac.GetPlayer())
+end
+
+
 ---@param player EntityPlayer
 ---@param startingFrame integer
 ---@return boolean
@@ -171,18 +176,31 @@ local function RenderMultiplier(player, startingFrame)
     local baseYPos = 87
     local alpha = 0.5
 
-    if Game().Difficulty ~= Difficulty.DIFFICULTY_NORMAL or not TSIL.Run.CanRunUnlockAchievements() then
-        --If there are any simbols (Hard mode, greed, achievements disabled, etc..) move the ui up
-        baseYPos = baseYPos - 20
+    if IsDisplayingMultiplayerStats() then
+        if utility:IsFirstPlayer(player) then
+            baseYPos = baseYPos - 4
+        else
+            baseYPos = baseYPos + 4
+        end
     end
 
-    if TSIL.Players.IsBethany(player) then
-        --If the player is playing bethany, account for the soul/red health charge
+    if Game().Difficulty == Difficulty.DIFFICULTY_NORMAL and TSIL.Run.CanRunUnlockAchievements() then
+        --If there are any simbols (Hard mode, greed, achievements disabled, etc..) move the ui up
+        baseYPos = baseYPos - 14
+    end
+
+    if utility:AnyPlayerIsCharacter(PlayerType.PLAYER_BETHANY) then
+        --If the player is playing bethany, account for the soul charge
         baseYPos = baseYPos + 10
     end
 
-    if TSIL.Players.IsJacobOrEsau(player) then
-        --If it's jacob and esau lower it a bit
+    if utility:AnyPlayerIsCharacter(PlayerType.PLAYER_BETHANY_B) then
+        --If the player is playing T.bethany, account for the red health charge
+        baseYPos = baseYPos + 10
+    end
+
+    if TSIL.Players.IsJacobOrEsau(Isaac.GetPlayer()) then
+        --If the main player is jacob and esau lower it a bit
         baseYPos = baseYPos + 16
     end
 
@@ -205,16 +223,18 @@ local function RenderMultiplier(player, startingFrame)
     for index, mult in ipairs(statMultipliers) do
         RenderStat(mult, Vector(baseXPos, baseYPos), alpha)
 
-        if index == 1 then
-            if player:GetPlayerType() == PlayerType.PLAYER_JACOB then
-                baseYPos = baseYPos + 8
-            elseif player:GetPlayerType() == PlayerType.PLAYER_ESAU then
-                baseYPos = baseYPos + 16
-            end
-        elseif TSIL.Players.IsJacobOrEsau(player) then
+        if IsDisplayingMultiplayerStats() then
             baseYPos = baseYPos + 14
         else
-            baseYPos = baseYPos + 12
+            if index == 1 and player:GetPlayerType() == PlayerType.PLAYER_JACOB then
+                baseYPos = baseYPos + 8
+            elseif index == 1 and player:GetPlayerType() == PlayerType.PLAYER_ESAU then
+                baseYPos = baseYPos + 16
+            elseif TSIL.Players.IsJacobOrEsau(player) then
+                baseYPos = baseYPos + 14
+            else
+                baseYPos = baseYPos + 12
+            end
         end
     end
 
