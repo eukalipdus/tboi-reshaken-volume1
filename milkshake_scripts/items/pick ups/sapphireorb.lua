@@ -175,7 +175,81 @@ local MACHINE_PAYOUTS = {
         }},
     },
 }
+--[[
+-- dp here, not sure how milkshake handles mod patches so I'll just leave the code here that will need to be added to the patch
+-- this is not final as it will run into issues as it will not trigger if milkshake loads before epiphany
+if Epiphany then
+    local Mod = Epiphany
+    local EP_MACHINE_VARIANTS = {
+        [Mod.Slot.GLITCH.ID] = true,
+        [Mod.Slot.DICE_MACHINE.ID] = true,
+        [Mod.Slot.PAIN_O_MATIC.ID] = true,
+        [Mod.Slot.TURNOVER_RESTOCK.ID] = true,
+        [Mod.Slot.CONVERTER_BEGGAR.ID] = true, -- it's not made of flesh and bones, it's more like a robot
+    }
+    local EP_PAYOUTS = {
+        [Mod.Slot.GLITCH.ID] =
+            { chance = 100, value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = 0,
+                weight = 1
+            }},
+            { chance = 50, value = {
+                variant = PickupVariant.PICKUP_HEART,
+                subtype = 0,
+                weight = 1
+            }},
+            { chance = 50, value = {
+                variant = PickupVariant.PICKUP_BOMB,
+                subtype = 0,
+                weight = 1
+            }},
+            { chance = 50, value = {
+                variant = PickupVariant.PICKUP_KEY,
+                subtype = 0,
+                weight = 1
+            }},
+            { chance = 15, value = {
+                variant = PickupVariant.PICKUP_CHEST,
+                subtype = ChestSubType.CHEST_CLOSED,
+                weight = 1
+            }},
+        [Mod.Slot.DICE_MACHINE.ID] =
+            { chance = 50, value = {
+                variant = PickupVariant.PICKUP_TAROTCARD,
+                subtype = Mod.PickupGetter.MakeCardGetter("Capsules"),
+                weight = 1
+            }},
+        [Mod.Slot.PAIN_O_MATIC.ID] =
+        { chance = 50, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = Mod.PickupGetter.MakeHeartGetter({ "Red", "Rotten" }),
+            weight = 1
+        }},
 
+        [Mod.Slot.TURNOVER_RESTOCK.ID] = MACHINE_PAYOUTS[TSIL.Enums.SlotVariant.RESTOCK_MACHINE],
+        [Mod.Slot.CONVERTER_BEGGAR.ID] =
+        { chance = 50, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = Mod.PickupGetter.MakeHeartGetter("Red"),
+            weight = 1
+        }},
+        { chance = 15, value = {
+            variant = PickupVariant.PICKUP_HEART,
+            subtype = Mod.PickupGetter.MakeHeartGetter("Soul"),
+            weight = 1
+        }},
+    }
+
+
+    for _, v in pairs(EP_MACHINE_VARIANTS) do
+		table.insert(SLOT_MACHINE_VARIANTS, v)
+	end
+    for _, v in pairs(EP_PAYOUTS) do
+		table.insert(MACHINE_PAYOUTS, v)
+	end
+end
+]]
 
 TSIL.SaveManager.AddPersistentVariable(
     milkshakeMod,
