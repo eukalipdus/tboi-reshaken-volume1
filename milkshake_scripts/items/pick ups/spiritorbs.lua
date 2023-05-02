@@ -19,7 +19,7 @@ function SpiritOrbs:OnCardUpdate(card)
 
     if sprite:IsEventTriggered("DropSound") then
         SFXManager():Stop(SoundEffect.SOUND_SCAMPER)
-        SFXManager():Play(SoundEffect.SOUND_CASH_REGISTER)
+        SFXManager():Play(SoundEffect.SOUND_GOLD_HEART_DROP)
     end
 end
 milkshakeMod:AddCallback(
