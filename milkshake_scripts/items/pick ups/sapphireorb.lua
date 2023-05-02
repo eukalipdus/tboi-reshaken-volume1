@@ -7,249 +7,262 @@ local CONDUCTIVITY_TEAR_LIFESPAN = 30
 local CONDUCTIVITY_PARASITE_TEAR_LIFESPAN = 4
 local SLOT_ELECTROCUTE_RADIUS = 120
 local SLOT_ELECTROCUTION_DURATION = 30
-local SLOT_MACHINE_VARIANTS = {
-    [TSIL.Enums.SlotVariant.SLOT_MACHINE] = true,
-    [TSIL.Enums.SlotVariant.BLOOD_DONATION_MACHINE] = true,
-    [TSIL.Enums.SlotVariant.CRANE_GAME] = true,
-    [TSIL.Enums.SlotVariant.FORTUNE_TELLING_MACHINE] = true,
-    [TSIL.Enums.SlotVariant.RESTOCK_MACHINE] = true,
-    [TSIL.Enums.SlotVariant.DONATION_MACHINE] = true,
-}
 local MACHINE_PAYOUTS = {
     [TSIL.Enums.SlotVariant.SLOT_MACHINE] = {
         --For Slot machines
-        { chance = 100, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_PENNY,
-            weight = 1
-        }},
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = HeartSubType.HEART_HALF,
-            weight = 1
-        }},
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = HeartSubType.HEART_FULL,
-            weight = 1
-        }},
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_BOMB,
-            subtype = BombSubType.BOMB_NORMAL,
-            weight = 1
-        }},
-        { chance = 20, value = {
-            variant = PickupVariant.PICKUP_KEY,
-            subtype = KeySubType.KEY_NORMAL,
-            weight = 1
-        }},
-        { chance = 15, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = HeartSubType.HEART_DOUBLEPACK,
-            weight = 2
-        }},
-        { chance = 10, value = {
-            variant = PickupVariant.PICKUP_BOMB,
-            subtype = BombSubType.BOMB_DOUBLEPACK,
-            weight = 2
-        }},
-        { chance = 10, value = {
-            variant = PickupVariant.PICKUP_KEY,
-            subtype = KeySubType.KEY_DOUBLEPACK,
-            weight = 2
-        }},
-        { chance = 5, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_NICKEL,
-            weight = 2
-        }},
-        { chance = 1, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_DIME,
-            weight = 3
-        }},
+        {
+            chance = 100,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_PENNY,
+                weight = 1
+            }
+        },
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_HEART,
+                subtype = HeartSubType.HEART_HALF,
+                weight = 1
+            }
+        },
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_HEART,
+                subtype = HeartSubType.HEART_FULL,
+                weight = 1
+            }
+        },
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_BOMB,
+                subtype = BombSubType.BOMB_NORMAL,
+                weight = 1
+            }
+        },
+        {
+            chance = 20,
+            value = {
+                variant = PickupVariant.PICKUP_KEY,
+                subtype = KeySubType.KEY_NORMAL,
+                weight = 1
+            }
+        },
+        {
+            chance = 15,
+            value = {
+                variant = PickupVariant.PICKUP_HEART,
+                subtype = HeartSubType.HEART_DOUBLEPACK,
+                weight = 2
+            }
+        },
+        {
+            chance = 10,
+            value = {
+                variant = PickupVariant.PICKUP_BOMB,
+                subtype = BombSubType.BOMB_DOUBLEPACK,
+                weight = 2
+            }
+        },
+        {
+            chance = 10,
+            value = {
+                variant = PickupVariant.PICKUP_KEY,
+                subtype = KeySubType.KEY_DOUBLEPACK,
+                weight = 2
+            }
+        },
+        {
+            chance = 5,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_NICKEL,
+                weight = 2
+            }
+        },
+        {
+            chance = 1,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_DIME,
+                weight = 3
+            }
+        },
     },
     [TSIL.Enums.SlotVariant.BLOOD_DONATION_MACHINE] = {
         --For blood donation machines
-        { chance = 100, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_PENNY,
-            weight = 1
-        }},
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = HeartSubType.HEART_HALF,
-            weight = 1
-        }},
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = HeartSubType.HEART_FULL,
-            weight = 1
-        }},
-        { chance = 15, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = HeartSubType.HEART_DOUBLEPACK,
-            weight = 2
-        }},
-        { chance = 5, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_NICKEL,
-            weight = 2
-        }},
+        {
+            chance = 100,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_PENNY,
+                weight = 1
+            }
+        },
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_HEART,
+                subtype = HeartSubType.HEART_HALF,
+                weight = 1
+            }
+        },
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_HEART,
+                subtype = HeartSubType.HEART_FULL,
+                weight = 1
+            }
+        },
+        {
+            chance = 15,
+            value = {
+                variant = PickupVariant.PICKUP_HEART,
+                subtype = HeartSubType.HEART_DOUBLEPACK,
+                weight = 2
+            }
+        },
+        {
+            chance = 5,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_NICKEL,
+                weight = 2
+            }
+        },
     },
     [TSIL.Enums.SlotVariant.FORTUNE_TELLING_MACHINE] = {
         --For fortune telling machines
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = HeartSubType.HEART_SOUL,
-            weight = 2
-        }},
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = HeartSubType.HEART_BLACK,
-            weight = 2
-        }},
-        { chance = 15, value = {
-            variant = PickupVariant.PICKUP_TAROTCARD,
-            subtype = 0,
-            weight = 3
-        }},
-        { chance = 5, value = {
-            variant = PickupVariant.PICKUP_TRINKET,
-            subtype = 0,
-            weight = 3
-        }},
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_HEART,
+                subtype = HeartSubType.HEART_SOUL,
+                weight = 2
+            }
+        },
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_HEART,
+                subtype = HeartSubType.HEART_BLACK,
+                weight = 2
+            }
+        },
+        {
+            chance = 15,
+            value = {
+                variant = PickupVariant.PICKUP_TAROTCARD,
+                subtype = 0,
+                weight = 3
+            }
+        },
+        {
+            chance = 5,
+            value = {
+                variant = PickupVariant.PICKUP_TRINKET,
+                subtype = 0,
+                weight = 3
+            }
+        },
     },
     [TSIL.Enums.SlotVariant.RESTOCK_MACHINE] = {
         --For restock machines
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_PENNY,
-            weight = 2
-        }},
-        { chance = 15, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_NICKEL,
-            weight = 2
-        }},
-        { chance = 15, value = {
-            variant = PickupVariant.PICKUP_TAROTCARD,
-            subtype = Card.CARD_DICE_SHARD,
-            weight = 3
-        }},
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_PENNY,
+                weight = 2
+            }
+        },
+        {
+            chance = 15,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_NICKEL,
+                weight = 2
+            }
+        },
+        {
+            chance = 15,
+            value = {
+                variant = PickupVariant.PICKUP_TAROTCARD,
+                subtype = Card.CARD_DICE_SHARD,
+                weight = 3
+            }
+        },
     },
     [TSIL.Enums.SlotVariant.DONATION_MACHINE] = {
         --For Donation machines
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_PENNY,
-            weight = 2
-        }},
-        { chance = 15, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_NICKEL,
-            weight = 2
-        }},
-        { chance = 7, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = CoinSubType.COIN_DIME,
-            weight = 3
-        }},
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_PENNY,
+                weight = 2
+            }
+        },
+        {
+            chance = 15,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_NICKEL,
+                weight = 2
+            }
+        },
+        {
+            chance = 7,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_DIME,
+                weight = 3
+            }
+        },
     },
     [TSIL.Enums.SlotVariant.CRANE_GAME] = {
         --For crane game machines
-        { chance = 30, value = {
-            variant = PickupVariant.PICKUP_COIN,
-            subtype = HeartSubType.COIN_NICKEL,
-            weight = 2
-        }},
-        { chance = 15, value = {
-            variant = PickupVariant.PICKUP_TRINKET,
-            subtype = 0,
-            weight = 3
-        }},
-        { chance = 5, value = {
-            variant = PickupVariant.PICKUP_COLLECTIBLE,
-            subtype = 0,
-            weight = 6
-        }},
+        {
+            chance = 30,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = HeartSubType.COIN_NICKEL,
+                weight = 2
+            }
+        },
+        {
+            chance = 15,
+            value = {
+                variant = PickupVariant.PICKUP_TRINKET,
+                subtype = 0,
+                weight = 3
+            }
+        },
+        {
+            chance = 5,
+            value = {
+                variant = PickupVariant.PICKUP_COLLECTIBLE,
+                subtype = 0,
+                weight = 6
+            }
+        },
     },
 }
---[[
--- dp here, not sure how milkshake handles mod patches so I'll just leave the code here that will need to be added to the patch
--- this is not final as it will run into issues as it will not trigger if milkshake loads before epiphany
-if Epiphany then
-    local Mod = Epiphany
-    local EP_MACHINE_VARIANTS = {
-        [Mod.Slot.GLITCH.ID] = true,
-        [Mod.Slot.DICE_MACHINE.ID] = true,
-        [Mod.Slot.PAIN_O_MATIC.ID] = true,
-        [Mod.Slot.TURNOVER_RESTOCK.ID] = true,
-        [Mod.Slot.CONVERTER_BEGGAR.ID] = true, -- it's not made of flesh and bones, it's more like a robot
-    }
-    local EP_PAYOUTS = {
-        [Mod.Slot.GLITCH.ID] =
-            { chance = 100, value = {
-                variant = PickupVariant.PICKUP_COIN,
-                subtype = 0,
-                weight = 1
-            }},
-            { chance = 50, value = {
-                variant = PickupVariant.PICKUP_HEART,
-                subtype = 0,
-                weight = 1
-            }},
-            { chance = 50, value = {
-                variant = PickupVariant.PICKUP_BOMB,
-                subtype = 0,
-                weight = 1
-            }},
-            { chance = 50, value = {
-                variant = PickupVariant.PICKUP_KEY,
-                subtype = 0,
-                weight = 1
-            }},
-            { chance = 15, value = {
-                variant = PickupVariant.PICKUP_CHEST,
-                subtype = ChestSubType.CHEST_CLOSED,
-                weight = 1
-            }},
-        [Mod.Slot.DICE_MACHINE.ID] =
-            { chance = 50, value = {
-                variant = PickupVariant.PICKUP_TAROTCARD,
-                subtype = Mod.PickupGetter.MakeCardGetter("Capsules"),
-                weight = 1
-            }},
-        [Mod.Slot.PAIN_O_MATIC.ID] =
-        { chance = 50, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = Mod.PickupGetter.MakeHeartGetter({ "Red", "Rotten" }),
-            weight = 1
-        }},
 
-        [Mod.Slot.TURNOVER_RESTOCK.ID] = MACHINE_PAYOUTS[TSIL.Enums.SlotVariant.RESTOCK_MACHINE],
-        [Mod.Slot.CONVERTER_BEGGAR.ID] =
-        { chance = 50, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = Mod.PickupGetter.MakeHeartGetter("Red"),
-            weight = 1
-        }},
-        { chance = 15, value = {
-            variant = PickupVariant.PICKUP_HEART,
-            subtype = Mod.PickupGetter.MakeHeartGetter("Soul"),
-            weight = 1
-        }},
-    }
+---@class ConductivityOrbSlotReward
+---@field variant PickupVariant,
+---@field subtype integer
+---@field weight integer
 
-
-    for _, v in pairs(EP_MACHINE_VARIANTS) do
-		table.insert(SLOT_MACHINE_VARIANTS, v)
-	end
-    for _, v in pairs(EP_PAYOUTS) do
-		table.insert(MACHINE_PAYOUTS, v)
-	end
+---Adds rewards to a slot so it can be electrocuted with Conductivity Orb.
+---@param slotVariant any
+---@param payouts {chance: integer, value: ConductivityOrbSlotReward}[]
+function milkshakeMod:AddConductivityOrbSlotPayout(slotVariant, payouts)
+    MACHINE_PAYOUTS[slotVariant] = payouts
 end
-]]
 
 TSIL.SaveManager.AddPersistentVariable(
     milkshakeMod,
@@ -385,13 +398,14 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
         )
     end
 end
+
 milkshakeMod:AddCallback(ModCallbacks.MC_USE_CARD, SapphireOrb.OnSapphireOrbUse, enums.Cards.SAPPHIRE_ORB)
 
 
 ---@param slot Entity
 ---@return boolean
 local function isSlotMachine(slot)
-    return SLOT_MACHINE_VARIANTS[slot.Variant] ~= nil
+    return MACHINE_PAYOUTS[slot.Variant] ~= nil
 end
 
 ---@param player EntityPlayer
@@ -450,6 +464,7 @@ function SapphireOrb:OnPeffectUpdate(player)
 
     ElectrocuteSlots(player, rng)
 end
+
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, SapphireOrb.OnPeffectUpdate)
 
 
@@ -533,6 +548,7 @@ function SapphireOrb:OnTearUpdate(tear)
         UpdateParasiteTear(tear)
     end
 end
+
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, SapphireOrb.OnTearUpdate)
 
 
@@ -558,6 +574,7 @@ function SapphireOrb:OnTearCollision(tear)
         return true
     end
 end
+
 milkshakeMod:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, SapphireOrb.OnTearCollision)
 
 
@@ -573,7 +590,7 @@ local function SpawnSlotElectrocutionPayouts(spawnPos, rng, slot)
 
         local velocity = Vector.FromAngle(rng:RandomInt(360)) * TSIL.Random.GetRandomFloat(5, 7, rng)
         if rewardToSpawn.variant == PickupVariant.PICKUP_COLLECTIBLE then
-            spawnPos = Isaac.GetFreeNearPosition (spawnPos,5)
+            spawnPos = Isaac.GetFreeNearPosition(spawnPos, 5)
             rewardToSpawn.subtype = Game():GetItemPool():GetCollectible(
                 ItemPoolType.POOL_CRANE_GAME,
                 true,
@@ -631,8 +648,9 @@ function SapphireOrb:OnSlotUpdate(slot)
 
     if currentDuration % 15 ~= 0 then return end
 
-    SpawnSlotElectrocutionPayouts(slot.Position, slot:GetDropRNG(),slot)
+    SpawnSlotElectrocutionPayouts(slot.Position, slot:GetDropRNG(), slot)
 end
+
 milkshakeMod:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_UPDATE,
     SapphireOrb.OnSlotUpdate
@@ -649,6 +667,7 @@ function SapphireOrb:OnSlotCollision(slot)
         return true
     end
 end
+
 milkshakeMod:AddPriorityCallback(
     TSIL.Enums.CustomCallback.PRE_SLOT_COLLISION,
     CallbackPriority.IMPORTANT,

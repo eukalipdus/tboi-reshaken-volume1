@@ -9,6 +9,11 @@ require("milkshake_scripts.bumAPI.core")
 local eid = require("milkshake_scripts.modcompatibility.eid")
 eid:addEid()
 
+--Mod compatibility
+require("milkshake_scripts.modcompatibility.modCompat")
+require("milkshake_scripts.modcompatibility.epiphany")
+require("milkshake_scripts.modcompatibility.fiendFolio")
+
 -- Collectibles
 require("milkshake_scripts.items.collectibles.passive.blackeye")
 require("milkshake_scripts.items.collectibles.familiars.spiritbum")

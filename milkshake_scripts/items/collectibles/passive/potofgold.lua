@@ -1,35 +1,65 @@
 local potOfGold = {}
 local enums = milkshakeMod.enums
 
-local rainbowPennies = {
-    [0] = enums.Coins.ROTTEN_PENNY,
-    [1] = enums.Coins.FLAT_PENNY,
-    [2] = enums.Coins.BURNT_PENNY,
-    [3] = enums.Coins.BUTT_PENNY,
-    [4] = enums.Coins.CHARGED_PENNY,
-    [5] = enums.Coins.CURSED_PENNY,
-    [6] = enums.Coins.BLOODY_PENNY,
-    [7] = enums.Coins.BLESSED_PENNY,
-    [8] = enums.Coins.COUNTERFEIT_PENNY,
-    [9] = enums.Coins.ACID_PENNY,
-    [10] = enums.Coins.CRYSTAL_PENNY
-}
+---@class RainbowPenny
+---@field variant PickupVariant
+---@field subtype integer
+---@field onPickup fun(pickup: EntityPickup, player: EntityPlayer)
+
+---@type RainbowPenny[]
+local rainbowPennies = {}
+
+---Adds a special penny to the pool of pennies spawnable by Pot Of Gold
+---@param variant PickupVariant
+---@param subtype integer
+---@param onPickup fun(pickup: EntityPickup, player: EntityPlayer)
+function milkshakeMod:AddRainbowPenny(variant, subtype, onPickup)
+    rainbowPennies[#rainbowPennies+1] = {
+        variant = variant,
+        subtype = subtype,
+        onPickup = onPickup
+    }
+end
+
 
 function potOfGold:onPlayerEffectUpdate(player)
     if not player then return end
-    if player:HasCollectible(milkshakeMod.enums.Collectibles.POT_OF_GOLD) then
-        for i, entity in pairs(Isaac.GetRoomEntities()) do
-            if entity.Type == EntityType.ENTITY_PICKUP then
-                local pickup = entity:ToPickup()
-                if (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB) then
-                    local rng = player:GetCollectibleRNG(enums.Collectibles.POT_OF_GOLD)
-                    local roll = rng:RandomInt(#rainbowPennies + 1)
-                    pickup:Remove()
-                    TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, rainbowPennies[roll], pickup.Position, Vector.Zero, player)
-                end
-            end
+    if not player:HasCollectible(milkshakeMod.enums.Collectibles.POT_OF_GOLD) then return end
+
+    local pickups = TSIL.EntitySpecific.GetPickups()
+    for _, pickup in pairs(pickups) do
+        if pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB then
+            local rng = player:GetCollectibleRNG(enums.Collectibles.POT_OF_GOLD)
+            local chosenCoin = TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
+
+            pickup:Remove()
+            TSIL.EntitySpecific.SpawnPickup(chosenCoin.variant, chosenCoin.subtype, pickup.Position, Vector.Zero, player)
         end
     end
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.onPlayerEffectUpdate)
+
+
+---@param pickup EntityPickup
+---@param collider Entity
+function potOfGold:prePickupCollision(pickup, collider)
+    local player = collider:ToPlayer()
+    if not player then return end
+
+    local rainbowPenny = TSIL.Utils.Tables.FindFirst(rainbowPennies, function (_, rainbowPenny)
+        return rainbowPenny.variant == pickup.Variant and rainbowPenny.subtype == pickup.SubType
+    end)
+
+    if not rainbowPenny then return end
+
+    rainbowPenny.onPickup(pickup, player)
+
+    pickup:Die()
+
+    --Needs to be set to one so it doesn't grant the player 99 coins
+    pickup.SubType = 1
+end
+milkshakeMod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.prePickupCollision)
+
+
 return potOfGold
