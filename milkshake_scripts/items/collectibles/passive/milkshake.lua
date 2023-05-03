@@ -40,14 +40,14 @@ function milkshake:onCache(player, cacheFlag)
     local itemNum = player:GetCollectibleNum(enums.Collectibles.MILKSHAKE)
 
     local MilkShakeSpeed = GetStatMultiplier(rng, itemNum)
-    local MilkShakeTears = 1 / GetStatMultiplier(rng, itemNum)
+    local MilkShakeTears = GetStatMultiplier(rng, itemNum)
     local MilkShakeDamage = GetStatMultiplier(rng, itemNum)
     local MilkShakeRange = GetStatMultiplier(rng, itemNum)
     local MilkShakeShotSpeed = GetStatMultiplier(rng, itemNum)
     local MilkShakeLuck = GetStatMultiplier(rng, itemNum)
 
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then
-        player.MaxFireDelay = player.MaxFireDelay * MilkShakeTears
+        player.MaxFireDelay = ((player.MaxFireDelay + 1) / MilkShakeTears) - 1
     end
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then
@@ -58,7 +58,7 @@ function milkshake:onCache(player, cacheFlag)
         player.MoveSpeed = player.MoveSpeed * MilkShakeSpeed
     end
 
-    if cacheFlag == CacheFlag.CACHE_LUCK then
+    if cacheFlag == CacheFlag.CACHE_LUCK and player.Luck > 0 then
         player.Luck = player.Luck * MilkShakeLuck
     end
 
