@@ -37,7 +37,7 @@ end)
 milkshakeMod:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CRYSTAL_PENNY, function (_, player)
     local randomCard = Game():GetItemPool():GetCard(Random() + 1, true, true, false)
     player:AddCard(randomCard)
-    SFXManager():Play(SoundEffect.SOUND_MENU_NOTE_APPEAR)
+    SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
 end)
 
 milkshakeMod:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CURSED_PENNY, function (_, player)
