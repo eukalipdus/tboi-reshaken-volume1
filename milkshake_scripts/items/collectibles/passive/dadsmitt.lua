@@ -66,7 +66,7 @@ function dadsMitt:PostLaserUpdate(laser)
 
     local laserDirection = Vector.FromAngle(laser.AngleDegrees)
     local itemCount = player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
-    Vector.Lerp(laserDirection, playerDirection, LASER_LERP_STRENGTH*itemCount)
+    laserDirection:Lerp(playerDirection, LASER_LERP_STRENGTH*itemCount)
     laser.AngleDegrees = laserDirection:GetAngleDegrees()
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE, dadsMitt.PostLaserUpdate)
