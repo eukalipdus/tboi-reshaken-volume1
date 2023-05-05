@@ -1,5 +1,5 @@
 local ChaosOrb = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 
 local SPRITESHEET_PER_ORB = {
@@ -14,7 +14,7 @@ local SPRITESHEET_PER_ORB = {
 function ChaosOrb:OnChaosOrbUse(_, player)
     local rng = player:GetCardRNG(enums.Orbs.RANDOM)
 
-    local orbToUse = milkshakeMod.utility:GetRandomSpiritOrb(false, rng)
+    local orbToUse = MilkshakeVol1.utility:GetRandomSpiritOrb(false, rng)
 
     player:UseCard(orbToUse)
 
@@ -26,7 +26,7 @@ function ChaosOrb:OnChaosOrbUse(_, player)
     sprite:Play("Idle", true)
     player:AnimatePickup(sprite)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     enums.Callbacks.ON_ORB_USE,
     ChaosOrb.OnChaosOrbUse,
     enums.Orbs.RANDOM

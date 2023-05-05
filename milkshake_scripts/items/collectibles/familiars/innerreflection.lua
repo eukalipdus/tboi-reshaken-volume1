@@ -1,6 +1,6 @@
 local innerreflection = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local actionDelay = 50
 local appearLength = 20
@@ -16,7 +16,7 @@ function innerreflection:EvaluateCache(player)
         enums.Familiars.INNER_REFLECTION
     )
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, innerreflection.EvaluateCache, CacheFlag.CACHE_FAMILIARS)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, innerreflection.EvaluateCache, CacheFlag.CACHE_FAMILIARS)
 
 ---@param familiar EntityFamiliar
 function innerreflection:PostFamiliarUpdate(familiar)
@@ -46,7 +46,7 @@ function innerreflection:PostFamiliarUpdate(familiar)
 	wasRoomClear = Game():GetRoom():IsClear()
 	utility:SetData(familiar, "Reflection", reflectionData)
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, innerreflection.PostFamiliarUpdate, enums.Familiars.INNER_REFLECTION)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, innerreflection.PostFamiliarUpdate, enums.Familiars.INNER_REFLECTION)
 
 ---@param familiar EntityFamiliar
 function innerreflection:PostFamiliarRender(familiar)
@@ -70,7 +70,7 @@ function innerreflection:PostFamiliarRender(familiar)
 		end
 	end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, innerreflection.PostFamiliarRender, enums.Familiars.INNER_REFLECTION)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, innerreflection.PostFamiliarRender, enums.Familiars.INNER_REFLECTION)
 
 ---@param familiar EntityFamiliar
 ---@param collider Entity
@@ -79,11 +79,11 @@ function innerreflection:Collision(familiar, collider)
 		print("aa")
 	end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, innerreflection.Collision, enums.Familiars.INNER_REFLECTION)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, innerreflection.Collision, enums.Familiars.INNER_REFLECTION)
 
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
 	isNewRoom = true
 end)
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
 	if isNewRoom then isNewRoom = false end
 end)

@@ -1,5 +1,5 @@
 local goldenShovel = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 local goldenShovelData = {
     FREEZE_DURATION = 180,
@@ -145,7 +145,7 @@ function goldenShovel:onUse(_, rng, player)
 
     return true
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_USE_ITEM, goldenShovel.onUse, enums.Collectibles.GOLDEN_SHOVEL)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, goldenShovel.onUse, enums.Collectibles.GOLDEN_SHOVEL)
 
 
 return goldenShovel

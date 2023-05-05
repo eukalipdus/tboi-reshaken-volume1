@@ -1,4 +1,4 @@
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local Leviticus = {}
 
 ---@class LeviticusSoulHeartInfo
@@ -15,7 +15,7 @@ local EXTRA_HEART_TYPES = {
 }
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "UsedLeviticus",
     false,
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
@@ -121,7 +121,7 @@ function Leviticus:onLeviticusUse(_, _, player)
     SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
 
     TSIL.SaveManager.SetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "UsedLeviticus",
         true
     )
@@ -132,7 +132,7 @@ function Leviticus:onLeviticusUse(_, _, player)
         ShowAnim = true
     }
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_USE_ITEM,
     Leviticus.onLeviticusUse,
     enums.Collectibles.LEVITICUS
@@ -250,7 +250,7 @@ function Leviticus:onPickupCollision(pickup, collider)
 
     return false
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_PICKUP_COLLISION,
     Leviticus.onPickupCollision
 )
@@ -267,7 +267,7 @@ if CustomHealthAPI then
             playersPickedUpImmoralItems[playerIndex] = true
         end
     end
-    milkshakeMod:AddCallback(
+    MilkshakeVol1:AddCallback(
         TSIL.Enums.CustomCallback.PRE_ITEM_PICKUP,
         Leviticus.PreCollectiblePickup,
         {
@@ -354,7 +354,7 @@ else
             })
         end
     end
-    milkshakeMod:AddCallback(
+    MilkshakeVol1:AddCallback(
         TSIL.Enums.CustomCallback.POST_PLAYER_HEALTH_CHANGED,
         Leviticus.OnHealthChanged
     )
@@ -387,7 +387,7 @@ function Leviticus:OnItemAdded(player, collectibleType)
         })
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
     Leviticus.OnItemAdded
 )
@@ -399,7 +399,7 @@ function Leviticus:onItemSpawn(itemPoolType, _, seed)
     if itemPoolType ~= ItemPoolType.POOL_BOSS then return end
 
     local usedLeviticus = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "UsedLeviticus"
     )
 
@@ -411,7 +411,7 @@ function Leviticus:onItemSpawn(itemPoolType, _, seed)
 
     return randomAngelItemID
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_GET_COLLECTIBLE,
     Leviticus.onItemSpawn
 )
@@ -425,7 +425,7 @@ function Leviticus:onAngelBossItemSpawn(pickup)
     local roomType = Game():GetRoom():GetType()
     if roomType ~= RoomType.ROOM_BOSS then return end
     local usedLeviticus = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "UsedLeviticus"
     )
 
@@ -441,7 +441,7 @@ function Leviticus:onAngelBossItemSpawn(pickup)
     end
     pickup.ShopItemId = -1
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_INIT,
     Leviticus.onAngelBossItemSpawn
 )

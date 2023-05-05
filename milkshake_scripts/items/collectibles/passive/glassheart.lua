@@ -1,9 +1,9 @@
 local GlassHeart = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "PlayersTookDamageThisRoomGlassHeart",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
@@ -27,7 +27,7 @@ function GlassHeart:CrystalHeart(entity, _, damageFlags)
 
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
     local playersTookDamage = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "PlayersTookDamageThisRoomGlassHeart"
     )
 
@@ -41,7 +41,7 @@ function GlassHeart:CrystalHeart(entity, _, damageFlags)
     SFXManager():Play(SoundEffect.SOUND_GLASS_BREAK)
     IsTakingExtraDamage = false
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_ENTITY_TAKE_DMG,
     GlassHeart.CrystalHeart,
     EntityType.ENTITY_PLAYER
@@ -54,7 +54,7 @@ local function OnPlayerRoomClear(player)
 
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
     local playersTookDamage = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "PlayersTookDamageThisRoomGlassHeart"
     )
 
@@ -80,7 +80,7 @@ function GlassHeart:CrystalDodgeHeal()
 		OnPlayerRoomClear(player)
 	end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD,
     GlassHeart.CrystalDodgeHeal
 )

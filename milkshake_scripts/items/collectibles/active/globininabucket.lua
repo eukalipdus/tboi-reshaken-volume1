@@ -1,5 +1,5 @@
 local globinInABucket = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 local globinTypes = {
     [1] = EntityType.ENTITY_GLOBIN,
@@ -14,7 +14,7 @@ function globinInABucket:onUse(collectible, rng, player, flags, slot)
     globin:AddCharmed(EntityRef(player), -1)
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_USE_ITEM, globinInABucket.onUse, enums.Collectibles.GLOBIN_IN_A_BUCKET)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, globinInABucket.onUse, enums.Collectibles.GLOBIN_IN_A_BUCKET)
 
 return {
     Discharge = true,

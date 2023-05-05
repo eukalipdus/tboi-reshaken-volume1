@@ -1,4 +1,4 @@
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local SharpCursor = {}
 
 
@@ -12,7 +12,7 @@ function SharpCursor:OnFamiliarCache(player)
         enums.Familiars.SHARP_CURSOR
     )
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     SharpCursor.OnFamiliarCache,
     CacheFlag.CACHE_FAMILIARS
@@ -20,13 +20,13 @@ milkshakeMod:AddCallback(
 
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "SharpCursorDataMap",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "SharpCursorFollowMouse",
     true,
     TSIL.Enums.VariablePersistenceMode.NONE
@@ -49,7 +49,7 @@ local function ShouldActivateMouseMode(player)
     if not Options.MouseControl then return false end
 
     return TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "SharpCursorFollowMouse"
     )
 end
@@ -58,7 +58,7 @@ end
 ---@param familiar EntityFamiliar
 local function GetCursorData(familiar)
     local SharpCursorDataMap = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "SharpCursorDataMap"
     )
 
@@ -171,7 +171,7 @@ function SharpCursor:OnSharpCursorUpdate(familiar)
         data.travelTime = data.travelTime + 1
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_FAMILIAR_UPDATE,
     SharpCursor.OnSharpCursorUpdate,
     enums.Familiars.SHARP_CURSOR
@@ -313,7 +313,7 @@ function SharpCursor:OnSharpCursorRender(familiar)
         end)
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_FAMILIAR_RENDER,
     SharpCursor.OnSharpCursorRender,
     enums.Familiars.SHARP_CURSOR
@@ -328,7 +328,7 @@ function SharpCursor:OnUpdate()
         doubleTapFrame = doubleTapFrame - 1
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_UPDATE, SharpCursor.OnUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_UPDATE, SharpCursor.OnUpdate)
 
 
 ---@param player EntityPlayer
@@ -344,17 +344,17 @@ function SharpCursor:OnPlayerRender(player)
     end
 
     local currentFollowMouse = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "SharpCursorFollowMouse"
     )
 
     TSIL.SaveManager.SetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "SharpCursorFollowMouse",
         not currentFollowMouse
     )
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PLAYER_RENDER,
     SharpCursor.OnPlayerRender
 )
@@ -387,7 +387,7 @@ function SharpCursor:OnRender()
         return sharpCursorText.alpha > 0
     end)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_RENDER,
     SharpCursor.OnRender
 )

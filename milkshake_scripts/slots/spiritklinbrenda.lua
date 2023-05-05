@@ -1,5 +1,5 @@
 local SpiritKlin = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 
 ---@param brenda Entity
@@ -19,7 +19,7 @@ function SpiritKlin:OnBrendaUpdate(brenda)
         sprite:Play("Idle")
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_UPDATE,
     SpiritKlin.OnBrendaUpdate,
     enums.Slots.SPIRIT_KLIN_BRENDA
@@ -44,7 +44,7 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
 
     sprite:Play("Wiggle", true)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.PRE_SLOT_COLLISION,
     SpiritKlin.OnBrendaCollision,
     enums.Slots.SPIRIT_KLIN_BRENDA
@@ -68,7 +68,7 @@ function SpiritKlin:OnBrendaPrize(brenda)
     --     Vector(6, 0):Rotated(rng:RandomInt(360))
     -- )
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_PRIZE,
     SpiritKlin.OnBrendaPrize,
     enums.Slots.SPIRIT_KLIN_BRENDA

@@ -1,5 +1,5 @@
 local blackEye = {}
-local Enums = milkshakeMod.enums
+local Enums = MilkshakeVol1.enums
 
 local blackEyeData = {
     FIRE_DELAY = 1.50
@@ -20,6 +20,6 @@ function blackEye:AddKnockback(player)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, blackEye.AddKnockback, CacheFlag.CACHE_TEARFLAG)
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, blackEye.onCache)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, blackEye.AddKnockback, CacheFlag.CACHE_TEARFLAG)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, blackEye.onCache)
 return blackEye

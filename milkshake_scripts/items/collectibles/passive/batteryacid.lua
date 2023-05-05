@@ -1,5 +1,5 @@
 local batteryAcid = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 local itemConfig = Isaac.GetItemConfig()
 local game = Game()
@@ -29,8 +29,8 @@ function batteryAcid:preSpawnCleanAward()
         end
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, batteryAcid.preSpawnCleanAward)
-milkshakeMod:AddCallback(TSIL.Enums.CustomCallback.POST_GREED_MODE_WAVE, batteryAcid.preSpawnCleanAward)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, batteryAcid.preSpawnCleanAward)
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GREED_MODE_WAVE, batteryAcid.preSpawnCleanAward)
 
 function batteryAcid:entityTakeDmg(entity)
     local player = entity:ToPlayer()
@@ -40,4 +40,4 @@ function batteryAcid:entityTakeDmg(entity)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, batteryAcid.entityTakeDmg, EntityType.ENTITY_PLAYER)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, batteryAcid.entityTakeDmg, EntityType.ENTITY_PLAYER)

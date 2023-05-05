@@ -1,6 +1,6 @@
 local game = Game()
 local rng = RNG()
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local CrystalPenny = {}
 
 function CrystalPenny:PrePickupCollision(Pickup, Collider, _)
@@ -27,5 +27,5 @@ function CrystalPenny:PrePickupCollision(Pickup, Collider, _)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CrystalPenny.PrePickupCollision, PickupVariant.PICKUP_COIN)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CrystalPenny.PrePickupCollision, PickupVariant.PICKUP_COIN)
 return CrystalPenny

@@ -1,5 +1,5 @@
 local potOfGold = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 ---@class RainbowPenny
 ---@field variant PickupVariant
@@ -13,7 +13,7 @@ local rainbowPennies = {}
 ---@param variant PickupVariant
 ---@param subtype integer
 ---@param onPickup fun(pickup: EntityPickup, player: EntityPlayer)
-function milkshakeMod:AddRainbowPenny(variant, subtype, onPickup)
+function MilkshakeVol1:AddRainbowPenny(variant, subtype, onPickup)
     rainbowPennies[#rainbowPennies+1] = {
         variant = variant,
         subtype = subtype,
@@ -24,7 +24,7 @@ end
 
 function potOfGold:onPlayerEffectUpdate(player)
     if not player then return end
-    if not player:HasCollectible(milkshakeMod.enums.Collectibles.POT_OF_GOLD) then return end
+    if not player:HasCollectible(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD) then return end
 
     local pickups = TSIL.EntitySpecific.GetPickups()
     for _, pickup in pairs(pickups) do
@@ -37,7 +37,7 @@ function potOfGold:onPlayerEffectUpdate(player)
         end
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.onPlayerEffectUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.onPlayerEffectUpdate)
 
 
 ---@param pickup EntityPickup
@@ -59,7 +59,7 @@ function potOfGold:prePickupCollision(pickup, collider)
     --Needs to be set to one so it doesn't grant the player 99 coins
     pickup.SubType = 1
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.prePickupCollision)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.prePickupCollision)
 
 
 return potOfGold

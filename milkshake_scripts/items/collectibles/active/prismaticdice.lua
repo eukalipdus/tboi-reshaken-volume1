@@ -1,6 +1,6 @@
 local prismaticDice = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
@@ -178,7 +178,7 @@ end
 function prismaticDice:preItemuse(_, _, _, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return true end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, prismaticDice.preItemuse, enums.Collectibles.PRISMATIC_DICE)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, prismaticDice.preItemuse, enums.Collectibles.PRISMATIC_DICE)
 
 function prismaticDice:onUse(_, _, player)
     --local collectibleCount = getCollectibleCount()
@@ -211,5 +211,5 @@ function prismaticDice:onUse(_, _, player)
     return true
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
 return prismaticDice

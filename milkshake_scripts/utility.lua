@@ -1,5 +1,5 @@
 local utility = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 --- Used to spawn spirit orbs for the shard series of trinkets
 ---@param trinketType TrinketType
@@ -62,7 +62,7 @@ end
 local function PreGameExit()
 	NotGetData = {}
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, PreGameExit)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, PreGameExit)
 
 ---@param entity Entity
 local function OnEntityRemoved(_, entity)
@@ -70,7 +70,7 @@ local function OnEntityRemoved(_, entity)
 
     NotGetData[ptrHash] = nil
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, OnEntityRemoved)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, OnEntityRemoved)
 
 ---Concatenates 2 tables into 1
 ---https://stackoverflow.com/a/15278426
@@ -137,7 +137,7 @@ end
 local function OnNewRoom()
     tempPlayerData = {}
 end
-milkshakeMod:AddPriorityCallback(
+MilkshakeVol1:AddPriorityCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     CallbackPriority.IMPORTANT,
     OnNewRoom

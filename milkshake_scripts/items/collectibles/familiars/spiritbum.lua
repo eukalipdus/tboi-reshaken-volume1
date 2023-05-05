@@ -1,4 +1,4 @@
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 ---@type bumPickups[]
 local spiritBumPickups = {

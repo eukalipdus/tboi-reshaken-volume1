@@ -1,6 +1,6 @@
 local fingore = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local offset = Vector(75, -50)
 local entranceSpeed = 0.05
@@ -16,7 +16,7 @@ function fingore:EvaluateCache(player)
         enums.Familiars.FINGORE
     )
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, fingore.EvaluateCache, CacheFlag.CACHE_FAMILIARS)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, fingore.EvaluateCache, CacheFlag.CACHE_FAMILIARS)
 
 ---@param familiar EntityFamiliar
 function fingore:FamiliarInit(familiar)
@@ -34,7 +34,7 @@ function fingore:FamiliarInit(familiar)
 	}
 	utility:SetData(familiar, "Fingore", fingoreData)
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, fingore.FamiliarInit, enums.Familiars.FINGORE)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, fingore.FamiliarInit, enums.Familiars.FINGORE)
 
 ---@param familiar EntityFamiliar
 function fingore:FamiliarUpdate(familiar)
@@ -82,7 +82,7 @@ function fingore:FamiliarUpdate(familiar)
 	end
 	fingoreData.sprite:Update()
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, fingore.FamiliarUpdate, enums.Familiars.FINGORE)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, fingore.FamiliarUpdate, enums.Familiars.FINGORE)
 
 ---@param familiar EntityFamiliar
 function fingore:PostFamiliarRender(familiar)
@@ -100,12 +100,12 @@ function fingore:PostFamiliarRender(familiar)
 	end
 	fingoreData.sprite:Render(Isaac.WorldToScreen(familiar.Position))
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, fingore.PostFamiliarRender, enums.Familiars.FINGORE)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, fingore.PostFamiliarRender, enums.Familiars.FINGORE)
 
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
 	isNewRoom = true
 end)
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
 	if isNewRoom then isNewRoom = false end
 end)
 

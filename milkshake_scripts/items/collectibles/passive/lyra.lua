@@ -1,6 +1,6 @@
 local Lyra = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 
 ---@class UsingLyraData
@@ -155,12 +155,12 @@ function Lyra:OnPickupInitFirst(pickup)
         true
     )
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PICKUP_INIT_FIRST,
     Lyra.OnPickupInitFirst,
     PickupVariant.PICKUP_TAROTCARD
 )
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PICKUP_INIT_FIRST,
     Lyra.OnPickupInitFirst,
     PickupVariant.PICKUP_PILL
@@ -210,7 +210,7 @@ function Lyra:OnOrbUse(orb, player)
     --Doesn't really mean anything, but will stop the other callbacks from running
     return true
 end
-milkshakeMod:AddPriorityCallback(
+MilkshakeVol1:AddPriorityCallback(
     enums.Callbacks.ON_ORB_USE,
     CallbackPriority.EARLY,
     Lyra.OnOrbUse
@@ -315,7 +315,7 @@ function Lyra:OnPlayerRender(player)
 
     HandleLyraInput(player, playerUsingLyraData)
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Lyra.OnPlayerRender)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Lyra.OnPlayerRender)
 
 
 ---@param entity Entity
@@ -338,7 +338,7 @@ function Lyra:OnInput(entity, inputHook, buttonAction)
         return false
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_INPUT_ACTION, Lyra.OnInput)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_INPUT_ACTION, Lyra.OnInput)
 
 
 function Lyra:OnRender()
@@ -358,10 +358,10 @@ function Lyra:OnRender()
 
     noteSplashes = filteredSplashes
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_RENDER, Lyra.OnRender)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, Lyra.OnRender)
 
 
 function Lyra:OnNewRoom()
     noteSplashes = {}
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Lyra.OnNewRoom)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Lyra.OnNewRoom)

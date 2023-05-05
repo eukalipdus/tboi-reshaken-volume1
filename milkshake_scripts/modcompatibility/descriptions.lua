@@ -1,5 +1,5 @@
 local descriptions = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 --[[
     Available Languages:

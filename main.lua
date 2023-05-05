@@ -1,9 +1,9 @@
-milkshakeMod = RegisterMod("Milkshake!", 1)
+MilkshakeVol1 = RegisterMod("Milkshake!", 1)
 
 require("loi_milkshake.TSIL").Init("loi_milkshake")
 
-milkshakeMod.enums = require("milkshake_scripts.enums")
-milkshakeMod.utility = require("milkshake_scripts.utility")
+MilkshakeVol1.enums = require("milkshake_scripts.enums")
+MilkshakeVol1.utility = require("milkshake_scripts.utility")
 require("milkshake_scripts.bumAPI.core")
 
 local eid = require("milkshake_scripts.modcompatibility.eid")

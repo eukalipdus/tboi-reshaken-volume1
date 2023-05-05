@@ -1,5 +1,5 @@
 local laChancla = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 local SPEED_UP = 0.3
 
@@ -11,7 +11,7 @@ function laChancla:onCache(player, cacheFlag)
         end
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, laChancla.onCache)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, laChancla.onCache)
 
 function laChancla:onHit(entity, amount, flags, source)
     local effect, variant
@@ -32,5 +32,5 @@ function laChancla:onHit(entity, amount, flags, source)
         return false
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, laChancla.onHit, EntityType.ENTITY_PLAYER)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, laChancla.onHit, EntityType.ENTITY_PLAYER)
 return laChancla

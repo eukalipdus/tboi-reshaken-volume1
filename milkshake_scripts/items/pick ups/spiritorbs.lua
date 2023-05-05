@@ -10,14 +10,14 @@ function SpiritOrbs:OnCardUse(orb, player)
     --Chaos orb doesn't use up the double lyra power
     if orb ~= enums.Orbs.RANDOM then
         ---@diagnostic disable-next-line: cast-local-type
-        isDoublePower = milkshakeMod.utility:GetTemporaryPlayerData(player, "IsUsingDoublePowerOrb")
-        milkshakeMod.utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
+        isDoublePower = MilkshakeVol1.utility:GetTemporaryPlayerData(player, "IsUsingDoublePowerOrb")
+        MilkshakeVol1.utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
     end
 
     Isaac.RunCallbackWithParam(enums.Callbacks.ON_ORB_USE, orb, orb, player, isDoublePower)
 end
 for _, orb in pairs(enums.Orbs) do
-    milkshakeMod:AddCallback(
+    MilkshakeVol1:AddCallback(
         ModCallbacks.MC_USE_CARD,
         SpiritOrbs.OnCardUse,
         orb
@@ -27,7 +27,7 @@ end
 
 ---@param card EntityPickup
 function SpiritOrbs:OnCardUpdate(card)
-    if not milkshakeMod.utility:IsSpiritOrb(card.SubType) then return end
+    if not MilkshakeVol1.utility:IsSpiritOrb(card.SubType) then return end
 
     local sprite = card:GetSprite()
 
@@ -36,7 +36,7 @@ function SpiritOrbs:OnCardUpdate(card)
         SFXManager():Play(SoundEffect.SOUND_GOLD_HEART_DROP)
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_UPDATE,
     SpiritOrbs.OnCardUpdate,
     PickupVariant.PICKUP_TAROTCARD
@@ -45,7 +45,7 @@ milkshakeMod:AddCallback(
 
 ---@param card EntityPickup
 function SpiritOrbs:OnCardRender(card)
-    if not milkshakeMod.utility:IsSpiritOrb(card.SubType) then return end
+    if not MilkshakeVol1.utility:IsSpiritOrb(card.SubType) then return end
 
     local sprite = card:GetSprite()
 
@@ -55,7 +55,7 @@ function SpiritOrbs:OnCardRender(card)
         SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_RENDER,
     SpiritOrbs.OnCardRender,
     PickupVariant.PICKUP_TAROTCARD

@@ -1,5 +1,5 @@
 local dadsMitt = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 --Deadzones direct how strict should be prevention of projectiles turning back towards the player. Numbers closer to 1 give smaller trigger angle.
 local TEAR_MOVEMENT_RATIO = 0.2
@@ -31,7 +31,7 @@ function dadsMitt:PostTearUpdate(tear)
     local itemCount = player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
     tear.Velocity = tear.Velocity + player.Velocity*TEAR_MOVEMENT_RATIO*itemCount
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, dadsMitt.PostTearUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, dadsMitt.PostTearUpdate)
 
 function dadsMitt:PostBombUpdate(bomb)
     if not bomb.IsFetus then
@@ -50,7 +50,7 @@ function dadsMitt:PostBombUpdate(bomb)
     local itemCount = player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
     bomb.Velocity = bomb.Velocity + player.Velocity*BOMB_MOVEMENT_RATIO*itemCount
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_BOMB_UPDATE, dadsMitt.PostBombUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_BOMB_UPDATE, dadsMitt.PostBombUpdate)
 
 function dadsMitt:PostLaserUpdate(laser)
     if not laser.SpawnerEntity then
@@ -69,7 +69,7 @@ function dadsMitt:PostLaserUpdate(laser)
     laserDirection:Lerp(playerDirection, LASER_LERP_STRENGTH*itemCount)
     laser.AngleDegrees = laserDirection:GetAngleDegrees()
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE, dadsMitt.PostLaserUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE, dadsMitt.PostLaserUpdate)
 
 function dadsMitt:EvaluateCache(player, flag)
     local itemCount = player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
@@ -87,4 +87,4 @@ function dadsMitt:EvaluateCache(player, flag)
         player.ShotSpeed = player.ShotSpeed - (SHOTSPEED_REDUCTION*itemCount)
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, dadsMitt.EvaluateCache)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, dadsMitt.EvaluateCache)

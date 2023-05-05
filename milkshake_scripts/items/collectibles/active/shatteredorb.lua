@@ -1,4 +1,4 @@
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local ShatteredOrb = {}
 
 local SHATTERED_ORB_THROW_SPEED = 8
@@ -208,7 +208,7 @@ local OrbsPerFiendFolioEntities = {
 
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "PlayersUsingShatteredOrb",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
@@ -216,7 +216,7 @@ TSIL.SaveManager.AddPersistentVariable(
 
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "DataPerShatteredOrb",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
@@ -229,7 +229,7 @@ local function AddPlayerUsingShatteredOrb(player, slot)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local playersUsingShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "PlayersUsingShatteredOrb"
     )
 
@@ -243,7 +243,7 @@ local function IsPlayerUsingShatteredOrb(player)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local playersUsingShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "PlayersUsingShatteredOrb"
     )
 
@@ -257,7 +257,7 @@ local function GetShatteredOrbActiveSlotFromPlayer(player)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local playersUsingShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "PlayersUsingShatteredOrb"
     )
 
@@ -270,7 +270,7 @@ local function RemovePlayerUsingShatteredOrb(player)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local playersUsingShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "PlayersUsingShatteredOrb"
     )
 
@@ -287,7 +287,7 @@ local function AddShatteredOrbData(effect, direction)
     local ptrHash = GetPtrHash(effect)
 
     local directionsPerShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "DataPerShatteredOrb"
     )
 
@@ -304,7 +304,7 @@ local function GetShatteredOrbData(effect)
     local ptrHash = GetPtrHash(effect)
 
     local directionsPerShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "DataPerShatteredOrb"
     )
 
@@ -342,7 +342,7 @@ function ShatteredOrb:OnShatteredOrbUse(_, _, player, useFlags, activeSlot)
         ShowAnim = false
     }
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_USE_ITEM,
     ShatteredOrb.OnShatteredOrbUse,
     enums.Collectibles.SHATTERED_ORB
@@ -374,7 +374,7 @@ function ShatteredOrb:OnPlayerUpdate(player)
     local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + player.Velocity
     AddShatteredOrbData(shatteredOrb, direction)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PLAYER_UPDATE,
     ShatteredOrb.OnPlayerUpdate
 )
@@ -481,7 +481,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
         end
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
     ShatteredOrb.OnShatteredOrbUpdate,
     enums.Effects.SHATTERED_ORB
