@@ -598,9 +598,13 @@ local function SpawnSlotElectrocutionPayouts(spawnPos, rng, slot)
                 CollectibleType.COLLECTIBLE_NULL
             )
         end
+        local subtype = rewardToSpawn.subtype
+        if type(subtype) == "function" then
+            subtype = rewardToSpawn.subtype()
+        end
         TSIL.EntitySpecific.SpawnPickup(
             rewardToSpawn.variant,
-            rewardToSpawn.subtype,
+            subtype,
             spawnPos,
             velocity
         )
