@@ -142,7 +142,7 @@ descriptions.Trinkets = {
 
 --CARD DESCRIPTIONS
 descriptions.Cards = {
-    [enums.Cards.EMERALD_ORB] = {
+    [enums.Orbs.NATURE] = {
         en_us = {
             name = "Druidity Orb",
             description = "#Wraps all enemies in the room in vines for 20 seconds, freezing them #Killing a vined enemy spawns a fruit heart"

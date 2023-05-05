@@ -23,13 +23,6 @@ local utility = milkshakeMod.utility
 ---@field notes NoteData[]
 
 --CONSTANTS
-local ORBS = {
-    enums.Cards.RANDOM_ORB,
-    enums.Cards.AMETHYST_ORB,
-    enums.Cards.RUBY_ORB,
-    enums.Cards.EMERALD_ORB,
-    enums.Cards.SAPPHIRE_ORB,
-}
 ---@enum NoteDirection
 local NOTE_DIRECTION = {
     UP = "Up",
@@ -145,7 +138,7 @@ function Lyra:OnPickupInitFirst(pickup)
     if not TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA) then return end
 
     --It's already an orb
-    if TSIL.Utils.Tables.IsIn(ORBS, pickup.SubType) then
+    if utility:IsSpiritOrb(pickup.SubType) then
         return
     end
 
@@ -154,7 +147,7 @@ function Lyra:OnPickupInitFirst(pickup)
 
     if chance > PILL_CARD_REPLACE_CHANCE then return end
 
-    local chosenOrb = TSIL.Random.GetRandomElementsFromTable(ORBS, 1, rng)[1]
+    local chosenOrb = utility:GetRandomSpiritOrb(true, rng)
     pickup:Morph(
         EntityType.ENTITY_PICKUP,
         PickupVariant.PICKUP_TAROTCARD,
@@ -211,18 +204,17 @@ function Lyra:OnOrbUse(orb, player)
         notes = currentSongNotes
     }
     utility:SetTemporaryPlayerData(player, "UsingLyraData", playerUsingLyraData)
-    --player.ControlsEnabled = false
 
     player:AnimateCollectible(enums.Collectibles.LYRA, "LiftItem", "PlayerPickup")
+
+    --Doesn't really mean anything, but will stop the other callbacks from running
+    return true
 end
-for _, orb in ipairs(ORBS) do
-    milkshakeMod:AddPriorityCallback(
-        ModCallbacks.MC_USE_CARD,
-        CallbackPriority.EARLY,
-        Lyra.OnOrbUse,
-        orb
-    )
-end
+milkshakeMod:AddPriorityCallback(
+    enums.Callbacks.ON_ORB_USE,
+    CallbackPriority.EARLY,
+    Lyra.OnOrbUse
+)
 
 
 ---@param player EntityPlayer

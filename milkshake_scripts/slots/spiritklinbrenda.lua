@@ -2,15 +2,6 @@ local SpiritKlin = {}
 local enums = milkshakeMod.enums
 
 
-local ORBS = {
-    enums.Cards.RANDOM_ORB,
-    enums.Cards.AMETHYST_ORB,
-    enums.Cards.RUBY_ORB,
-    enums.Cards.EMERALD_ORB,
-    enums.Cards.SAPPHIRE_ORB,
-}
-
-
 ---@param brenda Entity
 function SpiritKlin:OnBrendaUpdate(brenda)
     local sprite = brenda:GetSprite()
@@ -62,20 +53,20 @@ milkshakeMod:AddCallback(
 
 ---@param brenda Entity
 function SpiritKlin:OnBrendaPrize(brenda)
-    local rng = brenda:GetDropRNG()
+    -- local rng = brenda:GetDropRNG()
 
-    local orbToPay = TSIL.Random.GetRandomElementsFromTable(
-        ORBS,
-        1,
-        rng
-    )[1]
+    -- local orbToPay = TSIL.Random.GetRandomElementsFromTable(
+    --     ORBS,
+    --     1,
+    --     rng
+    -- )[1]
 
-    TSIL.EntitySpecific.SpawnPickup(
-        PickupVariant.PICKUP_TAROTCARD,
-        orbToPay,
-        brenda.Position,
-        Vector(6, 0):Rotated(rng:RandomInt(360))
-    )
+    -- TSIL.EntitySpecific.SpawnPickup(
+    --     PickupVariant.PICKUP_TAROTCARD,
+    --     orbToPay,
+    --     brenda.Position,
+    --     Vector(6, 0):Rotated(rng:RandomInt(360))
+    -- )
 end
 milkshakeMod:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_PRIZE,

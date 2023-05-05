@@ -76,21 +76,21 @@ BumAPI:AddBumFamiliar(enums.Familiars.SPIRIT_BUM, enums.Collectibles.SPIRIT_BUM,
 	{chance = 25, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,
-		subtype = enums.Cards.AMETHYST_ORB
+		subtype = enums.Orbs.ELECTRIC
 	}},
 	{chance = 25, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,
-		subtype = enums.Cards.EMERALD_ORB
+		subtype = enums.Orbs.FIRE
 	}},
 	{chance = 25, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,
-		subtype = enums.Cards.RUBY_ORB
+		subtype = enums.Orbs.NATURE
 	}},
 	{chance = 25, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,
-		subtype = enums.Cards.SAPPHIRE_ORB
+		subtype = enums.Orbs.PSYCHIC
 	}},
 })

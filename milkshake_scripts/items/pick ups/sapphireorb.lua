@@ -353,14 +353,7 @@ end
 
 
 ---@param player EntityPlayer
-function SapphireOrb:OnSapphireOrbUse(_, player)
-    local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
-
-    if playerUsingLyraData then return end
-
-    local isDoublePower = utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
-    utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
-
+function SapphireOrb:OnSapphireOrbUse(_, player, doublePower)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local playersUsingSapphireOrbFrames = TSIL.SaveManager.GetPersistentVariable(
@@ -369,7 +362,7 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
     )
 
     local frameCount = Game():GetFrameCount()
-    if isDoublePower then
+    if doublePower then
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount + SAPPHIRE_ORB_DURATION
     else
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount
@@ -384,7 +377,7 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
         true
     )
 
-    local rng = player:GetCardRNG(enums.Cards.SAPPHIRE_ORB)
+    local rng = player:GetCardRNG(enums.Orbs.ELECTRIC)
 
     for angle = 0, 359, 90 do
         local velocity = Vector.FromAngle(angle) * TSIL.Random.GetRandomFloat(8, 12, rng)
@@ -399,7 +392,11 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_USE_CARD, SapphireOrb.OnSapphireOrbUse, enums.Cards.SAPPHIRE_ORB)
+milkshakeMod:AddCallback(
+    enums.Callbacks.ON_ORB_USE,
+    SapphireOrb.OnSapphireOrbUse,
+    enums.Orbs.ELECTRIC
+)
 
 
 ---@param slot Entity
@@ -458,7 +455,7 @@ function SapphireOrb:OnPeffectUpdate(player)
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = nil
     end
 
-    local rng = player:GetCardRNG(enums.Cards.SAPPHIRE_ORB)
+    local rng = player:GetCardRNG(enums.Orbs.ELECTRIC)
 
     SpawnConductiveTear(player, rng)
 

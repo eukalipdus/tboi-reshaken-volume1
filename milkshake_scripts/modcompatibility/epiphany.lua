@@ -56,16 +56,16 @@ milkshakeMod:AddModCompatibility(function()
         }
     })
 
-    milkshakeMod:AddConductivityOrbSlotPayout(Epiphany.Slot.PAIN_O_MATIC.ID, {
-        {
-            chance = 50,
-            value = {
-                variant = PickupVariant.PICKUP_HEART,
-                subtype = Epiphany.PickupGetter.MakeHeartGetter({ "Red", "Rotten" }),
-                weight = 1
-            }
-        }
-    })
+    -- milkshakeMod:AddConductivityOrbSlotPayout(Epiphany.Slot.PAIN_O_MATIC.ID, {
+    --     {
+    --         chance = 50,
+    --         value = {
+    --             variant = PickupVariant.PICKUP_HEART,
+    --             subtype = Epiphany.PickupGetter.MakeHeartGetter({ "Red", "Rotten" }),
+    --             weight = 1
+    --         }
+    --     }
+    -- })
 
     milkshakeMod:AddConductivityOrbSlotPayout(Epiphany.Slot.TURNOVER_RESTOCK.ID, {
         {

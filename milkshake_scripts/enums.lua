@@ -40,11 +40,6 @@ enums.Trinkets = {
 }
 
 enums.Cards = {
-    AMETHYST_ORB = Isaac.GetCardIdByName("Spirit Of Clairvoyance"),
-    RANDOM_ORB = Isaac.GetCardIdByName("Spirit Of Chaos"),
-    EMERALD_ORB = Isaac.GetCardIdByName("Spirit Of Druidity"),
-    RUBY_ORB = Isaac.GetCardIdByName("Spirit Of Inferno"),
-    SAPPHIRE_ORB = Isaac.GetCardIdByName("Spirit Of Conductivity"),
     TATTERED_PAGE = Isaac.GetCardIdByName("Tattered Page"),
 }
 
@@ -91,6 +86,31 @@ enums.Coins = {
     COUNTERFEIT_PENNY = 3413,
     ACID_PENNY = 3414,
     CRYSTAL_PENNY = 3415,
+}
+
+enums.Orbs = {
+    FIRE = Isaac.GetCardIdByName("Spirit Of Inferno"),
+    ELECTRIC = Isaac.GetCardIdByName("Spirit Of Conductivity"),
+    NATURE = Isaac.GetCardIdByName("Spirit Of Druidity"),
+    PSYCHIC = Isaac.GetCardIdByName("Spirit Of Clairvoyance"),
+    RANDOM = Isaac.GetCardIdByName("Spirit Of Chaos")
+}
+
+
+---@enum MilkshakeCallbacks
+enums.Callbacks = {
+    --Called from the `MC_USE_CARD` callback whenever a spirit orb is used.
+	--
+	--Params:
+	--
+	-- * orb - Card
+    -- * player - EntityPlayer
+    -- * isLyra - boolean
+	--
+	--Optional args:
+	--
+	-- * orb - Card
+    ON_ORB_USE = "MILKSHAKE_CB_ON_ORB_USE"
 }
 
 return enums

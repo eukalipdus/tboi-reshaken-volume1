@@ -2,18 +2,32 @@ local SpiritOrbs = {}
 local enums = require("milkshake_scripts.enums")
 
 
-local ORB_SUBTYPES = {
-    [enums.Cards.AMETHYST_ORB] = true,
-    [enums.Cards.EMERALD_ORB] = true,
-    [enums.Cards.RUBY_ORB] = true,
-    [enums.Cards.SAPPHIRE_ORB] = true,
-    [enums.Cards.RANDOM_ORB] = true
-}
+---@param orb Card
+---@param player any
+function SpiritOrbs:OnCardUse(orb, player)
+    local isDoublePower = false
+
+    --Chaos orb doesn't use up the double lyra power
+    if orb ~= enums.Orbs.RANDOM then
+        ---@diagnostic disable-next-line: cast-local-type
+        isDoublePower = milkshakeMod.utility:GetTemporaryPlayerData(player, "IsUsingDoublePowerOrb")
+        milkshakeMod.utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
+    end
+
+    Isaac.RunCallbackWithParam(enums.Callbacks.ON_ORB_USE, orb, orb, player, isDoublePower)
+end
+for _, orb in pairs(enums.Orbs) do
+    milkshakeMod:AddCallback(
+        ModCallbacks.MC_USE_CARD,
+        SpiritOrbs.OnCardUse,
+        orb
+    )
+end
 
 
 ---@param card EntityPickup
 function SpiritOrbs:OnCardUpdate(card)
-    if not ORB_SUBTYPES[card.SubType] then return end
+    if not milkshakeMod.utility:IsSpiritOrb(card.SubType) then return end
 
     local sprite = card:GetSprite()
 
@@ -31,7 +45,7 @@ milkshakeMod:AddCallback(
 
 ---@param card EntityPickup
 function SpiritOrbs:OnCardRender(card)
-    if not ORB_SUBTYPES[card.SubType] then return end
+    if not milkshakeMod.utility:IsSpiritOrb(card.SubType) then return end
 
     local sprite = card:GetSprite()
 
