@@ -23,6 +23,7 @@ function batteryAcid:preSpawnCleanAward()
                 else
                     chargeToAdd = 1
                 end
+                chargeToAdd = chargeToAdd * player:GetCollectibleNum(enums.Collectibles.BATTERY_ACID)
                 TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_PRIMARY, chargeToAdd)
             end
         end
