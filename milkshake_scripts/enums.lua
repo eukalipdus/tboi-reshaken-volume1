@@ -25,6 +25,7 @@ enums.Collectibles = {
     LEVITICUS = Isaac.GetItemIdByName("Leviticus"),
     SICKLE_CELL = Isaac.GetItemIdByName("Sickle Cell"),
     BATTERY_ACID = Isaac.GetItemIdByName("Battery Acid"),
+    DADS_MITT = Isaac.GetItemIdByName("Dad's Mitt"),
 }
 
 enums.Trinkets = {
