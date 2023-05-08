@@ -2,18 +2,32 @@ local SpiritOrbs = {}
 local enums = require("milkshake_scripts.enums")
 
 
-local ORB_SUBTYPES = {
-    [enums.Cards.AMETHYST_ORB] = true,
-    [enums.Cards.EMERALD_ORB] = true,
-    [enums.Cards.RUBY_ORB] = true,
-    [enums.Cards.SAPPHIRE_ORB] = true,
-    [enums.Cards.RANDOM_ORB] = true
-}
+---@param orb Card
+---@param player any
+function SpiritOrbs:OnCardUse(orb, player)
+    local isDoublePower = false
+
+    --Chaos orb doesn't use up the double lyra power
+    if orb ~= enums.Orbs.RANDOM then
+        ---@diagnostic disable-next-line: cast-local-type
+        isDoublePower = MilkshakeVol1.utility:GetTemporaryPlayerData(player, "IsUsingDoublePowerOrb")
+        MilkshakeVol1.utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
+    end
+
+    Isaac.RunCallbackWithParam(enums.Callbacks.ON_ORB_USE, orb, orb, player, isDoublePower)
+end
+for _, orb in pairs(enums.Orbs) do
+    MilkshakeVol1:AddCallback(
+        ModCallbacks.MC_USE_CARD,
+        SpiritOrbs.OnCardUse,
+        orb
+    )
+end
 
 
 ---@param card EntityPickup
 function SpiritOrbs:OnCardUpdate(card)
-    if not ORB_SUBTYPES[card.SubType] then return end
+    if not MilkshakeVol1.utility:IsSpiritOrb(card.SubType) then return end
 
     local sprite = card:GetSprite()
 
@@ -22,7 +36,7 @@ function SpiritOrbs:OnCardUpdate(card)
         SFXManager():Play(SoundEffect.SOUND_GOLD_HEART_DROP)
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_UPDATE,
     SpiritOrbs.OnCardUpdate,
     PickupVariant.PICKUP_TAROTCARD
@@ -31,7 +45,7 @@ milkshakeMod:AddCallback(
 
 ---@param card EntityPickup
 function SpiritOrbs:OnCardRender(card)
-    if not ORB_SUBTYPES[card.SubType] then return end
+    if not MilkshakeVol1.utility:IsSpiritOrb(card.SubType) then return end
 
     local sprite = card:GetSprite()
 
@@ -41,7 +55,7 @@ function SpiritOrbs:OnCardRender(card)
         SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_RENDER,
     SpiritOrbs.OnCardRender,
     PickupVariant.PICKUP_TAROTCARD

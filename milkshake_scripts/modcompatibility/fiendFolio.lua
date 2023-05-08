@@ -1,6 +1,6 @@
-milkshakeMod:AddModCompatibility(function ()
+MilkshakeVol1:AddModCompatibility(function ()
     if not FiendFolio then return end
 
     --Add coins
-    --milkshakeMod:AddRainbowPenny()
+    --MilkshakeVol1:AddRainbowPenny()
 end)

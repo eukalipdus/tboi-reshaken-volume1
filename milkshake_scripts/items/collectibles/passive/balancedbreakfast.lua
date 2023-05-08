@@ -1,5 +1,5 @@
 local balancedBreakfast = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local LUCK_UP = 1
 
 function balancedBreakfast:onCache(player, cacheFlag)
@@ -9,4 +9,4 @@ function balancedBreakfast:onCache(player, cacheFlag)
         end
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, balancedBreakfast.onCache)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, balancedBreakfast.onCache)

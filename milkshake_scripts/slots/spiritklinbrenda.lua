@@ -1,14 +1,5 @@
 local SpiritKlin = {}
-local enums = milkshakeMod.enums
-
-
-local ORBS = {
-    enums.Cards.RANDOM_ORB,
-    enums.Cards.AMETHYST_ORB,
-    enums.Cards.RUBY_ORB,
-    enums.Cards.EMERALD_ORB,
-    enums.Cards.SAPPHIRE_ORB,
-}
+local enums = MilkshakeVol1.enums
 
 
 ---@param brenda Entity
@@ -28,7 +19,7 @@ function SpiritKlin:OnBrendaUpdate(brenda)
         sprite:Play("Idle")
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_UPDATE,
     SpiritKlin.OnBrendaUpdate,
     enums.Slots.SPIRIT_KLIN_BRENDA
@@ -53,7 +44,7 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
 
     sprite:Play("Wiggle", true)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.PRE_SLOT_COLLISION,
     SpiritKlin.OnBrendaCollision,
     enums.Slots.SPIRIT_KLIN_BRENDA
@@ -62,22 +53,22 @@ milkshakeMod:AddCallback(
 
 ---@param brenda Entity
 function SpiritKlin:OnBrendaPrize(brenda)
-    local rng = brenda:GetDropRNG()
+    -- local rng = brenda:GetDropRNG()
 
-    local orbToPay = TSIL.Random.GetRandomElementsFromTable(
-        ORBS,
-        1,
-        rng
-    )[1]
+    -- local orbToPay = TSIL.Random.GetRandomElementsFromTable(
+    --     ORBS,
+    --     1,
+    --     rng
+    -- )[1]
 
-    TSIL.EntitySpecific.SpawnPickup(
-        PickupVariant.PICKUP_TAROTCARD,
-        orbToPay,
-        brenda.Position,
-        Vector(6, 0):Rotated(rng:RandomInt(360))
-    )
+    -- TSIL.EntitySpecific.SpawnPickup(
+    --     PickupVariant.PICKUP_TAROTCARD,
+    --     orbToPay,
+    --     brenda.Position,
+    --     Vector(6, 0):Rotated(rng:RandomInt(360))
+    -- )
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_PRIZE,
     SpiritKlin.OnBrendaPrize,
     enums.Slots.SPIRIT_KLIN_BRENDA

@@ -1,4 +1,4 @@
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local SickleCell = {}
 
 local BLEED_DURATION = 30 * 6 --30 fps * 6 seconds
@@ -9,7 +9,7 @@ local StoneTearAnimScaleThresholds = { 0, 0.675, 0.925, 1.2, 1.695, 2.275, 2.8 }
 ---@return boolean
 local function IsSickleTear(tear)
     return TSIL.Entities.GetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         tear,
         "IsSickleTear"
     ) == true --So we don't return nil
@@ -31,7 +31,7 @@ end
 
 local function MakeTearSickle(tear)
     TSIL.Entities.SetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         tear,
         "IsSickleTear",
         true
@@ -70,7 +70,7 @@ function SickleCell:onCache(player, cacheFlag)
         player.TearFlags = player.TearFlags | TearFlags.TEAR_PIERCING
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     SickleCell.onCache
 )
@@ -85,7 +85,7 @@ function SickleCell:replaceTear(tear)
 
     MakeTearSickle(tear)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_TEAR_INIT_LATE,
     SickleCell.replaceTear
 )
@@ -98,7 +98,7 @@ local function AddSickleBleed(entity)
     entity:BloodExplode()
 
     TSIL.Entities.SetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         entity,
         "SickleCellBleedFrame",
         Game():GetFrameCount()
@@ -182,7 +182,7 @@ function SickleCell:OnEntityDamage(entity, _, flags, source)
     end
 end
 
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_ENTITY_TAKE_DMG,
     SickleCell.OnEntityDamage
 )
@@ -191,7 +191,7 @@ milkshakeMod:AddCallback(
 ---@param npc EntityNPC
 function SickleCell:OnNPCUpdate(npc)
     local sickleCellBleedFrame = TSIL.Entities.GetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         npc,
         "SickleCellBleedFrame"
     )
@@ -203,14 +203,14 @@ function SickleCell:OnNPCUpdate(npc)
     if currentDuration >= BLEED_DURATION then
         npc:ClearEntityFlags(EntityFlag.FLAG_BLEED_OUT)
         TSIL.Entities.SetEntityData(
-            milkshakeMod,
+            MilkshakeVol1,
             npc,
             "SickleCellBleedFrame",
             nil
         )
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_NPC_UPDATE,
     SickleCell.OnNPCUpdate
 )
@@ -235,7 +235,7 @@ function SickleCell:OnSickleCellItemAdded(player)
         MakeTearSickle(tear)
     end)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
     SickleCell.OnSickleCellItemAdded,
     {

@@ -1,6 +1,6 @@
 local heartyBreakfast = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 local LUCK_UP = 1
 local DMG_UP = 0.5
 local TEARS_UP = 0.3
@@ -20,4 +20,4 @@ function heartyBreakfast:onCache(player, cacheFlag)
         end
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, heartyBreakfast.onCache)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, heartyBreakfast.onCache)

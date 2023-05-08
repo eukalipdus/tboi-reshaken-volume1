@@ -90,7 +90,7 @@ local function BumFamiliarInit(_, familiar)
 		--I have no idea why i can't do this here but when i try i get C-stack size errors
 	end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, BumFamiliarInit)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, BumFamiliarInit)
 
 
 ---@param familiar EntityFamiliar
@@ -181,7 +181,7 @@ local function BumFamiliarUpdate(_, familiar)
 	---@diagnostic disable-next-line: assign-type-mismatch, param-type-mismatch
 	familiar.Velocity = TSIL.Utils.Math.Lerp(familiar.Velocity, newPos, 0.25)
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, BumFamiliarUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, BumFamiliarUpdate)
 
 ---@param player EntityPlayer
 local function EvaluateCache(_, player)
@@ -228,18 +228,18 @@ local function EvaluateCache(_, player)
 		end
 	end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, EvaluateCache, CacheFlag.CACHE_FAMILIARS)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, EvaluateCache, CacheFlag.CACHE_FAMILIARS)
 
 local function Update()
 	---@diagnostic disable-next-line: missing-parameter
 	if (superBumSprite:IsPlaying()) then Isaac.GetPlayer():UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, UseFlag.USE_NOANIM) end
 	superBumSprite:Update()
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_UPDATE, Update)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_UPDATE, Update)
 
 
 --[[NEXT THREE FUNCTIONS ARE BASICALLY THE DESECRATED CORPSE OF FF's giantbook_manager.lua]]
-milkshakeMod:AddCallback(ModCallbacks.MC_INPUT_ACTION, function(_, entity, hook, action)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_INPUT_ACTION, function(_, entity, hook, action)
 	---@diagnostic disable-next-line: missing-parameter
 	if superBumSprite:IsPlaying() and action ~= ButtonAction.ACTION_CONSOLE then
 		return 0
@@ -263,13 +263,13 @@ end
 
 ---@diagnostic disable-next-line: undefined-global
 if StageAPI then
-	milkshakeMod:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, function(_, shaderName) -- Hijack the existance of the StageAPI shader to render over the hud
+	MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, function(_, shaderName) -- Hijack the existance of the StageAPI shader to render over the hud
 		if shaderName == "StageAPI-RenderAboveHUD" then
 			doRender()
 		end
 	end)
 else
-	milkshakeMod:AddCallback(ModCallbacks.MC_POST_RENDER, doRender)
+	MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, doRender)
 end
 
 

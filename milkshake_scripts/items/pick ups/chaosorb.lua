@@ -1,32 +1,20 @@
 local ChaosOrb = {}
-local enums = milkshakeMod.enums
-
-
-local ORBS = {
-    enums.Cards.AMETHYST_ORB,
-    enums.Cards.RUBY_ORB,
-    enums.Cards.EMERALD_ORB,
-    enums.Cards.SAPPHIRE_ORB,
-}
+local enums = MilkshakeVol1.enums
 
 
 local SPRITESHEET_PER_ORB = {
-    [enums.Cards.AMETHYST_ORB] = "spirit_psychic",
-    [enums.Cards.RUBY_ORB] = "spirit_fire",
-    [enums.Cards.EMERALD_ORB] = "spirit_nature",
-    [enums.Cards.SAPPHIRE_ORB] = "spirit_electricity",
+    [enums.Orbs.PSYCHIC] = "spirit_psychic",
+    [enums.Orbs.FIRE] = "spirit_fire",
+    [enums.Orbs.NATURE] = "spirit_nature",
+    [enums.Orbs.ELECTRIC] = "spirit_electricity",
 }
 
 
 ---@param player EntityPlayer
 function ChaosOrb:OnChaosOrbUse(_, player)
-    local rng = player:GetCardRNG(enums.Cards.RANDOM_ORB)
+    local rng = player:GetCardRNG(enums.Orbs.RANDOM)
 
-    local orbToUse = TSIL.Random.GetRandomElementsFromTable(
-        ORBS,
-        1,
-        rng
-    )[1]
+    local orbToUse = MilkshakeVol1.utility:GetRandomSpiritOrb(false, rng)
 
     player:UseCard(orbToUse)
 
@@ -38,17 +26,8 @@ function ChaosOrb:OnChaosOrbUse(_, player)
     sprite:Play("Idle", true)
     player:AnimatePickup(sprite)
 end
-milkshakeMod:AddCallback(
-    ModCallbacks.MC_USE_CARD,
+MilkshakeVol1:AddCallback(
+    enums.Callbacks.ON_ORB_USE,
     ChaosOrb.OnChaosOrbUse,
-    enums.Cards.RANDOM_ORB
+    enums.Orbs.RANDOM
 )
-
-
--- function onrender()
-
--- end
--- milkshakeMod:AddCallback(
---     ModCallbacks.MC_POST_RENDER,
---     onrender
--- )

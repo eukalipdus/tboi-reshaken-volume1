@@ -1,5 +1,5 @@
 local utility = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 --- Used to spawn spirit orbs for the shard series of trinkets
 ---@param trinketType TrinketType
@@ -62,7 +62,7 @@ end
 local function PreGameExit()
 	NotGetData = {}
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, PreGameExit)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, PreGameExit)
 
 ---@param entity Entity
 local function OnEntityRemoved(_, entity)
@@ -70,7 +70,7 @@ local function OnEntityRemoved(_, entity)
 
     NotGetData[ptrHash] = nil
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, OnEntityRemoved)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, OnEntityRemoved)
 
 ---Concatenates 2 tables into 1
 ---https://stackoverflow.com/a/15278426
@@ -137,7 +137,7 @@ end
 local function OnNewRoom()
     tempPlayerData = {}
 end
-milkshakeMod:AddPriorityCallback(
+MilkshakeVol1:AddPriorityCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     CallbackPriority.IMPORTANT,
     OnNewRoom
@@ -183,6 +183,7 @@ function utility:RecycleCollectible(position, player, roomType, itemPool, seed, 
     SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
 
     for _ = 1, coins do
+        ---@diagnostic disable-next-line: param-type-mismatch
         TSIL.PickupSpecific.SpawnCoin(0, position, RandomVector() * mulVecBy, player, rng)
     end
 
@@ -301,6 +302,39 @@ function utility:AnyPlayerIsCharacter(character)
     return TSIL.Utils.Tables.Some(players, function (player)
         return player:GetPlayerType() == character
     end)
+end
+
+
+local SPIRIT_ORBS = {}
+local SPIRIT_ORBS_NO_RANDOM = {}
+local SPIRIT_ORBS_MAP = {}
+for _, orb in pairs(enums.Orbs) do
+    SPIRIT_ORBS_MAP[orb] = true
+    SPIRIT_ORBS[#SPIRIT_ORBS+1] = orb
+    if orb ~= enums.Orbs.RANDOM then
+        SPIRIT_ORBS_NO_RANDOM[#SPIRIT_ORBS_NO_RANDOM+1] = orb
+    end
+end
+
+---Checks if a given card is a spirit orb
+---@param card Card
+function utility:IsSpiritOrb(card)
+    return SPIRIT_ORBS_MAP[card] ~= nil
+end
+
+---Helper function to get a random orb
+---@param includeChaos? boolean @Default: true
+---@param seedOrRNG? integer | RNG
+---@return Card
+function utility:GetRandomSpiritOrb(includeChaos, seedOrRNG)
+    if includeChaos == nil then includeChaos = true end
+
+    local orbs = SPIRIT_ORBS
+    if not includeChaos then
+        orbs = SPIRIT_ORBS_NO_RANDOM
+    end
+
+    return TSIL.Random.GetRandomElementsFromTable(orbs, 1, seedOrRNG)[1]
 end
 
 return utility

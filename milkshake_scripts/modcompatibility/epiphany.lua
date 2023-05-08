@@ -1,8 +1,8 @@
-milkshakeMod:AddModCompatibility(function()
+MilkshakeVol1:AddModCompatibility(function()
     if not Epiphany then return end
 
     --Add slots
-    milkshakeMod:AddConductivityOrbSlotPayout(Epiphany.Slot.GLITCH.ID, {
+    MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.GLITCH.ID, {
         {
             chance = 100,
             value = {
@@ -45,7 +45,7 @@ milkshakeMod:AddModCompatibility(function()
         }
     })
 
-    milkshakeMod:AddConductivityOrbSlotPayout(Epiphany.Slot.DICE_MACHINE.ID, {
+    MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.DICE_MACHINE.ID, {
         {
             chance = 50,
             value = {
@@ -56,18 +56,18 @@ milkshakeMod:AddModCompatibility(function()
         }
     })
 
-    milkshakeMod:AddConductivityOrbSlotPayout(Epiphany.Slot.PAIN_O_MATIC.ID, {
-        {
-            chance = 50,
-            value = {
-                variant = PickupVariant.PICKUP_HEART,
-                subtype = Epiphany.PickupGetter.MakeHeartGetter({ "Red", "Rotten" }),
-                weight = 1
-            }
-        }
-    })
+    -- MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.PAIN_O_MATIC.ID, {
+    --     {
+    --         chance = 50,
+    --         value = {
+    --             variant = PickupVariant.PICKUP_HEART,
+    --             subtype = Epiphany.PickupGetter.MakeHeartGetter({ "Red", "Rotten" }),
+    --             weight = 1
+    --         }
+    --     }
+    -- })
 
-    milkshakeMod:AddConductivityOrbSlotPayout(Epiphany.Slot.TURNOVER_RESTOCK.ID, {
+    MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.TURNOVER_RESTOCK.ID, {
         {
             chance = 100,
             value = {
@@ -150,7 +150,7 @@ milkshakeMod:AddModCompatibility(function()
         },
     })
 
-    milkshakeMod:AddConductivityOrbSlotPayout(Epiphany.Slot.CONVERTER_BEGGAR.ID, {
+    MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.CONVERTER_BEGGAR.ID, {
         {
             chance = 50,
             value = {

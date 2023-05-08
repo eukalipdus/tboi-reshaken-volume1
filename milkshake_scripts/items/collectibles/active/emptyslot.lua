@@ -1,9 +1,9 @@
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local EmptySlot = {}
 
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "EmptySlotCoinsPerPlayer",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
@@ -22,7 +22,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player, _, activeSlot)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local emptySlotCoinsPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "EmptySlotCoinsPerPlayer"
     )
     local playerCoins = emptySlotCoinsPerPlayer[tostring(playerIndex)]
@@ -90,7 +90,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player, _, activeSlot)
         ShowAnim = true,
     }
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_USE_ITEM,
     EmptySlot.OnEmptySlotUse,
     enums.Collectibles.EMPTY_SLOT

@@ -1,6 +1,6 @@
 local SapphireOrb = {}
-local enums = milkshakeMod.enums
-local Utilities = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local Utilities = MilkshakeVol1.utility
 
 
 local CLAIRVOYANCE_ORB_DURATION = 30 * 75
@@ -10,7 +10,7 @@ local FAKE_CENSER_RADIUS = 70
 
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "ClairvoyanceOrbPlayerFrames",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
@@ -18,27 +18,20 @@ TSIL.SaveManager.AddPersistentVariable(
 
 
 ---@param player EntityPlayer
-function SapphireOrb:OnAmethystOrbUse(_, player)
-    local playerUsingLyraData = Utilities:GetTemporaryPlayerData(player, "UsingLyraData")
-
-    if playerUsingLyraData then return end
-
-    local isDoublePower = Utilities:GetTemporaryPlayerData(player, "IsUsingDoublePowerOrb")
-    Utilities:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
-
+function SapphireOrb:OnAmethystOrbUse(_, player, doublePower)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     player:AddNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
 
     local clairvoyanceOrbPlayerFrames = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "ClairvoyanceOrbPlayerFrames"
     )
     local frameCount = Game():GetFrameCount()
-    if isDoublePower then
-        clairvoyanceOrbPlayerFrames[tostring(playerIndex)] = frameCount + CLAIRVOYANCE_ORB_DURATION
+    if doublePower then
+        clairvoyanceOrbPlayerFrames[playerIndex] = frameCount + CLAIRVOYANCE_ORB_DURATION
     else
-        clairvoyanceOrbPlayerFrames[tostring(playerIndex)] = frameCount
+        clairvoyanceOrbPlayerFrames[playerIndex] = frameCount
     end
 
     local aura = TSIL.EntitySpecific.SpawnEffect(
@@ -50,16 +43,16 @@ function SapphireOrb:OnAmethystOrbUse(_, player)
     aura:FollowParent(player)
     aura.DepthOffset = -100
 end
-milkshakeMod:AddCallback(
-    ModCallbacks.MC_USE_CARD,
+MilkshakeVol1:AddCallback(
+    enums.Callbacks.ON_ORB_USE,
     SapphireOrb.OnAmethystOrbUse,
-    enums.Cards.AMETHYST_ORB
+    enums.Orbs.PSYCHIC
 )
 
 
 ---@param player EntityPlayer
 local function TryReflectProjectile(player)
-    local rng = player:GetCardRNG(enums.Cards.AMETHYST_ORB)
+    local rng = player:GetCardRNG(enums.Orbs.PSYCHIC)
 
     local nearProjectiles = Isaac.FindInRadius(
         player.Position,
@@ -170,10 +163,10 @@ function SapphireOrb:OnPeffectUpdate(player)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local clairvoyanceOrbPlayerFrames = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "ClairvoyanceOrbPlayerFrames"
     )
-    local playerUsedClairvoyanceFrame = clairvoyanceOrbPlayerFrames[tostring(playerIndex)]
+    local playerUsedClairvoyanceFrame = clairvoyanceOrbPlayerFrames[playerIndex]
 
     if not playerUsedClairvoyanceFrame then return end
 
@@ -182,7 +175,7 @@ function SapphireOrb:OnPeffectUpdate(player)
 
     if orbDuration >= CLAIRVOYANCE_ORB_DURATION then
         player:TryRemoveNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
-        clairvoyanceOrbPlayerFrames[tostring(playerIndex)] = nil
+        clairvoyanceOrbPlayerFrames[playerIndex] = nil
         return
     end
 
@@ -192,7 +185,7 @@ function SapphireOrb:OnPeffectUpdate(player)
 
     FakeCenserEffect(player)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PEFFECT_UPDATE,
     SapphireOrb.OnPeffectUpdate
 )
@@ -205,7 +198,7 @@ function SapphireOrb:OnNewRoom()
         player:TryRemoveNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
     end)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     SapphireOrb.OnNewRoom
 )
@@ -222,10 +215,10 @@ function SapphireOrb:OnClairvoyanceAuraUpdate(effect)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local clairvoyanceOrbPlayerFrames = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "ClairvoyanceOrbPlayerFrames"
     )
-    local playerUsedClairvoyanceFrame = clairvoyanceOrbPlayerFrames[tostring(playerIndex)]
+    local playerUsedClairvoyanceFrame = clairvoyanceOrbPlayerFrames[playerIndex]
 
     if not playerUsedClairvoyanceFrame then
         effect:Remove()
@@ -234,7 +227,7 @@ function SapphireOrb:OnClairvoyanceAuraUpdate(effect)
 
     effect:FollowParent(effect.Parent)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
     SapphireOrb.OnClairvoyanceAuraUpdate,
     enums.Effects.CLAIRVOYANCE_AURA
@@ -283,7 +276,7 @@ function SapphireOrb:OnLaserUpdate(laser)
     laser.AngleDegrees = laserAngle
     laser:SetMaxDistance(laserLength)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_LASER_UPDATE,
     SapphireOrb.OnLaserUpdate
 )
@@ -298,7 +291,7 @@ function SapphireOrb:OnReflectedProjectileGlowUpdate(glow)
         glow:Remove()
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
     SapphireOrb.OnReflectedProjectileGlowUpdate,
     enums.Effects.REFLECTED_PROJECTILE_GLOW

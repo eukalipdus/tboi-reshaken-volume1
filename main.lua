@@ -1,9 +1,9 @@
-milkshakeMod = RegisterMod("Milkshake!", 1)
+MilkshakeVol1 = RegisterMod("Milkshake!", 1)
 
 require("loi_milkshake.TSIL").Init("loi_milkshake")
 
-milkshakeMod.enums = require("milkshake_scripts.enums")
-milkshakeMod.utility = require("milkshake_scripts.utility")
+MilkshakeVol1.enums = require("milkshake_scripts.enums")
+MilkshakeVol1.utility = require("milkshake_scripts.utility")
 require("milkshake_scripts.bumAPI.core")
 
 local eid = require("milkshake_scripts.modcompatibility.eid")
@@ -52,12 +52,12 @@ require("milkshake_scripts.items.trinkets.crystalpenny")
 require("milkshake_scripts.items.trinkets.rockwheel")
 
 --Pick ups
-require("milkshake_scripts.items.pick ups.amethystorb")
+require("milkshake_scripts.items.pick ups.psychicorb")
 require("milkshake_scripts.items.pick ups.chaosorb")
-require("milkshake_scripts.items.pick ups.emeraldorb")
+require("milkshake_scripts.items.pick ups.natureorb")
 require("milkshake_scripts.items.pick ups.fruitheart")
-require("milkshake_scripts.items.pick ups.rubyorb")
-require("milkshake_scripts.items.pick ups.sapphireOrb")
+require("milkshake_scripts.items.pick ups.fireorb")
+require("milkshake_scripts.items.pick ups.electricorb")
 require("milkshake_scripts.items.pick ups.spiritorbs")
 require("milkshake_scripts.items.pick ups.tatteredpage")
 require("milkshake_scripts.items.pick ups.specialpennies")

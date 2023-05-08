@@ -1,4 +1,4 @@
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local TatteredPage = {}
 
 
@@ -9,7 +9,7 @@ function TatteredPage:OnTatteredPageUse(_, player)
         UseFlag.USE_NOANIM
     )
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_USE_CARD,
     TatteredPage.OnTatteredPageUse,
     enums.Cards.TATTERED_PAGE

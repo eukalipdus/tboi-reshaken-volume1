@@ -1,5 +1,5 @@
 local game = Game()
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local RockWheel = {}
 
 function RockWheel:NPCUpdate(Entity)
@@ -24,6 +24,6 @@ function RockWheel:EvaluateCache(Player, Flag)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, RockWheel.EvaluateCache, CacheFlag.CACHE_SPEED)
-milkshakeMod:AddCallback(ModCallbacks.MC_NPC_UPDATE, RockWheel.NPCUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, RockWheel.EvaluateCache, CacheFlag.CACHE_SPEED)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, RockWheel.NPCUpdate)
 return RockWheel

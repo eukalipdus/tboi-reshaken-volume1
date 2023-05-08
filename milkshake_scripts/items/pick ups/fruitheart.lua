@@ -1,5 +1,5 @@
 local FruitHeart = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 
 ---@param player EntityPlayer
@@ -20,7 +20,7 @@ function FruitHeart:OnPlayerCollision(player, collider)
     collider:Die()
     return true
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_PLAYER_COLLISION,
     FruitHeart.OnPlayerCollision
 )

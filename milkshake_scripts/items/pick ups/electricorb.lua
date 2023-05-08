@@ -1,6 +1,6 @@
 local SapphireOrb = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local SAPPHIRE_ORB_DURATION = 25
 local CONDUCTIVITY_TEAR_LIFESPAN = 30
@@ -260,40 +260,40 @@ local MACHINE_PAYOUTS = {
 ---Adds rewards to a slot so it can be electrocuted with Conductivity Orb.
 ---@param slotVariant any
 ---@param payouts {chance: integer, value: ConductivityOrbSlotReward}[]
-function milkshakeMod:AddConductivityOrbSlotPayout(slotVariant, payouts)
+function MilkshakeVol1:AddConductivityOrbSlotPayout(slotVariant, payouts)
     MACHINE_PAYOUTS[slotVariant] = payouts
 end
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "PlayersUsingSapphireOrbFrames",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "PlayerSelfConductivityTear",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "ConductivityTears",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "ConductivityParasiteTears",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "ElectrocutedSlotFrames",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
@@ -330,7 +330,7 @@ local function SpawnConductiveTear(player, rng)
     local tear = SpawnConductiveTearWithVelocity(player, velocity)
 
     TSIL.Entities.SetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         tear,
         "IsConductivityTear",
         true
@@ -344,7 +344,7 @@ local function SpawnFakeParasiteTear(tear, velocity)
     local parasiteTear = SpawnConductiveTearWithVelocity(tear.SpawnerEntity:ToPlayer(), velocity)
 
     TSIL.Entities.SetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         parasiteTear,
         "IsConductivityParasiteTear",
         true
@@ -353,23 +353,16 @@ end
 
 
 ---@param player EntityPlayer
-function SapphireOrb:OnSapphireOrbUse(_, player)
-    local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
-
-    if playerUsingLyraData then return end
-
-    local isDoublePower = utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
-    utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
-
+function SapphireOrb:OnSapphireOrbUse(_, player, doublePower)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local playersUsingSapphireOrbFrames = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "PlayersUsingSapphireOrbFrames"
     )
 
     local frameCount = Game():GetFrameCount()
-    if isDoublePower then
+    if doublePower then
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount + SAPPHIRE_ORB_DURATION
     else
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount
@@ -378,20 +371,20 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
     local selfTear = SpawnConductiveTearWithVelocity(player, player.Velocity)
 
     TSIL.Entities.SetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         selfTear,
         "IsPlayerSelfConductivityTear",
         true
     )
 
-    local rng = player:GetCardRNG(enums.Cards.SAPPHIRE_ORB)
+    local rng = player:GetCardRNG(enums.Orbs.ELECTRIC)
 
     for angle = 0, 359, 90 do
         local velocity = Vector.FromAngle(angle) * TSIL.Random.GetRandomFloat(8, 12, rng)
         local tear = SpawnConductiveTearWithVelocity(player, velocity)
 
         TSIL.Entities.SetEntityData(
-            milkshakeMod,
+            MilkshakeVol1,
             tear,
             "IsConductivityTear",
             true
@@ -399,7 +392,11 @@ function SapphireOrb:OnSapphireOrbUse(_, player)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_USE_CARD, SapphireOrb.OnSapphireOrbUse, enums.Cards.SAPPHIRE_ORB)
+MilkshakeVol1:AddCallback(
+    enums.Callbacks.ON_ORB_USE,
+    SapphireOrb.OnSapphireOrbUse,
+    enums.Orbs.ELECTRIC
+)
 
 
 ---@param slot Entity
@@ -413,7 +410,7 @@ end
 local function ElectrocuteSlots(player, rng)
     if rng:RandomFloat() <= 0.05 then return end
 
-    local electrocutedSlotFrames = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ElectrocutedSlotFrames")
+    local electrocutedSlotFrames = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "ElectrocutedSlotFrames")
 
     local entitiesInRadius = Isaac.FindInRadius(player.Position, SLOT_ELECTROCUTE_RADIUS)
     local slotsInRadius = TSIL.Utils.Tables.Filter(entitiesInRadius, function(_, entity)
@@ -444,7 +441,7 @@ function SapphireOrb:OnPeffectUpdate(player)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local playersUsingSapphireOrbFrames = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "PlayersUsingSapphireOrbFrames"
     )
 
@@ -458,14 +455,14 @@ function SapphireOrb:OnPeffectUpdate(player)
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = nil
     end
 
-    local rng = player:GetCardRNG(enums.Cards.SAPPHIRE_ORB)
+    local rng = player:GetCardRNG(enums.Orbs.ELECTRIC)
 
     SpawnConductiveTear(player, rng)
 
     ElectrocuteSlots(player, rng)
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, SapphireOrb.OnPeffectUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, SapphireOrb.OnPeffectUpdate)
 
 
 ---@param tear EntityTear
@@ -517,17 +514,17 @@ end
 ---@param tear EntityTear
 function SapphireOrb:OnTearUpdate(tear)
     local isPlayerConductivity = TSIL.Entities.GetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         tear,
         "IsPlayerSelfConductivityTear"
     )
     local isConductivityTear = TSIL.Entities.GetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         tear,
         "IsConductivityTear"
     )
     local isParasiteTear = TSIL.Entities.GetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         tear,
         "IsConductivityParasiteTear"
     )
@@ -549,23 +546,23 @@ function SapphireOrb:OnTearUpdate(tear)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, SapphireOrb.OnTearUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, SapphireOrb.OnTearUpdate)
 
 
 ---@param tear EntityTear
 function SapphireOrb:OnTearCollision(tear)
     local isPlayerConductivity = TSIL.Entities.GetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         tear,
         "IsPlayerSelfConductivityTear"
     )
     local isConductivityTear = TSIL.Entities.GetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         tear,
         "IsConductivityTear"
     )
     local isParasiteTear = TSIL.Entities.GetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         tear,
         "IsConductivityParasiteTear"
     )
@@ -575,7 +572,7 @@ function SapphireOrb:OnTearCollision(tear)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, SapphireOrb.OnTearCollision)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, SapphireOrb.OnTearCollision)
 
 
 ---@param spawnPos Vector
@@ -598,9 +595,13 @@ local function SpawnSlotElectrocutionPayouts(spawnPos, rng, slot)
                 CollectibleType.COLLECTIBLE_NULL
             )
         end
+        local subtype = rewardToSpawn.subtype
+        if type(subtype) == "function" then
+            subtype = rewardToSpawn.subtype()
+        end
         TSIL.EntitySpecific.SpawnPickup(
             rewardToSpawn.variant,
-            rewardToSpawn.subtype,
+            subtype,
             spawnPos,
             velocity
         )
@@ -610,7 +611,7 @@ end
 
 ---@param slot Entity
 function SapphireOrb:OnSlotUpdate(slot)
-    local electrocutedSlotFrames = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ElectrocutedSlotFrames")
+    local electrocutedSlotFrames = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "ElectrocutedSlotFrames")
     local ptrHash = GetPtrHash(slot)
 
     local slotElectrocutionFrame = electrocutedSlotFrames[tostring(ptrHash)]
@@ -651,14 +652,14 @@ function SapphireOrb:OnSlotUpdate(slot)
     SpawnSlotElectrocutionPayouts(slot.Position, slot:GetDropRNG(), slot)
 end
 
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_UPDATE,
     SapphireOrb.OnSlotUpdate
 )
 
 
 function SapphireOrb:OnSlotCollision(slot)
-    local electrocutedSlotFrames = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "ElectrocutedSlotFrames")
+    local electrocutedSlotFrames = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "ElectrocutedSlotFrames")
     local ptrHash = GetPtrHash(slot)
 
     local slotElectrocutionFrame = electrocutedSlotFrames[tostring(ptrHash)]
@@ -668,7 +669,7 @@ function SapphireOrb:OnSlotCollision(slot)
     end
 end
 
-milkshakeMod:AddPriorityCallback(
+MilkshakeVol1:AddPriorityCallback(
     TSIL.Enums.CustomCallback.PRE_SLOT_COLLISION,
     CallbackPriority.IMPORTANT,
     SapphireOrb.OnSlotCollision

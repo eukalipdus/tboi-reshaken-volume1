@@ -1,5 +1,5 @@
 local diceDice = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 local timesToActivate = 3
 
 local diceCollectibles = {
@@ -25,5 +25,5 @@ function diceDice:onUse(collectible, rng, player)
     end
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_USE_ITEM, diceDice.onUse, enums.Collectibles.DICE_DICE)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, diceDice.onUse, enums.Collectibles.DICE_DICE)
 return diceDice

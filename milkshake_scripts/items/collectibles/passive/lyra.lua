@@ -1,6 +1,6 @@
 local Lyra = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 
 ---@class UsingLyraData
@@ -23,13 +23,6 @@ local utility = milkshakeMod.utility
 ---@field notes NoteData[]
 
 --CONSTANTS
-local ORBS = {
-    enums.Cards.RANDOM_ORB,
-    enums.Cards.AMETHYST_ORB,
-    enums.Cards.RUBY_ORB,
-    enums.Cards.EMERALD_ORB,
-    enums.Cards.SAPPHIRE_ORB,
-}
 ---@enum NoteDirection
 local NOTE_DIRECTION = {
     UP = "Up",
@@ -145,7 +138,7 @@ function Lyra:OnPickupInitFirst(pickup)
     if not TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA) then return end
 
     --It's already an orb
-    if TSIL.Utils.Tables.IsIn(ORBS, pickup.SubType) then
+    if utility:IsSpiritOrb(pickup.SubType) then
         return
     end
 
@@ -154,7 +147,7 @@ function Lyra:OnPickupInitFirst(pickup)
 
     if chance > PILL_CARD_REPLACE_CHANCE then return end
 
-    local chosenOrb = TSIL.Random.GetRandomElementsFromTable(ORBS, 1, rng)[1]
+    local chosenOrb = utility:GetRandomSpiritOrb(true, rng)
     pickup:Morph(
         EntityType.ENTITY_PICKUP,
         PickupVariant.PICKUP_TAROTCARD,
@@ -162,12 +155,12 @@ function Lyra:OnPickupInitFirst(pickup)
         true
     )
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PICKUP_INIT_FIRST,
     Lyra.OnPickupInitFirst,
     PickupVariant.PICKUP_TAROTCARD
 )
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PICKUP_INIT_FIRST,
     Lyra.OnPickupInitFirst,
     PickupVariant.PICKUP_PILL
@@ -211,18 +204,17 @@ function Lyra:OnOrbUse(orb, player)
         notes = currentSongNotes
     }
     utility:SetTemporaryPlayerData(player, "UsingLyraData", playerUsingLyraData)
-    --player.ControlsEnabled = false
 
     player:AnimateCollectible(enums.Collectibles.LYRA, "LiftItem", "PlayerPickup")
+
+    --Doesn't really mean anything, but will stop the other callbacks from running
+    return true
 end
-for _, orb in ipairs(ORBS) do
-    milkshakeMod:AddPriorityCallback(
-        ModCallbacks.MC_USE_CARD,
-        CallbackPriority.EARLY,
-        Lyra.OnOrbUse,
-        orb
-    )
-end
+MilkshakeVol1:AddPriorityCallback(
+    enums.Callbacks.ON_ORB_USE,
+    CallbackPriority.EARLY,
+    Lyra.OnOrbUse
+)
 
 
 ---@param player EntityPlayer
@@ -323,7 +315,7 @@ function Lyra:OnPlayerRender(player)
 
     HandleLyraInput(player, playerUsingLyraData)
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Lyra.OnPlayerRender)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Lyra.OnPlayerRender)
 
 
 ---@param entity Entity
@@ -346,7 +338,7 @@ function Lyra:OnInput(entity, inputHook, buttonAction)
         return false
     end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_INPUT_ACTION, Lyra.OnInput)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_INPUT_ACTION, Lyra.OnInput)
 
 
 function Lyra:OnRender()
@@ -366,10 +358,10 @@ function Lyra:OnRender()
 
     noteSplashes = filteredSplashes
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_RENDER, Lyra.OnRender)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, Lyra.OnRender)
 
 
 function Lyra:OnNewRoom()
     noteSplashes = {}
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Lyra.OnNewRoom)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Lyra.OnNewRoom)

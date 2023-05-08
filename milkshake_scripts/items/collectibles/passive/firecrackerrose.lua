@@ -1,11 +1,11 @@
 local FirecrackerRose = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
-TSIL.SaveManager.AddPersistentVariable(milkshakeMod, "FirecrackerTears", {},
+TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "FirecrackerTears", {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM)
-TSIL.SaveManager.AddPersistentVariable(milkshakeMod, "CrackeredEnemies", {},
+TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "CrackeredEnemies", {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM)
-TSIL.SaveManager.AddPersistentVariable(milkshakeMod, "PetalTears", {}, TSIL.Enums.VariablePersistenceMode.RESET_ROOM)
+TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "PetalTears", {}, TSIL.Enums.VariablePersistenceMode.RESET_ROOM)
 
 local CrackerSeedSprites = {}
 
@@ -18,7 +18,7 @@ local function FirecrackerExplode(npc, source)
     Isaac.Explode(npc.Position, source, 35 + 6 * source.Damage)
 
     local npcPtr = GetPtrHash(npc)
-    local petalTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PetalTears")
+    local petalTears = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PetalTears")
 
     local rng = TSIL.RNG.NewRNG(npc.InitSeed)
     local numTears = 5 + rng:RandomInt(3)
@@ -47,7 +47,7 @@ end
 ---@param player EntityPlayer
 local function AddCrackered(npc, player)
     local colliderPtr = GetPtrHash(npc)
-    local crackeredEnemies = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "CrackeredEnemies")
+    local crackeredEnemies = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "CrackeredEnemies")
 
     if crackeredEnemies[colliderPtr] ~= nil then return end
 
@@ -76,14 +76,14 @@ local function MakeTearFirecrackerSeed(tear)
     local newColor = Color(1, 1, 1, 1, 0.5)
     tear.Color = newColor
 
-    TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "FirecrackerTears")[tearPtr] = true
+    TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "FirecrackerTears")[tearPtr] = true
 end
 
 
 ---@param tear EntityTear
 function FirecrackerRose:OnTearInit(tear)
     local tearPtr = GetPtrHash(tear)
-    local petalTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PetalTears")
+    local petalTears = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PetalTears")
 
     if petalTears[tearPtr] then return end
 
@@ -99,7 +99,7 @@ function FirecrackerRose:OnTearInit(tear)
 
     MakeTearFirecrackerSeed(tear)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_TEAR_INIT_LATE,
     FirecrackerRose.OnTearInit
 )
@@ -108,14 +108,14 @@ milkshakeMod:AddCallback(
 ---@param tear EntityTear
 function FirecrackerRose:OnTearUpdate(tear)
     local tearPtr = GetPtrHash(tear)
-    local petalTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PetalTears")
+    local petalTears = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PetalTears")
 
     if not petalTears[tearPtr] then return end
 
     local angle = tear.Velocity:GetAngleDegrees()
     tear.SpriteRotation = angle + 180
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_TEAR_UPDATE,
     FirecrackerRose.OnTearUpdate
 )
@@ -150,8 +150,8 @@ end
 ---@param collider Entity
 function FirecrackerRose:OnTearCollision(tear, collider)
     local tearPtr = GetPtrHash(tear)
-    local firecrackerTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "FirecrackerTears")
-    local petalTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PetalTears")
+    local firecrackerTears = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "FirecrackerTears")
+    local petalTears = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PetalTears")
 
     if petalTears[tearPtr] then
         return OnPetalTearCollision(collider, petalTears[tearPtr])
@@ -159,7 +159,7 @@ function FirecrackerRose:OnTearCollision(tear, collider)
         OnFirecrackerTearCollision(tear, collider)
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_TEAR_COLLISION,
     FirecrackerRose.OnTearCollision
 )
@@ -168,7 +168,7 @@ milkshakeMod:AddCallback(
 ---@param npc EntityNPC
 function FirecrackerRose:OnNPCUpdate(npc)
     local npcPtr = GetPtrHash(npc)
-    local crackeredEnemies = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "CrackeredEnemies")
+    local crackeredEnemies = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "CrackeredEnemies")
     local crackerInfo = crackeredEnemies[npcPtr]
 
     if crackerInfo == nil then return end
@@ -200,7 +200,7 @@ function FirecrackerRose:OnNPCUpdate(npc)
 
     FirecrackerExplode(npc, TSIL.Players.GetPlayerByIndex(crackerInfo.source))
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_NPC_UPDATE,
     FirecrackerRose.OnNPCUpdate
 )
@@ -209,7 +209,7 @@ milkshakeMod:AddCallback(
 ---@param npc EntityNPC
 function FirecrackerRose:OnNPCRender(npc)
     local npcPtr = GetPtrHash(npc)
-    local crackeredEnemies = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "CrackeredEnemies")
+    local crackeredEnemies = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "CrackeredEnemies")
     local crackerInfo = crackeredEnemies[npcPtr]
 
     if crackerInfo == nil then return end
@@ -226,7 +226,7 @@ function FirecrackerRose:OnNPCRender(npc)
 
     npc.Color = newColor
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NPC_RENDER,
     FirecrackerRose.OnNPCRender
 )
@@ -240,7 +240,7 @@ function FirecrackerRose:OnEntityRemove(entity)
     if tear == nil then return end
     local tearPtr = GetPtrHash(tear)
 
-    local petalTears = TSIL.SaveManager.GetPersistentVariable(milkshakeMod, "PetalTears")
+    local petalTears = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PetalTears")
 
     if not petalTears[tearPtr] then return end
 
@@ -274,7 +274,7 @@ function FirecrackerRose:OnEntityRemove(entity)
     SFXManager():Play(SoundEffect.SOUND_EXPLOSION_WEAK)
 
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_ENTITY_REMOVE,
     FirecrackerRose.OnEntityRemove
 )
@@ -332,7 +332,7 @@ function FirecrackerRose:OnEntityDamage(entity, _, flags, source)
         CheckForFirecrackerKnife(npc, source)
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_ENTITY_TAKE_DMG,
     FirecrackerRose.OnEntityDamage
 )
@@ -369,7 +369,7 @@ function FirecrackerRose:OnBoneSwing(bone)
     tear.FallingSpeed = player.TearFallingSpeed
     MakeTearFirecrackerSeed(tear)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_BONE_SWING,
     FirecrackerRose.OnBoneSwing
 )

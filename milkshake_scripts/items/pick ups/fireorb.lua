@@ -1,9 +1,9 @@
 local RubyOrb = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 --[[Customisation]]
-local INHALING_DURATION = 40
+local INHALING_DURATION = 60
 local angleVariance = 28;
 local maxAngle = 180;
 local blendAmount = 0.4;
@@ -21,7 +21,7 @@ ARROW_SPRITE:Load("gfx/ruby_orb_arrow.anm2", true)
 ARROW_SPRITE:Play("Idle", true)
 
 TSIL.SaveManager.AddPersistentVariable(
-	milkshakeMod,
+	MilkshakeVol1,
 	"RubyOrbInhalingInfoPerPlayer",
 	{},
 	TSIL.Enums.VariablePersistenceMode.RESET_ROOM
@@ -29,30 +29,28 @@ TSIL.SaveManager.AddPersistentVariable(
 
 
 ---@param player EntityPlayer
-function RubyOrb:UseCard(_, player, _)
-	local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
-
-	if playerUsingLyraData then return end
-
-	local isDoublePower = utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
-	utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
+function RubyOrb:UseCard(_, player, doublePower)
 	local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
 	local inhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-		milkshakeMod,
+		MilkshakeVol1,
 		"RubyOrbInhalingInfoPerPlayer"
 	)
 
 	inhalingInfoPerPlayer[playerIndex] = {
 		frame = Game():GetFrameCount(),
 		currentDirection = player:GetAimDirection():GetAngleDegrees(),
-		doublePower = isDoublePower
+		doublePower = doublePower
 	}
 
 	SFXManager():Play(SoundEffect.SOUND_LOW_INHALE)
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_USE_CARD, RubyOrb.UseCard, enums.Cards.RUBY_ORB)
+MilkshakeVol1:AddCallback(
+	enums.Callbacks.ON_ORB_USE,
+	RubyOrb.UseCard,
+	enums.Orbs.FIRE
+)
 
 function RubyOrb:PostNewRoom()
 	for i = 0, Game():GetNumPlayers() do
@@ -64,7 +62,7 @@ function RubyOrb:PostNewRoom()
 		})
 	end
 end
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, RubyOrb.PostNewRoom)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, RubyOrb.PostNewRoom)
 
 
 ---@param player EntityPlayer
@@ -72,7 +70,7 @@ function CheckInhaling(player)
 	local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
 	local inhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-		milkshakeMod,
+		MilkshakeVol1,
 		"RubyOrbInhalingInfoPerPlayer"
 	)
 
@@ -114,7 +112,7 @@ function RubyOrb:PostPEffectUpdate(player)
 	info.count = info.count - 1
 	info.timer = shotDelay
 
-	local rng = player:GetCardRNG(enums.Cards.RUBY_ORB)
+	local rng = player:GetCardRNG(enums.Orbs.FIRE)
 
 	local aimDir = player:GetAimDirection()
 	local angle = aimDir:GetAngleDegrees()
@@ -146,7 +144,7 @@ function RubyOrb:PostPEffectUpdate(player)
 	)
 end
 
-milkshakeMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, RubyOrb.PostPEffectUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, RubyOrb.PostPEffectUpdate)
 
 local isTakingBossArmorDamage = false
 
@@ -176,7 +174,7 @@ function RubyOrb:OnEntityTakeDamage(entity, amount, flags, source, countdownFram
 	return false
 end
 
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
 	ModCallbacks.MC_ENTITY_TAKE_DMG,
 	RubyOrb.OnEntityTakeDamage
 )
@@ -187,7 +185,7 @@ function RubyOrb:OnPlayerRender(player)
 	local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
 	local inhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-		milkshakeMod,
+		MilkshakeVol1,
 		"RubyOrbInhalingInfoPerPlayer"
 	)
 
@@ -203,7 +201,7 @@ function RubyOrb:OnPlayerRender(player)
 	ARROW_SPRITE:Render(renderPos)
 end
 
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
 	ModCallbacks.MC_POST_PLAYER_RENDER,
 	RubyOrb.OnPlayerRender
 )

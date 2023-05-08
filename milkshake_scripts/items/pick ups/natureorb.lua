@@ -1,19 +1,12 @@
 local EmeraldOrb = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local VINE_DURATION = 12
 local FRUIT_HEART_DURATION = 45
 
 ---@param player EntityPlayer
 function EmeraldOrb:OnEmeraldOrbUse(_, player)
-    local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
-
-    if playerUsingLyraData then return end
-
-    local isDoublePower = utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
-    utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
-
     local npcs = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, false)
 
     npcs = TSIL.Utils.Tables.Filter(npcs, function (_, npc)
@@ -56,17 +49,17 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player)
         vine:GetSprite():Play("Grow", true)
     end)
 end
-milkshakeMod:AddCallback(
-    ModCallbacks.MC_USE_CARD,
+MilkshakeVol1:AddCallback(
+    enums.Callbacks.ON_ORB_USE,
     EmeraldOrb.OnEmeraldOrbUse,
-    enums.Cards.EMERALD_ORB
+    enums.Orbs.NATURE
 )
 
 
 ---@param spawnPos Vector
 ---@param rng RNG
 local function SpawnFruitHeart(spawnPos, rng)
-    local spawningVelocity = Vector.One:Rotated(rng:RandomInt(360)):Resized(TSIL.Random.GetRandomFloat(2, 4, rng))
+    local spawningVelocity = Vector.FromAngle(rng:RandomInt(360)):Resized(TSIL.Random.GetRandomFloat(2, 4, rng))
 
     local heart = TSIL.EntitySpecific.SpawnPickup(
         PickupVariant.PICKUP_HEART,
@@ -132,7 +125,7 @@ function EmeraldOrb:OnVineUpdate(vine)
         vineSprite:Play("Idle")
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
     EmeraldOrb.OnVineUpdate,
     enums.Effects.VINES
@@ -156,7 +149,7 @@ function EmeraldOrb:OnNPCDeath(npc)
         end
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NPC_DEATH,
     EmeraldOrb.OnNPCDeath
 )

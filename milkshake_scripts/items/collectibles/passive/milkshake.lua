@@ -1,6 +1,6 @@
 local milkshake = {}
-local enums = milkshakeMod.enums
-local utility = milkshakeMod.utility
+local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local PINK_TEAR_COLOR = Color(1, 0, 1, 1, 0.196, 0, 0)
 local STAT_COUNTER_DURATION = 150
@@ -10,7 +10,7 @@ local StatsFont = Font() -- init font object
 StatsFont:Load("font/luaminioutlined.fnt") -- load a font into the font object
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "MilkshakeMultiplierFramePerPlayer",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
@@ -74,7 +74,7 @@ function milkshake:onCache(player, cacheFlag)
         player.TearColor = PINK_TEAR_COLOR
     end
 end
-milkshakeMod:AddPriorityCallback(
+MilkshakeVol1:AddPriorityCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     CallbackPriority.LATE + 2000, --Very low priority so the multiplier works with mods
     milkshake.onCache
@@ -87,7 +87,7 @@ function milkshake:OnMilkshakeAdded(player, _, firstTime)
     if utility:IsPlayerShowingStatsUI(player) then
         local playerIndex = TSIL.Players.GetPlayerIndex(player)
         local multiplierCounterFramesPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-            milkshakeMod,
+            MilkshakeVol1,
             "MilkshakeMultiplierFramePerPlayer"
         )
         multiplierCounterFramesPerPlayer[playerIndex] = Game():GetFrameCount()
@@ -113,7 +113,7 @@ function milkshake:OnMilkshakeAdded(player, _, firstTime)
         player:AddBlackHearts(2)
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
     milkshake.OnMilkshakeAdded,
     {
@@ -244,7 +244,7 @@ end
 
 function milkshake:OnRender()
     local multiplierCounterFramesPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "MilkshakeMultiplierFramePerPlayer"
     )
 
@@ -259,7 +259,7 @@ function milkshake:OnRender()
         end
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_RENDER,
     milkshake.OnRender
 )

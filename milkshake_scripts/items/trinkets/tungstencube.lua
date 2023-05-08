@@ -1,21 +1,21 @@
 local TungstenCube = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "NumTungstenCubesPerPlayer",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "NumGoldenTungstenCubesPerPlayer",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "FrameStartedPressingDropKeyPerPlayer",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
@@ -32,7 +32,7 @@ function TungstenCube:OnTrinketUpdate(trinket)
 
     if spr:IsEventTriggered("DropSound") then
         local damage = TSIL.Entities.GetEntityData(
-            milkshakeMod,
+            MilkshakeVol1,
             trinket,
             "TungstenDamage"
         )
@@ -48,7 +48,7 @@ function TungstenCube:OnTrinketUpdate(trinket)
         end
 
         local wasDroppedEarly = TSIL.Entities.GetEntityData(
-            milkshakeMod,
+            MilkshakeVol1,
             trinket,
             "HalfTungstenDamage"
         )
@@ -77,7 +77,7 @@ function TungstenCube:OnTrinketUpdate(trinket)
         )
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_UPDATE,
     TungstenCube.OnTrinketUpdate,
     PickupVariant.PICKUP_TRINKET
@@ -90,7 +90,7 @@ function TungstenCube:OnSpeedCache(player)
 
     player.MoveSpeed = player.MoveSpeed - 0.2
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     TungstenCube.OnSpeedCache,
     CacheFlag.CACHE_SPEED
@@ -116,7 +116,7 @@ local function SetTungstenDamageMultipler(player, droppedCube)
     end
 
     TSIL.Entities.SetEntityData(
-        milkshakeMod,
+        MilkshakeVol1,
         droppedCube,
         "TungstenDamage",
         trinketMultiplier
@@ -124,7 +124,7 @@ local function SetTungstenDamageMultipler(player, droppedCube)
 
     --Check if the trinket was dropped early
     local frameStartedPressingDropKeyPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FrameStartedPressingDropKeyPerPlayer"
     )
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
@@ -132,7 +132,7 @@ local function SetTungstenDamageMultipler(player, droppedCube)
 
     if frameStartedPressing == nil or Game():GetFrameCount() - frameStartedPressing < 60 then
         TSIL.Entities.SetEntityData(
-            milkshakeMod,
+            MilkshakeVol1,
             droppedCube,
             "HalfTungstenDamage",
             true
@@ -190,14 +190,14 @@ end
 local function CheckIfPressingDropKey(player)
     if Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex) then
         local frameStartedPressingDropKeyPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-            milkshakeMod,
+            MilkshakeVol1,
             "FrameStartedPressingDropKeyPerPlayer"
         )
         local playerIndex = TSIL.Players.GetPlayerIndex(player)
         frameStartedPressingDropKeyPerPlayer[playerIndex] = Game():GetFrameCount()
     elseif not Input.IsActionPressed(ButtonAction.ACTION_DROP, player.ControllerIndex) then
         local frameStartedPressingDropKeyPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-            milkshakeMod,
+            MilkshakeVol1,
             "FrameStartedPressingDropKeyPerPlayer"
         )
         local playerIndex = TSIL.Players.GetPlayerIndex(player)
@@ -211,11 +211,11 @@ function TungstenCube:OnPlayerUpdate(player)
     CheckIfPressingDropKey(player)
 
     local numTungstenCubesPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "NumTungstenCubesPerPlayer"
     )
     local numGoldenTungstenCubesPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "NumGoldenTungstenCubesPerPlayer"
     )
 
@@ -230,7 +230,7 @@ function TungstenCube:OnPlayerUpdate(player)
         numGoldenTungstenCubesPerPlayer
     )
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PLAYER_UPDATE_REORDERED,
     TungstenCube.OnPlayerUpdate
 )

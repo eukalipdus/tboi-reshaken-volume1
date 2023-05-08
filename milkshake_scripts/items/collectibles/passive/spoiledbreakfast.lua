@@ -1,5 +1,5 @@
 local spoiledBreakfast = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 function spoiledBreakfast:postPlayerCollectibleAdded(player, collectibleType)
     if collectibleType == enums.Collectibles.SPOILED_BREAKFAST
@@ -7,4 +7,4 @@ function spoiledBreakfast:postPlayerCollectibleAdded(player, collectibleType)
         player:AddHearts(-1)
     end
 end
-milkshakeMod:AddCallback(TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED, spoiledBreakfast.postPlayerCollectibleAdded)
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED, spoiledBreakfast.postPlayerCollectibleAdded)

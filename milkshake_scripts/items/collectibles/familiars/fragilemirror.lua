@@ -1,5 +1,5 @@
 local FragileMirror = {}
-local enums = milkshakeMod.enums
+local enums = MilkshakeVol1.enums
 
 
 local FRAGILE_MIRROR_SPRITES = {
@@ -76,28 +76,28 @@ local ROOMS_UNTIL_UNBROKEN = 1
 local INVINCIBILITY_FRAMES = 30
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "FragileMirrorHitPoints",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "FragileMirrorIFrames",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "FragileMirrorRevivesUsedPerPlayer",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
 
 TSIL.SaveManager.AddPersistentVariable(
-    milkshakeMod,
+    MilkshakeVol1,
     "FragileMirrorsBrokenPerPlayer",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
@@ -114,7 +114,7 @@ local function HasAnyUnbrokenMirror(player)
     end)
 
     local hitPointsFragileMirrors = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FragileMirrorHitPoints"
     )
 
@@ -140,7 +140,7 @@ local function BreakMirror(familiar, isRevive)
 
     if isRevive then
         local usedRevivesPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-            milkshakeMod,
+            MilkshakeVol1,
             "FragileMirrorRevivesUsedPerPlayer"
         )
 
@@ -153,7 +153,7 @@ local function BreakMirror(familiar, isRevive)
         usedRevivesPerPlayer[playerIndex] = usedRevives
     else
         local mirrorsBrokenPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-            milkshakeMod,
+            MilkshakeVol1,
             "FragileMirrorsBrokenPerPlayer"
         )
 
@@ -178,7 +178,7 @@ local function TryUpdateAnimation(familiar)
     local initSeed = familiar.InitSeed
 
     local hitPointsFragileMirrors = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FragileMirrorHitPoints"
     )
 
@@ -213,7 +213,7 @@ local function GetTargetFragileMirrorCount(player)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local usedRevivesPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FragileMirrorRevivesUsedPerPlayer"
     )
 
@@ -223,7 +223,7 @@ local function GetTargetFragileMirrorCount(player)
     end
 
     local mirrorsBrokenPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FragileMirrorsBrokenPerPlayer"
     )
 
@@ -251,7 +251,7 @@ function FragileMirror:OnFamiliarCache(player)
         enums.Familiars.FRAGILE_MIRROR
     )
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     FragileMirror.OnFamiliarCache,
     CacheFlag.CACHE_FAMILIARS
@@ -262,7 +262,7 @@ function FragileMirror:OnLuckCache(player)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local mirrorsBrokenPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FragileMirrorsBrokenPerPlayer"
     )
 
@@ -273,7 +273,7 @@ function FragileMirror:OnLuckCache(player)
 
     player.Luck = player.Luck - #mirrorsBroken
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     FragileMirror.OnLuckCache,
     CacheFlag.CACHE_LUCK
@@ -292,7 +292,7 @@ function FragileMirror:OnFamiliarInit(familiar)
 
     TryUpdateAnimation(familiar)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_FAMILIAR_INIT,
     FragileMirror.OnFamiliarInit,
     enums.Familiars.FRAGILE_MIRROR
@@ -302,7 +302,7 @@ milkshakeMod:AddCallback(
 ---@param familiar EntityFamiliar
 function FragileMirror:OnFamiliarUpdate(familiar)
     local fragileMirrorIFrames = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FragileMirrorIFrames"
     )
 
@@ -321,7 +321,7 @@ function FragileMirror:OnFamiliarUpdate(familiar)
 
     familiar:FollowParent()
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_FAMILIAR_UPDATE,
     FragileMirror.OnFamiliarUpdate,
     enums.Familiars.FRAGILE_MIRROR
@@ -337,7 +337,7 @@ local function CheckCollisionWithProjectile(familiar, projectile)
     local initSeed = familiar.InitSeed
 
     local fragileMirrorIFrames = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FragileMirrorIFrames"
     )
     local iFrames = fragileMirrorIFrames[initSeed]
@@ -347,7 +347,7 @@ local function CheckCollisionWithProjectile(familiar, projectile)
     fragileMirrorIFrames[initSeed] = INVINCIBILITY_FRAMES
 
     local hitPointsPerFamiliar = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FragileMirrorHitPoints"
     )
     local hitPoints = hitPointsPerFamiliar[initSeed]
@@ -378,7 +378,7 @@ function FragileMirror:OnFamiliarCollision(familiar, entity)
         return CheckCollisionWithProjectile(familiar, entity:ToProjectile())
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_FAMILIAR_COLLISION,
     FragileMirror.OnFamiliarCollision,
     enums.Familiars.FRAGILE_MIRROR
@@ -400,7 +400,7 @@ function FragileMirror:PreCustomRevive(player)
 
     return TSIL.Enums.CustomReviveType.SAME_ROOM
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.PRE_CUSTOM_REVIVE,
     FragileMirror.PreCustomRevive
 )
@@ -416,7 +416,7 @@ function FragileMirror:PostCustomRevive(player)
     local mirrorUsed = table.remove(familiarsUsed, 1)
     BreakMirror(mirrorUsed, true)
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_CUSTOM_REVIVE,
     FragileMirror.PostCustomRevive
 )
@@ -426,7 +426,7 @@ function FragileMirror:OnRoomClear()
     local players = TSIL.Players.GetPlayers()
 
     local mirrorsBrokenPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-        milkshakeMod,
+        MilkshakeVol1,
         "FragileMirrorsBrokenPerPlayer"
     )
 
@@ -455,7 +455,7 @@ function FragileMirror:OnRoomClear()
         player:EvaluateItems()
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_ROOM_CLEAR_CHANGED,
     FragileMirror.OnRoomClear,
     true
@@ -470,7 +470,7 @@ function FragileMirror:OnNewLevel()
         player:EvaluateItems()
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_LEVEL,
     FragileMirror.OnNewLevel
 )
@@ -483,7 +483,7 @@ function FragileMirror:OnNewRoom()
         TryUpdateAnimation(familiar)
     end
 end
-milkshakeMod:AddCallback(
+MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     FragileMirror.OnNewRoom
 )
