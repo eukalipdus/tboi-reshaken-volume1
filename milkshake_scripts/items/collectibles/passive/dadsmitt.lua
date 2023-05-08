@@ -1,20 +1,21 @@
 local dadsMitt = {}
 local enums = milkshakeMod.enums
 
---Deadzones direct how strict should be prevention of projectiles turning back towards the player. Numbers closer to 1 give smaller trigger angle.
 local TEAR_MOVEMENT_RATIO = 0.2
-local TEAR_DEADZONE_RANGE = 0.8
+local TEAR_DEADZONE_ANGLE = 30
 
 local BOMB_MOVEMENT_RATIO = 0.4
-local BOMB_DEADZONE_RANGE = 0.8
+local BOMB_DEADZONE_ANGLE = 30
 
-local KNIFE_MOVEMENT_RATIO = 0.3
-local KNIFE_DEADZONE_RANGE = 0.8
-
-local LASER_LERP_STRENGTH = 0.04
+local LASER_LERP_STRENGTH = 0.02
 
 local TEARS_MULTIPLIER_BONUS = 0.10
 local SHOTSPEED_REDUCTION = 0.2
+
+local TRACTOR_BEAM_VARIANT = 7
+local A_COMICALLY_SMALL_NUMBER = 0.01
+local TEAR_DEADZONE_RANGE = math.cos(math.rad(TEAR_DEADZONE_ANGLE))
+local BOMB_DEADZONE_RANGE = math.cos(math.rad(BOMB_DEADZONE_ANGLE))
 
 function dadsMitt:PostTearUpdate(tear)
     if not tear.SpawnerEntity then
@@ -58,15 +59,25 @@ function dadsMitt:PostLaserUpdate(laser)
     local player = laser.SpawnerEntity:ToPlayer()
     if not (player and player:HasCollectible(enums.Collectibles.DADS_MITT)) then
         return end
+    if laser.Variant == TRACTOR_BEAM_VARIANT then
+        return end
 
     local playerDirection = player.Velocity
-    if playerDirection:Length() < 0.1 then
-        return end
-    playerDirection = playerDirection:Normalized()
+    local lerpDirection
+    if playerDirection:LengthSquared() > A_COMICALLY_SMALL_NUMBER then
+        lerpDirection = playerDirection:Normalized()
+    else
+        if player:GetAimDirection():LengthSquared() > A_COMICALLY_SMALL_NUMBER then
+            lerpDirection = player:GetAimDirection():Normalized()
+        else
+            lerpDirection = Vector.FromAngle(laser.StartAngleDegrees)
+        end
+    end
 
     local laserDirection = Vector.FromAngle(laser.AngleDegrees)
     local itemCount = player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
-    laserDirection:Lerp(playerDirection, LASER_LERP_STRENGTH*itemCount)
+---@diagnostic disable-next-line: undefined-field
+    laserDirection:Lerp(lerpDirection, LASER_LERP_STRENGTH*itemCount)
     laser.AngleDegrees = laserDirection:GetAngleDegrees()
 end
 milkshakeMod:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE, dadsMitt.PostLaserUpdate)
