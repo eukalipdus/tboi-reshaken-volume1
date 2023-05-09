@@ -54,6 +54,8 @@ function batteryAcid:preSpawnCleanAward()
                 end
                 chargeToAdd = chargeToAdd * player:GetCollectibleNum(enums.Collectibles.BATTERY_ACID)
                 TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_PRIMARY, chargeToAdd)
+                local data = BatteryAcidData(player)
+                data.DrainTimer = DISCHARGE_TIME
             end
         end
     end
