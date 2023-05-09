@@ -14,9 +14,10 @@ local SHOTSPEED_REDUCTION = 0.2
 
 local TRACTOR_BEAM_VARIANT = 7
 local A_COMICALLY_SMALL_NUMBER = 0.01
-local TEAR_DEADZONE_RANGE = math.cos(math.rad(TEAR_DEADZONE_ANGLE))
-local BOMB_DEADZONE_RANGE = math.cos(math.rad(BOMB_DEADZONE_ANGLE))
+local TEAR_DEADZONE_RANGE = math.cos(math.rad(TEAR_DEADZONE_ANGLE/2))
+local BOMB_DEADZONE_RANGE = math.cos(math.rad(BOMB_DEADZONE_ANGLE/2))
 
+---@param tear EntityTear
 function dadsMitt:PostTearUpdate(tear)
     if not tear.SpawnerEntity then
         return end
@@ -34,6 +35,11 @@ function dadsMitt:PostTearUpdate(tear)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, dadsMitt.PostTearUpdate)
 
+--Comically large DRY violation go!
+--Keeping it like that in case some weird edge cases pop up.
+--Codes can have a little humidity.
+
+---@param bomb EntityBomb
 function dadsMitt:PostBombUpdate(bomb)
     if not bomb.IsFetus then
         return end
@@ -53,6 +59,7 @@ function dadsMitt:PostBombUpdate(bomb)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_BOMB_UPDATE, dadsMitt.PostBombUpdate)
 
+---@param laser EntityLaser
 function dadsMitt:PostLaserUpdate(laser)
     if not laser.SpawnerEntity then
         return end
@@ -82,6 +89,8 @@ function dadsMitt:PostLaserUpdate(laser)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE, dadsMitt.PostLaserUpdate)
 
+---@param player EntityPlayer
+---@param flag CacheFlag
 function dadsMitt:EvaluateCache(player, flag)
     local itemCount = player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
     if itemCount == 0 then
