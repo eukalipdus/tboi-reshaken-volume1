@@ -61,7 +61,7 @@ function batteryAcid:preSpawnCleanAward()
                 TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_PRIMARY, finalChargeToAdd)
             end
             local secondItem = player:GetActiveItem(ActiveSlot.SLOT_SECONDARY)
-            if activeItem ~= 0 and itemConfig:GetCollectible(secondItem).ChargeType == CHARGETYPE_NORMAL then
+            if secondItem ~= 0 and itemConfig:GetCollectible(secondItem).ChargeType == CHARGETYPE_NORMAL then
                 TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_SECONDARY, finalChargeToAdd)
             end
         end
