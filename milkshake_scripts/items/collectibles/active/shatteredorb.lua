@@ -34,7 +34,6 @@ local OrbsPerEnemy = {
     {trinket=enums.Orbs.FIRE, type=87, variant=1, },
     {trinket=enums.Orbs.FIRE, type=808, variant=0, },
     {trinket=enums.Orbs.FIRE, type=15, variant=3, },
-    {trinket=enums.Orbs.FIRE, type=817, variant=1, },
     {trinket=enums.Orbs.FIRE, type=820, variant=1, },
     {trinket=enums.Orbs.FIRE, type=25, variant=3, subtype=0, },
     {trinket=enums.Orbs.FIRE, type=25, variant=3, subtype=1, },
@@ -62,8 +61,6 @@ local OrbsPerFiendFolioEntities = {
     {trinket=enums.Orbs.PSYCHIC, type=666, variant=20, },
     {trinket=enums.Orbs.PSYCHIC, type=160, variant=1160, },
     {trinket=enums.Orbs.PSYCHIC, type=160, variant=1140, },
-    {trinket=enums.Orbs.PSYCHIC, type=21, variant=115, },
-    {trinket=enums.Orbs.PSYCHIC, type=450, variant=0, },
     {trinket=enums.Orbs.PSYCHIC, type=41, variant=114, },
     {trinket=enums.Orbs.PSYCHIC, type=160, variant=1100, },
     {trinket=enums.Orbs.PSYCHIC, type=240, variant=450, },
@@ -96,11 +93,10 @@ local OrbsPerFiendFolioEntities = {
     {trinket=enums.Orbs.PSYCHIC, type=160, variant=510, },
     {trinket=enums.Orbs.PSYCHIC, type=451, variant=180, },
     {trinket=enums.Orbs.PSYCHIC, type=114, variant=50, subtype=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=666, variant=30, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=901, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=900, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=521, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=420, },
+    {trinket=enums.Orbs.PSYCHIC, type=160, variant=901, }, --Enlightened
+    {trinket=enums.Orbs.PSYCHIC, type=160, variant=900, }, --Inner Eye
+    {trinket=enums.Orbs.PSYCHIC, type=160, variant=521, }, --Effigy
+    {trinket=enums.Orbs.PSYCHIC, type=160, variant=420, }, --Primemind
     {trinket=enums.Orbs.PSYCHIC, type=160, variant=870, subtype=1, },
     {trinket=enums.Orbs.PSYCHIC, type=160, variant=960, },
     {trinket=enums.Orbs.PSYCHIC, type=108, variant=111, },
@@ -178,7 +174,6 @@ local OrbsPerFiendFolioEntities = {
     {trinket=enums.Orbs.ELECTRIC, type=120, variant=222, },
     {trinket=enums.Orbs.ELECTRIC, type=450, variant=20, },
     {trinket=enums.Orbs.ELECTRIC, type=160, variant=420, },
-    {trinket=enums.Orbs.ELECTRIC, type=450, variant=3, },
     {trinket=enums.Orbs.ELECTRIC, type=450, variant=1510, },
     {trinket=enums.Orbs.ELECTRIC, type=451, variant=250, },
     {trinket=enums.Orbs.ELECTRIC, type=451, variant=141, },
