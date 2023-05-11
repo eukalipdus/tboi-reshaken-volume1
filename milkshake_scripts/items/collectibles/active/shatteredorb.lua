@@ -77,8 +77,6 @@ local OrbsPerFiendFolioEntities = {
     {trinket=enums.Orbs.PSYCHIC, type=114, variant=24, },
     {trinket=enums.Orbs.PSYCHIC, type=114, variant=27, },
     {trinket=enums.Orbs.PSYCHIC, type=114, variant=52, },
-    {trinket=enums.Orbs.PSYCHIC, type=369, variant=14, },
-    {trinket=enums.Orbs.PSYCHIC, type=120, variant=225, },
     {trinket=enums.Orbs.PSYCHIC, type=450, variant=30, },
     {trinket=enums.Orbs.PSYCHIC, type=450, variant=25, },
     {trinket=enums.Orbs.PSYCHIC, type=160, variant=1130, },
