@@ -133,11 +133,6 @@ Fiend Folio Poison
 114.55 --Musk
 120.232 --Foetus
 120.232.1 --Foetu
-450.12.0 --Bub
-450.12.1 --Bub
-450.12.2 --Bub
-450.12.3 --Bub
-450.12.4 --Bub
 160.505 --Really Tall Boi
 160.33 --Haunch
 160.162 --Mold

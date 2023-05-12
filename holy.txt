@@ -10,6 +10,7 @@ Regular Holy
 805.0 --Bishop
 
 FF Holy
+160.450 --Flickerspirit
 160.451 --Eternal Flickerspirit
 21.115 --Alfil
 450.0 --Zealot
