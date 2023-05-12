@@ -7,16 +7,30 @@ local game = Game()
 local CREEP_SCALE = 0.5
 local CREEP_DAMAGE = 1.5
 local CREEP_COLOR = Color(0, 0, 0, 1, 0.5, 0.5, 0.1)
+
 local CREEP_DELAY_MIN_SECONDS = 0.3
 local CREEP_DELAY_MAX_SECONDS = 0.6
+local CREEP_DELAY_STACK_DECREASE_SECONDS = 0.2
+local MIN_CREEP_DELAY_SECONDS = 0.2
 local CREEP_DURATION_SECONDS = 1.5
+
 local DRAIN_TIME_SECONDS = 15
+local DRAIN_STACK_TIMER_DECREASE_SECONDS = 3
+local MIN_DRAIN_TIME_SECONDS = 5
+local DRAIN_INCREASE_SECONDS = 5
 
 local ONE_SECOND = 30
+
 local CREEP_DELAY_MIN = CREEP_DELAY_MIN_SECONDS * ONE_SECOND
 local CREEP_DELAY_MAX = CREEP_DELAY_MAX_SECONDS * ONE_SECOND
+local CREEP_DELAY_STACK_DECREASE = CREEP_DELAY_STACK_DECREASE_SECONDS * ONE_SECOND
+local MIN_CREEP_DELAY = MIN_CREEP_DELAY_SECONDS * ONE_SECOND
 local CREEP_DURATION = CREEP_DURATION_SECONDS * ONE_SECOND
+
 local DRAIN_TIME = DRAIN_TIME_SECONDS * ONE_SECOND
+local DRAIN_STACK_TIMER_DECREASE = DRAIN_STACK_TIMER_DECREASE_SECONDS * ONE_SECOND
+local MIN_DRAIN_TIME = MIN_DRAIN_TIME_SECONDS * ONE_SECOND
+local DRAIN_INCREASE = DRAIN_INCREASE_SECONDS * ONE_SECOND
 local CHARGETYPE_NORMAL = 0
 
 TSIL.SaveManager.AddPersistentVariable(
@@ -26,13 +40,31 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_RUN)
 
 ---@param player EntityPlayer
+---@return number
+local function DrainTime(player)
+    local extraItemCount = player:GetCollectibleNum(enums.Collectibles.BATTERY_ACID)-1
+    local delay = DRAIN_TIME - DRAIN_STACK_TIMER_DECREASE*extraItemCount
+    return math.max(delay, MIN_DRAIN_TIME)
+end
+
+---@param player EntityPlayer
+---@return number
+local function CreepCooldown(player)
+    local extraItemCount = player:GetCollectibleNum(enums.Collectibles.BATTERY_ACID)-1
+    local rng = player:GetCollectibleRNG(enums.Collectibles.BATTERY_ACID)
+    local baseCooldown = rng:RandomInt(CREEP_DELAY_MAX-CREEP_DELAY_MIN) + CREEP_DELAY_MIN
+    local cooldown = baseCooldown - CREEP_DELAY_STACK_DECREASE*extraItemCount
+    return math.max(cooldown,MIN_CREEP_DELAY)
+end
+
+---@param player EntityPlayer
 ---@return table
 local function BatteryAcidData(player)
     local data = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "BatteryAcidData")
     local key = player:GetCollectibleRNG(1):GetSeed()
 
     if not data[key] then
-        data[key] = {DrainTimer = DRAIN_TIME, CreepTimer = CREEP_DELAY_MAX}
+        data[key] = {DrainTimer = DrainTime(player), CreepTimer = CreepCooldown(player)}
     end
     return data[key]
 end
@@ -55,7 +87,7 @@ function batteryAcid:preSpawnCleanAward()
         if player:HasCollectible(enums.Collectibles.BATTERY_ACID) then
             local finalChargeToAdd = chargeToAdd * player:GetCollectibleNum(enums.Collectibles.BATTERY_ACID)
             local data = BatteryAcidData(player)
-            data.DrainTimer = DRAIN_TIME
+            data.DrainTimer = data.DrainTimer + DRAIN_INCREASE
             local activeItem = player:GetActiveItem(ActiveSlot.SLOT_PRIMARY)
             if activeItem ~= 0 and itemConfig:GetCollectible(activeItem).ChargeType == CHARGETYPE_NORMAL then
                 TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_PRIMARY, finalChargeToAdd)
@@ -74,8 +106,6 @@ MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GREED_MODE_WAVE, batter
 ---@param player EntityPlayer
 function batteryAcid:postPeffectUpdate(player)
     if not player:HasCollectible(enums.Collectibles.BATTERY_ACID) then
-        return end
-    if player:GetActiveCharge() <= 0 then
         return end
 
     local primaryActiveItem = player:GetActiveItem(ActiveSlot.SLOT_PRIMARY)
@@ -98,13 +128,12 @@ function batteryAcid:postPeffectUpdate(player)
 
     data.DrainTimer = data.DrainTimer-1
     if data.DrainTimer <= 0 then
-        if primaryNotSpecial then
+        if primaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_PRIMARY) > 0 then
             TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_PRIMARY, -1)
-        end
-        if secondaryNotSpecial then
+        elseif secondaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_SECONDARY) > 0 then
             TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_SECONDARY, -1)
         end
-        data.DrainTimer = DRAIN_TIME
+        data.DrainTimer = DrainTime(player)
     end
     data.CreepTimer = data.CreepTimer-1
     if data.CreepTimer <= 0 then
@@ -114,9 +143,7 @@ function batteryAcid:postPeffectUpdate(player)
         creep.CollisionDamage = CREEP_DAMAGE
         creep.Scale = CREEP_SCALE
         creep:Update()
-        local rng = player:GetCollectibleRNG(enums.Collectibles.BATTERY_ACID)
-        local creepCooldown = rng:RandomInt(CREEP_DELAY_MAX-CREEP_DELAY_MIN) + CREEP_DELAY_MIN
-        data.CreepTimer = creepCooldown
+        data.CreepTimer = CreepCooldown(player)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, batteryAcid.postPeffectUpdate)
