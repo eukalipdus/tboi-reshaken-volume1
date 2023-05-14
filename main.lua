@@ -40,6 +40,7 @@ require("milkshake_scripts.items.collectibles.passive.heartybreakfast")
 require("milkshake_scripts.items.collectibles.passive.spoiledbreakfast")
 require("milkshake_scripts.items.collectibles.passive.batteryacid")
 require("milkshake_scripts.items.collectibles.passive.dadsmitt")
+require("milkshake_scripts.items.collectibles.familiars.doggybag")
 
 -- Trinkets
 require("milkshake_scripts.items.trinkets.amethystshard")

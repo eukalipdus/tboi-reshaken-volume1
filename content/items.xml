@@ -20,7 +20,7 @@
     <familiar id="22" name="Glass Idol" description="Care for your reflection" tags="summonable" quality="3" gfx="glass_idol.png"/>
     <active id="23" name="Leviticus" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
     <passive id="24" name="Battery Acid" description="PH down" tags="battery nocantrip offensive summonable" quality="2" gfx="collectibles_batteryacid.png"/>
-    <passive id="25" name="Doggy Bag" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="nocantrip offensive poop summonable" quality="1"/>
+    <passive id="25" name="Doggy Bag" description="[RACIST PLACEHOLDER]" cache="familiars" gfx="Fingore.png" tags="nocantrip offensive poop summonable" quality="1"/>
     <passive id="26" name="Dad's Mitt" description="Curve Ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2"/>
     <passive id="27" name="Lil Bishop" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="monstermanual summonable" quality="2"/>
     <passive id="28" name="Lucky Clover" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="offensive summonable summonable" quality="0"/>

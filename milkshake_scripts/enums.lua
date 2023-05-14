@@ -26,6 +26,7 @@ enums.Collectibles = {
     SICKLE_CELL = Isaac.GetItemIdByName("Sickle Cell"),
     BATTERY_ACID = Isaac.GetItemIdByName("Battery Acid"),
     DADS_MITT = Isaac.GetItemIdByName("Dad's Mitt"),
+    DOGGY_BAG = Isaac.GetItemIdByName("Doggy Bag"),
 }
 
 enums.Trinkets = {
@@ -49,6 +50,7 @@ enums.Familiars = {
     SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor"),
     FRAGILE_MIRROR = Isaac.GetEntityVariantByName("Fragile Mirror"),
     INNER_REFLECTION = Isaac.GetEntityVariantByName("Inner Reflection"),
+    DOGGY_BAG = Isaac.GetEntityVariantByName("Doggy Bag"),
 }
 
 enums.Effects = {
