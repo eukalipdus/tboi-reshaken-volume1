@@ -102,6 +102,20 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, batteryAcid.preSpawnCleanAward)
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GREED_MODE_WAVE, batteryAcid.preSpawnCleanAward)
 
+---@param collider Entity
+function batteryAcid:PrePickupCollision(battery, collider)
+    local player = collider:ToPlayer()
+    if not (player and player:HasCollectible(enums.Collectibles.BATTERY_ACID)) then
+        return end
+
+    if battery:IsShopItem() and battery.Price > player:GetNumCoins() then
+        return end
+
+    local data = BatteryAcidData(player)
+    data.DrainTimer = DrainTime(player)
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, batteryAcid.PrePickupCollision, PickupVariant.PICKUP_LIL_BATTERY)
+
 
 ---@param player EntityPlayer
 function batteryAcid:postPeffectUpdate(player)
