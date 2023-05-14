@@ -24,13 +24,19 @@
     <passive id="26" name="Dad's Mitt" description="Curve Ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2"/>
     <passive id="27" name="Lil Bishop" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="monstermanual summonable" quality="2"/>
     <passive id="28" name="Lucky Clover" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="offensive summonable summonable" quality="0"/>
-    <passive id="29" name="MilkCrate" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="nolostbr summonable uniquefamiliar" quality="3"/>
+    <passive id="29" name="MilkCrate" description="Something to cry about..." gfx="Fingore.png" tags="nolostbr summonable uniquefamiliar" quality="3"/>
 
     <!-- Trinkets -->
-    <trinket name="Amethyst Shard" description="A glimpse into the future..." gfx="trinkets_amethystcluster.png" tags="nogreed"/>
-    <trinket name="Ruby Shard" description="A glimpse into the other side..." gfx="trinkets_rubycluster.png" tags="nogreed"/>
-    <trinket name="Sapphire Shard" description="A glimpse into the mind of oneself..." gfx="trinkets_sapphirecluster.png" tags="nogreed"/>
-    <trinket name="Emerald Shard" description="A glimpse into the Past" gfx="trinkets_emeraldcluster.png" tags="nogreed"/>
+    <trinket name="Amethyst Shard" description="Hidden clairvoyant power..." gfx="trinkets_amethystcluster.png" tags="nogreed"/>
+    <trinket name="Ruby Shard" description="Hidden infernal power..." gfx="trinkets_rubycluster.png" tags="nogreed"/>
+    <trinket name="Tourmaline Shard" description="Hidden conductive power..." gfx="trinkets_tourmalinecluster.png" tags="nogreed"/>
+    <trinket name="Emerald Shard" description="Hidden verdant power..." gfx="trinkets_emeraldcluster.png" tags="nogreed"/>
+
+    <trinket name="Sapphire Shard" description="Hidden flooded power..." gfx="trinkets_sapphiregem.png" tags="nogreed"/>
+    <trinket name="Onyx Shard" description="Hidden revenant power..." gfx="trinkets_onyxgem.png" tags="nogreed"/>
+    <trinket name="Peridot Shard" description="Hidden virulent power..." gfx="trinkets_peridotsgem.png" tags="nogreed"/>
+    <trinket name="Diamond Shard" description="Hidden holy power..." gfx="trinkets_goldgem.png" tags="nogreed"/>
+    <trinket name="Garnet Shard" description="Hidden sacrilegious power..." gfx="trinkets_garnetgem.png" tags="nogreed"/>
     <trinket name="Tungsten Cube" description="It's heavy" gfx="trinkets_tungstencube.png" cache="speed" />
     <trinket name="Acid Penny"    description="[RACIST PLACEHOLDER]" gfx="trinkets_acidpenny.png" />
     <trinket name="Crystal Penny" description="Wealth of Knowledge"  gfx="trinkets_crystalpenny.png" />

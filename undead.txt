@@ -52,6 +52,8 @@
 160.1320 --Onlyfan
 120.224 --Cuffs
 130.60 --Glass Eye
+160.52 --Slick
+160.53 --Stump
 160.821 --Pale Slim
 160.821.1 --Jim
 160.821.2 --Pale Limb
@@ -117,6 +119,8 @@
 180.235 --Pale Gusher
 160.1360 --Pale Horf
 160.1370 --Pale Clotty
+130.40 --Morvid
+130.40.1 --Morvid (Perched)
 369.14 --Shi
 120.225 --Empath
 160.1130 --Looksee
@@ -128,6 +132,8 @@
 160.1220 --Aper (diagonal mirror),
 160.1220.1 --Aper (horizontal mirror),
 160.1220.2 --Aper (vertical mirror)
+160.1090 --Gutter
+750.200 --Ripcord
 212.451 --Astroskull
 450.16.1 --Rotskull
 450.12.0 --Bub

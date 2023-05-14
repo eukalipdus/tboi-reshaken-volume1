@@ -8,6 +8,7 @@
 	<costume id="16" anm2path="innerreflection.anm2" type="passive" hasSkinAlt="false" />
 	<costume id="17" anm2path="sicklecell.anm2" type="passive" hasSkinAlt="false" />
 	<costume id="21" anm2path="potofgold.anm2" type="passive" hasSkinAlt="true" hasOverlay="true"/>
+	<costume id="24" anm2path="batteryacid_costume.anm2" type="passive" hasSkinAlt="false" />
 
 	<!-- OTHER COSTUMES -->
 	<costume anm2path="clairvoyance_orb.anm2" priority="30" type="none" hasSkinAlt="false" hasOverlay="true" />
