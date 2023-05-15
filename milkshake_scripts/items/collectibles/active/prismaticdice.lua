@@ -126,6 +126,11 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
             end
 
             playSplitAnimation(i, shatteredCollectible)
+            
+            if shatteredCollectible and collectible:IsShopItem() then
+                shatteredCollectible.AutoUpdatePrice = false
+                shatteredCollectible.Price = math.floor(collectible.Price / 2)
+            end
         end
     else
         willBreakfast = false
@@ -168,10 +173,6 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
             playSplitAnimation(i, shatteredCollectible)
 
         end
-    end
-    if shatteredCollectible and collectible:IsShopItem() then
-        shatteredCollectible.AutoUpdatePrice = false
-        shatteredCollectible.Price = math.floor(collectible.Price / 2)
     end
 end
 
