@@ -1,0 +1,53 @@
+52.0 --Square Fly (Blue)
+152.0.1 --Square Fly (Yellow)
+160.700 --Bumbler
+451.60 --Potluck
+160.560 --Poobottle
+450.44 --Butt Fly
+155.0 --Weaver
+666.100 --Drink Worm
+160.1240 --Bunker Worm
+85.960 --Spooter
+85.961 --Super Spooter
+160.1040 --Nanny Long Legs
+114.26 --Brood (with sack)
+114.26.1 --Brood (without sack)
+160.401 --Zingling
+160.180 --Beeter
+160.610 --Hover
+140 --Honey Eye
+160.681 --Stingler
+160.590 --Homer
+160.810 --Honeydrip
+450.10 --Catfish
+750.220 --Croca
+114.28 --Unshornz
+160.320 --Milk Tooth
+666.40 --Foamy
+155.1 --Weaver Sr.
+21.960 --Roly Poly
+160.540 --Centipede (head)
+160.540.1 --Centipede (segment)
+160.540.103 --Centipede (pit)
+750.80 --Sackboy
+29.961 --Spinneretch
+240.701 --Ogre Creep
+666.101 --Drunk Worm
+160.1230 --Matte
+160.400 --Colonel
+160.402 --Zingy
+160.60 --Frog
+21.960.2 --Isopoly
+160.561 --Drainfly
+114.56 --Spanky
+450.31 --Ztewie
+451.0 --Briar
+160.1280 --Beebee
+160.990 --Carrier
+150.14 --Gary
+155.3 --Thread
+120.227 --Warble
+21.450 --Retch
+155.5 --Diagetic
+114.37 --Nematode
+160.701 --Buckshot
