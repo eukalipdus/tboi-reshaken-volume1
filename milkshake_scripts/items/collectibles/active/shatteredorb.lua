@@ -5,6 +5,69 @@ local SHATTERED_ORB_THROW_SPEED = 8
 local SHATTERED_ORB_FALL_ACCEL = 0.1
 local SHATTERED_ORB_RADIUS = 20
 
+--[[
+{
+    --type
+    [1] = {
+        orb = 1,
+        entities = {
+            --variant
+            [1] = {
+                orb = 2,
+                entities = {
+                    --subtype
+                    [1] = {
+                        orb = 3
+                    }
+                }
+            }
+        }
+    },
+    [2] = {
+        orb = 2
+    }
+}
+
+]]
+local ORBS_PER_ENEMY = {}
+
+function MilkshakeVol1.AddOrbsPerEnemyForShatteredOrb(orbsPerEnemy)
+    TSIL.Utils.Tables.ForEach(orbsPerEnemy, function(_, orbPerEnemy)
+        if ORBS_PER_ENEMY[orbPerEnemy.type] == nil then
+            ORBS_PER_ENEMY[orbPerEnemy.type] = {}
+        end
+
+        local perType = ORBS_PER_ENEMY[orbPerEnemy.type]
+
+        if orbPerEnemy.variant == nil then
+            --There is no variant, so just set the orb here
+            perType.orb = orbPerEnemy.orb
+            return
+        end
+
+        if not perType.entities then
+            perType.entities = {}
+        end
+
+        if perType.entities[orbPerEnemy.variant] == nil then
+            perType.entities[orbPerEnemy.variant] = {}
+        end
+
+        local perVariant = perType.entities[orbPerEnemy]
+
+        if orbPerEnemy.subtype == nil then
+            --There is no subtype, so just set the orb here
+            perVariant.variant = orbPerEnemy.variant
+            return
+        end
+
+        if not perVariant.entities then
+            perVariant.entities = {}
+        end
+
+        perVariant.entities[orbPerEnemy.subtype] = {orb = orbPerEnemy.orb}
+    end)
+end
 
 local OrbsPerEnemy = {
     {trinket=enums.Orbs.ELECTRIC, type=60, variant=0, },
