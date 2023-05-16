@@ -32,7 +32,6 @@ function lilBishop:onFamiliarUpdate(familiar)
     --if sprite:IsFinished("WakeUp") then
     --	sprite:Play("FloatDown")
     --end
-    
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarUpdate, enums.Familiars.LIL_BISHOP)
 
@@ -44,7 +43,6 @@ function lilBishop:onFamiliarCollision(familiar, collider)
 		local data = familiar:GetData()
 		if not data.BlockCooldown then
 			--sprite:Play("Sleep")
-			local projectile = collider:ToProjectile()
 			local player = familiar.Player
 			data.BlockCooldown = lilBishop.BlockCooldown
 			local tempEffects = player:GetEffects()

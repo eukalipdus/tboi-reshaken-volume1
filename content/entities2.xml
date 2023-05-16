@@ -22,6 +22,10 @@
     <entity anm2path="doggy_bag.anm2" name="Doggy Bag" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0">
     </entity>
+
+    <entity anm2path="familiar_fingore.anm2" name="Lil Bishop" id="3" tags="cansacrifice"
+    collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
 	
     <entity anm2path="familiar_spirit_bum.anm2" name="Spirit Bum Familiar" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
