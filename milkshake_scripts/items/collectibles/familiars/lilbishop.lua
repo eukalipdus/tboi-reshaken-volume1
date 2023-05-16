@@ -3,6 +3,16 @@ local enums = MilkshakeVol1.enums
 
 lilBishop.BlockCooldown = 150 -- 5*30
 
+function lilBishop:EvaluateCache(player)
+    TSIL.Familiars.CheckFamiliarFromCollectibles(
+        player,
+        enums.Collectibles.LIL_BISHOP,
+        enums.Familiars.LIL_BISHOP
+    )
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lilBishop.EvaluateCache, CacheFlag.CACHE_FAMILIARS)
+
+
 function lilBishop:onFamiliarInit(familiar)
 	familiar:AddToOrbit(2)
 	--local sprite = familiar:GetSprite()
