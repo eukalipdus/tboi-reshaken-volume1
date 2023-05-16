@@ -1,35 +1,57 @@
---Lil Bishop: Bishop orbital familiar that orbits close to Isaac. 
---If an enemy tear hits the bishop, it will briefly create a bubble shield around Isaac for a second, 
---making him immune to damage. Has 5 second cooldown.
-
 local lilBishop = {}
 local enums = MilkshakeVol1.enums
 
 lilBishop.BlockCooldown = 150 -- 5*30
 
-function lilBishop:OnFamiliarUpdate(familiar)
+function lilBishop:onFamiliarInit(familiar)
+	familiar:AddToOrbit(2)
+	--local sprite = familiar:GetSprite()
+	--sprite:Play("FloatDown")
+    
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, lilBishop.onFamiliarInit, enums.Familiars.LIL_BISHOP)
+
+
+function lilBishop:onFamiliarUpdate(familiar)
 	local data = familiar:GetData()
+	local player = familiar.Player
+	--local sprite = player:GetSprite()
+	
 	if data.BlockCooldown then
 		data.BlockCooldown = data.BlockCooldown - 1
 		if data.BlockCooldown <= 0 then
 			data.BlockCooldown = nil
+			--sprite:Play("WakeUp")
 		end
 	end
 	
-    familiar:FollowParent()
+	familiar.OrbitDistance = Vector(40, 40)
+	local targetPosition = familiar:GetOrbitPosition(player.Position + player.Velocity)
+	familiar.Velocity = targetPosition - familiar.Position
+    
+    --if sprite:IsFinished("WakeUp") then
+    --	sprite:Play("FloatDown")
+    --end
+    
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.OnFamiliarUpdate, enums.Familiars.LIL_BISHOP)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarUpdate, enums.Familiars.LIL_BISHOP)
 
-function lilBishop:onFamiliarCollision(fam, collider)
-	local data = fam:GetData()
-	if fam.SpawnerEntity and fam.SpawnerEntity:ToPlayer() and collider:ToProjectile() and not data.BlockCooldown then
-		local projectile = collider:ToProjectile()
-		local player = fam.SpawnerEntity:ToPlayer()
-		data.BlockCooldown = lilBishop.BlockCooldown
-		local tempEffects = player:GetEffects()
-		tempEffects:AddCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
-		--local tempEffect = tempEffects:GetCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS) -- it's const. so use remove collectible effect on peffect
-		--tempEffect.Cooldown = tempEffect.Cooldown - 270
+function lilBishop:onFamiliarCollision(familiar, collider)
+	if collider:ToProjectile() then
+		collider:Die()
+		--local sprite = player:GetSprite()
+
+		local data = familiar:GetData()
+		if not data.BlockCooldown then
+			--sprite:Play("Sleep")
+			local projectile = collider:ToProjectile()
+			local player = familiar.Player
+			data.BlockCooldown = lilBishop.BlockCooldown
+			local tempEffects = player:GetEffects()
+			tempEffects:AddCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS, true, 1) -- idk how it must work
+			--local tempEffect = tempEffects:GetCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
+			--tempEffect.Cooldown = tempEffect.Cooldown - 270
+		end
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, lilBishop.onFamiliarCollision, enums.Familiars.LIL_BISHOP)
