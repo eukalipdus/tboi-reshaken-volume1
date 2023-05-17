@@ -117,4 +117,4 @@ enums.Callbacks = {
     ON_ORB_USE = "MILKSHAKE_CB_ON_ORB_USE"
 }
 
-return enums
+MilkshakeVol1.enums = enums

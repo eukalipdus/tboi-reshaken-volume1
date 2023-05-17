@@ -337,4 +337,5 @@ function utility:GetRandomSpiritOrb(includeChaos, seedOrRNG)
     return TSIL.Random.GetRandomElementsFromTable(orbs, 1, seedOrRNG)[1]
 end
 
-return utility
+
+MilkshakeVol1.utility = utility
