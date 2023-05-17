@@ -1,5 +1,5 @@
 local eid = {}
-local descriptions = require("milkshake_scripts.modcompatibility.descriptions")
+local descriptions = include("milkshake_scripts.modcompatibility.descriptions")
 
 function eid:addEid()
     if not EID then return end

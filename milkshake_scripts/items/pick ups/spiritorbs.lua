@@ -1,5 +1,5 @@
 local SpiritOrbs = {}
-local enums = require("milkshake_scripts.enums")
+local enums = MilkshakeVol1.enums
 
 
 ---@param orb Card
