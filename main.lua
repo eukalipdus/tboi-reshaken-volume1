@@ -43,6 +43,7 @@ include("milkshake_scripts.items.collectibles.passive.spoiledbreakfast")
 include("milkshake_scripts.items.collectibles.passive.batteryacid")
 include("milkshake_scripts.items.collectibles.passive.dadsmitt")
 include("milkshake_scripts.items.collectibles.familiars.doggybag")
+include("milkshake_scripts.items.collectibles.familiars.lilbishop")
 
 -- Trinkets
 include("milkshake_scripts.items.trinkets.amethystshard")
