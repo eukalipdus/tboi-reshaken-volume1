@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 
 lilBishop.BlockCooldown = 150 -- 5*30
 lilBishop.ShieldTimeout = 30
-lilBishop.CosF = 80
+lilBishop.CosF = 15
 lilBishop.costumeBookShadow = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
 
 local game = Game()
