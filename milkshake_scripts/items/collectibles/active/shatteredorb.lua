@@ -5,33 +5,10 @@ local SHATTERED_ORB_THROW_SPEED = 8
 local SHATTERED_ORB_FALL_ACCEL = 0.1
 local SHATTERED_ORB_RADIUS = 20
 
---[[
-{
-    --type
-    [1] = {
-        orb = 1,
-        entities = {
-            --variant
-            [1] = {
-                orb = 2,
-                entities = {
-                    --subtype
-                    [1] = {
-                        orb = 3
-                    }
-                }
-            }
-        }
-    },
-    [2] = {
-        orb = 2
-    }
-}
 
-]]
-local ORBS_PER_ENEMY = {}
+ORBS_PER_ENEMY = {}
 
-function MilkshakeVol1.AddOrbsPerEnemyForShatteredOrb(orbsPerEnemy)
+function MilkshakeVol1:AddOrbsPerEnemyForShatteredOrb(orbsPerEnemy)
     TSIL.Utils.Tables.ForEach(orbsPerEnemy, function(_, orbPerEnemy)
         if ORBS_PER_ENEMY[orbPerEnemy.type] == nil then
             ORBS_PER_ENEMY[orbPerEnemy.type] = {}
@@ -53,11 +30,11 @@ function MilkshakeVol1.AddOrbsPerEnemyForShatteredOrb(orbsPerEnemy)
             perType.entities[orbPerEnemy.variant] = {}
         end
 
-        local perVariant = perType.entities[orbPerEnemy]
+        local perVariant = perType.entities[orbPerEnemy.variant]
 
         if orbPerEnemy.subtype == nil then
             --There is no subtype, so just set the orb here
-            perVariant.variant = orbPerEnemy.variant
+            perVariant.orb = orbPerEnemy.orb
             return
         end
 
@@ -65,202 +42,57 @@ function MilkshakeVol1.AddOrbsPerEnemyForShatteredOrb(orbsPerEnemy)
             perVariant.entities = {}
         end
 
-        perVariant.entities[orbPerEnemy.subtype] = {orb = orbPerEnemy.orb}
+        perVariant.entities[orbPerEnemy.subtype] = { orb = orbPerEnemy.orb }
     end)
 end
 
 local OrbsPerEnemy = {
-    {trinket=enums.Orbs.ELECTRIC, type=60, variant=0, },
-    {trinket=enums.Orbs.ELECTRIC, type=230, variant=0, },
-    {trinket=enums.Orbs.ELECTRIC, type=201, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=832, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=832, variant=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=836, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=248, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=828, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=24, variant=3, },
-    {trinket=enums.Orbs.PSYCHIC, type=26, variant=2, },
-    {trinket=enums.Orbs.PSYCHIC, type=246, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=246, variant=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=57, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=886, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=212, variant=2, }, 
-    {trinket=enums.Orbs.PSYCHIC, type=253, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=885, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=885, variant=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=816, variant=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=306, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=306, variant=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=877, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=409, variant=1, },
-    {trinket=enums.Orbs.FIRE, type=10, variant=2, },
-    {trinket=enums.Orbs.FIRE, type=87, variant=1, },
-    {trinket=enums.Orbs.FIRE, type=808, variant=0, },
-    {trinket=enums.Orbs.FIRE, type=15, variant=3, },
-    {trinket=enums.Orbs.FIRE, type=820, variant=1, },
-    {trinket=enums.Orbs.FIRE, type=25, variant=3, subtype=0, },
-    {trinket=enums.Orbs.FIRE, type=25, variant=3, subtype=1, },
-    {trinket=enums.Orbs.FIRE, type=54, variant=0, },
-    {trinket=enums.Orbs.FIRE, type=824, variant=1, },
-    {trinket=enums.Orbs.FIRE, type=41, variant=4, },
-    {trinket=enums.Orbs.FIRE, type=818, variant=2, },
-    {trinket=enums.Orbs.FIRE, type=208, variant=2, },
-    {trinket=enums.Orbs.FIRE, type=212, variant=4, },
-    {trinket=enums.Orbs.FIRE, type=838, variant=0, },
-    {trinket=enums.Orbs.FIRE, type=226, variant=2, },
-    {trinket=enums.Orbs.FIRE, type=833, variant=0, },
-    {trinket=enums.Orbs.FIRE, type=841, variant=0, },
-    {trinket=enums.Orbs.FIRE, type=841, variant=1, },
-    {trinket=enums.Orbs.FIRE, type=825, variant=0, },
-    {trinket=enums.Orbs.NATURE, type=300, variant=0, },
+    { orb = enums.Orbs.ELECTRIC, type = 60,  variant = 0, },
+    { orb = enums.Orbs.ELECTRIC, type = 230, variant = 0, },
+    { orb = enums.Orbs.ELECTRIC, type = 201, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 832, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 832, variant = 1, },
+    { orb = enums.Orbs.PSYCHIC,  type = 836, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 248, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 828, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 24,  variant = 3, },
+    { orb = enums.Orbs.PSYCHIC,  type = 26,  variant = 2, },
+    { orb = enums.Orbs.PSYCHIC,  type = 246, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 246, variant = 1, },
+    { orb = enums.Orbs.PSYCHIC,  type = 57,  variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 886, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 212, variant = 2, },
+    { orb = enums.Orbs.PSYCHIC,  type = 253, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 885, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 885, variant = 1, },
+    { orb = enums.Orbs.PSYCHIC,  type = 816, variant = 1, },
+    { orb = enums.Orbs.PSYCHIC,  type = 306, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 306, variant = 1, },
+    { orb = enums.Orbs.PSYCHIC,  type = 877, variant = 0, },
+    { orb = enums.Orbs.PSYCHIC,  type = 409, variant = 1, },
+    { orb = enums.Orbs.FIRE,     type = 10,  variant = 2, },
+    { orb = enums.Orbs.FIRE,     type = 87,  variant = 1, },
+    { orb = enums.Orbs.FIRE,     type = 808, variant = 0, },
+    { orb = enums.Orbs.FIRE,     type = 15,  variant = 3, },
+    { orb = enums.Orbs.FIRE,     type = 820, variant = 1, },
+    { orb = enums.Orbs.FIRE,     type = 25,  variant = 3, subtype = 0, },
+    { orb = enums.Orbs.FIRE,     type = 25,  variant = 3, subtype = 1, },
+    { orb = enums.Orbs.FIRE,     type = 54,  variant = 0, },
+    { orb = enums.Orbs.FIRE,     type = 824, variant = 1, },
+    { orb = enums.Orbs.FIRE,     type = 41,  variant = 4, },
+    { orb = enums.Orbs.FIRE,     type = 818, variant = 2, },
+    { orb = enums.Orbs.FIRE,     type = 208, variant = 2, },
+    { orb = enums.Orbs.FIRE,     type = 212, variant = 4, },
+    { orb = enums.Orbs.FIRE,     type = 838, variant = 0, },
+    { orb = enums.Orbs.FIRE,     type = 226, variant = 2, },
+    { orb = enums.Orbs.FIRE,     type = 833, variant = 0, },
+    { orb = enums.Orbs.FIRE,     type = 841, variant = 0, },
+    { orb = enums.Orbs.FIRE,     type = 841, variant = 1, },
+    { orb = enums.Orbs.FIRE,     type = 825, variant = 0, },
+    { orb = enums.Orbs.NATURE,   type = 300, variant = 0, },
 }
 
-local OrbsPerFiendFolioEntities = {
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=210, },
-    {trinket=enums.Orbs.PSYCHIC, type=29, variant=960, },
-    {trinket=enums.Orbs.PSYCHIC, type=170, variant=90, },
-    {trinket=enums.Orbs.PSYCHIC, type=234, variant=960, },
-    {trinket=enums.Orbs.PSYCHIC, type=258, variant=961, },
-    {trinket=enums.Orbs.PSYCHIC, type=666, variant=20, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=1160, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=1140, },
-    {trinket=enums.Orbs.PSYCHIC, type=41, variant=114, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=1100, },
-    {trinket=enums.Orbs.PSYCHIC, type=240, variant=450, },
-    {trinket=enums.Orbs.PSYCHIC, type=25, variant=920, },
-    {trinket=enums.Orbs.PSYCHIC, type=114, variant=7, },
-    {trinket=enums.Orbs.PSYCHIC, type=114, variant=7, subtype=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=114, variant=7,2, },
-    {trinket=enums.Orbs.PSYCHIC, type=130, variant=40, },
-    {trinket=enums.Orbs.PSYCHIC, type=10, variant=40, subtype=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=114, variant=59, },
-    {trinket=enums.Orbs.PSYCHIC, type=450, variant=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=114, variant=21, },
-    {trinket=enums.Orbs.PSYCHIC, type=450, variant=29, },
-    {trinket=enums.Orbs.PSYCHIC, type=114, variant=24, },
-    {trinket=enums.Orbs.PSYCHIC, type=114, variant=27, },
-    {trinket=enums.Orbs.PSYCHIC, type=114, variant=52, },
-    {trinket=enums.Orbs.PSYCHIC, type=450, variant=30, },
-    {trinket=enums.Orbs.PSYCHIC, type=450, variant=25, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=1130, },
-    {trinket=enums.Orbs.PSYCHIC, type=451, variant=220, },
-    {trinket=enums.Orbs.PSYCHIC, type=451, variant=220, subtype=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=877, variant=114, },
-    {trinket=enums.Orbs.PSYCHIC, type=450, variant=18, },
-    {trinket=enums.Orbs.PSYCHIC, type=750, variant=201, subtype=11, },
-    {trinket=enums.Orbs.PSYCHIC, type=108, variant=118, },
-    {trinket=enums.Orbs.PSYCHIC, type=156, variant=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=971, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=510, },
-    {trinket=enums.Orbs.PSYCHIC, type=451, variant=180, },
-    {trinket=enums.Orbs.PSYCHIC, type=114, variant=50, subtype=0, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=901, }, --Enlightened
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=900, }, --Inner Eye
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=521, }, --Effigy
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=420, }, --Primemind
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=870, subtype=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=960, },
-    {trinket=enums.Orbs.PSYCHIC, type=108, variant=111, },
-    {trinket=enums.Orbs.PSYCHIC, type=108, variant=112, },
-    {trinket=enums.Orbs.PSYCHIC, type=450, variant=37, },
-    {trinket=enums.Orbs.PSYCHIC, type=120, variant=236, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=670, },
-    {trinket=enums.Orbs.PSYCHIC, type=150, variant=23, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=341, },
-    {trinket=enums.Orbs.PSYCHIC, type=21, variant=961, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=34, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=340, },
-    {trinket=enums.Orbs.PSYCHIC, type=450, variant=1510, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=951, },
-    {trinket=enums.Orbs.PSYCHIC, type=112, variant=1, },
-    {trinket=enums.Orbs.PSYCHIC, type=956, variant=666, },
-    {trinket=enums.Orbs.PSYCHIC, type=160, variant=822, subtype=2, },
-    {trinket=enums.Orbs.PSYCHIC_ORB, type=160, variant=80, subtype=3, },
-    {trinket=enums.Orbs.PSYCHIC, type=120, variant=232, subtype=1, },
-    {trinket=enums.Orbs.FIRE, type=151, variant=5, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=310, },
-    {trinket=enums.Orbs.FIRE, type=750, variant=110, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=280, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=281, },
-    {trinket=enums.Orbs.FIRE, type=240, variant=700, },
-    {trinket=enums.Orbs.FIRE, type=61, variant=960, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=152, },
-    {trinket=enums.Orbs.FIRE, type=451, variant=151, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=430, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=43, },
-    {trinket=enums.Orbs.FIRE, type=208, variant=963, },
-    {trinket=enums.Orbs.FIRE, type=114, variant=33, },
-    {trinket=enums.Orbs.FIRE, type=817, variant=140, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=350, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=351, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=441, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=442, },
-    {trinket=enums.Orbs.FIRE, type=180, variant=21, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=1080, },
-    {trinket=enums.Orbs.FIRE, type=114, variant=4, },
-    {trinket=enums.Orbs.FIRE, type=450, variant=33, },
-    {trinket=enums.Orbs.FIRE, type=450, variant=2, },
-    {trinket=enums.Orbs.FIRE, type=450, variant=42, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=1160, },
-    {trinket=enums.Orbs.FIRE, type=450, variant=7, },
-    {trinket=enums.Orbs.FIRE, type=450, variant=43, subtype=1, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=35, },
-    {trinket=enums.Orbs.FIRE, type=42, variant=964, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=661, },
-    {trinket=enums.Orbs.FIRE, type=956, variant=666, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=1170, },
-    {trinket=enums.Orbs.FIRE, type=170, variant=80, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=153, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=153, subtype=1, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=154, },
-    {trinket=enums.Orbs.FIRE, type=160, variant=154, subtype=1, },
-    {trinket=enums.Orbs.FIRE, type=815, variant=960, },
-    {trinket=enums.Orbs.FIRE, type=450, variant=14, },
-    {trinket=enums.Orbs.FIRE, type=451, variant=40, },
-    {trinket=enums.Orbs.FIRE, type=451, variant=41, },
-    {trinket=enums.Orbs.FIRE, type=451, variant=42, },
-    {trinket=enums.Orbs.FIRE, type=170, variant=110, },
-    {trinket=enums.Orbs.ELECTRIC, type=61, variant=5, },
-    {trinket=enums.Orbs.ELECTRIC, type=160, variant=640, },
-    {trinket=enums.Orbs.ELECTRIC, type=160, variant=641, },
-    {trinket=enums.Orbs.ELECTRIC, type=170, variant=30, },
-    {trinket=enums.Orbs.ELECTRIC, type=114, variant=65, },
-    {trinket=enums.Orbs.ELECTRIC, type=451, variant=140, },
-    {trinket=enums.Orbs.ELECTRIC, type=451, variant=10, },
-    {trinket=enums.Orbs.ELECTRIC, type=160, variant=1120, },
-    {trinket=enums.Orbs.ELECTRIC, type=450, variant=21, },
-    {trinket=enums.Orbs.ELECTRIC, type=114, variant=10, },
-    {trinket=enums.Orbs.ELECTRIC, type=450, variant=5, },
-    {trinket=enums.Orbs.ELECTRIC, type=160, variant=1150, },
-    {trinket=enums.Orbs.ELECTRIC, type=120, variant=222, },
-    {trinket=enums.Orbs.ELECTRIC, type=450, variant=20, },
-    {trinket=enums.Orbs.ELECTRIC, type=160, variant=420, },
-    {trinket=enums.Orbs.ELECTRIC, type=450, variant=1510, },
-    {trinket=enums.Orbs.ELECTRIC, type=451, variant=250, },
-    {trinket=enums.Orbs.ELECTRIC, type=451, variant=141, },
-    {trinket=enums.Orbs.ELECTRIC, type=617, variant=402, },
-    {trinket=enums.Orbs.ELECTRIC, type=160, variant=80, subtype=68, },
-    {trinket=enums.Orbs.ELECTRIC, type=160, variant=85, subtype=395, },
-    {trinket=enums.Orbs.ELECTRIC, type=195, variant=30},
-    {trinket=enums.Orbs.NATURE, type=160, variant=360, },
-    {trinket=enums.Orbs.NATURE, type=29, variant=962, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=361, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=1718, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=750, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=840, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=2001, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=2000, },
-    {trinket=enums.Orbs.NATURE, type=666, variant=110, },
-    {trinket=enums.Orbs.NATURE, type=451, variant=30, },
-    {trinket=enums.Orbs.NATURE, type=25, variant=962, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=683, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=683, subtype=1, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=90, },
-    {trinket=enums.Orbs.NATURE, type=160, variant=60, },
-    {trinket=enums.Orbs.NATURE, type=170, variant=100, },
-    {trinket=enums.Orbs.NATURE, type=114, variant=57, },
-    {trinket=enums.Orbs.NATURE, type=450, variant=6, },
-}
+MilkshakeVol1:AddOrbsPerEnemyForShatteredOrb(OrbsPerEnemy)
 
 
 TSIL.SaveManager.AddPersistentVariable(
@@ -398,6 +230,7 @@ function ShatteredOrb:OnShatteredOrbUse(_, _, player, useFlags, activeSlot)
         ShowAnim = false
     }
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_USE_ITEM,
     ShatteredOrb.OnShatteredOrbUse,
@@ -430,6 +263,7 @@ function ShatteredOrb:OnPlayerUpdate(player)
     local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + player.Velocity
     AddShatteredOrbData(shatteredOrb, direction)
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PLAYER_UPDATE,
     ShatteredOrb.OnPlayerUpdate
@@ -437,36 +271,41 @@ MilkshakeVol1:AddCallback(
 
 
 ---@param entity Entity
----@param table table
----@return Card?
-function GetMathchingOrbFromEntity(entity, table)
-    for _, orbMatch in ipairs(table) do
-        if entity.Type == orbMatch.type and
-        (entity.Variant == orbMatch.variant or orbMatch.variant == nil) and
-        (entity.SubType == orbMatch.subtype or orbMatch.subtype == nil) then
-            return orbMatch.trinket
-        end
-    end
-end
-
-
----@param entity Entity
 ---@return Card
 function GetEntityOrb(entity)
-    local entityOrb = GetMathchingOrbFromEntity(entity, OrbsPerEnemy)
+    local orb
+    local orbsPerType = ORBS_PER_ENEMY[entity.Type]
 
-    if entityOrb then return entityOrb end
+    if orbsPerType then
+        orb = orbsPerType.orb
 
-	---@diagnostic disable-next-line: undefined-global
-    if FiendFolio then
-        entityOrb = GetMathchingOrbFromEntity(entity, OrbsPerFiendFolioEntities)
+        if orbsPerType.entities then
+            local orbsPerVariant = orbsPerType.entities[entity.Variant]
 
-        if entityOrb then return entityOrb end
+            if orbsPerVariant then
+                if orbsPerVariant.orb then
+                    orb = orbsPerVariant.orb
+                end
+
+                if orbsPerVariant.entities then
+                    local orbsPerSubtype = orbsPerVariant.entities[entity.SubType]
+
+                    if orbsPerSubtype then
+                        if orbsPerSubtype.orb then
+                            orb = orbsPerVariant.orb
+                        end
+                    end
+                end
+            end
+        end
     end
 
-    return enums.Orbs.RANDOM
-end
+    if not orb then
+        orb = enums.Orbs.RANDOM
+    end
 
+    return orb
+end
 
 ---@param shatteredOrb EntityEffect
 function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
@@ -498,7 +337,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
         SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK, 1, 2, false, 1.3)
 
         MusicManager():Pause()
-        TSIL.Utils.Functions.RunInFrames(function ()
+        TSIL.Utils.Functions.RunInFrames(function()
             MusicManager():Resume()
         end, 30 * 2)
 
@@ -509,10 +348,10 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     end
 
     local npcs = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
-    npcs = TSIL.Utils.Tables.Filter(npcs, function (_, npc)
+    npcs = TSIL.Utils.Tables.Filter(npcs, function(_, npc)
         return npc:IsVulnerableEnemy() and not npc:IsBoss() and
-        not (npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) or
-        npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY_BALL))
+            not (npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) or
+                npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY_BALL))
     end)
 
     for _, npc in ipairs(npcs) do
@@ -537,6 +376,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
         end
     end
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
     ShatteredOrb.OnShatteredOrbUpdate,
