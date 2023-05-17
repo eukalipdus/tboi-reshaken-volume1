@@ -1,8 +1,6 @@
-MilkshakeVol1:AddModCompatibility(function ()
-    if not FiendFolio then return end
-
+MilkshakeVol1:AddModCompatibility("FiendFolio", function ()
     --Add coins
-    --MilkshakeVol1:AddRainbowPenny()
+    --MilkshakeVol1.API:AddRainbowPenny()
 
     --Add entities to shattered orb
     local OrbsPerFiendFolioEntities = {
@@ -151,5 +149,5 @@ MilkshakeVol1:AddModCompatibility(function ()
         {trinket=MilkshakeVol1.enums.Orbs.NATURE, type=114, variant=57, },
         {trinket=MilkshakeVol1.enums.Orbs.NATURE, type=450, variant=6, },
     }
-    MilkshakeVol1:AddOrbsPerEnemyForShatteredOrb(OrbsPerFiendFolioEntities)
+    MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerFiendFolioEntities)
 end)

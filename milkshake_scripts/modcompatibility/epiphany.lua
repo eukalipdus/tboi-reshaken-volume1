@@ -1,8 +1,6 @@
-MilkshakeVol1:AddModCompatibility(function()
-    if not Epiphany then return end
-
+MilkshakeVol1:AddModCompatibility("Epiphany", function()
     --Add slots
-    MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.GLITCH.ID, {
+    MilkshakeVol1.API:AddConductivityOrbSlotPayout(Epiphany.Slot.GLITCH.ID, {
         {
             chance = 100,
             value = {
@@ -45,7 +43,7 @@ MilkshakeVol1:AddModCompatibility(function()
         }
     })
 
-    MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.DICE_MACHINE.ID, {
+    MilkshakeVol1.API:AddConductivityOrbSlotPayout(Epiphany.Slot.DICE_MACHINE.ID, {
         {
             chance = 50,
             value = {
@@ -67,7 +65,7 @@ MilkshakeVol1:AddModCompatibility(function()
     --     }
     -- })
 
-    MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.TURNOVER_RESTOCK.ID, {
+    MilkshakeVol1.API:AddConductivityOrbSlotPayout(Epiphany.Slot.TURNOVER_RESTOCK.ID, {
         {
             chance = 100,
             value = {
@@ -150,7 +148,7 @@ MilkshakeVol1:AddModCompatibility(function()
         },
     })
 
-    MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.CONVERTER_BEGGAR.ID, {
+    MilkshakeVol1.API:AddConductivityOrbSlotPayout(Epiphany.Slot.CONVERTER_BEGGAR.ID, {
         {
             chance = 50,
             value = {

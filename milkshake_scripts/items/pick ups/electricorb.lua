@@ -260,7 +260,7 @@ local MACHINE_PAYOUTS = {
 ---Adds rewards to a slot so it can be electrocuted with Conductivity Orb.
 ---@param slotVariant any
 ---@param payouts {chance: integer, value: ConductivityOrbSlotReward}[]
-function MilkshakeVol1:AddConductivityOrbSlotPayout(slotVariant, payouts)
+function MilkshakeVol1.API:AddConductivityOrbSlotPayout(slotVariant, payouts)
     MACHINE_PAYOUTS[slotVariant] = payouts
 end
 

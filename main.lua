@@ -4,6 +4,7 @@ require("loi_milkshake.TSIL").Init("loi_milkshake")
 
 include("milkshake_scripts.enums")
 include("milkshake_scripts.utility")
+MilkshakeVol1.API = {}
 
 include("milkshake_scripts.bumAPI.core")
 

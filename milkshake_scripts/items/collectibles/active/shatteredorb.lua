@@ -8,7 +8,7 @@ local SHATTERED_ORB_RADIUS = 20
 
 ORBS_PER_ENEMY = {}
 
-function MilkshakeVol1:AddOrbsPerEnemyForShatteredOrb(orbsPerEnemy)
+function MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(orbsPerEnemy)
     TSIL.Utils.Tables.ForEach(orbsPerEnemy, function(_, orbPerEnemy)
         if ORBS_PER_ENEMY[orbPerEnemy.type] == nil then
             ORBS_PER_ENEMY[orbPerEnemy.type] = {}
@@ -92,7 +92,7 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.NATURE,   type = 300, variant = 0, },
 }
 
-MilkshakeVol1:AddOrbsPerEnemyForShatteredOrb(OrbsPerEnemy)
+MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerEnemy)
 
 
 TSIL.SaveManager.AddPersistentVariable(
