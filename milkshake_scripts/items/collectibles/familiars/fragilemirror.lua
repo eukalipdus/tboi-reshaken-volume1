@@ -480,7 +480,7 @@ end
 
 
 ---@param player EntityPlayer
----@param pickingUpItem PickingUpItem
+---@param pickingUpItem table
 local function QueueEmpty(player, pickingUpItem)
     if pickingUpItem.ID == CollectibleType.COLLECTIBLE_NULL or
         pickingUpItem.Type == ItemType.ITEM_NULL then
@@ -499,7 +499,7 @@ end
 
 
 ---@param player EntityPlayer
----@param pickingUpItem PickingUpItem
+---@param pickingUpItem table
 local function QueueNotEmpty(player, pickingUpItem)
     local queuedItem = player.QueuedItem.Item;
     if queuedItem == nil or queuedItem.Type == ItemType.ITEM_NULL then
