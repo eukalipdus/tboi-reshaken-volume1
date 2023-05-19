@@ -103,6 +103,20 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
 
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "PlayerQueueInfoRender",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
+
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "PlayersRevivingFromDevilDeal",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_RUN
+)
+
 
 ---Returns the unbroken mirror found
 ---@param player EntityPlayer
@@ -251,6 +265,7 @@ function FragileMirror:OnFamiliarCache(player)
         enums.Familiars.FRAGILE_MIRROR
     )
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     FragileMirror.OnFamiliarCache,
@@ -273,6 +288,7 @@ function FragileMirror:OnLuckCache(player)
 
     player.Luck = player.Luck - #mirrorsBroken
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     FragileMirror.OnLuckCache,
@@ -292,6 +308,7 @@ function FragileMirror:OnFamiliarInit(familiar)
 
     TryUpdateAnimation(familiar)
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_FAMILIAR_INIT,
     FragileMirror.OnFamiliarInit,
@@ -321,6 +338,7 @@ function FragileMirror:OnFamiliarUpdate(familiar)
 
     familiar:FollowParent()
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_FAMILIAR_UPDATE,
     FragileMirror.OnFamiliarUpdate,
@@ -378,6 +396,7 @@ function FragileMirror:OnFamiliarCollision(familiar, entity)
         return CheckCollisionWithProjectile(familiar, entity:ToProjectile())
     end
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_FAMILIAR_COLLISION,
     FragileMirror.OnFamiliarCollision,
@@ -387,6 +406,16 @@ MilkshakeVol1:AddCallback(
 
 local isRevivingWithFragileMirror = false
 local familiarsUsed = {}
+
+
+---@param player EntityPlayer
+local function RevivingEffects(player)
+    SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
+    player:AddSoulHearts(2)
+    player:AnimateCollectible(enums.Collectibles.FRAGILE_MIRROR)
+    local mirrorUsed = table.remove(familiarsUsed, 1)
+    BreakMirror(mirrorUsed, true)
+end
 
 
 ---@param player EntityPlayer
@@ -400,6 +429,7 @@ function FragileMirror:PreCustomRevive(player)
 
     return TSIL.Enums.CustomReviveType.SAME_ROOM
 end
+
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.PRE_CUSTOM_REVIVE,
     FragileMirror.PreCustomRevive
@@ -410,15 +440,127 @@ MilkshakeVol1:AddCallback(
 function FragileMirror:PostCustomRevive(player)
     if not isRevivingWithFragileMirror then return end
 
-    SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
-    player:AddSoulHearts(2)
-    player:AnimateCollectible(enums.Collectibles.FRAGILE_MIRROR)
-    local mirrorUsed = table.remove(familiarsUsed, 1)
-    BreakMirror(mirrorUsed, true)
+    RevivingEffects(player)
 end
+
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_CUSTOM_REVIVE,
     FragileMirror.PostCustomRevive
+)
+
+
+---@param player EntityPlayer
+---@param itemInfo ItemConfig_Item
+local function CheckIfPlayerWillDieFromItem(player, itemInfo)
+    --The lost can pick up free devil deals
+    if TSIL.Players.IsTheLost(player) then return end
+
+    --The item will grant at least one heart
+    if itemInfo.AddBlackHearts > 0 and itemInfo.AddMaxHearts > 0 and itemInfo.AddSoulHearts > 0 then return end
+    --The player has some health
+    if TSIL.Players.GetPlayerNumHitsRemaining(player) > 0 then return end
+
+    local unbrokenMirror = HasAnyUnbrokenMirror(player)
+
+    if not unbrokenMirror then return end
+
+    isRevivingWithFragileMirror = true
+    familiarsUsed[#familiarsUsed + 1] = unbrokenMirror
+
+    ---@diagnostic disable-next-line: param-type-mismatch
+    player:UseCard(Card.CARD_SOUL_LAZARUS, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER)
+
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local playersReviving = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "PlayersRevivingFromDevilDeal"
+    )
+    playersReviving[playerIndex] = true
+end
+
+
+---@param player EntityPlayer
+---@param pickingUpItem PickingUpItem
+local function QueueEmpty(player, pickingUpItem)
+    if pickingUpItem.ID == CollectibleType.COLLECTIBLE_NULL or
+        pickingUpItem.Type == ItemType.ITEM_NULL then
+        return
+    end
+
+    if pickingUpItem.Type ~= ItemType.ITEM_TRINKET then
+        local itemConfig = Isaac.GetItemConfig()
+        local itemInfo = itemConfig:GetCollectible(pickingUpItem.ID)
+        CheckIfPlayerWillDieFromItem(player, itemInfo)
+    end
+
+    pickingUpItem.Type = ItemType.ITEM_NULL
+    pickingUpItem.ID = CollectibleType.COLLECTIBLE_NULL
+end
+
+
+---@param player EntityPlayer
+---@param pickingUpItem PickingUpItem
+local function QueueNotEmpty(player, pickingUpItem)
+    local queuedItem = player.QueuedItem.Item;
+    if queuedItem == nil or queuedItem.Type == ItemType.ITEM_NULL then
+        return
+    end
+
+    if queuedItem.Type ~= pickingUpItem.Type or
+        queuedItem.ID ~= pickingUpItem.ID then
+        pickingUpItem.ID = queuedItem.ID
+        pickingUpItem.Type = queuedItem.Type
+    end
+end
+
+
+---@param player EntityPlayer
+function FragileMirror:OnPlayerRender(player)
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local prevQueuedItemPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "PlayerQueueInfoRender"
+    )
+    local pickingUpItem = prevQueuedItemPerPlayer[playerIndex]
+
+    if pickingUpItem == nil then
+        pickingUpItem = {
+            ID = CollectibleType.COLLECTIBLE_NULL,
+            Type = ItemType.ITEM_NULL
+        }
+
+        prevQueuedItemPerPlayer[playerIndex] = pickingUpItem
+    end
+
+    if player:IsItemQueueEmpty() then
+        QueueEmpty(player, pickingUpItem)
+    else
+        QueueNotEmpty(player, pickingUpItem)
+    end
+end
+
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_PLAYER_RENDER_REORDERED,
+    FragileMirror.OnPlayerRender
+)
+
+
+---@param player EntityPlayer
+function FragileMirror:OnPeffectUpdate(player)
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local playersReviving = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "PlayersRevivingFromDevilDeal"
+    )
+
+    if not playersReviving[playerIndex] then return end
+    playersReviving[playerIndex] = nil
+
+    RevivingEffects(player)
+end
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_PEFFECT_UPDATE_REORDERED,
+    FragileMirror.OnPeffectUpdate
 )
 
 
@@ -440,7 +582,7 @@ function FragileMirror:OnRoomClear()
             for _, roomsUntilRespawn in ipairs(mirrorsBroken) do
                 roomsUntilRespawn = roomsUntilRespawn - 1
                 if roomsUntilRespawn > 0 then
-                    newMirrorsBroken[#newMirrorsBroken+1] = roomsUntilRespawn
+                    newMirrorsBroken[#newMirrorsBroken + 1] = roomsUntilRespawn
                 end
             end
 
@@ -455,6 +597,7 @@ function FragileMirror:OnRoomClear()
         player:EvaluateItems()
     end
 end
+
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_ROOM_CLEAR_CHANGED,
     FragileMirror.OnRoomClear,
@@ -470,6 +613,7 @@ function FragileMirror:OnNewLevel()
         player:EvaluateItems()
     end
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_LEVEL,
     FragileMirror.OnNewLevel
@@ -483,6 +627,7 @@ function FragileMirror:OnNewRoom()
         TryUpdateAnimation(familiar)
     end
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     FragileMirror.OnNewRoom
