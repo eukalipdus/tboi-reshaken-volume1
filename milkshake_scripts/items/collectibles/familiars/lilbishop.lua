@@ -8,6 +8,7 @@ lilBishop.FadeCounter = 15
 --lilBishop.costumeBookShadow = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
 lilBishop.ShieldEffect = Isaac.GetEntityVariantByName("Lil Bishop Shield")
 lilBishop.IgnoreFlag = DamageFlag.DAMAGE_INVINCIBLE
+lilBishop.bffsMultiplier = 2
 
 --local game = Game()
 
@@ -126,9 +127,13 @@ function lilBishop:onFamiliarCollision(familiar, collider)
 		collider:Die()
 		local famData = familiar:GetData()
 		--local sprite = familiar:GetSprite()
+		local player = familiar.Player
 		local rng = familiar:GetDropRNG()
 		if rng:RandomFloat() <= lilBishop.BlockChance and not famData.Active then
 			famData.Active = lilBishop.BlockCooldown
+			if player:ToPlayer():HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
+				famData.Active = lilBishop.BlockCooldown * lilBishop.bffsMultiplier
+			end
 			--sprite:Play("Active")
 		end
 	end
