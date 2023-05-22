@@ -2,7 +2,7 @@ local lilBishop = {}
 local enums = MilkshakeVol1.enums
 
 lilBishop.BlockCooldown = 120 -- 5*30
-lilBishop.BlockChance = 1 --0.1
+lilBishop.BlockChance = 0.1
 --lilBishop.ShieldTimeout = 120
 lilBishop.FadeCounter = 15
 --lilBishop.costumeBookShadow = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
@@ -38,8 +38,17 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 			for _, lilBishopFam in pairs(lilBishops) do
 				if lilBishopFam:GetData().Active then
 					--lilBishopFam:GetSprite():Play("Block")
-					--TODO lil bishop laser -- from fam to player
-
+					local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
+					laser:GetData().BishopLaser = player
+					laser:SetTimeout(lilBishop.FadeCounter)
+					laser.CollisionDamage = 0
+					laser.Mass = 0
+					local distance = lilBishopFam.Position:Distance(player.Position)
+					laser.Parent = lilBishopFam
+					laser:SetMaxDistance(distance)
+					local pos = player.Position - lilBishopFam.Position
+					laser.Angle = pos:GetAngleDegrees() -- lilBishopFam.Velocity
+					
 					local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil):ToEffect()
 					effect.Parent = player
 					effect:FollowParent(effect.Parent)
@@ -57,13 +66,23 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, lilBishop.onPlayerTakeDamage, EntityType.ENTITY_PLAYER)
 
+function lilBishop:onLaserUpdate(laser)
+	local data = laser:GetData()
+	if not data.BishopLaser then return end
+	local distance = laser.Parent.Position:Distance(data.BishopLaser.Position)
+	laser:SetMaxDistance(distance)
+	local pos = data.BishopLaser.Position - laser.Parent.Position
+	laser.Angle = pos:GetAngleDegrees()
+end
+MilkshakeVol1:AddCallback(ModCallbacks. MC_POST_LASER_UPDATE, lilBishop.onLaserUpdate, LaserVariant.ELECTRIC)
+
+
 function lilBishop:onEffectUpdate(effect)
 	local player = effect.Parent
 	effect:FollowParent(player)
 	--if effect.SubType == 0 then
 	effect.SpriteOffset = lilBishop.ShieldOffset * player.SpriteScale.X
 	--end
-	print(effect.Timeout)
 	if effect.Timeout <= 0 then
 		effect:Remove()
 	end
