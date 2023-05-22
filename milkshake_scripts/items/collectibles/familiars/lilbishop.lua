@@ -1,10 +1,12 @@
 local lilBishop = {}
 local enums = MilkshakeVol1.enums
 
-lilBishop.BlockCooldown = 150 -- 5*30
-lilBishop.ShieldTimeout = 30
-lilBishop.CosF = 15
+--lilBishop.BlockCooldown = 150 -- 5*30
+lilBishop.BlockChance = 0.1
+lilBishop.ShieldTimeout = 120
+lilBishop.FadeCounter = 15
 lilBishop.costumeBookShadow = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
+lilBishop.ShieldEffect = Isaac.GetEntityVariantByName("Lil Bishop Shield")
 
 local game = Game()
 
@@ -26,7 +28,6 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 	local player = entity:ToPlayer()
 	local data = player:GetData()
 
-	--- soul of nadab and abihu
 	if data.lilBishoped and flags & DamageFlag.DAMAGE_INVINCIBLE ~= DamageFlag.DAMAGE_INVINCIBLE then
 		return false
 	end
@@ -41,6 +42,19 @@ function lilBishop:onPEffectUpdate(player)
 		if data.lilBishopCurrentRoomIndex ~= game:GetLevel():GetCurrentRoomIndex() then
 			data.lilBishopCurrentRoomIndex = nil
 			data.lilBishoped = nil
+		else
+			data.lilBishoped = data.lilBishoped - 1
+			if data.lilBishoped <= 0 then
+				data.lilBishoped = nil
+			end
+		end
+	end
+
+	--[[
+	if data.lilBishoped then
+		if data.lilBishopCurrentRoomIndex ~= game:GetLevel():GetCurrentRoomIndex() then
+			data.lilBishopCurrentRoomIndex = nil
+			data.lilBishoped = nil
 			player:RemoveCostume(lilBishop.costumeBookShadow)
 		else
 			--if game:GetFrameCount() - data.lilBishoped >= lilBishop.ShieldTimeout then
@@ -50,24 +64,26 @@ function lilBishop:onPEffectUpdate(player)
 				if player:GetEffects():GetCollectibleEffectNum(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS) == 0 then
 					player:RemoveCostume(lilBishop.costumeBookShadow)
 				end
-			elseif data.lilBishoped <= lilBishop.CosF and data.lilBishoped%3 == 0 and player:GetEffects():GetCollectibleEffectNum(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS) == 0 then
-				if data.lilBishopCosF then
-					data.lilBishopCosF = nil
+			elseif data.lilBishoped <= lilBishop.FadeCounter and data.lilBishoped%3 == 0 and player:GetEffects():GetCollectibleEffectNum(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS) == 0 then
+				if data.lilBishopFadeCounter then
+					data.lilBishopFadeCounter = nil
 					player:AddCostume(lilBishop.costumeBookShadow, false)
 				else
-					data.lilBishopCosF = true
+					data.lilBishopFadeCounter = true
 					player:RemoveCostume(lilBishop.costumeBookShadow)
 				end
 			end
 		end
 	end
+	--]]
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, lilBishop.onPEffectUpdate)
 
 --- LIL BISHOP INIT --
 function lilBishop:onFamiliarInit(familiar)
-	familiar.OrbitSpeed = 0.01
-	familiar:AddToOrbit(8)
+	familiar:AddToFollowers()
+	--familiar.OrbitSpeed = 0.01
+	--familiar:AddToOrbit(8)
 	--local sprite = familiar:GetSprite()
 	--sprite:Play("FloatDown")
 end
@@ -75,10 +91,11 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, lilBishop.onFamiliarIni
 
 --- LIL BISHOP UPDATE --
 function lilBishop:onFamiliarUpdate(familiar)
-	local data = familiar:GetData()
-	local player = familiar.Player
-	--local sprite = player:GetSprite()
-
+	--local data = familiar:GetData()
+	--local player = familiar.Player
+	--local sprite = familiar:GetSprite()
+	familiar:FollowParent()
+	--[[
 	if data.BlockCooldown then
 		data.BlockCooldown = data.BlockCooldown - 1
 		if data.BlockCooldown <= 0 then
@@ -86,12 +103,13 @@ function lilBishop:onFamiliarUpdate(familiar)
 			--sprite:Play("WakeUp")
 		end
 	end
-
 	familiar.Velocity = familiar:GetOrbitPosition(player.Position) - familiar.Position
-
-    --if sprite:IsFinished("WakeUp") then
-    --	sprite:Play("FloatDown")
-    --end
+	--]]
+    --[[
+    if sprite:IsFinished("Avticate") then
+    	sprite:Play("FloatDown")
+    end
+	--]]
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarUpdate, enums.Familiars.LIL_BISHOP)
 
@@ -99,8 +117,20 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarU
 function lilBishop:onFamiliarCollision(familiar, collider)
 	if collider:ToProjectile() then
 		collider:Die()
-		--local sprite = player:GetSprite()
-
+		--local sprite = familiar:GetSprite()
+		local rng = familiar:GetDropRNG()
+		if rng:RandomFloat() <= lilBishop.BlockChance then
+			--sprite:Play("Avticate")
+			local player = familiar.Player
+			local data = player:GetData()
+			data.lilBishoped = lilBishop.ShieldTimeout
+			data.lilBishopCurrentRoomIndex = game:GetLevel():GetCurrentRoomIndex()
+			local shield = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil)
+			shield.Parent = player
+			--shield.Scale = shield.Scale * player.SpriteScale
+			shield:SetTimeout(lilBishop.ShieldTimeout)
+		end
+		--[[
 		local data = familiar:GetData()
 		if not data.BlockCooldown then
 			--sprite:Play("Sleep")
@@ -112,6 +142,15 @@ function lilBishop:onFamiliarCollision(familiar, collider)
 			pdata.lilBishoped = pdata.lilBishoped + lilBishop.ShieldTimeout
 			pdata.lilBishopCurrentRoomIndex = game:GetLevel():GetCurrentRoomIndex()
 		end
+		--]]
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, lilBishop.onFamiliarCollision, enums.Familiars.LIL_BISHOP)
+
+function lilBishop:onEffectUpdate(effect)
+	if effect.Timeout < lilBishop.FadeCounter and not effect:GetData().fading then
+		effect:GetData().fading = true
+		effect:GetSprite():Play("Fade")
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, lilBishop.onEffectUpdate, lilBishop.ShieldEffect)
