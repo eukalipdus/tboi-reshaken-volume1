@@ -2,7 +2,7 @@ local innerreflection = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local actionDelay = 50
+local actionDelay = 1
 local appearLength = 20
 
 local wasRoomClear = false;
