@@ -1,14 +1,15 @@
 local lilBishop = {}
 local enums = MilkshakeVol1.enums
 
---lilBishop.BlockCooldown = 150 -- 5*30
+lilBishop.BlockCooldown = 120 -- 5*30
 lilBishop.BlockChance = 0.1
-lilBishop.ShieldTimeout = 120
+--lilBishop.ShieldTimeout = 120
 lilBishop.FadeCounter = 15
-lilBishop.costumeBookShadow = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
+--lilBishop.costumeBookShadow = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
 lilBishop.ShieldEffect = Isaac.GetEntityVariantByName("Lil Bishop Shield")
+lilBishop.IgnoreFlag = DamageFlag.DAMAGE_INVINCIBLE
 
-local game = Game()
+--local game = Game()
 
 function lilBishop:OnFamiliarCache(player, cacheFlag)
     TSIL.Familiars.CheckFamiliarFromCollectibles(
@@ -26,30 +27,33 @@ MilkshakeVol1:AddCallback(
 --- PLAYER TAKE DMG --
 function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags, source, countdown
 	local player = entity:ToPlayer()
-	local data = player:GetData()
+	local ignore = false
 
-	if data.lilBishoped and flags & DamageFlag.DAMAGE_INVINCIBLE ~= DamageFlag.DAMAGE_INVINCIBLE then
-		return false
+	if flags & lilBishop.IgnoreFlag ~= lilBishop.IgnoreFlag then
+		local lilBishops = Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.LIL_BISHOP)
+		if #lilBishops > 0 then
+			for _, lilBishopFam in pairs(lilBishops) do
+				if lilBishopFam:GetData().Active then
+					--lilBishopFam:GetSprite():Play("Block")
+					--TODO lil bishop laser -- from fam to player
+					local shield = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil)
+					shield.Parent = player
+					--shield.Scale = shield.Scale * player.SpriteScale
+					shield:SetTimeout(lilBishop.FadeCounter)
+					shield:GetSprite():Play("Fade")
+					ignore = true -- to play animation for all active lil bishops
+				end
+			end
+		end
+		if ignore then return false end
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, lilBishop.onPlayerTakeDamage, EntityType.ENTITY_PLAYER)
 
 --- PLAYER UPDATE --
+--[[
 function lilBishop:onPEffectUpdate(player)
 	local data = player:GetData()
-
-	if data.lilBishoped then
-		if data.lilBishopCurrentRoomIndex ~= game:GetLevel():GetCurrentRoomIndex() then
-			data.lilBishopCurrentRoomIndex = nil
-			data.lilBishoped = nil
-		else
-			data.lilBishoped = data.lilBishoped - 1
-			if data.lilBishoped <= 0 then
-				data.lilBishoped = nil
-			end
-		end
-	end
-
 	--[[
 	if data.lilBishoped then
 		if data.lilBishopCurrentRoomIndex ~= game:GetLevel():GetCurrentRoomIndex() then
@@ -75,15 +79,16 @@ function lilBishop:onPEffectUpdate(player)
 			end
 		end
 	end
-	--]]
+	--]
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, lilBishop.onPEffectUpdate)
+--]]
 
 --- LIL BISHOP INIT --
 function lilBishop:onFamiliarInit(familiar)
 	familiar:AddToFollowers()
-	--familiar.OrbitSpeed = 0.01
-	--familiar:AddToOrbit(8)
+	local famData = familiar:GetData()
+	famData.Active = nil
 	--local sprite = familiar:GetSprite()
 	--sprite:Play("FloatDown")
 end
@@ -91,23 +96,25 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, lilBishop.onFamiliarIni
 
 --- LIL BISHOP UPDATE --
 function lilBishop:onFamiliarUpdate(familiar)
-	--local data = familiar:GetData()
+	local famData = familiar:GetData()
 	--local player = familiar.Player
 	--local sprite = familiar:GetSprite()
 	familiar:FollowParent()
-	--[[
-	if data.BlockCooldown then
-		data.BlockCooldown = data.BlockCooldown - 1
-		if data.BlockCooldown <= 0 then
-			data.BlockCooldown = nil
-			--sprite:Play("WakeUp")
+	if famData.Active then
+		famData.Active = famData.Active - 1
+		if famData.Active <= 0 then
+			famData.Active = nil
+			--sprite:Play("FloatDown")
 		end
 	end
 	familiar.Velocity = familiar:GetOrbitPosition(player.Position) - familiar.Position
-	--]]
     --[[
-    if sprite:IsFinished("Avticate") then
-    	sprite:Play("FloatDown")
+    if sprite:IsFinished("Block") then
+    	if famData.Active then
+    	    sprite:Play("Active")
+    	else
+    	    sprite:Play("FloatDown")
+    	end
     end
 	--]]
 end
@@ -117,40 +124,24 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarU
 function lilBishop:onFamiliarCollision(familiar, collider)
 	if collider:ToProjectile() then
 		collider:Die()
+		local famData = familiar:GetData()
 		--local sprite = familiar:GetSprite()
 		local rng = familiar:GetDropRNG()
-		if rng:RandomFloat() <= lilBishop.BlockChance then
-			--sprite:Play("Avticate")
-			local player = familiar.Player
-			local data = player:GetData()
-			data.lilBishoped = lilBishop.ShieldTimeout
-			data.lilBishopCurrentRoomIndex = game:GetLevel():GetCurrentRoomIndex()
-			local shield = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil)
-			shield.Parent = player
-			--shield.Scale = shield.Scale * player.SpriteScale
-			shield:SetTimeout(lilBishop.ShieldTimeout)
+		if rng:RandomFloat() <= lilBishop.BlockChance and not famData.Active then
+			famData.Active = lilBishop.BlockCooldown
+			--sprite:Play("Active")
 		end
-		--[[
-		local data = familiar:GetData()
-		if not data.BlockCooldown then
-			--sprite:Play("Sleep")
-			local player = familiar.Player
-			data.BlockCooldown = lilBishop.BlockCooldown
-			player:AddCostume(lilBishop.costumeBookShadow, false)
-			local pdata = player:GetData()
-			pdata.lilBishoped = pdata.lilBishoped or 0
-			pdata.lilBishoped = pdata.lilBishoped + lilBishop.ShieldTimeout
-			pdata.lilBishopCurrentRoomIndex = game:GetLevel():GetCurrentRoomIndex()
-		end
-		--]]
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, lilBishop.onFamiliarCollision, enums.Familiars.LIL_BISHOP)
 
 function lilBishop:onEffectUpdate(effect)
+	effect:FollowParent(effect.Parent)
+	--[[
 	if effect.Timeout < lilBishop.FadeCounter and not effect:GetData().fading then
 		effect:GetData().fading = true
 		effect:GetSprite():Play("Fade")
 	end
+	--]]
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, lilBishop.onEffectUpdate, lilBishop.ShieldEffect)
