@@ -150,3 +150,16 @@ function lilBishop:onEffectUpdate(effect)
 	--]]
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, lilBishop.onEffectUpdate, lilBishop.ShieldEffect)
+
+---TEST
+lilBishop.Font = Font()
+lilBishop.Font:Load("font/pftempestasevencondensed.fnt")
+
+function lilBishop:onRender(familiar)
+	--if familiar:GetData().Active then
+	local active = familiar:GetData().Active
+	local pos = Isaac.WorldToScreen(familiar.Position)
+	lilBishop.Font:DrawString(active, pos.X , pos.Y, KColor(1 ,1 ,1 ,1), 0, true)
+	--end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, lilBishop.onRender, enums.Familiars.LIL_BISHOP)
