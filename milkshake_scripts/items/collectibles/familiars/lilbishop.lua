@@ -2,13 +2,15 @@ local lilBishop = {}
 local enums = MilkshakeVol1.enums
 
 lilBishop.BlockCooldown = 120 -- 5*30
-lilBishop.BlockChance = 0.1
+lilBishop.BlockChance = 1 --0.1
 --lilBishop.ShieldTimeout = 120
 lilBishop.FadeCounter = 15
 --lilBishop.costumeBookShadow = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
 lilBishop.ShieldEffect = Isaac.GetEntityVariantByName("Lil Bishop Shield")
 lilBishop.IgnoreFlag = DamageFlag.DAMAGE_INVINCIBLE
 lilBishop.bffsMultiplier = 2
+lilBishop.ShieldOffset = Vector(0, -12.5)
+lilBishop.DepthOffset = 100
 
 --local game = Game()
 
@@ -37,11 +39,15 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 				if lilBishopFam:GetData().Active then
 					--lilBishopFam:GetSprite():Play("Block")
 					--TODO lil bishop laser -- from fam to player
-					local shield = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil)
-					shield.Parent = player
-					--shield.Scale = shield.Scale * player.SpriteScale
-					shield:SetTimeout(lilBishop.FadeCounter)
-					shield:GetSprite():Play("Fade")
+
+					local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil):ToEffect()
+					effect.Parent = player
+					effect:FollowParent(effect.Parent)
+					effect.SpriteOffset = lilBishop.ShieldOffset * player.SpriteScale.X
+					effect.SpriteScale = player.SpriteScale
+					effect:SetTimeout(lilBishop.FadeCounter)
+					effect.DepthOffset = lilBishop.DepthOffset
+					effect:GetSprite():Play("Fade")
 					ignore = true -- to play animation for all active lil bishops
 				end
 			end
@@ -50,6 +56,19 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, lilBishop.onPlayerTakeDamage, EntityType.ENTITY_PLAYER)
+
+function lilBishop:onEffectUpdate(effect)
+	local player = effect.Parent
+	effect:FollowParent(player)
+	--if effect.SubType == 0 then
+	effect.SpriteOffset = lilBishop.ShieldOffset * player.SpriteScale.X
+	--end
+	print(effect.Timeout)
+	if effect.Timeout <= 0 then
+		effect:Remove()
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, lilBishop.onEffectUpdate, lilBishop.ShieldEffect)
 
 --- PLAYER UPDATE --
 --[[
@@ -101,6 +120,7 @@ function lilBishop:onFamiliarUpdate(familiar)
 	--local player = familiar.Player
 	--local sprite = familiar:GetSprite()
 	familiar:FollowParent()
+	--[
 	if famData.Active then
 		famData.Active = famData.Active - 1
 		if famData.Active <= 0 then
@@ -108,7 +128,7 @@ function lilBishop:onFamiliarUpdate(familiar)
 			--sprite:Play("FloatDown")
 		end
 	end
-	familiar.Velocity = familiar:GetOrbitPosition(player.Position) - familiar.Position
+	--]]
     --[[
     if sprite:IsFinished("Block") then
     	if famData.Active then
@@ -140,16 +160,7 @@ function lilBishop:onFamiliarCollision(familiar, collider)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, lilBishop.onFamiliarCollision, enums.Familiars.LIL_BISHOP)
 
-function lilBishop:onEffectUpdate(effect)
-	effect:FollowParent(effect.Parent)
-	--[[
-	if effect.Timeout < lilBishop.FadeCounter and not effect:GetData().fading then
-		effect:GetData().fading = true
-		effect:GetSprite():Play("Fade")
-	end
-	--]]
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, lilBishop.onEffectUpdate, lilBishop.ShieldEffect)
+
 
 ---TEST
 lilBishop.Font = Font()
@@ -159,7 +170,9 @@ function lilBishop:onRender(familiar)
 	--if familiar:GetData().Active then
 	local active = familiar:GetData().Active
 	local pos = Isaac.WorldToScreen(familiar.Position)
-	lilBishop.Font:DrawString(active, pos.X , pos.Y, KColor(1 ,1 ,1 ,1), 0, true)
+	if active then
+		lilBishop.Font:DrawString(active, pos.X , pos.Y, KColor(1 ,1 ,1 ,1), 0, true)
+	end
 	--end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, lilBishop.onRender, enums.Familiars.LIL_BISHOP)
