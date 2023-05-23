@@ -39,6 +39,11 @@ enums.Trinkets = {
     ACID_PENNY = Isaac.GetTrinketIdByName("Acid Penny"),
     CRYSTAL_PENNY = Isaac.GetTrinketIdByName("Crystal Penny"),
     ROCK_WHEEL = Isaac.GetTrinketIdByName("Rock Wheel"),
+    PERIDOT_SHARD = Isaac.GetTrinketIdByName("Peridot Shard"),
+    GARNET_SHARD = Isaac.GetTrinketIdByName("Garnet Shard"),
+    ONYX_SHARD = Isaac.GetTrinketIdByName("Onyx Shard"),
+    DIAMOND_SHARD = Isaac.GetTrinketIdByName("Diamond Shard"),
+    --EMERALD_SHARD = Isaac.GetTrinketIdByName("Emerald Shard"),
 }
 
 enums.Cards = {

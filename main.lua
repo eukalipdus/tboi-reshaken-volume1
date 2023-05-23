@@ -53,7 +53,10 @@ include("milkshake_scripts.items.trinkets.emeraldshard")
 include("milkshake_scripts.items.trinkets.tungstencube")
 include("milkshake_scripts.items.trinkets.acidpenny")
 include("milkshake_scripts.items.trinkets.crystalpenny")
-include("milkshake_scripts.items.trinkets.rockwheel")
+include("milkshake_scripts.items.trinkets.peridotshard")
+include("milkshake_scripts.items.trinkets.garnetshard")
+include("milkshake_scripts.items.trinkets.onyxshard")
+include("milkshake_scripts.items.trinkets.diamondshard")
 
 --Pick ups
 include("milkshake_scripts.items.pick ups.psychicorb")
