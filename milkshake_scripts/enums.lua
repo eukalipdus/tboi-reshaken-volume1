@@ -43,7 +43,7 @@ enums.Trinkets = {
     GARNET_SHARD = Isaac.GetTrinketIdByName("Garnet Shard"),
     ONYX_SHARD = Isaac.GetTrinketIdByName("Onyx Shard"),
     DIAMOND_SHARD = Isaac.GetTrinketIdByName("Diamond Shard"),
-    --EMERALD_SHARD = Isaac.GetTrinketIdByName("Emerald Shard"),
+    SAPPHIRE_SHARD = Isaac.GetTrinketIdByName("Sapphire Shard"),
 }
 
 enums.Cards = {

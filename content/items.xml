@@ -31,7 +31,6 @@
     <trinket name="Ruby Shard" description="Hidden infernal power..." gfx="trinkets_rubycluster.png" tags="nogreed"/>
     <trinket name="Tourmaline Shard" description="Hidden conductive power..." gfx="trinkets_tourmalinecluster.png" tags="nogreed"/>
     <trinket name="Emerald Shard" description="Hidden verdant power..." gfx="trinkets_emeraldcluster.png" tags="nogreed"/>
-
     <trinket name="Sapphire Shard" description="Hidden flooded power..." gfx="trinkets_sapphiregem.png" tags="nogreed"/>
     <trinket name="Onyx Shard" description="Hidden revenant power..." gfx="trinkets_onyxgem.png" tags="nogreed"/>
     <trinket name="Peridot Shard" description="Hidden virulent power..." gfx="trinkets_peridotsgem.png" tags="nogreed"/>
