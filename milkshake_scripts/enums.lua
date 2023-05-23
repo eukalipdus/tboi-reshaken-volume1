@@ -103,10 +103,10 @@ enums.Orbs = {
     NATURE = Isaac.GetCardIdByName("Spirit Of Druidity"),
     PSYCHIC = Isaac.GetCardIdByName("Spirit Of Clairvoyance"),
     RANDOM = Isaac.GetCardIdByName("Spirit Of Chaos"),
-    SALVATION = Isaac.GetCardIdByName("Spirit Of Salvation"),
-    DEMONIC = Isaac.GetCardIdByName("Spirit Of Sacrilege"),
-    BIOHAZARD = Isaac.GetCardIdByName("Spirit Of Virulence"),
-    DEATH = Isaac.GetCardIdByName("Spirit Of Revengance"),
+    HOLY = Isaac.GetCardIdByName("Spirit Of Salvation"),
+    UNHOLY = Isaac.GetCardIdByName("Spirit Of Sacrilege"),
+    POISON = Isaac.GetCardIdByName("Spirit Of Virulence"),
+    UNDEAD = Isaac.GetCardIdByName("Spirit Of Revengance"),
     WATER = Isaac.GetCardIdByName("Spirit Of Deluge"),
 }
 
