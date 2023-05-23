@@ -7,7 +7,8 @@ local TEAR_DEADZONE_ANGLE = 30
 local BOMB_MOVEMENT_RATIO = 0.4
 local BOMB_DEADZONE_ANGLE = 30
 
-local LASER_LERP_STRENGTH = 0.02
+local LASER_LERP_STRENGTH = 0.03
+local LERP_STANDING_MULTIPLIER = 10
 
 local TEARS_MULTIPLIER_BONUS = 0.10
 local SHOTSPEED_REDUCTION = 0.2
@@ -69,11 +70,13 @@ function dadsMitt:PostLaserUpdate(laser)
     if laser.Variant == TRACTOR_BEAM_VARIANT then
         return end
 
+    local lerpMultiplier = 1
     local playerDirection = player.Velocity
     local lerpDirection
     if playerDirection:LengthSquared() > A_COMICALLY_SMALL_NUMBER then
         lerpDirection = playerDirection:Normalized()
     else
+        lerpMultiplier = LERP_STANDING_MULTIPLIER
         if player:GetAimDirection():LengthSquared() > A_COMICALLY_SMALL_NUMBER then
             lerpDirection = player:GetAimDirection():Normalized()
         else
@@ -84,7 +87,7 @@ function dadsMitt:PostLaserUpdate(laser)
     local laserDirection = Vector.FromAngle(laser.AngleDegrees)
     local itemCount = player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
 ---@diagnostic disable-next-line: undefined-field
-    laserDirection:Lerp(lerpDirection, LASER_LERP_STRENGTH*itemCount)
+    laserDirection:Lerp(lerpDirection, lerpMultiplier*LASER_LERP_STRENGTH*itemCount)
     laser.AngleDegrees = laserDirection:GetAngleDegrees()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE, dadsMitt.PostLaserUpdate)
