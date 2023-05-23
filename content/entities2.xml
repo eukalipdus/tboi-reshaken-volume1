@@ -74,6 +74,26 @@
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
+    <entity name="Spirit of Salvation" anm2path="spirit_salvation.anm2" id="5" variant="300" subtype="479" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+    <entity name="Spirit of Sacrilege" anm2path="spirit_demonic.anm2" id="5" variant="300" subtype="480" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+    <entity name="Spirit of Virulence" anm2path="spirit_biohazard.anm2" id="5" variant="300" subtype="481" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+    <entity name="Spirit of Revengance" anm2path="spirit_biohazard.anm2" id="5" variant="300" subtype="482" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
+    <entity name="Spirit of Deluge" anm2path="spirit_water.anm2" id="5" variant="300" subtype="482" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
     <entity name="Vine" anm2path="vines.anm2" id="1000">
 	</entity>
 
