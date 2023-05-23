@@ -19,6 +19,7 @@ function laChancla:onHit(entity, amount, flags, source)
     if not player then return end
 
     if player:HasCollectible(enums.Collectibles.LA_CHANCLA) then
+        if not source or not source.Entity then return end
         if source.Entity:ToEffect() then -- High priestess card
             effect = source.Entity:ToEffect()
             variant = effect.Variant
