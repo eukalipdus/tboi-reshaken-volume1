@@ -1,9 +1,11 @@
 local lilBishop = {}
 local enums = MilkshakeVol1.enums
+local sfx = SFXManager()
 
 lilBishop.BlockCooldown = 120 -- 5*30
 lilBishop.BlockChance = 0.1
 --lilBishop.ShieldTimeout = 120
+lilBishop.LaserFade = 10
 lilBishop.FadeCounter = 15
 --lilBishop.costumeBookShadow = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS)
 lilBishop.ShieldEffect = Isaac.GetEntityVariantByName("Lil Bishop Shield")
@@ -36,11 +38,13 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 		local lilBishops = Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.LIL_BISHOP)
 		if #lilBishops > 0 then
 			for _, lilBishopFam in pairs(lilBishops) do
-				if lilBishopFam:GetData().Active then
+				if lilBishopFam:GetData().Active then --and lilBishopFam:GetSprite():GetAnimation() == "Active" then
+					sfx:Play(SoundEffect.SOUND_BISHOP_HIT)
 					--lilBishopFam:GetSprite():Play("Block")
 					local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
+					sfx:Stop(SoundEffect.SOUND_LASERRING)
 					laser:GetData().BishopLaser = player
-					laser:SetTimeout(lilBishop.FadeCounter)
+					laser:SetTimeout(lilBishop.LaserFade)
 					laser.CollisionDamage = 0
 					laser.Mass = 0
 					local distance = lilBishopFam.Position:Distance(player.Position)
