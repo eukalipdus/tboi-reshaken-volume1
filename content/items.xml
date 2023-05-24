@@ -11,7 +11,7 @@
     <active id="11" name="Shattered Orb" description="Fragile Vessel" tags="offensive" quality="3" gfx="collectibles_shatteredorb.png" maxcharges="4" />
     <active id="13" name="Prismatic Dice" description="Quantity over quality" tags="nocantrip offensive" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" />
     <familiar id="14" name="Spirit Bum" description="He wants your soul." gfx="collectibles_spiritbum.png" tags="offensive summonable" quality="0" />
-    <familiar id="16" name="Inner Reflection" description="It's impossible to outrun your own reflection." gfx="InnerReflection.png" tags="monstermanual offensive summonable" quality="0" />
+    <familiar id="16" name="Celestial Mirror" description="It's impossible to outrun your own reflection." gfx="InnerReflection.png" tags="monstermanual offensive summonable" quality="0" />
     <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" tags="offensive summonable" quality="3" />
     <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="1" gfx="spoiled_breakfast.png" tags="food nocantrip noeden" quality="0" />
     <passive id="19" name="Balanced Breakfast" description="HP + luck up!" maxhearts="1" hearts="2" cache="luck" soulhearts="1" gfx="balanced_breakfast.png" tags="food nocantrip noeden" quality="2" />
@@ -20,7 +20,7 @@
     <familiar id="22" name="Glass Idol" description="Care for your reflection" tags="summonable" quality="3" gfx="glass_idol.png"/>
     <active id="23" name="Leviticus" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
     <passive id="24" name="Battery Acid" description="PH down" tags="battery nocantrip offensive summonable" quality="2" gfx="collectibles_batteryacid.png"/>
-    <passive id="25" name="Doggy Bag" description="[RACIST PLACEHOLDER]" cache="familiars" gfx="Fingore.png" tags="nocantrip offensive poop summonable" quality="1"/>
+    <passive id="25" name="Doggy Bag" description="[RACIST PLACEHOLDER]" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive poop summonable" quality="1"/>
     <passive id="26" name="Dad's Mitt" description="Curve Ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2"/>
     <familiar id="27" name="Lil Bishop" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="monstermanual summonable" quality="2"/>
     <passive id="28" name="Lucky Clover" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="offensive summonable summonable" quality="0"/>

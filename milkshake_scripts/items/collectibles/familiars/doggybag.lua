@@ -2,10 +2,10 @@ local doggyBag = {}
 local enums = MilkshakeVol1.enums
 local sfx = SFXManager()
 
-local FLIES_TO_SPAWN = 5
-local FLIES_TO_SPAWN_BFFS = 10
-local DIPS_TO_SPAWN = 3
-local DIPS_TO_SPAWN_BFFS = 6
+local FLIES_TO_SPAWN = 1
+local FLIES_TO_SPAWN_BFFS = 4
+local DIPS_TO_SPAWN = 2
+local DIPS_TO_SPAWN_BFFS = 2
 
 local POISON_RADIUS = 60
 local POISON_DAMAGE = 6
@@ -54,7 +54,7 @@ end
 
 function doggyBag:PostRoomClear()
     for _, bag in ipairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.DOGGY_BAG)) do
-        bag:GetSprite():Play("Payout")
+        bag:GetSprite():Play("Spawn")
     end
 end
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_ROOM_CLEAR_CHANGED, doggyBag.PostRoomClear)
@@ -85,8 +85,8 @@ function doggyBag:FamiliarUpdate(bag)
     local sprite = bag:GetSprite()
     if sprite:IsEventTriggered("Spawn") then
         DoggyBagTrigger(bag)
-    elseif sprite:IsFinished("Payout") then
-        sprite:Play("Idle")
+    elseif sprite:IsFinished("Spawn") then
+        sprite:Play("FloatDown")
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, doggyBag.FamiliarUpdate, enums.Familiars.DOGGY_BAG)
