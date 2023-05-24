@@ -3,15 +3,15 @@ local enums = MilkshakeVol1.enums
 local sfx = SFXManager()
 
 local FLIES_TO_SPAWN = 1
-local FLIES_TO_SPAWN_BFFS = 4
+local FLIES_TO_SPAWN_BFFS = 2
 local DIPS_TO_SPAWN = 2
-local DIPS_TO_SPAWN_BFFS = 2
+local DIPS_TO_SPAWN_BFFS = 4
 
 local POISON_RADIUS = 60
-local POISON_DAMAGE = 6
+local POISON_DAMAGE = 3
 local POISON_DAMAGE_BFFS = POISON_DAMAGE * 2
-local POISON_DURATION = 23
-local POISON_CHECK_COOLDOWN = 5
+local POISON_DURATION = 20
+local POISON_CHECK_COOLDOWN = 10
 
 ---@param bag EntityFamiliar
 local function DoggyBagPoison(bag)
