@@ -6,7 +6,6 @@
 		<Item Name="Golden Shovel" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Doggy Bag" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 
 		<Item Name="Shattered Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
@@ -28,6 +27,7 @@
 
 	<Pool Name="devil">
 		<Item Name="Firecracker Flower" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Sickle Cell" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 
 	<Pool Name="angel">
@@ -85,7 +85,6 @@
 		<Item Name="Golden Shovel" Weight="0.5" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Doggy Bag" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Dad's Mitt" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Pot of Gold" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
@@ -115,6 +114,7 @@
 
 	<Pool Name="greedDevil">
 		<Item Name="Firecracker Flower" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Sickle Cell" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	
 	<Pool Name="greedAngel">
@@ -143,6 +143,7 @@
 
 	<Pool Name="ultraSecret">
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Sickle Cell" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 
 	<Pool Name="bombBum">
