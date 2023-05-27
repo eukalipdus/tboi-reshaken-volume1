@@ -1,6 +1,19 @@
-MilkshakeVol1:AddModCompatibility("FiendFolio", function ()
+ MilkshakeVol1:AddModCompatibility("FiendFolio", function ()
     --Add coins
-    --MilkshakeVol1.API:AddRainbowPenny()
+    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.SHARP_PENNY, function (_, player)
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_DULL_RAZOR)
+        --SFXManager():Play(whatsound)
+    end)
+
+    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.EGG_PENNY, function (_, player)
+        Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FiendFolio.ITEM.FAMILIAR.FRAGILE_BOBBY, 0, player.Position, Vector.Zero, player)
+        --SFXManager():Play(whatsound)
+    end)
+
+    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.FUZZY_PENNY, function (_, player)
+        Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ATTACK_SKUZZ, 0, player.Position, Vector.Zero, player)
+        --SFXManager():Play(whatsound)
+    end)
 
     --Add entities to shattered orb
     local OrbsPerFiendFolioEntities = {
