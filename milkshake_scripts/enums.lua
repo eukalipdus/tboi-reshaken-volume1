@@ -95,6 +95,9 @@ enums.Coins = {
     COUNTERFEIT_PENNY = 3413,
     ACID_PENNY = 3414,
     CRYSTAL_PENNY = 3415,
+    SHARP_PENNY = 3416,
+    EGG_PENNY = 3417,
+    FUZZY_PENNY = 3418,
 }
 
 enums.Orbs = {

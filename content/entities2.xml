@@ -183,4 +183,22 @@
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
 	    <preload-snd id="234" />
     </entity>
+
+    <entity anm2path="sharp_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Sharp Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3416">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="egg_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Egg Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3417">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="fuzzy_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Fuzzy Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3418">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
 </entities>
