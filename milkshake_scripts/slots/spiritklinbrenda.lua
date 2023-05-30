@@ -161,7 +161,7 @@ MilkshakeVol1.API.AddSpiritKlinReward(3, function (_, player)
         0,
         player.Position
     )
-    SFXManager():Play(SoundEffect.SOUND_FIREDEATH_HISS)
+    SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
 end)
 
 

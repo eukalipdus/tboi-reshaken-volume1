@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="4/20/2023 3:43:22 PM" Version="110" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="5/30/2023 4:23:43 PM" Version="111" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="items\pick ups\eggpenny_pickup.png" Id="0"/>
+			<Spritesheet Path="items\pick ups\fuzzypenny_pickup.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

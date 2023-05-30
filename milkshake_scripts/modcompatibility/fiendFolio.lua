@@ -16,10 +16,10 @@
         --SOUND_PESTILENCE_MAGGOT_ENTER (probably wont use this for anything)
     end)
 
-    -- MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.MOLTEN_PENNY, function (_, player)
-    --     player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
-    --     SFXManager():Play(SoundEffect.SOUND_FIREDEATH_HISS)
-    -- end)
+    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.MOLTEN_PENNY, function (_, player)
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
+        SFXManager():Play(SoundEffect.SOUND_FIREDEATH_HISS)
+    end)
 
     --Add brenda payouts
     MilkshakeVol1.API:AddSoulStones(FiendFolio.ITEM.CARD.SOUL_OF_FIEND, FiendFolio.ACHIEVEMENT.SOUL_OF_FIEND:IsUnlocked())
