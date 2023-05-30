@@ -1,19 +1,25 @@
  MilkshakeVol1:AddModCompatibility("FiendFolio", function ()
     --Add coins
     MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.SHARP_PENNY, function (_, player)
-        player:UseActiveItem(CollectibleType.COLLECTIBLE_DULL_RAZOR)
-        --SFXManager():Play(whatsound)
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_DULL_RAZOR, UseFlag.USE_NOANIM)
+        SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL)
     end)
 
     MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.EGG_PENNY, function (_, player)
         Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FiendFolio.ITEM.FAMILIAR.FRAGILE_BOBBY, 0, player.Position, Vector.Zero, player)
-        --SFXManager():Play(whatsound)
+        SFXManager():Play(SoundEffect.SOUND_DERP)
     end)
 
     MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.FUZZY_PENNY, function (_, player)
         Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ATTACK_SKUZZ, 0, player.Position, Vector.Zero, player)
-        --SFXManager():Play(whatsound)
+        SFXManager():Play(SoundEffect.SOUND_SKIN_PULL, 0.6, 0, false, 1.5)
+        --SOUND_PESTILENCE_MAGGOT_ENTER (probably wont use this for anything)
     end)
+
+    -- MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.MOLTEN_PENNY, function (_, player)
+    --     player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
+    --     SFXManager():Play(SoundEffect.SOUND_FIREDEATH_HISS)
+    -- end)
 
     --Add entities to shattered orb
     local OrbsPerFiendFolioEntities = {

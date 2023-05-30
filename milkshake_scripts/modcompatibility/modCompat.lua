@@ -5,15 +5,16 @@ local modCompatibilities = {}
 ---@param mod string | fun(): boolean Name of the global variable to check if the mod exists, or funtion that checks if it does.
 ---@param funct function
 function MilkshakeVol1:AddModCompatibility(mod, funct)
-    if type(mod) == "string" then
-        mod = function ()
+    local exists = mod
+    if type(exists) == "string" then
+        exists = function ()
             return _G[mod] ~= nil
         end
     end
 
     modCompatibilities[#modCompatibilities+1] = {
         funct = funct,
-        exists = mod
+        exists = exists
     }
 end
 
