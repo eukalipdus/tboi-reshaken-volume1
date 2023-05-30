@@ -1,11 +1,11 @@
 local dadsMitt = {}
 local enums = MilkshakeVol1.enums
 
-local TEAR_MOVEMENT_RATIO = 0.2
-local TEAR_DEADZONE_ANGLE = 30
+local DEADZONE_ANGLE = 30
 
+local TEAR_MOVEMENT_RATIO = 0.2
 local BOMB_MOVEMENT_RATIO = 0.4
-local BOMB_DEADZONE_ANGLE = 30
+local TECHX_MOVEMENT_RATIO = 0.2
 
 local LASER_LERP_STRENGTH = 0.03
 local LERP_STANDING_MULTIPLIER = 10
@@ -13,26 +13,38 @@ local LERP_STANDING_MULTIPLIER = 10
 local TEARS_MULTIPLIER_BONUS = 0.10
 local SHOTSPEED_REDUCTION = 0.2
 
-local TRACTOR_BEAM_VARIANT = 7
 local A_COMICALLY_SMALL_NUMBER = 0.01
-local TEAR_DEADZONE_RANGE = math.cos(math.rad(TEAR_DEADZONE_ANGLE/2))
-local BOMB_DEADZONE_RANGE = math.cos(math.rad(BOMB_DEADZONE_ANGLE/2))
+local DEADZONE_RANGE = math.cos(math.rad(DEADZONE_ANGLE/2))
 
----@param tear EntityTear
-function dadsMitt:PostTearUpdate(tear)
-    if not tear.SpawnerEntity then
+---@param projectile Entity
+local function DadsMittOwner(projectile)
+    if not projectile.SpawnerEntity then
         return end
-    local player = tear.SpawnerEntity:ToPlayer()
+    local player = projectile.SpawnerEntity:ToPlayer()
     if not (player and player:HasCollectible(enums.Collectibles.DADS_MITT)) then
         return end
-    local tearToPlayer = (player.Position - tear.Position):Normalized()
+    return player
+end
+
+---@param projectile Entity
+---@param movementRatio number
+local function MovePlayerProjectile(projectile, movementRatio)
+    local player = DadsMittOwner(projectile)
+    if not player then
+        return end
+    local projectileToPlayer = (player.Position - projectile.Position):Normalized()
     local playerDirection = player.Velocity:Normalized()
 
-    if tearToPlayer:Dot(playerDirection) > TEAR_DEADZONE_RANGE then
+    if projectileToPlayer:Dot(playerDirection) > DEADZONE_RANGE then
         return end
 
     local itemCount = player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
-    tear.Velocity = tear.Velocity + player.Velocity*TEAR_MOVEMENT_RATIO*itemCount
+    projectile.Velocity = projectile.Velocity + player.Velocity*movementRatio*itemCount
+end
+
+---@param tear EntityTear
+function dadsMitt:PostTearUpdate(tear)
+    MovePlayerProjectile(tear, TEAR_MOVEMENT_RATIO)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, dadsMitt.PostTearUpdate)
 
@@ -40,34 +52,26 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, dadsMitt.PostTearUpd
 --Keeping it like that in case some weird edge cases pop up.
 --Codes can have a little humidity.
 
+--Nevermind fixed it.
+
 ---@param bomb EntityBomb
 function dadsMitt:PostBombUpdate(bomb)
     if not bomb.IsFetus then
         return end
-    if not bomb.SpawnerEntity then
-        return end
-    local player = bomb.SpawnerEntity:ToPlayer()
-    if not (player and player:HasCollectible(enums.Collectibles.DADS_MITT)) then
-        return end
-    local bombToPlayer = (player.Position - bomb.Position):Normalized()
-    local playerDirection = player.Velocity:Normalized()
-
-    if bombToPlayer:Dot(playerDirection) > BOMB_DEADZONE_RANGE then
-        return end
-
-    local itemCount = player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
-    bomb.Velocity = bomb.Velocity + player.Velocity*BOMB_MOVEMENT_RATIO*itemCount
+    MovePlayerProjectile(bomb, BOMB_MOVEMENT_RATIO)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_BOMB_UPDATE, dadsMitt.PostBombUpdate)
 
 ---@param laser EntityLaser
 function dadsMitt:PostLaserUpdate(laser)
-    if not laser.SpawnerEntity then
+    if laser.Variant == LaserVariant.TRACTOR_BEAM then
         return end
-    local player = laser.SpawnerEntity:ToPlayer()
-    if not (player and player:HasCollectible(enums.Collectibles.DADS_MITT)) then
-        return end
-    if laser.Variant == TRACTOR_BEAM_VARIANT then
+    if laser.SubType == LaserSubType.LASER_SUBTYPE_RING_PROJECTILE then
+        return MovePlayerProjectile(laser, TECHX_MOVEMENT_RATIO)
+    end
+
+    local player = DadsMittOwner(projectile)
+    if not player then
         return end
 
     local lerpMultiplier = 1
