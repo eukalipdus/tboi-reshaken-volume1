@@ -21,6 +21,10 @@
     --     SFXManager():Play(SoundEffect.SOUND_FIREDEATH_HISS)
     -- end)
 
+    --Add brenda payouts
+    MilkshakeVol1.API:AddSoulStones(FiendFolio.ITEM.CARD.SOUL_OF_FIEND, FiendFolio.ACHIEVEMENT.SOUL_OF_FIEND:IsUnlocked())
+    MilkshakeVol1.API:AddSoulStones(FiendFolio.ITEM.CARD.SOUL_OF_GOLEM, FiendFolio.ACHIEVEMENT.SOUL_OF_GOLEM:IsUnlocked())
+
     --Add entities to shattered orb
     local OrbsPerFiendFolioEntities = {
         {trinket=MilkshakeVol1.enums.Orbs.PSYCHIC, type=160, variant=210, },
