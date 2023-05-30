@@ -1,7 +1,7 @@
  MilkshakeVol1:AddModCompatibility("FiendFolio", function ()
     --Add coins
     MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.SHARP_PENNY, function (_, player)
-        player:UseActiveItem(CollectibleType.COLLECTIBLE_DULL_RAZOR)
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_DULL_RAZOR, UseFlag.USE_NOANIM)
         SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL)
     end)
 
