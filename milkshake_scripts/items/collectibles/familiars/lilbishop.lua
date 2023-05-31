@@ -38,9 +38,9 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 		local lilBishops = Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.LIL_BISHOP)
 		if #lilBishops > 0 then
 			for _, lilBishopFam in pairs(lilBishops) do
-				if lilBishopFam:GetData().Active then --and lilBishopFam:GetSprite():GetAnimation() == "Active" then
+				if lilBishopFam:GetData().Active and lilBishopFam:GetSprite():GetAnimation() == "Active" then
 					sfx:Play(SoundEffect.SOUND_BISHOP_HIT)
-					--lilBishopFam:GetSprite():Play("Block")
+					lilBishopFam:GetSprite():Play("Block")
 					local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
 					sfx:Stop(SoundEffect.SOUND_LASERRING)
 					laser:GetData().BishopLaser = player
@@ -52,7 +52,7 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 					laser:SetMaxDistance(distance)
 					local pos = player.Position - lilBishopFam.Position
 					laser.Angle = pos:GetAngleDegrees() -- lilBishopFam.Velocity
-					
+					laser:SetColor(2,2,2)
 					local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil):ToEffect()
 					effect.Parent = player
 					effect:FollowParent(effect.Parent)
@@ -84,20 +84,89 @@ MilkshakeVol1:AddCallback(ModCallbacks. MC_POST_LASER_UPDATE, lilBishop.onLaserU
 function lilBishop:onEffectUpdate(effect)
 	local player = effect.Parent
 	effect:FollowParent(player)
-	--if effect.SubType == 0 then
 	effect.SpriteOffset = lilBishop.ShieldOffset * player.SpriteScale.X
-	--end
 	if effect.Timeout <= 0 then
 		effect:Remove()
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, lilBishop.onEffectUpdate, lilBishop.ShieldEffect)
 
+--- LIL BISHOP INIT --
+function lilBishop:onFamiliarInit(familiar)
+	familiar:AddToFollowers()
+	local famData = familiar:GetData()
+	famData.Active = nil
+	local sprite = familiar:GetSprite()
+	sprite:Play("FloatDown")
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, lilBishop.onFamiliarInit, enums.Familiars.LIL_BISHOP)
+
+--- LIL BISHOP UPDATE --
+function lilBishop:onFamiliarUpdate(familiar)
+	local famData = familiar:GetData()
+	local sprite = familiar:GetSprite()
+	familiar:FollowParent()
+	if famData.Active then
+		famData.Active = famData.Active - 1
+		if famData.Active <= 0 then
+			famData.Active = nil
+			sprite:Play("FloatDown")
+		end
+	end
+    if sprite:IsFinished("Block") then
+    	if famData.Active then
+    	    sprite:Play("Active")
+    	else
+    	    sprite:Play("FloatDown")
+    	end
+    end
+	if sprite:GetAnimation() == "Active" and not famData.Active then
+		sprite:Play("FloatDown")
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarUpdate, enums.Familiars.LIL_BISHOP)
+
+--- LIL BISHOP COLLISION --
+function lilBishop:onFamiliarCollision(familiar, collider)
+	if collider:ToProjectile() then
+		collider:Die()
+		local famData = familiar:GetData()
+		local sprite = familiar:GetSprite()
+		local player = familiar.Player
+		local rng = familiar:GetDropRNG()
+		if rng:RandomFloat() <= lilBishop.BlockChance and not famData.Active then
+			famData.Active = lilBishop.BlockCooldown
+			if player:ToPlayer():HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
+				famData.Active = lilBishop.BlockCooldown * lilBishop.bffsMultiplier
+			end
+			sprite:Play("Active")
+		end
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, lilBishop.onFamiliarCollision, enums.Familiars.LIL_BISHOP)
+
+
+--[[
+---TEST
+lilBishop.Font = Font()
+lilBishop.Font:Load("font/pftempestasevencondensed.fnt")
+
+function lilBishop:onRender(familiar)
+	--if familiar:GetData().Active then
+	local active = familiar:GetData().Active
+	local pos = Isaac.WorldToScreen(familiar.Position)
+	if active then
+		lilBishop.Font:DrawString(active, pos.X , pos.Y, KColor(1 ,1 ,1 ,1), 0, true)
+	end
+	--end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, lilBishop.onRender, enums.Familiars.LIL_BISHOP)
+--]]
+
 --- PLAYER UPDATE --
 --[[
 function lilBishop:onPEffectUpdate(player)
 	local data = player:GetData()
-	--[[
 	if data.lilBishoped then
 		if data.lilBishopCurrentRoomIndex ~= game:GetLevel():GetCurrentRoomIndex() then
 			data.lilBishopCurrentRoomIndex = nil
@@ -122,80 +191,6 @@ function lilBishop:onPEffectUpdate(player)
 			end
 		end
 	end
-	--]
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, lilBishop.onPEffectUpdate)
 --]]
-
---- LIL BISHOP INIT --
-function lilBishop:onFamiliarInit(familiar)
-	familiar:AddToFollowers()
-	local famData = familiar:GetData()
-	famData.Active = nil
-	--local sprite = familiar:GetSprite()
-	--sprite:Play("FloatDown")
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, lilBishop.onFamiliarInit, enums.Familiars.LIL_BISHOP)
-
---- LIL BISHOP UPDATE --
-function lilBishop:onFamiliarUpdate(familiar)
-	local famData = familiar:GetData()
-	--local player = familiar.Player
-	--local sprite = familiar:GetSprite()
-	familiar:FollowParent()
-	--[
-	if famData.Active then
-		famData.Active = famData.Active - 1
-		if famData.Active <= 0 then
-			famData.Active = nil
-			--sprite:Play("FloatDown")
-		end
-	end
-	--]]
-    --[[
-    if sprite:IsFinished("Block") then
-    	if famData.Active then
-    	    sprite:Play("Active")
-    	else
-    	    sprite:Play("FloatDown")
-    	end
-    end
-	--]]
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarUpdate, enums.Familiars.LIL_BISHOP)
-
---- LIL BISHOP COLLISION --
-function lilBishop:onFamiliarCollision(familiar, collider)
-	if collider:ToProjectile() then
-		collider:Die()
-		local famData = familiar:GetData()
-		--local sprite = familiar:GetSprite()
-		local player = familiar.Player
-		local rng = familiar:GetDropRNG()
-		if rng:RandomFloat() <= lilBishop.BlockChance and not famData.Active then
-			famData.Active = lilBishop.BlockCooldown
-			if player:ToPlayer():HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
-				famData.Active = lilBishop.BlockCooldown * lilBishop.bffsMultiplier
-			end
-			--sprite:Play("Active")
-		end
-	end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, lilBishop.onFamiliarCollision, enums.Familiars.LIL_BISHOP)
-
-
-
----TEST
-lilBishop.Font = Font()
-lilBishop.Font:Load("font/pftempestasevencondensed.fnt")
-
-function lilBishop:onRender(familiar)
-	--if familiar:GetData().Active then
-	local active = familiar:GetData().Active
-	local pos = Isaac.WorldToScreen(familiar.Position)
-	if active then
-		lilBishop.Font:DrawString(active, pos.X , pos.Y, KColor(1 ,1 ,1 ,1), 0, true)
-	end
-	--end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, lilBishop.onRender, enums.Familiars.LIL_BISHOP)
