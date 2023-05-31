@@ -13,6 +13,8 @@ lilBishop.IgnoreFlag = DamageFlag.DAMAGE_INVINCIBLE
 lilBishop.bffsMultiplier = 2
 lilBishop.ShieldOffset = Vector(0, -12.5)
 lilBishop.DepthOffset = 100
+lilBishop.AlternativeSprite = "gfx/familiar/familiar_lilbishop_alt.png"
+ lilBishop.BaseSprite = "gfx/familiar/familiar_lilbishop.png"
 
 --local game = Game()
 
@@ -38,30 +40,32 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 		local lilBishops = Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.LIL_BISHOP)
 		if #lilBishops > 0 then
 			for _, lilBishopFam in pairs(lilBishops) do
-				if lilBishopFam:GetData().Active and lilBishopFam:GetSprite():GetAnimation() == "Active" then
-					sfx:Play(SoundEffect.SOUND_BISHOP_HIT)
-					lilBishopFam:GetSprite():Play("Block")
-					local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
-					sfx:Stop(SoundEffect.SOUND_LASERRING)
-					laser:GetData().BishopLaser = player
-					laser:SetTimeout(lilBishop.LaserFade)
-					laser.CollisionDamage = 0
-					laser.Mass = 0
-					local distance = lilBishopFam.Position:Distance(player.Position)
-					laser.Parent = lilBishopFam
-					laser:SetMaxDistance(distance)
-					local pos = player.Position - lilBishopFam.Position
-					laser.Angle = pos:GetAngleDegrees() -- lilBishopFam.Velocity
-					laser:SetColor(2,2,2)
-					local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil):ToEffect()
-					effect.Parent = player
-					effect:FollowParent(effect.Parent)
-					effect.SpriteOffset = lilBishop.ShieldOffset * player.SpriteScale.X
-					effect.SpriteScale = player.SpriteScale
-					effect:SetTimeout(lilBishop.FadeCounter)
-					effect.DepthOffset = lilBishop.DepthOffset
-					effect:GetSprite():Play("Fade")
+				if lilBishopFam:GetData().Active then -- and lilBishopFam:GetSprite():GetAnimation() == "Active" then
 					ignore = true -- to play animation for all active lil bishops
+					if lilBishopFam:GetSprite():GetAnimation() == "Active" then
+						sfx:Play(SoundEffect.SOUND_BISHOP_HIT)
+						lilBishopFam:GetSprite():Play("Block")
+						local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
+						sfx:Stop(SoundEffect.SOUND_LASERRING)
+						laser:GetData().BishopLaser = player
+						laser:SetTimeout(lilBishop.LaserFade)
+						laser.CollisionDamage = 0
+						laser.Mass = 0
+						local distance = lilBishopFam.Position:Distance(player.Position)
+						laser.Parent = lilBishopFam
+						laser:SetMaxDistance(distance)
+						local pos = player.Position - lilBishopFam.Position
+						laser.Angle = pos:GetAngleDegrees() -- lilBishopFam.Velocity
+						laser:SetColor(Color(2,2,2), 15, 1, false, false)
+						local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil):ToEffect()
+						effect.Parent = player
+						effect:FollowParent(effect.Parent)
+						effect.SpriteOffset = lilBishop.ShieldOffset * player.SpriteScale.X
+						effect.SpriteScale = player.SpriteScale
+						effect:SetTimeout(lilBishop.FadeCounter)
+						effect.DepthOffset = lilBishop.DepthOffset
+						effect:GetSprite():Play("Fade")
+					end
 				end
 			end
 		end
@@ -95,8 +99,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, lilBishop.onEffect
 function lilBishop:onFamiliarInit(familiar)
 	familiar:AddToFollowers()
 	local famData = familiar:GetData()
-	famData.Active = nil
 	local sprite = familiar:GetSprite()
+	famData.Active = nil
 	sprite:Play("FloatDown")
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, lilBishop.onFamiliarInit, enums.Familiars.LIL_BISHOP)
@@ -105,7 +109,19 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, lilBishop.onFamiliarIni
 function lilBishop:onFamiliarUpdate(familiar)
 	local famData = familiar:GetData()
 	local sprite = familiar:GetSprite()
+	local player = familiar.Player
 	familiar:FollowParent()
+		
+	if not famData.Alt and player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
+		famData.Alt = true
+		sprite:ReplaceSpritesheet(0, lilBishop.AlternativeSprite)
+		sprite:LoadGraphics()
+	elseif famData.Alt and not player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
+		famData.Alt = nil
+		sprite:ReplaceSpritesheet(0, lilBishop.BaseSprite)
+		sprite:LoadGraphics()
+	end
+	
 	if famData.Active then
 		famData.Active = famData.Active - 1
 		if famData.Active <= 0 then
