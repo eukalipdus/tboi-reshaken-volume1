@@ -129,6 +129,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarU
 --- LIL BISHOP COLLISION --
 function lilBishop:onFamiliarCollision(familiar, collider)
 	if collider:ToProjectile() then
+		if collider:ToProjectile():HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER) then return end
 		collider:Die()
 		local famData = familiar:GetData()
 		local sprite = familiar:GetSprite()
