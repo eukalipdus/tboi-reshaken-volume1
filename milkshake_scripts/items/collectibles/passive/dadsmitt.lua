@@ -70,7 +70,7 @@ function dadsMitt:PostLaserUpdate(laser)
         return MovePlayerProjectile(laser, TECHX_MOVEMENT_RATIO)
     end
 
-    local player = DadsMittOwner(projectile)
+    local player = DadsMittOwner(laser)
     if not player then
         return end
 
