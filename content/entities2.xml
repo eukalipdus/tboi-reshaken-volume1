@@ -23,7 +23,7 @@
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0">
     </entity>
 
-    <entity anm2path="familiar_fingore.anm2" name="Lil Bishop" id="3" tags="cansacrifice"
+    <entity anm2path="familiar_lilbishop.anm2" name="Lil Bishop" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
     </entity>
     <entity anm2path="lil_bishop_shield.anm2" name="Lil Bishop Shield" id="1000"
@@ -198,6 +198,12 @@
 
     <entity anm2path="fuzzy_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
     friction="1" id="5" name="Fuzzy Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3418">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="molten_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Molten Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3419">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
 	    <preload-snd id="234" />
     </entity>
