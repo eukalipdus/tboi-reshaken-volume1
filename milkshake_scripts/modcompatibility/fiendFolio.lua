@@ -22,8 +22,8 @@
     end)
 
     --Add brenda payouts
-    MilkshakeVol1.API:AddSoulStones(FiendFolio.ITEM.CARD.SOUL_OF_FIEND, FiendFolio.ACHIEVEMENT.SOUL_OF_FIEND:IsUnlocked())
-    MilkshakeVol1.API:AddSoulStones(FiendFolio.ITEM.CARD.SOUL_OF_GOLEM, FiendFolio.ACHIEVEMENT.SOUL_OF_GOLEM:IsUnlocked())
+    MilkshakeVol1.API:AddSoulStones(FiendFolio.ITEM.CARD.SOUL_OF_FIEND, FiendFolio.ACHIEVEMENT.SOUL_OF_FIEND:IsUnlocked(false))
+    --MilkshakeVol1.API:AddSoulStones(FiendFolio.ITEM.CARD.SOUL_OF_GOLEM, FiendFolio.ACHIEVEMENT.SOUL_OF_GOLEM:IsUnlocked(false))
 
     --Add entities to shattered orb
     local OrbsPerFiendFolioEntities = {
