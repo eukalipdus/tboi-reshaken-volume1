@@ -242,6 +242,13 @@ MilkshakeVol1:AddCallback(
 function ShatteredOrb:OnPlayerUpdate(player)
     if not IsPlayerUsingShatteredOrb(player) then return end
 
+    --If the player is not player the lift item anim, they're not using the item anymore
+    local sprite = player:GetSprite()
+    if sprite:IsPlaying("LiftItem") then
+        RemovePlayerUsingShatteredOrb(player)
+        return
+    end
+
     local shootingDir = player:GetFireDirection()
 
     if shootingDir == Direction.NO_DIRECTION then return end
