@@ -2,7 +2,7 @@ local SpiritKlin = {}
 local enums = MilkshakeVol1.enums
 
 ---@class BrendaReward
----@field chance integer | fun(): integer
+---@field chance integer | fun(player: EntityPlayer): integer
 ---@field value fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
 
 TSIL.SaveManager.AddPersistentVariable(
@@ -79,7 +79,7 @@ end
 ---Adds a new reward possibility to the Spirit Klin.
 ---
 ---The weight can just be a regular integer or a function that will get called when the machine is trying to pay out.
----@param weight integer | fun(): integer
+---@param weight integer | fun(player: EntityPlayer): integer
 ---@param rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
 function MilkshakeVol1.API.AddSpiritKlinReward(weight, rewardFun)
     brendaRewards[#brendaRewards+1] = {
@@ -153,7 +153,13 @@ end)
 
 
 --Smelt player trinkets
-MilkshakeVol1.API.AddSpiritKlinReward(3, function (_, player)
+MilkshakeVol1.API.AddSpiritKlinReward(function (player)
+    if player:GetTrinket(0) ~= 0 then
+        return 3
+    end
+
+    return 0
+end, function (_, player)
     player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
 
     TSIL.EntitySpecific.SpawnEffect(
@@ -279,7 +285,7 @@ function SpiritKlin:OnBrendaPrize(brenda)
     local rewards = TSIL.Utils.Tables.Map(brendaRewards, function (_, reward)
         local endChance = reward.chance
         if type(endChance) == "function" then
-            endChance = reward.chance()
+            endChance = reward.chance(player)
         end
 
         return {
