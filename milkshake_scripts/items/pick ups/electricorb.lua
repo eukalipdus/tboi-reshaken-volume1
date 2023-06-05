@@ -597,7 +597,7 @@ local function SpawnSlotElectrocutionPayouts(spawnPos, rng, slot)
         end
         local subtype = rewardToSpawn.subtype
         if type(subtype) == "function" then
-            subtype = rewardToSpawn.subtype()
+            subtype = rewardToSpawn.subtype(rng)
         end
         TSIL.EntitySpecific.SpawnPickup(
             rewardToSpawn.variant,

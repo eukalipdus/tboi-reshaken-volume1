@@ -48,7 +48,7 @@ MilkshakeVol1:AddModCompatibility("Epiphany", function()
             chance = 50,
             value = {
                 variant = PickupVariant.PICKUP_TAROTCARD,
-                subtype = Epiphany.PickupGetter.MakeCardGetter("Capsules"),
+                subtype = Epiphany.PickupGetter.MakeCardGetter({"DiceCapsule"}),
                 weight = 1
             }
         }
@@ -150,10 +150,10 @@ MilkshakeVol1:AddModCompatibility("Epiphany", function()
 
     MilkshakeVol1.API:AddConductivityOrbSlotPayout(Epiphany.Slot.CONVERTER_BEGGAR.ID, {
         {
-            chance = 50,
+            chance = 25,
             value = {
                 variant = PickupVariant.PICKUP_HEART,
-                subtype = Epiphany.PickupGetter.MakeHeartGetter("Red"),
+                subtype = Epiphany.PickupGetter.MakeHeartGetter({"Red"}),
                 weight = 1
             }
         },
@@ -161,7 +161,7 @@ MilkshakeVol1:AddModCompatibility("Epiphany", function()
             chance = 15,
             value = {
                 variant = PickupVariant.PICKUP_HEART,
-                subtype = Epiphany.PickupGetter.MakeHeartGetter("Soul"),
+                subtype = Epiphany.PickupGetter.MakeHeartGetter({"Soul"}),
                 weight = 1
             }
         }
