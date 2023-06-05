@@ -97,7 +97,7 @@ MilkshakeVol1.API.AddSpiritKlinReward(function ()
     )
 
     --The weight for this reward depends on the number of soul stones unlocked
-    return #availableSoulStones * 2
+    return #availableSoulStones * 1.1
 end,
 function (slot, _, position, velocity)
     local rng = slot:GetDropRNG()
