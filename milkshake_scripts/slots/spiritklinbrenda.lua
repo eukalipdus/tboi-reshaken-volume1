@@ -47,6 +47,17 @@ local glassTrinkets = {
 }
 ---@type BrendaReward[]
 local brendaRewards = {}
+local possibleWisps = {
+    CollectibleType.COLLECTIBLE_RED_CANDLE, -- Change to custom (orange and persistent)
+    CollectibleType.COLLECTIBLE_TELEPATHY_BOOK,
+    CollectibleType.COLLECTIBLE_PAUSE, -- Change to custom (Drops a fruit heart when dying)
+    CollectibleType.COLLECTIBLE_TELEPORT_2, -- Change to custom (Tech zero tears)
+    CollectibleType.COLLECTIBLE_SHOOP_DA_WHOOP, -- Change to custom (Blue laser)
+    CollectibleType.COLLECTIBLE_LEMON_MISHAP,
+    CollectibleType.COLLECTIBLE_CRACK_THE_SKY, -- Change to custom (Same, but cross sprite)
+    CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
+    CollectibleType.COLLECTIBLE_SATANIC_BIBLE
+}
 
 ---Adds a custom character's soul stone to the Spirit Klin's reward pool.
 ---@param card Card
@@ -177,6 +188,15 @@ end, function (_, player)
         player.Position
     )
     SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
+end)
+
+
+--Add random element wisp
+MilkshakeVol1.API.AddSpiritKlinReward(5, function (slot, player, position)
+    local rng = slot:GetDropRNG()
+    local wispToAdd = TSIL.Random.GetRandomElementsFromTable(possibleWisps, 1, rng)[1]
+
+    player:AddWisp(wispToAdd, position)
 end)
 
 
