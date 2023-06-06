@@ -1,3 +1,9 @@
+New Nature
+
+
+
+
+New FF Nature
 52.0 --Square Fly (Blue)
 152.0.1 --Square Fly (Yellow)
 160.700 --Bumbler
@@ -31,7 +37,6 @@
 160.540.103 --Centipede (pit)
 750.80 --Sackboy
 29.961 --Spinneretch
-240.701 --Ogre Creep
 666.101 --Drunk Worm
 160.1230 --Matte
 160.400 --Colonel
