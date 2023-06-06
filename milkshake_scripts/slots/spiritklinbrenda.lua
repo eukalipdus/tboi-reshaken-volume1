@@ -2,15 +2,9 @@ local SpiritKlin = {}
 local enums = MilkshakeVol1.enums
 
 ---@class BrendaReward
----@field chance integer | fun(player: EntityPlayer): integer
+---@field chance number | fun(player: EntityPlayer): number
 ---@field value fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
 
-TSIL.SaveManager.AddPersistentVariable(
-    MilkshakeVol1,
-    "SpiritKlinGlassTrinketsPool",
-    {},
-    TSIL.Enums.VariablePersistenceMode.RESET_RUN
-)
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
     "SpiritKlinAvailableSoulStones",
@@ -79,7 +73,7 @@ end
 ---Adds a new reward possibility to the Spirit Klin.
 ---
 ---The weight can just be a regular integer or a function that will get called when the machine is trying to pay out.
----@param weight integer | fun(player: EntityPlayer): integer
+---@param weight number | fun(player: EntityPlayer): number
 ---@param rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
 function MilkshakeVol1.API.AddSpiritKlinReward(weight, rewardFun)
     brendaRewards[#brendaRewards+1] = {
@@ -133,14 +127,29 @@ end)
 
 
 --Spawn glass trinket
-MilkshakeVol1.API.AddSpiritKlinReward(7, function (slot, _, position, velocity)
+MilkshakeVol1.API.AddSpiritKlinReward(function (_)
+    local itemConfig = Isaac.GetItemConfig()
+    local availableTrinkets = TSIL.Utils.Tables.Filter(glassTrinkets, function (_, trinket)
+        local trinketConfig = itemConfig:GetTrinket(trinket)
+        return trinketConfig:IsAvailable()
+    end)
+
+    if #availableTrinkets == 0 then
+        return 0
+    end
+
+    return 7
+end, function (slot, _, position, velocity)
     local rng = slot:GetDropRNG()
-    local trinketPool = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "SpiritKlinGlassTrinketsPool"
-    )
-    local chosenIndex = TSIL.Random.GetRandomInt(1, #trinketPool, rng)
-    local trinket = table.remove(trinketPool, chosenIndex)
+    local itemConfig = Isaac.GetItemConfig()
+    local availableTrinkets = TSIL.Utils.Tables.Filter(glassTrinkets, function (_, trinket)
+        local trinketConfig = itemConfig:GetTrinket(trinket)
+        return trinketConfig:IsAvailable()
+    end)
+    local trinket = TSIL.Random.GetRandomElementsFromTable(availableTrinkets, 1, rng)[1]
+
+    local itemPool = Game():GetItemPool()
+    itemPool:RemoveTrinket(trinket)
 
     TSIL.EntitySpecific.SpawnPickup(
         PickupVariant.PICKUP_TRINKET,
