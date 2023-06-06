@@ -47,7 +47,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.MILKSHAKE] = {
         en_us = {
             name = "Milkshake",
-            description = "{{Blank}}{{ArrowUp}} Grants a random multiplier to each stat",
+            description = "{{Blank}}{{ArrowUp}} 1.1x to 1.5x multiplier for all stats!",
         },
         spa = {
             name = "Batido",
@@ -57,7 +57,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.SHARP_CURSOR] = {
         en_us = {
             name = "Sharp Cursor",
-            description = "#Spawns a familiar that targets the furthest enemy from the player #Pressing a shooting key makes it deal 10% player's damage #Works with Mouse Control!",
+            description = "#Cursor familiar targets the furthest enemy from the player #Pressing a shooting key makes it click, dealing 10% player damage #Double press ctrl to switch to mouse control mode.",
         },
         spa = {
             name = "Cursor Afilado",
@@ -107,7 +107,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.GOLDEN_SHOVEL] = {
         en_us = {
             name = "Golden Shovel",
-            description = "On use, digs into the ground, spawning 1-2 golden chests and a random golden pickup, as well as digging up a golden crawlspace if used on decoration tiles",
+            description = "On use, digs into the ground, spawning 1-2 golden chests and a random golden pickup. #Digs up a golden crawlspace if used on decoration tiles",
         },
         spa = {
             name = "Pala Dorada",
@@ -131,7 +131,7 @@ descriptions.Trinkets = {
     [enums.Trinkets.TUNGSTEN_CUBE] = {
         en_us = {
             name = "Tungsten Cube",
-            description = "{{Blank}}{{ArrowDown}} Grants a -0.2 speed down #Dropping it creates a huge shockwaves that deals big damage",
+            description = "{{Blank}}{{ArrowDown}} -0.2 speed down. #Dropping it creates a huge shockwave that deals big damage",
         },
         spa = {
             name = "Cubo De Tungsteno",
@@ -144,8 +144,8 @@ descriptions.Trinkets = {
 descriptions.Cards = {
     [enums.Orbs.NATURE] = {
         en_us = {
-            name = "Druidity Orb",
-            description = "#Wraps all enemies in the room in vines for 20 seconds, freezing them #Killing a vined enemy spawns a fruit heart"
+            name = "Spirit of Druidity",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
         },
         spa = {
             name = "Orbe Druidico",
