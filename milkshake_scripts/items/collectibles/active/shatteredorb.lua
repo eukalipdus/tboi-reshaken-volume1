@@ -47,49 +47,50 @@ function MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(orbsPerEnemy)
 end
 
 local OrbsPerEnemy = {
-    { orb = enums.Orbs.ELECTRIC, type = 60,  variant = 0, },
-    { orb = enums.Orbs.ELECTRIC, type = 230, variant = 0, },
-    { orb = enums.Orbs.ELECTRIC, type = 201, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 832, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 832, variant = 1, },
-    { orb = enums.Orbs.PSYCHIC,  type = 836, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 248, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 828, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 24,  variant = 3, },
-    { orb = enums.Orbs.PSYCHIC,  type = 26,  variant = 2, },
-    { orb = enums.Orbs.PSYCHIC,  type = 246, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 246, variant = 1, },
-    { orb = enums.Orbs.PSYCHIC,  type = 57,  variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 886, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 212, variant = 2, },
-    { orb = enums.Orbs.PSYCHIC,  type = 253, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 885, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 885, variant = 1, },
-    { orb = enums.Orbs.PSYCHIC,  type = 816, variant = 1, },
-    { orb = enums.Orbs.PSYCHIC,  type = 306, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 306, variant = 1, },
-    { orb = enums.Orbs.PSYCHIC,  type = 877, variant = 0, },
-    { orb = enums.Orbs.PSYCHIC,  type = 409, variant = 1, },
-    { orb = enums.Orbs.FIRE,     type = 10,  variant = 2, },
-    { orb = enums.Orbs.FIRE,     type = 87,  variant = 1, },
-    { orb = enums.Orbs.FIRE,     type = 808, variant = 0, },
-    { orb = enums.Orbs.FIRE,     type = 15,  variant = 3, },
-    { orb = enums.Orbs.FIRE,     type = 820, variant = 1, },
-    { orb = enums.Orbs.FIRE,     type = 25,  variant = 3, subtype = 0, },
-    { orb = enums.Orbs.FIRE,     type = 25,  variant = 3, subtype = 1, },
-    { orb = enums.Orbs.FIRE,     type = 54,  variant = 0, },
-    { orb = enums.Orbs.FIRE,     type = 824, variant = 1, },
-    { orb = enums.Orbs.FIRE,     type = 41,  variant = 4, },
-    { orb = enums.Orbs.FIRE,     type = 818, variant = 2, },
-    { orb = enums.Orbs.FIRE,     type = 208, variant = 2, },
-    { orb = enums.Orbs.FIRE,     type = 212, variant = 4, },
-    { orb = enums.Orbs.FIRE,     type = 838, variant = 0, },
-    { orb = enums.Orbs.FIRE,     type = 226, variant = 2, },
-    { orb = enums.Orbs.FIRE,     type = 833, variant = 0, },
-    { orb = enums.Orbs.FIRE,     type = 841, variant = 0, },
-    { orb = enums.Orbs.FIRE,     type = 841, variant = 1, },
-    { orb = enums.Orbs.FIRE,     type = 825, variant = 0, },
-    { orb = enums.Orbs.NATURE,   type = 300, variant = 0, },
+    { orb = enums.Orbs.ELECTRIC, type = 60,  variant = 0, }, --Eye
+    { orb = enums.Orbs.ELECTRIC, type = 230, variant = 0, }, --Camillo Jr.
+    { orb = enums.Orbs.ELECTRIC, type = 201, variant = 0, }, --Stone Eye
+    { orb = enums.Orbs.ELECTRIC, type = 61,  variant = 5, }, --Bulb
+    { orb = enums.Orbs.PSYCHIC,  type = 832, variant = 0, }, --Exorcist
+    { orb = enums.Orbs.PSYCHIC,  type = 832, variant = 1, }, --Fanatic
+    { orb = enums.Orbs.PSYCHIC,  type = 836, variant = 0, }, --Vis Versa
+    { orb = enums.Orbs.PSYCHIC,  type = 248, variant = 0, }, --Psychic Horf
+    { orb = enums.Orbs.PSYCHIC,  type = 828, variant = 0, }, --Necro
+    { orb = enums.Orbs.PSYCHIC,  type = 24,  variant = 3, }, --Cursed Globin
+    { orb = enums.Orbs.PSYCHIC,  type = 26,  variant = 2, }, --Psychic Maw
+    { orb = enums.Orbs.PSYCHIC,  type = 246, variant = 0, }, --Ragling
+    { orb = enums.Orbs.PSYCHIC,  type = 246, variant = 1, }, --Rag Man's Ragling
+    { orb = enums.Orbs.PSYCHIC,  type = 57,  variant = 0, }, --MemBrain
+    { orb = enums.Orbs.PSYCHIC,  type = 886, variant = 0, }, --Vis Fatty
+    { orb = enums.Orbs.PSYCHIC,  type = 212, variant = 2, }, --Cursed Death's Head
+    { orb = enums.Orbs.PSYCHIC,  type = 253, variant = 0, }, --Psy Tumor
+    { orb = enums.Orbs.PSYCHIC,  type = 885, variant = 0, }, --Cultist
+    { orb = enums.Orbs.PSYCHIC,  type = 885, variant = 1, }, --Blood Cultist
+    { orb = enums.Orbs.PSYCHIC,  type = 816, variant = 1, }, --Kineti
+    { orb = enums.Orbs.PSYCHIC,  type = 306, variant = 0, }, --Portal
+    { orb = enums.Orbs.PSYCHIC,  type = 306, variant = 1, }, --Lil Portal
+    { orb = enums.Orbs.PSYCHIC,  type = 877, variant = 0, }, --Grudge
+    { orb = enums.Orbs.PSYCHIC,  type = 409, variant = 1, }, --Purple Ball
+    { orb = enums.Orbs.FIRE,     type = 10,  variant = 2, }, --Flaming Gaper
+    { orb = enums.Orbs.FIRE,     type = 87,  variant = 1, }, --Crackle
+    { orb = enums.Orbs.FIRE,     type = 808, variant = 0, }, --Willo
+    { orb = enums.Orbs.FIRE,     type = 15,  variant = 3, }, --Grilled Clotty
+    { orb = enums.Orbs.FIRE,     type = 820, variant = 1, }, --Coal Boy
+    { orb = enums.Orbs.FIRE,     type = 25,  variant = 3, subtype = 0, }, --Dragon Fly
+    { orb = enums.Orbs.FIRE,     type = 25,  variant = 3, subtype = 1, }, --Dragon Fly X
+    { orb = enums.Orbs.FIRE,     type = 54,  variant = 0, }, --Flaming Hopper
+    { orb = enums.Orbs.FIRE,     type = 824, variant = 1, }, --Grilled Gyro
+    { orb = enums.Orbs.FIRE,     type = 41,  variant = 4, }, --Black Knight
+    { orb = enums.Orbs.FIRE,     type = 818, variant = 2, }, --Coal Spider
+    { orb = enums.Orbs.FIRE,     type = 208, variant = 2, }, --Flaming Fatty
+    { orb = enums.Orbs.FIRE,     type = 212, variant = 4, }, --Redskull
+    { orb = enums.Orbs.FIRE,     type = 838, variant = 0, }, --Level 2 Willo
+    { orb = enums.Orbs.FIRE,     type = 226, variant = 2, }, --Crispy
+    { orb = enums.Orbs.FIRE,     type = 833, variant = 0, }, --Candler
+    { orb = enums.Orbs.FIRE,     type = 841, variant = 0, }, --Revenant
+    { orb = enums.Orbs.FIRE,     type = 841, variant = 1, }, --Quad Revenant
+    { orb = enums.Orbs.FIRE,     type = 825, variant = 0, }, --Fire Worm
+    { orb = enums.Orbs.NATURE,   type = 300, variant = 0, }, --Mushroom
 }
 
 MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerEnemy)
