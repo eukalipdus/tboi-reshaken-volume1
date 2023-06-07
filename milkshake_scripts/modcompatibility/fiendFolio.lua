@@ -85,7 +85,7 @@
         {trinket=MilkshakeVol1.enums.Orbs.PSYCHIC, type=160, variant=951, }, --Eclipse
         {trinket=MilkshakeVol1.enums.Orbs.PSYCHIC, type=112, variant=1, }, --Sombra
         {trinket=MilkshakeVol1.enums.Orbs.PSYCHIC, type=160, variant=822, subtype=2, }, --Slim Shady
-        {trinket=MilkshakeVol1.enums.Orbs.PSYCHIC_ORB, type=160, variant=80, subtype=3, }, --Dweller
+        {trinket=MilkshakeVol1.enums.Orbs.PSYCHIC, type=160, variant=80, subtype=3, }, --Dweller
         {trinket=MilkshakeVol1.enums.Orbs.PSYCHIC, type=120, variant=232, subtype=1, }, --Foetus
         {trinket=MilkshakeVol1.enums.Orbs.FIRE, type=151, variant=5, }, --S'More
         {trinket=MilkshakeVol1.enums.Orbs.FIRE, type=160, variant=310, }, --Woodburner
