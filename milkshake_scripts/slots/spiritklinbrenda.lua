@@ -62,7 +62,7 @@ local possibleWisps = {
 ---Adds a custom character's soul stone to the Spirit Klin's reward pool.
 ---@param card Card
 ---@param isUnlocked? fun(): boolean
-function MilkshakeVol1.API.AddSoulStone(card, isUnlocked)
+function MilkshakeVol1.API:AddSoulStone(card, isUnlocked)
     soulStones[#soulStones+1] = card
     if isUnlocked ~= nil then
         isUnlockedPerSoulStone[card] = isUnlocked
@@ -74,7 +74,7 @@ end
 ---
 ---This function can take multiple arguments.
 ---@param ... TrinketType
-function MilkshakeVol1.API.AddGlassTrinkets(...)
+function MilkshakeVol1.API:AddGlassTrinkets(...)
     for _, card in ipairs({...}) do
         glassTrinkets[#glassTrinkets+1] = card
     end
@@ -86,7 +86,7 @@ end
 ---The weight can just be a regular integer or a function that will get called when the machine is trying to pay out.
 ---@param weight number | fun(player: EntityPlayer): number
 ---@param rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
-function MilkshakeVol1.API.AddSpiritKlinReward(weight, rewardFun)
+function MilkshakeVol1.API:AddSpiritKlinReward(weight, rewardFun)
     brendaRewards[#brendaRewards+1] = {
         chance = weight,
         value = rewardFun
@@ -95,7 +95,7 @@ end
 
 
 --Spawn soul stone
-MilkshakeVol1.API.AddSpiritKlinReward(function ()
+MilkshakeVol1.API:AddSpiritKlinReward(function ()
     local availableSoulStones = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "SpiritKlinAvailableSoulStones"
@@ -123,7 +123,7 @@ end)
 
 
 --Spawn orb
-MilkshakeVol1.API.AddSpiritKlinReward(10, function (slot, _, position, velocity)
+MilkshakeVol1.API:AddSpiritKlinReward(10, function (slot, _, position, velocity)
     local rng = slot:GetDropRNG()
     local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
 
@@ -138,7 +138,7 @@ end)
 
 
 --Spawn glass trinket
-MilkshakeVol1.API.AddSpiritKlinReward(function (_)
+MilkshakeVol1.API:AddSpiritKlinReward(function (_)
     local itemConfig = Isaac.GetItemConfig()
     local availableTrinkets = TSIL.Utils.Tables.Filter(glassTrinkets, function (_, trinket)
         local trinketConfig = itemConfig:GetTrinket(trinket)
@@ -173,7 +173,7 @@ end)
 
 
 --Smelt player trinkets
-MilkshakeVol1.API.AddSpiritKlinReward(function (player)
+MilkshakeVol1.API:AddSpiritKlinReward(function (player)
     if player:GetTrinket(0) ~= 0 then
         return 3
     end
@@ -192,7 +192,7 @@ end)
 
 
 --Add random element wisp
-MilkshakeVol1.API.AddSpiritKlinReward(5, function (slot, player, position)
+MilkshakeVol1.API:AddSpiritKlinReward(5, function (slot, player, position)
     local rng = slot:GetDropRNG()
     local wispToAdd = TSIL.Random.GetRandomElementsFromTable(possibleWisps, 1, rng)[1]
 

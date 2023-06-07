@@ -1,3 +1,30 @@
+New Nature
+14.0 --Pooter
+14.1 --Super Pooter
+14.2 --Tainted Pooter
+55.0  --Leech
+854.0 --Adult Leech
+206.0 --Baby Long Legs
+206.1 --Small Baby Long Legs
+207.0 --Crazy Long Legs
+207.1 --Small Crazy Long Legs
+214.0 --Level 2 Fly
+249.0 --Full Fly
+215.0 --Level 2 Spider
+244.0 --Round Worm
+244.2 -Tainted Round Worm
+255.0 --Night Crawler
+234.0 --One Tooth
+258.0 --Fat Bat
+21.0 --Maggot
+23.0 --Charger
+855.0 --Level 2 Charger
+31.0 --Spitty
+31.1 --Tainted Spitty
+243.0 --Conjoined Spitty
+239.0 --Grub
+
+New FF Nature
 52.0 --Square Fly (Blue)
 152.0.1 --Square Fly (Yellow)
 160.700 --Bumbler
@@ -31,7 +58,6 @@
 160.540.103 --Centipede (pit)
 750.80 --Sackboy
 29.961 --Spinneretch
-240.701 --Ogre Creep
 666.101 --Drunk Worm
 160.1230 --Matte
 160.400 --Colonel

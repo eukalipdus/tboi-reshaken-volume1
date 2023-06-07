@@ -50,6 +50,7 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.ELECTRIC, type = 60,  variant = 0, }, --Eye
     { orb = enums.Orbs.ELECTRIC, type = 230, variant = 0, }, --Camillo Jr.
     { orb = enums.Orbs.ELECTRIC, type = 201, variant = 0, }, --Stone Eye
+    { orb = enums.Orbs.ELECTRIC, type = 61,  variant = 5, }, --Bulb
     { orb = enums.Orbs.PSYCHIC,  type = 832, variant = 0, }, --Exorcist
     { orb = enums.Orbs.PSYCHIC,  type = 832, variant = 1, }, --Fanatic
     { orb = enums.Orbs.PSYCHIC,  type = 836, variant = 0, }, --Vis Versa
