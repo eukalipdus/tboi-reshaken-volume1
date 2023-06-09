@@ -242,9 +242,9 @@ MilkshakeVol1:AddCallback(
 function ShatteredOrb:OnPlayerUpdate(player)
     if not IsPlayerUsingShatteredOrb(player) then return end
 
-    --If the player is not player the lift item anim, they're not using the item anymore
+    --If the player is not playing the lift item anim, they're not using the item anymore
     local sprite = player:GetSprite()
-    if sprite:IsPlaying("LiftItem") then
+    if sprite:IsPlaying("Hit") then
         RemovePlayerUsingShatteredOrb(player)
         return
     end
