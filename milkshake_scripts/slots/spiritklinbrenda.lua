@@ -247,10 +247,6 @@ function SpiritKlin:OnBrendaUpdate(brenda)
         return
     end
 
-    if sprite:IsFinished("Wiggle") then
-        sprite:Play("Prize", true)
-    end
-
     if sprite:IsFinished("Prize") then
         sprite:Play("Idle")
     end
@@ -278,7 +274,7 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
         player:AddSoulHearts(-1)
     end
 
-    sprite:Play("Wiggle", true)
+    sprite:Play("Prize", true)
     TSIL.Entities.SetEntityData(
         MilkshakeVol1,
         brenda,
