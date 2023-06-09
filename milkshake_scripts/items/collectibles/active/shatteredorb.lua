@@ -6,7 +6,7 @@ local SHATTERED_ORB_FALL_ACCEL = 0.1
 local SHATTERED_ORB_RADIUS = 20
 
 
-ORBS_PER_ENEMY = {}
+local ORBS_PER_ENEMY = {}
 
 function MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(orbsPerEnemy)
     TSIL.Utils.Tables.ForEach(orbsPerEnemy, function(_, orbPerEnemy)
@@ -92,7 +92,6 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.FIRE,     type = 825, variant = 0, }, --Fire Worm
     { orb = enums.Orbs.NATURE,   type = 300, variant = 0, }, --Mushroom
 }
-
 MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerEnemy)
 
 
