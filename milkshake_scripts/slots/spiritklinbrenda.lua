@@ -102,7 +102,7 @@ MilkshakeVol1.API:AddSpiritKlinReward(function ()
     )
 
     --The weight for this reward depends on the number of soul stones unlocked
-    return #availableSoulStones * 1.1
+    return math.sqrt(#availableSoulStones * 2)
 end,
 function (slot, _, position, velocity)
     local rng = slot:GetDropRNG()
@@ -149,7 +149,7 @@ MilkshakeVol1.API:AddSpiritKlinReward(function (_)
         return 0
     end
 
-    return 7
+    return 3
 end, function (slot, _, position, velocity)
     local rng = slot:GetDropRNG()
     local itemConfig = Isaac.GetItemConfig()
@@ -192,7 +192,7 @@ end)
 
 
 --Add random element wisp
-MilkshakeVol1.API:AddSpiritKlinReward(5, function (slot, player, position)
+MilkshakeVol1.API:AddSpiritKlinReward(15, function (slot, player, position)
     local rng = slot:GetDropRNG()
     local wispToAdd = TSIL.Random.GetRandomElementsFromTable(possibleWisps, 1, rng)[1]
 
