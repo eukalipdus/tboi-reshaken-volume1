@@ -102,7 +102,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 newCollectibleID = itemPool:GetCollectible(roomPool, false)
 
                 if counter == TIMES_CAN_FAIL
-                or newCollectibleID == 0 -- Null collectible is rolled, shouldn't happen
+                or newCollectibleID == CollectibleType.COLLECTIBLE_NULL
                 or counter == TIMES_CAN_FAIL then goto failsafe
                 end
 
