@@ -121,7 +121,9 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
             elseif i == 1 then
                 if collectible.OptionsPickupIndex > 0 then
-                    shatteredCollectible.OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
+                    shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
+                else
+                    shatteredCollectible.OptionsPickupIndex = 0
                 end
             end
 
