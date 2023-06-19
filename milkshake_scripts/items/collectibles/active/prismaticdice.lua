@@ -208,18 +208,20 @@ function prismaticDice:onUse(_, _, player)
 
             local collectibleQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality
 
-            collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
-
             TSIL.Utils.Functions.RunInFrames(function ()
-
-                collectible:Remove()
-                local newCollectibleID
-                if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
-                    for i = 1, 2 do
-                        splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
-                    end
+                if collectible.SubType == CollectibleType.COLLECTIBLE_DADS_NOTE then
+                    return
                 else
-                    splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
+                    collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
+                    collectible:Remove()
+                    local newCollectibleID
+                    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+                        for i = 1, 2 do
+                            splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
+                        end
+                    else
+                        splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
+                    end
                 end
     
                 SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
