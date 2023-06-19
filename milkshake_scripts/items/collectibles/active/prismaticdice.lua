@@ -4,7 +4,7 @@ local utility = MilkshakeVol1.utility
 
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
-local TIMES_CAN_FAIL = 100
+local TIMES_CAN_FAIL = 1000
 local INITIAL_BREAKFAST_CHECK = 10
 local WHITE = Color(1, 1, 1, 1, 255, 255, 255)
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
