@@ -61,19 +61,38 @@ local function playSplitAnimation(index, currentCollecible)
         local lastCollectible = currentCollecible
 
         TSIL.Utils.Functions.RunInFrames(function ()
-            --CYAN:SetColorize(0, 2, 2, 3)
-            lastCollectible:SetColor(CYAN, SHATTERED_COLOR_FRAMES, 2, true, false)
-            end, SHATTERED_SOLID_FRAMES)
+        --CYAN:SetColorize(0, 2, 2, 3)
+        lastCollectible:SetColor(CYAN, SHATTERED_COLOR_FRAMES, 2, true, false)
+        end, SHATTERED_SOLID_FRAMES)
 
     elseif index == 1 then
         --SOLID_PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
         currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
 
         TSIL.Utils.Functions.RunInFrames(function ()
-            --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
-            currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
-            end, SHATTERED_SOLID_FRAMES)
+        --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
+        currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
+        end, SHATTERED_SOLID_FRAMES)
+
+    elseif index == 2 then
+        currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
+
+        TSIL.Utils.Functions.RunInFrames(function ()
+        --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
+        currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
+        end, SHATTERED_SOLID_FRAMES)
     end
+end
+
+--- Plays a color flash animation for a spawned collectible
+---@param collectible EntityPickup
+---@param colorOne Color
+---@param colorTwo Color
+local function SplitAnimationSingle(collectible, colorOne, colorTwo)
+    collectible:SetColor(colorOne, SHATTERED_SOLID_FRAMES, 2, false, false)
+    TSIL.Utils.Functions.RunInFrames(function ()
+    collectible:SetColor(colorTwo, SHATTERED_COLOR_FRAMES, 2, true, false)
+    end, SHATTERED_SOLID_FRAMES)
 end
 
 ---Actives the prismatic dice effect of giving you two items for one, of lower quality
@@ -193,6 +212,14 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     end
 end
 
+--- Spawns a collectible but only allows you to modify the SubType and position
+---@param collectibleType integer
+---@param position Vector
+---@param player EntityPlayer
+local function SpawnCollectible(collectibleType, position, player)
+    return Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectibleType, position, Vector.Zero, player):ToPickup()
+end
+
 function prismaticDice:preItemuse(_, _, _, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return true end
 end
@@ -205,12 +232,24 @@ function prismaticDice:onUse(_, _, player)
         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
         and entity.SubType ~= CollectibleType.COLLECTIBLE_NULL then
             local collectible = entity:ToPickup()
-
+            local collectibleType = collectible.SubType
             local collectibleQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality
 
+            local posLeft = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
+            local posRight = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
+
+
             TSIL.Utils.Functions.RunInFrames(function ()
+                collectible:Remove()
                 if collectible.SubType == CollectibleType.COLLECTIBLE_DADS_NOTE then
                     return
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_TWISTED_PAIR then
+                    local incubus = SpawnCollectible(CollectibleType.COLLECTIBLE_INCUBUS, posLeft, player)
+                    local succubus = SpawnCollectible(CollectibleType.COLLECTIBLE_SUCCUBUS, posRight, player)
+                    SplitAnimationSingle(incubus, SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(succubus, SOLID_PINK, PINK)
+
                 else
                     collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
                     collectible:Remove()
