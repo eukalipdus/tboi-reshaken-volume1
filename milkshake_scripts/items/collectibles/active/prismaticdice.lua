@@ -245,10 +245,61 @@ function prismaticDice:onUse(_, _, player)
                     return
 
                 elseif collectibleType == CollectibleType.COLLECTIBLE_TWISTED_PAIR then
-                    local incubus = SpawnCollectible(CollectibleType.COLLECTIBLE_INCUBUS, posLeft, player)
-                    local succubus = SpawnCollectible(CollectibleType.COLLECTIBLE_SUCCUBUS, posRight, player)
-                    SplitAnimationSingle(incubus, SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(succubus, SOLID_PINK, PINK)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_INCUBUS, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SUCCUBUS, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_GODHEAD then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MIND, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BODY, posRight, player), SOLID_PINK, PINK)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SOUL, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT), player), SOLID_PINK, PINK) -- Yellow
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_HALO_OF_FLIES then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_FRIEND_ZONE, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DISTANT_ADMIRATION, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_FRIEND_FINDER then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MY_SHADOW, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_JUDAS_SHADOW, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_QUINTS then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BROTHER_BOBBY, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SISTER_MAGGY, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_EVERYTHING_JAR then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_JAR_OF_FLIES, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_JAR_OF_WISPS, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_DOLLAR then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, posRight, player), SOLID_PINK, PINK)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT), player), SOLID_CYAN, CYAN) -- Yellow
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT * 2), player), SOLID_PINK, PINK) -- New color
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_FREE_LEMONADE then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_LEMON_MISHAP, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_THE_JAR, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_DEAD_CAT then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_GUPPYS_TAIL, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_GUPPYS_HEAD, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_GLITCHED_CROWN then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_TMTRAINER, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_CROWN_OF_LIGHT, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_BINGE_EATER then
+                    SplitAnimationSingle(SpawnCollectible(enums.Collectibles.HEARTY_BREAKFAST, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(enums.Collectibles.HEARTY_BREAKFAST, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_MEGA_BLAST then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BRIMSTONE, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SULFUR, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_NECRONOMICON then
+                    local missingPage = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET, TrinketType.TRINKET_MISSING_PAGE, posLeft, Vector.Zero, player):ToPickup()
+                    SplitAnimationSingle(missingPage, SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MISSING_PAGE_2, posRight, player), SOLID_PINK, PINK)
+
 
                 else
                     collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
