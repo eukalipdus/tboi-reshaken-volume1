@@ -177,8 +177,8 @@ end
 ---@param rng RNG
 function utility:RecycleCollectible(position, player, roomType, itemPool, seed, rng)
     local mulVecBy = 4
-    local coins = rng:RandomInt(7)
-    local keysBombsHearts = rng:RandomInt(4) + 1
+    local coins = rng:RandomInt(3) + 2
+    local keysBombsHearts = rng:RandomInt(3) + 1
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, position, Vector.Zero, player)
     SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
 
