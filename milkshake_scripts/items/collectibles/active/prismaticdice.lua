@@ -6,6 +6,7 @@ local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
 local TIMES_CAN_FAIL = 1000
 local INITIAL_BREAKFAST_CHECK = 10
+local BLACK = Color(0, 0, 0, 1, 0, 0, 0)
 local WHITE = Color(1, 1, 1, 1, 255, 255, 255)
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220 / 255, 1, 0, 0, 0)
@@ -15,6 +16,11 @@ local SPLIT_COLOR_FRAMES = 2
 local SHATTERED_SOLID_FRAMES = 7
 local SHATTERED_COLOR_FRAMES = 20
 local SCHEDULE_FRAMES = 2
+local TROLL_BOMB_COUNT = 3
+local TROLL_BOMB_STEP = 1
+local PICKUP_COUNT = 8
+local BOMB_COUNT = 5
+local POOP_COUNT = 6
 
 ---Returns the amount of collectibles in the current room 
 ---@return number
@@ -300,7 +306,65 @@ function prismaticDice:onUse(_, _, player)
                     SplitAnimationSingle(missingPage, SOLID_CYAN, CYAN)
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MISSING_PAGE_2, posRight, player), SOLID_PINK, PINK)
 
+                elseif collectibleType == CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER then
+                    local pos = posLeft
+                    for _ = 1, TROLL_BOMB_COUNT do
+                        SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_TROLL, pos, Vector.Zero, player):ToPickup(), SOLID_CYAN, CYAN)
+                        pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                    end
+                    SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_TAROTCARD, Card.CARD_TOWER, posRight, Vector.Zero, player):ToPickup(), SOLID_PINK, PINK)
 
+                elseif collectibleType == CollectibleType.COLLECTIBLE_TORN_PHOTO then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_POLAROID, posLeft, player), WHITE, WHITE)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_NEGATIVE, posRight, player), BLACK, BLACK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_EPIC_FETUS then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DR_FETUS, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DOCTORS_REMOTE, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_RED_STEW then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_ROTTEN_TOMATO, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DINNER, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_YUM_HEART then
+                    local pos = posLeft
+                    for _ = 1, PICKUP_COUNT do
+                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, pos, Vector.Zero, player)
+                        pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                    end
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_BOOM then
+                    local pos = posLeft
+                    for _ = 1, BOMB_COUNT do
+                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL, pos, Vector.Zero, player)
+                        pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                    end
+                    TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN, pos, Vector.Zero, player)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_POOP then
+                    local pos = posLeft
+                    for _ = 1, POOP_COUNT do
+                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_POOP, PoopPickupSubType.POOP_SMALL, pos, Vector.Zero, player)
+                        pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                    end
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_LATCH_KEY then
+                    local pos = posLeft
+                    for _ = 1, PICKUP_COUNT do
+                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, BombSubType.KEY_NORMAL, pos, Vector.Zero, player)
+                        pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                    end
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_MR_BOOM then
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BOOM, posLeft, player), SOLID_CYAN, CYAN)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BOOM, posRight, player), SOLID_PINK, PINK)
+
+                elseif collectibleType == CollectibleType.COLLECTIBLE_PORTABLE_SLOT then
+                    local pos = posLeft
+                    for _ = 1, PICKUP_COUNT do
+                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, pos, Vector.Zero, player)
+                        pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                    end
                 else
                     collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
                     collectible:Remove()
@@ -320,6 +384,5 @@ function prismaticDice:onUse(_, _, player)
     end
     return true
 end
-
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
 return prismaticDice
