@@ -23,6 +23,8 @@ local utility = MilkshakeVol1.utility
 ---@field notes NoteData[]
 
 --CONSTANTS
+local CLEAR_REWARD_REPLACE_CHANCE = 0.1
+local ORB_REPLACE_CHANCE = 0.33
 ---@enum NoteDirection
 local NOTE_DIRECTION = {
     UP = "Up",
@@ -38,7 +40,6 @@ local ALLOWED_INPUTS_DURING_LYRA = {
     [ButtonAction.ACTION_PAUSE] = true,
     [ButtonAction.ACTION_MAP] = true
 }
-local PILL_CARD_REPLACE_CHANCE = 20
 local NOTE_MARKER_ANM2 = "/gfx/lyra_note_marks.anm2"
 local NOTE_SPEED = 0.6
 local NOTE_PLAYING_INPUTS = {
@@ -131,40 +132,6 @@ local function CreateNoteSplash(dir, pos)
         sprite = sprite
     }
 end
-
-
----@param pickup EntityPickup
-function Lyra:OnPickupInitFirst(pickup)
-    if not TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA) then return end
-
-    --It's already an orb
-    if utility:IsSpiritOrb(pickup.SubType) then
-        return
-    end
-
-    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
-    local chance = TSIL.Random.GetRandomInt(1, 100, rng)
-
-    if chance > PILL_CARD_REPLACE_CHANCE then return end
-
-    local chosenOrb = utility:GetRandomSpiritOrb(true, rng)
-    pickup:Morph(
-        EntityType.ENTITY_PICKUP,
-        PickupVariant.PICKUP_TAROTCARD,
-        chosenOrb,
-        true
-    )
-end
-MilkshakeVol1:AddCallback(
-    TSIL.Enums.CustomCallback.POST_PICKUP_INIT_FIRST,
-    Lyra.OnPickupInitFirst,
-    PickupVariant.PICKUP_TAROTCARD
-)
-MilkshakeVol1:AddCallback(
-    TSIL.Enums.CustomCallback.POST_PICKUP_INIT_FIRST,
-    Lyra.OnPickupInitFirst,
-    PickupVariant.PICKUP_PILL
-)
 
 
 ---@param orb Card
@@ -365,3 +332,84 @@ function Lyra:OnNewRoom()
     noteSplashes = {}
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Lyra.OnNewRoom)
+
+
+---@param rng RNG
+---@param pos Vector
+function Lyra:OnClearAwardSpawn(rng, pos)
+    if rng:RandomFloat() >= CLEAR_REWARD_REPLACE_CHANCE then return end
+
+    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
+    TSIL.EntitySpecific.SpawnPickup(
+        PickupVariant.PICKUP_TAROTCARD,
+        orb,
+        pos
+    )
+
+    return true
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, Lyra.OnClearAwardSpawn)
+
+
+---@param rng RNG
+---@param position Vector
+local function SpawnRewardOrb(rng, position)
+    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
+
+    local angle = rng:RandomInt(360)
+    local speed = TSIL.Random.GetRandomFloat(4, 6, rng)
+    local velocity = Vector.FromAngle(angle):Resized(speed)
+
+    TSIL.EntitySpecific.SpawnPickup(
+        PickupVariant.PICKUP_TAROTCARD,
+        orb,
+        position,
+        velocity
+    )
+end
+
+
+---@param gridEntity GridEntity
+function Lyra:OnTintedRockBreak(gridEntity)
+    if not TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA) then return end
+
+    local rng = gridEntity:GetRNG()
+    if rng:RandomFloat() >= ORB_REPLACE_CHANCE then return end
+
+    SpawnRewardOrb(rng, gridEntity.Position)
+end
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_GRID_ENTITY_BROKEN,
+    Lyra.OnTintedRockBreak,
+    GridEntityType.GRID_ROCKT
+)
+
+
+---@param slot Entity
+function Lyra:OnSlotDestroyed(slot)
+    if not TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA) then return end
+
+    local rng = slot:GetDropRNG()
+    if rng:RandomFloat() >= ORB_REPLACE_CHANCE then return end
+
+    SpawnRewardOrb(rng, slot.Position)
+end
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_SLOT_DESTROYED,
+    Lyra.OnSlotDestroyed
+)
+
+
+---@param chest EntityPickup
+function Lyra:OnChestOpened(chest)
+    if not TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA) then return end
+
+    local rng = chest:GetDropRNG()
+    if rng:RandomFloat() >= ORB_REPLACE_CHANCE then return end
+
+    SpawnRewardOrb(rng, chest.Position)
+end
+MilkshakeVol1:AddCallback(
+    MilkshakeVol1.enums.Callbacks.POST_CHEST_OPENED,
+    Lyra.OnChestOpened
+)

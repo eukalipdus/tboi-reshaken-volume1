@@ -128,7 +128,19 @@ enums.Callbacks = {
 	--Optional args:
 	--
 	-- * orb - Card
-    ON_ORB_USE = "MILKSHAKE_CB_ON_ORB_USE"
+    ON_ORB_USE = {},
+
+    --Called whenever a chest changes to the opened subtype.
+    --Won't be called if a chest spawns an item.
+    --
+    --Params:
+    --
+    -- * chest - EntityPickup
+    --
+    --Optional args:
+    --
+    -- * pickupVariant - PickupVariant
+    POST_CHEST_OPENED = {}
 }
 
 MilkshakeVol1.enums = enums

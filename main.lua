@@ -16,6 +16,9 @@ include("milkshake_scripts.modcompatibility.modCompat")
 include("milkshake_scripts.modcompatibility.epiphany")
 include("milkshake_scripts.modcompatibility.fiendFolio")
 
+-- Custom callbacks
+include("milkshake_scripts.custom_callbacks.chest_opened")
+
 -- Collectibles
 include("milkshake_scripts.items.collectibles.passive.blackeye")
 include("milkshake_scripts.items.collectibles.familiars.spiritbum")
