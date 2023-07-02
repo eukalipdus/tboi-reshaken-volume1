@@ -2,12 +2,14 @@ DelugeOrb = {}
 local enums = MilkshakeVol1.enums
 local game = Game()
 
-DelugeOrb.Force = 10
-DelugeOrb.Radius = 250
+DelugeOrb.Force = 50
+DelugeOrb.Radius = 600
 DelugeOrb.Speed = -1.9
-DelugeOrb.MaxFireDelay = -1
 DelugeOrb.WaterSpeed = 5
-DelugeOrb.Timeout = 600
+DelugeOrb.Timeout = 360
+
+--TODO
+--Custom Hush Laser?
 
 function DelugeOrb:onCache(player, cacheFlag)
 	player = player:ToPlayer()
@@ -21,16 +23,32 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, DelugeOrb.onCache)
 function DelugeOrb:onPEffectUpdate(player)
 	local data = player:GetData()
 	if data.DelugeOrbUsed then
-		player.FireDelay = DelugeOrb.MaxFireDelay
+		player.FireDelay = player.MaxFireDelay - 1
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, DelugeOrb.onPEffectUpdate)
 
+function DelugeOrb:onNewRoom()
+	for playerNum = 0, game:GetNumPlayers()-1 do
+		local player = game:GetPlayer(playerNum)
+		local data = player:GetData()
+		if data.DelugeOrbUsed then
+			data.DelugeOrbUsed = nil
+			player:AddCacheFlags(CacheFlag.CACHE_SPEED)
+			player:EvaluateItems()
+		end
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, DelugeOrb.onNewRoom)
+
 function DelugeOrb:onWaterfallUpdate(effect)
 	local effectData = effect:GetData()
 	if effectData.DelugeOrb then
-		game:UpdateStrangeAttractor(waterfall.Position, DelugeOrb.Force, DelugeOrb.Radius)
-	 	local player = effect.Parent
+		effect.Target = nil
+		game:UpdateStrangeAttractor(effect.Position, DelugeOrb.Force, DelugeOrb.Radius)
+	 	local player = effect.Parent:ToPlayer()
+		effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ENEMIES
+		effect.CollisionDamage = player.Damage * 10
 		effect.Velocity = player:GetShootingInput() * player.ShotSpeed * DelugeOrb.WaterSpeed
 		if effect.Timeout <= 1 then
 			player:GetData().DelugeOrbUsed = nil
@@ -46,10 +64,14 @@ function DelugeOrb:OnDelugeOrbUse(card, player) -- useFlag
 	local room = game:GetRoom()
 	local data = player:GetData()
 	data.DelugeOrbUsed = true
-	local waterfall = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER, 0, room:GetCenterPos(), Vector.Zero, player):ToEffect()
-	waterfall:GetData().DelugeOrb = true
-	waterfall.Parent = player
-	waterfall.Timeout = DelugeOrb.Timeout
+	local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER, 1, room:GetCenterPos(), Vector.Zero, player):ToEffect()
+	effect:GetData().DelugeOrb = true
+	effect.Parent = player:ToPlayer()
+	effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+	effect.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_WALLS
+	effect.Timeout = DelugeOrb.Timeout
+	effect:SetDamageSource(EntityType.ENTITY_PLAYER)
+	effect.CollisionDamage = player.Damage * 10
 	player:AddCacheFlags(CacheFlag.CACHE_SPEED)
 	player:EvaluateItems()
 end

@@ -69,6 +69,8 @@ include("milkshake_scripts.items.pick ups.electricorb")
 include("milkshake_scripts.items.pick ups.spiritorbs")
 include("milkshake_scripts.items.pick ups.tatteredpage")
 include("milkshake_scripts.items.pick ups.specialpennies")
+include("milkshake_scripts.items.pick ups.delugeOrb")
+include("milkshake_scripts.items.pick ups.revenanceOrb")
 
 
 --Slots
