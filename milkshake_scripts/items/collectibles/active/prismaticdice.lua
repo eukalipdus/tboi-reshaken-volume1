@@ -242,6 +242,8 @@ function prismaticDice:onUse(_, _, player)
 
             local posLeft = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
             local posRight = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
+            local rng = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE)
+            local seed = rng:GetSeed()
 
 
             TSIL.Utils.Functions.RunInFrames(function ()
@@ -312,6 +314,7 @@ function prismaticDice:onUse(_, _, player)
                     for _ = 1, TROLL_BOMB_COUNT do
                         SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_TROLL, posLeft, RandomVector() * MUL_VEC_BY, player):ToPickup(), SOLID_CYAN, CYAN)
                     end
+                    utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
                     SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_TAROTCARD, Card.CARD_TOWER, posRight, Vector.Zero, player):ToPickup(), SOLID_PINK, PINK)
 
                 elseif collectibleType == CollectibleType.COLLECTIBLE_TORN_PHOTO then
@@ -335,6 +338,7 @@ function prismaticDice:onUse(_, _, player)
                    for _ = 1, PICKUP_COUNT do
                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
+                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_SHARP_KEY then
                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_1, posLeft, player), SOLID_CYAN, CYAN)
@@ -345,6 +349,7 @@ function prismaticDice:onUse(_, _, player)
                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
                    TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN, posLeft, Vector.Zero, player)
+                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
 
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_MR_BOOM then
@@ -356,6 +361,7 @@ function prismaticDice:onUse(_, _, player)
                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
                    TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN, posLeft, Vector.Zero, player)
+                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
 
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_WOODEN_NICKEL then
@@ -367,11 +373,13 @@ function prismaticDice:onUse(_, _, player)
                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
                    TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_GOLDEN, posLeft, Vector.Zero, player)
+                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
                    
                elseif collectibleType == CollectibleType.COLLECTIBLE_POOP then
                    for _ = 1, PICKUP_COUNT do
                        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_POOP, PoopPickupSubType.POOP_SMALL, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
+                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
 
                 else
                     collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
