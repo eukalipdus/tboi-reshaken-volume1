@@ -17,10 +17,8 @@ local SHATTERED_SOLID_FRAMES = 7
 local SHATTERED_COLOR_FRAMES = 20
 local SCHEDULE_FRAMES = 2
 local TROLL_BOMB_COUNT = 3
-local TROLL_BOMB_STEP = 1
 local PICKUP_COUNT = 6
 local NON_GOLD_PICKUP_COUNT = 5
-local POOP_COUNT = 6
 local MUL_VEC_BY = 4
 
 ---Returns the amount of collectibles in the current room 
