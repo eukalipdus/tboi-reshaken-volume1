@@ -246,11 +246,14 @@ function prismaticDice:onUse(_, _, player)
 
 
             TSIL.Utils.Functions.RunInFrames(function ()
-                collectible:Remove()
+                
                 if collectible.SubType == CollectibleType.COLLECTIBLE_DADS_NOTE then
                     return
+                end
 
-                elseif collectibleType == CollectibleType.COLLECTIBLE_TWISTED_PAIR then
+                collectible:Remove()
+                
+                if collectibleType == CollectibleType.COLLECTIBLE_TWISTED_PAIR then
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_INCUBUS, posLeft, player), SOLID_CYAN, CYAN)
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SUCCUBUS, posRight, player), SOLID_PINK, PINK)
 
