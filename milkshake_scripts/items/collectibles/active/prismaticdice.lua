@@ -232,7 +232,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, prismaticDice.preItemuse
 
 function prismaticDice:onUse(_, _, player)
     --local collectibleCount = getCollectibleCount()
-    for i, entity in pairs(Isaac.GetRoomEntities()) do
+    for _, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
         and entity.SubType ~= CollectibleType.COLLECTIBLE_NULL then
