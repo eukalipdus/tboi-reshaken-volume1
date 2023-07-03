@@ -21,6 +21,7 @@ local TROLL_BOMB_STEP = 1
 local PICKUP_COUNT = 6
 local NON_GOLD_PICKUP_COUNT = 5
 local POOP_COUNT = 6
+local MUL_VEC_BY = 4
 
 ---Returns the amount of collectibles in the current room 
 ---@return number
@@ -310,10 +311,8 @@ function prismaticDice:onUse(_, _, player)
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MISSING_PAGE_2, posRight, player), SOLID_PINK, PINK)
 
                 elseif collectibleType == CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER then
-                    local pos = posLeft
                     for _ = 1, TROLL_BOMB_COUNT do
-                        SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_TROLL, pos, Vector.Zero, player):ToPickup(), SOLID_CYAN, CYAN)
-                        pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                        SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_TROLL, posLeft, RandomVector() * MUL_VEC_BY, player):ToPickup(), SOLID_CYAN, CYAN)
                     end
                     SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_TAROTCARD, Card.CARD_TOWER, posRight, Vector.Zero, player):ToPickup(), SOLID_PINK, PINK)
 
@@ -335,24 +334,19 @@ function prismaticDice:onUse(_, _, player)
                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_ISAACS_HEART, posRight, player), SOLID_PINK, PINK)
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_ISAACS_HEART then
-                   local pos = posLeft
                    for _ = 1, PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, pos, Vector.Zero, player)
-                       pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
-
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_SHARP_KEY then
                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_1, posLeft, player), SOLID_CYAN, CYAN)
                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_2, posRight, player), SOLID_PINK, PINK)
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_KEY_PIECE_1 or collectibleType == CollectibleType.COLLECTIBLE_KEY_PIECE_2 then
-                   local pos = posLeft
                    for _ = 1, NON_GOLD_PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL, pos, Vector.Zero, player)
-                       pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
-                   TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN, pos, Vector.Zero, player)
+                   TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN, posLeft, Vector.Zero, player)
 
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_MR_BOOM then
@@ -360,12 +354,10 @@ function prismaticDice:onUse(_, _, player)
                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BOOM, posRight, player), SOLID_PINK, PINK)
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_BOOM then
-                   local pos = posLeft
                    for _ = 1, NON_GOLD_PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL, pos, Vector.Zero, player)
-                       pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
-                   TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN, pos, Vector.Zero, player)
+                   TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN, posLeft, Vector.Zero, player)
 
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_WOODEN_NICKEL then
@@ -373,18 +365,14 @@ function prismaticDice:onUse(_, _, player)
                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_PAGEANT_BOY, posRight, player), SOLID_PINK, PINK)
 
                elseif collectibleType == CollectibleType.COLLECTIBLE_PAGEANT_BOY then
-                   local pos = posLeft
                    for _ = 1, NON_GOLD_PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, pos, Vector.Zero, player)
-                       pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
-                   TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_GOLDEN, pos, Vector.Zero, player)
+                   TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_GOLDEN, posLeft, Vector.Zero, player)
                    
                elseif collectibleType == CollectibleType.COLLECTIBLE_POOP then
-                   local pos = posLeft
                    for _ = 1, PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_POOP, PoopPickupSubType.POOP_SMALL, pos, Vector.Zero, player)
-                       pos = Isaac.GetFreeNearPosition(pos, TROLL_BOMB_STEP)
+                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_POOP, PoopPickupSubType.POOP_SMALL, posLeft, RandomVector() * MUL_VEC_BY, player)
                    end
 
                 else
