@@ -178,7 +178,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
         local rng = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE)
         local seed = rng:GetSeed()
         local roomType = Game():GetRoom():GetType()
-        utility:RecycleCollectible(collectible.Position, player, roomType, itemPool, seed, rng)
+        utility:RecycleCollectible(collectible.Position, player, roomType, itemPool, seed, rng, false)
     end
     ::failsafe::
     if willBreakfast == true then
