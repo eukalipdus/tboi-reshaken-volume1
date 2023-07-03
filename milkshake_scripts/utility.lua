@@ -175,26 +175,29 @@ end
 ---@param itemPool ItemPool
 ---@param seed integer
 ---@param rng RNG
-function utility:RecycleCollectible(position, player, roomType, itemPool, seed, rng)
+---@param specialPickupOnly boolean
+function utility:RecycleCollectible(position, player, roomType, itemPool, seed, rng, specialPickupOnly)
     local mulVecBy = 4
-    local coins = rng:RandomInt(3) + 2
-    local keysBombsHearts = rng:RandomInt(3) + 1
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, position, Vector.Zero, player)
-    SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
+    if not specialPickupOnly then
+        local coins = rng:RandomInt(3) + 2
+        local keysBombsHearts = rng:RandomInt(3) + 1
+        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, position, Vector.Zero, player)
+        SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
 
-    for _ = 1, coins do
-        ---@diagnostic disable-next-line: param-type-mismatch
-        TSIL.PickupSpecific.SpawnCoin(0, position, RandomVector() * mulVecBy, player, rng)
-    end
+        for _ = 1, coins do
+            ---@diagnostic disable-next-line: param-type-mismatch
+            TSIL.PickupSpecific.SpawnCoin(0, position, RandomVector() * mulVecBy, player, rng)
+        end
 
-    for _ = 1, keysBombsHearts do
-        TSIL.EntitySpecific.SpawnPickup(
-            PickupVariant.PICKUP_NULL,
-            TSIL.Enums.PickupNullSubType.EXCLUDE_COLLECTIBLES_TRINKETS_CHESTS,
-            position,
-            RandomVector() * mulVecBy,
-            player
-        )
+        for _ = 1, keysBombsHearts do
+            TSIL.EntitySpecific.SpawnPickup(
+                PickupVariant.PICKUP_NULL,
+                TSIL.Enums.PickupNullSubType.EXCLUDE_COLLECTIBLES_TRINKETS_CHESTS,
+                position,
+                RandomVector() * mulVecBy,
+                player
+            )
+        end
     end
 
     if roomType == RoomType.ROOM_ANGEL then
