@@ -337,6 +337,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Lyra.OnNewRoom)
 ---@param rng RNG
 ---@param pos Vector
 function Lyra:OnClearAwardSpawn(rng, pos)
+    if not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.LYRA) then return end
+
     if rng:RandomFloat() >= CLEAR_REWARD_REPLACE_CHANCE then return end
 
     local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
