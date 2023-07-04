@@ -6,6 +6,8 @@ local DEADZONE_ANGLE = 30
 local TEAR_MOVEMENT_RATIO = 0.2
 local BOMB_MOVEMENT_RATIO = 0.4
 local TECHX_MOVEMENT_RATIO = 0.2
+local KNIFE_MOVEMENT_RATIO = 0.05
+local KNIFE_OFFSET_STRENGTH = 0.01
 
 local LASER_LERP_STRENGTH = 0.03
 local LERP_STANDING_MULTIPLIER = 10
@@ -95,6 +97,30 @@ function dadsMitt:PostLaserUpdate(laser)
     laser.AngleDegrees = laserDirection:GetAngleDegrees()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE, dadsMitt.PostLaserUpdate)
+
+---@param knife EntityKnife
+function dadsMitt:PostKnifeUpdate(knife)
+    local player = DadsMittOwner(knife)
+    if not player then
+        return end
+
+    local data = knife:GetData()
+    if not knife:IsFlying() then
+        data.DadsMittKnife = nil
+        return
+    end
+    if not data.DadsMittKnife then
+        data.DadsMittKnife = {Velocity = Vector.Zero, Offset = Vector.Zero}
+    end
+    local knifeMovement = data.DadsMittKnife
+    local knifeDirectionParallel = Vector.FromAngle(knife.Rotation):Rotated(90)
+    local parallelPlayerVelocity = knifeDirectionParallel:Normalized() * player.Velocity:Dot(knifeDirectionParallel)*KNIFE_MOVEMENT_RATIO
+
+    knifeMovement.Velocity = knifeMovement.Velocity + parallelPlayerVelocity
+    knifeMovement.Offset = knifeMovement.Offset + knifeMovement.Velocity
+    knife.Position = knife.Position + (knifeMovement.Offset * knife:GetKnifeDistance() * KNIFE_OFFSET_STRENGTH)
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, dadsMitt.PostKnifeUpdate)
 
 ---@param player EntityPlayer
 ---@param flag CacheFlag
