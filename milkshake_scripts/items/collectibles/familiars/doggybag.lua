@@ -86,7 +86,7 @@ function doggyBag:FamiliarUpdate(bag)
     if sprite:IsEventTriggered("Spawn") then
         DoggyBagTrigger(bag)
     elseif sprite:IsFinished("Spawn") then
-        sprite:Play("FloatDown")
+        sprite:Play("Idle")
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, doggyBag.FamiliarUpdate, enums.Familiars.DOGGY_BAG)
