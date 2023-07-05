@@ -7,27 +7,6 @@ local FLIES_TO_SPAWN_BFFS = 2
 local DIPS_TO_SPAWN = 2
 local DIPS_TO_SPAWN_BFFS = 4
 
-local POISON_RADIUS = 60
-local POISON_DAMAGE = 3
-local POISON_DAMAGE_BFFS = POISON_DAMAGE * 2
-local POISON_DURATION = 20
-local POISON_CHECK_COOLDOWN = 10
-
----@param bag EntityFamiliar
-local function DoggyBagPoison(bag)
-    local damage
-    if bag.Player and bag.Player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
-        damage = POISON_DAMAGE_BFFS
-    else
-        damage = POISON_DAMAGE
-    end
-    for _, enemy in ipairs(Isaac.FindInRadius(bag.Position, POISON_RADIUS, EntityPartition.ENEMY)) do
-        if enemy:IsVulnerableEnemy() and not enemy:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) then
-            enemy:AddPoison(EntityRef(bag), POISON_DURATION, damage)
-        end
-    end
-end
-
 ---@param bag EntityFamiliar
 local function DoggyBagTrigger(bag)
     local player = bag.Player
@@ -72,6 +51,18 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, doggyBag.EvaluateCache
 
 ---@param bag EntityFamiliar
 function doggyBag:FamiliarInit(bag)
+    local aura = Isaac.Spawn(
+        EntityType.ENTITY_EFFECT,
+        EffectVariant.FART_RING,
+        0,
+        bag.Position,
+        Vector.Zero,
+        bag
+    ):ToEffect()
+    aura:FollowParent(bag)
+    aura:AddEntityFlags(EntityFlag.FLAG_PERSISTENT)
+    aura.Color = Color(1, 1, 1, 0.3)
+    bag.Child = aura
     bag:AddToFollowers()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, doggyBag.FamiliarInit, enums.Familiars.DOGGY_BAG)
@@ -79,14 +70,17 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, doggyBag.FamiliarInit, 
 ---@param bag EntityFamiliar
 function doggyBag:FamiliarUpdate(bag)
     bag:FollowParent()
-    if bag.FrameCount%POISON_CHECK_COOLDOWN == 0 then
-        DoggyBagPoison(bag)
-    end
     local sprite = bag:GetSprite()
     if sprite:IsEventTriggered("Spawn") then
         DoggyBagTrigger(bag)
     elseif sprite:IsFinished("Spawn") then
-        sprite:Play("FloatDown")
+        sprite:Play("Idle")
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, doggyBag.FamiliarUpdate, enums.Familiars.DOGGY_BAG)
+
+function doggyBag:RemoveCloud(bag)
+    if bag.Variant ~= enums.Familiars.DOGGY_BAG then return end
+    bag.Child:Die()
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, doggyBag.RemoveCloud, EntityType.ENTITY_FAMILIAR)
