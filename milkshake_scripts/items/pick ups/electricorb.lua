@@ -1,6 +1,5 @@
 local SapphireOrb = {}
 local enums = MilkshakeVol1.enums
-local utility = MilkshakeVol1.utility
 
 local SAPPHIRE_ORB_DURATION = 25
 local CONDUCTIVITY_TEAR_LIFESPAN = 30

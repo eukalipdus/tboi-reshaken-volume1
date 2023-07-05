@@ -1,12 +1,12 @@
 local EmeraldOrb = {}
 local enums = MilkshakeVol1.enums
-local utility = MilkshakeVol1.utility
 
 local VINE_DURATION = 12
+local VINE_DAMAGE = 1
 local FRUIT_HEART_DURATION = 45
 
 ---@param player EntityPlayer
-function EmeraldOrb:OnEmeraldOrbUse(_, player)
+function EmeraldOrb:OnEmeraldOrbUse(_, player, isLyra)
     local npcs = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, false)
 
     npcs = TSIL.Utils.Tables.Filter(npcs, function (_, npc)
@@ -47,6 +47,13 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player)
         vine.DepthOffset = 10
 
         vine:GetSprite():Play("Grow", true)
+
+        TSIL.Entities.SetEntityData(
+            MilkshakeVol1,
+            vine,
+            "IsLyraUse",
+            true
+        )
     end)
 end
 MilkshakeVol1:AddCallback(
@@ -80,6 +87,11 @@ end
 
 ---@param vine EntityEffect
 function EmeraldOrb:OnVineUpdate(vine)
+    local isLyra = TSIL.Entities.GetEntityData(
+        MilkshakeVol1,
+        vine,
+        "IsLyraUse"
+    )
     local vineSprite = vine:GetSprite()
     local timeout = vine.Timeout
     local target = vine.Target
@@ -89,6 +101,9 @@ function EmeraldOrb:OnVineUpdate(vine)
     if vineSprite:IsFinished("Hide") then
         if target and target:ToPlayer() then
             SpawnFruitHeart(vine.Position, vine:GetDropRNG())
+            if isLyra then
+                SpawnFruitHeart(vine.Position, vine:GetDropRNG())
+            end
         end
         vine:Remove()
     end
@@ -117,7 +132,12 @@ function EmeraldOrb:OnVineUpdate(vine)
     end
 
     if timeout % 40 == 0 then
-        target:TakeDamage(1, 0, EntityRef(vine.SpawnerEntity), -1)
+        local damage = VINE_DAMAGE
+        if isLyra then
+            damage = damage * 2
+        end
+
+        target:TakeDamage(damage, 0, EntityRef(vine.SpawnerEntity), -1)
         vineSprite:Play("Attack", true)
     end
 
@@ -143,7 +163,17 @@ function EmeraldOrb:OnNPCDeath(npc)
             local targetPtr = GetPtrHash(vine.Target)
 
             if ptr == targetPtr then
+                local isLyra = TSIL.Entities.GetEntityData(
+                    MilkshakeVol1,
+                    vine,
+                    "IsLyraUse"
+                )
+
                 SpawnFruitHeart(npc.Position, vine:GetDropRNG())
+                if isLyra then
+                    SpawnFruitHeart(npc.Position, vine:GetDropRNG())
+                end
+
                 return
             end
         end
