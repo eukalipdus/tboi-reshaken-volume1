@@ -232,7 +232,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, prismaticDice.preItemuse
 
 function prismaticDice:onUse(_, _, player)
     --local collectibleCount = getCollectibleCount()
-    for i, entity in pairs(Isaac.GetRoomEntities()) do
+    for _, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
         and entity.SubType ~= CollectibleType.COLLECTIBLE_NULL then
@@ -254,145 +254,146 @@ function prismaticDice:onUse(_, _, player)
 
                 collectible:Remove()
                 
-                if collectibleType == CollectibleType.COLLECTIBLE_TWISTED_PAIR then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_INCUBUS, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SUCCUBUS, posRight, player), SOLID_PINK, PINK)
+                -- if collectibleType == CollectibleType.COLLECTIBLE_TWISTED_PAIR then
+                --     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_INCUBUS, posLeft, player), SOLID_CYAN, CYAN)
+                --     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SUCCUBUS, posRight, player), SOLID_PINK, PINK)
 
-                elseif collectibleType == CollectibleType.COLLECTIBLE_GODHEAD then
+                if collectibleType == CollectibleType.COLLECTIBLE_GODHEAD then
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MIND, posLeft, player), SOLID_CYAN, CYAN)
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BODY, posRight, player), SOLID_PINK, PINK)
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SOUL, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT), player), SOLID_PINK, PINK) -- Yellow
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_HALO_OF_FLIES then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_FRIEND_ZONE, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DISTANT_ADMIRATION, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_FRIEND_FINDER then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MY_SHADOW, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_JUDAS_SHADOW, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_QUINTS then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BROTHER_BOBBY, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SISTER_MAGGY, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_EVERYTHING_JAR then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_JAR_OF_FLIES, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_JAR_OF_WISPS, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_DOLLAR then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, posRight, player), SOLID_PINK, PINK)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT), player), SOLID_CYAN, CYAN) -- Yellow
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT * 2), player), SOLID_PINK, PINK) -- New color
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_FREE_LEMONADE then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_LEMON_MISHAP, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_THE_JAR, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_DEAD_CAT then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_GUPPYS_TAIL, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_GUPPYS_HEAD, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_GLITCHED_CROWN then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_TMTRAINER, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_CROWN_OF_LIGHT, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_BINGE_EATER then
-                    SplitAnimationSingle(SpawnCollectible(enums.Collectibles.HEARTY_BREAKFAST, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(enums.Collectibles.HEARTY_BREAKFAST, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_MEGA_BLAST then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BRIMSTONE, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SULFUR, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_NECRONOMICON then
-                    local missingPage = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET, TrinketType.TRINKET_MISSING_PAGE, posLeft, Vector.Zero, player):ToPickup()
-                    SplitAnimationSingle(missingPage, SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MISSING_PAGE_2, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER then
-                    for _ = 1, TROLL_BOMB_COUNT do
-                        SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_TROLL, posLeft, RandomVector() * MUL_VEC_BY, player):ToPickup(), SOLID_CYAN, CYAN)
-                    end
-                    utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
-                    SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_TAROTCARD, Card.CARD_TOWER, posRight, Vector.Zero, player):ToPickup(), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_TORN_PHOTO then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_POLAROID, posLeft, player), WHITE, WHITE)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_NEGATIVE, posRight, player), BLACK, BLACK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_EPIC_FETUS then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DR_FETUS, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DOCTORS_REMOTE, posRight, player), SOLID_PINK, PINK)
-
-                elseif collectibleType == CollectibleType.COLLECTIBLE_RED_STEW then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_ROTTEN_TOMATO, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DINNER, posRight, player), SOLID_PINK, PINK)
-
-
-                 elseif collectibleType == CollectibleType.COLLECTIBLE_YUM_HEART then
-                   SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_ISAACS_HEART, posLeft, player), SOLID_CYAN, CYAN)
-                   SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_ISAACS_HEART, posRight, player), SOLID_PINK, PINK)
-
-               elseif collectibleType == CollectibleType.COLLECTIBLE_ISAACS_HEART then
-                   for _ = 1, PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, posLeft, RandomVector() * MUL_VEC_BY, player)
-                   end
-                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
-
-               elseif collectibleType == CollectibleType.COLLECTIBLE_SHARP_KEY then
-                   SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_1, posLeft, player), SOLID_CYAN, CYAN)
-                   SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_2, posRight, player), SOLID_PINK, PINK)
-
-               elseif collectibleType == CollectibleType.COLLECTIBLE_KEY_PIECE_1 or collectibleType == CollectibleType.COLLECTIBLE_KEY_PIECE_2 then
-                   for _ = 1, NON_GOLD_PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL, posLeft, RandomVector() * MUL_VEC_BY, player)
-                   end
-                   TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN, posLeft, Vector.Zero, player)
-                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
-
-
-               elseif collectibleType == CollectibleType.COLLECTIBLE_MR_BOOM then
-                   SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BOOM, posLeft, player), SOLID_CYAN, CYAN)
-                   SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BOOM, posRight, player), SOLID_PINK, PINK)
-
-               elseif collectibleType == CollectibleType.COLLECTIBLE_BOOM then
-                   for _ = 1, NON_GOLD_PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL, posLeft, RandomVector() * MUL_VEC_BY, player)
-                   end
-                   TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN, posLeft, Vector.Zero, player)
-                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
-
-
-               elseif collectibleType == CollectibleType.COLLECTIBLE_WOODEN_NICKEL then
-                   SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_PAGEANT_BOY, posLeft, player), SOLID_CYAN, CYAN)
-                   SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_PAGEANT_BOY, posRight, player), SOLID_PINK, PINK)
-
-               elseif collectibleType == CollectibleType.COLLECTIBLE_PAGEANT_BOY then
-                   for _ = 1, NON_GOLD_PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, posLeft, RandomVector() * MUL_VEC_BY, player)
-                   end
-                   TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_GOLDEN, posLeft, Vector.Zero, player)
-                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
-                   
-               elseif collectibleType == CollectibleType.COLLECTIBLE_POOP then
-                   for _ = 1, PICKUP_COUNT do
-                       TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_POOP, PoopPickupSubType.POOP_SMALL, posLeft, RandomVector() * MUL_VEC_BY, player)
-                   end
-                   utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
-
-                else
-                    collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
-                    collectible:Remove()
-                    local newCollectibleID
-                    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
-                        for i = 1, 2 do
-                            splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
-                        end
-                    else
-                        splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
-                    end
                 end
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_HALO_OF_FLIES then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_FRIEND_ZONE, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DISTANT_ADMIRATION, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_FRIEND_FINDER then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MY_SHADOW, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_JUDAS_SHADOW, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_QUINTS then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BROTHER_BOBBY, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SISTER_MAGGY, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_EVERYTHING_JAR then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_JAR_OF_FLIES, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_JAR_OF_WISPS, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_DOLLAR then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, posRight, player), SOLID_PINK, PINK)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT), player), SOLID_CYAN, CYAN) -- Yellow
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_QUARTER, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT * 2), player), SOLID_PINK, PINK) -- New color
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_FREE_LEMONADE then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_LEMON_MISHAP, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_THE_JAR, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_DEAD_CAT then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_GUPPYS_TAIL, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_GUPPYS_HEAD, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_GLITCHED_CROWN then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_TMTRAINER, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_CROWN_OF_LIGHT, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_BINGE_EATER then
+            --         SplitAnimationSingle(SpawnCollectible(enums.Collectibles.HEARTY_BREAKFAST, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(enums.Collectibles.HEARTY_BREAKFAST, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_MEGA_BLAST then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BRIMSTONE, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SULFUR, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_NECRONOMICON then
+            --         local missingPage = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET, TrinketType.TRINKET_MISSING_PAGE, posLeft, Vector.Zero, player):ToPickup()
+            --         SplitAnimationSingle(missingPage, SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MISSING_PAGE_2, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER then
+            --         for _ = 1, TROLL_BOMB_COUNT do
+            --             SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_TROLL, posLeft, RandomVector() * MUL_VEC_BY, player):ToPickup(), SOLID_CYAN, CYAN)
+            --         end
+            --         utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
+            --         SplitAnimationSingle(TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_TAROTCARD, Card.CARD_TOWER, posRight, Vector.Zero, player):ToPickup(), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_TORN_PHOTO then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_POLAROID, posLeft, player), WHITE, WHITE)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_NEGATIVE, posRight, player), BLACK, BLACK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_EPIC_FETUS then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DR_FETUS, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DOCTORS_REMOTE, posRight, player), SOLID_PINK, PINK)
+
+            --     elseif collectibleType == CollectibleType.COLLECTIBLE_RED_STEW then
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_ROTTEN_TOMATO, posLeft, player), SOLID_CYAN, CYAN)
+            --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_DINNER, posRight, player), SOLID_PINK, PINK)
+
+
+            --      elseif collectibleType == CollectibleType.COLLECTIBLE_YUM_HEART then
+            --        SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_ISAACS_HEART, posLeft, player), SOLID_CYAN, CYAN)
+            --        SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_ISAACS_HEART, posRight, player), SOLID_PINK, PINK)
+
+            --    elseif collectibleType == CollectibleType.COLLECTIBLE_ISAACS_HEART then
+            --        for _ = 1, PICKUP_COUNT do
+            --            TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, posLeft, RandomVector() * MUL_VEC_BY, player)
+            --        end
+            --        utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
+
+            --    elseif collectibleType == CollectibleType.COLLECTIBLE_SHARP_KEY then
+            --        SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_1, posLeft, player), SOLID_CYAN, CYAN)
+            --        SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_KEY_PIECE_2, posRight, player), SOLID_PINK, PINK)
+
+            --    elseif collectibleType == CollectibleType.COLLECTIBLE_KEY_PIECE_1 or collectibleType == CollectibleType.COLLECTIBLE_KEY_PIECE_2 then
+            --        for _ = 1, NON_GOLD_PICKUP_COUNT do
+            --            TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL, posLeft, RandomVector() * MUL_VEC_BY, player)
+            --        end
+            --        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN, posLeft, Vector.Zero, player)
+            --        utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
+
+
+            --    elseif collectibleType == CollectibleType.COLLECTIBLE_MR_BOOM then
+            --        SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BOOM, posLeft, player), SOLID_CYAN, CYAN)
+            --        SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BOOM, posRight, player), SOLID_PINK, PINK)
+
+            --    elseif collectibleType == CollectibleType.COLLECTIBLE_BOOM then
+            --        for _ = 1, NON_GOLD_PICKUP_COUNT do
+            --            TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL, posLeft, RandomVector() * MUL_VEC_BY, player)
+            --        end
+            --        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN, posLeft, Vector.Zero, player)
+            --        utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
+
+
+            --    elseif collectibleType == CollectibleType.COLLECTIBLE_WOODEN_NICKEL then
+            --        SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_PAGEANT_BOY, posLeft, player), SOLID_CYAN, CYAN)
+            --        SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_PAGEANT_BOY, posRight, player), SOLID_PINK, PINK)
+
+            --    elseif collectibleType == CollectibleType.COLLECTIBLE_PAGEANT_BOY then
+            --        for _ = 1, NON_GOLD_PICKUP_COUNT do
+            --            TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, posLeft, RandomVector() * MUL_VEC_BY, player)
+            --        end
+            --        TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_COIN, CoinSubType.COIN_GOLDEN, posLeft, Vector.Zero, player)
+            --        utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
+                   
+            --    elseif collectibleType == CollectibleType.COLLECTIBLE_POOP then
+            --        for _ = 1, PICKUP_COUNT do
+            --            TSIL.EntitySpecific.SpawnPickup(PickupVariant.PICKUP_POOP, PoopPickupSubType.POOP_SMALL, posLeft, RandomVector() * MUL_VEC_BY, player)
+            --        end
+            --        utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
+
+            --     else
+            --         collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
+            --         collectible:Remove()
+            --         local newCollectibleID
+            --         if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+            --             for i = 1, 2 do
+            --                 splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
+            --             end
+            --         else
+            --             splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
+            --         end
+            --     end
     
                 SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
             end, SCHEDULE_FRAMES)

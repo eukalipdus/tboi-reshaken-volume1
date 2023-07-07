@@ -15,6 +15,12 @@ TSIL.SaveManager.AddPersistentVariable(
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "ClairvoyanceDoubleEffectPerPlayer",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
 
 
 ---@param player EntityPlayer
@@ -28,11 +34,13 @@ function SapphireOrb:OnAmethystOrbUse(_, player, doublePower)
         "ClairvoyanceOrbPlayerFrames"
     )
     local frameCount = Game():GetFrameCount()
-    if doublePower then
-        clairvoyanceOrbPlayerFrames[playerIndex] = frameCount + CLAIRVOYANCE_ORB_DURATION
-    else
-        clairvoyanceOrbPlayerFrames[playerIndex] = frameCount
-    end
+    clairvoyanceOrbPlayerFrames[playerIndex] = frameCount
+
+    local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "ClairvoyanceDoubleEffectPerPlayer"
+    )
+    doubleEffectPerPlayer[playerIndex] = doublePower
 
     local aura = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.CLAIRVOYANCE_AURA,
@@ -128,6 +136,18 @@ end
 
 
 local function FakeCenserEffect(player)
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "ClairvoyanceDoubleEffectPerPlayer"
+    )
+    local isDoubleEffect = doubleEffectPerPlayer[playerIndex]
+
+    local radius = FAKE_CENSER_RADIUS
+    if isDoubleEffect then
+        radius = radius * 1.5
+    end
+
     local nearProjectiles = Isaac.FindInRadius(
         player.Position,
         FAKE_CENSER_RADIUS,
@@ -177,6 +197,17 @@ function SapphireOrb:OnPeffectUpdate(player)
         player:TryRemoveNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
         clairvoyanceOrbPlayerFrames[playerIndex] = nil
         return
+    end
+
+    local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "ClairvoyanceDoubleEffectPerPlayer"
+    )
+    local isDoubleEffect = doubleEffectPerPlayer[playerIndex]
+
+    local projectileReflectInterval = PROJECTILE_REFLECTION_INTERVAL
+    if isDoubleEffect then
+        projectileReflectInterval = math.floor(projectileReflectInterval/2)
     end
 
     if orbDuration % PROJECTILE_REFLECTION_INTERVAL == 0 then

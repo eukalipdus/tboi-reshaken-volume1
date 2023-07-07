@@ -60,3 +60,21 @@ MilkshakeVol1:AddCallback(
     SpiritOrbs.OnCardRender,
     PickupVariant.PICKUP_TAROTCARD
 )
+
+
+---@param rng RNG
+---@param card Card
+---@param playing boolean
+---@param runes boolean
+---@param onlyRunes boolean
+function SpiritOrbs:GetCard(rng, card, playing, runes, onlyRunes)
+    if MilkshakeVol1.utility:IsSpiritOrb(card) then
+        local itemPool = Game():GetItemPool()
+
+        return itemPool:GetCard(rng:Next(), playing, runes, onlyRunes)
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_GET_CARD,
+    SpiritOrbs.GetCard
+)
