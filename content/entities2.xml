@@ -93,7 +93,10 @@
     <entity name="Spirit of Deluge" anm2path="spirit_water.anm2" id="5" variant="300" subtype="483" 
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
-
+	
+	<entity name="Gravestone" anm2path="monster_gravin.anm2" id="1000"  baseHP="3" >
+	</entity>
+	
     <entity name="Vine" anm2path="vines.anm2" id="1000">
 	</entity>
 
