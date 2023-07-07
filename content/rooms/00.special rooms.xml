@@ -810,7 +810,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="6" name="[RE] -  [REDACTED] - Spirit Of Chaos" type="7" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
+	<room variant="6" name="[RE] - Spirit Of Chaos" type="7" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -1448,7 +1448,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="1" name="[RE] -  [REDACTED] - Glassy Bois" type="24" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
+	<room variant="1" name="[RE] - Glassy Bois" type="24" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -1475,7 +1475,7 @@
 			<entity type="1901" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="2" name="[RE] -  [REDACTED] - Bulbness" type="24" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
+	<room variant="2" name="[RE] - Bulbness" type="24" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -1514,7 +1514,7 @@
 			<entity type="33" variant="2" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="1" name="[RE] -  [REDACTED] - Kattack's Idea" type="10" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
+	<room variant="1" name="[RE] - Kattack's Idea" type="10" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="False" x="6" y="-1"/>
 		<door exists="False" x="6" y="7"/>
@@ -1574,7 +1574,7 @@
 			<entity type="60" variant="1" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="2" name="[RE] -  [REDACTED] - Kattack's Idea^2" type="10" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
+	<room variant="2" name="[RE] - Kattack's Idea^2" type="10" subtype="0" shape="1" width="13" height="7" difficulty="0" weight="1.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="False" x="6" y="-1"/>
 		<door exists="False" x="6" y="7"/>
