@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 local game = Game()
 
 --
-RevenanceOrb.TombHP = 1
+RevenanceOrb.TombHP = 3
 RevenanceOrb.SkeletonHP = 1
 RevenanceOrb.SkeletonDMG = 1
 
@@ -51,12 +51,12 @@ function RevenanceOrb:OnRevenanceOrbUse(card, player) -- useFlag
 	local room = game:GetRoom()
 	local rng = player:GetCardRNG(card)
 	game:ShakeScreen(RevenanceOrb.Timeout)
+	--[[
 	local bony = Isaac.Spawn(EntityType.ENTITY_BONY, 0, 0, player.Position, Vector.Zero, nil):ToNPC()
-
 	bony.MaxHitPoints = RevenanceOrb.SkeletonHP
 	bony:GetData().TearDamage = RevenanceOrb.SkeletonDMG
 	bony:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
-
+	--]]
 	local tombNum = rng:RandomInt(2)+4
 	if room:GetRoomShape() > 7 then tombNum = tombNum+2 end
 
