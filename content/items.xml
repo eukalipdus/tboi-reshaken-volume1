@@ -11,6 +11,7 @@
     <active id="11" name="Shattered Orb" description="Fragile Vessel" tags="offensive" quality="3" gfx="collectibles_shatteredorb.png" maxcharges="4" />
     <active id="13" name="Prismatic Dice" description="Quantity over quality" tags="nocantrip offensive" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" />
     <familiar id="14" name="Spirit Bum" description="He wants your soul." gfx="collectibles_spiritbum.png" tags="offensive summonable" quality="0" />
+    <passive id="15" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" quality="2" />
     <familiar id="16" name="Celestial Mirror" description="It's impossible to outrun your own reflection." gfx="InnerReflection.png" tags="monstermanual offensive summonable" quality="0" />
     <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" tags="offensive summonable" quality="3" />
     <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="1" gfx="spoiled_breakfast.png" tags="food nocantrip noeden" quality="0" />
@@ -24,7 +25,6 @@
     <passive id="26" name="Dad's Mitt" description="Curve Ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2"/>
     <familiar id="27" name="Lil Bishop" description="[RACIST PLACEHOLDER]" gfx="collectibles_lilbishop.png" tags="monstermanual summonable" quality="2"/>
     <passive id="28" name="Rainbow Fragment" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="offensive summonable summonable" quality="0"/>
-    <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" quality="2" />
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="Hidden clairvoyant power..." gfx="trinkets_amethystcluster.png" tags="nogreed"/>
