@@ -57,7 +57,11 @@ function witchDoctorMask:UsePill(_, player)
         if TSIL.Pills.IsHorsePill(pillColor) then
             utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
         end
-        player:UseCard(matchingPills[pillColor], UseFlag.USE_NOANIM)
+        local spiritOrb = matchingPills[pillColor]
+        if not spiritOrb then
+            spiritOrb = enums.Orbs.RANDOM
+        end
+        player:UseCard(spiritOrb, UseFlag.USE_NOANIM)
         --utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", false) seems like it should be done but could mess with lyra?
     end
 end
