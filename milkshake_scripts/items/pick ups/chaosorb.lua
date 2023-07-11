@@ -7,6 +7,11 @@ local SPRITESHEET_PER_ORB = {
     [enums.Orbs.FIRE] = "spirit_fire",
     [enums.Orbs.NATURE] = "spirit_nature",
     [enums.Orbs.ELECTRIC] = "spirit_electricity",
+    [enums.Orbs.HOLY] = "spirit_holy",
+    [enums.Orbs.UNHOLY] = "spirit_unholy",
+    [enums.Orbs.POISON] = "spirit_poison",
+    [enums.Orbs.UNDEAD] = "spirit_undead",
+    [enums.Orbs.WATER] = "spirit_water",
 }
 
 

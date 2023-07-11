@@ -14,12 +14,22 @@ local CREEP_DELAY_STACK_DECREASE_SECONDS = 0.2
 local MIN_CREEP_DELAY_SECONDS = 0.2
 local CREEP_DURATION_SECONDS = 1.5
 
+local DOUBLE_CHARGE_DELAY = 10
+
 local DRAIN_TIME_SECONDS = 15
 local DRAIN_STACK_TIMER_DECREASE_SECONDS = 3
 local MIN_DRAIN_TIME_SECONDS = 5
 local DRAIN_INCREASE_SECONDS = 5
 
 local ONE_SECOND = 30
+
+local LARGE_ROOMS = {
+    [RoomShape.ROOMSHAPE_2x2] = true,
+    [RoomShape.ROOMSHAPE_LTL] = true,
+    [RoomShape.ROOMSHAPE_LTR] = true,
+    [RoomShape.ROOMSHAPE_LBL] = true,
+    [RoomShape.ROOMSHAPE_LBR] = true,
+}
 
 local CREEP_DELAY_MIN = CREEP_DELAY_MIN_SECONDS * ONE_SECOND
 local CREEP_DELAY_MAX = CREEP_DELAY_MAX_SECONDS * ONE_SECOND
@@ -69,14 +79,27 @@ local function BatteryAcidData(player)
     return data[key]
 end
 
+---@param player EntityPlayer
+---@param chargeToAdd integer
+local function AddBatteryAcidCharge(player, chargeToAdd)
+    local data = BatteryAcidData(player)
+    data.DrainTimer = data.DrainTimer + DRAIN_INCREASE
+    for _, slot in ipairs({ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_SECONDARY}) do
+        local activeItem = player:GetActiveItem(slot)
+        if activeItem ~= 0 and itemConfig:GetCollectible(activeItem).ChargeType == CHARGETYPE_NORMAL then
+            TSIL.Utils.Functions.RunInFrames(
+                TSIL.Charge.AddCharge,
+                DOUBLE_CHARGE_DELAY,
+                player, slot, chargeToAdd
+            )
+        end
+    end
+end
+
 function batteryAcid:preSpawnCleanAward()
     local chargeToAdd
     local roomShape = game:GetRoom():GetRoomShape()
-    if roomShape == RoomShape.ROOMSHAPE_2x2
-    or roomShape == RoomShape.ROOMSHAPE_LTL
-    or roomShape == RoomShape.ROOMSHAPE_LTR
-    or roomShape == RoomShape.ROOMSHAPE_LBL
-    or roomShape == RoomShape.ROOMSHAPE_LBR then
+    if LARGE_ROOMS[roomShape] then
         chargeToAdd = 2
     else
         chargeToAdd = 1
@@ -86,16 +109,7 @@ function batteryAcid:preSpawnCleanAward()
         local player = Isaac.GetPlayer(i)
         if player:HasCollectible(enums.Collectibles.BATTERY_ACID) then
             local finalChargeToAdd = chargeToAdd * player:GetCollectibleNum(enums.Collectibles.BATTERY_ACID)
-            local data = BatteryAcidData(player)
-            data.DrainTimer = data.DrainTimer + DRAIN_INCREASE
-            local activeItem = player:GetActiveItem(ActiveSlot.SLOT_PRIMARY)
-            if activeItem ~= 0 and itemConfig:GetCollectible(activeItem).ChargeType == CHARGETYPE_NORMAL then
-                TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_PRIMARY, finalChargeToAdd)
-            end
-            local secondItem = player:GetActiveItem(ActiveSlot.SLOT_SECONDARY)
-            if secondItem ~= 0 and itemConfig:GetCollectible(secondItem).ChargeType == CHARGETYPE_NORMAL then
-                TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_SECONDARY, finalChargeToAdd)
-            end
+            AddBatteryAcidCharge(player, finalChargeToAdd)
         end
     end
 end

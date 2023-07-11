@@ -86,7 +86,7 @@
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
-    <entity name="Spirit of Revengance" anm2path="spirit_undead.anm2" id="5" variant="300" subtype="482" 
+    <entity name="Spirit of Revenance" anm2path="spirit_undead.anm2" id="5" variant="300" subtype="482" 
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
