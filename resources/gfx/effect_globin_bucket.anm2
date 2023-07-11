@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="7/2/2023 7:17:43 PM" Version="161" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="7/10/2023 11:43:05 PM" Version="163" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="effects\effect_002_bloodpoof_alt.png" Id="0"/>
@@ -12,6 +12,7 @@
 		<Nulls/>
 		<Events>
 			<Event Name="DropSound" Id="0"/>
+			<Event Name="idkhowtouseIsFinished()" Id="1"/>
 		</Events>
 	</Content>
 	<Animations DefaultAnimation="globin">
@@ -50,6 +51,7 @@
 			<NullAnimations/>
 			<Triggers>
 				<Trigger EventId="0" AtFrame="16"/>
+				<Trigger EventId="1" AtFrame="25"/>
 			</Triggers>
 		</Animation>
 		<Animation Name="gazing_globin" FrameNum="26" Loop="false">

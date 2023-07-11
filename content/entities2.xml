@@ -103,7 +103,8 @@
     <entity name="Vine" anm2path="vines.anm2" id="1000">
 	</entity>
     
-    <entity name="Globin In A Bucket" anm2path="effect_globin_bucket.anm2" id="1000">
+    <entity name="Globin In A Bucket" anm2path="effect_globin_bucket.anm2" id="1000"
+        friction="1">
 	</entity>
 
     <entity name="Clairvoyance Aura" anm2path="clairvoyance_aura.anm2" id="1000">
