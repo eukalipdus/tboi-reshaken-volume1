@@ -10,7 +10,7 @@
 	<entity Name="Spirit of Salvation"      ID="5" Variant="300"  Subtype="479"  Group="Consumables" Image="MilkshakeSprites/SalvationSpirit.png"  Kind="Milkshake!" />
     <entity Name="Spirit of Sacrilege"      ID="5" Variant="300"  Subtype="480"  Group="Consumables" Image="MilkshakeSprites/SacrilegeSpirit.png"  Kind="Milkshake!" />
     <entity Name="Spirit of Virulence"      ID="5" Variant="300"  Subtype="481"  Group="Consumables" Image="MilkshakeSprites/VirulenceSpirit.png"  Kind="Milkshake!" />
-    <entity Name="Spirit of Revengance"     ID="5" Variant="300"  Subtype="482"  Group="Consumables" Image="MilkshakeSprites/RevenganceSpirit.png" Kind="Milkshake!" />
+    <entity Name="Spirit of Revenance"     ID="5" Variant="300"  Subtype="482"  Group="Consumables" Image="MilkshakeSprites/RevenanceSpirit.png" Kind="Milkshake!" />
     <entity Name="Spirit of Deluge"         ID="5" Variant="300"  Subtype="483"  Group="Consumables" Image="MilkshakeSprites/DelugeSpirit.png"     Kind="Milkshake!" />
 
     <entity Name="Fruit Heart"              ID="5" Variant="10"   Subtype="743"  Group="Pickups"     Image="MilkshakeSprites/FruitHeart.png"               Kind="Milkshake!" />

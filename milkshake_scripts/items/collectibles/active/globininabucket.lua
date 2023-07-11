@@ -9,9 +9,11 @@ local globinTypes = {
 function globinInABucket:onUse(collectible, rng, player, flags, slot)
     if player == nil then return end
     player:AnimateCollectible(enums.Collectibles.GLOBIN_IN_A_BUCKET, "Pickup", "PlayerPickupSparkle")
-    local roll = rng:RandomInt(#globinTypes) + 1
-    local globin = Isaac.Spawn(globinTypes[roll], 0, 0, player.Position, Vector(0,0), player)
-    globin:AddCharmed(EntityRef(player), -1)
+    --local roll = rng:RandomInt(#globinTypes) + 1
+    --local globin = Isaac.Spawn(globinTypes[roll], 0, 0, player.Position, Vector(0,0), player)
+    --globin:AddCharmed(EntityRef(player), -1)
+    local effectGlobinBucket = Isaac.Spawn(1000, enums.Effects.GLOBIN_IN_A_BUCKET, 0, player.Position, Vector(0,0), player)
+    --effectGlobinBucket:AddCharmed(EntityRef(player), -1)
 end
 
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, globinInABucket.onUse, enums.Collectibles.GLOBIN_IN_A_BUCKET)
