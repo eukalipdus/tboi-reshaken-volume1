@@ -3,6 +3,9 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local HORSE_PILL_INC = 2048
+local NO_PILL = 0
+
+local playersCurrentPills = {}
 
 local matchingPills = {
     [PillColor.PILL_BLUE_BLUE] = enums.Orbs.RANDOM,
@@ -36,13 +39,13 @@ local matchingPills = {
 
 }
 
-function witchDoctorMask:UsePill(pillEffect, player)
+function witchDoctorMask:UsePill(_, player)
     if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK) then
-        local colorToEffect = {}
-        for i = 1, PillColor.NUM_STANDARD_PILLS do
-            colorToEffect[Game():GetItemPool():GetPillEffect(i, player)] = i
-        end
-        local pillColor = colorToEffect[pillEffect]
+        --local colorToEffect = {}
+        --for i = 1, PillColor.NUM_STANDARD_PILLS do
+        --    colorToEffect[Game():GetItemPool():GetPillEffect(i, player)] = i
+        --end
+        local pillColor = playersCurrentPills[GetPtrHash(player)] --colorToEffect[pillEffect]
         if TSIL.Pills.IsHorsePill(pillColor) then
             utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
         end
@@ -51,5 +54,11 @@ function witchDoctorMask:UsePill(pillEffect, player)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_PILL, witchDoctorMask.UsePill)
+
+function witchDoctorMask:PostPEffectUpdate(player)
+    if player:GetPill(0) == NO_PILL then return end
+    playersCurrentPills[GetPtrHash(player)] = player:GetPill(0)
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, witchDoctorMask.PostPEffectUpdate)
 
 return witchDoctorMask
