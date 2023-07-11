@@ -117,7 +117,7 @@ enums.Orbs = {
     HOLY = Isaac.GetCardIdByName("Spirit Of Salvation"),
     UNHOLY = Isaac.GetCardIdByName("Spirit Of Sacrilege"),
     POISON = Isaac.GetCardIdByName("Spirit Of Virulence"),
-    UNDEAD = Isaac.GetCardIdByName("Spirit Of Revengance"),
+    UNDEAD = Isaac.GetCardIdByName("Spirit Of Revenance"),
     WATER = Isaac.GetCardIdByName("Spirit Of Deluge"),
 }
 
