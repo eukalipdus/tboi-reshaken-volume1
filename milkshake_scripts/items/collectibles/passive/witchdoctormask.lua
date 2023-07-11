@@ -39,6 +39,14 @@ local matchingPills = {
 
 }
 
+--- Adds a pill color and its horse pill variant and gives it a corresponding spirit orb
+---@param pillColor integer
+---@param spiritOrb number
+function MilkshakeVol1.API:AddOrbsPerPill(pillColor, spiritOrb)
+    matchingPills[pillColor] = spiritOrb
+    matchingPills[pillColor + HORSE_PILL_INC] = spiritOrb
+end
+
 function witchDoctorMask:UsePill(_, player)
     if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK) then
         --local colorToEffect = {}
