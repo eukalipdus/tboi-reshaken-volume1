@@ -22,51 +22,59 @@ RevenanceOrb.TombMobs = {
 }
 RevenanceOrb.Timeout = 45
 
---TODO
---TombEffect stones
+
 function RevenanceOrb:GravestonUpd(gravestone)
-	local tears = Isaac.FindInRadius(gravestone.Position, 15, EntityPartition.BULLET | EntityPartition.TEAR)
-	for _, tear in pairs(tears) do
-		tear:Kill()
+	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
+	if gravestone.HitPoints > 0 then return end
+	local rng = gravestone:GetDropRNG()
+	local randMob = RevenanceOrb.TombMobs[rng:RandomInt(#RevenanceOrb.TombMobs)+1]
+	local mob = Isaac.Spawn(randMob[1], randMob[2], randMob[3], gravestone.Position, Vector.Zero, gravestone.SpawnerEntity)
+	if mob.Type ~= EntityType.ENTITY_EFFECT then
+		mob.MaxHitPoints = RevenanceOrb.SkeletonHP
+		mob:GetData().TearDamage = RevenanceOrb.SkeletonDMG
+		mob:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
+	else
+		mob:ToEffect():SetTimeout(180)
+	end
+	gravestone:Remove()
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.GravestonUpd, EntityType.ENTITY_GENERIC_PROP)
+
+
+function RevenanceOrb:GravestonCollision(gravestone, collider)
+	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
+	if (collider:ToTear() or collider:ToProjectile()) and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 15) then
+		collider:GetData().GravetoneTouched = game:GetFrameCount()
 		gravestone.HitPoints = gravestone.HitPoints - 1
-	end 
-	
-	if gravestone:HasMortalDamage() then
-		local rng = gravestone:GetDropRNG()
-		local randMob = RevenanceOrb.TombMobs[rng:RandomInt(#RevenanceOrb.TombMobs)+1]
-		local mob = Isaac.Spawn(randMob[1], randMob[2], randMob[3], gravestone.Position, Vector.Zero, gravestone.SpawnerEntity)
-		if mob.Type ~= EntityType.ENTITY_EFFECT then
-			mob.MaxHitPoints = RevenanceOrb.SkeletonHP
-			mob:GetData().TearDamage = RevenanceOrb.SkeletonDMG
-			mob:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
-		else
-			mob:ToEffect():SetTimeout(180)
-		end
+		gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, RevenanceOrb.GravestonCollision, EntityType.ENTITY_GENERIC_PROP)
+
+
+function RevenanceOrb:OnNewRoom()
+	local gravestones = Isaac.FindByType(EntityType.ENTITY_GENERIC_PROP, enums.ENTITY_GENERIC_PROP.GRAVESTONE)
+	for _, gravestone in pairs(gravestones) do
 		gravestone:Remove()
 	end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, RevenanceOrb.GravestonUpd, enums.Effects.GRAVESTONE)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, RevenanceOrb.OnNewRoom)
 
 function RevenanceOrb:OnRevenanceOrbUse(card, player) -- useFlag
 	local room = game:GetRoom()
 	local rng = player:GetCardRNG(card)
 	game:ShakeScreen(RevenanceOrb.Timeout)
-	--[[
-	local bony = Isaac.Spawn(EntityType.ENTITY_BONY, 0, 0, player.Position, Vector.Zero, nil):ToNPC()
-	bony.MaxHitPoints = RevenanceOrb.SkeletonHP
-	bony:GetData().TearDamage = RevenanceOrb.SkeletonDMG
-	bony:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
-	--]]
+	
 	local tombNum = rng:RandomInt(2)+4
 	if room:GetRoomShape() > 7 then tombNum = tombNum+2 end
 
 	for _ = 1, tombNum do
 		local pos =  Isaac.GetFreeNearPosition(room:GetRandomPosition(0), 10)
-		local ggv = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.GRAVESTONE, 0, pos, Vector.Zero, player)
-		ggv:GetSprite():Play(RevenanceOrb.Anims[rng:RandomInt(#RevenanceOrb.Anims)+1])
-		ggv.MaxHitPoints = RevenanceOrb.TombHP
-		ggv.HitPoints = ggv.MaxHitPoints
-	
+		local gravestone = Isaac.Spawn(EntityType.ENTITY_GENERIC_PROP, enums.ENTITY_GENERIC_PROP.GRAVESTONE, 0, pos, Vector.Zero, player)
+		gravestone:GetSprite():Play(RevenanceOrb.Anims[rng:RandomInt(#RevenanceOrb.Anims)+1])
+		gravestone.MaxHitPoints = RevenanceOrb.TombHP
+		gravestone.HitPoints = gravestone.MaxHitPoints
+		gravestone.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL
 	end
 
 	for gridIndex = 1, room:GetGridSize() do
