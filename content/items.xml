@@ -1,6 +1,6 @@
 <items gfxroot="gfx/items/" version="1">
     <!-- Collectibles -->
-    <active id="1" name="Globin In A Bucket" description="Fleshy Friends" gfx="collectibles_globininabucket.png" maxcharges="4" tags="offensive" quality="2" />
+    <active id="1" name="Globin In A Bucket" description="Fleshy Friends" gfx="collectibles_globininabucket.png" maxcharges="6" tags="offensive" quality="2" />
     <active id="3" name="Golden Shovel" description="Strike gold!" gfx="collectibles_goldenshovel.png" maxcharges="8" shopprice="30" tags="offensive" quality="4" />
     <passive id="5" name="Milkshake!" description="All Stats Shaken Up!"  cache="all" gfx="collectibles_milkshake.png" tags="offensive summonable tearsup" quality="4" />
     <passive id="6" name="Firecracker Flower" description="Bloom and Doom" gfx="collectibles_firecrackerflower.png" devilprice="2" tags="offensive summonable" quality="3" />
