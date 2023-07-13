@@ -1,4 +1,4 @@
-RevenanceOrb = {}
+local RevenanceOrb = {}
 local enums = MilkshakeVol1.enums
 local game = Game()
 local sfx = SFXManager()
@@ -39,13 +39,31 @@ function RevenanceOrb:GravestonUpd(gravestone)
 	local explosions = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.BOMB_EXPLOSION)
 	local mamaMega = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.MAMA_MEGA_EXPLOSION)
 	local lasers = Isaac.FindByType(EntityType.ENTITY_LASER)
-
+	local enemytears =Isaac.FindInRadius(gravestone.Position, 25, EntityPartition.BULLET)
+	gravestone.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL
+	--
 	for _, laser in pairs(lasers) do
-		if laser.Position:Distance(gravestone.Position) <= 25 and laser.CollisionDamage > 0 and (not laser:GetData().GravetoneTouched or game:GetFrameCount() - laser:GetData().GravetoneTouched > 5) then
-			laser:GetData().GravetoneTouched = game:GetFrameCount()
-			DamageTombstone(gravestone)
+		laser = laser:ToLaser()
+		local vectors = laser:GetNonOptimizedSamples()
+		
+		for i=0, #vectors-1 do
+			local pos = vectors:Get(i)
+			if pos:Distance(gravestone.Position) <= 40 and laser.CollisionDamage > 0 and ((not gravestone:GetData().GravetoneTouched or game:GetFrameCount() - gravestone:GetData().GravetoneTouched > 5) or (not laser:GetData().GravetoneTouched or game:GetFrameCount() - laser:GetData().GravetoneTouched > 5)) then
+				gravestone:GetData().GravetoneTouched = game:GetFrameCount()
+				laser:GetData().GravetoneTouched = game:GetFrameCount()
+				DamageTombstone(gravestone)
+			end
 		end
 	end
+	
+	for _, enemytear in pairs(enemytears) do
+		if (not gravestone:GetData().GravetoneTouched or game:GetFrameCount() - gravestone:GetData().GravetoneTouched > 15) then
+			gravestone:GetData().GravetoneTouched = game:GetFrameCount()
+			DamageTombstone(gravestone)
+			enemytear:Kill()
+		end
+	end
+	--
 
 	if #mamaMega > 0 then
 		gravestone.HitPoints = 0
@@ -84,25 +102,18 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.Graveston
 
 function RevenanceOrb:GravestonCollision(gravestone, collider)
 	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
-	local damaged = false
-
-	if (collider:ToTear() or collider:ToProjectile()) and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 15) then
+	if (collider:ToTear()) and ((not gravestone:GetData().GravetoneTouched or game:GetFrameCount() - gravestone:GetData().GravetoneTouched > 15) or (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 15)) then
+		gravestone:GetData().GravetoneTouched = game:GetFrameCount()
 		collider:GetData().GravetoneTouched = game:GetFrameCount()
 		if collider.CollisionDamage > 0 then
-			damaged = true
+			DamageTombstone(gravestone)
 		end
-	elseif collider:ToKnife() and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 5) then
+	elseif collider:ToKnife() and ((not gravestone:GetData().GravetoneTouched or game:GetFrameCount() - gravestone:GetData().GravetoneTouched > 5) or (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 5)) then
+		gravestone:GetData().GravetoneTouched = game:GetFrameCount()
 		collider:GetData().GravetoneTouched = game:GetFrameCount()
 		if collider.CollisionDamage > 0 then
-			damaged = true
+			DamageTombstone(gravestone)
 		end
-	--elseif collider:ToLaser() then
-	--	print('LASER TOMB COLLIDED')
-	--	damaged = true
-	end
-
-	if damaged then
-		DamageTombstone(gravestone)
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, RevenanceOrb.GravestonCollision, EntityType.ENTITY_GENERIC_PROP)
