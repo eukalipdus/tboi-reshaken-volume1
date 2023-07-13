@@ -197,4 +197,29 @@
     for i, value in pairs(ffPills) do
         MilkshakeVol1.API:AddOrbsPerPill(i, value)
     end
+
+    --Special globins
+    MilkshakeVol1.API:AddSpecialGlobin(
+        "gfx/effect_globin_bucket.anm2",
+        "conglobberate_small",
+        FiendFolio.FF.ConglobberateSmall.ID,
+        FiendFolio.FF.ConglobberateSmall.Var,
+        0,
+        BackdropType.CORPSE_ENTRANCE,
+        BackdropType.CORPSE,
+        BackdropType.CORPSE2,
+        BackdropType.CORPSE3
+    )
+
+    MilkshakeVol1.API:AddSpecialGlobin(
+        "gfx/effect_globin_bucket.anm2",
+        "spoilie",
+        FiendFolio.FF.Spoilie.ID,
+        FiendFolio.FF.Spoilie.Var,
+        0,
+        BackdropType.CORPSE_ENTRANCE,
+        BackdropType.CORPSE,
+        BackdropType.CORPSE2,
+        BackdropType.CORPSE3
+    )
 end)
