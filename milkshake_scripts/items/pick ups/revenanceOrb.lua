@@ -1,11 +1,11 @@
 RevenanceOrb = {}
 local enums = MilkshakeVol1.enums
 local game = Game()
-
+local sfx = SFXManager()
 --
 RevenanceOrb.TombHP = 3
-RevenanceOrb.SkeletonHP = 1
-RevenanceOrb.SkeletonDMG = 1
+RevenanceOrb.SkeletonHP = 5
+RevenanceOrb.SkeletonDMG = 3
 
 RevenanceOrb.Undeads = {
 [EntityType.ENTITY_BONY] = true,
@@ -40,12 +40,20 @@ function RevenanceOrb:GravestonUpd(gravestone)
 	end
 
 	if gravestone.HitPoints > 0 then return end
+	local level = game:GetLevel()
+	local stageCounter = level:GetAbsoluteStage()
+	local dmag = RevenanceOrb.SkeletonDMG + stageCounter
+	local skelHP = RevenanceOrb.SkeletonHP
+	for _ = 1, stageCounter do
+		skelHP = skelHP +4
+	end
 	local rng = gravestone:GetDropRNG()
 	local randMob = RevenanceOrb.TombMobs[rng:RandomInt(#RevenanceOrb.TombMobs)+1]
 	local mob = Isaac.Spawn(randMob[1], randMob[2], randMob[3], gravestone.Position, Vector.Zero, gravestone.SpawnerEntity)
 	if mob.Type ~= EntityType.ENTITY_EFFECT then
-		mob.MaxHitPoints = RevenanceOrb.SkeletonHP
-		mob:GetData().TearDamage = RevenanceOrb.SkeletonDMG
+
+		mob.MaxHitPoints = skelHP
+		mob:GetData().TearDamage = dmag
 		mob:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
 	else
 		mob:ToEffect():SetTimeout(180)
@@ -57,21 +65,28 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.Graveston
 
 function RevenanceOrb:GravestonCollision(gravestone, collider)
 	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
+	local damaged = false
+
 	if (collider:ToTear() or collider:ToProjectile()) and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 15) then
 		collider:GetData().GravetoneTouched = game:GetFrameCount()
 		if collider.CollisionDamage > 0 then
-			gravestone.HitPoints = gravestone.HitPoints - 1
-			gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
+			damaged = true
 		end
 	elseif collider:ToKnife() and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 5) then
 		collider:GetData().GravetoneTouched = game:GetFrameCount()
 		if collider.CollisionDamage > 0 then
-			gravestone.HitPoints = gravestone.HitPoints - 1
-			gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
+			damaged = true
 		end
 	elseif collider:ToLaser() then
+		print('LASER TOMB COLLIDED')
+		damaged = true
+	end
+
+	if damaged then
 		gravestone.HitPoints = gravestone.HitPoints - 1
 		gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
+		sfx:Play(SoundEffect.SOUND_STONE_IMPACT)
+		game:SpawnParticles(gravestone.Position, EffectVariant.ROCK_PARTICLE, 3, 1, Color.Default, 100000)
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, RevenanceOrb.GravestonCollision, EntityType.ENTITY_GENERIC_PROP)
