@@ -25,6 +25,20 @@ RevenanceOrb.Timeout = 45
 
 function RevenanceOrb:GravestonUpd(gravestone)
 	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
+
+	local explosions = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.BOMB_EXPLOSION)
+	local mamaMega = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.MAMA_MEGA_EXPLOSION)
+
+	if #mamaMega > 0 then
+		gravestone.HitPoints = 0
+	elseif #explosions > 0 then
+		for _, explos in pairs(explosions) do
+			if explos:GetSprite():GetFrame() < 3 and explos.Position:Distance(gravestone.Position) <= 90 * explos.SpriteScale.X then
+				gravestone.HitPoints = 0
+			end
+		end
+	end
+
 	if gravestone.HitPoints > 0 then return end
 	local rng = gravestone:GetDropRNG()
 	local randMob = RevenanceOrb.TombMobs[rng:RandomInt(#RevenanceOrb.TombMobs)+1]
@@ -43,10 +57,12 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.Graveston
 
 function RevenanceOrb:GravestonCollision(gravestone, collider)
 	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
-	if (collider:ToTear() or collider:ToProjectile()) and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 15) then
+	if (collider:ToTear() or collider:ToProjectile() or collider:ToKnife() or collider:ToLaser()) and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 15) then
 		collider:GetData().GravetoneTouched = game:GetFrameCount()
-		gravestone.HitPoints = gravestone.HitPoints - 1
-		gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
+		if collider.CollisionDamage > 0 then
+			gravestone.HitPoints = gravestone.HitPoints - 1
+			gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
+		end
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, RevenanceOrb.GravestonCollision, EntityType.ENTITY_GENERIC_PROP)
