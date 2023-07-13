@@ -57,12 +57,21 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.Graveston
 
 function RevenanceOrb:GravestonCollision(gravestone, collider)
 	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
-	if (collider:ToTear() or collider:ToProjectile() or collider:ToKnife() or collider:ToLaser()) and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 15) then
+	if (collider:ToTear() or collider:ToProjectile()) and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 15) then
 		collider:GetData().GravetoneTouched = game:GetFrameCount()
 		if collider.CollisionDamage > 0 then
 			gravestone.HitPoints = gravestone.HitPoints - 1
 			gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
 		end
+	elseif collider:ToKnife() and (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 5) then
+		collider:GetData().GravetoneTouched = game:GetFrameCount()
+		if collider.CollisionDamage > 0 then
+			gravestone.HitPoints = gravestone.HitPoints - 1
+			gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
+		end
+	elseif collider:ToLaser() then
+		gravestone.HitPoints = gravestone.HitPoints - 1
+		gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, RevenanceOrb.GravestonCollision, EntityType.ENTITY_GENERIC_PROP)
