@@ -22,11 +22,15 @@ RevenanceOrb.TombMobs = {
 }
 RevenanceOrb.Timeout = 45
 
+local function SoundParticle()
+	sfx:Play(SoundEffect.SOUND_STONE_IMPACT)
+	game:SpawnParticles(gravestone.Position, EffectVariant.TOOTH_PARTICLE, 3, 1, Color(0.5,0.5,0.5), 100000)
+end
+
 local function DamageTombstone(gravestone)
 	gravestone.HitPoints = gravestone.HitPoints - 1
 	gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
-	sfx:Play(SoundEffect.SOUND_STONE_IMPACT)
-	game:SpawnParticles(gravestone.Position, EffectVariant.TOOTH_PARTICLE, 3, 1, Color(0.5,0.5,0.5), 100000)
+	SoundParticle()
 end
 
 function RevenanceOrb:GravestonUpd(gravestone)
@@ -54,6 +58,7 @@ function RevenanceOrb:GravestonUpd(gravestone)
 	end
 
 	if gravestone.HitPoints > 0 then return end
+	SoundParticle()
 	local level = game:GetLevel()
 	local stageCounter = level:GetAbsoluteStage()
 	local dmag = RevenanceOrb.SkeletonDMG + stageCounter
