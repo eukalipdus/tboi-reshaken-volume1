@@ -22,12 +22,26 @@ RevenanceOrb.TombMobs = {
 }
 RevenanceOrb.Timeout = 45
 
+local function DamageTombstone(gravestone)
+	gravestone.HitPoints = gravestone.HitPoints - 1
+	gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
+	sfx:Play(SoundEffect.SOUND_STONE_IMPACT)
+	game:SpawnParticles(gravestone.Position, EffectVariant.TOOTH_PARTICLE, 3, 1, Color(0.5,0.5,0.5), 100000)
+end
 
 function RevenanceOrb:GravestonUpd(gravestone)
 	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
 
 	local explosions = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.BOMB_EXPLOSION)
 	local mamaMega = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.MAMA_MEGA_EXPLOSION)
+	local lasers = Isaac.FindByType(EntityType.ENTITY_LASER)
+
+	for _, laser in pairs(lasers) do
+		if laser.Position:Distance(gravestone.Position) <= 25 and laser.CollisionDamage > 0 and (not laser:GetData().GravetoneTouched or game:GetFrameCount() - laser:GetData().GravetoneTouched > 5) then
+			laser:GetData().GravetoneTouched = game:GetFrameCount()
+			DamageTombstone(gravestone)
+		end
+	end
 
 	if #mamaMega > 0 then
 		gravestone.HitPoints = 0
@@ -77,16 +91,13 @@ function RevenanceOrb:GravestonCollision(gravestone, collider)
 		if collider.CollisionDamage > 0 then
 			damaged = true
 		end
-	elseif collider:ToLaser() then
-		print('LASER TOMB COLLIDED')
-		damaged = true
+	--elseif collider:ToLaser() then
+	--	print('LASER TOMB COLLIDED')
+	--	damaged = true
 	end
 
 	if damaged then
-		gravestone.HitPoints = gravestone.HitPoints - 1
-		gravestone:SetColor(Color(0.5,0,0),10,1, true, false)
-		sfx:Play(SoundEffect.SOUND_STONE_IMPACT)
-		game:SpawnParticles(gravestone.Position, EffectVariant.ROCK_PARTICLE, 3, 1, Color.Default, 100000)
+		DamageTombstone(gravestone)
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, RevenanceOrb.GravestonCollision, EntityType.ENTITY_GENERIC_PROP)
