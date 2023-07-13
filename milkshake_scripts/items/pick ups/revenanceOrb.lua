@@ -4,7 +4,7 @@ local game = Game()
 local sfx = SFXManager()
 --
 RevenanceOrb.TombHP = 3
-RevenanceOrb.SkeletonHP = 5
+RevenanceOrb.SkeletonHP = 1
 RevenanceOrb.SkeletonDMG = 3
 
 RevenanceOrb.Undeads = {
