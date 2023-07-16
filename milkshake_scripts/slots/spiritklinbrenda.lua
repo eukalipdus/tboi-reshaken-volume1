@@ -48,15 +48,15 @@ local glassTrinkets = {
 ---@type BrendaReward[]
 local brendaRewards = {}
 local possibleWisps = {
-    enums.Collectibles.SPECIAL_BRENDA_FIRE_WISP,
-    CollectibleType.COLLECTIBLE_TELEPATHY_BOOK,
-    CollectibleType.COLLECTIBLE_PAUSE, -- Change to custom (Drops a fruit heart when dying)
-    CollectibleType.COLLECTIBLE_TELEPORT_2, -- Change to custom (Tech zero tears)
-    CollectibleType.COLLECTIBLE_SHOOP_DA_WHOOP, -- Change to custom (Blue laser)
-    CollectibleType.COLLECTIBLE_LEMON_MISHAP,
-    CollectibleType.COLLECTIBLE_CRACK_THE_SKY, -- Change to custom (Same, but cross sprite)
-    CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
-    CollectibleType.COLLECTIBLE_SATANIC_BIBLE
+    -- enums.Collectibles.SPECIAL_BRENDA_FIRE_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_PSYCHIC_WISP,
+    -- CollectibleType.COLLECTIBLE_PAUSE, -- Change to custom (Drops a fruit heart when dying)
+    -- CollectibleType.COLLECTIBLE_TELEPORT_2, -- Change to custom (Tech zero tears)
+    -- CollectibleType.COLLECTIBLE_SHOOP_DA_WHOOP, -- Change to custom (Blue laser)
+    -- CollectibleType.COLLECTIBLE_LEMON_MISHAP,
+    -- CollectibleType.COLLECTIBLE_CRACK_THE_SKY, -- Change to custom (Same, but cross sprite)
+    -- CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
+    -- CollectibleType.COLLECTIBLE_SATANIC_BIBLE
 }
 
 ---Adds a custom character's soul stone to the Spirit Klin's reward pool.

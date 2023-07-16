@@ -87,5 +87,10 @@
 	<color name="tear_vengeful" r="380" g="380" b="380" or="200"/>
 
 	<!-- Special Brenda Fire Wisp -->
-	<wisp id="500" hp="10" layer="1" damage="3" fireDelay="15" flameColor="flame_orange" coreColor="core_orange" tearColor="tear_orange"/>
+	<wisp id="500" hp="10" layer="1" damage="3" fireDelay="15"
+	flameColor="flame_orange" coreColor="core_orange" tearColor="tear_orange"/>
+
+	<!-- Special Brenda Psychic Wisp -->
+	<wisp id="501" hp="10" layer="1" damage="3" fireDelay="15" tearFlags="2"
+	flameColor="flame_purple" coreColor="core_purple" tearColor="tear_purple"/>
 </wisps>
