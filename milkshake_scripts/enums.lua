@@ -29,6 +29,8 @@ enums.Collectibles = {
     DOGGY_BAG = Isaac.GetItemIdByName("Doggy Bag"),
     LIL_BISHOP = Isaac.GetItemIdByName("Lil Bishop"),
     WITCH_DOCTOR_MASK = Isaac.GetItemIdByName("Witch Doctor Mask"),
+
+    SPECIAL_BRENDA_FIRE_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM FIRE WISP")
 }
 
 enums.Trinkets = {

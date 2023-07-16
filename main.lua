@@ -79,3 +79,7 @@ include("milkshake_scripts.items.pick ups.revenanceOrb")
 
 --Slots
 include("milkshake_scripts.slots.spiritklinbrenda")
+
+
+--Wisps
+include("milkshake_scripts.wisps.brendafirewisp")

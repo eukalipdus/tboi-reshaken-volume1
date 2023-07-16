@@ -41,6 +41,9 @@
     <trinket name="Crystal Penny" description="Wealth of Knowledge"  gfx="trinkets_crystalpenny.png" />
     <trinket name="Rock Wheel"    description="Stone Aged Allies"    gfx="rock_wheel.png" cache="speed" tags="nogreed"/>
 
+    <!-- Hidden items -->
+    <passive id="500" name="BRENDA CUSTOM FIRE WISP" description="Report this to the Milkshake devs" tags="hidden" />
+
     <!-- unused -->
     <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true"/> 
     <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true"/>

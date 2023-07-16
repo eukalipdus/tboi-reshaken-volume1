@@ -48,7 +48,7 @@ local glassTrinkets = {
 ---@type BrendaReward[]
 local brendaRewards = {}
 local possibleWisps = {
-    CollectibleType.COLLECTIBLE_RED_CANDLE, -- Change to custom (orange and persistent)
+    enums.Collectibles.SPECIAL_BRENDA_FIRE_WISP,
     CollectibleType.COLLECTIBLE_TELEPATHY_BOOK,
     CollectibleType.COLLECTIBLE_PAUSE, -- Change to custom (Drops a fruit heart when dying)
     CollectibleType.COLLECTIBLE_TELEPORT_2, -- Change to custom (Tech zero tears)
