@@ -93,4 +93,8 @@
 	<!-- Special Brenda Psychic Wisp -->
 	<wisp id="501" hp="10" layer="1" damage="3" fireDelay="15" tearFlags="2"
 	flameColor="flame_purple" coreColor="core_purple" tearColor="tear_purple"/>
+
+	<!-- Special Brenda Nature Wisp -->
+	<wisp id="502" hp="10" layer="1" damage="3" fireDelay="15"
+	flameColor="flame_green" coreColor="core_green" tearColor="tear_blue"/>
 </wisps>

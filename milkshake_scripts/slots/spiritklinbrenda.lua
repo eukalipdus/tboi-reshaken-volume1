@@ -49,8 +49,8 @@ local glassTrinkets = {
 local brendaRewards = {}
 local possibleWisps = {
     -- enums.Collectibles.SPECIAL_BRENDA_FIRE_WISP,
-    enums.Collectibles.SPECIAL_BRENDA_PSYCHIC_WISP,
-    -- CollectibleType.COLLECTIBLE_PAUSE, -- Change to custom (Drops a fruit heart when dying)
+    -- enums.Collectibles.SPECIAL_BRENDA_PSYCHIC_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_NATURE_WISP,
     -- CollectibleType.COLLECTIBLE_TELEPORT_2, -- Change to custom (Tech zero tears)
     -- CollectibleType.COLLECTIBLE_SHOOP_DA_WHOOP, -- Change to custom (Blue laser)
     -- CollectibleType.COLLECTIBLE_LEMON_MISHAP,
