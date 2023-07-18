@@ -62,6 +62,7 @@ function doggyBag:FamiliarInit(bag)
     aura:FollowParent(bag)
     aura:AddEntityFlags(EntityFlag.FLAG_PERSISTENT)
     aura.Color = Color(1, 1, 1, 0.3)
+    aura.ParentOffset = Vector(0,-11)
     bag.Child = aura
     bag:AddToFollowers()
 end
@@ -80,7 +81,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, doggyBag.FamiliarUpdate, enums.Familiars.DOGGY_BAG)
 
 function doggyBag:RemoveCloud(bag)
-    if bag.Variant ~= enums.Familiars.DOGGY_BAG then return end
-    bag.Child:Die()
+    if bag.Variant ~= enums.Familiars.DOGGY_BAG or not bag.Child then
+        return end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, doggyBag.RemoveCloud, EntityType.ENTITY_FAMILIAR)
