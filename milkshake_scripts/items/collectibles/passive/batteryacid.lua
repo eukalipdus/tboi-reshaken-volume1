@@ -86,12 +86,16 @@ local function AddBatteryAcidCharge(player, chargeToAdd)
     data.DrainTimer = data.DrainTimer + DRAIN_INCREASE
     for _, slot in ipairs({ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_SECONDARY}) do
         local activeItem = player:GetActiveItem(slot)
-        if activeItem ~= 0 and itemConfig:GetCollectible(activeItem).ChargeType == CHARGETYPE_NORMAL then
+
+        if activeItem ~= 0
+        and itemConfig:GetCollectible(activeItem).ChargeType == CHARGETYPE_NORMAL
+        and TSIL.Charge.GetChargesAwayFromMax(player, slot) > 0 then
             TSIL.Utils.Functions.RunInFrames(
                 TSIL.Charge.AddCharge,
                 DOUBLE_CHARGE_DELAY,
                 player, slot, chargeToAdd
             )
+            return
         end
     end
 end
