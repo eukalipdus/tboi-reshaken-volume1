@@ -7,6 +7,9 @@ local FLIES_TO_SPAWN_BFFS = 2
 local DIPS_TO_SPAWN = 2
 local DIPS_TO_SPAWN_BFFS = 4
 
+local CLOUD_ALPHA = 0.3
+local CLOUD_OFFSET = Vector(0,-11)
+
 ---@param bag EntityFamiliar
 local function DoggyBagTrigger(bag)
     local player = bag.Player
@@ -61,8 +64,8 @@ function doggyBag:FamiliarInit(bag)
     ):ToEffect()
     aura:FollowParent(bag)
     aura:AddEntityFlags(EntityFlag.FLAG_PERSISTENT)
-    aura.Color = Color(1, 1, 1, 0.3)
-    aura.ParentOffset = Vector(0,-11)
+    aura.Color = Color(1, 1, 1, CLOUD_ALPHA)
+    aura.ParentOffset = CLOUD_OFFSET
     bag.Child = aura
     bag:AddToFollowers()
 end
