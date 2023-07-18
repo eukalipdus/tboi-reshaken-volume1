@@ -86,5 +86,6 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, doggyBag.FamiliarUpda
 function doggyBag:RemoveCloud(bag)
     if bag.Variant ~= enums.Familiars.DOGGY_BAG or not bag.Child then
         return end
+    bag.Child:Die()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, doggyBag.RemoveCloud, EntityType.ENTITY_FAMILIAR)
