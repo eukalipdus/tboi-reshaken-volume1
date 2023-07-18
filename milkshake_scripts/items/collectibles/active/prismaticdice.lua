@@ -262,7 +262,6 @@ function prismaticDice:onUse(_, _, player)
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MIND, posLeft, player), SOLID_CYAN, CYAN)
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BODY, posRight, player), SOLID_PINK, PINK)
                     SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SOUL, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT), player), SOLID_PINK, PINK) -- Yellow
-                end
 
             --     elseif collectibleType == CollectibleType.COLLECTIBLE_HALO_OF_FLIES then
             --         SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_FRIEND_ZONE, posLeft, player), SOLID_CYAN, CYAN)
@@ -382,18 +381,18 @@ function prismaticDice:onUse(_, _, player)
             --        end
             --        utility:RecycleCollectible(posLeft, player, Game():GetRoom():GetType(), Game():GetItemPool(), seed, rng, true)
 
-            --     else
-            --         collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
-            --         collectible:Remove()
-            --         local newCollectibleID
-            --         if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
-            --             for i = 1, 2 do
-            --                 splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
-            --             end
-            --         else
-            --             splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
-            --         end
-            --     end
+                 else
+                     collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
+                     collectible:Remove()
+                     local newCollectibleID
+                     if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+                         for i = 1, 2 do
+                             splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
+                         end
+                     else
+                         splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
+                     end
+                 end
     
                 SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
             end, SCHEDULE_FRAMES)
