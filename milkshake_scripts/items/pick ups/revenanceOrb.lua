@@ -33,6 +33,20 @@ local function DamageTombstone(gravestone)
 	SoundParticle(gravestone)
 end
 
+local function CollisionTombstone(gravestone, collider, checkFrame)
+	local colData = collider:GetData()
+	local grbData = gravestone:GetData()
+	if (not grbData.GravetoneTouched or game:GetFrameCount() - grbData.GravetoneTouched > checkFrame) or (not colData.GravetoneTouched or game:GetFrameCount() - colData.GravetoneTouched > checkFrame) then
+		grbData.GravetoneTouched = game:GetFrameCount()
+		colData.GravetoneTouched = game:GetFrameCount()
+		if collider.CollisionDamage > 0 then
+			DamageTombstone(gravestone)
+		end
+	end
+end
+
+
+
 function RevenanceOrb:GravestonUpd(gravestone)
 	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
 
@@ -63,7 +77,6 @@ function RevenanceOrb:GravestonUpd(gravestone)
 			enemytear:Kill()
 		end
 	end
-	--
 
 	if #mamaMega > 0 then
 		gravestone.HitPoints = 0
@@ -77,8 +90,7 @@ function RevenanceOrb:GravestonUpd(gravestone)
 
 	if gravestone.HitPoints > 0 then return end
 	SoundParticle(gravestone)
-	local level = game:GetLevel()
-	local stageCounter = level:GetAbsoluteStage()
+	local stageCounter = MilkshakeVol1.utility:GetCurrentChapter()
 	local dmag = RevenanceOrb.SkeletonDMG + stageCounter
 	local skelHP = RevenanceOrb.SkeletonHP
 	for _ = 1, stageCounter do
@@ -99,21 +111,12 @@ function RevenanceOrb:GravestonUpd(gravestone)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.GravestonUpd, EntityType.ENTITY_GENERIC_PROP)
 
-
 function RevenanceOrb:GravestonCollision(gravestone, collider)
 	if gravestone.Variant ~= enums.ENTITY_GENERIC_PROP.GRAVESTONE then return end
-	if (collider:ToTear()) and ((not gravestone:GetData().GravetoneTouched or game:GetFrameCount() - gravestone:GetData().GravetoneTouched > 15) or (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 15)) then
-		gravestone:GetData().GravetoneTouched = game:GetFrameCount()
-		collider:GetData().GravetoneTouched = game:GetFrameCount()
-		if collider.CollisionDamage > 0 then
-			DamageTombstone(gravestone)
-		end
-	elseif collider:ToKnife() and ((not gravestone:GetData().GravetoneTouched or game:GetFrameCount() - gravestone:GetData().GravetoneTouched > 5) or (not collider:GetData().GravetoneTouched or game:GetFrameCount() - collider:GetData().GravetoneTouched > 5)) then
-		gravestone:GetData().GravetoneTouched = game:GetFrameCount()
-		collider:GetData().GravetoneTouched = game:GetFrameCount()
-		if collider.CollisionDamage > 0 then
-			DamageTombstone(gravestone)
-		end
+	if collider:ToTear() then
+		CollisionTombstone(gravestone, collider, 15)
+	elseif collider:ToKnife() then
+		CollisionTombstone(gravestone, collider, 5)
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, RevenanceOrb.GravestonCollision, EntityType.ENTITY_GENERIC_PROP)
