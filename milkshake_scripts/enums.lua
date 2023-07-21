@@ -72,6 +72,7 @@ enums.Effects = {
     REFLECTED_PROJECTILE_GLOW = Isaac.GetEntityVariantByName("Reflected Projectile Glow"),
 	--GRAVESTONE = Isaac.GetEntityVariantByName("Gravestone"),
     GLOBIN_IN_A_BUCKET = Isaac.GetEntityVariantByName("Globin In A Bucket"),
+    DELUGE_LASER = Isaac.GetEntityVariantByName("Deluge Laser"),
 }
 
 enums.ENTITY_GENERIC_PROP = { --id = 960
@@ -84,6 +85,7 @@ enums.Sounds = {
 
 enums.Costumes = {
     CLAIRVOYANCE_ORB = Isaac.GetCostumeIdByPath("gfx/characters/clairvoyance_orb.anm2"),
+    DELUGE_ORB = Isaac.GetCostumeIdByPath("gfx/characters/spirit_water.anm2"),
 }
 
 enums.Hearts = {

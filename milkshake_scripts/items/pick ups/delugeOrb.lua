@@ -7,6 +7,7 @@ DelugeOrb.Radius = 600
 DelugeOrb.Speed = -1.9
 DelugeOrb.WaterSpeed = 5
 DelugeOrb.Timeout = 360
+DelugeOrb.DamageTick = 5
 
 --TODO
 --Custom Hush Laser?
@@ -48,23 +49,31 @@ function DelugeOrb:onWaterfallUpdate(effect)
 		game:UpdateStrangeAttractor(effect.Position, DelugeOrb.Force, DelugeOrb.Radius)
 	 	local player = effect.Parent:ToPlayer()
 		effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ENEMIES
-		effect.CollisionDamage = player.Damage * 10
+		--effect.CollisionDamage = player.Damage * 10
 		effect.Velocity = player:GetShootingInput() * player.ShotSpeed * DelugeOrb.WaterSpeed
+		if effect.FrameCount% DelugeOrb.DamageTick == 0 then
+			for _, enemy in pairs(Isaac.FindInRadius(player.Position, 5000, EntityPartition.ENEMY)) do
+				if enemy:ToNPC() then
+					enemy:TakeDamage(player.Damage * 10)
+				end
+			end
+		end
 		if effect.Timeout <= 1 then
 			player:GetData().DelugeOrbUsed = nil
 			player:AddCacheFlags(CacheFlag.CACHE_SPEED)
 			player:EvaluateItems()
+			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
 		end
 	end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, DelugeOrb.onWaterfallUpdate, EffectVariant.HUSH_LASER)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, DelugeOrb.onWaterfallUpdate, enums.Effects.DELUGE_LASER)
 
 
 function DelugeOrb:OnDelugeOrbUse(card, player) -- useFlag
 	local room = game:GetRoom()
 	local data = player:GetData()
 	data.DelugeOrbUsed = true
-	local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER, 1, room:GetCenterPos(), Vector.Zero, player):ToEffect()
+	local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER, 1, room:GetCenterPos(), Vector.Zero, player):ToEffect()
 	effect:GetData().DelugeOrb = true
 	effect.Parent = player:ToPlayer()
 	effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
@@ -74,5 +83,6 @@ function DelugeOrb:OnDelugeOrbUse(card, player) -- useFlag
 	effect.CollisionDamage = player.Damage * 10
 	player:AddCacheFlags(CacheFlag.CACHE_SPEED)
 	player:EvaluateItems()
+	player:AddNullCostume(enums.Costumes.DELUGE_ORB)
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, DelugeOrb.OnDelugeOrbUse, enums.Orbs.WATER)
