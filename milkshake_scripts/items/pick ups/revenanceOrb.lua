@@ -92,10 +92,7 @@ function RevenanceOrb:GravestonUpd(gravestone)
 	SoundParticle(gravestone)
 	local stageCounter = MilkshakeVol1.utility:GetCurrentChapter()
 	local dmag = RevenanceOrb.SkeletonDMG + stageCounter
-	local skelHP = RevenanceOrb.SkeletonHP
-	for _ = 1, stageCounter do
-		skelHP = skelHP +4
-	end
+	local skelHP = RevenanceOrb.SkeletonHP + 4*stageCounter
 	local rng = gravestone:GetDropRNG()
 	local randMob = RevenanceOrb.TombMobs[rng:RandomInt(#RevenanceOrb.TombMobs)+1]
 	local mob = Isaac.Spawn(randMob[1], randMob[2], randMob[3], gravestone.Position, Vector.Zero, gravestone.SpawnerEntity)
@@ -156,10 +153,11 @@ function RevenanceOrb:OnRevenanceOrbUse(card, player) -- useFlag
 	end
 
 	local undeads = Isaac.FindInRadius(player.Position, 5000, EntityPartition.ENEMY)
+	local stageCounter = MilkshakeVol1.utility:GetCurrentChapter()
+	local dmag = RevenanceOrb.SkeletonDMG + stageCounter
 	for _, undead in pairs(undeads) do
 		if RevenanceOrb.Undeads[undead.Type] then
-			undead.MaxHitPoints = RevenanceOrb.SkeletonHP
-			undead:GetData().TearDamage = RevenanceOrb.SkeletonDMG
+			undead:GetData().TearDamage = dmag
 			undead:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
 		end
 	end
@@ -176,8 +174,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PROJECTILE_UPDATE, RevenanceOrb.O
 
 function RevenanceOrb:onEnemyTakesDMG(entity, _, damageFlags, source, DamageCountdown) -- no way to change amount, blame someone
 	if source.Entity and source.Entity:ToProjectile() and source.Entity:GetData().BoneyMShootUPD then
+		entity:TakeDamage(source.Entity:GetData().BoneyMShootUPD, damageFlags, source, DamageCountdown)
 		source.Entity:GetData().BoneyMShootUPD = nil
-		entity:TakeDamage(RevenanceOrb.SkeletonDMG, damageFlags, source, DamageCountdown)
 		return false
 	end
 end
