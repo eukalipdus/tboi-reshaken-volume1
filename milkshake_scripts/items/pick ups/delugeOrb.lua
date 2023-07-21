@@ -69,9 +69,9 @@ function DelugeOrb:onWaterfallUpdate(effect)
 	--effect.CollisionDamage = player.Damage * 10
 	effect.Velocity = player:GetShootingInput() * player.ShotSpeed * DelugeOrb.WaterSpeed
 	if effect.FrameCount % DelugeOrb.DamageTick == 0 then
-		for _, enemy in pairs(Isaac.FindInRadius(player.Position, 5000, EntityPartition.ENEMY)) do
+		for _, enemy in pairs(Isaac.FindInRadius(player.Position, 60, EntityPartition.ENEMY)) do
 			if enemy:ToNPC() then
-				enemy:TakeDamage(player.Damage * 10, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(player︎), 1)
+				enemy:TakeDamage(player.Damage * 10, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(player), 1)
 			end
 		end
 	end
