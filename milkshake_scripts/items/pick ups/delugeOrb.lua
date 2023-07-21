@@ -47,6 +47,7 @@ function DelugeOrb:onWaterfallUpdate(effect)
 	local effectData = effect:GetData()
 	if not effectData.DelugeOrb then return end
 	effect:GetSprite():Play("NormalDelugeLaser")
+
 	local player = effect.Parent:ToPlayer()
 	if effect.FrameCount == 1 then
 		player:UseActiveItem(CollectibleType.COLLECTIBLE_FLUSH, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC)
