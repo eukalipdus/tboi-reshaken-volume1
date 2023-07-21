@@ -46,6 +46,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, DelugeOrb.onNewRoom)
 function DelugeOrb:onWaterfallUpdate(effect)
 	local effectData = effect:GetData()
 	if not effectData.DelugeOrb then return end
+	effect:GetSprite():Play("NormalDelugeLaser")
 	local player = effect.Parent:ToPlayer()
 	if effect.FrameCount == 1 then
 		player:UseActiveItem(CollectibleType.COLLECTIBLE_FLUSH, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC)
@@ -69,7 +70,7 @@ function DelugeOrb:onWaterfallUpdate(effect)
 	--effect.CollisionDamage = player.Damage * 10
 	effect.Velocity = player:GetShootingInput() * player.ShotSpeed * DelugeOrb.WaterSpeed
 	if effect.FrameCount % DelugeOrb.DamageTick == 0 then
-		for _, enemy in pairs(Isaac.FindInRadius(player.Position, 60, EntityPartition.ENEMY)) do
+		for _, enemy in pairs(Isaac.FindInRadius(effect.Position, 60, EntityPartition.ENEMY)) do
 			if enemy:ToNPC() then
 				enemy:TakeDamage(player.Damage * 10, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(player), 1)
 			end
@@ -97,6 +98,7 @@ function DelugeOrb:OnDelugeOrbUse(card, player) -- useFlag
 	effect.Timeout = DelugeOrb.Timeout
 	effect:SetDamageSource(EntityType.ENTITY_PLAYER)
 	effect.CollisionDamage = player.Damage * 10
+	--effect:GetSprite():Play("NormalDelugeLaser")
 	player:AddCacheFlags(CacheFlag.CACHE_SPEED)
 	player:EvaluateItems()
 	player:AddNullCostume(enums.Costumes.DELUGE_ORB)
