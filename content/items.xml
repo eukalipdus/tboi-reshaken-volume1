@@ -23,7 +23,7 @@
     <familiar id="25" name="Doggy Bag" description="[RACIST PLACEHOLDER]" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive poop summonable" quality="1"/>
     <passive id="26" name="Dad's Mitt" description="Curve Ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2"/>
     <familiar id="27" name="Lil Bishop" description="[RACIST PLACEHOLDER]" gfx="collectibles_lilbishop.png" tags="monstermanual summonable" quality="2"/>
-    <passive id="28" name="Rainbow Fragment" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="offensive summonable summonable" quality="0"/>
+    <passive id="28" name="Rainbow Fragment" description="[RACIST PLACEHOLDER]" gfx="Fingore.png" tags="offensive summonable" quality="0"/>
     <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" quality="2" />
 
     <!-- Trinkets -->
