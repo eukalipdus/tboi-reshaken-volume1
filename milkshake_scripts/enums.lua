@@ -70,14 +70,19 @@ enums.Effects = {
     SHATTERED_ORB = Isaac.GetEntityVariantByName("Shattered Orb"),
     CLAIRVOYANCE_AURA = Isaac.GetEntityVariantByName("Clairvoyance Aura"),
     REFLECTED_PROJECTILE_GLOW = Isaac.GetEntityVariantByName("Reflected Projectile Glow"),
-	--GRAVESTONE = Isaac.GetEntityVariantByName("Gravestone"),
     GLOBIN_IN_A_BUCKET = Isaac.GetEntityVariantByName("Globin In A Bucket"),
     DELUGE_LASER = Isaac.GetEntityVariantByName("Deluge Laser"),
 }
 
-enums.ENTITY_GENERIC_PROP = { --id = 960
-	GRAVESTONE = Isaac.GetEntityVariantByName("Gravestone")
+enums.Enemies = {
+    GRAVESTONE = Isaac.GetEntityTypeByName("Gravestone")
 }
+
+--[[
+enums.ENTITY_GENERIC_PROP = { --id = 960
+	GRAVESTONE = Isaac.GetEntityVariantByName("Gravestone"),
+}
+--]]
 
 enums.Sounds = {
     CLICK = Isaac.GetSoundIdByName("sharp cursor click"),

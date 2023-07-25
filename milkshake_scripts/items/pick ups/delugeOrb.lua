@@ -11,9 +11,6 @@ DelugeOrb.DamageTick = 5
 DelugeOrb.DamageArea = 40
 DelugeOrb.DamageMultiplier = 5
 
---TODO
---Custom Hush Laser?
-
 function DelugeOrb:onCache(player, cacheFlag)
 	player = player:ToPlayer()
 	local data = player:GetData()
@@ -127,6 +124,5 @@ function DelugeOrb:OnDelugeOrbUse(card, player) -- useFlag
 			end
 		end
 	end
-
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, DelugeOrb.OnDelugeOrbUse, enums.Orbs.WATER)
