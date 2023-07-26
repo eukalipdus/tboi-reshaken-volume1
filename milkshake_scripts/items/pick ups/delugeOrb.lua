@@ -10,6 +10,7 @@ DelugeOrb.Timeout = 360
 DelugeOrb.DamageTick = 5
 DelugeOrb.DamageArea = 40
 DelugeOrb.DamageMultiplier = 5
+DelugeOrb.SplashTick = 8
 
 function DelugeOrb:onCache(player, cacheFlag)
 	player = player:ToPlayer()
@@ -44,7 +45,7 @@ function DelugeOrb:onNewRoom()
 			player:AddCacheFlags(CacheFlag.CACHE_SPEED)
 			player:EvaluateItems()
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
-			
+
 		end
 	end
 end
@@ -80,7 +81,14 @@ function DelugeOrb:onWaterfallUpdate(effect)
 	end
 	effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ENEMIES
 	effect.Velocity = player:GetShootingInput() * player.ShotSpeed
-	effect.Position = effect.Position + effect.Velocity:Resized(DelugeOrb.WaterSpeed) 
+	effect.Position = effect.Position + effect.Velocity:Resized(DelugeOrb.WaterSpeed)
+
+
+	if effect.FrameCount % DelugeOrb.SplashTick == 0 then
+		local splash = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.WATER_RIPPLE, 0, effect.Position, Vector.Zero, effect):ToEffect()
+		splash.SpriteScale = Vector.One * 3
+	end
+
 	if effect.FrameCount % DelugeOrb.DamageTick == 0 then
 		for _, enemy in pairs(Isaac.FindInRadius(effect.Position, DelugeOrb.DamageArea, EntityPartition.ENEMY)) do
 			if enemy:ToNPC() then
@@ -90,6 +98,8 @@ function DelugeOrb:onWaterfallUpdate(effect)
 	end
 	if effect.Timeout <= 1 then
 		effect:GetSprite():Play("End")
+		local splash = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.WATER_RIPPLE, 0, effect.Position, Vector.Zero, effect):ToEffect()
+		splash.SpriteScale = Vector.One * 3
 		for _, pickup in pairs(Isaac.FindInRadius(effect.Position, DelugeOrb.Radius, EntityPartition.PICKUP)) do
 			if pickup:ToPickup() then
 				pickup.GridCollisionClass = GridCollisionClass.COLLISION_WALL_EXCEPT_PLAYER
