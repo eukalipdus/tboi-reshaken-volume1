@@ -11,12 +11,15 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, rainbowFragment.Evalua
 
 ---@param player EntityPlayer
 function rainbowFragment:PostItemAdded(player)
+    local rng = player:GetCollectibleRNG(MilkshakeVol1.enums.Collectibles.RAINBOW_FRAGMENT)
     for i=1,PENNY_COUNT do
         local position = Isaac.GetFreeNearPosition(player.Position, 15)
+        local penny = MilkshakeVol1.API:GetRainbowPenny(rng)
+
         Isaac.Spawn(
             EntityType.ENTITY_PICKUP,
-            PickupVariant.PICKUP_COIN,
-            CoinSubType.COIN_PENNY,
+            penny.variant,
+            penny.subtype,
             position,
             Vector.Zero,
             player
