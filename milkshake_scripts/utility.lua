@@ -340,5 +340,16 @@ function utility:GetRandomSpiritOrb(includeChaos, seedOrRNG)
     return TSIL.Random.GetRandomElementsFromTable(orbs, 1, seedOrRNG)[1]
 end
 
+--- To be used when entities are initialized, returns true if this entity was previously seen by the player, false if it is the first time it ever spawned
+---@return boolean
+function utility:DidEntityExist()
+    local room = Game():GetRoom()
+    if not room:IsFirstVisit()
+    and room:GetFrameCount() <= 0 then
+        return true
+    else
+        return false
+    end
+end
 
 MilkshakeVol1.utility = utility

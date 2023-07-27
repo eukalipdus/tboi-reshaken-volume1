@@ -93,11 +93,24 @@
     <entity name="Spirit of Deluge" anm2path="spirit_water.anm2" id="5" variant="300" subtype="483" 
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
-	
+
+     <entity name="Deluge Laser" anm2path="deluge_laser.anm2" id="1000"
+    collisionMass="3" collisionRadius="30"  >
+    </entity>
+
+    <!--
 	<entity anm2path="monster_gravin.anm2" 
 		baseHP="3" boss="0" champion="0" collisionDamage="0" collisionMass="200" 
 		collisionRadius="12" friction="1" id="960" name="Gravestone" numGridCollisionPoints="12" shadowSize="0" shutdoors="false" stageHP="0" variant="97" >
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0"/>
+    </entity>
+    !-->
+
+    <entity anm2path="monster_gravin.anm2" baseHP="3" boss="0" champion="0" collisionDamage="0"
+            id="961" reroll="false"
+            collisionMass="200" collisionRadius="12" friction="1" name="Gravestone"
+            numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="0" shutdoors="false">
+            <gibs amount="4" blood="0" bone="1" eye="0" gut="0" large="0" />
     </entity>
 	
     <entity name="Vine" anm2path="vines.anm2" id="1000">

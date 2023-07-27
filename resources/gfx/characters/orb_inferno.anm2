@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="3/26/2023 1:49:10 AM" Version="106" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="7/20/2023 1:24:04 PM" Version="107" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="costumes\rubyorb.png" Id="0"/>
+			<Spritesheet Path="costumes\orb_inferno.png" Id="0"/>
 			<Spritesheet Path="costumes\sweat.png" Id="1"/>
 		</Spritesheets>
 		<Layers>
