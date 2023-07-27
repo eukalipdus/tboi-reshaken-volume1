@@ -10,7 +10,10 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, rainbowFragment.EvaluateCache, CacheFlag.CACHE_LUCK)
 
 ---@param player EntityPlayer
-function rainbowFragment:PostItemAdded(player)
+function rainbowFragment:PostItemAdded(player, _, firstTime)
+    if player:GetPlayerType() == PlayerType.PLAYER_ISAAC_B and firstTime == false then
+        return  --(T)Isaac we (don't) love you!
+    end
     local rng = player:GetCollectibleRNG(MilkshakeVol1.enums.Collectibles.RAINBOW_FRAGMENT)
     for i=1,PENNY_COUNT do
         local position = Isaac.GetFreeNearPosition(player.Position, 15)
@@ -33,6 +36,5 @@ MilkshakeVol1:AddCallback(
         nil,
         nil,
         MilkshakeVol1.enums.Collectibles.RAINBOW_FRAGMENT,
-        true
     }
 )
