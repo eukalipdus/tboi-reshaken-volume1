@@ -21,6 +21,13 @@ function MilkshakeVol1.API:AddRainbowPenny(variant, subtype, onPickup)
     }
 end
 
+---Gives a random type of rainbow penny
+---NOTE: Access the Variant through returnedNumber.variant, and SubType through returnedNumber.subtype
+---@param rng RNG
+---@return number
+function MilkshakeVol1.API:GetRainbowPenny(rng)
+    return TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
+end
 
 function potOfGold:onPlayerEffectUpdate(player)
     if not player then return end
