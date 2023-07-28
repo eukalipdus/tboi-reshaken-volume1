@@ -180,6 +180,11 @@ local function BreakMirror(familiar, isRevive)
         mirrorsBrokenPerPlayer[playerIndex] = mirrorsBroken
     end
 
+    TSIL.EntitySpecific.SpawnEffect(
+        enums.Effects.GLASS_IDOL_SHATTER,
+        0,
+        familiar.Position
+    )
     SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK, 1, 2, false, 1.3)
     familiar:Remove()
     player:AddCacheFlags(CacheFlag.CACHE_FAMILIARS | CacheFlag.CACHE_LUCK)
@@ -631,4 +636,18 @@ end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     FragileMirror.OnNewRoom
+)
+
+
+---@param effect EntityEffect
+function FragileMirror:OnGlassIdolShatterUpdate(effect)
+    local sprite = effect:GetSprite()
+
+    if sprite:IsFinished("Appear") then
+        effect:Remove()
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_UPDATE,
+    FragileMirror.OnGlassIdolShatterUpdate
 )

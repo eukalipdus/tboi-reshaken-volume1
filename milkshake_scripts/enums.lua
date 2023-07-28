@@ -73,6 +73,7 @@ enums.Effects = {
     REFLECTED_PROJECTILE_GLOW = Isaac.GetEntityVariantByName("Reflected Projectile Glow"),
     GLOBIN_IN_A_BUCKET = Isaac.GetEntityVariantByName("Globin In A Bucket"),
     DELUGE_LASER = Isaac.GetEntityVariantByName("Deluge Laser"),
+    GLASS_IDOL_SHATTER = Isaac.GetEntityVariantByName("Glass Idol Shatter")
 }
 
 enums.Enemies = {
