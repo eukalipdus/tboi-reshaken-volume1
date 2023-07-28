@@ -1,7 +1,7 @@
 local dadsMitt = {}
 local enums = MilkshakeVol1.enums
 
-local DEADZONE_ANGLE = 30
+local DEADZONE_ANGLE = 60
 
 local TEAR_MOVEMENT_RATIO = 0.2
 local BOMB_MOVEMENT_RATIO = 0.4
