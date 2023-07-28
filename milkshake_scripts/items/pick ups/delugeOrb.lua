@@ -2,35 +2,43 @@ DelugeOrb = {}
 local enums = MilkshakeVol1.enums
 local game = Game()
 
-DelugeOrb.Force = 50
-DelugeOrb.Radius = 600
-DelugeOrb.Speed = -1.9
-DelugeOrb.WaterSpeed = 5
-DelugeOrb.Timeout = 360
-DelugeOrb.DamageTick = 5
-DelugeOrb.DamageArea = 40
-DelugeOrb.DamageMultiplier = 5
+DelugeOrb.Force = 52
+DelugeOrb.Radius = 260
+DelugeOrb.SpeedMultiplier = 1
+DelugeOrb.WaterSpeed = 6.8
+DelugeOrb.Timeout = 240
+DelugeOrb.DamageTick = 2
+DelugeOrb.DamageArea = 57
+DelugeOrb.DamageMultiplier = 0.75
 DelugeOrb.SplashTick = 8
 
-function DelugeOrb:onCache(player, cacheFlag)
-	player = player:ToPlayer()
-	local data = player:GetData()
-	if data.DelugeOrbUsed and cacheFlag == CacheFlag.CACHE_SPEED then
-		player.MoveSpeed = player.MoveSpeed + DelugeOrb.Speed
-	end
+--- Written by Zamiel, technique created by im_tem, tweaked
+function DelugeOrb.SetBlindfold(player, enabled)
+	if player:GetData().eclipsed.BlindCharacter then return end -- eclipsed
+	---Blindfold
+    local challenge = Isaac.GetChallenge()
+    if enabled then
+        game.Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
+        player:UpdateCanShoot()
+        game.Challenge = challenge
+        player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
+    else
+        game.Challenge = Challenge.CHALLENGE_NULL
+        player:UpdateCanShoot()
+        game.Challenge = challenge
+    end
+	--print(player:GetName(), enabled)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, DelugeOrb.onCache)
 
 function DelugeOrb:onPEffectUpdate(player)
 	local data = player:GetData()
 	if data.DelugeOrbUsed then
 		if game:GetFrameCount() - data.DelugeOrbUsed > DelugeOrb.Timeout then
 			data.DelugeOrbUsed = nil
-			player:AddCacheFlags(CacheFlag.CACHE_SPEED)
-			player:EvaluateItems()
+			DelugeOrb.SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
 		else
-			player.FireDelay = player.MaxFireDelay - 1
+			player.Velocity = player:GetMovementVector()*DelugeOrb.SpeedMultiplier
 		end
 	end
 end
@@ -42,8 +50,6 @@ function DelugeOrb:onNewRoom()
 		local data = player:GetData()
 		if data.DelugeOrbUsed then
 			data.DelugeOrbUsed = nil
-			player:AddCacheFlags(CacheFlag.CACHE_SPEED)
-			player:EvaluateItems()
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
 		end
 	end
@@ -61,7 +67,9 @@ function DelugeOrb:onWaterfallUpdate(effect)
 		effect:GetSprite():Play("Loop")
 	end
 	local player = effect.Parent:ToPlayer()
-	if effect.FrameCount == 1 then
+	---flush effect
+	if effectData.DelugeFlushed and effect.FrameCount == 1 then
+		effectData.DelugeFlushed = nil
 		player:UseActiveItem(CollectibleType.COLLECTIBLE_FLUSH, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC)
 		SFXManager():Stop(SoundEffect.SOUND_FLUSH)
 		local enemies = Isaac.FindInRadius(player.Position, 5000, EntityPartition.ENEMY)
@@ -72,6 +80,7 @@ function DelugeOrb:onWaterfallUpdate(effect)
 			end
 		end
 	end
+	---magnetite
 	game:UpdateStrangeAttractor(effect.Position, DelugeOrb.Force, DelugeOrb.Radius)
 	for _, pickup in pairs(Isaac.FindInRadius(effect.Position, DelugeOrb.Radius, EntityPartition.PICKUP)) do
 		if pickup:ToPickup() then
@@ -81,20 +90,26 @@ function DelugeOrb:onWaterfallUpdate(effect)
 	effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ENEMIES
 	effect.Velocity = player:GetShootingInput() * player.ShotSpeed
 	effect.Position = effect.Position + effect.Velocity:Resized(DelugeOrb.WaterSpeed)
-
-
+	---water ripple
 	if effect.FrameCount % DelugeOrb.SplashTick == 0 then
 		local splash = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.WATER_RIPPLE, 0, effect.Position, Vector.Zero, effect):ToEffect()
 		splash.SpriteScale = Vector.One * 3
 	end
-
+	---grid damage
+	local grid = game:GetRoom():GetGridEntityFromPos(effect.Position)
+	if grid and (grid:ToPoop() or grid:ToTNT()) then
+		grid:Hurt(10)
+	end
+	---npc damage
 	if effect.FrameCount % DelugeOrb.DamageTick == 0 then
+		local dmg = 1 + (DelugeOrb.DamageMultiplier*MilkshakeVol1.utility:GetCurrentChapter())
 		for _, enemy in pairs(Isaac.FindInRadius(effect.Position, DelugeOrb.DamageArea, EntityPartition.ENEMY)) do
 			if enemy:ToNPC() then
-				enemy:TakeDamage(player.Damage * DelugeOrb.DamageMultiplier, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(player), 1)
+				enemy:TakeDamage(dmg, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(player), 1)
 			end
 		end
 	end
+	---end of effect
 	if effect.Timeout <= 1 then
 		effect:GetSprite():Play("End")
 		local splash = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.WATER_RIPPLE, 0, effect.Position, Vector.Zero, effect):ToEffect()
@@ -119,12 +134,12 @@ function DelugeOrb:OnDelugeOrbUse(card, player) -- useFlag
 	effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
 	effect.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_WALLS
 	effect.Timeout = DelugeOrb.Timeout
+	DelugeOrb.SetBlindfold(player, true)
 	effect:SetDamageSource(EntityType.ENTITY_PLAYER)
-	player:AddCacheFlags(CacheFlag.CACHE_SPEED)
-	player:EvaluateItems()
 	player:AddNullCostume(enums.Costumes.DELUGE_ORB)
 	effect:GetSprite():Play("Start")
 	if not room:HasWater() then
+		effect:GetData().DelugeFlushed = true
 		local enemies = Isaac.FindInRadius(player.Position, 5000, EntityPartition.ENEMY)
 		for _, enemy in pairs(enemies) do
 			if enemy:ToNPC() and enemy:IsVulnerableEnemy() and enemy:IsActiveEnemy() and not enemy:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) then
