@@ -25,10 +25,10 @@ function DelugeOrb:onPEffectUpdate(player)
 	local data = player:GetData()
 	if data.DelugeOrbUsed then
 		if game:GetFrameCount() - data.DelugeOrbUsed > DelugeOrb.Timeout then
+			data.DelugeOrbUsed = nil
 			player:AddCacheFlags(CacheFlag.CACHE_SPEED)
 			player:EvaluateItems()
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
-			data.DelugeOrbUsed = nil
 		else
 			player.FireDelay = player.MaxFireDelay - 1
 		end
@@ -45,7 +45,6 @@ function DelugeOrb:onNewRoom()
 			player:AddCacheFlags(CacheFlag.CACHE_SPEED)
 			player:EvaluateItems()
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
-
 		end
 	end
 end
