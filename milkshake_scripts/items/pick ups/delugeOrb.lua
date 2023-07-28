@@ -5,7 +5,7 @@ local game = Game()
 DelugeOrb.Force = 52
 DelugeOrb.Radius = 260
 DelugeOrb.SpeedMultiplier = 1.5
-DelugeOrb.WaterSpeed = 6.8
+DelugeOrb.WaterSpeed = 1.2
 DelugeOrb.Timeout = 240
 DelugeOrb.DamageTick = 2
 DelugeOrb.DamageArea = 57
@@ -88,8 +88,7 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 		end
 	end
 	effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ENEMIES
-	effect.Velocity = player:GetShootingInput() * player.ShotSpeed
-	effect.Position = effect.Position + effect.Velocity:Resized(DelugeOrb.WaterSpeed)
+	effect.Velocity = effect.Velocity + (player:GetShootingInput() * player.ShotSpeed):Resized(DelugeOrb.WaterSpeed)
 	---water ripple
 	if effect.FrameCount % DelugeOrb.SplashTick == 0 then
 		local splash = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.WATER_RIPPLE, 0, effect.Position, Vector.Zero, effect):ToEffect()
