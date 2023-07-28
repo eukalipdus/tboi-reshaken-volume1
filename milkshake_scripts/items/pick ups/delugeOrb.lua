@@ -51,6 +51,7 @@ function DelugeOrb:onNewRoom()
 		local data = player:GetData()
 		if data.DelugeOrbUsed then
 			data.DelugeOrbUsed = nil
+			DelugeOrb.SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
 		end
 	end
