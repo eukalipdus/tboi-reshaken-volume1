@@ -296,21 +296,24 @@ if CustomHealthAPI then
             AddSoulHeartCharges(player, {
                 charges = hp,
                 extraHeart = EXTRA_HEART_TYPES.SOUL,
-                soundEffect = -1
+                soundEffect = -1,
+                isBlended = false
             })
             return true
         elseif key == "BLACK_HEART" then
             AddSoulHeartCharges(player, {
                 charges = hp,
                 extraHeart = EXTRA_HEART_TYPES.BLACK,
-                soundEffect = -1
+                soundEffect = -1,
+                isBlended = false
             })
             return true
         elseif key == "IMMORAL_HEART" then
             AddSoulHeartCharges(player, {
                 charges = hp,
                 extraHeart = EXTRA_HEART_TYPES.IMMORAL,
-                soundEffect = -1
+                soundEffect = -1,
+                isBlended = false
             })
             return true
         end
@@ -343,14 +346,16 @@ else
             AddSoulHeartCharges(player, {
                 charges = heartsAdded,
                 extraHeart = EXTRA_HEART_TYPES.SOUL,
-                soundEffect = -1
+                soundEffect = -1,
+                isBlended = false
             })
         elseif healthType == TSIL.Enums.HealthType.BLACK then
             player:AddBlackHearts(-heartsAdded)
             AddSoulHeartCharges(player, {
                 charges = heartsAdded,
                 extraHeart = EXTRA_HEART_TYPES.BLACK,
-                soundEffect = -1
+                soundEffect = -1,
+                isBlended = false
             })
         end
     end
@@ -375,7 +380,8 @@ function Leviticus:OnItemAdded(player, collectibleType)
         AddSoulHeartCharges(player, {
             charges = collectibleConfig.AddSoulHearts,
             soundEffect = -1,
-            extraHeart = EXTRA_HEART_TYPES.SOUL
+            extraHeart = EXTRA_HEART_TYPES.SOUL,
+            isBlended = false
         })
     end
 
@@ -383,7 +389,8 @@ function Leviticus:OnItemAdded(player, collectibleType)
         AddSoulHeartCharges(player, {
             charges = collectibleConfig.AddBlackHearts,
             soundEffect = -1,
-            extraHeart = EXTRA_HEART_TYPES.BLACK
+            extraHeart = EXTRA_HEART_TYPES.BLACK,
+            isBlended = false
         })
     end
 end
