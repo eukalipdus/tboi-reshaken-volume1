@@ -14,7 +14,8 @@ DelugeOrb.SplashTick = 8
 
 --- Written by Zamiel, technique created by im_tem, tweaked
 function DelugeOrb.SetBlindfold(player, enabled)
-	if player:GetData().eclipsed.BlindCharacter then return end -- eclipsed
+	local data = player:GetData()
+	if data.eclipsed and data.eclipsed.BlindCharacter then return end -- eclipsed
 	---Blindfold
     local challenge = Isaac.GetChallenge()
     if enabled then
