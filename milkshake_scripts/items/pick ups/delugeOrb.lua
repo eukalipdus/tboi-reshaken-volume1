@@ -2,14 +2,14 @@ DelugeOrb = {}
 local enums = MilkshakeVol1.enums
 local game = Game()
 
-DelugeOrb.Force = 50
-DelugeOrb.Radius = 600
-DelugeOrb.Speed = -1.9
-DelugeOrb.WaterSpeed = 5
-DelugeOrb.Timeout = 360
-DelugeOrb.DamageTick = 5
-DelugeOrb.DamageArea = 40
-DelugeOrb.DamageMultiplier = 5
+DelugeOrb.Force = 52
+DelugeOrb.Radius = 260
+DelugeOrb.Speed = -1.80
+DelugeOrb.WaterSpeed = 6.8
+DelugeOrb.Timeout = 240
+DelugeOrb.DamageTick = 2
+DelugeOrb.DamageArea = 57
+DelugeOrb.DamageMultiplier = 0.75
 DelugeOrb.SplashTick = 8
 
 function DelugeOrb:onCache(player, cacheFlag)
