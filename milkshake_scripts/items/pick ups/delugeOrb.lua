@@ -1,4 +1,4 @@
-DelugeOrb = {}
+local DelugeOrb = {}
 local enums = MilkshakeVol1.enums
 local game = Game()
 
