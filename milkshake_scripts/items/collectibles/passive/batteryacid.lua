@@ -100,7 +100,7 @@ local function AddBatteryAcidCharge(player, chargeToAdd)
     end
 end
 
-function batteryAcid:preSpawnCleanAward()
+function batteryAcid:PostRoomClear()
     local chargeToAdd
     local roomShape = game:GetRoom():GetRoomShape()
     if LARGE_ROOMS[roomShape] then
@@ -117,8 +117,9 @@ function batteryAcid:preSpawnCleanAward()
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, batteryAcid.preSpawnCleanAward)
-MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GREED_MODE_WAVE, batteryAcid.preSpawnCleanAward)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, batteryAcid.PostRoomClear)
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GREED_MODE_WAVE, batteryAcid.PostRoomClear)
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_AMBUSH_WAVE, batteryAcid.PostRoomClear)
 
 ---@param collider Entity
 function batteryAcid:PrePickupCollision(battery, collider)
@@ -136,7 +137,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, batteryAcid.PreP
 
 
 ---@param player EntityPlayer
-function batteryAcid:postPeffectUpdate(player)
+function batteryAcid:PostPeffectUpdate(player)
     if not player:HasCollectible(enums.Collectibles.BATTERY_ACID) then
         return end
 
@@ -178,4 +179,4 @@ function batteryAcid:postPeffectUpdate(player)
         data.CreepTimer = CreepCooldown(player)
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, batteryAcid.postPeffectUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, batteryAcid.PostPeffectUpdate)
