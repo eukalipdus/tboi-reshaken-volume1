@@ -352,4 +352,28 @@ function utility:DidEntityExist()
     end
 end
 
+
+---Helper function to make a player able/unable to shoot.
+---@param player EntityPlayer
+---@param canShoot boolean
+function utility:SetCanShoot(player, canShoot)
+    --whats this??
+	-- local data = player:GetData()
+	-- if data.eclipsed and data.eclipsed.BlindCharacter then return end -- eclipsed
+
+	---Blindfold
+    local challenge = Isaac.GetChallenge()
+    if not canShoot then
+        Game().Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
+        player:UpdateCanShoot()
+        Game().Challenge = challenge
+        player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
+    else
+        Game().Challenge = Challenge.CHALLENGE_NULL
+        player:UpdateCanShoot()
+        Game().Challenge = challenge
+    end
+end
+
+
 MilkshakeVol1.utility = utility

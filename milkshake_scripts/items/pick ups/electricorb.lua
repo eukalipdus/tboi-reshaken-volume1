@@ -252,7 +252,7 @@ local MACHINE_PAYOUTS = {
 }
 
 ---@class ConductivityOrbSlotReward
----@field variant PickupVariant,
+---@field variant PickupVariant
 ---@field subtype integer
 ---@field weight integer
 
