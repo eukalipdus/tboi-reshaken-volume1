@@ -1,11 +1,11 @@
-DelugeOrb = {}
+local DelugeOrb = {}
 local enums = MilkshakeVol1.enums
 local game = Game()
 
 DelugeOrb.Force = 52
 DelugeOrb.Radius = 260
-DelugeOrb.SpeedMultiplier = 1.5
-DelugeOrb.WaterSpeed = 1.2
+DelugeOrb.SpeedMultiplier = 1
+DelugeOrb.WaterSpeed = 3
 DelugeOrb.Timeout = 240
 DelugeOrb.DamageTick = 2
 DelugeOrb.DamageArea = 57
@@ -88,7 +88,7 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 		end
 	end
 	effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ENEMIES
-	effect.Velocity = effect.Velocity + (player:GetShootingInput() * player.ShotSpeed):Resized(DelugeOrb.WaterSpeed)
+	effect.Velocity = (effect.Velocity + (player:GetAimDirection()):Resized(DelugeOrb.WaterSpeed)) * 0.9 --
 	---water ripple
 	if effect.FrameCount % DelugeOrb.SplashTick == 0 then
 		local splash = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.WATER_RIPPLE, 0, effect.Position, Vector.Zero, effect):ToEffect()

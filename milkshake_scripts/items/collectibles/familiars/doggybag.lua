@@ -41,6 +41,7 @@ function doggyBag:PostRoomClear()
 end
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_ROOM_CLEAR_CHANGED, doggyBag.PostRoomClear)
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GREED_MODE_WAVE, doggyBag.PostRoomClear)
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_AMBUSH_WAVE, doggyBag.PostRoomClear)
 
 ---@param player EntityPlayer
 function doggyBag:EvaluateCache(player)
