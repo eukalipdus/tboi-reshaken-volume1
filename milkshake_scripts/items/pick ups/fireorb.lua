@@ -2,23 +2,38 @@ local RubyOrb = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
---[[Customisation]]
 local INHALING_DURATION = 60
-local angleVariance = 28;
-local maxAngle = 180;
-local blendAmount = 0.4;
+local ANGLE_VARIANCE = 28;
+local MAX_ANGLE = 180;
+local BLEND_AMOUNT = 0.4;
 
-local numShots = 40;
-local shootTime = 70;
+local NUM_SHOTS = 40;
+local NUM_SHOTS_DOUBLE_POWER = NUM_SHOTS * 2
+local SHOOT_TIME = 70;
+local SHOOT_TIME_DOUBLE_POWER = SHOOT_TIME * 1.5
 
-local shotSpeed = 8;
+local SHOT_SPEED = 8;
+local SHOT_SPEED_DOUBLE_POWER = 10
 
 --Other Variables
-local clampAngle = (maxAngle / 2) - (angleVariance / 2);
-local shotDelay = shootTime / numShots;
+local CLAMP_ANGLE = (MAX_ANGLE / 2) - (ANGLE_VARIANCE / 2);
+local SHOT_DELAY = math.floor(SHOOT_TIME / NUM_SHOTS + 0.5);
+local SHOT_DELAY_DOUBLE_POWER = math.floor(SHOOT_TIME_DOUBLE_POWER / NUM_SHOTS_DOUBLE_POWER + 0.5)
 local ARROW_SPRITE = Sprite()
 ARROW_SPRITE:Load("gfx/ruby_orb_arrow.anm2", true)
 ARROW_SPRITE:Play("Idle", true)
+
+---@class RubyOrbInhalingInfo
+---@field frame integer
+---@field currentDirection number
+---@field doublePower boolean
+
+---@class RubyOrbExhalingInfo
+---@field angle number
+---@field count integer
+---@field timer integer
+---@field prAng number
+---@field doublePower boolean
 
 TSIL.SaveManager.AddPersistentVariable(
 	MilkshakeVol1,
@@ -26,10 +41,17 @@ TSIL.SaveManager.AddPersistentVariable(
 	{},
 	TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
+TSIL.SaveManager.AddPersistentVariable(
+	MilkshakeVol1,
+	"RubyOrbExhalingInfoPerPlayer",
+	{},
+	TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
 
 
 ---@param player EntityPlayer
-function RubyOrb:UseCard(_, player, doublePower)
+---@param doublePower boolean
+local function CreateInhalingInfo(player, doublePower)
 	local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
 	local inhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
@@ -42,39 +64,129 @@ function RubyOrb:UseCard(_, player, doublePower)
 		currentDirection = player:GetAimDirection():GetAngleDegrees(),
 		doublePower = doublePower
 	}
+end
+
+
+---@param player EntityPlayer
+---@return RubyOrbInhalingInfo?
+local function GetInhalingInfo(player)
+	local playerIndex = TSIL.Players.GetPlayerIndex(player)
+	local inhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+		MilkshakeVol1,
+		"RubyOrbInhalingInfoPerPlayer"
+	)
+
+	return inhalingInfoPerPlayer[playerIndex]
+end
+
+
+---@param player EntityPlayer
+local function RemoveInhalingInfo(player)
+	local playerIndex = TSIL.Players.GetPlayerIndex(player)
+	local inhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+		MilkshakeVol1,
+		"RubyOrbInhalingInfoPerPlayer"
+	)
+
+	inhalingInfoPerPlayer[playerIndex] = nil
+end
+
+
+---@param player EntityPlayer
+---@param angle number
+---@param doublePower boolean
+local function CreateExhalingInfo(player, angle, doublePower)
+	local playerIndex = TSIL.Players.GetPlayerIndex(player)
+	local exhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+		MilkshakeVol1,
+		"RubyOrbExhalingInfoPerPlayer"
+	)
+
+	local numShots = NUM_SHOTS
+	if doublePower then
+		numShots = NUM_SHOTS_DOUBLE_POWER
+	end
+
+	exhalingInfoPerPlayer[playerIndex] = {
+		angle = angle,
+		count = numShots,
+		timer = 0,
+		prAng = 0,
+		doublePower = doublePower
+	}
+end
+
+
+---@param player EntityPlayer
+---@return RubyOrbExhalingInfo?
+local function GetExhalingInfo(player)
+	local playerIndex = TSIL.Players.GetPlayerIndex(player)
+	local exhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+		MilkshakeVol1,
+		"RubyOrbExhalingInfoPerPlayer"
+	)
+
+	return exhalingInfoPerPlayer[playerIndex]
+end
+
+
+---@param player EntityPlayer
+local function RemoveExhalingInfo(player)
+	local playerIndex = TSIL.Players.GetPlayerIndex(player)
+	local exhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+		MilkshakeVol1,
+		"RubyOrbExhalingInfoPerPlayer"
+	)
+
+	exhalingInfoPerPlayer[playerIndex] = false
+end
+
+
+---@param player EntityPlayer
+---@param angle number
+---@param doublePower boolean
+local function SpawnFireProjectile(player, angle, doublePower)
+	local shotSpeed = SHOT_SPEED
+	if doublePower then
+		shotSpeed = SHOT_SPEED_DOUBLE_POWER
+	end
+
+	local flame = TSIL.EntitySpecific.SpawnProjectile(
+		ProjectileVariant.PROJECTILE_FIRE,
+		0,
+		player.Position,
+		shotSpeed * Vector.FromAngle(angle),
+		player
+	):ToProjectile()
+	flame.Height = player.TearHeight
+	flame.CollisionDamage = 5 * utility:GetCurrentChapter()
+	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER |
+	ProjectileFlags.DECELERATE  | ProjectileFlags.NO_WALL_COLLIDE
+	TSIL.Entities.SetEntityData(
+		MilkshakeVol1,
+		flame,
+		"IsRubyOrbFireProjectile",
+		true
+	)
+end
+
+
+---@param player EntityPlayer
+function RubyOrb:UseCard(_, player, doublePower)
+	CreateInhalingInfo(player, doublePower)
 
 	SFXManager():Play(SoundEffect.SOUND_LOW_INHALE)
 end
-
 MilkshakeVol1:AddCallback(
 	enums.Callbacks.ON_ORB_USE,
 	RubyOrb.UseCard,
 	enums.Orbs.FIRE
 )
 
-function RubyOrb:PostNewRoom()
-	for i = 0, Game():GetNumPlayers() do
-		utility:SetData(Isaac.GetPlayer(i), "RubyOrb", {
-			angle = 0,
-			count = 0,
-			timer = 0,
-			prAng = 0,
-		})
-	end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, RubyOrb.PostNewRoom)
-
 
 ---@param player EntityPlayer
 function CheckInhaling(player)
-	local playerIndex = TSIL.Players.GetPlayerIndex(player)
-
-	local inhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-		MilkshakeVol1,
-		"RubyOrbInhalingInfoPerPlayer"
-	)
-
-	local inhalingInfo = inhalingInfoPerPlayer[playerIndex]
+	local inhalingInfo = GetInhalingInfo(player)
 
 	if not inhalingInfo then return end
 
@@ -91,26 +203,30 @@ function CheckInhaling(player)
 
 	if difference < INHALING_DURATION then return end
 
-	inhalingInfoPerPlayer[playerIndex] = nil
+	RemoveInhalingInfo(player)
+	CreateExhalingInfo(player, angle, inhalingInfo.doublePower)
 
-	utility:SetData(player, "RubyOrb", {
-		angle = angle,
-		count = (utility:GetData(player, "RubyOrb") and utility:GetData(player, "RubyOrb").count or 0) + numShots,
-		timer = 0,
-		prAng = 0,
-	})
+	utility:SetCanShoot(player, false)
+	player:AddNullCostume(enums.Costumes.INFERNO_ORB)
+
 	SFXManager():Play(SoundEffect.SOUND_GHOST_ROAR)
 end
 
-function RubyOrb:PostPEffectUpdate(player)
-	CheckInhaling(player)
 
-	local info = utility:GetData(player, "RubyOrb")
-	if (not info or info.count <= 0) then return end
+---@param player EntityPlayer
+function CheckExhaling(player)
+	local info = GetExhalingInfo(player)
+	if not info then return end
+
 	info.timer = info.timer - 1
-	if (info.timer > 0) then return end
+	if info.timer > 0 then return end
+
 	info.count = info.count - 1
-	info.timer = shotDelay
+	if info.doublePower then
+		info.timer = SHOT_DELAY_DOUBLE_POWER
+	else
+		info.timer = SHOT_DELAY
+	end
 
 	local rng = player:GetCardRNG(enums.Orbs.FIRE)
 
@@ -118,30 +234,28 @@ function RubyOrb:PostPEffectUpdate(player)
 	local angle = aimDir:GetAngleDegrees()
 	if (aimDir:Length() == 0) then angle = info.angle end
 	angle = ((angle + 540 - info.angle) % 360) - 180
-	angle = math.min(math.max(angle, -clampAngle), clampAngle)
+	angle = math.min(math.max(angle, -CLAMP_ANGLE), CLAMP_ANGLE)
 
-	angle = TSIL.Utils.Math.Lerp(info.prAng, angle, blendAmount)
+	angle = TSIL.Utils.Math.Lerp(info.prAng, angle, BLEND_AMOUNT)
 	info.prAng = angle
 
-	angle = angle + rng:RandomInt(angleVariance + 1) - (angleVariance / 2)
-	local flame = Isaac.Spawn(
-		EntityType.ENTITY_PROJECTILE,
-		ProjectileVariant.PROJECTILE_FIRE,
-		0,
-		player.Position,
-		---@diagnostic disable-next-line: param-type-mismatch
-		shotSpeed * Vector.FromAngle(angle + info.angle),
-		player
-	):ToProjectile()
-	flame.Height = player.TearHeight
-	flame.CollisionDamage = 5 * utility:GetCurrentChapter()
-	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER |
-	ProjectileFlags.DECELERATE  | ProjectileFlags.NO_WALL_COLLIDE
-	utility:SetData(
-		flame,
-		"IsRubyOrbFireProjectile",
-		true
-	)
+	angle = angle + rng:RandomInt(ANGLE_VARIANCE + 1) - (ANGLE_VARIANCE / 2)
+
+	SpawnFireProjectile(player, angle + info.angle, info.doublePower)
+
+	if info.count == 0 then
+		RemoveExhalingInfo(player)
+		player:TryRemoveNullCostume(enums.Costumes.INFERNO_ORB)
+		utility:SetCanShoot(player, true)
+	end
+end
+
+
+---@param player EntityPlayer
+function RubyOrb:PostPEffectUpdate(player)
+	CheckInhaling(player)
+
+	CheckExhaling(player)
 end
 
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, RubyOrb.PostPEffectUpdate)
@@ -160,7 +274,8 @@ function RubyOrb:OnEntityTakeDamage(entity, amount, flags, source, countdownFram
 
 	if not sourceEntity then return end
 
-	local isRubyOrbProjectile = utility:GetData(
+	local isRubyOrbProjectile = TSIL.Entities.GetEntityData(
+		MilkshakeVol1,
 		sourceEntity,
 		"IsRubyOrbFireProjectile"
 	)
@@ -173,7 +288,6 @@ function RubyOrb:OnEntityTakeDamage(entity, amount, flags, source, countdownFram
 
 	return false
 end
-
 MilkshakeVol1:AddCallback(
 	ModCallbacks.MC_ENTITY_TAKE_DMG,
 	RubyOrb.OnEntityTakeDamage
@@ -182,15 +296,7 @@ MilkshakeVol1:AddCallback(
 
 ---@param player EntityPlayer
 function RubyOrb:OnPlayerRender(player)
-	local playerIndex = TSIL.Players.GetPlayerIndex(player)
-
-	local inhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
-		MilkshakeVol1,
-		"RubyOrbInhalingInfoPerPlayer"
-	)
-
-	local inhalingInfo = inhalingInfoPerPlayer[playerIndex]
-
+	local inhalingInfo = GetInhalingInfo(player)
 	if not inhalingInfo then return end
 
 	if not player:IsExtraAnimationFinished() then return end
@@ -200,7 +306,6 @@ function RubyOrb:OnPlayerRender(player)
 	ARROW_SPRITE.Rotation = inhalingInfo.currentDirection - 90
 	ARROW_SPRITE:Render(renderPos)
 end
-
 MilkshakeVol1:AddCallback(
 	ModCallbacks.MC_POST_PLAYER_RENDER,
 	RubyOrb.OnPlayerRender

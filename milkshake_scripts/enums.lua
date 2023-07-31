@@ -93,6 +93,7 @@ enums.Sounds = {
 enums.Costumes = {
     CLAIRVOYANCE_ORB = Isaac.GetCostumeIdByPath("gfx/characters/clairvoyance_orb.anm2"),
     DELUGE_ORB = Isaac.GetCostumeIdByPath("gfx/characters/orb_deluge.anm2"),
+    INFERNO_ORB = Isaac.GetCostumeIdByPath("gfx/characters/orb_inferno.anm2")
 }
 
 enums.Hearts = {

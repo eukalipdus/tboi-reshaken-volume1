@@ -253,7 +253,7 @@ local function HandleLyraInput(player, playerUsingLyraData)
         if difference <= INPUT_FORGIVENESS then
             local renderPos = Isaac.WorldToScreen(player.Position)
             local baseYPos = -40 * player.SpriteScale.Y
-            CreateNoteSplash(firstNote.direction, renderPos + Vector(0, baseYPos - firstNote.height))
+            CreateNoteSplash(firstNote.direction, renderPos + Vector(0, baseYPos))
             table.remove(playerUsingLyraData.notes, 1)
 
             if #playerUsingLyraData.notes == 0 then
