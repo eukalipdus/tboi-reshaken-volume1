@@ -79,7 +79,7 @@ function witchDoctorMask:PostPickupUpdate(pickup)
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
         if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
-        and pickup.Type == PickupVariant.PICKUP_PILL then
+        and pickup.Variant == PickupVariant.PICKUP_PILL then
             if not utility:GetData(pickup, "SpiritPillSprite") then
                 if pickup.SubType < FF_PILL_BEGIN then
                     pickup:GetSprite():ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pills ground.png")
