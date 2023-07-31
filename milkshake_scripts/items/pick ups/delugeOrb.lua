@@ -4,8 +4,8 @@ local game = Game()
 
 DelugeOrb.Force = 52
 DelugeOrb.Radius = 260
-DelugeOrb.SpeedMultiplier = 1
-DelugeOrb.WaterSpeed = 3
+DelugeOrb.SpeedMultiplier = 2.25
+DelugeOrb.WaterSpeed = 1
 DelugeOrb.Timeout = 240
 DelugeOrb.DamageTick = 2
 DelugeOrb.DamageArea = 57
