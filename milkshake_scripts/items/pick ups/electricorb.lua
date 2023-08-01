@@ -352,7 +352,8 @@ end
 
 
 ---@param player EntityPlayer
-function SapphireOrb:OnSapphireOrbUse(_, player, doublePower)
+---@param flags UseOrbFlag
+function SapphireOrb:OnSapphireOrbUse(_, player, flags)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     local playersUsingSapphireOrbFrames = TSIL.SaveManager.GetPersistentVariable(
@@ -361,7 +362,7 @@ function SapphireOrb:OnSapphireOrbUse(_, player, doublePower)
     )
 
     local frameCount = Game():GetFrameCount()
-    if doublePower then
+    if TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER) then
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount + SAPPHIRE_ORB_DURATION
     else
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount

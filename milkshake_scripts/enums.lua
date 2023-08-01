@@ -164,4 +164,12 @@ enums.Callbacks = {
     POST_CHEST_OPENED = {}
 }
 
+
+---@enum UseOrbFlag
+enums.UseOrbFlags = {
+    NONE = 0 << 0,
+    DOUBLE_POWER = 1 << 0,
+    ALLOW_LYRA = 1 << 1
+}
+
 MilkshakeVol1.enums = enums

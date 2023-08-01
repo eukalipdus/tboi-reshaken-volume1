@@ -6,7 +6,8 @@ local VINE_DAMAGE = 1
 local FRUIT_HEART_DURATION = 45
 
 ---@param player EntityPlayer
-function EmeraldOrb:OnEmeraldOrbUse(_, player, isLyra)
+---@param flags UseOrbFlag
+function EmeraldOrb:OnEmeraldOrbUse(_, player, flags)
     local npcs = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, false)
 
     npcs = TSIL.Utils.Tables.Filter(npcs, function (_, npc)
@@ -52,7 +53,7 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player, isLyra)
             MilkshakeVol1,
             vine,
             "IsLyraUse",
-            true
+            TSIL.Utils.Flags.HasFlags(enums.UseOrbFlags.DOUBLE_POWER)
         )
     end)
 end

@@ -50,8 +50,8 @@ TSIL.SaveManager.AddPersistentVariable(
 
 
 ---@param player EntityPlayer
----@param doublePower boolean
-local function CreateInhalingInfo(player, doublePower)
+---@param flags UseOrbFlag
+local function CreateInhalingInfo(player, flags)
 	local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
 	local inhalingInfoPerPlayer = TSIL.SaveManager.GetPersistentVariable(
@@ -62,7 +62,7 @@ local function CreateInhalingInfo(player, doublePower)
 	inhalingInfoPerPlayer[playerIndex] = {
 		frame = Game():GetFrameCount(),
 		currentDirection = player:GetAimDirection():GetAngleDegrees(),
-		doublePower = doublePower
+		doublePower = TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER)
 	}
 end
 

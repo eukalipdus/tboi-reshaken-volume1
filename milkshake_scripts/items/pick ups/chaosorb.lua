@@ -16,12 +16,13 @@ local SPRITESHEET_PER_ORB = {
 
 
 ---@param player EntityPlayer
-function ChaosOrb:OnChaosOrbUse(_, player)
+---@param flags UseOrbFlag
+function ChaosOrb:OnChaosOrbUse(_, player, flags)
     local rng = player:GetCardRNG(enums.Orbs.RANDOM)
 
     local orbToUse = MilkshakeVol1.utility:GetRandomSpiritOrb(false, rng)
 
-    player:UseCard(orbToUse)
+    MilkshakeVol1:UseSpiritOrb(orbToUse, player, flags)
 
     local sprite = Sprite()
     sprite:Load("/gfx/chaos_orb_flash.anm2", true)

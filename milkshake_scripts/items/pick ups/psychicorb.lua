@@ -24,7 +24,8 @@ TSIL.SaveManager.AddPersistentVariable(
 
 
 ---@param player EntityPlayer
-function SapphireOrb:OnAmethystOrbUse(_, player, doublePower)
+---@param flags UseOrbFlag
+function SapphireOrb:OnAmethystOrbUse(_, player, flags)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
     player:AddNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
@@ -40,7 +41,7 @@ function SapphireOrb:OnAmethystOrbUse(_, player, doublePower)
         MilkshakeVol1,
         "ClairvoyanceDoubleEffectPerPlayer"
     )
-    doubleEffectPerPlayer[playerIndex] = doublePower
+    doubleEffectPerPlayer[playerIndex] = TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER)
 
     local aura = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.CLAIRVOYANCE_AURA,
@@ -315,6 +316,11 @@ MilkshakeVol1:AddCallback(
 
 ---@param glow EntityEffect
 function SapphireOrb:OnReflectedProjectileGlowUpdate(glow)
+    if not glow.Parent then
+        glow:Remove()
+        return
+    end
+
     local projectile = glow.Parent:ToProjectile()
     glow.Position = projectile.Position + Vector(0, projectile.Height)
 

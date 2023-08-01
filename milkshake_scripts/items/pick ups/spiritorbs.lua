@@ -3,22 +3,21 @@ local enums = MilkshakeVol1.enums
 
 
 ---@param orb Card
+---@param player EntityPlayer
+---@param flags UseOrbFlag | integer
+function MilkshakeVol1:UseSpiritOrb(orb, player, flags)
+    Isaac.RunCallbackWithParam(enums.Callbacks.ON_ORB_USE, orb, orb, player, flags)
+end
+
+
+---@param orb Card
 ---@param player any
 function SpiritOrbs:OnCardUse(orb, player)
-    local isDoublePower = false
-
-    --Chaos orb doesn't use up the double lyra power
-    if orb ~= enums.Orbs.RANDOM then
-        ---@diagnostic disable-next-line: cast-local-type
-        isDoublePower = MilkshakeVol1.utility:GetTemporaryPlayerData(player, "IsUsingDoublePowerOrb")
-        MilkshakeVol1.utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", nil)
-    end
-
-    Isaac.RunCallbackWithParam(enums.Callbacks.ON_ORB_USE, orb, orb, player, isDoublePower)
-
-    if orb ~= enums.Orbs.RANDOM then
-        MilkshakeVol1.utility:SetTemporaryPlayerData(player, "JustFinishedUsingLyra", false)
-    end
+    MilkshakeVol1:UseSpiritOrb(
+        orb,
+        player,
+        enums.UseOrbFlags.ALLOW_LYRA
+    )
 end
 for _, orb in pairs(enums.Orbs) do
     MilkshakeVol1:AddCallback(

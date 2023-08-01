@@ -136,10 +136,11 @@ end
 
 ---@param orb Card
 ---@param player EntityPlayer
-function Lyra:OnOrbUse(orb, player)
+---@param flags UseOrbFlag
+function Lyra:OnOrbUse(orb, player, flags)
     if not player:HasCollectible(enums.Collectibles.LYRA) then return end
 
-    if utility:GetTemporaryPlayerData(player, "JustFinishedUsingLyra") then
+    if not TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.ALLOW_LYRA) then
         return
     end
 
@@ -185,11 +186,17 @@ MilkshakeVol1:AddPriorityCallback(
 
 ---@param player EntityPlayer
 ---@param data UsingLyraData
-local function StopUsingLyra(player, data)
+---@param success boolean
+local function StopUsingLyra(player, data, success)
     utility:SetTemporaryPlayerData(player, "UsingLyraData", nil)
-    utility:SetTemporaryPlayerData(player, "JustFinishedUsingLyra", true)
     player.ControlsEnabled = true
-    player:UseCard(data.orb)
+
+    local flags = enums.UseOrbFlags.NONE
+    if success then
+        flags = flags | enums.UseOrbFlags.DOUBLE_POWER
+    end
+
+    MilkshakeVol1:UseSpiritOrb(data.orb, player, flags)
 end
 
 
@@ -235,13 +242,13 @@ local function HandleLyraInput(player, playerUsingLyraData)
     local inputToCheck = INPUT_PER_NOTE_DIRECTION[firstNote.direction]
 
     if firstNote.height < -INPUT_FORGIVENESS then
-        StopUsingLyra(player, playerUsingLyraData)
+        StopUsingLyra(player, playerUsingLyraData, false)
         player:AnimateSad()
         return
     end
 
     if IsPlayingWrongInput(inputToCheck, controllerIndex) then
-        StopUsingLyra(player, playerUsingLyraData)
+        StopUsingLyra(player, playerUsingLyraData, false)
         player:AnimateSad()
         return
     end
@@ -266,11 +273,11 @@ local function HandleLyraInput(player, playerUsingLyraData)
 
             if #playerUsingLyraData.notes == 0 then
                 utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
-                StopUsingLyra(player, playerUsingLyraData)
+                StopUsingLyra(player, playerUsingLyraData, true)
                 player:AnimateHappy()
             end
         else
-            StopUsingLyra(player, playerUsingLyraData)
+            StopUsingLyra(player, playerUsingLyraData, false)
             player:AnimateSad()
         end
     end
