@@ -151,17 +151,20 @@ local function SpawnFireProjectile(player, angle, doublePower)
 		shotSpeed = SHOT_SPEED_DOUBLE_POWER
 	end
 
-	local flame = TSIL.EntitySpecific.SpawnProjectile(
-		ProjectileVariant.PROJECTILE_FIRE,
+	local flame = TSIL.EntitySpecific.SpawnTear(
+		TearVariant.FIRE,
 		0,
 		player.Position,
 		shotSpeed * Vector.FromAngle(angle),
 		player
-	):ToProjectile()
-	flame.Height = player.TearHeight
-	flame.CollisionDamage = 5 * utility:GetCurrentChapter()
-	flame.ProjectileFlags = flame.ProjectileFlags | ProjectileFlags.HIT_ENEMIES | ProjectileFlags.CANT_HIT_PLAYER |
-	ProjectileFlags.DECELERATE  | ProjectileFlags.NO_WALL_COLLIDE
+	)
+	flame:AddTearFlags(TearFlags.TEAR_SPECTRAL)
+	flame.CollisionDamage = 5 + 5 * utility:GetCurrentChapter()
+
+	local sprite = flame:GetSprite()
+	sprite:ReplaceSpritesheet(0, "gfx/Effects/Effect_005_Fire.png")
+	sprite:LoadGraphics()
+
 	TSIL.Entities.SetEntityData(
 		MilkshakeVol1,
 		flame,
@@ -309,4 +312,30 @@ end
 MilkshakeVol1:AddCallback(
 	ModCallbacks.MC_POST_PLAYER_RENDER,
 	RubyOrb.OnPlayerRender
+)
+
+
+---@param entity Entity
+function RubyOrb:OnTearRemove(entity)
+	if TSIL.Rooms.IsLeavingRoom() then return end
+
+	local isFireProjectile = TSIL.Entities.GetEntityData(
+		MilkshakeVol1,
+		entity,
+		"IsRubyOrbFireProjectile"
+	)
+	if not isFireProjectile then return end
+
+	local poof = TSIL.EntitySpecific.SpawnEffect(
+		EffectVariant.POOF01,
+		0,
+		entity.Position
+	)
+	poof.Color = Color(1, 1, 1, 0.5)
+	poof.SpriteScale = Vector(0.6, 0.6)
+end
+MilkshakeVol1:AddCallback(
+	ModCallbacks.MC_POST_ENTITY_REMOVE,
+	RubyOrb.OnTearRemove,
+	EntityType.ENTITY_TEAR
 )
