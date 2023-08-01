@@ -41,7 +41,7 @@ function RevenanceOrb:GravestonUpd(gravestone)
 	for _, tear in pairs(Isaac.FindInRadius(gravestone.Position, 12, EntityPartition.TEAR)) do
 		tear = tear:ToKnife()
 		if tear and (tear.Variant ~= 0 and tear:IsFlying() or tear.Variant == 0 or tear.Variant == 5) then
-			gravestone:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE, EntityRef(enemytear), 1)
+			gravestone:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE, EntityRef(tear), 1)
 		end
 	end
 end
