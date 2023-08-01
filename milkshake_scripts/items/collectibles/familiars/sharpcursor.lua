@@ -269,7 +269,6 @@ function SharpCursor:OnSharpCursorRender(familiar)
 
     if ShouldActivateMouseMode(player) then
         local mousePos = Input.GetMousePosition(false)
-        local og = TSIL.Vector.CopyVector(mousePos)
         if Game():GetRoom():IsMirrorWorld() then
             mousePos = Vector(Isaac.GetScreenWidth() * Isaac.GetScreenPointScale() - mousePos.X, mousePos.Y)
         end

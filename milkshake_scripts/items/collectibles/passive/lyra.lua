@@ -252,7 +252,16 @@ local function HandleLyraInput(player, playerUsingLyraData)
         if difference <= INPUT_FORGIVENESS then
             local renderPos = Isaac.WorldToScreen(player.Position)
             local baseYPos = -40 * player.SpriteScale.Y
-            CreateNoteSplash(firstNote.direction, renderPos + Vector(0, baseYPos))
+            local noteSplashPos = renderPos + Vector(0, baseYPos)
+            CreateNoteSplash(firstNote.direction, noteSplashPos)
+            local shockwavePos = Isaac.ScreenToWorld(noteSplashPos * Isaac.GetScreenPointScale())
+            TSIL.Utils.Functions.RunNextCallback(
+                MilkshakeVol1,
+                ModCallbacks.MC_POST_UPDATE,
+                function ()
+                    Game():MakeShockwave(shockwavePos, 0.005, 0.005, 4)
+                end
+            )
             table.remove(playerUsingLyraData.notes, 1)
 
             if #playerUsingLyraData.notes == 0 then
