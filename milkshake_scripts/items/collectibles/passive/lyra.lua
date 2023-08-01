@@ -140,7 +140,6 @@ function Lyra:OnOrbUse(orb, player)
     if not player:HasCollectible(enums.Collectibles.LYRA) then return end
 
     if utility:GetTemporaryPlayerData(player, "JustFinishedUsingLyra") then
-        utility:SetTemporaryPlayerData(player, "JustFinishedUsingLyra", false)
         return
     end
 

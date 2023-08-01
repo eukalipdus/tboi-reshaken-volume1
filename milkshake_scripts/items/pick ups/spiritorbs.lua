@@ -15,6 +15,10 @@ function SpiritOrbs:OnCardUse(orb, player)
     end
 
     Isaac.RunCallbackWithParam(enums.Callbacks.ON_ORB_USE, orb, orb, player, isDoublePower)
+
+    if orb ~= enums.Orbs.RANDOM then
+        MilkshakeVol1.utility:SetTemporaryPlayerData(player, "JustFinishedUsingLyra", false)
+    end
 end
 for _, orb in pairs(enums.Orbs) do
     MilkshakeVol1:AddCallback(
