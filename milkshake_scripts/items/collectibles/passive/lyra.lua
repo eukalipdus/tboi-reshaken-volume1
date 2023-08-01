@@ -345,6 +345,7 @@ function Lyra:OnClearAwardSpawn(rng, pos)
 
     if rng:RandomFloat() >= CLEAR_REWARD_REPLACE_CHANCE then return end
 
+    pos = room:FindFreePickupSpawnPosition(pos)
     local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
     TSIL.EntitySpecific.SpawnPickup(
         PickupVariant.PICKUP_TAROTCARD,
