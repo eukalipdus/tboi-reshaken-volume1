@@ -69,6 +69,7 @@ include("milkshake_scripts.items.pick ups.psychicorb")
 include("milkshake_scripts.items.pick ups.chaosorb")
 include("milkshake_scripts.items.pick ups.natureorb")
 include("milkshake_scripts.items.pick ups.fruitheart")
+include("milkshake_scripts.items.pick ups.holyorb")
 include("milkshake_scripts.items.pick ups.fireorb")
 include("milkshake_scripts.items.pick ups.electricorb")
 include("milkshake_scripts.items.pick ups.spiritorbs")
@@ -76,6 +77,8 @@ include("milkshake_scripts.items.pick ups.tatteredpage")
 include("milkshake_scripts.items.pick ups.specialpennies")
 include("milkshake_scripts.items.pick ups.delugeOrb")
 include("milkshake_scripts.items.pick ups.revenanceOrb")
+include("milkshake_scripts.items.pick ups.toxicorb")
+include("milkshake_scripts.items.pick ups.unholyorb")
 
 
 --Slots
