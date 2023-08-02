@@ -111,6 +111,6 @@
 	flameColor="flame_yellow" coreColor="core_yellow" tearColor="tear_blue"/>
 
 	<!-- Special Brenda Holy Wisp -->
-	<wisp id="506" hp="10" layer="1" damage="3" fireDelay="15"
+	<wisp id="506" hp="10" layer="1" damage="3" fireDelay="15" coreGfx="cross.png"
 	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
 </wisps>
