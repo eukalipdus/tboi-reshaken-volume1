@@ -51,10 +51,10 @@ local possibleWisps = {
     enums.Collectibles.SPECIAL_BRENDA_FIRE_WISP,
     enums.Collectibles.SPECIAL_BRENDA_PSYCHIC_WISP,
     enums.Collectibles.SPECIAL_BRENDA_NATURE_WISP,
-    CollectibleType.COLLECTIBLE_TELEPORT_2, -- Change to custom (Tech zero tears)
-    CollectibleType.COLLECTIBLE_SHOOP_DA_WHOOP, -- Change to custom (Blue laser)
-    CollectibleType.COLLECTIBLE_LEMON_MISHAP,
-    CollectibleType.COLLECTIBLE_CRACK_THE_SKY, -- Change to custom (Same, but cross sprite)
+    enums.Collectibles.SPECIAL_BRENDA_ELECTRIC_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_WATER_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
     CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
     CollectibleType.COLLECTIBLE_SATANIC_BIBLE
 }

@@ -45,6 +45,10 @@
     <passive id="500" name="BRENDA CUSTOM FIRE WISP" description="Report this to the Milkshake devs" tags="hidden" />
     <passive id="501" name="BRENDA CUSTOM PSYCHIC WISP" description="Report this to the Milkshake devs" tags="hidden" />
     <passive id="502" name="BRENDA CUSTOM NATURE WISP" description="Report this to the Milkshake devs" tags="hidden" />
+    <passive id="503" name="BRENDA CUSTOM ELECTRIC WISP" description="Report this to the Milkshake devs" tags="hidden" />
+    <passive id="504" name="BRENDA CUSTOM WATER WISP" description="Report this to the Milkshake devs" tags="hidden" />
+    <passive id="505" name="BRENDA CUSTOM POISON WISP" description="Report this to the Milkshake devs" tags="hidden" />
+    <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="Report this to the Milkshake devs" tags="hidden" />
 
     <!-- unused -->
     <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true"/> 

@@ -97,4 +97,20 @@
 	<!-- Special Brenda Nature Wisp -->
 	<wisp id="502" hp="10" layer="1" damage="3" fireDelay="15"
 	flameColor="flame_green" coreColor="core_green" tearColor="tear_blue"/>
+
+	<!-- Special Brenda Electric Wisp -->
+	<wisp id="503" hp="10" layer="1" damage="3" fireDelay="15"
+	flameColor="flame_bright_blue" coreColor="core_bright_blue" tearColor="tear_blue"/>
+
+	<!-- Special Brenda Water Wisp -->
+	<wisp id="504" hp="10" layer="1" damage="3" fireDelay="15"
+	flameColor="flame_blue" coreColor="core_blue" tearColor="tear_blue"/>
+
+	<!-- Special Brenda Poison Wisp -->
+	<wisp id="505" hp="10" layer="1" damage="3" fireDelay="15"
+	flameColor="flame_yellow" coreColor="core_yellow" tearColor="tear_blue"/>
+
+	<!-- Special Brenda Holy Wisp -->
+	<wisp id="506" hp="10" layer="1" damage="3" fireDelay="15"
+	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
 </wisps>
