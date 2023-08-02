@@ -3,6 +3,7 @@ local BrendaPoisonWisp = {}
 
 local CREEP_FREQUENCY = 4
 local CREEP_DURATION = 45
+local CREEP_SCALE = 0.75
 
 
 ---@param wisp EntityFamiliar
@@ -20,6 +21,7 @@ function BrendaPoisonWisp:OnWispUpdate(wisp)
     local creepColor = Color(1, 1, 1)
     creepColor:SetColorize(6, 6, 0, 1)
     creep.Color = creepColor
+    creep.SpriteScale = Vector.One * CREEP_SCALE
     creep:SetTimeout(CREEP_DURATION)
 
     creep:Update()
