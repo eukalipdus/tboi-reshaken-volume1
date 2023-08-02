@@ -1,6 +1,7 @@
 local DelugeOrb = {}
 local enums = MilkshakeVol1.enums
 local game = Game()
+local sfx = SFXManager()
 
 DelugeOrb.Force = 52
 DelugeOrb.Radius = 260
@@ -11,7 +12,7 @@ DelugeOrb.DamageTick = 2
 DelugeOrb.DamageArea = 57
 DelugeOrb.DamageMultiplier = 0.75
 DelugeOrb.SplashTick = 8
-DelugeOrb.DelayBetweenLasers = 15
+DelugeOrb.DelayBetweenLasers = 7
 
 --- Written by Zamiel, technique created by im_tem, tweaked
 function DelugeOrb.SetBlindfold(player, enabled)
@@ -49,8 +50,12 @@ function DelugeOrb:onPEffectUpdate(player)
 			data.DelugeOrbUsed = nil
 			DelugeOrb.SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
+			sfx:Stop(SoundEffect.SOUND_WATER_FLOW_LARGE)
 		else
 			player.Velocity = player:GetMovementVector()*DelugeOrb.SpeedMultiplier
+			if not sfx:IsPlaying(SoundEffect.SOUND_WATER_FLOW_LARGE) then
+				sfx:Play(SoundEffect.SOUND_WATER_FLOW_LARGE, 1, 2, true)
+			end
 		end
 	end
 end
@@ -127,6 +132,7 @@ function DelugeOrb:onWaterfallUpUpdate(effect)
 	if not effectData.DelugeOrb then return end
 	if effect.FrameCount == DelugeOrb.DelayBetweenLasers then
 		local effectDown = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER, 0, game:GetRoom():GetCenterPos(), Vector.Zero, effect.Parent):ToEffect()
+		sfx:Play(SoundEffect.SOUND_BOSS2_DIVE)
 		effectDown:GetData().DelugeOrb = true
 		effectDown.Parent = effect.Parent:ToPlayer()
 		effectDown.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
