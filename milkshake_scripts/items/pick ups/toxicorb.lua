@@ -8,5 +8,5 @@ end
 MilkshakeVol1:AddCallback(
     MilkshakeVol1.enums.Callbacks.ON_ORB_USE,
     ToxicOrb.OnToxicOrbUse,
-    MilkshakeVol1.enums.Orbs.HOLY
+    MilkshakeVol1.enums.Orbs.POISON
 )
