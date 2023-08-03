@@ -53,9 +53,6 @@ function DelugeOrb:onPEffectUpdate(player)
 			sfx:Stop(SoundEffect.SOUND_WATER_FLOW_LARGE)
 		else
 			player.Velocity = player:GetMovementVector()*DelugeOrb.SpeedMultiplier
-			if not sfx:IsPlaying(SoundEffect.SOUND_WATER_FLOW_LARGE) then
-				sfx:Play(SoundEffect.SOUND_WATER_FLOW_LARGE, 1, 2, true)
-			end
 		end
 	end
 end
@@ -159,10 +156,11 @@ function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
 	data.DelugeOrbUsed = true
 	local laserUp = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP)
 	local laserDown = Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER)
-	if #laserDown > 0 then
+	if #laserDown > 0 and #laserUp > 0 then
 		DelugeOrb.ExtraUse(laserUp, 2)
 		DelugeOrb.ExtraUse(laserDown)
 	else
+		sfx:Play(SoundEffect.SOUND_WATER_FLOW_LARGE, 1, 2, true)
 		DelugeOrb.SetBlindfold(player, true)
 		player:AddNullCostume(enums.Costumes.DELUGE_ORB)
 		local effectUp = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP, 0, player.Position, Vector.Zero, player):ToEffect()
