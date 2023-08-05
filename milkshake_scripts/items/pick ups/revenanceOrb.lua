@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 local game = Game()
 local sfx = SFXManager()
 
-RevenanceOrb.SkeletonHP = 1
+RevenanceOrb.SkeletonHP = 10
 RevenanceOrb.SkeletonDMG = 3
 
 RevenanceOrb.Undeads = {
@@ -15,6 +15,7 @@ RevenanceOrb.Anims = {
 }
 
 RevenanceOrb.TombMobs = {
+{EntityType.ENTITY_BONY, 0, 0},
 {EntityType.ENTITY_BONY, 0, 0},
 {EntityType.ENTITY_EFFECT, EffectVariant.PURGATORY, 1},
 {EntityType.ENTITY_EFFECT, EffectVariant.HUNGRY_SOUL, 1},
@@ -72,7 +73,7 @@ function RevenanceOrb:GravestonDeath(gravestone)
 	SoundParticle(gravestone.Position)
 	local stageCounter = MilkshakeVol1.utility:GetCurrentChapter()
 	local dmag = RevenanceOrb.SkeletonDMG + stageCounter
-	local skelHP = RevenanceOrb.SkeletonHP + 4*stageCounter
+	local skelHP = RevenanceOrb.SkeletonHP + 10*stageCounter
 	local rng = gravestone:GetDropRNG()
 	local randMob = RevenanceOrb.TombMobs[rng:RandomInt(#RevenanceOrb.TombMobs)+1]
 	local mob = Isaac.Spawn(randMob[1], randMob[2], randMob[3], gravestone.Position, Vector.Zero, gravestone.SpawnerEntity)

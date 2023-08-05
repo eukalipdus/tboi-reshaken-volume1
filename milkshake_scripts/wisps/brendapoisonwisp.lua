@@ -1,9 +1,9 @@
 local BrendaPoisonWisp = {}
 
 
-local CREEP_FREQUENCY = 4
-local CREEP_DURATION = 45
-local CREEP_SCALE = 0.75
+local CREEP_FREQUENCY = 10
+local CREEP_DURATION = 3
+local CREEP_SCALE = 0.6
 
 
 ---@param wisp EntityFamiliar
