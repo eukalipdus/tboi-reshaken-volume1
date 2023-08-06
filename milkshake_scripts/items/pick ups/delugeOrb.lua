@@ -13,6 +13,8 @@ DelugeOrb.DamageArea = 57
 DelugeOrb.DamageMultiplier = 0.75
 DelugeOrb.SplashTick = 8
 DelugeOrb.DelayBetweenLasers = 7
+DelugeOrb.SwirlScale = 0.8
+DelugeOrb.SwirlAlpha = 0.8
 
 --- Written by Zamiel, technique created by im_tem, tweaked
 function DelugeOrb.SetBlindfold(player, enabled)
@@ -50,9 +52,14 @@ function DelugeOrb:onPEffectUpdate(player)
 			data.DelugeOrbUsed = nil
 			DelugeOrb.SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
-			sfx:Stop(SoundEffect.SOUND_WATER_FLOW_LARGE)
+			--sfx:Stop(SoundEffect.SOUND_WATER_FLOW_LARGE)
 		else
 			player.Velocity = player:GetMovementVector()*DelugeOrb.SpeedMultiplier
+			--if not sfx:IsPlaying(SoundEffect.SOUND_WATER_FLOW_LARGE) then
+				--sfx:SetAmbientSound(SoundEffect.SOUND_WATER_FLOW_LARGE, 1 ,1)
+				--sfx:Play(SoundEffect.SOUND_WATER_FLOW_LARGE)
+				--print(SoundEffect.SOUND_BOSS2_WATERTHRASHING)
+			--end
 		end
 	end
 end
@@ -109,6 +116,7 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 				enemy:TakeDamage(dmg, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(player), 1)
 			end
 		end
+		
 	end
 	---end of effect
 	if effect.Timeout <= 1 then
@@ -121,12 +129,17 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 			end
 		end
 	end
+	local swirl = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.WHIRLPOOL, 1, effect.Position, Vector.Zero, effect.Parent):ToEffect()	
+	swirl:FollowParent(effect)
+	swirl.SpriteScale = Vector.One * DelugeOrb.SwirlScale
+	swirl:SetColor(Color(1,1,1,DelugeOrb.SwirlAlpha), -1, 1, false, true)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, DelugeOrb.onWaterfallDownUpdate, enums.Effects.DELUGE_LASER)
 
 function DelugeOrb:onWaterfallUpUpdate(effect)
 	local effectData = effect:GetData()
 	if not effectData.DelugeOrb then return end
+	effect.ParentOffset = Vector(0, -32*effect.Parent.SpriteScale.Y)
 	if effect.FrameCount == DelugeOrb.DelayBetweenLasers then
 		local effectDown = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER, 0, game:GetRoom():GetCenterPos(), Vector.Zero, effect.Parent):ToEffect()
 		sfx:Play(SoundEffect.SOUND_BOSS2_DIVE)
@@ -160,7 +173,6 @@ function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
 		DelugeOrb.ExtraUse(laserUp, 2)
 		DelugeOrb.ExtraUse(laserDown)
 	else
-		sfx:Play(SoundEffect.SOUND_WATER_FLOW_LARGE, 1, 2, true)
 		DelugeOrb.SetBlindfold(player, true)
 		player:AddNullCostume(enums.Costumes.DELUGE_ORB)
 		local effectUp = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP, 0, player.Position, Vector.Zero, player):ToEffect()
@@ -169,7 +181,7 @@ function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
 		effectUp:FollowParent(player)
 		effectUp.ParentOffset = Vector(0, -32*player.SpriteScale.Y)
 		effectUp:SetTimeout(2*DelugeOrb.Timeout)
-		effectUp.DepthOffset = 100
+		effectUp.DepthOffset = 999
 	end
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, DelugeOrb.OnDelugeOrbUse, enums.Orbs.WATER)

@@ -96,7 +96,8 @@ function RevenanceOrb:OnRevenanceOrbUse(card, player) -- useFlag
 	if room:GetRoomShape() > 7 then tombNum = tombNum+2 end
 	--- spawn gravestones
 	for _ = 1, tombNum do
-		local pos =  Isaac.GetFreeNearPosition(room:GetRandomPosition(0), 10)
+		--local pos =  Isaac.GetFreeNearPosition(room:GetRandomPosition(0), 10)
+		local pos = room:FindFreePickupSpawnPosition(room:GetRandomPosition(0), 0, true)
 		local gravestone = Isaac.Spawn(enums.Enemies.GRAVESTONE, 0, 0, pos, Vector.Zero, player)
 		gravestone:GetSprite():Play(RevenanceOrb.Anims[rng:RandomInt(#RevenanceOrb.Anims)+1])
 		gravestone:GetSprite().FlipX = 0.5 > rng:RandomFloat()
