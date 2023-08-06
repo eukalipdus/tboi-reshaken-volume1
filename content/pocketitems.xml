@@ -1,15 +1,15 @@
 <pocketitems>
     <!-- Runes -->
-    <card type="object" pickup="474" description="Conductive Power" name="Spirit Of Conductivity" hud="Spirit Of Conductivity" mimiccharge="6" />
-    <card type="object" pickup="475" description="Infernal Power" name="Spirit Of Inferno" hud="Spirit Of Inferno" mimiccharge="6" />
-    <card type="object" pickup="476" description="Druidic Power" name="Spirit Of Druidity" hud="Spirit Of Druidity" mimiccharge="6" />
-    <card type="object" pickup="477" description="Clairvoyant Power" name="Spirit Of Clairvoyance" hud="Spirit Of Clairvoyance" mimiccharge="6" />
+    <card type="object" pickup="474" description="EMP Blast" name="Spirit Of Conductivity" hud="Spirit Of Conductivity" mimiccharge="6" />
+    <card type="object" pickup="475" description="Flamethrower" name="Spirit Of Inferno" hud="Spirit Of Inferno" mimiccharge="6" />
+    <card type="object" pickup="476" description="Fruiting Vines" name="Spirit Of Druidity" hud="Spirit Of Druidity" mimiccharge="6" />
+    <card type="object" pickup="477" description="Psychic Ward" name="Spirit Of Clairvoyance" hud="Spirit Of Clairvoyance" mimiccharge="6" />
     <card type="object" pickup="478" description="Unfocused Power" name="Spirit Of Chaos" hud="Spirit Of Chaos" mimiccharge="6" />
-    <card type="object" pickup="479" description="Placeholder" name="Spirit Of Salvation" hud="Spirit Of Salvation" mimiccharge="6" />
-    <card type="object" pickup="480" description="Placeholder" name="Spirit Of Sacrilege" hud="Spirit Of Sacrilege" mimiccharge="6" />
-    <card type="object" pickup="481" description="Placeholder" name="Spirit Of Virulence" hud="Spirit Of Virulence" mimiccharge="6" />
-    <card type="object" pickup="482" description="Placeholder" name="Spirit Of Revenance" hud="Spirit Of Revenance" mimiccharge="6" />
-    <card type="object" pickup="483" description="Placeholder" name="Spirit Of Deluge" hud="Spirit Of Deluge" mimiccharge="6" />
+    <card type="object" pickup="479" description="Angel's Light" name="Spirit Of Salvation" hud="Spirit Of Salvation" mimiccharge="6" />
+    <card type="object" pickup="480" description="Demon Slice" name="Spirit Of Sacrilege" hud="Spirit Of Sacrilege" mimiccharge="6" />
+    <card type="object" pickup="481" description="Toxic Cloud" name="Spirit Of Virulence" hud="Spirit Of Virulence" mimiccharge="6" />
+    <card type="object" pickup="482" description="Tomb Raiser" name="Spirit Of Revenance" hud="Spirit Of Revenance" mimiccharge="6" />
+    <card type="object" pickup="483" description="Waterfall Cyclone" name="Spirit Of Deluge" hud="Spirit Of Deluge" mimiccharge="6" />
     
     <!-- Tattered Page -->
     <card type="special" pickup="473" description="Discarded Archive" name="Tattered Page" hud="Tattered Page" mimiccharge="3" />

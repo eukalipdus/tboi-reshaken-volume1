@@ -3,9 +3,9 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local INHALING_DURATION = 60
-local ANGLE_VARIANCE = 28;
+local ANGLE_VARIANCE = 10;
 local MAX_ANGLE = 180;
-local BLEND_AMOUNT = 0.4;
+local BLEND_AMOUNT = 0.2;
 
 local NUM_SHOTS = 40;
 local NUM_SHOTS_DOUBLE_POWER = NUM_SHOTS * 2
