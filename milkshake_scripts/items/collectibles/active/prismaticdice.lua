@@ -242,8 +242,6 @@ function prismaticDice:onUse(_, _, player)
 
             local posLeft = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
             local posRight = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
-            local rng = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE)
-            local seed = rng:GetSeed()
 
 
             TSIL.Utils.Functions.RunInFrames(function ()
@@ -386,7 +384,7 @@ function prismaticDice:onUse(_, _, player)
                      collectible:Remove()
                      local newCollectibleID
                      if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
-                         for i = 1, 2 do
+                         for _ = 1, 2 do
                              splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
                          end
                      else
