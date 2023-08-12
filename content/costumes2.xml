@@ -10,9 +10,11 @@
 	<costume id="21" anm2path="potofgold.anm2" type="passive" hasSkinAlt="true" hasOverlay="true"/>
 	<costume id="24" anm2path="batteryacid.anm2" type="passive" hasSkinAlt="false" />
 	<costume id="26" anm2path="dadsmitt.anm2" type="passive" hasSkinAlt="false" />
+	<costume id="29" anm2path="witchdoctormask.anm2" type="passive" hasSkinAlt="false" />
 
 	<!-- OTHER COSTUMES -->
 	<costume anm2path="clairvoyance_orb.anm2" priority="30" type="none" hasSkinAlt="false" hasOverlay="true" />
 	<costume anm2path="orb_deluge.anm2" priority="1" type="none" hasSkinAlt="false" hasOverlay="true" />
 	<costume anm2path="orb_inferno.anm2" priority="30" type="none" hasSkinAlt="true" hasOverlay="true" />
+	
 </costumes>
