@@ -42,7 +42,8 @@ function potOfGold:onPlayerEffectUpdate(player)
         or pickup.Variant == PickupVariant.PICKUP_BOMB then
             local chosenCoin = TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
             pickup:Remove()
-            TSIL.EntitySpecific.SpawnPickup(chosenCoin.variant, chosenCoin.subtype, pickup.Position, Vector.Zero, player)
+            local coin = TSIL.EntitySpecific.SpawnPickup(chosenCoin.variant, chosenCoin.subtype, pickup.Position, Vector.Zero, player):ToPickup()
+            coin.Price = pickup.Price
         end
     end
 end
