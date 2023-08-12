@@ -54,12 +54,7 @@ function potOfGold:PostPickupInit(pickup)
         local player = Isaac.GetPlayer(i)
         if  player:HasCollectible(enums.Collectibles.POT_OF_GOLD)
         and not utility:DidEntityExist()
-        and (pickup.Variant == PickupVariant.PICKUP_COIN and not function ()
-            for index = 1, #rainbowPennies do
-                if pickup.SubType == rainbowPennies[index].subtype then return true
-            end
-        end
-        return false end) then
+        and pickup.Variant == PickupVariant.PICKUP_COIN then
             local rng = player:GetCollectibleRNG(enums.Collectibles.POT_OF_GOLD)
             local roll = rng:RandomInt(100) + 1
             if roll >= PENNY_CONVERT_CHANCE then
