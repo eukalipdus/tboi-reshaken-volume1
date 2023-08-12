@@ -1,4 +1,5 @@
 local enums = MilkshakeVol1.enums
+local dropSoundFrame = 23
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
     local randomPill = Game():GetItemPool():GetPill(Random() + 1)
@@ -51,4 +52,13 @@ end)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, function (pickup, player)
     player:AddBlueFlies(1, pickup.Position, player)
+end)
+
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_RENDER, function (_, pickup)
+    if pickup.Variant ~= PickupVariant.PICKUP_COIN
+    or (PickupVariant == PickupVariant.PICKUP_COIN and pickup.SubType ~= 1) then return end
+    local sprite = pickup:GetSprite()
+    if sprite:IsEventTriggered("DropSound") then
+        SFXManager():Play(SoundEffect.SOUND_PENNYDROP)
+    end
 end)
