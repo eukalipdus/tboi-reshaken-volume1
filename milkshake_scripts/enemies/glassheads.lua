@@ -776,7 +776,7 @@ function GlassHeads:WineHead_Update(enemy)
 
             for i=1, 3 do
                 local dist = rng:RandomInt(40)+30
-                local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CREEP_SLIPPERY_BROWN, 0, enemy.Position + Vector.FromAngle(rng:RandomInt(360)):Resized(dist), Vector.Zero, enemy):ToEffect()
+                local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CREEP_RED, 0, enemy.Position + Vector.FromAngle(rng:RandomInt(360)):Resized(dist), Vector.Zero, enemy):ToEffect()
                 local n = (rng:RandomInt(10)+10)/10 
                 creep.SpriteScale = Vector(n,n)
                 creep.Timeout = 200
