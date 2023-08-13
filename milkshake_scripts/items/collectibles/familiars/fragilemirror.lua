@@ -20,6 +20,7 @@ local FRAGILE_MIRROR_SPRITES = {
     "checkmate",
     "cupcake",
     "cupcake_unit",
+    "devil",
     "dogma",
     "eggplant",
     "error",
