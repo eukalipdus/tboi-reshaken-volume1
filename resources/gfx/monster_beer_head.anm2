@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="8/10/2023 7:43:21 PM" Version="17" Fps="45"/>
+	<Info CreatedBy="Unknown" CreatedOn="8/12/2023 4:04:13 PM" Version="19" Fps="45"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="monsters\beer_head.png" Id="0"/>
@@ -15,6 +15,7 @@
 		<Nulls/>
 		<Events>
 			<Event Name="Smash" Id="0"/>
+			<Event Name="Step" Id="1"/>
 		</Events>
 	</Content>
 	<Animations DefaultAnimation="Appear">
@@ -140,7 +141,10 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="1" AtFrame="9"/>
+				<Trigger EventId="1" AtFrame="27"/>
+			</Triggers>
 		</Animation>
 		<Animation Name="WalkLeft" FrameNum="36" Loop="true">
 			<RootAnimation>
@@ -213,7 +217,10 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="1" AtFrame="9"/>
+				<Trigger EventId="1" AtFrame="27"/>
+			</Triggers>
 		</Animation>
 		<Animation Name="WalkRight" FrameNum="36" Loop="true">
 			<RootAnimation>
@@ -286,7 +293,10 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="1" AtFrame="9"/>
+				<Trigger EventId="1" AtFrame="27"/>
+			</Triggers>
 		</Animation>
 		<Animation Name="Death" FrameNum="46" Loop="false">
 			<RootAnimation>
@@ -482,7 +492,10 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="1" AtFrame="6"/>
+				<Trigger EventId="1" AtFrame="20"/>
+			</Triggers>
 		</Animation>
 		<Animation Name="WalkDown_Rush" FrameNum="28" Loop="true">
 			<RootAnimation>
@@ -567,7 +580,10 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="1" AtFrame="6"/>
+				<Trigger EventId="1" AtFrame="20"/>
+			</Triggers>
 		</Animation>
 		<Animation Name="WalkLeft_Rush" FrameNum="28" Loop="true">
 			<RootAnimation>
@@ -652,7 +668,10 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="1" AtFrame="6"/>
+				<Trigger EventId="1" AtFrame="20"/>
+			</Triggers>
 		</Animation>
 		<Animation Name="WalkRight_Rush" FrameNum="28" Loop="true">
 			<RootAnimation>
@@ -737,7 +756,10 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="1" AtFrame="6"/>
+				<Trigger EventId="1" AtFrame="20"/>
+			</Triggers>
 		</Animation>
 		<Animation Name="Deactivate" FrameNum="22" Loop="false">
 			<RootAnimation>

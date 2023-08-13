@@ -32,4 +32,9 @@
     <entity Name="Molten Penny"             ID="5" Variant="20"   Subtype="3419" Group="Pickups"     Image="MilkshakeSprites/Pennies/MoltenPenny.png"      Kind="Milkshake!" />
 
     <entity Name="Brenda"                   ID="6" Variant="3270" Subtype="0"    Group="Slots"       Image="MilkshakeSprites/Brenda.png"         Kind="Milkshake!" />
+
+    <entity Name="Glass Head"               ID="962" Variant="0" Subtype="0"    Group="Enemies"       Image="MilkshakeSprites/GlassHead.png"     Kind="Milkshake!" />
+    <entity Name="Beaker Head"               ID="962" Variant="1" Subtype="0"    Group="Enemies"       Image="MilkshakeSprites/BeakerHead.png"     Kind="Milkshake!" />
+    <entity Name="Beer Head"               ID="962" Variant="2" Subtype="0"    Group="Enemies"       Image="MilkshakeSprites/BeerHead.png"     Kind="Milkshake!" />
+    <entity Name="Wine Head"               ID="962" Variant="3" Subtype="0"    Group="Enemies"       Image="MilkshakeSprites/WineHead.png"     Kind="Milkshake!" />
 </data>
