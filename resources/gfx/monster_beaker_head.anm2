@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="8/12/2023 2:23:40 PM" Version="21" Fps="45"/>
+	<Info CreatedBy="Unknown" CreatedOn="8/13/2023 8:37:04 AM" Version="22" Fps="45"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="monsters\beaker_head.png" Id="0"/>
@@ -12,6 +12,7 @@
 		<Events>
 			<Event Name="Throw" Id="0"/>
 			<Event Name="Step" Id="1"/>
+			<Event Name="Shlosh" Id="2"/>
 		</Events>
 	</Content>
 	<Animations DefaultAnimation="Appear">
@@ -41,7 +42,9 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="2" AtFrame="6"/>
+			</Triggers>
 		</Animation>
 		<Animation Name="WalkVert" FrameNum="23" Loop="true">
 			<RootAnimation>
@@ -267,7 +270,10 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="2" AtFrame="6"/>
+				<Trigger EventId="2" AtFrame="18"/>
+			</Triggers>
 		</Animation>
 	</Animations>
 </AnimatedActor>
