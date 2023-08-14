@@ -89,5 +89,20 @@ function potOfGold:prePickupCollision(pickup, collider)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.prePickupCollision)
 
+function potOfGold:PostPEffectUpdate()
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        if player:HasCollectible(enums.Collectibles.POT_OF_GOLD)
+        and player:HasCollectible(CollectibleType.COLLECTIBLE_POUND_OF_FLESH) then
+            for _, entity in pairs(Isaac.GetRoomEntities()) do
+                if entity:ToPickup() then
+                    local pickup = entity:ToPickup()
+                    pickup.AutoUpdatePrice = true
+                end
+            end
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.PostPEffectUpdate)
 
 return potOfGold
