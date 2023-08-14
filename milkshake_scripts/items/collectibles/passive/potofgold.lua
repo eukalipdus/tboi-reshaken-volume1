@@ -32,7 +32,7 @@ function MilkshakeVol1.API:GetRainbowPenny(rng)
     return TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
 end
 
-function potOfGold:onPlayerEffectUpdate(player)
+function potOfGold:PostPEffectUpdate(player)
     if not player:HasCollectible(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD) then return end
     local rng = player:GetCollectibleRNG(enums.Collectibles.POT_OF_GOLD)
     local pickups = TSIL.EntitySpecific.GetPickups()
@@ -48,7 +48,7 @@ function potOfGold:onPlayerEffectUpdate(player)
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.onPlayerEffectUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.PostPEffectUpdate)
 
 function potOfGold:PostPickupInit(pickup)
     for i = 0, Game():GetNumPlayers() - 1 do
@@ -70,7 +70,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, potOfGold.PostPickup
 
 ---@param pickup EntityPickup
 ---@param collider Entity
-function potOfGold:prePickupCollision(pickup, collider)
+function potOfGold:PrePickupCollision(pickup, collider)
     local player = collider:ToPlayer()
     if not player then return end
 
@@ -87,7 +87,7 @@ function potOfGold:prePickupCollision(pickup, collider)
     MilkshakeVol1.utility:SetData(pickup, "IsRainbowPenny", true)
     pickup.SubType = CoinSubType.COIN_PENNY
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.prePickupCollision)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.PrePickupCollision)
 
 function potOfGold:PostPEffectUpdate()
     for i = 0, Game():GetNumPlayers() - 1 do
