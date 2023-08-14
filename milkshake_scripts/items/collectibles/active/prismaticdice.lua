@@ -124,10 +124,11 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 end
 
                 newCollectibleID = itemPool:GetCollectible(roomPool, false)
+                print(newCollectibleID)
 
                 if counter == TIMES_CAN_FAIL
                 or newCollectibleID == CollectibleType.COLLECTIBLE_NULL
-                or (CollectibleType.COLLECTIBLE_BREAKFAST
+                or (newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST
                     and (itemPool ~= ItemPoolType.POOL_BOSS and itemPool ~= ItemPoolType.POOL_GREED_BOSS))
                 or counter == TIMES_CAN_FAIL then goto failsafe
                 end
