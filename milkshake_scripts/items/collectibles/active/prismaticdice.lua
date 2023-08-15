@@ -124,7 +124,6 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 end
 
                 newCollectibleID = itemPool:GetCollectible(roomPool, false)
-                print(newCollectibleID)
 
                 if counter == TIMES_CAN_FAIL
                 or newCollectibleID == CollectibleType.COLLECTIBLE_NULL
