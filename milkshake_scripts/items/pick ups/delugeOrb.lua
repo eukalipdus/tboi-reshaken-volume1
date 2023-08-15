@@ -1,5 +1,6 @@
 local DelugeOrb = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 local game = Game()
 local sfx = SFXManager()
 
@@ -38,7 +39,7 @@ function DelugeOrb.ExtraUse(lasers, double)
 	double = double or 1
 	for _, laser in pairs(lasers) do
 		laser = laser:ToEffect()
-		if laser:GetData().DelugeOrb then
+		if utility:GetData(laser, "DelugeOrb") then
 			laser:SetTimeout(laser.Timeout + (DelugeOrb.Timeout * double))
 			laser:GetSprite():Play("Loop")
 		end
@@ -46,10 +47,10 @@ function DelugeOrb.ExtraUse(lasers, double)
 end
 
 function DelugeOrb:onPEffectUpdate(player)
-	local data = player:GetData()
-	if data.DelugeOrbUsed then
+	--local data = player:GetData()
+	if utility:GetData(player, "DelugeOrbUsed") then
 		if #Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP) == 0 and #Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER) == 0 then
-			data.DelugeOrbUsed = nil
+			utility:SetData(player, "DelugeOrbUsed", nil)
 			DelugeOrb.SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
 			--sfx:Stop(SoundEffect.SOUND_WATER_FLOW_LARGE)
@@ -66,8 +67,8 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, DelugeOrb.onPEffectUpdate)
 
 function DelugeOrb:onWaterfallDownUpdate(effect)
-	local effectData = effect:GetData()
-	if not effectData.DelugeOrb then return end
+	--local effectData = effect:GetData()
+	if not utility:GetData(effect, "DelugeOrb") then return end
 	if effect:GetSprite():IsFinished("End") then
 		effect:Remove()
 	end
@@ -77,15 +78,15 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 	end
 	local player = effect.Parent:ToPlayer()
 	---flush effect
-	if effectData.DelugeFlushed and effect.FrameCount == 1 then
-		effectData.DelugeFlushed = nil
+	if utility:GetData(effect, "DelugeFlushed") and effect.FrameCount == 1 then
+		utility:SetData(effect, "DelugeFlushed", nil)
 		player:UseActiveItem(CollectibleType.COLLECTIBLE_FLUSH, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC)
 		SFXManager():Stop(SoundEffect.SOUND_FLUSH)
 		local enemies = Isaac.FindInRadius(player.Position, 5000, EntityPartition.ENEMY)
 		for _, enemy in pairs(enemies) do
-			if enemy:GetData().DelugeFlushed then
+			if utility:GetData(enemy, "DelugeFlushed") then
 				enemy:ClearEntityFlags(EntityFlag.FLAG_FRIENDLY)
-				enemy:GetData().DelugeFlushed = nil
+				utility:SetData(enemy, "DelugeFlushed", nil)
 			end
 		end
 	end
@@ -137,13 +138,13 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, DelugeOrb.onWaterfallDownUpdate, enums.Effects.DELUGE_LASER)
 
 function DelugeOrb:onWaterfallUpUpdate(effect)
-	local effectData = effect:GetData()
-	if not effectData.DelugeOrb then return end
+	--local effectData = effect:GetData()
+	if not utility:GetData(effect, "DelugeOrb") then return end
 	effect.ParentOffset = Vector(0, -32*effect.Parent.SpriteScale.Y)
 	if effect.FrameCount == DelugeOrb.DelayBetweenLasers then
 		local effectDown = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER, 0, game:GetRoom():GetCenterPos(), Vector.Zero, effect.Parent):ToEffect()
 		sfx:Play(SoundEffect.SOUND_BOSS2_DIVE)
-		effectDown:GetData().DelugeOrb = true
+		utility:SetData(effectDown, "DelugeOrb", true)
 		effectDown.Parent = effect.Parent:ToPlayer()
 		effectDown.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
 		effectDown.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_WALLS
@@ -151,12 +152,12 @@ function DelugeOrb:onWaterfallUpUpdate(effect)
 		effectDown:SetDamageSource(EntityType.ENTITY_PLAYER)
 		effectDown:GetSprite():Play("Start")
 		if not game:GetRoom():HasWater() then
-			effectDown:GetData().DelugeFlushed = true
+			utility:SetData(effectDown, "DelugeFlushed", true)
 			local enemies = Isaac.FindInRadius(effect.Position, 5000, EntityPartition.ENEMY)
 			for _, enemy in pairs(enemies) do
 				if enemy:ToNPC() and enemy:IsVulnerableEnemy() and enemy:IsActiveEnemy() and not enemy:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) then
 					enemy:AddEntityFlags(EntityFlag.FLAG_FRIENDLY)
-					enemy:GetData().DelugeFlushed = true
+					utility:SetData(enemy, "DelugeFlushed", true)
 				end
 			end
 		end
@@ -165,8 +166,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, DelugeOrb.onWaterfallUpUpdate, EffectVariant.HUSH_LASER_UP)
 
 function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
-	local data = player:GetData()
-	data.DelugeOrbUsed = true
+	utility:SetData(player, "DelugeOrbUsed", true)
 	local laserUp = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP)
 	local laserDown = Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER)
 	if #laserDown > 0 and #laserUp > 0 then
@@ -176,7 +176,7 @@ function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
 		DelugeOrb.SetBlindfold(player, true)
 		player:AddNullCostume(enums.Costumes.DELUGE_ORB)
 		local effectUp = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP, 0, player.Position, Vector.Zero, player):ToEffect()
-		effectUp:GetData().DelugeOrb = true
+		utility:SetData(effectUp, "DelugeOrb", true)
 		effectUp.Parent = player
 		effectUp:FollowParent(player)
 		effectUp.ParentOffset = Vector(0, -32*player.SpriteScale.Y)
