@@ -1,5 +1,6 @@
 local dadsMitt = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local DEADZONE_ANGLE = 60
 
@@ -104,7 +105,10 @@ function dadsMitt:PostKnifeUpdate(knife)
     if not player then
         return end
 
-    local data = knife:GetData()
+    local data = utility:GetData(knife, "DadsMittKnifeVelocity")
+    if not data then
+        data = utility:SetData(knife, "DadsMittKnifeVelocity", {})
+    end
     if not knife:IsFlying() then
         data.DadsMittKnife = nil
         return
