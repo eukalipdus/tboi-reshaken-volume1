@@ -107,22 +107,19 @@ function dadsMitt:PostKnifeUpdate(knife)
 
     local data = utility:GetData(knife, "DadsMittKnifeVelocity")
     if not data then
-        data = utility:SetData(knife, "DadsMittKnifeVelocity", {})
+        utility:SetData(knife, "DadsMittKnifeVelocity", {Velocity = Vector.Zero, Offset = Vector.Zero})
+        data = utility:GetData(knife, "DadsMittKnifeVelocity")
     end
     if not knife:IsFlying() then
-        data.DadsMittKnife = nil
+        utility:SetData(knife, "DadsMittKnifeVelocity", nil)
         return
     end
-    if not data.DadsMittKnife then
-        data.DadsMittKnife = {Velocity = Vector.Zero, Offset = Vector.Zero}
-    end
-    local knifeMovement = data.DadsMittKnife
     local knifeDirectionParallel = Vector.FromAngle(knife.Rotation):Rotated(90)
     local parallelPlayerVelocity = knifeDirectionParallel:Normalized() * player.Velocity:Dot(knifeDirectionParallel)*KNIFE_MOVEMENT_RATIO
 
-    knifeMovement.Velocity = knifeMovement.Velocity + parallelPlayerVelocity
-    knifeMovement.Offset = knifeMovement.Offset + knifeMovement.Velocity
-    knife.Position = knife.Position + (knifeMovement.Offset * knife:GetKnifeDistance() * KNIFE_OFFSET_STRENGTH)
+    data.Velocity = data.Velocity + parallelPlayerVelocity
+    data.Offset = data.Offset + data.Velocity
+    knife.Position = knife.Position + (data.Offset * knife:GetKnifeDistance() * KNIFE_OFFSET_STRENGTH)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, dadsMitt.PostKnifeUpdate)
 
