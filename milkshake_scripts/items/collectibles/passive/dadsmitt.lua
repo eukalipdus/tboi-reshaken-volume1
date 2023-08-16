@@ -115,7 +115,7 @@ function dadsMitt:PostKnifeUpdate(knife)
         return
     end
     local knifeDirectionParallel = Vector.FromAngle(knife.Rotation):Rotated(90)
-    local parallelPlayerVelocity = knifeDirectionParallel:Normalized() * player.Velocity:Dot(knifeDirectionParallel)*KNIFE_MOVEMENT_RATIO
+    local parallelPlayerVelocity = knifeDirectionParallel:Normalized() * player.Velocity:Dot(knifeDirectionParallel) * KNIFE_MOVEMENT_RATIO*player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
 
     data.Velocity = data.Velocity + parallelPlayerVelocity
     data.Offset = data.Offset + data.Velocity
