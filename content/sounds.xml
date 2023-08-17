@@ -4,4 +4,11 @@
         <sample weight="1" path="click2.wav"/>
         <sample weight="1" path="click3.wav"/>
     </sound>
+
+    <sound name="glass head liquid">
+        <sample weight="1" path="glasshead_liquid.wav"/>
+    </sound>
+    <sound name="glass head shatter">
+        <sample weight="1" path="glasshead_shatter.wav"/>
+    </sound>
 </sounds>

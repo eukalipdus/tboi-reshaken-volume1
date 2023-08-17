@@ -100,6 +100,8 @@ enums.ENTITY_GENERIC_PROP = { --id = 960
 
 enums.Sounds = {
     CLICK = Isaac.GetSoundIdByName("sharp cursor click"),
+    GLASSHEAD_LIQUID = Isaac.GetSoundIdByName("glass head liquid"),
+    GLASSHEAD_SHATTER = Isaac.GetSoundIdByName("glass head shatter"),
 }
 
 enums.Costumes = {

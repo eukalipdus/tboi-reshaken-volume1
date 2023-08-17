@@ -41,6 +41,11 @@ function GlassHeads:GlassHead_Update(enemy)
         return
     end
 
+    if sprite:IsEventTriggered("Step") then
+        sfx:Play(SoundEffect.SOUND_FETUS_LAND, .5, 0, false, 1, 0)
+        sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, .25, 0, false, 1, 0)
+    end
+
     if data.state == 1 then
         if enemy.Pathfinder:HasPathToPos(target.Position) then 
             if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and 
@@ -68,9 +73,6 @@ function GlassHeads:GlassHead_Update(enemy)
                 end
             end
 
-            if sprite:IsEventTriggered("Step") then
-                sfx:Play(SoundEffect.SOUND_FETUS_LAND, .5, 0, false, 1, 0)
-            end
         else
             sprite:SetFrame('WalkVert', 0)
             enemy.Velocity = enemy.Velocity * .5
@@ -113,7 +115,7 @@ function GlassHeads:GlassHead_Update(enemy)
                 sfx:Play(SoundEffect.SOUND_BLOODSHOOT, 1, 0, false, 1)
             end
 
-            sfx:Play(SoundEffect.SOUND_GLASS_BREAK, 1, 0, false, 1, 0)
+            sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
 
         elseif sprite:IsFinished("Death") then
@@ -145,9 +147,9 @@ function GlassHeads:GlassHeads_Dmg(enemy, amount, flags, source, _)
         end
 
         if enemy.Variant==enums.Enemies.BEER_HEAD then
-            sfx:Play(SoundEffect.SOUND_STONE_WALKER, 1, 0, false, 2)
+            sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, .25, 0)
         else
-            sfx:Play(SoundEffect.SOUND_STONE_WALKER, 1, 0, false, 4)
+            sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 2, 0, false, .75, 0)
         end
         if enemy.Variant==enums.Enemies.WINE_HEAD then
             sfx:Play(SoundEffect.SOUND_SHELLGAME, .5, 0, false, .6)
@@ -188,6 +190,10 @@ function GlassHeads:BeakerHead_Update(enemy)
 
     if data.state == 1 then
         sprite:PlayOverlay('HeadIdle')
+
+        if sprite:GetOverlayFrame()==18 then
+            sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, .25, 0, false, 4, 0)
+        end
 
         if enemy.Pathfinder:HasPathToPos(data.targpos) then 
             if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and 
@@ -242,6 +248,7 @@ function GlassHeads:BeakerHead_Update(enemy)
             local targpos = target.Position + Vector(rng:RandomInt(100)-50, rng:RandomInt(100)-50)
             Isaac.Spawn(enums.Enemies.GLASS_HEAD, enums.Enemies.BEAKER_HEAD, enums.Enemies.BEAKER_HEAD_PROJECTILE, enemy.Position, (targpos - enemy.Position):Resized(targpos:Distance(enemy.Position)*.075), enemy)
             sfx:Play(SoundEffect.SOUND_SHELLGAME, .5, 0, false, 1, 0)
+            sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, 2, 0)
         elseif sprite:IsFinished("Throw") then
             enemy.CanShutDoors = false
         end
@@ -330,7 +337,7 @@ function GlassHeads:BeakerHeadProjectile_Update(enemy)
 
             Game():BombExplosionEffects(enemy.Position+Vector(0,10), 20, 0, Color(0,1,0,1,0,0,0), enemy, 1, false, true)
 
-            sfx:Play(SoundEffect.SOUND_GLASS_BREAK, 1, 0, false, 1, 0)
+            sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
 
         else     
@@ -452,6 +459,8 @@ function GlassHeads:BeerHead_Update(enemy)
 
         if sprite:IsEventTriggered("Step") then
             sfx:Play(SoundEffect.SOUND_FETUS_LAND, .75, 0, false, .75, 0)
+        elseif sprite:IsEventTriggered("Shlosh") then
+            sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, .5, 0, false, .5, 0)
         end
 
         local Speed = BEERHEAD_SPEED
@@ -528,7 +537,11 @@ function GlassHeads:BeerHead_Update(enemy)
                 if enemy:IsFrame(4,0) then 
                     local eff = Isaac.Spawn(1000, 2, 6, enemy.Position + (tab[sprite:GetAnimation()]*30) + Vector(rng:RandomInt(20)-10, rng:RandomInt(20)-10), enemy.Velocity*-.5, enemy)  
                     eff:GetSprite().Color = BeerColor
-                    sfx:Play(SoundEffect.SOUND_ROTTEN_HEART, .75, 0, false, 1)
+                    sfx:Play(SoundEffect.SOUND_ROTTEN_HEART, .25, 0, false, 1)
+                end
+
+                if enemy:IsFrame(10,0) then
+                    sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, 1.5, 0)
                 end
 
                 if rng:RandomInt(5)+1==1 then 
@@ -607,7 +620,7 @@ function GlassHeads:BeerHead_Update(enemy)
                 sfx:Play(SoundEffect.SOUND_BLOODSHOOT, 1, 0, false, 1)
             end
 
-            sfx:Play(SoundEffect.SOUND_GLASS_BREAK, 1, 0, false, 1, 0)
+            sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 1, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
 
         elseif sprite:IsFinished("Death") then
@@ -661,6 +674,10 @@ function GlassHeads:WineHead_Update(enemy)
     if data.state==1 then
         sprite:PlayOverlay("HeadIdle")
 
+        if sprite:GetOverlayFrame()==6 then 
+            sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, .75, 0, false, 1.5, 0)
+        end
+
         if Game():GetRoom():CheckLine(enemy.Position, target.Position, 0, 0, false, false) then 
             data.trigger = data.trigger - 1
         end
@@ -699,7 +716,8 @@ function GlassHeads:WineHead_Update(enemy)
         end
 
         if enemy:IsFrame(5,0) then
-            sfx:Play(SoundEffect.SOUND_SHELLGAME, .4, 0, false, .5)
+            sfx:Play(SoundEffect.SOUND_SHELLGAME, .3, 0, false, .5)
+            sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 1, 0, false, 2, 0)
         end
 
 
@@ -813,8 +831,8 @@ function GlassHeads:WineHead_Update(enemy)
                 sfx:Play(SoundEffect.SOUND_BLOODSHOOT, 1, 0, false, 1)
             end
 
-            sfx:Play(SoundEffect.SOUND_GLASS_BREAK, 1, 0, false, 1, 0)
-            sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
+            sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
+            sfx:Play(SoundEffect.SOUND_HEARTOUT, .5, 0, false, 1, 0)
 
         elseif sprite:IsFinished("Death") then
             enemy.CanShutDoors = false

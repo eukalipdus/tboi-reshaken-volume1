@@ -16,10 +16,10 @@ local SPLIT_COLOR_FRAMES = 2
 local SHATTERED_SOLID_FRAMES = 7
 local SHATTERED_COLOR_FRAMES = 20
 local SCHEDULE_FRAMES = 2
-local TROLL_BOMB_COUNT = 3
-local PICKUP_COUNT = 6
-local NON_GOLD_PICKUP_COUNT = 5
-local MUL_VEC_BY = 4
+--local TROLL_BOMB_COUNT = 3
+--local PICKUP_COUNT = 6
+--local NON_GOLD_PICKUP_COUNT = 5
+--local MUL_VEC_BY = 4
 
 ---Returns the amount of collectibles in the current room 
 ---@return number
@@ -127,7 +127,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
 
                 if counter == TIMES_CAN_FAIL
                 or newCollectibleID == CollectibleType.COLLECTIBLE_NULL
-                or (CollectibleType.COLLECTIBLE_BREAKFAST
+                or (newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST
                     and (itemPool ~= ItemPoolType.POOL_BOSS and itemPool ~= ItemPoolType.POOL_GREED_BOSS))
                 or counter == TIMES_CAN_FAIL then goto failsafe
                 end

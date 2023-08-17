@@ -54,7 +54,7 @@ MilkshakeVol1:AddModCompatibility("Epiphany", function()
         }
     })
 
-    MilkshakeVol1:AddConductivityOrbSlotPayout(Epiphany.Slot.PAIN_O_MATIC.ID, {
+    MilkshakeVol1.API:AddConductivityOrbSlotPayout(Epiphany.Slot.PAIN_O_MATIC.ID, {
         {
             chance = 50,
             value = {

@@ -1,5 +1,6 @@
 local dadsMitt = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local DEADZONE_ANGLE = 60
 
@@ -104,21 +105,21 @@ function dadsMitt:PostKnifeUpdate(knife)
     if not player then
         return end
 
-    local data = knife:GetData()
+    local data = utility:GetData(knife, "DadsMittKnifeVelocity")
+    if not data then
+        utility:SetData(knife, "DadsMittKnifeVelocity", {Velocity = Vector.Zero, Offset = Vector.Zero})
+        data = utility:GetData(knife, "DadsMittKnifeVelocity")
+    end
     if not knife:IsFlying() then
-        data.DadsMittKnife = nil
+        utility:SetData(knife, "DadsMittKnifeVelocity", nil)
         return
     end
-    if not data.DadsMittKnife then
-        data.DadsMittKnife = {Velocity = Vector.Zero, Offset = Vector.Zero}
-    end
-    local knifeMovement = data.DadsMittKnife
     local knifeDirectionParallel = Vector.FromAngle(knife.Rotation):Rotated(90)
-    local parallelPlayerVelocity = knifeDirectionParallel:Normalized() * player.Velocity:Dot(knifeDirectionParallel)*KNIFE_MOVEMENT_RATIO
+    local parallelPlayerVelocity = knifeDirectionParallel:Normalized() * player.Velocity:Dot(knifeDirectionParallel) * KNIFE_MOVEMENT_RATIO*player:GetCollectibleNum(enums.Collectibles.DADS_MITT)
 
-    knifeMovement.Velocity = knifeMovement.Velocity + parallelPlayerVelocity
-    knifeMovement.Offset = knifeMovement.Offset + knifeMovement.Velocity
-    knife.Position = knife.Position + (knifeMovement.Offset * knife:GetKnifeDistance() * KNIFE_OFFSET_STRENGTH)
+    data.Velocity = data.Velocity + parallelPlayerVelocity
+    data.Offset = data.Offset + data.Velocity
+    knife.Position = knife.Position + (data.Offset * knife:GetKnifeDistance() * KNIFE_OFFSET_STRENGTH)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, dadsMitt.PostKnifeUpdate)
 
