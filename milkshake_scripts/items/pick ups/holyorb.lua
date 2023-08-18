@@ -30,8 +30,8 @@ local GRID_DESTRUCTION_WHITELIST = TSIL.Utils.Tables.ConstructDictionaryFromTabl
 })
 
 local function getLaserDamagePerTick()
-    local stage = Game():GetLevel():GetAbsoluteStage()
-    return 5 * math.ceil(stage / 2)
+    local stage = TSIL.Stage.GetEffectiveStage()
+    return 2.8 * math.max(math.ceil(stage / 2.5), 1)
 end
 
 local function vLerp(vec1, vec2, percent)
