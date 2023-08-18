@@ -89,7 +89,7 @@ function GlassHeads:GlassHead_Update(enemy)
             eff.SpriteScale = Vector(1.5,1.5)
 
             local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CREEP_RED, 0, enemy.Position + Vector(rng:RandomInt(40)-20, rng:RandomInt(40)-20), Vector.Zero, enemy):ToEffect()
-            creep.SpriteScale = Vector(3,3)
+            creep.SpriteScale = Vector(4,4)
             creep.Timeout = 300
             creep:Update()
 
