@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 local sfx = SFXManager()
 
 local GLASSHEAD_SPEED = .5
-local BEAKERHEAD_SPEED = .4
+local FLASKHEAD_SPEED = .4
 local BEERHEAD_SPEED = .3
 local BEERHEAD_SPEED_2 = 1
 local WINEHEAD_SPEED = .4
@@ -11,6 +11,18 @@ local WINEHEAD_SPEED = .4
 local function lerp(vec1, vec2, percent)
     return vec1 * (1 - percent) + vec2 * percent
 end
+
+local function isScared(Enemy) 
+    if Enemy:HasEntityFlags(EntityFlag.FLAG_FEAR) or Enemy:HasEntityFlags(EntityFlag.FLAG_SHRINK) then 
+        return true
+    end
+end
+local function isConfused(Enemy) 
+    if Enemy:HasEntityFlags(EntityFlag.FLAG_CONFUSION) then 
+        return true
+    end
+end
+
 
 function GlassHeads:GlassHeads_Init(enemy)
     local data = enemy:GetData()
@@ -47,19 +59,29 @@ function GlassHeads:GlassHead_Update(enemy)
     end
 
     if data.state == 1 then
-        if enemy.Pathfinder:HasPathToPos(target.Position) then 
-            if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and 
-            (target.Position:Length(enemy.Position) > 100 or target.Position:Length(enemy.Position) < 100 and 
-            not Game():GetRoom():CheckLine(enemy.Position, target.Position, 0, 0, false, false)) then 
+        if isScared(enemy) then 
+            data.targpos = enemy.Position + (enemy.Position - target.Position)
+        elseif isConfused(enemy) then
+            if not data.targpos or enemy:IsFrame(25,0) then
+                data.targpos = Game():GetRoom():GetRandomPosition(0)
+            end
+        else
+            data.targpos = target.Position
+        end 
 
-                enemy.Pathfinder:FindGridPath(target.Position, GLASSHEAD_SPEED, 1, false)
+        if enemy.Pathfinder:HasPathToPos(data.targpos) or (isScared(enemy) or isConfused(enemy)) then 
+            if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and 
+            (data.targpos:Length(enemy.Position) > 100 or data.targpos:Length(enemy.Position) < 100 and 
+            not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then 
+
+                enemy.Pathfinder:FindGridPath(data.targpos, GLASSHEAD_SPEED, 1, false)
                 if data.gridCountdown <= 0 then
                     data.gridCountdown = 60
                 else
                     data.gridCountdown  = data.gridCountdown - 1
                 end 
             else
-                local targetvel = (target.Position - enemy.Position):Resized(GLASSHEAD_SPEED*6)
+                local targetvel = (data.targpos - enemy.Position):Resized(GLASSHEAD_SPEED*6)
                 enemy.Velocity = lerp(enemy.Velocity, targetvel, 0.25)
             end
 
@@ -161,10 +183,10 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, GlassHeads.GlassHeads_Dmg, enums.Enemies.GLASS_HEAD)
 
 
--- Beaker head
+-- flask head
 
-function GlassHeads:BeakerHead_Update(enemy)
-    if enemy.Variant~=enums.Enemies.BEAKER_HEAD or enemy.SubType~=0 then return end
+function GlassHeads:FlaskHead_Update(enemy)
+    if enemy.Variant~=enums.Enemies.FLASK_HEAD or enemy.SubType~=0 then return end
     local sprite = enemy:GetSprite()
     local target = enemy:GetPlayerTarget()   
     local data = enemy:GetData() 
@@ -183,10 +205,14 @@ function GlassHeads:BeakerHead_Update(enemy)
         return
     end
 
-    if not data.targpos or enemy:IsFrame(50,0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) or not enemy.Pathfinder:HasPathToPos(data.targpos) then 
-        data.targpos = Game():GetRoom():GetRandomPosition(0)
-        data.gridCountdown = 300 * (rng:RandomInt(2))
-    end
+    if isScared(enemy) then 
+        data.targpos = enemy.Position + (enemy.Position - target.Position)
+    else
+        if not data.targpos or enemy:IsFrame(50,0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) or not enemy.Pathfinder:HasPathToPos(data.targpos) then 
+            data.targpos = Game():GetRoom():GetRandomPosition(0)
+            data.gridCountdown = 300 * (rng:RandomInt(2))
+        end
+    end 
 
     if data.state == 1 then
         sprite:PlayOverlay('HeadIdle')
@@ -195,19 +221,19 @@ function GlassHeads:BeakerHead_Update(enemy)
             sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, .25, 0, false, 4, 0)
         end
 
-        if enemy.Pathfinder:HasPathToPos(data.targpos) then 
+        if enemy.Pathfinder:HasPathToPos(data.targpos) or (isScared(enemy) or isConfused(enemy)) then 
             if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and 
             (data.targpos:Length(enemy.Position) > 100 or data.targpos:Length(enemy.Position) < 100 and 
             not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then 
 
-                enemy.Pathfinder:FindGridPath(data.targpos, BEAKERHEAD_SPEED, 1, false)
+                enemy.Pathfinder:FindGridPath(data.targpos, FLASKHEAD_SPEED, 1, false)
                 if data.gridCountdown <= 0 then
                     data.gridCountdown = 60
                 else
                     data.gridCountdown  = data.gridCountdown - 1
                 end 
             else
-                local targetvel = (data.targpos - enemy.Position):Resized(BEAKERHEAD_SPEED*6)
+                local targetvel = (data.targpos - enemy.Position):Resized(FLASKHEAD_SPEED*6)
                 enemy.Velocity = lerp(enemy.Velocity, targetvel, 0.25)
             end
 
@@ -228,14 +254,14 @@ function GlassHeads:BeakerHead_Update(enemy)
 
         -- unused head puff
         --   if sprite:GetOverlayFrame()==18 then
-            --    local eff = Isaac.Spawn(1000, enums.Effects.BEAKER_HEAD_HEAD_PUFF, 0, enemy.Position, enemy.Velocity, enemy)  
+            --    local eff = Isaac.Spawn(1000, enums.Effects.FLASK_HEAD_HEAD_PUFF, 0, enemy.Position, enemy.Velocity, enemy)  
             --    eff.SpriteOffset = Vector(0,-40)
             --    eff.Parent = enemy
             --    eff:GetSprite().Color = Color(1,1,1,.75,0,0,0)
         --  end
 
         if enemy:IsFrame(10,0) then
-            local eff = Isaac.Spawn(1000, enums.Effects.BEAKER_HEAD_PUFF, 0, enemy.Position + Vector(rng:RandomInt(20)-10, rng:RandomInt(20)-10), enemy.Velocity*-.5, enemy)  
+            local eff = Isaac.Spawn(1000, enums.Effects.FLASK_HEAD_PUFF, 0, enemy.Position + Vector(rng:RandomInt(20)-10, rng:RandomInt(20)-10), enemy.Velocity*-.5, enemy)  
             eff:GetSprite().Color = Color(1,1,1,.75,0,0,0)
             eff.SpriteOffset = Vector(0,-40)
         end
@@ -246,7 +272,7 @@ function GlassHeads:BeakerHead_Update(enemy)
 
         if sprite:IsEventTriggered("Throw") then
             local targpos = target.Position + Vector(rng:RandomInt(100)-50, rng:RandomInt(100)-50)
-            Isaac.Spawn(enums.Enemies.GLASS_HEAD, enums.Enemies.BEAKER_HEAD, enums.Enemies.BEAKER_HEAD_PROJECTILE, enemy.Position, (targpos - enemy.Position):Resized(targpos:Distance(enemy.Position)*.075), enemy)
+            Isaac.Spawn(enums.Enemies.GLASS_HEAD, enums.Enemies.FLASK_HEAD, enums.Enemies.FLASK_HEAD_PROJECTILE, enemy.Position, (targpos - enemy.Position):Resized(targpos:Distance(enemy.Position)*.075), enemy)
             sfx:Play(SoundEffect.SOUND_SHELLGAME, .5, 0, false, 1, 0)
             sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, 2, 0)
         elseif sprite:IsFinished("Throw") then
@@ -258,10 +284,10 @@ function GlassHeads:BeakerHead_Update(enemy)
 
 
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, GlassHeads.BeakerHead_Update, enums.Enemies.GLASS_HEAD)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, GlassHeads.FlaskHead_Update, enums.Enemies.GLASS_HEAD)
 
-function GlassHeads:BeakerHeadProjectile_Init(enemy)
-    if enemy.Variant~=enums.Enemies.BEAKER_HEAD or enemy.SubType~=enums.Enemies.BEAKER_HEAD_PROJECTILE then return end
+function GlassHeads:FlaskHeadProjectile_Init(enemy)
+    if enemy.Variant~=enums.Enemies.FLASK_HEAD or enemy.SubType~=enums.Enemies.FLASK_HEAD_PROJECTILE then return end
     local data = enemy:GetData()
     if not data.Height then data.Height = 60 end
 
@@ -271,11 +297,11 @@ function GlassHeads:BeakerHeadProjectile_Init(enemy)
     enemy.GridCollisionClass = GridCollisionClass.COLLISION_WALL
     enemy:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_INIT, GlassHeads.BeakerHeadProjectile_Init, enums.Enemies.GLASS_HEAD)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_INIT, GlassHeads.FlaskHeadProjectile_Init, enums.Enemies.GLASS_HEAD)
 
 
-function GlassHeads:BeakerHeadProjectile_Update(enemy)
-    if enemy.Variant~=enums.Enemies.BEAKER_HEAD or enemy.SubType~=enums.Enemies.BEAKER_HEAD_PROJECTILE then return end
+function GlassHeads:FlaskHeadProjectile_Update(enemy)
+    if enemy.Variant~=enums.Enemies.FLASK_HEAD or enemy.SubType~=enums.Enemies.FLASK_HEAD_PROJECTILE then return end
     local sprite = enemy:GetSprite()
     local data = enemy:GetData()
     local rng = enemy:GetDropRNG()
@@ -288,7 +314,7 @@ function GlassHeads:BeakerHeadProjectile_Update(enemy)
         data.FallingSpeed = data.FallingSpeed + data.FallingAccel
 
         if enemy:IsFrame(2,0) then
-            local eff = Isaac.Spawn(1000, enums.Effects.BEAKER_HEAD_PUFF, 0, enemy.Position + Vector(rng:RandomInt(20)-10, rng:RandomInt(20)-10), enemy.Velocity*-.5, enemy)  
+            local eff = Isaac.Spawn(1000, enums.Effects.FLASK_HEAD_PUFF, 0, enemy.Position + Vector(rng:RandomInt(20)-10, rng:RandomInt(20)-10), enemy.Velocity*-.5, enemy)  
             eff:GetSprite().Color = Color(1,1,1,.75,0,0,0)
             eff.SpriteOffset = Vector(0, -(data.Height+10))
         end
@@ -337,6 +363,9 @@ function GlassHeads:BeakerHeadProjectile_Update(enemy)
 
             Game():BombExplosionEffects(enemy.Position+Vector(0,10), 20, 0, Color(0,1,0,1,0,0,0), enemy, 1, false, true)
 
+            local smoke = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD, 0, enemy.Position, Vector.Zero, enemy):ToEffect()
+            smoke.Timeout = 600
+
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
 
@@ -350,10 +379,10 @@ function GlassHeads:BeakerHeadProjectile_Update(enemy)
         enemy.Velocity = Vector.Zero
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, GlassHeads.BeakerHeadProjectile_Update, enums.Enemies.GLASS_HEAD)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, GlassHeads.FlaskHeadProjectile_Update, enums.Enemies.GLASS_HEAD)
 
 
-function GlassHeads:BeakerHead_HeadPuff_Init(effect)
+function GlassHeads:FlaskHead_HeadPuff_Init(effect)
     local rng = effect:GetDropRNG()
     local sprite = effect:GetSprite()
 
@@ -362,10 +391,10 @@ function GlassHeads:BeakerHead_HeadPuff_Init(effect)
         sprite.FlipX = true
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, GlassHeads.BeakerHead_HeadPuff_Init, enums.Effects.BEAKER_HEAD_HEAD_PUFF)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, GlassHeads.FlaskHead_HeadPuff_Init, enums.Effects.FLASK_HEAD_HEAD_PUFF)
 
 
-function GlassHeads:BeakerHead_HeadPuff_Update(effect)
+function GlassHeads:FlaskHead_HeadPuff_Update(effect)
     local sprite = effect:GetSprite()
 
     if effect.Parent then 
@@ -379,10 +408,10 @@ function GlassHeads:BeakerHead_HeadPuff_Update(effect)
         effect:Remove()
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlassHeads.BeakerHead_HeadPuff_Update, enums.Effects.BEAKER_HEAD_HEAD_PUFF)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlassHeads.FlaskHead_HeadPuff_Update, enums.Effects.FLASK_HEAD_HEAD_PUFF)
 
 
-function GlassHeads:BeakerHead_Puff_Init(effect)
+function GlassHeads:FlaskHead_Puff_Init(effect)
     local rng = effect:GetDropRNG()
     local sprite = effect:GetSprite()
     local data = effect:GetData()
@@ -393,10 +422,10 @@ function GlassHeads:BeakerHead_Puff_Init(effect)
     data.anim = rng:RandomInt(2)+1
     sprite:Play("Poof"..data.anim)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, GlassHeads.BeakerHead_Puff_Init, enums.Effects.BEAKER_HEAD_PUFF)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, GlassHeads.FlaskHead_Puff_Init, enums.Effects.FLASK_HEAD_PUFF)
 
 
-function GlassHeads:BeakerHead_Puff_Update(effect)
+function GlassHeads:FlaskHead_Puff_Update(effect)
     local rng = effect:GetDropRNG()
     local sprite = effect:GetSprite()
     local data = effect:GetData()
@@ -406,7 +435,7 @@ function GlassHeads:BeakerHead_Puff_Update(effect)
         effect:Remove()
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlassHeads.BeakerHead_Puff_Update, enums.Effects.BEAKER_HEAD_PUFF)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlassHeads.FlaskHead_Puff_Update, enums.Effects.FLASK_HEAD_PUFF)
 
 
 -- roo beer
@@ -464,6 +493,8 @@ function GlassHeads:BeerHead_Update(enemy)
         end
 
         local Speed = BEERHEAD_SPEED
+
+
         if data.state==3 then
             if not data.targpos or enemy:IsFrame(50,0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) or not enemy.Pathfinder:HasPathToPos(data.targpos) then 
                 data.targpos = Game():GetRoom():GetRandomPosition(0)
@@ -471,12 +502,19 @@ function GlassHeads:BeerHead_Update(enemy)
             end
             Speed = BEERHEAD_SPEED_2
 
+        elseif isScared(enemy) then 
+            data.targpos = enemy.Position + (enemy.Position - target.Position)
+
+        elseif isConfused(enemy) then
+            if not data.targpos or enemy:IsFrame(25,0) then
+                data.targpos = Game():GetRoom():GetRandomPosition(0)
+            end
         else
             data.targpos = target.Position
         end
 
 
-        if enemy.Pathfinder:HasPathToPos(data.targpos) then 
+        if enemy.Pathfinder:HasPathToPos(data.targpos) or (isScared(enemy) or isConfused(enemy)) then 
             if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and 
             (data.targpos:Length(enemy.Position) > 100 or data.targpos:Length(enemy.Position) < 100 and 
             not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then 
@@ -737,13 +775,22 @@ function GlassHeads:WineHead_Update(enemy)
     
 
     if data.state~=6 then
-        if not data.targpos or enemy:IsFrame(20,0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) or not enemy.Pathfinder:HasPathToPos(data.targpos) then 
-            data.targpos = Game():GetRoom():GetClampedPosition(target.Position+Vector(rng:RandomInt(50)-25,rng:RandomInt(50)-25), 0)
-            data.gridCountdown = 50 * (rng:RandomInt(2))
+        if isScared(enemy) then 
+            data.targpos = enemy.Position + (enemy.Position - target.Position)
+
+        elseif isConfused(enemy) then
+            if not data.targpos or enemy:IsFrame(25,0) then
+                data.targpos = Game():GetRoom():GetRandomPosition(0)
+            end
+        else
+            if not data.targpos or enemy:IsFrame(20,0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) or not enemy.Pathfinder:HasPathToPos(data.targpos) then 
+                data.targpos = Game():GetRoom():GetClampedPosition(target.Position+Vector(rng:RandomInt(50)-25,rng:RandomInt(50)-25), 0)
+                data.gridCountdown = 50 * (rng:RandomInt(2))
+            end
         end
         data.targpos = Game():GetRoom():GetClampedPosition(data.targpos + target.Velocity, 0)
 
-        if enemy.Pathfinder:HasPathToPos(data.targpos) then 
+        if enemy.Pathfinder:HasPathToPos(data.targpos) or (isScared(enemy) or isConfused(enemy)) then 
             if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and 
             (data.targpos:Length(enemy.Position) > 100 or data.targpos:Length(enemy.Position) < 100 and 
             not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then 
