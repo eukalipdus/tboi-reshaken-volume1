@@ -81,6 +81,8 @@ enums.Effects = {
 
     FLASK_HEAD_HEAD_PUFF = Isaac.GetEntityVariantByName("Flask Head Head Puff"),
     FLASK_HEAD_PUFF = Isaac.GetEntityVariantByName("Flask Head Puff"),
+
+    SALVATION_ORB = Isaac.GetEntityVariantByName("Salvation Orb"),
 }
 
 enums.Enemies = {
