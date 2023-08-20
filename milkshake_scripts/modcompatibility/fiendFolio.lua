@@ -75,7 +75,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 160, variant = 901, },                              --Enlightened --Enlightened
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 160, variant = 900, },                              --Inner Eye --Inner Eye
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 160, variant = 521, },                              --Effigy --Effigy
-        { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 160, variant = 420, },                              --Primemind --Primemind
+        { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 160, variant = 420, },                              --Primemind
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 160, variant = 870,  subtype = 1, },                --Armoured Looker
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 160, variant = 960, },                              --Seeker
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 108, variant = 111, },                              --Watcher
@@ -111,6 +111,9 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 160, variant = 351, },                              --Mote
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 160, variant = 441, },                              --Smokin
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 160, variant = 442, },                              --Flamin
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 451, variant = 100, },                              --Trailblazer
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 451, variant = 100,  subtype = 1, },                --Trailblazer Flame Segment
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 451, variant = 150, },                              --Chili
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 180, variant = 21, },                               --Commission
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 160, variant = 1080, },                             --Mini-Min
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 114, variant = 4, },                                --Bellow
@@ -149,7 +152,6 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 160, variant = 1150, },                             --Stolas
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 120, variant = 222, },                              --Onlooker
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 450, variant = 20, },                               --Weeper
-        { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 160, variant = 420, },                              --Primemind
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 450, variant = 1510, },                             --Observer
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 451, variant = 250, },                              --Zephyr
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 451, variant = 141, },                              --Roy Gerald Dericott II
@@ -192,6 +194,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 401 },                               --Zingling
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 180 },                               --Beeter
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 610 },                               --Hover
+        { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 140, variant = 0 },                                 --Honey Eye
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 681 },                               --Stingler
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 590 },                               --Homer
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 810 },                               --Honeydrip
@@ -226,6 +229,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 155, variant = 5 },                                 --Diagetic
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 114, variant = 37 },                                --Nematode
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 701 },                               --Buckshot
+        { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 215, variant = 710 },                               --Full Spider
         { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 160, variant = 450 },                               --Flickerspirit
         { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 160, variant = 451 },                               --Eternal Flickerspirit
         { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 21,  variant = 115 },                               --Alfil

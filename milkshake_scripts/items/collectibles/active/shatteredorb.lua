@@ -117,7 +117,7 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.NATURE,   type = 239, variant = 0 },               --Grub
     { orb = enums.Orbs.HOLY,     type = 96,  variant = 0 },               --Eternal Fly
     { orb = enums.Orbs.HOLY,     type = 819, variant = 1 },               --Eternal Bomb Fly
-    { orb = enums.Orbs.HOLY,     type = 38,  variant = 1, subtype = 0 },  --Angelic Baby
+    { orb = enums.Orbs.HOLY,     type = 38,  variant = 1,},               --Angelic Baby
     { orb = enums.Orbs.HOLY,     type = 38,  variant = 1, subtype = 1 },  --Angelic Baby (small)
     { orb = enums.Orbs.HOLY,     type = 55,  variant = 2 },               --Holy Leech
     { orb = enums.Orbs.HOLY,     type = 60,  variant = 2 },               --Holy Eye
@@ -210,7 +210,7 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.UNDEAD,   type = 227, variant = 1 },               --–-Holy Bony
     { orb = enums.Orbs.UNDEAD,   type = 277, variant = 0 },               --–-Black Bony
     { orb = enums.Orbs.UNDEAD,   type = 890, variant = 0 },               --Maze Roamer
-    { orb = enums.Orbs.UNDEAD,   type = 260, variant = 0 },               --–-Lil' Haunt
+    { orb = enums.Orbs.UNDEAD,   type = 260, variant = 10 },               --–-Lil' Haunt
     { orb = enums.Orbs.UNDEAD,   type = 816, variant = 0 },               --Polty
     { orb = enums.Orbs.UNDEAD,   type = 882, variant = 0 },               --Dust
     { orb = enums.Orbs.UNDEAD,   type = 880, variant = 0 },               --Flesh Maiden
