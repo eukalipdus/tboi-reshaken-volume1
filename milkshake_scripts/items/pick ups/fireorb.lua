@@ -22,6 +22,12 @@ local SHOT_DELAY_DOUBLE_POWER = math.floor(SHOOT_TIME_DOUBLE_POWER / NUM_SHOTS_D
 local ARROW_SPRITE = Sprite()
 ARROW_SPRITE:Load("gfx/ruby_orb_arrow.anm2", true)
 ARROW_SPRITE:Play("Idle", true)
+local VECTOR_PER_SHOOT_ACTION = {
+	[ButtonAction.ACTION_SHOOTDOWN] = Vector(0, 1),
+	[ButtonAction.ACTION_SHOOTLEFT] = Vector(-1, 0),
+	[ButtonAction.ACTION_SHOOTRIGHT] = Vector(1, 0),
+	[ButtonAction.ACTION_SHOOTUP] = Vector(0, -1)
+}
 
 ---@class RubyOrbInhalingInfo
 ---@field frame integer
@@ -193,7 +199,13 @@ function CheckInhaling(player)
 
 	if not inhalingInfo then return end
 
-	local aimDir = player:GetAimDirection()
+	local aimDir = Vector(0, 0)
+	local shootActions = TSIL.Input.GetShootActions()
+	for _, shootAction in ipairs(shootActions) do
+		local shootValue = Input.GetActionValue(shootAction, player.ControllerIndex)
+		aimDir = aimDir + VECTOR_PER_SHOOT_ACTION[shootAction] * shootValue
+	end
+
 	local angle = aimDir:GetAngleDegrees()
 	if aimDir:Length() == 0 then
 		angle = 90.0
@@ -298,20 +310,25 @@ MilkshakeVol1:AddCallback(
 
 
 ---@param player EntityPlayer
-function RubyOrb:OnPlayerRender(player)
+local function OnPlayerRender(player)
 	local inhalingInfo = GetInhalingInfo(player)
 	if not inhalingInfo then return end
-
-	if not player:IsExtraAnimationFinished() then return end
 
 	local renderPos = Isaac.WorldToScreen(player.Position)
 
 	ARROW_SPRITE.Rotation = inhalingInfo.currentDirection - 90
 	ARROW_SPRITE:Render(renderPos)
 end
+
+
+function RubyOrb:OnRender()
+	for _, player in ipairs(TSIL.Players.GetPlayers()) do
+		OnPlayerRender(player)
+	end
+end
 MilkshakeVol1:AddCallback(
-	ModCallbacks.MC_POST_PLAYER_RENDER,
-	RubyOrb.OnPlayerRender
+	ModCallbacks.MC_POST_RENDER,
+	RubyOrb.OnRender
 )
 
 
