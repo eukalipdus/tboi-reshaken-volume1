@@ -42,7 +42,7 @@ New FF Nature
 160.401 --Zingling
 160.180 --Beeter
 160.610 --Hover
-140 --Honey Eye
+140.0 --Honey Eye
 160.681 --Stingler
 160.590 --Homer
 160.810 --Honeydrip
@@ -77,3 +77,4 @@ New FF Nature
 155.5 --Diagetic
 114.37 --Nematode
 160.701 --Buckshot
+215.710 --Full Spider

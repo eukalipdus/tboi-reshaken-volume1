@@ -79,8 +79,8 @@ enums.Effects = {
     DELUGE_LASER = Isaac.GetEntityVariantByName("Deluge Laser"),
     GLASS_IDOL_SHATTER = Isaac.GetEntityVariantByName("Glass Idol Shatter"),
 
-    BEAKER_HEAD_HEAD_PUFF = Isaac.GetEntityVariantByName("Beaker Head Head Puff"),
-    BEAKER_HEAD_PUFF = Isaac.GetEntityVariantByName("Beaker Head Puff"),
+    FLASK_HEAD_HEAD_PUFF = Isaac.GetEntityVariantByName("Flask Head Head Puff"),
+    FLASK_HEAD_PUFF = Isaac.GetEntityVariantByName("Flask Head Puff"),
 
     SALVATION_ORB = Isaac.GetEntityVariantByName("Salvation Orb"),
 }
@@ -88,10 +88,10 @@ enums.Effects = {
 enums.Enemies = {
     GRAVESTONE = Isaac.GetEntityTypeByName("Gravestone"),
     GLASS_HEAD = Isaac.GetEntityTypeByName("Glass Head"),
-    BEAKER_HEAD = Isaac.GetEntityVariantByName("Beaker Head"),
-    BEAKER_HEAD_PROJECTILE = 1,
-    BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head"),
-    WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head"),
+        FLASK_HEAD = Isaac.GetEntityVariantByName("Flask Head"),
+            FLASK_HEAD_PROJECTILE = 1,
+        BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head"),
+        WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head"),
 }
 
 --[[
