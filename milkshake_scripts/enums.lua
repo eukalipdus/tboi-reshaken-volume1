@@ -10,7 +10,7 @@ enums.Collectibles = {
     GLASS_HEART = Isaac.GetItemIdByName("Glass Heart"),
     GLOBIN_IN_A_BUCKET = Isaac.GetItemIdByName("Globin In A Bucket"),
     GOLDEN_SHOVEL = Isaac.GetItemIdByName("Golden Shovel"),
-	INNER_REFLECTION = Isaac.GetItemIdByName("Celestial Mirror"),
+    INNER_REFLECTION = Isaac.GetItemIdByName("Celestial Mirror"),
     LA_CHANCLA = Isaac.GetItemIdByName("La Chancla"),
     MILKSHAKE = Isaac.GetItemIdByName("Milkshake!"),
     SHARP_CURSOR = Isaac.GetItemIdByName("Sharp Cursor"),
@@ -88,10 +88,10 @@ enums.Effects = {
 enums.Enemies = {
     GRAVESTONE = Isaac.GetEntityTypeByName("Gravestone"),
     GLASS_HEAD = Isaac.GetEntityTypeByName("Glass Head"),
-        BEAKER_HEAD = Isaac.GetEntityVariantByName("Beaker Head"),
-            BEAKER_HEAD_PROJECTILE = 1,
-        BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head"),
-        WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head"),
+    BEAKER_HEAD = Isaac.GetEntityVariantByName("Beaker Head"),
+    BEAKER_HEAD_PROJECTILE = 1,
+    BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head"),
+    WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head"),
 }
 
 --[[
@@ -152,19 +152,34 @@ enums.Orbs = {
 }
 
 
+enums.CardSpawnerSubtypePerCard = {
+    [0] = enums.Cards.TATTERED_PAGE,
+    [1] = enums.Orbs.ELECTRIC,
+    [2] = enums.Orbs.FIRE,
+    [3] = enums.Orbs.NATURE,
+    [4] = enums.Orbs.PSYCHIC,
+    [5] = enums.Orbs.RANDOM,
+    [6] = enums.Orbs.HOLY,
+    [7] = enums.Orbs.UNHOLY,
+    [8] = enums.Orbs.POISON,
+    [9] = enums.Orbs.UNDEAD,
+    [10] = enums.Orbs.WATER
+}
+
+
 ---@enum MilkshakeCallbacks
 enums.Callbacks = {
     --Called from the `MC_USE_CARD` callback whenever a spirit orb is used.
-	--
-	--Params:
-	--
-	-- * orb - Card
+    --
+    --Params:
+    --
+    -- * orb - Card
     -- * player - EntityPlayer
     -- * isLyra - boolean
-	--
-	--Optional args:
-	--
-	-- * orb - Card
+    --
+    --Optional args:
+    --
+    -- * orb - Card
     ON_ORB_USE = {},
 
     --Called whenever a chest changes to the opened subtype.

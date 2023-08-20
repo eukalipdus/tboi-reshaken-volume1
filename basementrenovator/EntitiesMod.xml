@@ -1,17 +1,17 @@
 <data>
-    <entity Name="Tattered Page"            ID="5" Variant="300"  Subtype="473"  Group="Consumables" Image="MilkshakeSprites/TatteredPage.png"   Kind="Milkshake!" />
+    <entity Name="Tattered Page"            ID="618" Variant="124"  Subtype="0"  Group="Consumables" Image="MilkshakeSprites/TatteredPage.png"   Kind="Milkshake!" Metadata="1" />
 
-	<entity Name="Spirit of Conductivity"   ID="5" Variant="300"  Subtype="474"  Group="Consumables" Image="MilkshakeSprites/ElectricSpirit.png" Kind="Milkshake!" />
-    <entity Name="Spirit of Inferno"        ID="5" Variant="300"  Subtype="475"  Group="Consumables" Image="MilkshakeSprites/FireSpirit.png"     Kind="Milkshake!" />
-    <entity Name="Spirit of Druidity"       ID="5" Variant="300"  Subtype="476"  Group="Consumables" Image="MilkshakeSprites/NatureSpirit.png"   Kind="Milkshake!" />
-    <entity Name="Spirit of Clairvoyance"   ID="5" Variant="300"  Subtype="477"  Group="Consumables" Image="MilkshakeSprites/PsychicSpirit.png"  Kind="Milkshake!" />
-    <entity Name="Spirit of Chaos"          ID="5" Variant="300"  Subtype="478"  Group="Consumables" Image="MilkshakeSprites/RandomSpirit.png"   Kind="Milkshake!" />
+	<entity Name="Spirit of Conductivity"   ID="618" Variant="124"  Subtype="1"  Group="Consumables" Image="MilkshakeSprites/ElectricSpirit.png" Kind="Milkshake!" Metadata="1" />
+    <entity Name="Spirit of Inferno"        ID="618" Variant="124"  Subtype="2"  Group="Consumables" Image="MilkshakeSprites/FireSpirit.png"     Kind="Milkshake!" Metadata="1" />
+    <entity Name="Spirit of Druidity"       ID="618" Variant="124"  Subtype="3"  Group="Consumables" Image="MilkshakeSprites/NatureSpirit.png"   Kind="Milkshake!" Metadata="1" />
+    <entity Name="Spirit of Clairvoyance"   ID="618" Variant="124"  Subtype="4"  Group="Consumables" Image="MilkshakeSprites/PsychicSpirit.png"  Kind="Milkshake!" Metadata="1" />
+    <entity Name="Spirit of Chaos"          ID="618" Variant="124"  Subtype="5"  Group="Consumables" Image="MilkshakeSprites/RandomSpirit.png"   Kind="Milkshake!" Metadata="1" />
 
-	<entity Name="Spirit of Salvation"      ID="5" Variant="300"  Subtype="479"  Group="Consumables" Image="MilkshakeSprites/SalvationSpirit.png"  Kind="Milkshake!" />
-    <entity Name="Spirit of Sacrilege"      ID="5" Variant="300"  Subtype="480"  Group="Consumables" Image="MilkshakeSprites/SacrilegeSpirit.png"  Kind="Milkshake!" />
-    <entity Name="Spirit of Virulence"      ID="5" Variant="300"  Subtype="481"  Group="Consumables" Image="MilkshakeSprites/VirulenceSpirit.png"  Kind="Milkshake!" />
-    <entity Name="Spirit of Revenance"     ID="5" Variant="300"  Subtype="482"  Group="Consumables" Image="MilkshakeSprites/RevenanceSpirit.png" Kind="Milkshake!" />
-    <entity Name="Spirit of Deluge"         ID="5" Variant="300"  Subtype="483"  Group="Consumables" Image="MilkshakeSprites/DelugeSpirit.png"     Kind="Milkshake!" />
+	<entity Name="Spirit of Salvation"      ID="618" Variant="124"  Subtype="6"  Group="Consumables" Image="MilkshakeSprites/SalvationSpirit.png"  Kind="Milkshake!" Metadata="1" />
+    <entity Name="Spirit of Sacrilege"      ID="618" Variant="124"  Subtype="7"  Group="Consumables" Image="MilkshakeSprites/SacrilegeSpirit.png"  Kind="Milkshake!" Metadata="1" />
+    <entity Name="Spirit of Virulence"      ID="618" Variant="124"  Subtype="8"  Group="Consumables" Image="MilkshakeSprites/VirulenceSpirit.png"  Kind="Milkshake!" Metadata="1" />
+    <entity Name="Spirit of Revenance"      ID="618" Variant="124"  Subtype="9"  Group="Consumables" Image="MilkshakeSprites/RevenanceSpirit.png" Kind="Milkshake!" Metadata="1" />
+    <entity Name="Spirit of Deluge"         ID="618" Variant="124"  Subtype="10" Group="Consumables" Image="MilkshakeSprites/DelugeSpirit.png"     Kind="Milkshake!" Metadata="1" />
 
     <entity Name="Fruit Heart"              ID="5" Variant="10"   Subtype="743"  Group="Pickups"     Image="MilkshakeSprites/FruitHeart.png"               Kind="Milkshake!" />
 
@@ -31,10 +31,10 @@
     <entity Name="Fuzzy Penny"              ID="5" Variant="20"   Subtype="3418" Group="Pickups"     Image="MilkshakeSprites/Pennies/FuzzyPenny.png"       Kind="Milkshake!" />
     <entity Name="Molten Penny"             ID="5" Variant="20"   Subtype="3419" Group="Pickups"     Image="MilkshakeSprites/Pennies/MoltenPenny.png"      Kind="Milkshake!" />
 
-    <entity Name="Brenda"                   ID="6" Variant="3270" Subtype="0"    Group="Slots"       Image="MilkshakeSprites/Brenda.png"         Kind="Milkshake!" />
+    <entity Name="Brenda"                   ID="6" Variant="504" Subtype="0"    Group="Slots"        Image="MilkshakeSprites/Brenda.png"                    Kind="Milkshake!" />
 
-    <entity Name="Glass Head"               ID="962" Variant="0" Subtype="0"    Group="Enemies"       Image="MilkshakeSprites/GlassHead.png"     Kind="Milkshake!" />
-    <entity Name="Beaker Head"               ID="962" Variant="1" Subtype="0"    Group="Enemies"       Image="MilkshakeSprites/BeakerHead.png"     Kind="Milkshake!" />
-    <entity Name="Beer Head"               ID="962" Variant="2" Subtype="0"    Group="Enemies"       Image="MilkshakeSprites/BeerHead.png"     Kind="Milkshake!" />
-    <entity Name="Wine Head"               ID="962" Variant="3" Subtype="0"    Group="Enemies"       Image="MilkshakeSprites/WineHead.png"     Kind="Milkshake!" />
+    <entity Name="Glass Head"               ID="962" Variant="0"  Subtype="0"    Group="Enemies"     Image="MilkshakeSprites/GlassHead.png"                 Kind="Milkshake!" />
+    <entity Name="Beaker Head"              ID="962" Variant="1"  Subtype="0"    Group="Enemies"     Image="MilkshakeSprites/BeakerHead.png"     Kind="Milkshake!" />
+    <entity Name="Beer Head"                ID="962" Variant="2"  Subtype="0"    Group="Enemies"     Image="MilkshakeSprites/BeerHead.png"     Kind="Milkshake!" />
+    <entity Name="Wine Head"                ID="962" Variant="3"  Subtype="0"    Group="Enemies"     Image="MilkshakeSprites/WineHead.png"     Kind="Milkshake!" />
 </data>

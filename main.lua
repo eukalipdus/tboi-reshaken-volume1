@@ -65,6 +65,7 @@ include("milkshake_scripts.items.trinkets.diamondshard")
 include("milkshake_scripts.items.trinkets.tourmalineshard")
 
 --Pick ups
+include("milkshake_scripts.items.pick ups.cardspawner")
 include("milkshake_scripts.items.pick ups.psychicorb")
 include("milkshake_scripts.items.pick ups.chaosorb")
 include("milkshake_scripts.items.pick ups.natureorb")
