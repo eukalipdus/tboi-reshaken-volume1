@@ -5,6 +5,9 @@ local sfx = SFXManager()
 
 RevenanceOrb.SkeletonHP = 20
 RevenanceOrb.SkeletonDMG = 3
+--also is there way to lower the invincibility frames the tombstones have when hit
+--cuz if you have high tearrate and hit it a lot it has a lot of tears that dont damage it
+RevenanceOrb.TombTakeDMGCooldown = 5
 
 RevenanceOrb.Undeads = {
 [EntityType.ENTITY_BONY] = true,
@@ -16,7 +19,7 @@ RevenanceOrb.Anims = {
 
 RevenanceOrb.TombMobs = {
 {EntityType.ENTITY_BONY, 0, 0},
-{EntityType.ENTITY_BONY, 0, 0},
+{EntityType.ENTITY_BONY, 0, 0}, -- huh?
 {EntityType.ENTITY_EFFECT, EffectVariant.PURGATORY, 1},
 {EntityType.ENTITY_EFFECT, EffectVariant.HUNGRY_SOUL, 1},
 }
@@ -52,17 +55,19 @@ function RevenanceOrb:GravestonDMG(entity, amount, damageFlags, source, DamageCo
 	--- do damage effects
 	local grbData = entity:GetData()
 
-	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 then
+	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 or damageFlags & DamageFlag.DAMAGE_INVINCIBLE > 0 then
 		return true
-	elseif not grbData.GravetoneTouched or game:GetFrameCount() - grbData.GravetoneTouched > 5 then
-		grbData.CustomDamage = false
-		grbData.GravetoneTouched = game:GetFrameCount()
-		entity:TakeDamage(1, damageFlags, source, DamageCountdown)
-		return false
-	elseif grbData.GravetoneTouched and not grbData.CustomDamage then
-		grbData.CustomDamage = true
-		SoundParticle(entity.Position)
-		return true
+	elseif source.Entity:ToKnife() or damageFlags & DamageFlag.DAMAGE_LASER > 0 then
+		if not grbData.GravetoneTouched or game:GetFrameCount() - grbData.GravetoneTouched > RevenanceOrb.TombTakeDMGCooldown then
+			grbData.CustomDamage = false
+			grbData.GravetoneTouched = game:GetFrameCount()
+			entity:TakeDamage(1, damageFlags, source, DamageCountdown)
+			return false
+		elseif grbData.GravetoneTouched and not grbData.CustomDamage then
+			grbData.CustomDamage = true
+			SoundParticle(entity.Position)
+			return true
+		end
 	end
 	return false
 end

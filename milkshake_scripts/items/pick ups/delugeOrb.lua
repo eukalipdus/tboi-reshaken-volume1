@@ -17,6 +17,8 @@ DelugeOrb.DelayBetweenLasers = 7
 DelugeOrb.SwirlScale = 0.8
 DelugeOrb.SwirlAlpha = 0.8
 
+
+
 --- Written by Zamiel, technique created by im_tem, tweaked
 function DelugeOrb.SetBlindfold(player, enabled)
 	local data = player:GetData()
@@ -53,13 +55,11 @@ function DelugeOrb:onPEffectUpdate(player)
 			utility:SetData(player, "DelugeOrbUsed", nil)
 			DelugeOrb.SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
-			--sfx:Stop(SoundEffect.SOUND_WATER_FLOW_LARGE)
+			sfx:Stop(enums.Sounds.MLEB)
 		else
 			player.Velocity = player:GetMovementVector()*DelugeOrb.SpeedMultiplier
-			--if not sfx:IsPlaying(SoundEffect.SOUND_WATER_FLOW_LARGE) then
-				--sfx:SetAmbientSound(SoundEffect.SOUND_WATER_FLOW_LARGE, 1 ,1)
-				--sfx:Play(SoundEffect.SOUND_WATER_FLOW_LARGE)
-				--print(SoundEffect.SOUND_BOSS2_WATERTHRASHING)
+			--if not sfx:IsPlaying(enums.Sounds.MLEB) then
+			--print(SoundEffect.SOUND_BOSS2_WATERTHRASHING)
 			--end
 		end
 	end
@@ -81,7 +81,7 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 	if utility:GetData(effect, "DelugeFlushed") and effect.FrameCount == 1 then
 		utility:SetData(effect, "DelugeFlushed", nil)
 		player:UseActiveItem(CollectibleType.COLLECTIBLE_FLUSH, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC)
-		SFXManager():Stop(SoundEffect.SOUND_FLUSH)
+		sfx:Stop(SoundEffect.SOUND_FLUSH)
 		local enemies = Isaac.FindInRadius(player.Position, 5000, EntityPartition.ENEMY)
 		for _, enemy in pairs(enemies) do
 			if utility:GetData(enemy, "DelugeFlushed") then
@@ -182,6 +182,7 @@ function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
 		effectUp.ParentOffset = Vector(0, -32*player.SpriteScale.Y)
 		effectUp:SetTimeout(2*DelugeOrb.Timeout)
 		effectUp.DepthOffset = 999
+		sfx:Play(enums.Sounds.MLEB, 1, 0, true, 1, 0)
 	end
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, DelugeOrb.OnDelugeOrbUse, enums.Orbs.WATER)
