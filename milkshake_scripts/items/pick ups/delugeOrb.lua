@@ -49,18 +49,15 @@ function DelugeOrb.ExtraUse(lasers, double)
 end
 
 function DelugeOrb:onPEffectUpdate(player)
-	--local data = player:GetData()
 	if utility:GetData(player, "DelugeOrbUsed") then
 		if #Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP) == 0 and #Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER) == 0 then
 			utility:SetData(player, "DelugeOrbUsed", nil)
 			DelugeOrb.SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
 			sfx:Stop(enums.Sounds.MLEB)
+			sfx:Play(enums.Sounds.MLEB) -- if it works, it works
 		else
 			player.Velocity = player:GetMovementVector()*DelugeOrb.SpeedMultiplier
-			--if not sfx:IsPlaying(enums.Sounds.MLEB) then
-			--print(SoundEffect.SOUND_BOSS2_WATERTHRASHING)
-			--end
 		end
 	end
 end
@@ -143,7 +140,7 @@ function DelugeOrb:onWaterfallUpUpdate(effect)
 	effect.ParentOffset = Vector(0, -32*effect.Parent.SpriteScale.Y)
 	if effect.FrameCount == DelugeOrb.DelayBetweenLasers then
 		local effectDown = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER, 0, game:GetRoom():GetCenterPos(), Vector.Zero, effect.Parent):ToEffect()
-		sfx:Play(SoundEffect.SOUND_BOSS2_DIVE)
+		--sfx:Play(SoundEffect.SOUND_BOSS2_DIVE)
 		utility:SetData(effectDown, "DelugeOrb", true)
 		effectDown.Parent = effect.Parent:ToPlayer()
 		effectDown.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE

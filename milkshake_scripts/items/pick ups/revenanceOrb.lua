@@ -54,8 +54,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.Graveston
 function RevenanceOrb:GravestonDMG(entity, amount, damageFlags, source, DamageCountdown) -- no way to change amount, blame someone
 	--- do damage effects
 	local grbData = entity:GetData()
-
-	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 or damageFlags & DamageFlag.DAMAGE_INVINCIBLE > 0 then
+	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 or damageFlags & DamageFlag.DAMAGE_INVINCIBLE > 0 or source.Entity:ToTear() or source.Entity:ToProjectile() then
 		return true
 	elseif source.Entity:ToKnife() or damageFlags & DamageFlag.DAMAGE_LASER > 0 then
 		if not grbData.GravetoneTouched or game:GetFrameCount() - grbData.GravetoneTouched > RevenanceOrb.TombTakeDMGCooldown then
