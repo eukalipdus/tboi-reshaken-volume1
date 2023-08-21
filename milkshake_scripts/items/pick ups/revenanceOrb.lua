@@ -43,8 +43,9 @@ function RevenanceOrb:GravestonUpd(gravestone)
 		enemytear:Kill()
 	end
 	for _, tear in pairs(Isaac.FindInRadius(gravestone.Position, 12, EntityPartition.TEAR)) do
-		tear = tear:ToKnife()
-		if tear and (tear.Variant ~= 0 and tear:IsFlying() or tear.Variant == 0 or tear.Variant == 5) then
+		if tear:ToTear() then
+			gravestone:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE, EntityRef(tear), 1)
+		elseif tear:ToKnife() and (tear.Variant ~= 0 and tear:ToKnife():IsFlying() or tear.Variant == 0 or tear.Variant == 5) then
 			gravestone:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE, EntityRef(tear), 1)
 		end
 	end
@@ -54,7 +55,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.Graveston
 function RevenanceOrb:GravestonDMG(entity, amount, damageFlags, source, DamageCountdown) -- no way to change amount, blame someone
 	--- do damage effects
 	local grbData = entity:GetData()
-	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 or damageFlags & DamageFlag.DAMAGE_INVINCIBLE > 0 or source.Entity:ToTear() or source.Entity:ToProjectile() then
+	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 or damageFlags & DamageFlag.DAMAGE_INVINCIBLE > 0 then
 		return true
 	elseif source.Entity:ToKnife() or damageFlags & DamageFlag.DAMAGE_LASER > 0 then
 		if not grbData.GravetoneTouched or game:GetFrameCount() - grbData.GravetoneTouched > RevenanceOrb.TombTakeDMGCooldown then
@@ -120,7 +121,7 @@ function RevenanceOrb:OnRevenanceOrbUse(card, player) -- useFlag
 	for _, undead in pairs(undeads) do
 		if RevenanceOrb.Undeads[undead.Type] then
 			undead:GetData().TearDamage = dmag
-			undead:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
+			undead:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM )
 		end
 	end
 end
@@ -145,3 +146,13 @@ function RevenanceOrb:onEnemyTakesDMG(entity, amount, damageFlags, source, Damag
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, RevenanceOrb.onEnemyTakesDMG)
+
+function RevenanceOrb:onExit(isContinue)
+	local undeads = Isaac.FindInRadius(game:GetRoom():GetCenterPos(), 5000, EntityPartition.ENEMY)
+	for _, undead in pairs(undeads) do
+		if RevenanceOrb.Undeads[undead.Type] and undead:GetData().TearDamage then
+			undead:ClearEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM ) -- peak of modding! I guess game combines persistent and friendly flags?
+		end
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, RevenanceOrb.onExit)

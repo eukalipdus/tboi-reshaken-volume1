@@ -55,7 +55,6 @@ function DelugeOrb:onPEffectUpdate(player)
 			DelugeOrb.SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
 			sfx:Stop(enums.Sounds.MLEB)
-			sfx:Play(enums.Sounds.MLEB) -- if it works, it works
 		else
 			player.Velocity = player:GetMovementVector()*DelugeOrb.SpeedMultiplier
 		end
@@ -114,7 +113,7 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 				enemy:TakeDamage(dmg, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(player), 1)
 			end
 		end
-		
+
 	end
 	---end of effect
 	if effect.Timeout <= 1 then
@@ -127,7 +126,7 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 			end
 		end
 	end
-	local swirl = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.WHIRLPOOL, 1, effect.Position, Vector.Zero, effect.Parent):ToEffect()	
+	local swirl = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.WHIRLPOOL, 1, effect.Position, Vector.Zero, effect.Parent):ToEffect()
 	swirl:FollowParent(effect)
 	swirl.SpriteScale = Vector.One * DelugeOrb.SwirlScale
 	swirl:SetColor(Color(1,1,1,DelugeOrb.SwirlAlpha), -1, 1, false, true)
@@ -140,7 +139,6 @@ function DelugeOrb:onWaterfallUpUpdate(effect)
 	effect.ParentOffset = Vector(0, -32*effect.Parent.SpriteScale.Y)
 	if effect.FrameCount == DelugeOrb.DelayBetweenLasers then
 		local effectDown = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER, 0, game:GetRoom():GetCenterPos(), Vector.Zero, effect.Parent):ToEffect()
-		--sfx:Play(SoundEffect.SOUND_BOSS2_DIVE)
 		utility:SetData(effectDown, "DelugeOrb", true)
 		effectDown.Parent = effect.Parent:ToPlayer()
 		effectDown.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
@@ -179,7 +177,7 @@ function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
 		effectUp.ParentOffset = Vector(0, -32*player.SpriteScale.Y)
 		effectUp:SetTimeout(2*DelugeOrb.Timeout)
 		effectUp.DepthOffset = 999
-		sfx:Play(enums.Sounds.MLEB, 1, 0, true, 1, 0)
+		sfx:Play(enums.Sounds.MLEB, 0.75, 0, true, 1, 0)
 	end
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, DelugeOrb.OnDelugeOrbUse, enums.Orbs.WATER)
