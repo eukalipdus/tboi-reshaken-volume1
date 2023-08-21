@@ -376,4 +376,21 @@ function utility:SetCanShoot(player, canShoot)
 end
 
 
+---Helper function to check if an enemy should have a scared behaviour.
+---@param enemy EntityNPC
+---@return boolean
+function utility:IsEnemyScared(enemy)
+    return enemy:HasEntityFlags(EntityFlag.FLAG_FEAR)
+    or enemy:HasEntityFlags(EntityFlag.FLAG_SHRINK)
+end
+
+
+---Helper function to check if an enemy should have a confused behaviour.
+---@param enemy EntityNPC
+---@return boolean
+function utility:IsEnemyConfused(enemy)
+    return enemy:HasEntityFlags(EntityFlag.FLAG_CONFUSION)
+end
+
+
 MilkshakeVol1.utility = utility

@@ -94,6 +94,17 @@ enums.Enemies = {
         WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head"),
 }
 
+enums.GlassHeadVariant = {
+    FLASK_HEAD = Isaac.GetEntityVariantByName("Flask Head"),
+    BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head"),
+    WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head"),
+}
+
+enums.FlaskHeadSubType = {
+    FLASK_HEAD = 0,
+    HEAD_PROJECTILE = 1,
+}
+
 --[[
 enums.ENTITY_GENERIC_PROP = { --id = 960
 	GRAVESTONE = Isaac.GetEntityVariantByName("Gravestone"),
