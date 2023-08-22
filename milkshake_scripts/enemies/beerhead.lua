@@ -35,8 +35,6 @@ end
 
 ---@param enemy EntityNPC
 function BeerHead:BeerHead_Update(enemy)
-    if enemy.Variant ~= enums.GlassHeadVariant.BEER_HEAD then return end
-
     local sprite = enemy:GetSprite()
     local data = GetGlassHeadData(enemy)
     local target = enemy:GetPlayerTarget()
@@ -346,9 +344,12 @@ function BeerHead:BeerHead_Update(enemy)
 end
 
 MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_NPC_UPDATE,
+    TSIL.Enums.CustomCallback.POST_NPC_UPDATE_FILTER,
     BeerHead.BeerHead_Update,
-    enums.Enemies.GLASS_HEAD
+    {
+        enums.Enemies.GLASS_HEAD,
+        enums.GlassHeadVariant.BEER_HEAD,
+    }
 )
 
 function BeerHead:BeerHead_Creep(effect)

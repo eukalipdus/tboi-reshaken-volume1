@@ -2,7 +2,7 @@ local potOfGold = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local PENNY_CONVERT_CHANCE = 50
+local PENNY_CONVERT_CHANCE = 0.5
 
 ---@class RainbowPenny
 ---@field variant PickupVariant
@@ -27,46 +27,71 @@ end
 ---Gives a random type of rainbow penny
 ---NOTE: Access the Variant through returnedNumber.variant, and SubType through returnedNumber.subtype
 ---@param rng RNG
----@return number
+---@return RainbowPenny
 function MilkshakeVol1.API:GetRainbowPenny(rng)
     return TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
 end
 
-function potOfGold:PostPEffectUpdate(player)
-    if not player:HasCollectible(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD) then return end
-    local rng = player:GetCollectibleRNG(enums.Collectibles.POT_OF_GOLD)
-    local pickups = TSIL.EntitySpecific.GetPickups()
-    for _, pickup in pairs(pickups) do
 
-        if pickup.Variant == PickupVariant.PICKUP_KEY
-        or pickup.Variant == PickupVariant.PICKUP_BOMB then
-            local chosenCoin = TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
-            pickup:Remove()
-            local coin = TSIL.EntitySpecific.SpawnPickup(chosenCoin.variant, chosenCoin.subtype, pickup.Position, Vector.Zero, player):ToPickup()
-            coin.AutoUpdatePrice = false
-            coin.Price = pickup.Price
-        end
+---@param pickup EntityPickup
+local function TryReplacePickupWithRainbowPenny(pickup)
+    if pickup.Variant ~= PickupVariant.PICKUP_KEY
+    and pickup.Variant ~= PickupVariant.PICKUP_BOMB then return end
+    if not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD) then return end
+
+    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+
+    if rng:RandomFloat() < PENNY_CONVERT_CHANCE then
+        local chosenCoin = MilkshakeVol1.API:GetRainbowPenny(rng)
+
+        pickup:Morph(
+            pickup.Type,
+            chosenCoin.variant,
+            chosenCoin.subtype,
+            true,
+            false
+        )
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.PostPEffectUpdate)
+
+
+
+---@param pickup EntityPickup
+function potOfGold:OnPickupUpdate(pickup)
+    TryReplacePickupWithRainbowPenny(pickup)
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_PICKUP_UPDATE,
+    potOfGold.OnPickupUpdate
+)
+
 
 function potOfGold:PostPickupInit(pickup)
-    for i = 0, Game():GetNumPlayers() - 1 do
-        local player = Isaac.GetPlayer(i)
-        if  player:HasCollectible(enums.Collectibles.POT_OF_GOLD)
-        and not utility:DidEntityExist()
-        and pickup.Variant == PickupVariant.PICKUP_COIN then
-            local rng = player:GetCollectibleRNG(enums.Collectibles.POT_OF_GOLD)
-            local roll = rng:RandomInt(100) + 1
-            if roll >= PENNY_CONVERT_CHANCE then
-                local chosenCoin = TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
-                pickup:Remove()
-                TSIL.EntitySpecific.SpawnPickup(chosenCoin.variant, chosenCoin.subtype, pickup.Position, Vector.Zero, player)
-            end
-        end
-    end
+    TryReplacePickupWithRainbowPenny(pickup)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, potOfGold.PostPickupInit)
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_PICKUP_INIT,
+    potOfGold.PostPickupInit
+)
+
+
+-- function potOfGold:PostPEffectUpdate(player)
+--     if not player:HasCollectible(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD) then return end
+--     local rng = player:GetCollectibleRNG(enums.Collectibles.POT_OF_GOLD)
+--     local pickups = TSIL.EntitySpecific.GetPickups()
+
+--     for _, pickup in pairs(pickups) do
+--         if pickup.Variant == PickupVariant.PICKUP_KEY
+--         or pickup.Variant == PickupVariant.PICKUP_BOMB then
+--             local chosenCoin = TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
+--             pickup:Remove()
+--             local coin = TSIL.EntitySpecific.SpawnPickup(chosenCoin.variant, chosenCoin.subtype, pickup.Position, Vector.Zero, player):ToPickup()
+--             coin.AutoUpdatePrice = false
+--             coin.Price = pickup.Price
+--         end
+--     end
+-- end
+-- MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.PostPEffectUpdate)
 
 ---@param pickup EntityPickup
 ---@param collider Entity
@@ -89,21 +114,5 @@ function potOfGold:PrePickupCollision(pickup, collider)
     pickup.SubType = CoinSubType.COIN_PENNY
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.PrePickupCollision)
-
-function potOfGold:PostPEffectUpdate()
-    for i = 0, Game():GetNumPlayers() - 1 do
-        local player = Isaac.GetPlayer(i)
-        if player:HasCollectible(enums.Collectibles.POT_OF_GOLD)
-        and player:HasCollectible(CollectibleType.COLLECTIBLE_POUND_OF_FLESH) then
-            for _, entity in pairs(Isaac.GetRoomEntities()) do
-                if entity:ToPickup() then
-                    local pickup = entity:ToPickup()
-                    pickup.AutoUpdatePrice = true
-                end
-            end
-        end
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.PostPEffectUpdate)
 
 return potOfGold

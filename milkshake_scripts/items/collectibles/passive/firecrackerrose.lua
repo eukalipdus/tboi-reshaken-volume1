@@ -1,14 +1,27 @@
 local FirecrackerRose = {}
 local enums = MilkshakeVol1.enums
 
-TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "FirecrackerTears", {},
-    TSIL.Enums.VariablePersistenceMode.RESET_ROOM)
-TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "CrackeredEnemies", {},
-    TSIL.Enums.VariablePersistenceMode.RESET_ROOM)
-TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "PetalTears", {}, TSIL.Enums.VariablePersistenceMode.RESET_ROOM)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "FirecrackerTears",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "CrackeredEnemies",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "PetalTears",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
 
 local CrackerSeedSprites = {}
-
+local IsSpawningPetalTear = false
 
 ---@param npc EntityNPC
 ---@param source EntityPlayer?
@@ -27,6 +40,7 @@ local function FirecrackerExplode(npc, source)
         local angle = rng:RandomInt(360)
         local velocity = Vector.FromAngle(angle):Resized(7)
 
+        IsSpawningPetalTear = true
         local tear = source:FireTear(npc.Position, velocity, false, true, false, source, (1/source.Damage) * 5)
         tear.Height = -26
         tear.FallingSpeed = TSIL.Random.GetRandomFloat(0, 3, rng)
@@ -82,14 +96,21 @@ end
 
 ---@param tear EntityTear
 function FirecrackerRose:OnTearInit(tear)
+    if IsSpawningPetalTear then
+        IsSpawningPetalTear = false
+        return
+    end
+
     local tearPtr = GetPtrHash(tear)
     local petalTears = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PetalTears")
 
     if petalTears[tearPtr] then return end
 
-    local player = TSIL.Players.GetPlayerFromEntity(tear)
+    local spawner = tear.SpawnerEntity
+    if not spawner then return end
 
-    if player == nil then return end
+    local player = spawner:ToPlayer()
+    if not player then return end
     if not player:HasCollectible(enums.Collectibles.FIRECRACKER_ROSE) then return end
 
     local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
@@ -272,7 +293,6 @@ function FirecrackerRose:OnEntityRemove(entity)
     SFXManager():Play(SoundEffect.SOUND_ROCKET_LAUNCH_TINY)
     SFXManager():Stop(SoundEffect.SOUND_EXPLOSION_STRONG)
     SFXManager():Play(SoundEffect.SOUND_EXPLOSION_WEAK)
-
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_ENTITY_REMOVE,
@@ -286,6 +306,7 @@ function CheckForFirecrackerLaser(npc, source)
     if source.Type ~= EntityType.ENTITY_PLAYER then return end
 
     local player = source.Entity:ToPlayer()
+    if not player then return end
     if not player:HasCollectible(enums.Collectibles.FIRECRACKER_ROSE) then return end
 
     local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
@@ -306,6 +327,7 @@ function CheckForFirecrackerKnife(npc, source)
 
     local player = source.Entity.SpawnerEntity:ToPlayer()
 
+    if not player then return end
     if not player:HasCollectible(enums.Collectibles.FIRECRACKER_ROSE) then return end
 
     local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
@@ -372,4 +394,34 @@ end
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_BONE_SWING,
     FirecrackerRose.OnBoneSwing
+)
+
+
+---@param effect EntityEffect
+function FirecrackerRose:OnTearPoofInit(effect)
+    local petalTears = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PetalTears")
+    local tears = TSIL.EntitySpecific.GetTears()
+
+    for _, tear in ipairs(tears) do
+        local ptrHash = GetPtrHash(tear)
+
+        if petalTears[ptrHash] then
+            local distance = effect.Position:DistanceSquared(tear.Position + tear.PosDisplacement)
+
+            if distance < 0.1 then
+                effect:Remove()
+                break
+            end
+        end
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_INIT,
+    FirecrackerRose.OnTearPoofInit,
+    EffectVariant.TEAR_POOF_A
+)
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_INIT,
+    FirecrackerRose.OnTearPoofInit,
+    EffectVariant.TEAR_POOF_B
 )
