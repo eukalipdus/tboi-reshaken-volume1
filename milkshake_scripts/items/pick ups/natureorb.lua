@@ -27,6 +27,13 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player, flags)
         vine.DepthOffset = 10
 
         vine:GetSprite():Play("Grow", true)
+
+        TSIL.Entities.SetEntityData(
+            MilkshakeVol1,
+            vine,
+            "IsLyraUse",
+            TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER)
+        )
     end
 
     TSIL.Utils.Tables.ForEach(npcs, function (_, npc)
@@ -53,7 +60,7 @@ function EmeraldOrb:OnEmeraldOrbUse(_, player, flags)
             MilkshakeVol1,
             vine,
             "IsLyraUse",
-            TSIL.Utils.Flags.HasFlags(enums.UseOrbFlags.DOUBLE_POWER)
+            TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER)
         )
     end)
 end
