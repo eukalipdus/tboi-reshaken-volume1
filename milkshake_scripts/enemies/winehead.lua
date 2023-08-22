@@ -31,7 +31,6 @@ end
 
 ---@param enemy EntityNPC
 function WineHead:WineHead_Update(enemy)
-    if enemy.Variant ~= enums.GlassHeadVariant.WINE_HEAD then return end
     local sprite = enemy:GetSprite()
     local data = GetGlassHeadData(enemy)
     local target = enemy:GetPlayerTarget()
@@ -302,7 +301,14 @@ function WineHead:WineHead_Update(enemy)
     end
 end
 
-MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, WineHead.WineHead_Update, enums.Enemies.GLASS_HEAD)
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_NPC_UPDATE_FILTER,
+    WineHead.WineHead_Update,
+    {
+        enums.Enemies.GLASS_HEAD,
+        enums.GlassHeadVariant.WINE_HEAD,
+    }
+)
 
 function WineHead:WineHead_Proj(proj)
     if not GetGlassHeadData(proj).WineHead then return end

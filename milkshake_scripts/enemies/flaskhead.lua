@@ -29,8 +29,6 @@ end
 
 ---@param enemy EntityNPC
 function FlaskHead:FlaskHeadUpdate(enemy)
-    if enemy.Variant ~= enums.GlassHeadVariant.FLASK_HEAD or enemy.SubType ~= 0 then return end
-
     local sprite = enemy:GetSprite()
     local target = enemy:GetPlayerTarget()
     local data = GetGlassHeadData(enemy)
@@ -152,10 +150,17 @@ function FlaskHead:FlaskHeadUpdate(enemy)
     end
 end
 
-MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, FlaskHead.FlaskHeadUpdate, enums.Enemies.GLASS_HEAD)
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_NPC_UPDATE_FILTER,
+    FlaskHead.FlaskHeadUpdate,
+    {
+        enums.Enemies.GLASS_HEAD,
+        enums.GlassHeadVariant.FLASK_HEAD,
+        enums.FlaskHeadSubType.FLASK_HEAD
+    }
+)
 
 function FlaskHead:FlaskHeadProjectile_Init(enemy)
-    if enemy.Variant ~= enums.Enemies.FLASK_HEAD or enemy.SubType ~= enums.Enemies.FLASK_HEAD_PROJECTILE then return end
     local data = GetGlassHeadData(enemy)
     if not data.Height then data.Height = 60 end
 
@@ -166,11 +171,18 @@ function FlaskHead:FlaskHeadProjectile_Init(enemy)
     enemy:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 end
 
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_INIT, FlaskHead.FlaskHeadProjectile_Init, enums.Enemies.GLASS_HEAD)
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_NPC_INIT_FILTER,
+    FlaskHead.FlaskHeadProjectile_Init,
+    {
+        enums.Enemies.GLASS_HEAD,
+        enums.GlassHeadVariant.FLASK_HEAD,
+        enums.FlaskHeadSubType.HEAD_PROJECTILE
+    }
+)
 
 
 function FlaskHead:FlaskHeadProjectile_Update(enemy)
-    if enemy.Variant ~= enums.Enemies.FLASK_HEAD or enemy.SubType ~= enums.Enemies.FLASK_HEAD_PROJECTILE then return end
     local sprite = enemy:GetSprite()
     local data = GetGlassHeadData(enemy)
     local rng = enemy:GetDropRNG()
@@ -320,7 +332,15 @@ function FlaskHead:FlaskHeadProjectile_Update(enemy)
     end
 end
 
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, FlaskHead.FlaskHeadProjectile_Update, enums.Enemies.GLASS_HEAD)
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_NPC_UPDATE_FILTER,
+    FlaskHead.FlaskHeadProjectile_Update,
+    {
+        enums.Enemies.GLASS_HEAD,
+        enums.GlassHeadVariant.FLASK_HEAD,
+        enums.FlaskHeadSubType.HEAD_PROJECTILE
+    }
+)
 
 
 function FlaskHead:FlaskHead_HeadPuff_Init(effect)

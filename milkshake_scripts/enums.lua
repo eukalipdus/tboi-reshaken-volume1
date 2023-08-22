@@ -88,13 +88,10 @@ enums.Effects = {
 enums.Enemies = {
     GRAVESTONE = Isaac.GetEntityTypeByName("Gravestone"),
     GLASS_HEAD = Isaac.GetEntityTypeByName("Glass Head"),
-        FLASK_HEAD = Isaac.GetEntityVariantByName("Flask Head"),
-            FLASK_HEAD_PROJECTILE = 1,
-        BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head"),
-        WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head"),
 }
 
 enums.GlassHeadVariant = {
+    GLASS_HEAD = Isaac.GetEntityVariantByName("Glass Head"),
     FLASK_HEAD = Isaac.GetEntityVariantByName("Flask Head"),
     BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head"),
     WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head"),
