@@ -203,8 +203,12 @@ end
 ---@param player EntityPlayer
 ---@param playerUsingLyraData UsingLyraData
 local function RenderLyraNotes(player, playerUsingLyraData)
+    local room = Game():GetRoom()
+    local isMirror = room:IsMirrorWorld()
+
     local renderPos = Isaac.WorldToScreen(player.Position)
     local baseYPos = -40 * player.SpriteScale.Y
+    playerUsingLyraData.noteMarkerSprite.FlipX = isMirror
     playerUsingLyraData.noteMarkerSprite:Render(renderPos + Vector(0, baseYPos))
 
     TSIL.Utils.Tables.ForEach(playerUsingLyraData.notes, function (_, note)
@@ -213,6 +217,7 @@ local function RenderLyraNotes(player, playerUsingLyraData)
         end
 
         local spriteToRender = NOTE_SPRITES_PER_DIRECTION[note.direction]
+        spriteToRender.FlipX = isMirror
         spriteToRender:Render(renderPos + Vector(0, baseYPos - note.height))
     end)
 end
@@ -237,6 +242,9 @@ end
 ---@param player EntityPlayer
 ---@param playerUsingLyraData UsingLyraData
 local function HandleLyraInput(player, playerUsingLyraData)
+    local room = Game():GetRoom()
+    local isMirror = room:IsMirrorWorld()
+
     local controllerIndex = player.ControllerIndex
     local firstNote = playerUsingLyraData.notes[1]
     local inputToCheck = INPUT_PER_NOTE_DIRECTION[firstNote.direction]
@@ -260,7 +268,14 @@ local function HandleLyraInput(player, playerUsingLyraData)
             local renderPos = Isaac.WorldToScreen(player.Position)
             local baseYPos = -40 * player.SpriteScale.Y
             local noteSplashPos = renderPos + Vector(0, baseYPos)
-            CreateNoteSplash(firstNote.direction, noteSplashPos)
+            if isMirror then
+                CreateNoteSplash(
+                    firstNote.direction,
+                    Vector(Isaac.GetScreenWidth() - noteSplashPos.X, noteSplashPos.Y)
+                )
+            else
+                CreateNoteSplash(firstNote.direction, noteSplashPos)
+            end
             local shockwavePos = Isaac.ScreenToWorld(noteSplashPos * Isaac.GetScreenPointScale())
             TSIL.Utils.Functions.RunNextCallback(
                 MilkshakeVol1,
@@ -286,6 +301,10 @@ end
 
 ---@param player EntityPlayer
 function Lyra:OnPlayerRender(player)
+    local room = Game():GetRoom()
+    local renderMode = room:GetRenderMode()
+    if renderMode == RenderMode.RENDER_WATER_REFLECT then return end
+
     ---@type UsingLyraData?
     local playerUsingLyraData = utility:GetTemporaryPlayerData(player, "UsingLyraData")
 
