@@ -112,7 +112,7 @@ enums.Sounds = {
     CLICK = Isaac.GetSoundIdByName("sharp cursor click"),
     GLASSHEAD_LIQUID = Isaac.GetSoundIdByName("glass head liquid"),
     GLASSHEAD_SHATTER = Isaac.GetSoundIdByName("glass head shatter"),
-    MLEB = Isaac.GetSoundIdByName("mleb"),
+    WATER_FLOW = Isaac.GetSoundIdByName("water flow"),
 }
 
 enums.Costumes = {

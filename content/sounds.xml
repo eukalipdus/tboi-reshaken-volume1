@@ -11,7 +11,7 @@
     <sound name="glass head shatter">
         <sample weight="1" path="glasshead_shatter.wav"/>
     </sound>
-     <sound name="mleb">
+     <sound name="water flow">
         <sample weight="1" path="water_flow_mleb.wav"/>
     </sound>
 </sounds>

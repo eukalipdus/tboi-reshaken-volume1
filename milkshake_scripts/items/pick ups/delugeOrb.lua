@@ -17,6 +17,8 @@ DelugeOrb.DelayBetweenLasers = 7
 DelugeOrb.SwirlScale = 0.8
 DelugeOrb.SwirlAlpha = 0.8
 
+local StopNextMusic = false
+
 
 
 --- Written by Zamiel, technique created by im_tem, tweaked
@@ -54,7 +56,7 @@ function DelugeOrb:onPEffectUpdate(player)
 			utility:SetData(player, "DelugeOrbUsed", nil)
 			DelugeOrb.SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
-			sfx:Stop(enums.Sounds.MLEB)
+			sfx:Stop(enums.Sounds.WATER_FLOW)
 		else
 			player.Velocity = player:GetMovementVector()*DelugeOrb.SpeedMultiplier
 		end
@@ -85,6 +87,10 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 				utility:SetData(enemy, "DelugeFlushed", nil)
 			end
 		end
+
+		TSIL.Utils.Functions.RunInFrames(function ()
+			StopNextMusic = false
+		end, 2)
 	end
 	---magnetite
 	game:UpdateStrangeAttractor(effect.Position, DelugeOrb.Force, DelugeOrb.Radius)
@@ -147,6 +153,7 @@ function DelugeOrb:onWaterfallUpUpdate(effect)
 		effectDown:SetDamageSource(EntityType.ENTITY_PLAYER)
 		effectDown:GetSprite():Play("Start")
 		if not game:GetRoom():HasWater() then
+			StopNextMusic = true
 			utility:SetData(effectDown, "DelugeFlushed", true)
 			local enemies = Isaac.FindInRadius(effect.Position, 5000, EntityPartition.ENEMY)
 			for _, enemy in pairs(enemies) do
@@ -159,6 +166,20 @@ function DelugeOrb:onWaterfallUpUpdate(effect)
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, DelugeOrb.onWaterfallUpUpdate, EffectVariant.HUSH_LASER_UP)
+
+if MMC then
+	MMC.AddMusicCallback(
+		MilkshakeVol1,
+		function ()
+			if StopNextMusic then
+				return 0
+			end
+		end,
+		Music.MUSIC_JINGLE_BOSS_OVER,
+		Music.MUSIC_JINGLE_BOSS_OVER2,
+		Music.MUSIC_JINGLE_BOSS_OVER3
+	)
+end
 
 function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
 	utility:SetData(player, "DelugeOrbUsed", true)
@@ -177,7 +198,7 @@ function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
 		effectUp.ParentOffset = Vector(0, -32*player.SpriteScale.Y)
 		effectUp:SetTimeout(2*DelugeOrb.Timeout)
 		effectUp.DepthOffset = 999
-		sfx:Play(enums.Sounds.MLEB, 0.75, 0, true, 1, 0)
+		sfx:Play(enums.Sounds.WATER_FLOW, 0.75, 0, true, 1, 0)
 	end
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, DelugeOrb.OnDelugeOrbUse, enums.Orbs.WATER)
