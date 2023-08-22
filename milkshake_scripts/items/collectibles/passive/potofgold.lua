@@ -73,6 +73,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, potOfGold.PostPickup
 function potOfGold:PrePickupCollision(pickup, collider)
     local player = collider:ToPlayer()
     if not player then return end
+    if player:GetNumCoins() < pickup.Price then return end
 
     local rainbowPenny = TSIL.Utils.Tables.FindFirst(rainbowPennies, function (_, rainbowPenny)
         return rainbowPenny.variant == pickup.Variant and rainbowPenny.subtype == pickup.SubType
