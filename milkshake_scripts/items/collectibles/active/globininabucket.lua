@@ -121,6 +121,10 @@ function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
     local velY = TSIL.Random.GetRandomFloat(-7, 7, rng)
     local spawningVelocity = Vector(velX, velY)
 
+    SFXManager():Play(
+        SoundEffect.SOUND_MEAT_JUMPS
+    )
+
     TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.GLOBIN_IN_A_BUCKET,
         0,
@@ -201,6 +205,7 @@ function GlobinInABucket:onNPCUpdate(entity)
 
     if sprite:IsEventTriggered("DropSound") then
         entity.Velocity = entity.Velocity*0
+        SFXManager():Play(SoundEffect.SOUND_MEAT_IMPACTS)
     elseif sprite:IsFinished(globinInfo.anim) then
         local globin = TSIL.EntitySpecific.SpawnNPC(
             globinInfo.type,

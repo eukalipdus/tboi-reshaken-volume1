@@ -3,7 +3,7 @@
                ⚠⚠ ATTENTION ⚠⚠
     THIS FILE SHOULD NEVER BE INCLUDED!!!!!
 
-    IT'S ONLY PURPOSE IS TO GIVE AUTOCOMPLETE
+    ITS ONLY PURPOSE IS TO GIVE AUTOCOMPLETE
     TO THE ADD CALLBACK FUNCTIONS
 ===============================================
 ]]
