@@ -398,8 +398,9 @@ end
 ---@param familiar EntityFamiliar
 ---@param entity Entity
 function FragileMirror:OnFamiliarCollision(familiar, entity)
-    if entity.Type == EntityType.ENTITY_PROJECTILE then
-        return CheckCollisionWithProjectile(familiar, entity:ToProjectile())
+    local projectile = entity:ToProjectile()
+    if projectile then
+        return CheckCollisionWithProjectile(familiar, projectile)
     end
 end
 
@@ -421,6 +422,10 @@ local function RevivingEffects(player)
     player:AnimateCollectible(enums.Collectibles.FRAGILE_MIRROR)
     local mirrorUsed = table.remove(familiarsUsed, 1)
     BreakMirror(mirrorUsed, true)
+    player:UseActiveItem(
+        CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS,
+        UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER
+    )
 end
 
 
