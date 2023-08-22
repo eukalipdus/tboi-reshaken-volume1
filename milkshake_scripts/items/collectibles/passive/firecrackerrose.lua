@@ -395,3 +395,33 @@ MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_BONE_SWING,
     FirecrackerRose.OnBoneSwing
 )
+
+
+---@param effect EntityEffect
+function FirecrackerRose:OnTearPoofInit(effect)
+    local petalTears = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PetalTears")
+    local tears = TSIL.EntitySpecific.GetTears()
+
+    for _, tear in ipairs(tears) do
+        local ptrHash = GetPtrHash(tear)
+
+        if petalTears[ptrHash] then
+            local distance = effect.Position:DistanceSquared(tear.Position + tear.PosDisplacement)
+
+            if distance < 0.1 then
+                effect:Remove()
+                break
+            end
+        end
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_INIT,
+    FirecrackerRose.OnTearPoofInit,
+    EffectVariant.TEAR_POOF_A
+)
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_INIT,
+    FirecrackerRose.OnTearPoofInit,
+    EffectVariant.TEAR_POOF_B
+)
