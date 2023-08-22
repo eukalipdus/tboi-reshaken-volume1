@@ -35,42 +35,30 @@ function utility:TearsUp(firedelay, val)
     return math.max((30 / newTears) - 1, -0.99)
 end
 
-local NotGetData = {}
 ---Acts as a replacement for Entity:GetData()
 ---@param entity Entity
 ---@param identifier string
 ---@return any
 function utility:GetData(entity, identifier)
-	if (not NotGetData[GetPtrHash(entity)]) then NotGetData[GetPtrHash(entity)] = {} end
-	return NotGetData[GetPtrHash(entity)][identifier]
+    return TSIL.Entities.GetEntityData(
+        MilkshakeVol1,
+        entity,
+        identifier
+    )
 end
+
 ---Acts as a replacement for Entity:GetData()
 ---@param entity Entity
 ---@param identifier string
 ---@param data any
----@return boolean
 function utility:SetData(entity, identifier, data)
-    local existedBefore = true
-	if (not NotGetData[GetPtrHash(entity)]) then
-        NotGetData[GetPtrHash(entity)] = {}
-        existedBefore = false
-    end
-	NotGetData[GetPtrHash(entity)][identifier] = data
-	return existedBefore
+    TSIL.Entities.SetEntityData(
+        MilkshakeVol1,
+        entity,
+        identifier,
+        data
+    )
 end
-
-local function PreGameExit()
-	NotGetData = {}
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, PreGameExit)
-
----@param entity Entity
-local function OnEntityRemoved(_, entity)
-    local ptrHash = GetPtrHash(entity)
-
-    NotGetData[ptrHash] = nil
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, OnEntityRemoved)
 
 ---Concatenates 2 tables into 1
 ---https://stackoverflow.com/a/15278426
@@ -218,18 +206,19 @@ function utility:RecycleCollectible(position, player, roomType, itemPool, seed, 
     end
 end
 
---- Check if a value is inside of a table
----@param table table
----@param val any
-function utility:HasValue(table, val)
-    for i, value in pairs(table) do
-        if value == val then
-            return true
-        end
-    end
+--- If you want to use this, just use TSIL.Utils.Tables.IsIn
+-- --- Check if a value is inside of a table
+-- ---@param table table
+-- ---@param val any
+-- function utility:HasValue(table, val)
+--     for i, value in pairs(table) do
+--         if value == val then
+--             return true
+--         end
+--     end
 
-    return false
-end
+--     return false
+-- end
 
 
 --- Checks if a player is the main player, i.e. the one who started the run.
