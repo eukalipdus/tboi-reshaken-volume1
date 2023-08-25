@@ -130,6 +130,7 @@ end
 ---@param entity Entity
 ---@param source Entity
 local function OnLaserDamage(entity, source)
+    if not source then return end
     local player = source:ToPlayer()
     if not player then return end
 
@@ -143,6 +144,7 @@ end
 ---@param source Entity
 local function OnBombDamage(entity, source)
     local bomb = source:ToBomb()
+    if not bomb then return end
     if not bomb.IsFetus then return end
 
     local player = TSIL.Players.GetPlayerFromEntity(source)
@@ -164,7 +166,6 @@ function SickleCell:OnEntityDamage(entity, _, flags, source)
 
     if source.Type == EntityType.ENTITY_TEAR and IsSickleTear(source.Entity)  then
         SFXManager():Play(SoundEffect.SOUND_MEATY_DEATHS)
-        
     end
     if entity:HasEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS) or
         entity:HasEntityFlags(EntityFlag.FLAG_BLEED_OUT) then
