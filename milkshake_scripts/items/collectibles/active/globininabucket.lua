@@ -9,7 +9,7 @@ local enums = MilkshakeVol1.enums
 ---@field variant any
 ---@field subtype any
 
-
+local GLOBIN_LIMIT = 4
 local SPECIAL_GLOBIN_CHANCE = 0.33
 ---@type table<BackdropType, GlobinInfo[]>
 local GLOBINS_PER_BACKDROP = {}
@@ -115,7 +115,24 @@ end
 ---@param rng RNG
 ---@param player EntityPlayer
 function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
-    if player == nil then return end
+    if not player then return end
+    local globins = Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.GLOBIN_IN_A_BUCKET)
+    local count = 0
+    for i = 1, #globins do
+        if GetPtrHash(globins[i].SpawnerEntity) == GetPtrHash(player) then
+            count = count + 1
+        end
+    end
+
+    local globinEffects = Isaac.FindByType(EntityType.ENTITY_GLOBIN)
+    for i = 1, #globinEffects do
+        if GetPtrHash(globinEffects[i].SpawnerEntity) == GetPtrHash(player) then
+            count = count + 1
+        end
+    end
+    
+    if count >= GLOBIN_LIMIT then return end
+
 
     local velX = TSIL.Random.GetRandomFloat(-7, 7, rng)
     local velY = TSIL.Random.GetRandomFloat(-7, 7, rng)
