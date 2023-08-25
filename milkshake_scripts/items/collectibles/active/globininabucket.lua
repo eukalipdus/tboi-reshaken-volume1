@@ -130,8 +130,31 @@ function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
             count = count + 1
         end
     end
-    
-    if count >= GLOBIN_LIMIT then return end
+
+    local lowestHealthGlobin = globins[1]
+    if count >= GLOBIN_LIMIT then
+        if #globinEffects == 0 and #globins > 0 then
+            for i = 2, #globins do
+                if globins[i].HitPoints < lowestHealthGlobin.HitPoints then
+                    lowestHealthGlobin = globins[i]
+                end
+            end
+            for _ = 1, 2 do
+                lowestHealthGlobin:Kill()
+            end
+
+        elseif #globinEffects > 0 then
+            lowestHealthGlobin = globinEffects[1]
+            for i = 2, #globinEffects do
+                if globinEffects[i].HitPoints < lowestHealthGlobin.HitPoints then
+                    lowestHealthGlobin = globins[i]
+                end
+            end
+            for _ = 1, 2 do
+                lowestHealthGlobin:Kill()
+            end
+        end
+    end
 
 
     local velX = TSIL.Random.GetRandomFloat(-7, 7, rng)
