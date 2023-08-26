@@ -1,5 +1,6 @@
 local GlobinInABucket = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 
 ---@class GlobinInfo
@@ -10,6 +11,7 @@ local enums = MilkshakeVol1.enums
 ---@field subtype any
 
 local GLOBIN_LIMIT = 4
+local COOLDOWN_FRAMES = 30 * 3
 local SPECIAL_GLOBIN_CHANCE = 0.33
 ---@type table<BackdropType, GlobinInfo[]>
 local GLOBINS_PER_BACKDROP = {}
@@ -116,7 +118,10 @@ end
 ---@param player EntityPlayer
 function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
     if not player then return end
-    local globins = Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.GLOBIN_IN_A_BUCKET)
+    local globins = utility:TableConcat(Isaac.FindByType(EntityType.ENTITY_GLOBIN),
+                                        Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.GLOBIN_IN_A_BUCKET)
+                                       )
+
     local count = 0
     for i = 1, #globins do
         if GetPtrHash(globins[i].SpawnerEntity) == GetPtrHash(player) then
@@ -124,35 +129,23 @@ function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
         end
     end
 
-    local globinEffects = Isaac.FindByType(EntityType.ENTITY_GLOBIN)
-    for i = 1, #globinEffects do
-        if GetPtrHash(globinEffects[i].SpawnerEntity) == GetPtrHash(player) then
-            count = count + 1
+    local lowestHealthGlobin
+    if count == GLOBIN_LIMIT then
+        lowestHealthGlobin = globins[1]
+        for i = 2, #globins do
+            if globins[i].HitPoints < lowestHealthGlobin.HitPoints then
+                lowestHealthGlobin = globins[i]
+            end
         end
     end
-
-    local lowestHealthGlobin = globins[1]
-    if count >= GLOBIN_LIMIT then
-        if #globinEffects == 0 and #globins > 0 then
-            for i = 2, #globins do
-                if globins[i].HitPoints < lowestHealthGlobin.HitPoints then
-                    lowestHealthGlobin = globins[i]
-                end
-            end
-            for _ = 1, 2 do
+    if lowestHealthGlobin then
+        if lowestHealthGlobin.Type == EntityType.ENTITY_GLOBIN then
+            lowestHealthGlobin:Kill()
+            TSIL.Utils.Functions.RunInFrames(function ()
                 lowestHealthGlobin:Kill()
-            end
-
-        elseif #globinEffects > 0 then
-            lowestHealthGlobin = globinEffects[1]
-            for i = 2, #globinEffects do
-                if globinEffects[i].HitPoints < lowestHealthGlobin.HitPoints then
-                    lowestHealthGlobin = globins[i]
-                end
-            end
-            for _ = 1, 2 do
-                lowestHealthGlobin:Kill()
-            end
+            end, 1, {})
+        elseif lowestHealthGlobin.Type == EntityType.ENTITY_EFFECT then
+            lowestHealthGlobin:Remove()
         end
     end
 
@@ -173,7 +166,6 @@ function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
         player,
         rng
     )
-
     return true
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, GlobinInABucket.OnGlobinBucketUse, enums.Collectibles.GLOBIN_IN_A_BUCKET)
