@@ -91,7 +91,7 @@ local function TryReflectProjectile(player)
         rng
     )[1]
 
-    local laserSpawnPoint = player.Position + Vector(0, -40)
+    local laserSpawnPoint = player.Position + Vector(0, -40 * player.SpriteScale.Y)
     local laserTargetPoint = projectileToReflect.Position + Vector(0, projectileToReflect.Height)
     local laserAngle = (laserTargetPoint - laserSpawnPoint):GetAngleDegrees()
     local laserLength = laserSpawnPoint:Distance(laserTargetPoint)
@@ -300,7 +300,7 @@ function SapphireOrb:OnLaserUpdate(laser)
         )
     end
 
-    local laserSpawnPoint = player.Position + Vector(0, -40)
+    local laserSpawnPoint = player.Position + Vector(0, -40 * player.SpriteScale.Y)
     local laserTargetPoint = projectile.Position + Vector(0, projectile.Height)
     local laserAngle = (laserTargetPoint - laserSpawnPoint):GetAngleDegrees()
     local laserLength = laserSpawnPoint:Distance(laserTargetPoint)
