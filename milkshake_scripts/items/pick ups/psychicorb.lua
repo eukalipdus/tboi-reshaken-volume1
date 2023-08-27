@@ -277,6 +277,10 @@ function SapphireOrb:OnLaserUpdate(laser)
     ---@type EntityProjectile
     local projectile = Utilities:GetData(laser, "LinkedProjectile")
     local targetVelocity = Utilities:GetData(projectile, "ReflectedVelocity")
+    if not targetVelocity then
+        laser:Remove()
+        return
+    end
 
     if laser.Timeout == 0 then
         projectile.Velocity = targetVelocity
