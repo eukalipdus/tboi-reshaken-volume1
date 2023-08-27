@@ -99,7 +99,7 @@
 	flameColor="flame_green" coreColor="core_green" tearColor="tear_blue"/>
 
 	<!-- Special Brenda Electric Wisp -->
-	<wisp id="503" hp="10" layer="1" damage="3" fireDelay="15"
+	<wisp id="503" hp="10" layer="1" damage="3" fireDelay="15" tearFlags="57"
 	flameColor="flame_bright_blue" coreColor="core_bright_blue" tearColor="tear_blue"/>
 
 	<!-- Special Brenda Water Wisp -->
