@@ -7,8 +7,9 @@ local CARD_SPAWN_VARIANT = 124
 ---@param variant any
 ---@param subtype any
 ---@param seed any
-function CardSpawner:PreEntitySpawn(_, variant, subtype, _, _, _, seed)
-    if variant ~= CARD_SPAWN_VARIANT then return end
+function CardSpawner:PreEntitySpawn(type, variant, subtype, _, _, _, seed)
+    if variant ~= CARD_SPAWN_VARIANT
+    or type == EntityType.ENTITY_EFFECT then return end
     local card = MilkshakeVol1.enums.CardSpawnerSubtypePerCard[subtype]
     if not card then return end
 
