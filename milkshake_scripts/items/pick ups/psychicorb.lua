@@ -35,6 +35,7 @@ function SapphireOrb:OnAmethystOrbUse(_, player, flags)
         "ClairvoyanceOrbPlayerFrames"
     )
     local frameCount = Game():GetFrameCount()
+    local wasUsingOrb = clairvoyanceOrbPlayerFrames[playerIndex] ~= nil
     clairvoyanceOrbPlayerFrames[playerIndex] = frameCount
 
     local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(
@@ -43,6 +44,7 @@ function SapphireOrb:OnAmethystOrbUse(_, player, flags)
     )
     doubleEffectPerPlayer[playerIndex] = TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER)
 
+    if wasUsingOrb then return end
     local aura = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.CLAIRVOYANCE_AURA,
         0,
@@ -91,7 +93,7 @@ local function TryReflectProjectile(player)
         rng
     )[1]
 
-    local laserSpawnPoint = player.Position + Vector(0, -40)
+    local laserSpawnPoint = player.Position + Vector(0, -40 * player.SpriteScale.Y)
     local laserTargetPoint = projectileToReflect.Position + Vector(0, projectileToReflect.Height)
     local laserAngle = (laserTargetPoint - laserSpawnPoint):GetAngleDegrees()
     local laserLength = laserSpawnPoint:Distance(laserTargetPoint)
@@ -275,6 +277,10 @@ function SapphireOrb:OnLaserUpdate(laser)
     ---@type EntityProjectile
     local projectile = Utilities:GetData(laser, "LinkedProjectile")
     local targetVelocity = Utilities:GetData(projectile, "ReflectedVelocity")
+    if not targetVelocity then
+        laser:Remove()
+        return
+    end
 
     if laser.Timeout == 0 then
         projectile.Velocity = targetVelocity
@@ -300,7 +306,7 @@ function SapphireOrb:OnLaserUpdate(laser)
         )
     end
 
-    local laserSpawnPoint = player.Position + Vector(0, -40)
+    local laserSpawnPoint = player.Position + Vector(0, -40 * player.SpriteScale.Y)
     local laserTargetPoint = projectile.Position + Vector(0, projectile.Height)
     local laserAngle = (laserTargetPoint - laserSpawnPoint):GetAngleDegrees()
     local laserLength = laserSpawnPoint:Distance(laserTargetPoint)

@@ -1,6 +1,4 @@
 local potOfGold = {}
-local enums = MilkshakeVol1.enums
-local utility = MilkshakeVol1.utility
 
 local PENNY_CONVERT_CHANCE = 0.5
 
@@ -34,9 +32,26 @@ end
 
 
 ---@param pickup EntityPickup
+local function CanPickupBeReplaced(pickup)
+    if pickup.Variant == PickupVariant.PICKUP_KEY
+    or pickup.Variant == PickupVariant.PICKUP_BOMB then
+        return true
+    end
+
+    if pickup.Variant == PickupVariant.PICKUP_COIN
+    and pickup.SubType == CoinSubType.COIN_PENNY then
+        local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+
+        return rng:RandomFloat() < PENNY_CONVERT_CHANCE
+    end
+
+    return false
+end
+
+
+---@param pickup EntityPickup
 local function TryReplacePickupWithRainbowPenny(pickup)
-    if pickup.Variant ~= PickupVariant.PICKUP_KEY
-    and pickup.Variant ~= PickupVariant.PICKUP_BOMB then return end
+    if not CanPickupBeReplaced(pickup) then return end
     if not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD) then return end
 
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)

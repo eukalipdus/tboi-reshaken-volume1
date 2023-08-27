@@ -29,13 +29,24 @@ local function GetTearAnimationNumber(tear)
 end
 
 
-local function MakeTearSickle(tear)
+---@param tear EntityTear
+function MakeTearSickle(tear)
     TSIL.Entities.SetEntityData(
         MilkshakeVol1,
         tear,
         "IsSickleTear",
         true
     )
+
+    local isLudo = tear:HasTearFlags(TearFlags.TEAR_LUDOVICO)
+
+    if isLudo then
+        local sprite = tear:GetSprite()
+        sprite:Load("gfx/tears/tear_sicklecell.anm2", true)
+        local animNum = GetTearAnimationNumber(tear)
+        sprite:Play("Stone" .. animNum .. "Move", true)
+        return
+    end
 
     local tearSizeMult = 1.2
     if tear.Variant == TearVariant.SCHYTHE then
@@ -79,7 +90,9 @@ MilkshakeVol1:AddCallback(
 -- On frame 1 of tear update, Multipies Tear size by 1.2, or 1.4 if you have death's touch, Visually changes the sickle cell tear sprite and animation based on the tear size
 ---@param tear EntityTear
 function SickleCell:replaceTear(tear)
-    local player = TSIL.Players.GetPlayerFromEntity(tear)
+    local spawner = tear.SpawnerEntity
+    if not spawner then return end
+    local player = spawner:ToPlayer()
     if player == nil then return end
     if not player:HasCollectible(enums.Collectibles.SICKLE_CELL) then return end
 

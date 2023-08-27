@@ -165,6 +165,12 @@ local function SpawnFireProjectile(player, angle, doublePower)
 		player
 	)
 	flame:AddTearFlags(TearFlags.TEAR_SPECTRAL)
+	TSIL.Entities.SetEntityData(
+		MilkshakeVol1,
+		flame,
+		"RubyOrbProjectileDamage",
+		5 + 5 * utility:GetCurrentChapter()
+	)
 	flame.CollisionDamage = 5 + 5 * utility:GetCurrentChapter()
 
 	local sprite = flame:GetSprite()
@@ -297,8 +303,13 @@ function RubyOrb:OnEntityTakeDamage(entity, amount, flags, source, countdownFram
 
 	if not isRubyOrbProjectile then return end
 
+	local fixedDamage = TSIL.Entities.GetEntityData(
+		MilkshakeVol1,
+		sourceEntity,
+		"RubyOrbProjectileDamage"
+	)
 	isTakingBossArmorDamage = true
-	entity:TakeDamage(amount, flags | DamageFlag.DAMAGE_IGNORE_ARMOR, source, countdownFrames)
+	entity:TakeDamage(fixedDamage, flags | DamageFlag.DAMAGE_IGNORE_ARMOR, source, countdownFrames)
 	isTakingBossArmorDamage = false
 
 	return false

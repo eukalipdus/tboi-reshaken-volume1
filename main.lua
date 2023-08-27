@@ -87,6 +87,7 @@ include("milkshake_scripts.slots.spiritklinbrenda")
 
 
 --Wisps
+include("milkshake_scripts.wisps.brendaelectricwisp")
 include("milkshake_scripts.wisps.brendafirewisp")
 include("milkshake_scripts.wisps.brendaholywisp")
 include("milkshake_scripts.wisps.brendanaturewisp")
