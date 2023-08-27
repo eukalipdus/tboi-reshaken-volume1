@@ -16,6 +16,7 @@ local SPLIT_COLOR_FRAMES = 2
 local SHATTERED_SOLID_FRAMES = 7
 local SHATTERED_COLOR_FRAMES = 20
 local SCHEDULE_FRAMES = 2
+local WISP_RADIUS = 10
 --local TROLL_BOMB_COUNT = 3
 --local PICKUP_COUNT = 6
 --local NON_GOLD_PICKUP_COUNT = 5
@@ -401,4 +402,21 @@ function prismaticDice:onUse(_, _, player)
     return true
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
+
+-- function prismaticDice:FamiliarUpdate(familiar)
+--     if familiar.SubType ~= enums.Collectibles.PRISMATIC_DICE then return end
+--     for _, entity in pairs(Isaac.GetRoomEntities()) do
+-- 		if entity.Type == EntityType.ENTITY_TEAR
+--     	and entity.Position:Distance(familiar.Position) < WISP_RADIUS then
+--             local prism = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ANGELIC_PRISM, 0, familiar.Position, Vector.Zero, familiar)
+--             --prism.Visible = false
+--             prism.Size = familiar.Size
+--             TSIL.Utils.Functions.RunInFrames(function ()
+--                 prism:Remove()
+--             end, 1)
+-- 		end
+--     end
+-- end
+-- MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate)
+
 return prismaticDice
