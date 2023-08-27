@@ -35,6 +35,7 @@ function SapphireOrb:OnAmethystOrbUse(_, player, flags)
         "ClairvoyanceOrbPlayerFrames"
     )
     local frameCount = Game():GetFrameCount()
+    local wasUsingOrb = clairvoyanceOrbPlayerFrames[playerIndex] ~= nil
     clairvoyanceOrbPlayerFrames[playerIndex] = frameCount
 
     local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(
@@ -43,6 +44,7 @@ function SapphireOrb:OnAmethystOrbUse(_, player, flags)
     )
     doubleEffectPerPlayer[playerIndex] = TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER)
 
+    if wasUsingOrb then return end
     local aura = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.CLAIRVOYANCE_AURA,
         0,
