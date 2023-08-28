@@ -14,11 +14,12 @@ local rainbowPennies = {}
 ---@param variant PickupVariant
 ---@param subtype integer
 ---@param onPickup fun(pickup: EntityPickup, player: EntityPlayer)
-function MilkshakeVol1.API:AddRainbowPenny(variant, subtype, onPickup)
+function MilkshakeVol1.API:AddRainbowPenny(variant, subtype, onPickup, weight)
     rainbowPennies[#rainbowPennies+1] = {
         variant = variant,
         subtype = subtype,
-        onPickup = onPickup
+        onPickup = onPickup,
+        weight = weight
     }
 end
 
