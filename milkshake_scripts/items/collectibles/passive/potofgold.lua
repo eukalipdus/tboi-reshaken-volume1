@@ -54,14 +54,6 @@ local function CanPickupBeReplaced(pickup)
     or pickup.Variant == PickupVariant.PICKUP_BOMB then
         return true
     end
-
-    if pickup.Variant == PickupVariant.PICKUP_COIN
-    and pickup.SubType == CoinSubType.COIN_PENNY then
-        local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
-
-        return rng:RandomFloat() < PENNY_CONVERT_CHANCE
-    end
-
     return false
 end
 
