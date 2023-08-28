@@ -73,7 +73,8 @@ local function TryReplacePickupWithRainbowPenny(pickup)
 
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
 
-    if rng:RandomFloat() < PENNY_CONVERT_CHANCE then
+    if rng:RandomFloat() < PENNY_CONVERT_CHANCE
+    or (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB) then
         local chosenCoin = MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
 
         pickup:Morph(
