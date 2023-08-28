@@ -4,6 +4,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         function(_, player)
             player:UseActiveItem(CollectibleType.COLLECTIBLE_DULL_RAZOR, UseFlag.USE_NOANIM)
             SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL)
+            player:BloodExplode()
         end, 0.10)
 
     MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.EGG_PENNY,
