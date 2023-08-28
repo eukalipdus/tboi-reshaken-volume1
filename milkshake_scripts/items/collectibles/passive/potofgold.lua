@@ -31,6 +31,22 @@ function MilkshakeVol1.API:GetRainbowPenny(rng)
     return TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
 end
 
+---Gives you a random rainbow penny, selecting them through their weight
+---@param rng RNG
+---@return RainbowPenny
+function MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
+    local total = 0
+    for i = 1, #rainbowPennies do
+        total = total + rainbowPennies[i].weight
+    end
+    local randomFloat = rng:RandomFloat() * total
+    for i = 1, #rainbowPennies do
+        if randomFloat < rainbowPennies[i].weight then
+            return rainbowPennies[i]
+        end
+        randomFloat = randomFloat - rainbowPennies[i].weight
+    end
+end
 
 ---@param pickup EntityPickup
 local function CanPickupBeReplaced(pickup)
@@ -58,7 +74,7 @@ local function TryReplacePickupWithRainbowPenny(pickup)
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
 
     if rng:RandomFloat() < PENNY_CONVERT_CHANCE then
-        local chosenCoin = MilkshakeVol1.API:GetRainbowPenny(rng)
+        local chosenCoin = MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
 
         pickup:Morph(
             pickup.Type,
