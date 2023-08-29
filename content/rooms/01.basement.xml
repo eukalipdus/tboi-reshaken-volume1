@@ -62,7 +62,7 @@
 			<entity type="618" variant="124" subtype="5" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="2" name="[RE] - steve2552 - kinda shitty ngl" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+	<room variant="2" name="[RE] - steve2552 - kinda shitty ngl" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -125,7 +125,7 @@
 			<entity type="1500" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="3" name="[RE] - steve2552 - filler! wow!" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+	<room variant="3" name="[RE] - steve2552 - filler! wow!" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -194,7 +194,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="4" name="[RE] - steve2552 - I LOVE MILKSHAKE" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+	<room variant="4" name="[RE] - steve2552 - I LOVE MILKSHAKE" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -248,7 +248,7 @@
 			<entity type="1000" variant="0" subtype="1" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="5" name="[RE] - steve2552 - randumb" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="1.0">
+	<room variant="5" name="[RE] - steve2552 - randumb" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -305,7 +305,7 @@
 			<entity type="5" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="6" name="[RE] - steve2552 - gonna save it for the boss, huh?" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0">
+	<room variant="6" name="[RE] - steve2552 - gonna save it for the boss, huh?" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -362,7 +362,7 @@
 			<entity type="5" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="7" name="[RE] - steve2552 - shit bridge tutorial (milkshake edition)" type="1" subtype="0" shape="6" width="26" height="7" difficulty="5" weight="1.0">
+	<room variant="7" name="[RE] - steve2552 - shit bridge tutorial (milkshake edition)" type="1" subtype="0" shape="6" width="26" height="7" difficulty="5" weight="0.3">
 		<door exists="False" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -493,7 +493,7 @@
 			<entity type="1500" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="8" name="[RE] - steve2552 - THINK FAST" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+	<room variant="8" name="[RE] - steve2552 - THINK FAST" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="False" x="6" y="7"/>
@@ -568,7 +568,7 @@
 			<entity type="3000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="9" name="[RE] - steve2552 - ouch oof ouch my bones hurt" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0">
+	<room variant="9" name="[RE] - steve2552 - ouch oof ouch my bones hurt" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -619,7 +619,7 @@
 			<entity type="3000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="10" name="[RE] - steve2552 - use it now, i dare you" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+	<room variant="10" name="[RE] - steve2552 - use it now, i dare you" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="False" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
