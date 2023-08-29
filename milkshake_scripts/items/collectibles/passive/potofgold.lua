@@ -14,11 +14,12 @@ local rainbowPennies = {}
 ---@param variant PickupVariant
 ---@param subtype integer
 ---@param onPickup fun(pickup: EntityPickup, player: EntityPlayer)
-function MilkshakeVol1.API:AddRainbowPenny(variant, subtype, onPickup)
+function MilkshakeVol1.API:AddRainbowPenny(variant, subtype, onPickup, weight)
     rainbowPennies[#rainbowPennies+1] = {
         variant = variant,
         subtype = subtype,
-        onPickup = onPickup
+        onPickup = onPickup,
+        weight = weight
     }
 end
 
@@ -30,6 +31,22 @@ function MilkshakeVol1.API:GetRainbowPenny(rng)
     return TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
 end
 
+---Gives you a random rainbow penny, selecting them through their weight
+---@param rng RNG
+---@return RainbowPenny
+function MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
+    local total = 0
+    for i = 1, #rainbowPennies do
+        total = total + rainbowPennies[i].weight
+    end
+    local randomFloat = rng:RandomFloat() * total
+    for i = 1, #rainbowPennies do
+        if randomFloat < rainbowPennies[i].weight then
+            return rainbowPennies[i]
+        end
+        randomFloat = randomFloat - rainbowPennies[i].weight
+    end
+end
 
 ---@param pickup EntityPickup
 local function CanPickupBeReplaced(pickup)
@@ -37,14 +54,6 @@ local function CanPickupBeReplaced(pickup)
     or pickup.Variant == PickupVariant.PICKUP_BOMB then
         return true
     end
-
-    if pickup.Variant == PickupVariant.PICKUP_COIN
-    and pickup.SubType == CoinSubType.COIN_PENNY then
-        local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
-
-        return rng:RandomFloat() < PENNY_CONVERT_CHANCE
-    end
-
     return false
 end
 
@@ -56,8 +65,9 @@ local function TryReplacePickupWithRainbowPenny(pickup)
 
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
 
-    if rng:RandomFloat() < PENNY_CONVERT_CHANCE then
-        local chosenCoin = MilkshakeVol1.API:GetRainbowPenny(rng)
+    if rng:RandomFloat() < PENNY_CONVERT_CHANCE
+    or (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB) then
+        local chosenCoin = MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
 
         pickup:Morph(
             pickup.Type,
