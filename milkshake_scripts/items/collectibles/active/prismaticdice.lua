@@ -235,7 +235,7 @@ local function CreateInvisiblePrism(wisp)
     prism:RemoveFromOrbit()
     prism.Visible = false
     prism:SetSize(wisp.Size, wisp.SizeMulti, WISP_GRID_COLLISION_POINTS)
-    utility:SetData(prism, "IsPrismaticDiceWisp", true)
+    utility:SetData(prism, "IsInvisiblePrism", true)
     utility:SetData(prism, "WispParent", wisp)
     return prism
 end
