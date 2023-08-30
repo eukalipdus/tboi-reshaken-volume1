@@ -415,18 +415,6 @@ function prismaticDice:onUse(_, _, player)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
 
-function prismaticDice:FamiliarInit(familiar)
-    if familiar.SubType ~= enums.Collectibles.PRISMATIC_DICE then return end
-    CreateInvisiblePrism(familiar)
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, prismaticDice.FamiliarInit)
-
-function prismaticDice:PostNewRoom()
-    for _, entity in pairs(Isaac.GetRoomEntities()) do
-        if entity.Type == EntityType.ENTITY_FAMILIAR
-        and entity.Variant == FamiliarVariant.WISP
-        and entity.SubType == enums.Collectibles.PRISMATIC_DICE then
-            CreateInvisiblePrism(entity:ToFamiliar())
 function prismaticDice:PreEntitySpawn(type, variant, _, position, _, _, seed)
     if Game():GetRoom():GetFrameCount() > 1 then return end
     if type == EntityType.ENTITY_EFFECT
@@ -437,17 +425,6 @@ function prismaticDice:PreEntitySpawn(type, variant, _, position, _, _, seed)
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, prismaticDice.PostNewRoom)
-
-function prismaticDice:FamiliarUpdate(familiar)
-    if familiar.Variant ~= FamiliarVariant.ANGELIC_PRISM
-    or not utility:GetData(familiar, "IsPrismaticDiceWisp") then return end
-    familiar.Visible = false
-    familiar:RemoveFromOrbit()
-    familiar.Position = utility:GetData(familiar, "WispParent").Position
-    familiar.Velocity = utility:GetData(familiar, "WispParent").Velocity
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate)
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_ENTITY_SPAWN, prismaticDice.PreEntitySpawn)
 
 return prismaticDice
