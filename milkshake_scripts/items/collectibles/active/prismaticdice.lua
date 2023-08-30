@@ -246,7 +246,14 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, prismaticDice.preItemuse, enums.Collectibles.PRISMATIC_DICE)
 
 function prismaticDice:onUse(_, _, player)
-    --local collectibleCount = getCollectibleCount()
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then
+        local familiar = TSIL.EntitySpecific.SpawnFamiliar(FamiliarVariant.WISP,
+                                                           enums.Collectibles.PRISMATIC_DICE,
+                                                           player.Position,
+                                                           Vector.Zero,
+                                                           player)
+        CreateInvisiblePrism(familiar)
+    end
     for _, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
