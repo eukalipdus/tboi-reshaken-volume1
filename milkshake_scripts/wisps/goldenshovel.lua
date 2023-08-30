@@ -1,7 +1,7 @@
 local GoldenShovelWisp = {}
 
 
-local GOLDEN_TEAR_CHANCE = 1
+local GOLDEN_TEAR_CHANCE = 0.1
 local GOLDEN_COLOR = Color(0.9, 0.8, 0, 1, 0.8, 0.7, 0)
 local FREEZE_DURATION = 30 * 3
 
@@ -36,10 +36,8 @@ MilkshakeVol1:AddCallback(
 
 
 ---@param entity Entity
----@param amount any
----@param damageFlags any
 ---@param source EntityRef
-function GoldenShovelWisp:OnEntityDamage(entity, amount, damageFlags, source)
+function GoldenShovelWisp:OnEntityDamage(entity, _, _, source)
     local npc = entity:ToNPC()
     if not npc then return end
     if npc:IsBoss() or not npc:IsActiveEnemy(false) then return end
