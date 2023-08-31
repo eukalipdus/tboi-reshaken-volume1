@@ -19,24 +19,6 @@ local RED = Color(141 / 255, 2 / 255, 0, 1, 141 / 255, 2 / 255, 0)
 local YELLOW = Color(135 / 255, 140 / 255, 20 / 255, 1, 135 / 255, 140 / 255, 20 / 255)
 local GREEN = Color(0, 133 / 255, 2 / 255, 1, 0, 133 / 255, 2 / 255)
 local BLUE = Color(4 / 255, 99 / 255, 147 / 255, 1, 4 / 255, 99 / 255, 147 / 255)
-local WISP_GRID_COLLISION_POINTS = 12
---local TROLL_BOMB_COUNT = 3
---local PICKUP_COUNT = 6
---local NON_GOLD_PICKUP_COUNT = 5
---local MUL_VEC_BY = 4
-
----Returns the amount of collectibles in the current room 
----@return number
--- local function getCollectibleCount()
---     local collectibleCount = 0
---     for i, entity in pairs(Isaac.GetRoomEntities()) do
---         if entity.Type == EntityType.ENTITY_PICKUP
---         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE then
---             collectibleCount = collectibleCount + 1
---         end
---     end
---     return collectibleCount
--- end
 
 --- Gets a spawn position for a split collectible
 ---@param index number
