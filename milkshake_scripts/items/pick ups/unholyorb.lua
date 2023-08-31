@@ -12,11 +12,11 @@ local utility = MilkshakeVol1.utility
 --blood tears fontaine when enemy dies
 
 UnholyOrb.DamageMultiplier = 5
+UnholyOrb.InvFrames = 90
 
 
 
-
-function UnholyOrb.GetNearestEnemy(basePos)
+function UnholyOrb.GetTargets(basePos)
 	--- get near enemy's position, else return basePos position
 	local positionsTable = {}
 	local enemies = Isaac.FindInRadius(basePos, 5000, EntityPartition.ENEMY)
@@ -36,15 +36,23 @@ end
 
 
 function UnholyOrb:onPEffectUpdate(player)
-	if utility:GetData(player, "UsedUnholyOrb") then
-		if game:GetRoom():GetFrameCount() == 1 then
-			utility:SetData(player, "UsedUnholyOrb", nil)
-		else -- if positionsTable has elements
-			-- move player to targets by X speed
-			--player.Velocity =
-			-- remove element from positionsTable
-			-- if #positionsTable == 0 then set utility:SetData(player, "UsedUnholyOrb", nil)
-		end
+	if not utility:GetData(player, "UnholyOrbBasePosition") then return end
+	if not utility:GetData(player, "UnholyOrbTargetPositions") then return end
+	local TargetPositions = utility:GetData(player, "UnholyOrbTargetPositions")
+	if game:GetRoom():GetFrameCount() == 1 then
+		utility:SetData(player, "UnholyOrbBasePosition", nil)
+		utility:SetData(player, "UnholyOrbTargetPositions", nil)
+	elseif #TargetPositions <= 0 then
+		player:SetMinDamageCooldown(UnholyOrb.InvFrames)
+		local basePos = utility:GetData(player, "UnholyOrbBasePosition")
+		player.Velocity = (basePos - player.Position):Resized(1)
+		utility:SetData(player, "UnholyOrbBasePosition", nil)
+		utility:SetData(player, "UnholyOrbTargetPositions", nil)
+	elseif #TargetPositions > 0 then
+		-- move player to targets by X speed
+		--player.Velocity =
+		-- remove element from TargetPositions
+		--utility:SetData(player, "UnholyOrbTargetPositions", TargetPositions)
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, UnholyOrb.onPEffectUpdate)
@@ -53,6 +61,12 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, UnholyOrb.onPEffe
 function UnholyOrb:enemyUpd(enemy)
 	if not enemy:GetData().UnholyOrbFlag then return end
 	if enemy.Type == EntityType.ENTITY_FIREPLACE then return end
+	if enemy.Type == EntityType.ENTITY_SHOPKEEPER then
+		enemy:Kill()
+		for _ = 1, 2 do
+			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, enemy.Position, RandomVector()*3, nil)
+		end
+	end
 	if enemy:HasMortalDamage() then
 		--blood tears
 		--local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_RED, 0, enemy.Position, Vector.Zero, player):ToEffect()
@@ -61,7 +75,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, UnholyOrb.enemyUpd)
 
 function UnholyOrb:onPlayerCollision(player, collider)
-	if not utility:GetData(player, "UsedUnholyOrb") then return end
+	if not utility:GetData(player, "UnholyOrbBasePosition") then return end
 	if not collider:ToNPC() then return end
 	if collider:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) then return end
     local enemy = collider:ToNPC()
@@ -75,18 +89,15 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, UnholyOrb.onPlay
 
 ---@param player EntityPlayer
 function UnholyOrb:OnUnholyOrbUse(_, player)
-
 	player:UseActiveItem(CollectibleType.COLLECTIBLE_DARK_ARTS)
-
     local room = game:GetRoom()
-    UnholyOrb.StartingPos = player.Position -- return to this position
-    local positionsTable = UnholyOrb.GetNearestEnemy(player.Position)
-
-	if #positionsTable == 0 then
-		utility:SetData(player, "UsedUnholyOrb", true)
+    local TargetPositions = UnholyOrb.GetTargets(player.Position)
+	if #TargetPositions > 0 then
+		utility:SetData(player, "UnholyOrbTargetPositions", TargetPositions)
+		utility:SetData(player, "UnholyOrbBasePosition", player.Position)
 		player:UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC)
 		local pentagram = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PENTAGRAM_BLACKPOWDER, 0, room:GetCenterPos(), Vector.Zero, player):ToEffect()
-	    pentagram:GetData().UnholyOrbFlag = true -- remove after dash
+		pentagram:GetData().UnholyOrbFlag = true -- remove after dash
 		pentagram:SetTimeout(-1)
 	end
 end
