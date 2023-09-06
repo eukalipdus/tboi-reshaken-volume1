@@ -298,6 +298,37 @@ function prismaticDice:FamiliarUpdate(familiar)
             blueTear.Color = BLUE
         end
     end
+
+    local bombsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_BOMB)
+    for _, bomb in ipairs(bombsInRoom) do
+        if bomb.Position:Distance(familiar.Position, bomb.Position) < 10
+        and not utility:GetData(bomb, "PrismaticWispBomb") then
+            bomb:Remove()
+
+            local redBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
+            local yellowBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
+            local greenBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
+            local blueBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
+
+            local splitBombs = {}
+            table.insert(splitBombs, redBomb)
+            table.insert(splitBombs, yellowBomb)
+            table.insert(splitBombs, greenBomb)
+            table.insert(splitBombs, blueBomb)
+
+            for _, entry in ipairs(splitBombs) do
+                utility:SetData(entry, "PrismaticWispBomb", true)
+            end
+            redBomb.Velocity = (redBomb.Velocity):Rotated(30)
+            redBomb.Color = RED
+            yellowBomb.Velocity = (yellowBomb.Velocity):Rotated(10)
+            yellowBomb.Color = YELLOW
+            greenBomb.Velocity = (greenBomb.Velocity):Rotated(-10)
+            greenBomb.Color = GREEN
+            blueBomb.Velocity = (blueBomb.Velocity):Rotated(-30)
+            blueBomb.Color = BLUE
+        end
+    end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate, FamiliarVariant.WISP)
 
