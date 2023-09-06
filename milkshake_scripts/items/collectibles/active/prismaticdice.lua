@@ -213,6 +213,30 @@ local function SpawnCollectible(collectibleType, position, player)
     return Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectibleType, position, Vector.Zero, player):ToPickup()
 end
 
+--- Mimicks the effect of Angelic Prism
+---@param redEntity Entity
+---@param yellowEntity Entity
+---@param greenEntity Entity
+---@param blueEntity Entity
+---@param identifierString string
+---@return table
+local function CreateAngelicPrismSplit(redEntity, yellowEntity, greenEntity, blueEntity, identifierString)
+    local splitEntities = {}
+    table.insert(splitEntities, redEntity)
+    table.insert(splitEntities, yellowEntity)
+    table.insert(splitEntities, greenEntity)
+    table.insert(splitEntities, blueEntity)
+
+    for _, entry in ipairs(splitEntities) do
+        utility:SetData(entry, identifierString, true)
+    end
+    redEntity.Color = RED
+    yellowEntity.Color = YELLOW
+    greenEntity.Color = GREEN
+    blueEntity.Color = BLUE
+    return splitEntities
+end
+
 function prismaticDice:preItemuse(_, _, _, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return true end
 end
@@ -278,24 +302,16 @@ function prismaticDice:FamiliarUpdate(familiar)
             local yellowTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
             local greenTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
             local blueTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
+            CreateAngelicPrismSplit(redTear,
+                                    yellowTear,
+                                    greenTear,
+                                    blueTear,
+                                    "PrismaticWispTear")
 
-            local splitTears = {}
-            table.insert(splitTears, redTear)
-            table.insert(splitTears, yellowTear)
-            table.insert(splitTears, greenTear)
-            table.insert(splitTears, blueTear)
-
-            for _, entry in ipairs(splitTears) do
-                utility:SetData(entry, "PrismaticWispTear", true)
-            end
             redTear.Velocity = (redTear.Velocity):Rotated(30)
-            redTear.Color = RED
             yellowTear.Velocity = (yellowTear.Velocity):Rotated(10)
-            yellowTear.Color = YELLOW
             greenTear.Velocity = (greenTear.Velocity):Rotated(-10)
-            greenTear.Color = GREEN
             blueTear.Velocity = (blueTear.Velocity):Rotated(-30)
-            blueTear.Color = BLUE
         end
     end
 
@@ -310,23 +326,16 @@ function prismaticDice:FamiliarUpdate(familiar)
             local greenBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
             local blueBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
 
-            local splitBombs = {}
-            table.insert(splitBombs, redBomb)
-            table.insert(splitBombs, yellowBomb)
-            table.insert(splitBombs, greenBomb)
-            table.insert(splitBombs, blueBomb)
+            CreateAngelicPrismSplit(redBomb,
+                                    yellowBomb,
+                                    greenBomb,
+                                    blueBomb,
+                                    "PrismaticWispBomb")
 
-            for _, entry in ipairs(splitBombs) do
-                utility:SetData(entry, "PrismaticWispBomb", true)
-            end
             redBomb.Velocity = (redBomb.Velocity):Rotated(30)
-            redBomb.Color = RED
             yellowBomb.Velocity = (yellowBomb.Velocity):Rotated(10)
-            yellowBomb.Color = YELLOW
             greenBomb.Velocity = (greenBomb.Velocity):Rotated(-10)
-            greenBomb.Color = GREEN
             blueBomb.Velocity = (blueBomb.Velocity):Rotated(-30)
-            blueBomb.Color = BLUE
         end
     end
 end
