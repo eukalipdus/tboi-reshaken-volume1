@@ -125,4 +125,8 @@
 	<!-- Leviticus -->
 	<wisp id="23" hp="10" layer="1" damage="3" fireDelay="15" coreGfx="cross.png"
 	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
+
+	<!-- Globin in a bucket -->
+	<wisp id="1" hp="5" layer="1" damage="3" fireDelay="15"
+	flameColor="flame_red" coreColor="core_red" tearColor="tear_red"/>
 </wisps>
