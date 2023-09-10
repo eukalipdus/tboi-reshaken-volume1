@@ -91,7 +91,7 @@
 	flameColor="flame_orange" coreColor="core_orange" tearColor="tear_orange"/>
 
 	<!-- Special Brenda Psychic Wisp -->
-	<wisp id="501" hp="10" layer="1" damage="3" fireDelay="15" tearFlags="2"
+	<wisp id="501" hp="10" layer="1" damage="3" fireDelay="15" tearFlags="2" coreGfx="psychic.png"
 	flameColor="flame_purple" coreColor="core_purple" tearColor="tear_purple"/>
 
 	<!-- Special Brenda Nature Wisp -->
