@@ -6,6 +6,7 @@ local PENNY_CONVERT_CHANCE = 0.5
 ---@field variant PickupVariant
 ---@field subtype integer
 ---@field onPickup fun(pickup: EntityPickup, player: EntityPlayer)
+---@field weight number
 
 ---@type RainbowPenny[]
 local rainbowPennies = {}
@@ -46,6 +47,8 @@ function MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
         end
         randomFloat = randomFloat - rainbowPennies[i].weight
     end
+
+    return rainbowPennies[1]
 end
 
 ---@param pickup EntityPickup
