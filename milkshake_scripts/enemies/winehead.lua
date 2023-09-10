@@ -218,6 +218,7 @@ function WineHead:WineHead_Update(enemy)
             bigCreep:GetSprite().Color = WINE_COLOR
             bigCreep.Timeout = 200
             bigCreep:Update()
+            data.creep = bigCreep
 
             for _ = 1, 3 do
                 local dist = rng:RandomInt(40) + 30
@@ -295,6 +296,14 @@ function WineHead:WineHead_Update(enemy)
         elseif sprite:IsFinished("Death") then
             enemy.CanShutDoors = false
             enemy.DepthOffset = -10
+
+            if not data.creep or not data.creep:Exists() then
+                sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+
+                if sprite.Color.A < .1 then
+                    enemy:Remove()
+                end
+            end
         end
 
         enemy.Velocity = enemy.Velocity * .85

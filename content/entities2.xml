@@ -285,4 +285,8 @@
     <entity name="Salvation Orb" anm2path="salvation_orb_effect.anm2" id="1000" shadowSize="8"
     collisionMass="1" friction="1">
 	</entity>
+
+    <entity name="Effect Replacer" id="1000">
+    </entity>
+
 </entities>

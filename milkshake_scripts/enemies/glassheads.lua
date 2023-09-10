@@ -150,6 +150,7 @@ function GlassHeads:GlassHead_Update(enemy)
             creep.SpriteScale = Vector(4, 4)
             creep.Timeout = 300
             creep:Update()
+            data.creep = creep
 
             for _ = 1, 3 do
                 local dist = rng:RandomInt(40) + 20
@@ -205,6 +206,14 @@ function GlassHeads:GlassHead_Update(enemy)
         elseif sprite:IsFinished("Death") then
             enemy.CanShutDoors = false
             enemy.DepthOffset = -10
+            
+            if not data.creep or not data.creep:Exists() then
+                sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+
+                if sprite.Color.A < .1 then
+                    enemy:Remove()
+                end
+            end
         end
 
         enemy.Velocity = enemy.Velocity * .85

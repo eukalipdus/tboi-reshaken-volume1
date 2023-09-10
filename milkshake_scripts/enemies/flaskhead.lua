@@ -132,7 +132,7 @@ function FlaskHead:FlaskHeadUpdate(enemy)
 
         if sprite:IsEventTriggered("Throw") then
             local targpos = target.Position + Vector(rng:RandomInt(100) - 50, rng:RandomInt(100) - 50)
-            Isaac.Spawn(
+            local head = Isaac.Spawn(
                 enums.Enemies.GLASS_HEAD,
                 enums.GlassHeadVariant.FLASK_HEAD,
                 enums.FlaskHeadSubType.HEAD_PROJECTILE,
@@ -140,10 +140,19 @@ function FlaskHead:FlaskHeadUpdate(enemy)
                 (targpos - enemy.Position):Resized(targpos:Distance(enemy.Position) * .075),
                 enemy
             )
+            data.head = head
             sfx:Play(SoundEffect.SOUND_SHELLGAME, .5, 0, false, 1, 0)
             sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, 2, 0)
         elseif sprite:IsFinished("Throw") then
             enemy.CanShutDoors = false
+            
+            if not data.head or not data.head:Exists() then
+                sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+
+                if sprite.Color.A < .1 then
+                    enemy:Remove()
+                end
+            end
         end
 
         enemy.Velocity = enemy.Velocity * .85
@@ -267,6 +276,7 @@ function FlaskHead:FlaskHeadProjectile_Update(enemy)
             creep.SpriteScale = Vector(3, 3)
             creep.Timeout = 400
             creep:Update()
+            data.creep = creep
 
             for _ = 1, 3 do
                 local dist = rng:RandomInt(40) + 20
@@ -329,6 +339,14 @@ function FlaskHead:FlaskHeadProjectile_Update(enemy)
     else
         sprite:Play("Death")
         enemy.Velocity = Vector.Zero
+
+        if not data.creep or not data.creep:Exists() then
+            sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+
+            if sprite.Color.A < .1 then
+                enemy:Remove()
+            end
+        end
     end
 end
 
