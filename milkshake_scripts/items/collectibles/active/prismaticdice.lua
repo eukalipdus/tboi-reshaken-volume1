@@ -302,7 +302,6 @@ function prismaticDice:FamiliarUpdate(familiar)
             local yellowTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
             local greenTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
             local blueTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
-            CreateAngelicPrismSplit(redTear,
             local tears = CreateAngelicPrismSplit(redTear,
                                     yellowTear,
                                     greenTear,
