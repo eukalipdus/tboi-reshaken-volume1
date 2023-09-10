@@ -93,6 +93,7 @@ include("milkshake_scripts.wisps.brendaholywisp")
 include("milkshake_scripts.wisps.brendanaturewisp")
 include("milkshake_scripts.wisps.brendapoisonwisp")
 include("milkshake_scripts.wisps.goldenshovel")
+include("milkshake_scripts.wisps.leviticus")
 
 --Enemies
 include("milkshake_scripts.enemies.beerhead")
