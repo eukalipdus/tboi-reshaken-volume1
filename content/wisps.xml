@@ -121,4 +121,8 @@
 	<!-- Golden shovel -->
 	<wisp id="3" hp="20" layer="1" damage="3" fireDelay="15"
 	flameColor="flame_yellow" coreColor="core_yellow" tearColor="tear_blue"/>
+
+	<!-- Leviticus -->
+	<wisp id="23" hp="10" layer="1" damage="3" fireDelay="15" coreGfx="cross.png"
+	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
 </wisps>

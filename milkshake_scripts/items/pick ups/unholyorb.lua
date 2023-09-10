@@ -19,13 +19,13 @@ function UnholyOrb.GetNearestEnemy(basePos)
 	for _, enemy in pairs(enemies) do
 		if enemy:ToNPC() and not enemy:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and enemy.Type ~= EntityType.ENTITY_FIREPLACE then
 			--positionsTable.insert(enemy.Position, basePos:Distance(enemy.Position))
-			positionsTable.insert(enemy)
+			table.insert(positionsTable, enemy)
         end
 	end
 	local slots = Isaac.FindByType(EntityType.ENTITY_SLOT)
 	for _, slot in pairs(slots) do
 		--positionsTable.insert(slot.Position, basePos:Distance(slot.Position))
-		positionsTable.insert(slot)
+		table.insert(positionsTable, slot)
 	end
 	return positionsTable
 end
