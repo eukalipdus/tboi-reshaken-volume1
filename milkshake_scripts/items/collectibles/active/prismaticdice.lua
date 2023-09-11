@@ -294,7 +294,7 @@ function prismaticDice:FamiliarUpdate(familiar)
     local tearsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_TEAR)
     local player = familiar.Player
     for _, tear in ipairs(tearsInRoom) do
-        if tear.Position:Distance(familiar.Position, tear.Position) < 10
+        if tear.Position:Distance(familiar.Position) < 10
         and not utility:GetData(tear, "PrismaticWispTear") then
             tear:Remove()
 
@@ -319,9 +319,9 @@ function prismaticDice:FamiliarUpdate(familiar)
         end
     end
 
-    local bombsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_BOMB)
+    local bombsInRoom = TSIL.EntitySpecific.GetBombs()
     for _, bomb in ipairs(bombsInRoom) do
-        if bomb.Position:Distance(familiar.Position, bomb.Position) < 10
+        if bomb.Position:Distance(familiar.Position) < 10
         and bomb.IsFetus
         and not utility:GetData(bomb, "PrismaticWispBomb") then
             bomb:Remove()
