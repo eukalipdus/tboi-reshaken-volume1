@@ -12,10 +12,13 @@ TSIL.SaveManager.AddPersistentVariable(
 
 ---@param rng RNG
 ---@param player EntityPlayer
----@param activeSlot ActiveSlot
-function EmptySlot:OnEmptySlotUse(_, rng, player, _, activeSlot)
+function EmptySlot:OnEmptySlotUse(_, rng, player)
     if player:GetNumCoins() < 1 then
-        return
+        return {
+            Discharge = false,
+            Remove = false,
+            ShowAnim = false,
+        }
     end
     player:AddCoins(-1)
 
@@ -34,7 +37,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player, _, activeSlot)
     playerCoins = playerCoins + 1
     emptySlotCoinsPerPlayer[tostring(playerIndex)] = playerCoins
 
-    if playerCoins > 10 and TSIL.Random.GetRandom(rng) < 0.015 or playerCoins > 100 then
+    if playerCoins > 10 and rng:RandomFloat() < 0.015 or playerCoins > 100 then
         local crater = TSIL.EntitySpecific.SpawnEffect(
             EffectVariant.BOMB_CRATER,
             0,
@@ -77,7 +80,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player, _, activeSlot)
 
         emptySlotCoinsPerPlayer[tostring(playerIndex)] = 0
         return {
-            Discharge = true,
+            Discharge = false,
             Remove = true,
             ShowAnim = true,
         }
