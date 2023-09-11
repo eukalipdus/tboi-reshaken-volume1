@@ -8,14 +8,55 @@ TSIL.SaveManager.AddPersistentVariable(
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "CanLeviticusWispChanceDealChance",
+    false,
+    TSIL.Enums.VariablePersistenceMode.RESET_RUN
+)
+
+local function CanChangeChance()
+    return TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "CanLeviticusWispChanceDealChance"
+    )
+end
+
+local function SetCanChangeChance()
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "CanLeviticusWispChanceDealChance",
+        true
+    )
+end
+
+function LeviticusWisp:OnUpdate()
+    if CanChangeChance() then return end
+
+    local level = Game():GetLevel()
+    local roomIndex = level:GetCurrentRoomIndex()
+
+    if roomIndex == GridRooms.ROOM_DEVIL_IDX then
+        SetCanChangeChance()
+        return
+    end
+
+    local dealDoors = TSIL.Doors.GetDoorsToRoomIndex(GridRooms.ROOM_DEVIL_IDX)
+    if #dealDoors > 0 then
+        SetCanChangeChance()
+        return
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_UPDATE,
+    LeviticusWisp.OnUpdate
+)
 
 ---@param wisp EntityFamiliar
 function LeviticusWisp:OnWispUpdate(wisp)
     if wisp.SubType ~= MilkshakeVol1.enums.Collectibles.LEVITICUS then return end
 
-    if not Game():GetStateFlag(GameStateFlag.STATE_DEVILROOM_SPAWNED) then
-        return
-    end
+    if not CanChangeChance() then return end
 
     local wispsAppliedDealChance = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
@@ -39,9 +80,7 @@ function LeviticusWisp:OnFamiliarRemove(entity)
     if entity.Variant ~= FamiliarVariant.WISP then return end
     if entity.SubType ~= MilkshakeVol1.enums.Collectibles.LEVITICUS then return end
 
-    if not Game():GetStateFlag(GameStateFlag.STATE_DEVILROOM_SPAWNED) then
-        return
-    end
+    if not CanChangeChance() then return end
 
     local wispsAppliedDealChance = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
