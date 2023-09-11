@@ -173,7 +173,6 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 25,  variant = 962, },                              --Warhead
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 683, },                              --Bunch
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 683,  subtype = 1, },                --Bunch
-        { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 90, },                               --Warty
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 60, },                               --Frog
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 170, variant = 100, },                              --Prick
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 114, variant = 57, },                               --Spiroll
@@ -199,8 +198,6 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 681 },                               --Stingler
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 590 },                               --Homer
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 810 },                               --Honeydrip
-        { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 450, variant = 10 },                                --Catfish
-        { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 750, variant = 220 },                               --Croca
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 114, variant = 28 },                                --Unshornz
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 160, variant = 320 },                               --Milk Tooth
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 666, variant = 40 },                                --Foamy

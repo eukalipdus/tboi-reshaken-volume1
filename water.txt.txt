@@ -1,0 +1,77 @@
+807.0 --Wraith
+811.0 --Deep Gaper
+813.0 --Blurb
+812.0 --Sub Horf
+812.1 --Tainted Sub Horf
+22.1 --Drowned Hive
+817.0 --Prey
+23.1 --Drowned Charger
+810.0 --Small Leech
+855.1 --Elleech
+25.2 --Drowned Boom Fly
+311.0 --Mr. Mine
+806.0 --Bubbles
+879.0 --Bloaty
+244.1 --Tube Worm
+244.3 --Tainted Tube Worm
+815.0 --Fissure
+
+
+
+160.1350.1 --Buoy
+160.1250 --Buckethead
+160.776 --Mr. Sub Horf
+120.228 --Rift Walker (visible)
+120.228.1 --Rift Walker (reflected)
+817.170 --Cushion
+170.120 --Skipper
+155.4 --Archer
+61.450 --Mayfly
+25.451 --Mightfly
+114.1 --Dewdrop
+160.1260 --Bubby
+450.9 --Fishy
+450.9.2 --Fish
+450.10 --Catfish
+750.220 --Croca
+160.150 --Drop
+160.151 --Dribble
+21.666 --Nimbus
+114.5 --Floodface (Random)
+114.5.1 --Floodface (Chasing)
+208.961 --Tubby
+160.830 --Geyser
+160.90 --Warty
+258.960 --Bubble Bat
+22.666 --Cistern
+160.250 --Bubble Blowing Double Baby
+160.410 --Globulon
+207.960 --Gutbuster (Offal)
+160.40 --Offal
+160.730 --Eroded Host (regular)
+160.730.1 --Eroded Host (cracked)
+160.730.1 --Eroded Host (eroded)
+160.862 --Eroded Smidgen (regular),
+160.862.1 --Eroded Smidgen (eroded)
+160.240 --Fishface
+160.380 --Madclaw
+120.233 --Anemone
+114.51 --Clam
+450.27 --Puffer
+450.11 --Squid
+21.114 --Sea Cucumber
+450.28 --Dolphin
+450.45 --Sponge
+666.150.1 --Panini
+180.161 --Aquabab
+150.1 --Bubble
+150.1.1 --Bubble
+150.1.2 --Bubble
+150.1.3 --Bubble
+150.1.4 --Bubble
+150.1.5 --Bubble
+150.1.6 --Bubble
+150.1.7 --Bubble
+150.1.8 --Bubble
+150.1.9 --Bubble
+150.1.10 --Bubble (Isopoly)
