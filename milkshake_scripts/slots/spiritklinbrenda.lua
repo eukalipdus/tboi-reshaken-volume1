@@ -63,23 +63,21 @@ local possibleWisps = {
 ---@param card Card
 ---@param isUnlocked? fun(): boolean
 function MilkshakeVol1.API:AddSoulStone(card, isUnlocked)
-    soulStones[#soulStones+1] = card
+    soulStones[#soulStones + 1] = card
     if isUnlocked ~= nil then
         isUnlockedPerSoulStone[card] = isUnlocked
     end
 end
-
 
 ---Adds a trinket to the Spirit Klin's glass trinket pool.
 ---
 ---This function can take multiple arguments.
 ---@param ... TrinketType
 function MilkshakeVol1.API:AddGlassTrinkets(...)
-    for _, card in ipairs({...}) do
-        glassTrinkets[#glassTrinkets+1] = card
+    for _, card in ipairs({ ... }) do
+        glassTrinkets[#glassTrinkets + 1] = card
     end
 end
-
 
 ---Adds a new reward possibility to the Spirit Klin.
 ---
@@ -87,43 +85,42 @@ end
 ---@param weight number | fun(player: EntityPlayer): number
 ---@param rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
 function MilkshakeVol1.API:AddSpiritKlinReward(weight, rewardFun)
-    brendaRewards[#brendaRewards+1] = {
+    brendaRewards[#brendaRewards + 1] = {
         chance = weight,
         value = rewardFun
     }
 end
 
-
 --Spawn soul stone
-MilkshakeVol1.API:AddSpiritKlinReward(function ()
-    local availableSoulStones = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "SpiritKlinAvailableSoulStones"
-    )
+MilkshakeVol1.API:AddSpiritKlinReward(function()
+        local availableSoulStones = TSIL.SaveManager.GetPersistentVariable(
+            MilkshakeVol1,
+            "SpiritKlinAvailableSoulStones"
+        )
 
-    --The weight for this reward depends on the number of soul stones unlocked
-    return math.sqrt(#availableSoulStones * 2)
-end,
-function (slot, _, position, velocity)
-    local rng = slot:GetDropRNG()
-    local availableSoulStones = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "SpiritKlinAvailableSoulStones"
-    )
-    local soulStone = TSIL.Random.GetRandomElementsFromTable(availableSoulStones, 1, rng)[1]
+        --The weight for this reward depends on the number of soul stones unlocked
+        return math.sqrt(#availableSoulStones * 2)
+    end,
+    function(slot, _, position, velocity)
+        local rng = slot:GetDropRNG()
+        local availableSoulStones = TSIL.SaveManager.GetPersistentVariable(
+            MilkshakeVol1,
+            "SpiritKlinAvailableSoulStones"
+        )
+        local soulStone = TSIL.Random.GetRandomElementsFromTable(availableSoulStones, 1, rng)[1]
 
-    TSIL.EntitySpecific.SpawnPickup(
-        PickupVariant.PICKUP_TAROTCARD,
-        soulStone,
-        position,
-        velocity,
-        slot
-    )
-end)
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_TAROTCARD,
+            soulStone,
+            position,
+            velocity,
+            slot
+        )
+    end)
 
 
 --Spawn orb
-MilkshakeVol1.API:AddSpiritKlinReward(10, function (slot, _, position, velocity)
+MilkshakeVol1.API:AddSpiritKlinReward(10, function(slot, _, position, velocity)
     local rng = slot:GetDropRNG()
     local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
 
@@ -138,9 +135,9 @@ end)
 
 
 --Spawn glass trinket
-MilkshakeVol1.API:AddSpiritKlinReward(function (_)
+MilkshakeVol1.API:AddSpiritKlinReward(function(_)
     local itemConfig = Isaac.GetItemConfig()
-    local availableTrinkets = TSIL.Utils.Tables.Filter(glassTrinkets, function (_, trinket)
+    local availableTrinkets = TSIL.Utils.Tables.Filter(glassTrinkets, function(_, trinket)
         local trinketConfig = itemConfig:GetTrinket(trinket)
         return trinketConfig:IsAvailable()
     end)
@@ -150,10 +147,10 @@ MilkshakeVol1.API:AddSpiritKlinReward(function (_)
     end
 
     return 3
-end, function (slot, _, position, velocity)
+end, function(slot, _, position, velocity)
     local rng = slot:GetDropRNG()
     local itemConfig = Isaac.GetItemConfig()
-    local availableTrinkets = TSIL.Utils.Tables.Filter(glassTrinkets, function (_, trinket)
+    local availableTrinkets = TSIL.Utils.Tables.Filter(glassTrinkets, function(_, trinket)
         local trinketConfig = itemConfig:GetTrinket(trinket)
         return trinketConfig:IsAvailable()
     end)
@@ -173,13 +170,13 @@ end)
 
 
 --Smelt player trinkets
-MilkshakeVol1.API:AddSpiritKlinReward(function (player)
+MilkshakeVol1.API:AddSpiritKlinReward(function(player)
     if player:GetTrinket(0) ~= 0 then
         return 3
     end
 
     return 0
-end, function (_, player)
+end, function(_, player)
     player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
 
     TSIL.EntitySpecific.SpawnEffect(
@@ -192,7 +189,7 @@ end)
 
 
 --Add random element wisp
-MilkshakeVol1.API:AddSpiritKlinReward(15, function (slot, player, position)
+MilkshakeVol1.API:AddSpiritKlinReward(15, function(slot, player, position)
     local rng = slot:GetDropRNG()
     local wispToAdd = TSIL.Random.GetRandomElementsFromTable(possibleWisps, 1, rng)[1]
 
@@ -202,7 +199,7 @@ end)
 
 local function CheckAvailableSoulStones()
     local itemConfig = Isaac.GetItemConfig()
-    local availableSoulStones = TSIL.Utils.Tables.Filter(soulStones, function (_, soulStone)
+    local availableSoulStones = TSIL.Utils.Tables.Filter(soulStones, function(_, soulStone)
         local isUnlocked = isUnlockedPerSoulStone[soulStone]
 
         if isUnlocked ~= nil then
@@ -232,10 +229,61 @@ function SpiritKlin:OnGameStart(isContinue)
 
     CheckAvailableSoulStones()
 end
+
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED,
     SpiritKlin.OnGameStart
 )
+
+
+---@param slot Entity
+local function OnSlotBroken(slot)
+    local pickups = TSIL.EntitySpecific.GetPickups()
+    local slotPosLastFrame = slot.Position - slot.Velocity
+    local rewardPickups = TSIL.Utils.Tables.Filter(pickups, function(_, pickup)
+        local pickupPosLastFrame = pickup.Position - pickup.Velocity
+        return pickup.FrameCount == 1
+            and TSIL.Vector.VectorFuzzyEquals(slotPosLastFrame, pickupPosLastFrame)
+    end)
+    for _, pickup in ipairs(rewardPickups) do
+        pickup:Remove()
+    end
+
+    local newSlot = TSIL.EntitySpecific.SpawnSlot(
+        enums.Slots.SPIRIT_KLIN_BRENDA,
+        0,
+        slot.Position - slot.Velocity,
+        Vector.Zero,
+        slot.SpawnerEntity
+    )
+
+    newSlot:AddEntityFlags(slot:GetEntityFlags())
+    newSlot:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+
+    local oldData = newSlot:GetData()
+    local newData = newSlot:GetData()
+    --Im not letting GetData mess with my code
+    if type(oldData) == "table" and type(newData) == "table" then
+        for key, value in pairs(oldData) do
+            newData[key] = value
+        end
+    end
+
+    local oldSprite = slot:GetSprite()
+    local newSprite = newSlot:GetSprite()
+
+    if oldSprite:IsPlaying("Angry") then
+        newSprite:Play("Angry")
+    else
+        newSprite:Play("Death")
+
+        if oldSprite:IsPlaying("Death") then
+            newSprite:SetFrame(oldSprite:GetFrame())
+        end
+    end
+
+    slot:Remove()
+end
 
 
 ---@param brenda Entity
@@ -243,14 +291,19 @@ function SpiritKlin:OnBrendaUpdate(brenda)
     local sprite = brenda:GetSprite()
 
     if brenda.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND then
-        sprite:Play("Broken", false)
+        OnSlotBroken(brenda)
         return
     end
 
     if sprite:IsFinished("Prize") then
         sprite:Play("Idle")
     end
+
+    if sprite:IsFinished("Death") then
+        sprite:Play("Angry")
+    end
 end
+
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_UPDATE,
     SpiritKlin.OnBrendaUpdate,
@@ -282,6 +335,7 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
         TSIL.Players.GetPlayerIndex(player)
     )
 end
+
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.PRE_SLOT_COLLISION,
     SpiritKlin.OnBrendaCollision,
@@ -307,7 +361,7 @@ function SpiritKlin:OnBrendaPrize(brenda)
     local speed = TSIL.Random.GetRandomFloat(5, 7, rng)
     local rewardSpawnVel = Vector.FromAngle(velAngle):Resized(speed)
 
-    local rewards = TSIL.Utils.Tables.Map(brendaRewards, function (_, reward)
+    local rewards = TSIL.Utils.Tables.Map(brendaRewards, function(_, reward)
         local endChance = reward.chance
         if type(endChance) == "function" then
             endChance = reward.chance(player)
@@ -321,6 +375,7 @@ function SpiritKlin:OnBrendaPrize(brenda)
     local reward = TSIL.Random.GetRandomElementFromWeightedList(rng, rewards)
     reward(brenda, player, rewardSpawnPos, rewardSpawnVel)
 end
+
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_PRIZE,
     SpiritKlin.OnBrendaPrize,

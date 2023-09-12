@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="6/11/2023 8:47:49 PM" Version="59" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="12/09/2023 11:32:37" Version="62" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="slots\brenda.png" Id="0"/>
@@ -253,7 +253,7 @@
 				<Trigger EventId="0" AtFrame="24"/>
 			</Triggers>
 		</Animation>
-		<Animation Name="Death" FrameNum="20" Loop="true">
+		<Animation Name="Death" FrameNum="20" Loop="false">
 			<RootAnimation>
 				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 			</RootAnimation>
@@ -321,9 +321,7 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers>
-				<Trigger EventId="1" AtFrame="0"/>
-			</Triggers>
+			<Triggers/>
 		</Animation>
 		<Animation Name="Empty" FrameNum="1" Loop="true">
 			<RootAnimation>
@@ -467,6 +465,32 @@
 				<LayerAnimation LayerId="12" Visible="true"/>
 				<LayerAnimation LayerId="6" Visible="true"/>
 				<LayerAnimation LayerId="2" Visible="true"/>
+			</LayerAnimations>
+			<NullAnimations/>
+			<Triggers/>
+		</Animation>
+		<Animation Name="Angry" FrameNum="1" Loop="true">
+			<RootAnimation>
+				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+			</RootAnimation>
+			<LayerAnimations>
+				<LayerAnimation LayerId="7" Visible="true">
+					<Frame XPosition="0" YPosition="0" XPivot="40" YPivot="70" XCrop="80" YCrop="160" Width="80" Height="80" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+				</LayerAnimation>
+				<LayerAnimation LayerId="9" Visible="true"/>
+				<LayerAnimation LayerId="10" Visible="true"/>
+				<LayerAnimation LayerId="8" Visible="true"/>
+				<LayerAnimation LayerId="11" Visible="true"/>
+				<LayerAnimation LayerId="0" Visible="true">
+					<Frame XPosition="0" YPosition="0" XPivot="40" YPivot="70" XCrop="0" YCrop="160" Width="80" Height="80" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+				</LayerAnimation>
+				<LayerAnimation LayerId="1" Visible="false"/>
+				<LayerAnimation LayerId="3" Visible="false"/>
+				<LayerAnimation LayerId="4" Visible="false"/>
+				<LayerAnimation LayerId="5" Visible="false"/>
+				<LayerAnimation LayerId="12" Visible="true"/>
+				<LayerAnimation LayerId="6" Visible="false"/>
+				<LayerAnimation LayerId="2" Visible="false"/>
 			</LayerAnimations>
 			<NullAnimations/>
 			<Triggers/>
