@@ -103,7 +103,7 @@
 	flameColor="flame_bright_blue" coreColor="core_bright_blue" tearColor="tear_blue"/>
 
 	<!-- Special Brenda Water Wisp -->
-	<wisp id="504" hp="10" layer="1" damage="3" fireDelay="15"
+	<wisp id="504" hp="10" layer="1" damage="3" fireDelay="180"
 	flameColor="flame_blue" coreColor="core_blue" tearColor="tear_blue"/>
 
 	<!-- Special Brenda Poison Wisp -->
