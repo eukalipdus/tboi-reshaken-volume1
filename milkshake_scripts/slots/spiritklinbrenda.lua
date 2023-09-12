@@ -260,7 +260,7 @@ local function OnSlotBroken(slot)
     newSlot:AddEntityFlags(slot:GetEntityFlags())
     newSlot:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 
-    local oldData = newSlot:GetData()
+    local oldData = slot:GetData()
     local newData = newSlot:GetData()
     --Im not letting GetData mess with my code
     if type(oldData) == "table" and type(newData) == "table" then
