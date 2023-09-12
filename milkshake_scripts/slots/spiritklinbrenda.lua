@@ -7,7 +7,7 @@ local enums = MilkshakeVol1.enums
 
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
-    "SpiritKlinAvailableSoulStones",
+    "SpiritKlinSpawnedGlassTrinkets",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
@@ -93,20 +93,34 @@ end
 
 --Spawn soul stone
 MilkshakeVol1.API:AddSpiritKlinReward(function()
-        local availableSoulStones = TSIL.SaveManager.GetPersistentVariable(
-            MilkshakeVol1,
-            "SpiritKlinAvailableSoulStones"
-        )
+        local itemConfig = Isaac.GetItemConfig()
+        local availableSoulStones = TSIL.Utils.Tables.Filter(soulStones, function (_, soulStone)
+            local isUnlocked = isUnlockedPerSoulStone[soulStone]
+
+            if isUnlocked then
+                return isUnlocked()
+            else
+                local cardInfo = itemConfig:GetCard(soulStone)
+                return cardInfo:IsAvailable()
+            end
+        end)
 
         --The weight for this reward depends on the number of soul stones unlocked
         return math.sqrt(#availableSoulStones * 2)
     end,
     function(slot, _, position, velocity)
         local rng = slot:GetDropRNG()
-        local availableSoulStones = TSIL.SaveManager.GetPersistentVariable(
-            MilkshakeVol1,
-            "SpiritKlinAvailableSoulStones"
-        )
+        local itemConfig = Isaac.GetItemConfig()
+        local availableSoulStones = TSIL.Utils.Tables.Filter(soulStones, function (_, soulStone)
+            local isUnlocked = isUnlockedPerSoulStone[soulStone]
+
+            if isUnlocked then
+                return isUnlocked()
+            else
+                local cardInfo = itemConfig:GetCard(soulStone)
+                return cardInfo:IsAvailable()
+            end
+        end)
         local soulStone = TSIL.Random.GetRandomElementsFromTable(availableSoulStones, 1, rng)[1]
 
         TSIL.EntitySpecific.SpawnPickup(
@@ -136,10 +150,12 @@ end)
 
 --Spawn glass trinket
 MilkshakeVol1.API:AddSpiritKlinReward(function(_)
-    local itemConfig = Isaac.GetItemConfig()
+    local spawnedTrinkets = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "SpiritKlinSpawnedGlassTrinkets"
+    )
     local availableTrinkets = TSIL.Utils.Tables.Filter(glassTrinkets, function(_, trinket)
-        local trinketConfig = itemConfig:GetTrinket(trinket)
-        return trinketConfig:IsAvailable()
+        return spawnedTrinkets[trinket] ~= true
     end)
 
     if #availableTrinkets == 0 then
@@ -149,13 +165,16 @@ MilkshakeVol1.API:AddSpiritKlinReward(function(_)
     return 3
 end, function(slot, _, position, velocity)
     local rng = slot:GetDropRNG()
-    local itemConfig = Isaac.GetItemConfig()
+    local spawnedTrinkets = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "SpiritKlinSpawnedGlassTrinkets"
+    )
     local availableTrinkets = TSIL.Utils.Tables.Filter(glassTrinkets, function(_, trinket)
-        local trinketConfig = itemConfig:GetTrinket(trinket)
-        return trinketConfig:IsAvailable()
+        return spawnedTrinkets[trinket] ~= true
     end)
     local trinket = TSIL.Random.GetRandomElementsFromTable(availableTrinkets, 1, rng)[1]
 
+    spawnedTrinkets[trinket] = true
     local itemPool = Game():GetItemPool()
     itemPool:RemoveTrinket(trinket)
 
@@ -195,45 +214,6 @@ MilkshakeVol1.API:AddSpiritKlinReward(15, function(slot, player, position)
 
     player:AddWisp(wispToAdd, position)
 end)
-
-
-local function CheckAvailableSoulStones()
-    local itemConfig = Isaac.GetItemConfig()
-    local availableSoulStones = TSIL.Utils.Tables.Filter(soulStones, function(_, soulStone)
-        local isUnlocked = isUnlockedPerSoulStone[soulStone]
-
-        if isUnlocked ~= nil then
-            return isUnlocked()
-        end
-
-        local card = itemConfig:GetCard(soulStone)
-        return card:IsAvailable()
-    end)
-
-    TSIL.SaveManager.SetPersistentVariable(
-        MilkshakeVol1,
-        "SpiritKlinAvailableSoulStones",
-        availableSoulStones
-    )
-end
-
-
-function SpiritKlin:OnGameStart(isContinue)
-    if isContinue then return end
-
-    TSIL.SaveManager.SetPersistentVariable(
-        MilkshakeVol1,
-        "SpiritKlinGlassTrinketsPool",
-        TSIL.Utils.Tables.Copy(glassTrinkets)
-    )
-
-    CheckAvailableSoulStones()
-end
-
-MilkshakeVol1:AddCallback(
-    TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED,
-    SpiritKlin.OnGameStart
-)
 
 
 ---@param slot Entity
