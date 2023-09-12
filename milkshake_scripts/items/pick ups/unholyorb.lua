@@ -1,8 +1,7 @@
 local UnholyOrb = {}
-local game = Game()
 
 local enums = MilkshakeVol1.enums
-local utility = MilkshakeVol1.utility
+--local utility = MilkshakeVol1.utility
 
 -- some thoughts
 -- killing beggars is difficult stuff, cause beggar is "slot machine", so it must also destroy slot machines, cause there is mod beggars
@@ -11,10 +10,10 @@ local utility = MilkshakeVol1.utility
 --save all enemy and beggars position?
 --blood tears fontaine when enemy dies
 
+--[[
+
 UnholyOrb.DamageMultiplier = 5
 UnholyOrb.InvFrames = 90
-
-
 
 function UnholyOrb.GetTargets(basePos)
 	--- get near enemy's position, else return basePos position
@@ -87,10 +86,13 @@ function UnholyOrb:onPlayerCollision(player, collider)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, UnholyOrb.onPlayerCollision)
 
+--]]
+
 ---@param player EntityPlayer
 function UnholyOrb:OnUnholyOrbUse(_, player)
 	player:UseActiveItem(CollectibleType.COLLECTIBLE_DARK_ARTS)
-    local room = game:GetRoom()
+    --[[
+	local room = game:GetRoom()
     local TargetPositions = UnholyOrb.GetTargets(player.Position)
 	if #TargetPositions > 0 then
 		utility:SetData(player, "UnholyOrbTargetPositions", TargetPositions)
@@ -100,5 +102,6 @@ function UnholyOrb:OnUnholyOrbUse(_, player)
 		pentagram:GetData().UnholyOrbFlag = true -- remove after dash
 		pentagram:SetTimeout(-1)
 	end
+	--]]
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, UnholyOrb.OnUnholyOrbUse, enums.Orbs.UNHOLY)
