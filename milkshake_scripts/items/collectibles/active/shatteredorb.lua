@@ -5,6 +5,19 @@ local SHATTERED_ORB_THROW_SPEED = 8
 local SHATTERED_ORB_FALL_ACCEL = 0.1
 local SHATTERED_ORB_RADIUS = 20
 
+--TODO: Find a better place to put this in so it's not repeated
+local PossibleWisps = {
+    enums.Collectibles.SPECIAL_BRENDA_FIRE_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_PSYCHIC_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_NATURE_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_ELECTRIC_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_WATER_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
+    CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
+    CollectibleType.COLLECTIBLE_SATANIC_BIBLE
+}
+
 
 local ORBS_PER_ENEMY = {}
 
@@ -421,18 +434,24 @@ function ShatteredOrb:OnPlayerUpdate(player)
     if shootingDir == Direction.NO_DIRECTION then return end
 
     local activeSlot = GetShatteredOrbActiveSlotFromPlayer(player)
-    player:DischargeActiveItem(activeSlot)
+    local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
+    local newCharge = math.max(0, charge - 4)
+    player:SetActiveCharge(newCharge, ActiveSlot.SLOT_PRIMARY)
     player:PlayExtraAnimation("HideItem")
     RemovePlayerUsingShatteredOrb(player)
 
     local shatteredOrb = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.SHATTERED_ORB,
         0,
-        player.Position
+        player.Position,
+        Vector.Zero,
+        player
     )
 
     shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
     shatteredOrb:GetSprite():Play("Thrown", true)
+
+    SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 
     local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + player.Velocity
     AddShatteredOrbData(shatteredOrb, direction)
@@ -481,6 +500,26 @@ function GetEntityOrb(entity)
     return orb
 end
 
+
+---@param shatteredOrb EntityEffect
+local function SpawnWisps(shatteredOrb)
+    local spawner = shatteredOrb.SpawnerEntity
+    if not spawner then return end
+    local player = spawner:ToPlayer()
+    if not player then return end
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then return end
+
+    local wisps = TSIL.Random.GetRandomElementsFromTable(
+        PossibleWisps,
+        4,
+        player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB)
+    )
+    for _, wisp in ipairs(wisps) do
+        player:AddWisp(wisp, shatteredOrb.Position)
+    end
+end
+
+
 ---@param shatteredOrb EntityEffect
 function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     local sprite = shatteredOrb:GetSprite()
@@ -508,6 +547,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     shatteredOrbData.fallingSpeed = shatteredOrbData.fallingSpeed + SHATTERED_ORB_FALL_ACCEL
 
     if shatteredOrb.SpriteOffset.Y >= 0 then
+        SpawnWisps(shatteredOrb)
         SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK, 1, 2, false, 1.3)
 
         MusicManager():Pause()
