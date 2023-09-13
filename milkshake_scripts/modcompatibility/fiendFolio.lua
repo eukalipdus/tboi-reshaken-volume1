@@ -481,6 +481,63 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.UNHOLY,   type = 160, variant = 822,  subtype = 2 },    --Red Hand
         { orb = MilkshakeVol1.enums.Orbs.UNHOLY,   type = 160, variant = 666 },                  --Reaper
         { orb = MilkshakeVol1.enums.Orbs.UNHOLY,   type = 160, variant = 711 },                  --Thousand Eyes
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 1350, subtype = 1 },    --Buoy
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 1250 },                 --Buckethead
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 776 },                  --Mr. Sub Horf
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 120, variant = 228 },                  --Rift Walker (visible)
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 120, variant = 228,  subtype = 1 },    --Rift Walker (reflected)
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 817, variant = 170 },                  --Cushion
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 170, variant = 120 },                  --Skipper
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 155, variant = 4 },                    --Archer
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 61,  variant = 450 },                  --Mayfly
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 25,  variant = 451 },                  --Mightfly
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 114, variant = 1 },                    --Dewdrop
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 1260 },                 --Bubby
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 450, variant = 9 },                    --Fishy
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 450, variant = 9,    subtype = 2 },    --Fish
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 450, variant = 10 },                   --Catfish
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 750, variant = 220 },                  --Croca
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 150 },                  --Drop
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 151 },                  --Dribble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 21,  variant = 666 },                  --Nimbus
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 114, variant = 5 },                    --Floodface (Random)
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 114, variant = 5,    subtype = 1 },    --Floodface (Chasing)
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 208, variant = 961 },                  --Tubby
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 830 },                  --Geyser
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 90 },                   --Warty
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 258, variant = 960 },                  --Bubble Bat
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 22,  variant = 666 },                  --Cistern
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 250 },                  --Bubble Blowing Double Baby
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 410 },                  --Globulon
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 207, variant = 960 },                  --Gutbuster (Offal)
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 40 },                   --Offal
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 730 },                  --Eroded Host (regular)
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 730,  subtype = 1 },    --Eroded Host (cracked)
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 730,  subtype = 1 },    --Eroded Host (eroded)
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 862 },                  --Eroded Smidgen (regular),
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 862,  subtype = 1 },    --Eroded Smidgen (eroded)
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 240 },                  --Fishface
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 160, variant = 380 },                  --Madclaw
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 120, variant = 233 },                  --Anemone
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 114, variant = 51 },                   --Clam
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 450, variant = 27 },                   --Puffer
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 450, variant = 11 },                   --Squid
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 21,  variant = 114 },                  --Sea Cucumber
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 450, variant = 28 },                   --Dolphin
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 450, variant = 45 },                   --Sponge
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 666, variant = 150,  subtype = 1 },    --Panini
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 180, variant = 161 },                  --Aquabab
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1 },                    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 1 },    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 2 },    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 3 },    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 4 },    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 5 },    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 6 },    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 7 },    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 8 },    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 9 },    --Bubble
+        { orb = MilkshakeVol1.Orbs.WATER,          type = 150, variant = 1,    subtype = 10 },   --Bubble (Isopoly)
 
     }
     MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerFiendFolioEntities)
@@ -539,64 +596,68 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
     MilkshakeVol1.API:AddItemsToGlassPool({
         { Collectible = FiendFolio.ITEM.COLLECTIBLE.CLEAR_CASE,       Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
         { Collectible = FiendFolio.ITEM.COLLECTIBLE.AZURITE_SPINDOWN, Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
-        { Collectible = FiendFolio.ITEM.COLLECTIBLE.SNOW_GLOBE,       Weight = 1, DecreaseBy = 1, RemoveOn = 0.1, IsUnlocked = function() return FiendFolio.ACHIEVEMENT.SNOW_GLOBE:IsUnlocked(false) end },
+        { Collectible = FiendFolio.ITEM.COLLECTIBLE.SNOW_GLOBE,       Weight = 1, DecreaseBy = 1, RemoveOn = 0.1,
+                                                                                                                      IsUnlocked = function() return
+                FiendFolio.ACHIEVEMENT.SNOW_GLOBE:IsUnlocked(false) end },
         { Collectible = FiendFolio.ITEM.COLLECTIBLE.EXCELSIOR,        Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
-        { Collectible = FiendFolio.ITEM.COLLECTIBLE.HEART_OF_CHINA,   Weight = 1, DecreaseBy = 1, RemoveOn = 0.1, IsUnlocked = function() return FiendFolio.ACHIEVEMENT.HEART_OF_CHINA:IsUnlocked(false) end },
+        { Collectible = FiendFolio.ITEM.COLLECTIBLE.HEART_OF_CHINA,   Weight = 1, DecreaseBy = 1, RemoveOn = 0.1,
+                                                                                                                      IsUnlocked = function() return
+                FiendFolio.ACHIEVEMENT.HEART_OF_CHINA:IsUnlocked(false) end },
     })
 
     --Glass trinkets
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.SHARD_OF_CHINA,
-        function ()
+        function()
             return FiendFolio.ACHIEVEMENT.SHARD_OF_CHINA:IsUnlocked(false)
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(FiendFolio.ITEM.TRINKET.EXTRA_VESSEL)
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.MASSIVE_AMETHYST,
-        function ()
+        function()
             return FiendFolio.ACHIEVEMENT.MASSIVE_AMETHYST:IsUnlocked(false)
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.CURSED_URN,
-        function ()
+        function()
             return FiendFolio.ACHIEVEMENT.CHINAS_BELONGINGS:IsUnlocked(false)
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.SHARD_OF_CHINA,
-        function ()
+        function()
             return FiendFolio.ACHIEVEMENT.SHARD_OF_CHINA:IsUnlocked(false)
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.TIME_LOST_DIAMOND,
-        function ()
+        function()
             return FiendFolio.GolemExists()
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.TWENTY_SIDED_EMERALD,
-        function ()
+        function()
             return FiendFolio.GolemExists()
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.TECHNOLOGICAL_RUBY_2,
-        function ()
+        function()
             return FiendFolio.GolemExists()
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.FIENDISH_AMETHYST,
-        function ()
+        function()
             return FiendFolio.GolemExists()
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.FRIENDLY_RAPID_FIRE_OPAL,
-        function ()
+        function()
             return FiendFolio.GolemExists()
         end
     )

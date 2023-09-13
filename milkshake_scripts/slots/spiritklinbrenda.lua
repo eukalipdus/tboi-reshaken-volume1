@@ -218,17 +218,17 @@ end)
 
 --Add random element wisp
 MilkshakeVol1.API:AddSpiritKlinReward(function(player)
-        local familiarPlayers = TSIL.Familiars.GetPlayerFamiliars(player)
-        local wisps = TSIL.Utils.Tables.Filter(familiarPlayers, function (_, familiar)
-            return familiar.Variant == FamiliarVariant.WISP
-        end)
+    local familiarPlayers = TSIL.Familiars.GetPlayerFamiliars(player)
+    local wisps = TSIL.Utils.Tables.Filter(familiarPlayers, function(_, familiar)
+        return familiar.Variant == FamiliarVariant.WISP
+    end)
 
-        if #wisps == 0 then
-            return 0
-        end
+    if #wisps == 0 then
+        return 0
+    end
 
-        return 15
-    end, function(slot, player, position)
+    return 15
+end, function(slot, player, position)
     local rng = slot:GetDropRNG()
     local wispToAdd = TSIL.Random.GetRandomElementsFromTable(possibleWisps, 1, rng)[1]
 
@@ -469,6 +469,7 @@ function SpiritKlin:OnGameStart(isContinue)
         true
     )
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_GAME_STARTED,
     SpiritKlin.OnGameStart
@@ -476,7 +477,7 @@ MilkshakeVol1:AddCallback(
 
 
 function SpiritKlin:OnNewRoom()
-    local shouldCheck = TSIL.SaveManager.SetPersistentVariable(
+    local shouldCheck = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "ShouldCheckUnlockedGlassTrinketsNextRoom"
     )
@@ -501,6 +502,7 @@ function SpiritKlin:OnNewRoom()
         end
     end
 end
+
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     SpiritKlin.OnNewRoom

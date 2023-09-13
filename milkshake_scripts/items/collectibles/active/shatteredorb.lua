@@ -117,7 +117,7 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.NATURE,   type = 239, variant = 0 },               --Grub
     { orb = enums.Orbs.HOLY,     type = 96,  variant = 0 },               --Eternal Fly
     { orb = enums.Orbs.HOLY,     type = 819, variant = 1 },               --Eternal Bomb Fly
-    { orb = enums.Orbs.HOLY,     type = 38,  variant = 1,},               --Angelic Baby
+    { orb = enums.Orbs.HOLY,     type = 38,  variant = 1, },              --Angelic Baby
     { orb = enums.Orbs.HOLY,     type = 38,  variant = 1, subtype = 1 },  --Angelic Baby (small)
     { orb = enums.Orbs.HOLY,     type = 55,  variant = 2 },               --Holy Leech
     { orb = enums.Orbs.HOLY,     type = 60,  variant = 2 },               --Holy Eye
@@ -210,7 +210,7 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.UNDEAD,   type = 227, variant = 1 },               --–-Holy Bony
     { orb = enums.Orbs.UNDEAD,   type = 277, variant = 0 },               --–-Black Bony
     { orb = enums.Orbs.UNDEAD,   type = 890, variant = 0 },               --Maze Roamer
-    { orb = enums.Orbs.UNDEAD,   type = 260, variant = 10 },               --–-Lil' Haunt
+    { orb = enums.Orbs.UNDEAD,   type = 260, variant = 10 },              --–-Lil' Haunt
     { orb = enums.Orbs.UNDEAD,   type = 816, variant = 0 },               --Polty
     { orb = enums.Orbs.UNDEAD,   type = 882, variant = 0 },               --Dust
     { orb = enums.Orbs.UNDEAD,   type = 880, variant = 0 },               --Flesh Maiden
@@ -241,6 +241,23 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.UNHOLY,   type = 885, variant = 1 },               --Blood Cultist
     { orb = enums.Orbs.UNHOLY,   type = 203, variant = 0 },               --Brimstone Head
     { orb = enums.Orbs.UNHOLY,   type = 404, variant = 1 },               --Dark Ball
+    { orb = enums.Orbs.WATER,    type = 807, variant = 0 },               --Wraith
+    { orb = enums.Orbs.WATER,    type = 811, variant = 0 },               --Deep Gaper
+    { orb = enums.Orbs.WATER,    type = 813, variant = 0 },               --Blurb
+    { orb = enums.Orbs.WATER,    type = 812, variant = 0 },               --Sub Horf
+    { orb = enums.Orbs.WATER,    type = 812, variant = 1 },               --Tainted Sub Horf
+    { orb = enums.Orbs.WATER,    type = 22,  variant = 1 },               --Drowned Hive
+    { orb = enums.Orbs.WATER,    type = 817, variant = 0 },               --Prey
+    { orb = enums.Orbs.WATER,    type = 23,  variant = 1 },               --Drowned Charger
+    { orb = enums.Orbs.WATER,    type = 810, variant = 0 },               --Small Leech
+    { orb = enums.Orbs.WATER,    type = 855, variant = 1 },               --Elleech
+    { orb = enums.Orbs.WATER,    type = 25,  variant = 2 },               --Drowned Boom Fly
+    { orb = enums.Orbs.WATER,    type = 311, variant = 0 },               --Mr. Mine
+    { orb = enums.Orbs.WATER,    type = 806, variant = 0 },               --Bubbles
+    { orb = enums.Orbs.WATER,    type = 879, variant = 0 },               --Bloaty
+    { orb = enums.Orbs.WATER,    type = 244, variant = 1 },               --Tube Worm
+    { orb = enums.Orbs.WATER,    type = 244, variant = 3 },               --Tainted Tube Worm
+    { orb = enums.Orbs.WATER,    type = 815, variant = 0 },               --Fissure
 }
 MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerEnemy)
 
