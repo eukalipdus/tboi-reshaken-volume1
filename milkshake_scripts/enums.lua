@@ -213,4 +213,8 @@ enums.UseOrbFlags = {
     ALLOW_LYRA = 1 << 1
 }
 
+enums.ItemPools = {
+    GLASS = 0
+}
+
 MilkshakeVol1.enums = enums

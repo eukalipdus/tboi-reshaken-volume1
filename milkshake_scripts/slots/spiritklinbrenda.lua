@@ -94,7 +94,7 @@ end
 --Spawn soul stone
 MilkshakeVol1.API:AddSpiritKlinReward(function()
         local itemConfig = Isaac.GetItemConfig()
-        local availableSoulStones = TSIL.Utils.Tables.Filter(soulStones, function (_, soulStone)
+        local availableSoulStones = TSIL.Utils.Tables.Filter(soulStones, function(_, soulStone)
             local isUnlocked = isUnlockedPerSoulStone[soulStone]
 
             if isUnlocked then
@@ -111,7 +111,7 @@ MilkshakeVol1.API:AddSpiritKlinReward(function()
     function(slot, _, position, velocity)
         local rng = slot:GetDropRNG()
         local itemConfig = Isaac.GetItemConfig()
-        local availableSoulStones = TSIL.Utils.Tables.Filter(soulStones, function (_, soulStone)
+        local availableSoulStones = TSIL.Utils.Tables.Filter(soulStones, function(_, soulStone)
             local isUnlocked = isUnlockedPerSoulStone[soulStone]
 
             if isUnlocked then
@@ -266,8 +266,75 @@ local function OnSlotBroken(slot)
 end
 
 
+---@param slot Entity
+local function CheckCollisionWithChaosCard(slot)
+    local chaosCards = TSIL.EntitySpecific.GetTears(TearVariant.CHAOS_CARD)
+    chaosCards = TSIL.Utils.Tables.Filter(chaosCards, function(_, tear)
+        return tear.EntityCollisionClass ~= EntityCollisionClass.ENTCOLL_NONE
+    end)
+
+    return TSIL.Utils.Tables.Some(chaosCards, function(tear)
+        if slot.SizeMulti.X ~= slot.SizeMulti.Y then
+            return (
+                    math.abs(slot.Position.X - tear.Position.X) ^ 2
+                    <= (slot.Size * slot.SizeMulti.X + tear.Size) ^ 2
+                )
+                and (
+                    math.abs(slot.Position.Y - tear.Position.Y) ^ 2
+                    <= (slot.Size * slot.SizeMulti.Y + tear.Size) ^ 2
+                )
+        else
+            return slot.Position:DistanceSquared(tear.Position) <= (slot.Size + tear.Size) ^ 2
+        end
+    end)
+end
+
+
 ---@param brenda Entity
 function SpiritKlin:OnBrendaUpdate(brenda)
+    if CheckCollisionWithChaosCard(brenda) then
+        brenda:Remove()
+        SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
+        Game():ShakeScreen(10)
+        Game():MakeShockwave(brenda.Position, 0.03, 0.025, 10)
+
+        local dustCloud = TSIL.EntitySpecific.SpawnEffect(
+            EffectVariant.DUST_CLOUD,
+            1,
+            brenda.Position
+        )
+        dustCloud.SpriteScale = Vector(1.5, 1.5)
+        dustCloud:SetTimeout(15)
+
+        local rng = TSIL.RNG.NewRNG(brenda.InitSeed)
+        local numParticles = TSIL.Random.GetRandomInt(10, 16, rng)
+
+        for _ = 1, numParticles, 1 do
+            local angle = rng:RandomInt(360)
+            local velocity = TSIL.Random.GetRandomFloat(6, 8, rng)
+            local spawnVel = Vector.FromAngle(angle):Resized(velocity)
+
+            TSIL.EntitySpecific.SpawnEffect(
+                EffectVariant.ROCK_PARTICLE,
+                0,
+                brenda.Position,
+                spawnVel
+            )
+        end
+
+        local collectible = TSIL.CustomItemPools.GetCollectible(
+            enums.ItemPools.GLASS,
+            true,
+            brenda:GetDropRNG(),
+            enums.Collectibles.MILKSHAKE
+        )
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_COLLECTIBLE,
+            collectible,
+            brenda.Position
+        )
+    end
+
     local sprite = brenda:GetSprite()
 
     if brenda.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND then
