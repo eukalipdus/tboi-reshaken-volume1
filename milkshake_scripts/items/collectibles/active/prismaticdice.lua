@@ -15,10 +15,6 @@ local SPLIT_COLOR_FRAMES = 2
 local SHATTERED_SOLID_FRAMES = 7
 local SHATTERED_COLOR_FRAMES = 20
 local SCHEDULE_FRAMES = 2
-local RED = Color(141 / 255, 2 / 255, 0, 1, 141 / 255, 2 / 255, 0)
-local YELLOW = Color(135 / 255, 140 / 255, 20 / 255, 1, 135 / 255, 140 / 255, 20 / 255)
-local GREEN = Color(0, 133 / 255, 2 / 255, 1, 0, 133 / 255, 2 / 255)
-local BLUE = Color(4 / 255, 99 / 255, 147 / 255, 1, 4 / 255, 99 / 255, 147 / 255)
 
 --- Gets a spawn position for a split collectible
 ---@param index number
@@ -213,36 +209,28 @@ local function SpawnCollectible(collectibleType, position, player)
     return Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectibleType, position, Vector.Zero, player):ToPickup()
 end
 
---- Mimicks the effect of Angelic Prism
----@param redEntity Entity
----@param yellowEntity Entity
----@param greenEntity Entity
----@param blueEntity Entity
----@param identifierString string
----@return table
-local function CreateAngelicPrismSplit(redEntity, yellowEntity, greenEntity, blueEntity, identifierString)
-    local splitEntities = {}
-    table.insert(splitEntities, redEntity)
-    table.insert(splitEntities, yellowEntity)
-    table.insert(splitEntities, greenEntity)
-    table.insert(splitEntities, blueEntity)
-
-    for _, entry in ipairs(splitEntities) do
-        utility:SetData(entry, identifierString, true)
-    end
-    redEntity.Color = RED
-    yellowEntity.Color = YELLOW
-    greenEntity.Color = GREEN
-    blueEntity.Color = BLUE
-    return splitEntities
-end
-
 function prismaticDice:preItemuse(_, _, _, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return true end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, prismaticDice.preItemuse, enums.Collectibles.PRISMATIC_DICE)
 
+local wispPrisms = {}
+
 function prismaticDice:onUse(_, _, player)
+    -- move this into its own file
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then
+        local prism = TSIL.EntitySpecific.SpawnFamiliar(FamiliarVariant.ANGELIC_PRISM, 0, player.Position, Vector.Zero, player):ToFamiliar()
+        prism.Visible = false
+        local wisp = TSIL.EntitySpecific.SpawnFamiliar(FamiliarVariant.WISP,
+                                                       enums.Collectibles.PRISMATIC_DICE,
+                                                       prism.Position,
+                                                       Vector.Zero,
+                                                       player):ToFamiliar()
+        --utility:SetData(prism, "IsPrismaticDiceWisp", true)
+        table.insert(wispPrisms, {WispPtr = GetPtrHash(wisp), PrismPtr = GetPtrHash(prism)})
+        wisp:RemoveFromOrbit()
+    end
+
     for _, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
@@ -289,61 +277,36 @@ function prismaticDice:onUse(_, _, player)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
 
+-- move this into its own file
+
 function prismaticDice:FamiliarUpdate(familiar)
     if familiar.SubType ~= enums.Collectibles.PRISMATIC_DICE then return end
-    local tearsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_TEAR)
-    local player = familiar.Player
-    for _, tear in ipairs(tearsInRoom) do
-        if tear.Position:Distance(familiar.Position) < 10
-        and not utility:GetData(tear, "PrismaticWispTear") then
-            tear:Remove()
-
-            local redTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
-            local yellowTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
-            local greenTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
-            local blueTear = player:FireTear(familiar.Position, tear.Velocity, true, false, false):ToTear()
-            local tears = CreateAngelicPrismSplit(redTear,
-                                    yellowTear,
-                                    greenTear,
-                                    blueTear,
-                                    "PrismaticWispTear")
-
-            for _, entry in ipairs(tears) do
-                entry:ChangeVariant(tear.Variant)
-            end
-
-            redTear.Velocity = (redTear.Velocity):Rotated(30)
-            yellowTear.Velocity = (yellowTear.Velocity):Rotated(10)
-            greenTear.Velocity = (greenTear.Velocity):Rotated(-10)
-            blueTear.Velocity = (blueTear.Velocity):Rotated(-30)
+    local index
+    for i, table in ipairs(wispPrisms) do
+        if table.WispPtr == GetPtrHash(familiar) then
+            index = i
         end
     end
-
-    local bombsInRoom = TSIL.EntitySpecific.GetBombs()
-    for _, bomb in ipairs(bombsInRoom) do
-        if bomb.Position:Distance(familiar.Position) < 10
-        and bomb.IsFetus
-        and not utility:GetData(bomb, "PrismaticWispBomb") then
-            bomb:Remove()
-
-            local redBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
-            local yellowBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
-            local greenBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
-            local blueBomb = player:FireBomb(familiar.Position, bomb.Velocity):ToBomb()
-
-            CreateAngelicPrismSplit(redBomb,
-                                    yellowBomb,
-                                    greenBomb,
-                                    blueBomb,
-                                    "PrismaticWispBomb")
-
-            redBomb.Velocity = (redBomb.Velocity):Rotated(30)
-            yellowBomb.Velocity = (yellowBomb.Velocity):Rotated(10)
-            greenBomb.Velocity = (greenBomb.Velocity):Rotated(-10)
-            blueBomb.Velocity = (blueBomb.Velocity):Rotated(-30)
+    if not index then return end
+    local prisms = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ANGELIC_PRISM)
+    for _, orbital in ipairs(prisms) do
+        if GetPtrHash(orbital) == wispPrisms[index].PrismPtr then
+            familiar.Position = orbital.Position
         end
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate, FamiliarVariant.WISP)
+
+function prismaticDice:PreEntitySpawn(type, variant, _, position, _, _, seed)
+    if Game():GetRoom():GetFrameCount() > 1 then return end
+    if type == EntityType.ENTITY_EFFECT
+    and variant == EffectVariant.POOF01 then
+        local prisms = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ANGELIC_PRISM)
+        for _, familiar in ipairs(prisms) do
+            if position:Distance(familiar.Position) < 5 then return {type, enums.Effects.EFFECT_REPLACER, 0, seed} end
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_ENTITY_SPAWN, prismaticDice.PreEntitySpawn)
 
 return prismaticDice
