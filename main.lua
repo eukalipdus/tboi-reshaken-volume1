@@ -82,6 +82,9 @@ include("milkshake_scripts.items.pick ups.toxicorb")
 include("milkshake_scripts.items.pick ups.unholyorb")
 
 
+--Pools
+include("milkshake_scripts.pools.glasspool")
+
 --Slots
 include("milkshake_scripts.slots.spiritklinbrenda")
 

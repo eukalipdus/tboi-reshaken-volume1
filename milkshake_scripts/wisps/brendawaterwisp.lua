@@ -26,12 +26,12 @@ function BrendaWaterWisp:OnTearInit(tear)
         wisp
     )
     laser:AddTearFlags(tear.TearFlags)
-    laser.CollisionDamage = 2
+    laser.CollisionDamage = 1
 
     tear:Remove()
 
     laser:Update()
-    laser.SpriteScale = Vector(0.65, 0.65)
+    laser.SpriteScale = Vector(0.5, 0.5)
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_TEAR_INIT,
