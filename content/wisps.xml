@@ -91,7 +91,7 @@
 	flameColor="flame_orange" coreColor="core_orange" tearColor="tear_orange"/>
 
 	<!-- Special Brenda Psychic Wisp -->
-	<wisp id="501" hp="10" layer="1" damage="3" fireDelay="15" tearFlags="2"
+	<wisp id="501" hp="10" layer="1" damage="3" fireDelay="15" tearFlags="2" coreGfx="psychic.png"
 	flameColor="flame_purple" coreColor="core_purple" tearColor="tear_purple"/>
 
 	<!-- Special Brenda Nature Wisp -->
@@ -103,7 +103,7 @@
 	flameColor="flame_bright_blue" coreColor="core_bright_blue" tearColor="tear_blue"/>
 
 	<!-- Special Brenda Water Wisp -->
-	<wisp id="504" hp="10" layer="1" damage="3" fireDelay="15"
+	<wisp id="504" hp="10" layer="1" damage="3" fireDelay="180"
 	flameColor="flame_blue" coreColor="core_blue" tearColor="tear_blue"/>
 
 	<!-- Special Brenda Poison Wisp -->
@@ -115,10 +115,22 @@
 	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
 
 	<!-- Prismatic Dice -->
-	<wisp id="13" hp="2" layer="1" canShoot="false"
+	<wisp id="13" hp="2" canShoot="false" count="0"
 	flameColor="flame_pink" coreColor="core_cyan" />
 
 	<!-- Golden shovel -->
 	<wisp id="3" hp="20" layer="1" damage="3" fireDelay="15"
 	flameColor="flame_yellow" coreColor="core_yellow" tearColor="tear_blue"/>
+
+	<!-- Leviticus -->
+	<wisp id="23" hp="10" layer="1" damage="3" fireDelay="15" coreGfx="cross.png"
+	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
+
+	<!-- Globin in a bucket -->
+	<wisp id="1" hp="5" layer="1" damage="3" fireDelay="15"
+	flameColor="flame_red" coreColor="core_red" tearColor="tear_red"/>
+
+	<!-- Globin in a bucket -->
+	<wisp id="10" hp="1" layer="2" canShoot="false"
+	flameColor="flame_yellow" coreColor="core_yellow" tearColor="tear_yellow"/>
 </wisps>

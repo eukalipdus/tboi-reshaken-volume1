@@ -5,6 +5,19 @@ local SHATTERED_ORB_THROW_SPEED = 8
 local SHATTERED_ORB_FALL_ACCEL = 0.1
 local SHATTERED_ORB_RADIUS = 20
 
+--TODO: Find a better place to put this in so it's not repeated
+local PossibleWisps = {
+    enums.Collectibles.SPECIAL_BRENDA_FIRE_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_PSYCHIC_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_NATURE_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_ELECTRIC_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_WATER_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
+    CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
+    CollectibleType.COLLECTIBLE_SATANIC_BIBLE
+}
+
 
 local ORBS_PER_ENEMY = {}
 
@@ -117,7 +130,7 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.NATURE,   type = 239, variant = 0 },               --Grub
     { orb = enums.Orbs.HOLY,     type = 96,  variant = 0 },               --Eternal Fly
     { orb = enums.Orbs.HOLY,     type = 819, variant = 1 },               --Eternal Bomb Fly
-    { orb = enums.Orbs.HOLY,     type = 38,  variant = 1,},               --Angelic Baby
+    { orb = enums.Orbs.HOLY,     type = 38,  variant = 1, },              --Angelic Baby
     { orb = enums.Orbs.HOLY,     type = 38,  variant = 1, subtype = 1 },  --Angelic Baby (small)
     { orb = enums.Orbs.HOLY,     type = 55,  variant = 2 },               --Holy Leech
     { orb = enums.Orbs.HOLY,     type = 60,  variant = 2 },               --Holy Eye
@@ -210,7 +223,7 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.UNDEAD,   type = 227, variant = 1 },               --–-Holy Bony
     { orb = enums.Orbs.UNDEAD,   type = 277, variant = 0 },               --–-Black Bony
     { orb = enums.Orbs.UNDEAD,   type = 890, variant = 0 },               --Maze Roamer
-    { orb = enums.Orbs.UNDEAD,   type = 260, variant = 10 },               --–-Lil' Haunt
+    { orb = enums.Orbs.UNDEAD,   type = 260, variant = 10 },              --–-Lil' Haunt
     { orb = enums.Orbs.UNDEAD,   type = 816, variant = 0 },               --Polty
     { orb = enums.Orbs.UNDEAD,   type = 882, variant = 0 },               --Dust
     { orb = enums.Orbs.UNDEAD,   type = 880, variant = 0 },               --Flesh Maiden
@@ -241,6 +254,23 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.UNHOLY,   type = 885, variant = 1 },               --Blood Cultist
     { orb = enums.Orbs.UNHOLY,   type = 203, variant = 0 },               --Brimstone Head
     { orb = enums.Orbs.UNHOLY,   type = 404, variant = 1 },               --Dark Ball
+    { orb = enums.Orbs.WATER,    type = 807, variant = 0 },               --Wraith
+    { orb = enums.Orbs.WATER,    type = 811, variant = 0 },               --Deep Gaper
+    { orb = enums.Orbs.WATER,    type = 813, variant = 0 },               --Blurb
+    { orb = enums.Orbs.WATER,    type = 812, variant = 0 },               --Sub Horf
+    { orb = enums.Orbs.WATER,    type = 812, variant = 1 },               --Tainted Sub Horf
+    { orb = enums.Orbs.WATER,    type = 22,  variant = 1 },               --Drowned Hive
+    { orb = enums.Orbs.WATER,    type = 817, variant = 0 },               --Prey
+    { orb = enums.Orbs.WATER,    type = 23,  variant = 1 },               --Drowned Charger
+    { orb = enums.Orbs.WATER,    type = 810, variant = 0 },               --Small Leech
+    { orb = enums.Orbs.WATER,    type = 855, variant = 1 },               --Elleech
+    { orb = enums.Orbs.WATER,    type = 25,  variant = 2 },               --Drowned Boom Fly
+    { orb = enums.Orbs.WATER,    type = 311, variant = 0 },               --Mr. Mine
+    { orb = enums.Orbs.WATER,    type = 806, variant = 0 },               --Bubbles
+    { orb = enums.Orbs.WATER,    type = 879, variant = 0 },               --Bloaty
+    { orb = enums.Orbs.WATER,    type = 244, variant = 1 },               --Tube Worm
+    { orb = enums.Orbs.WATER,    type = 244, variant = 3 },               --Tainted Tube Worm
+    { orb = enums.Orbs.WATER,    type = 815, variant = 0 },               --Fissure
 }
 MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerEnemy)
 
@@ -404,18 +434,24 @@ function ShatteredOrb:OnPlayerUpdate(player)
     if shootingDir == Direction.NO_DIRECTION then return end
 
     local activeSlot = GetShatteredOrbActiveSlotFromPlayer(player)
-    player:DischargeActiveItem(activeSlot)
+    local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
+    local newCharge = math.max(0, charge - 4)
+    player:SetActiveCharge(newCharge, ActiveSlot.SLOT_PRIMARY)
     player:PlayExtraAnimation("HideItem")
     RemovePlayerUsingShatteredOrb(player)
 
     local shatteredOrb = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.SHATTERED_ORB,
         0,
-        player.Position
+        player.Position,
+        Vector.Zero,
+        player
     )
 
     shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
     shatteredOrb:GetSprite():Play("Thrown", true)
+
+    SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 
     local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + player.Velocity
     AddShatteredOrbData(shatteredOrb, direction)
@@ -464,6 +500,26 @@ function GetEntityOrb(entity)
     return orb
 end
 
+
+---@param shatteredOrb EntityEffect
+local function SpawnWisps(shatteredOrb)
+    local spawner = shatteredOrb.SpawnerEntity
+    if not spawner then return end
+    local player = spawner:ToPlayer()
+    if not player then return end
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then return end
+
+    local wisps = TSIL.Random.GetRandomElementsFromTable(
+        PossibleWisps,
+        4,
+        player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB)
+    )
+    for _, wisp in ipairs(wisps) do
+        player:AddWisp(wisp, shatteredOrb.Position)
+    end
+end
+
+
 ---@param shatteredOrb EntityEffect
 function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     local sprite = shatteredOrb:GetSprite()
@@ -491,6 +547,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     shatteredOrbData.fallingSpeed = shatteredOrbData.fallingSpeed + SHATTERED_ORB_FALL_ACCEL
 
     if shatteredOrb.SpriteOffset.Y >= 0 then
+        SpawnWisps(shatteredOrb)
         SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK, 1, 2, false, 1.3)
 
         MusicManager():Pause()

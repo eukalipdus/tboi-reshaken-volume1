@@ -46,8 +46,6 @@ New FF Nature
 160.681 --Stingler
 160.590 --Homer
 160.810 --Honeydrip
-450.10 --Catfish
-750.220 --Croca
 114.28 --Unshornz
 160.320 --Milk Tooth
 666.40 --Foamy

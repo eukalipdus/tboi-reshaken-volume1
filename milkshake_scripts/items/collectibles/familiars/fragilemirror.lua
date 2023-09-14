@@ -649,7 +649,8 @@ MilkshakeVol1:AddCallback(
 function FragileMirror:OnGlassIdolShatterUpdate(effect)
     local sprite = effect:GetSprite()
 
-    if sprite:IsFinished("Appear") then
+    if sprite:IsFinished("Appear")
+    and effect.Variant == enums.Effects.GLASS_IDOL_SHATTER then
         effect:Remove()
     end
 end
