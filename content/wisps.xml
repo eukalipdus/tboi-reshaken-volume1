@@ -115,7 +115,7 @@
 	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
 
 	<!-- Prismatic Dice -->
-	<wisp id="13" hp="2" layer="1" canShoot="false"
+	<wisp id="13" hp="2" canShoot="false" count="0"
 	flameColor="flame_pink" coreColor="core_cyan" />
 
 	<!-- Golden shovel -->
