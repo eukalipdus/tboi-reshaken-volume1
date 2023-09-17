@@ -42,8 +42,12 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 			for _, lilBishopFam in pairs(lilBishops) do
 				if lilBishopFam:GetData().Active then -- and lilBishopFam:GetSprite():GetAnimation() == "Active" then
 					ignore = true -- to play animation for all active lil bishops
-					if lilBishopFam:GetSprite():GetAnimation() == "Active" or lilBishopFam:GetSprite():GetAnimation() == "Sleep" then
+					local sprite = lilBishopFam:GetSprite()
+					if sprite:GetAnimation() == "Active" or sprite:GetAnimation() == "Sleep" then
 						sfx:Play(SoundEffect.SOUND_BISHOP_HIT)
+						if sprite:GetAnimation() == "Active" then
+							sprite:Play("Block")
+						end
 						local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
 						sfx:Stop(SoundEffect.SOUND_LASERRING)
 						laser:GetData().BishopLaser = player
@@ -160,7 +164,7 @@ function lilBishop:onFamiliarCollision(familiar, collider)
 			if player:ToPlayer():HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
 				famData.Active = lilBishop.BlockCooldown * lilBishop.bffsMultiplier
 			end
-			sprite:Play("Active")
+			sprite:Play("Block")
 		end
 	end
 end
