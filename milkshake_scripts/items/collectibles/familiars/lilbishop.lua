@@ -142,7 +142,7 @@ function lilBishop:onFamiliarUpdate(familiar)
     	    sprite:Play("Sleep")
     	end
     end
-	print(famData.Active, sprite:GetAnimation(), sprite:IsFinished("Sleep"))
+	--print(famData.Active, sprite:GetAnimation(), sprite:IsFinished("Sleep"))
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarUpdate, enums.Familiars.LIL_BISHOP)
 
