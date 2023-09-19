@@ -220,10 +220,10 @@ end)
 MilkshakeVol1.API:AddSpiritKlinReward(function(player)
     local familiarPlayers = TSIL.Familiars.GetPlayerFamiliars(player)
     local wisps = TSIL.Utils.Tables.Filter(familiarPlayers, function(_, familiar)
-        return familiar.Variant == FamiliarVariant.WISP
+        return familiar.Variant == FamiliarVariant.WISP and familiar.OrbitLayer == 8
     end)
 
-    if #wisps == 0 then
+    if #wisps >= 8 then
         return 0
     end
 

@@ -14,7 +14,7 @@ lilBishop.bffsMultiplier = 2
 lilBishop.ShieldOffset = Vector(0, -12.5)
 lilBishop.DepthOffset = 100
 lilBishop.AlternativeSprite = "gfx/familiar/familiar_lilbishop_alt.png"
- lilBishop.BaseSprite = "gfx/familiar/familiar_lilbishop.png"
+lilBishop.BaseSprite = "gfx/familiar/familiar_lilbishop.png"
 
 --local game = Game()
 
@@ -42,9 +42,12 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 			for _, lilBishopFam in pairs(lilBishops) do
 				if lilBishopFam:GetData().Active then -- and lilBishopFam:GetSprite():GetAnimation() == "Active" then
 					ignore = true -- to play animation for all active lil bishops
-					if lilBishopFam:GetSprite():GetAnimation() == "Active" then
+					local sprite = lilBishopFam:GetSprite()
+					if sprite:GetAnimation() == "Active" or sprite:GetAnimation() == "Sleep" then
 						sfx:Play(SoundEffect.SOUND_BISHOP_HIT)
-						lilBishopFam:GetSprite():Play("Block")
+						if sprite:GetAnimation() == "Active" then
+							sprite:Play("Block")
+						end
 						local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
 						sfx:Stop(SoundEffect.SOUND_LASERRING)
 						laser:GetData().BishopLaser = player
@@ -111,7 +114,7 @@ function lilBishop:onFamiliarUpdate(familiar)
 	local sprite = familiar:GetSprite()
 	local player = familiar.Player
 	familiar:FollowParent()
-		
+
 	if not famData.Alt and player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
 		famData.Alt = true
 		sprite:ReplaceSpritesheet(0, lilBishop.AlternativeSprite)
@@ -121,24 +124,29 @@ function lilBishop:onFamiliarUpdate(familiar)
 		sprite:ReplaceSpritesheet(0, lilBishop.BaseSprite)
 		sprite:LoadGraphics()
 	end
-	
+
 	if famData.Active then
 		famData.Active = famData.Active - 1
-		if famData.Active <= 0 then
+		if famData.Active < 0 and sprite:IsFinished("Sleep") then
 			famData.Active = nil
 			sprite:Play("FloatDown")
+		elseif famData.Active <= 32 then
+			sprite:Play("Sleep")
 		end
+	elseif sprite:IsFinished("Sleep") then
+		sprite:Play("FloatDown")
+	elseif sprite:GetAnimation() == "Active" then
+		sprite:Play("Sleep")
 	end
+
     if sprite:IsFinished("Block") then
     	if famData.Active then
     	    sprite:Play("Active")
     	else
-    	    sprite:Play("FloatDown")
+    	    sprite:Play("Sleep")
     	end
     end
-	if sprite:GetAnimation() == "Active" and not famData.Active then
-		sprite:Play("FloatDown")
-	end
+	--print(famData.Active, sprite:GetAnimation(), sprite:IsFinished("Sleep"))
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, lilBishop.onFamiliarUpdate, enums.Familiars.LIL_BISHOP)
 
@@ -156,7 +164,7 @@ function lilBishop:onFamiliarCollision(familiar, collider)
 			if player:ToPlayer():HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
 				famData.Active = lilBishop.BlockCooldown * lilBishop.bffsMultiplier
 			end
-			sprite:Play("Active")
+			sprite:Play("Block")
 		end
 	end
 end
