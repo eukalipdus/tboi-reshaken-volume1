@@ -140,9 +140,11 @@ MilkshakeVol1:AddCallback(
 
 
 local function CheckLeviticusActiveSlot(player)
+    local overcharge = 0
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) then overcharge = LEVITICUS_MAX_CHARGES end
     for i = 0, 4, 1 do
         if player:GetActiveItem(i) == enums.Collectibles.LEVITICUS and
-        player:GetActiveCharge(i) < LEVITICUS_MAX_CHARGES then
+        player:GetActiveCharge(i) + player:GetBatteryCharge(i) < LEVITICUS_MAX_CHARGES + overcharge then
             return i
         end
     end
@@ -162,8 +164,11 @@ local function AddSoulHeartCharges(player, soulHeartInfo)
     end
 
     for _ = 0, soulHeartInfo.charges - 1, 1 do
-        if slot and player:GetActiveCharge(slot) < LEVITICUS_MAX_CHARGES then
-            player:SetActiveCharge(player:GetActiveCharge(slot) + 1, slot)
+        local overcharge = 0
+        if player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) then overcharge = LEVITICUS_MAX_CHARGES end
+
+        if slot and player:GetActiveCharge(slot) + player:GetBatteryCharge(slot) < LEVITICUS_MAX_CHARGES + overcharge then
+            player:SetActiveCharge(player:GetActiveCharge(slot) + player:GetBatteryCharge(slot) + 1, slot)
         else
             if soulHeartInfo.extraHeart == EXTRA_HEART_TYPES.SOUL then
                 player:AddSoulHearts(1)
