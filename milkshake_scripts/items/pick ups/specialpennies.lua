@@ -1,5 +1,4 @@
 local enums = MilkshakeVol1.enums
-local dropSoundFrame = 23
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
     local randomPill = Game():GetItemPool():GetPill(Random() + 1)
