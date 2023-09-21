@@ -18,19 +18,23 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, prismaticDice.PreUseItem, enums.Collectibles.PRISMATIC_DICE)
 
 function prismaticDice:FamiliarUpdate(familiar)
-    if familiar.SubType ~= enums.Collectibles.PRISMATIC_DICE then return end
-    local index
-    for i, table in ipairs(wispPrisms) do
-        if table.WispPtr == GetPtrHash(familiar) then
-            index = i
+    if familiar.SubType == enums.Collectibles.PRISMATIC_DICE then
+        local index
+        for i, table in ipairs(wispPrisms) do
+            if table.WispPtr == GetPtrHash(familiar) then
+                index = i
+            end
         end
-    end
-    if not index then return end
-    local prisms = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ANGELIC_PRISM)
-    for _, orbital in ipairs(prisms) do
-        if GetPtrHash(orbital) == wispPrisms[index].PrismPtr then
-            familiar.Position = orbital.Position
+        if not index then return end
+        local prisms = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ANGELIC_PRISM)
+        for _, orbital in ipairs(prisms) do
+            if GetPtrHash(orbital) == wispPrisms[index].PrismPtr then
+                familiar.Position = orbital.Position
+            end
         end
+        
+    elseif familiar.Variant == FamiliarVariant.ANGELIC_PRISM then
+        familiar.Visible = false
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate)
