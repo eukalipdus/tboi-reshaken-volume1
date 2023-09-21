@@ -38,7 +38,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.Familia
 function prismaticDice:PostNewRoom()
     local prisms = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ANGELIC_PRISM)
     for _, currentPrism in ipairs(prisms) do
-        for i, storedPrism in ipairs(wispPrisms) do
+        for _, storedPrism in ipairs(wispPrisms) do
             print(GetPtrHash(currentPrism))
             print(storedPrism.PrismPtr)
             if GetPtrHash(currentPrism) == storedPrism.PrismPtr then
