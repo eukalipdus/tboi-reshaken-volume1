@@ -209,28 +209,8 @@ local function SpawnCollectible(collectibleType, position, player)
     return Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectibleType, position, Vector.Zero, player):ToPickup()
 end
 
-function prismaticDice:preItemuse(_, _, _, useFlags)
+function prismaticDice:onUse(_, _, player, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return true end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, prismaticDice.preItemuse, enums.Collectibles.PRISMATIC_DICE)
-
-local wispPrisms = {}
-
-function prismaticDice:onUse(_, _, player)
-    -- move this into its own file
-    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then
-        local prism = TSIL.EntitySpecific.SpawnFamiliar(FamiliarVariant.ANGELIC_PRISM, 0, player.Position, Vector.Zero, player):ToFamiliar()
-        prism.Visible = false
-        local wisp = TSIL.EntitySpecific.SpawnFamiliar(FamiliarVariant.WISP,
-                                                       enums.Collectibles.PRISMATIC_DICE,
-                                                       prism.Position,
-                                                       Vector.Zero,
-                                                       player):ToFamiliar()
-        --utility:SetData(prism, "IsPrismaticDiceWisp", true)
-        table.insert(wispPrisms, {WispPtr = GetPtrHash(wisp), PrismPtr = GetPtrHash(prism)})
-        wisp:RemoveFromOrbit()
-    end
-
     for _, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
@@ -276,26 +256,6 @@ function prismaticDice:onUse(_, _, player)
     return true
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
-
--- move this into its own file
-
-function prismaticDice:FamiliarUpdate(familiar)
-    if familiar.SubType ~= enums.Collectibles.PRISMATIC_DICE then return end
-    local index
-    for i, table in ipairs(wispPrisms) do
-        if table.WispPtr == GetPtrHash(familiar) then
-            index = i
-        end
-    end
-    if not index then return end
-    local prisms = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ANGELIC_PRISM)
-    for _, orbital in ipairs(prisms) do
-        if GetPtrHash(orbital) == wispPrisms[index].PrismPtr then
-            familiar.Position = orbital.Position
-        end
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate, FamiliarVariant.WISP)
 
 function prismaticDice:PreEntitySpawn(type, variant, _, position, _, _, seed)
     if Game():GetRoom():GetFrameCount() > 1 then return end
