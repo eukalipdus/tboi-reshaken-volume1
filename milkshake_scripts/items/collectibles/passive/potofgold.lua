@@ -123,22 +123,29 @@ MilkshakeVol1:AddCallback(
 ---@param pickup EntityPickup
 ---@param collider Entity
 function potOfGold:PrePickupCollision(pickup, collider)
-    local player = collider:ToPlayer()
-    if not player then return end
-    if player:GetNumCoins() < pickup.Price then return end
+    if not pickup:IsShopItem()
+    and (collider.Type == EntityType.ENTITY_ULTRA_GREED
+    or (collider.Type == EntityType.ENTITY_FAMILIAR
+        and collider.Variant == FamiliarVariant.BUMBO or collider.Variant == FamiliarVariant.BUM_FRIEND)) then
+            pickup.SubType = CoinSubType.COIN_PENNY
+    else
+        local player = collider:ToPlayer()
+        if not player then return end
+        if player:GetNumCoins() < pickup.Price then return end
 
-    local rainbowPenny = TSIL.Utils.Tables.FindFirst(rainbowPennies, function (_, rainbowPenny)
-        return rainbowPenny.variant == pickup.Variant and rainbowPenny.subtype == pickup.SubType
-    end)
+        local rainbowPenny = TSIL.Utils.Tables.FindFirst(rainbowPennies, function (_, rainbowPenny)
+            return rainbowPenny.variant == pickup.Variant and rainbowPenny.subtype == pickup.SubType
+        end)
 
-    if not rainbowPenny then return end
+        if not rainbowPenny then return end
 
-    rainbowPenny.onPickup(pickup, player)
+        rainbowPenny.onPickup(pickup, player)
 
-    pickup:Die()
+        pickup:Die()
 
-    MilkshakeVol1.utility:SetData(pickup, "IsRainbowPenny", true)
-    pickup.SubType = CoinSubType.COIN_PENNY
+        MilkshakeVol1.utility:SetData(pickup, "IsRainbowPenny", true)
+        pickup.SubType = CoinSubType.COIN_PENNY
+    end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.PrePickupCollision)
 
