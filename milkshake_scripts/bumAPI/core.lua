@@ -114,7 +114,7 @@ local function BumFamiliarUpdate(_, familiar)
 
 	for _, pickup in ipairs(TSIL.EntitySpecific.GetPickups()) do
 		local distance = pickup.Position:DistanceSquared(familiar.Position)
-		if pickup:Exists() and not pickup:IsDead() and distance < closestDist then
+		if pickup:Exists() and not pickup:IsDead() and distance < closestDist and not pickup:IsShopItem() then
 			local foundBumPickup = TSIL.Utils.Tables.FindFirst(bumInfo.pickups, function (_, foundBumPickup)
 				return pickup.Variant == foundBumPickup.value.variant and
 				pickup.SubType == foundBumPickup.value.subtype
