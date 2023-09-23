@@ -289,4 +289,7 @@
     <entity name="Effect Replacer" id="1000">
     </entity>
 
+    <entity name="Mirror Key Door" id="1000" anm2path="grid/door_01_normaldoor.anm2">
+    </entity>
+
 </entities>
