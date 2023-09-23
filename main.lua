@@ -100,6 +100,7 @@ include("milkshake_scripts.wisps.brendawaterwisp")
 include("milkshake_scripts.wisps.globininabucket")
 include("milkshake_scripts.wisps.goldenshovel")
 include("milkshake_scripts.wisps.leviticus")
+include("milkshake_scripts.wisps.prismaticdice")
 
 --Enemies
 include("milkshake_scripts.enemies.beerhead")

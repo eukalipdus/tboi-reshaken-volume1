@@ -8,6 +8,8 @@ RevenanceOrb.SkeletonDMG = 3
 --also is there way to lower the invincibility frames the tombstones have when hit
 --cuz if you have high tearrate and hit it a lot it has a lot of tears that dont damage it
 RevenanceOrb.TombTakeDMGCooldown = 5
+RevenanceOrb.BoneBridgeGfx = "gfx/grid/bone_bridge_better.png"
+
 
 RevenanceOrb.Undeads = {
 [EntityType.ENTITY_BONY] = true,
@@ -57,7 +59,7 @@ function RevenanceOrb:GravestonDMG(entity, amount, damageFlags, source, DamageCo
 	local grbData = entity:GetData()
 	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 or damageFlags & DamageFlag.DAMAGE_INVINCIBLE > 0 then
 		return true
-	elseif source.Entity:ToKnife() or damageFlags & DamageFlag.DAMAGE_LASER > 0 then
+	elseif source.Entity and source.Entity:ToKnife() or damageFlags & DamageFlag.DAMAGE_LASER > 0 then
 		if not grbData.GravetoneTouched or game:GetFrameCount() - grbData.GravetoneTouched > RevenanceOrb.TombTakeDMGCooldown then
 			grbData.CustomDamage = false
 			grbData.GravetoneTouched = game:GetFrameCount()
@@ -69,9 +71,23 @@ function RevenanceOrb:GravestonDMG(entity, amount, damageFlags, source, DamageCo
 			return true
 		end
 	end
-	return false
+	--return false
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, RevenanceOrb.GravestonDMG, enums.Enemies.GRAVESTONE)
+
+
+function RevenanceOrb:onNewRoom()
+	local room = game:GetRoom()
+	for gridIndex = 1, room:GetGridSize() do
+		local grid = room:GetGridEntity(gridIndex)
+		if grid and grid.VarData == 111 then
+			grid:GetSprite():ReplaceSpritesheet(1, RevenanceOrb.BoneBridgeGfx)
+			grid:GetSprite():LoadGraphics()
+		end
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, RevenanceOrb.onNewRoom)
+
 
 --- gravestone destroyed
 function RevenanceOrb:GravestonDeath(gravestone)
@@ -112,6 +128,8 @@ function RevenanceOrb:OnRevenanceOrbUse(card, player) -- useFlag
 		local grid = room:GetGridEntity(gridIndex)
 		if grid and grid:ToPit() and grid.State ~= 1 then
 			grid:ToPit():MakeBridge(nil)
+			grid:GetSprite():ReplaceSpritesheet(1, RevenanceOrb.BoneBridgeGfx)
+			grid:GetSprite():LoadGraphics()
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, grid.Position, Vector.Zero, nil) --- some effects
 		end
 	end
