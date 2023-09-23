@@ -1,89 +1,113 @@
 local innerreflection = {}
 local enums = MilkshakeVol1.enums
-local utility = MilkshakeVol1.utility
+local game = Game()
 
-local actionDelay = 1
-local appearLength = 20
+local InnerReflectionConfig = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.INNER_REFLECTION)
 
-local wasRoomClear = false;
-local isNewRoom = false;
+local BASE_CONTACT_DAMAGE = 25
+
+local MIRROR_WORLD_DAMAGE_BONUS = 2.5
+local MAX_DAMAGE_MULTIPLIER_INCREASE = 1
+
+local isMirrorDimension = false
+
+--This is only for the function below, don't think about it too much.
+local DIRECTIONAL_ANIMATIONS = {"Walk", "Head", "PickupWalk"}
+local OPPOSITE_DIRECTIONS = {["Left"] = "Right", ["Up"] = "Down"}
+local ANIMATIONS_OPPOSITE_DIRECTION = {}
+for _, animation in ipairs(DIRECTIONAL_ANIMATIONS) do
+	for direction, opposite in pairs(OPPOSITE_DIRECTIONS) do
+		local animName1 = animation .. direction
+		local animName2 = animation .. opposite
+		ANIMATIONS_OPPOSITE_DIRECTION[animName1] = animName2
+		ANIMATIONS_OPPOSITE_DIRECTION[animName2] = animName1
+	end
+end
+
+---If animation is one of the directional ones, makes it head the other direction (e.g. "HeadLeft" becomes "HeadRight")
+---@param mainAnimation string
+---@return string
+local function MirroredAnimation(mainAnimation)
+	return ANIMATIONS_OPPOSITE_DIRECTION[mainAnimation] or mainAnimation
+end
 
 ---@param player EntityPlayer
-function innerreflection:EvaluateCache(player)
-    TSIL.Familiars.CheckFamiliarFromCollectibles(
-        player,
-        enums.Collectibles.INNER_REFLECTION,
-        enums.Familiars.INNER_REFLECTION
-    )
+local function HasFamiliar(player)
+	return player:HasCollectible(enums.Collectibles.INNER_REFLECTION) or player:GetEffects():HasCollectibleEffect(enums.Collectibles.INNER_REFLECTION)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, innerreflection.EvaluateCache, CacheFlag.CACHE_FAMILIARS)
+
+---@param player EntityPlayer
+function innerreflection:EvaluateCacheFamiliars(player)
+	if HasFamiliar(player) then
+		player:CheckFamiliar(enums.Familiars.INNER_REFLECTION, 1, TSIL.RNG.NewRNG(), InnerReflectionConfig)
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, innerreflection.EvaluateCacheFamiliars, CacheFlag.CACHE_FAMILIARS)
+
+---@param player EntityPlayer
+function innerreflection:EvaluateCacheDamage(player)
+	if HasFamiliar(player) then
+		if isMirrorDimension then
+			--Capping max damage increase in percent to prevent it getting too stupid with Soy Milk and such.
+			local damageBonus = math.min(MIRROR_WORLD_DAMAGE_BONUS, player.Damage*MAX_DAMAGE_MULTIPLIER_INCREASE)
+			player.Damage = player.Damage + damageBonus
+		end
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, innerreflection.EvaluateCacheDamage, CacheFlag.CACHE_DAMAGE)
+
+---@param familiar EntityFamiliar
+function innerreflection:FamiliarInit(familiar)
+	familiar.Color = Color(1,1,1,0.5)
+	print(test)
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, innerreflection.FamiliarInit, enums.Familiars.INNER_REFLECTION)
 
 ---@param familiar EntityFamiliar
 function innerreflection:PostFamiliarUpdate(familiar)
 	local player = familiar.Player
-	---@type {frame : integer, actionList : table}
-	local reflectionData = utility:GetData(familiar, "Reflection")
 
-	if (not reflectionData or isNewRoom or (wasRoomClear and not Game():GetRoom():IsClear())) then
-		reflectionData = {
-			frame = 0,
-			actionList = {}
-		}
-	elseif (Game():GetRoom():IsClear()) then
-		if (reflectionData.frame > actionDelay) then reflectionData.frame = actionDelay+1 end
-		reflectionData.frame = reflectionData.frame - 1
+	local centre = game:GetRoom():GetCenterPos()
+
+	local centreToPlayer = player.Position-centre
+	local targetPos = centre - centreToPlayer
+	if game:GetRoom():GetFrameCount() == 0 then	--Fixes familiar jumping across the room when entering it.
+		familiar.Position = targetPos
+		familiar.Velocity = Vector.Zero
 	else
-		if (reflectionData.frame < 0) then reflectionData.frame = -1 end
-		reflectionData.frame = reflectionData.frame + 1
+		familiar.Velocity = targetPos - familiar.Position
 	end
-	reflectionData.actionList[#reflectionData.actionList+1] = {
-		Anm=player:GetSprite():GetAnimation(),
-		OAnm=player:GetSprite():GetOverlayAnimation(),
-		Frame=player:GetSprite():GetFrame(),
-		OFrame=player:GetSprite():GetOverlayFrame(),
-		Pos=player.Position
-	}
-	wasRoomClear = Game():GetRoom():IsClear()
-	utility:SetData(familiar, "Reflection", reflectionData)
+
+	local familiarMultiplier = 
+	player:GetCollectibleNum(enums.Collectibles.INNER_REFLECTION)
+	+ player:GetEffects():GetCollectibleEffectNum(enums.Collectibles.INNER_REFLECTION)
+
+	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier
+
+	local pSprite = player:GetSprite()
+	local fSprite = familiar:GetSprite()
+	fSprite:SetFrame(MirroredAnimation(pSprite:GetAnimation()), pSprite:GetFrame())
+	fSprite:SetOverlayFrame(MirroredAnimation(pSprite:GetOverlayAnimation()), pSprite:GetOverlayFrame())
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, innerreflection.PostFamiliarUpdate, enums.Familiars.INNER_REFLECTION)
 
----@param familiar EntityFamiliar
-function innerreflection:PostFamiliarRender(familiar)
-	---@type {frame : integer, actionList : table}
-	local reflectionData = utility:GetData(familiar, "Reflection")
-	familiar.Color = Color(1,1,1,0.5)
-	if (reflectionData) then
-		local frame = reflectionData.frame-actionDelay
-		local curAction = reflectionData.actionList[math.max(frame, 1)]
-		
-		if (frame > 0) then
-			familiar.Position = curAction.Pos
-			familiar:GetSprite():SetFrame(curAction.Anm, curAction.Frame)
-			familiar:GetSprite():SetOverlayFrame(curAction.OAnm, curAction.OFrame)
-		elseif (frame >= -appearLength) then
-			if (not Game():GetRoom():IsClear()) then familiar.Position = curAction.Pos end
-			familiar:GetSprite():SetFrame("CelesteAppear", frame+appearLength)
-			familiar:GetSprite():SetOverlayFrame("CelesteAppear", 0)
-		else
-			familiar.Position = Vector(-1000, -1000)
+function innerreflection:PostNewRoom()
+	if game:GetRoom():IsMirrorWorld() == isMirrorDimension then
+		return end
+	isMirrorDimension = not isMirrorDimension
+	local badelinesActive = false
+	for index = 0, game:GetNumPlayers()-1 do
+		local player = Isaac.GetPlayer(index)
+		if HasFamiliar(player) then
+			player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+			player:EvaluateItems()
+			badelinesActive = true
+		end
+	end
+	if badelinesActive then
+		for _, badeline in ipairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.INNER_REFLECTION)) do
+			--Imma sleep for now. This can wait until tomorrow.
 		end
 	end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, innerreflection.PostFamiliarRender, enums.Familiars.INNER_REFLECTION)
-
----@param familiar EntityFamiliar
----@param collider Entity
-function innerreflection:Collision(familiar, collider)
-	if (collider:ToPlayer() == familiar.Player) then
-		print("aa")
-	end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, innerreflection.Collision, enums.Familiars.INNER_REFLECTION)
-
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
-	isNewRoom = true
-end)
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
-	if isNewRoom then isNewRoom = false end
-end)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, innerreflection.PostNewRoom)
