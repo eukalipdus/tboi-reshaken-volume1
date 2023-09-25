@@ -49,6 +49,7 @@ include("milkshake_scripts.items.collectibles.familiars.doggybag")
 include("milkshake_scripts.items.collectibles.familiars.lilbishop")
 include("milkshake_scripts.items.collectibles.passive.witchdoctormask")
 include("milkshake_scripts.items.collectibles.passive.rainbowfragment")
+include("milkshake_scripts.items.collectibles.active.mirrorkey")
 
 -- Trinkets
 include("milkshake_scripts.items.trinkets.amethystshard")

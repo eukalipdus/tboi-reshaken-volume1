@@ -38,7 +38,7 @@ function WineHead:WineHead_Update(enemy)
 
     if not data.state then data.state = 1 end
     if not data.gridCountdown then data.gridCountdown = 0 end
-    if not data.trigger then data.trigger = rng:RandomInt(200) + 100 end
+    if not data.trigger then data.trigger = rng:RandomInt(100) + 50 end
 
     if data.init and data.state ~= 6 then
         data.init = data.init - 1
@@ -77,7 +77,7 @@ function WineHead:WineHead_Update(enemy)
     elseif data.state == 3 then
         sprite:PlayOverlay("Spin")
 
-        if enemy:IsFrame(10, 0) or rng:RandomInt(20) + 1 == 1 then
+        if enemy:IsFrame(10, 0) or rng:RandomInt(15) + 1 == 1 then
             local posOffset = Vector(
                 TSIL.Random.GetRandomInt(-10, 10, rng),
                 TSIL.Random.GetRandomInt(-10, 10, rng)
