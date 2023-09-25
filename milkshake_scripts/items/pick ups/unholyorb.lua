@@ -14,8 +14,27 @@ UnholyOrb.KillBill = {
 	[18] = true,
 }
 
+--[[
+If Epiphany then
+local Converter = Isaac.GetEntityTypeByName('Converter Beggar)
+UnholyOrb.KillBill[Converter.Variant] = true
+end
+--]]
 
-
+--[[
+if FF then
+local Hug = Isaac.GetEntityTypeByName('Hug Beggar)
+UnholyOrb.KillBill[Hug.Variant] = true
+local Evil = Isaac.GetEntityTypeByName('Evil Beggar)
+UnholyOrb.KillBill[Evil.Variant] = true
+local Zodiacc = Isaac.GetEntityTypeByName('Zodiacc Beggar)
+UnholyOrb.KillBill[Zodiacc.Variant] = true
+local Cell = Isaac.GetEntityTypeByName('Cell Game)
+UnholyOrb.KillBill[Cell.Variant] = true
+local Fake = Isaac.GetEntityTypeByName('Fake Beggar)
+UnholyOrb.KillBill[Fake.Variant] = true
+end
+--]]
 
 UnholyOrb.DamageMultiplier = 5
 UnholyOrb.InvincibleFrames = 90 -- 1.5 sec
