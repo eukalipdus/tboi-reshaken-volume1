@@ -4,7 +4,7 @@ local game = Game()
 
 local InnerReflectionConfig = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.INNER_REFLECTION)
 
-local BASE_CONTACT_DAMAGE = 25
+local BASE_CONTACT_DAMAGE = 12
 
 local MIRROR_WORLD_DAMAGE_BONUS = 2.5
 local MAX_DAMAGE_MULTIPLIER_INCREASE = 1
@@ -59,7 +59,6 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, innerreflection.Evalua
 ---@param familiar EntityFamiliar
 function innerreflection:FamiliarInit(familiar)
 	familiar.Color = Color(1,1,1,0.5)
-	print(test)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, innerreflection.FamiliarInit, enums.Familiars.INNER_REFLECTION)
 
@@ -78,11 +77,13 @@ function innerreflection:PostFamiliarUpdate(familiar)
 		familiar.Velocity = targetPos - familiar.Position
 	end
 
-	local familiarMultiplier = 
+	local familiarMultiplier =
 	player:GetCollectibleNum(enums.Collectibles.INNER_REFLECTION)
 	+ player:GetEffects():GetCollectibleEffectNum(enums.Collectibles.INNER_REFLECTION)
 
 	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier
+	familiar.SpriteScale = player.SpriteScale
+	familiar.SizeMulti = player.SpriteScale
 
 	local pSprite = player:GetSprite()
 	local fSprite = familiar:GetSprite()
