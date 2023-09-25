@@ -16,5 +16,6 @@
 	<costume anm2path="clairvoyance_orb.anm2" priority="30" type="none" hasSkinAlt="false" hasOverlay="true" />
 	<costume anm2path="orb_deluge.anm2" priority="1" type="none" hasSkinAlt="false" hasOverlay="true" />
 	<costume anm2path="orb_inferno.anm2" priority="30" type="none" hasSkinAlt="true" hasOverlay="true" />
+	<costume anm2path="celestialmirror_mirror.anm2" priority="20" type="none" hasSkinAlt="false" />
 	
 </costumes>

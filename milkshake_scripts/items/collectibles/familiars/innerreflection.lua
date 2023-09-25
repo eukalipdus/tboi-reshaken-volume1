@@ -100,7 +100,14 @@ function innerreflection:PostNewRoom()
 	local badelinesActive = false
 	for index = 0, game:GetNumPlayers()-1 do
 		local player = Isaac.GetPlayer(index)
+		if not isMirrorDimension then
+			--I really wanna make sure it doesn't linger for whole run if player loses the item in mirror world or something.
+			player:TryRemoveNullCostume(enums.Costumes.CELESTIAL_MIRROR_ALT)
+		end
 		if HasFamiliar(player) then
+			if isMirrorDimension then
+				player:AddNullCostume(enums.Costumes.CELESTIAL_MIRROR_ALT)
+			end
 			player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
 			player:EvaluateItems()
 			badelinesActive = true
@@ -115,7 +122,6 @@ function innerreflection:PostNewRoom()
 		end
 		local spritePath = "gfx/familiar/" .. newSpriteName .. ".png"
 		for _, badeline in ipairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.INNER_REFLECTION)) do
-			print("sprite test")
 			local sprite = badeline:GetSprite()
 			for layer = 0, 14 do
 				sprite:ReplaceSpritesheet(layer, spritePath)
