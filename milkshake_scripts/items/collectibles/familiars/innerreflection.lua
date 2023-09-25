@@ -107,8 +107,20 @@ function innerreflection:PostNewRoom()
 		end
 	end
 	if badelinesActive then
+		local newSpriteName
+		if isMirrorDimension then
+			newSpriteName = "familiar_innerreflection_mirror"
+		else
+			newSpriteName = "familiar_innerreflection"
+		end
+		local spritePath = "gfx/familiar/" .. newSpriteName .. ".png"
 		for _, badeline in ipairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.INNER_REFLECTION)) do
-			--Imma sleep for now. This can wait until tomorrow.
+			print("sprite test")
+			local sprite = badeline:GetSprite()
+			for layer = 0, 14 do
+				sprite:ReplaceSpritesheet(layer, spritePath)
+			end
+			sprite:LoadGraphics()
 		end
 	end
 end
