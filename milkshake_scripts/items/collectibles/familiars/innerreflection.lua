@@ -81,9 +81,10 @@ function innerreflection:PostFamiliarUpdate(familiar)
 	player:GetCollectibleNum(enums.Collectibles.INNER_REFLECTION)
 	+ player:GetEffects():GetCollectibleEffectNum(enums.Collectibles.INNER_REFLECTION)
 
-	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier
 	familiar.SpriteScale = player.SpriteScale
 	familiar.SizeMulti = player.SpriteScale
+	local sizeDamageMultiplier = familiar.SizeMulti.Y
+	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier * sizeDamageMultiplier
 
 	local pSprite = player:GetSprite()
 	local fSprite = familiar:GetSprite()
