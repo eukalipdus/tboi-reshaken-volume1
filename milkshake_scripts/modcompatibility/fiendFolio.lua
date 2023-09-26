@@ -542,26 +542,26 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
     }
     MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerFiendFolioEntities)
     local ffPills = {
-        [101] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [102] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [103] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [104] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [105] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [106] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [107] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [108] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [109] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [110] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [111] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [112] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [113] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [114] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [115] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [116] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [117] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [118] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [119] = MilkshakeVol1.enums.Orbs.RANDOM,
-        [120] = MilkshakeVol1.enums.Orbs.RANDOM,
+        [101] = MilkshakeVol1.enums.Orbs.PSYCHIC,
+        [102] = MilkshakeVol1.enums.Orbs.FIRE,
+        [103] = MilkshakeVol1.enums.Orbs.POISON,
+        [104] = MilkshakeVol1.enums.Orbs.WATER,
+        [105] = MilkshakeVol1.enums.Orbs.HOLY,
+        [106] = MilkshakeVol1.enums.Orbs.UNHOLY,
+        [107] = MilkshakeVol1.enums.Orbs.NATURE,
+        [108] = MilkshakeVol1.enums.Orbs.ELECTRIC,
+        [109] = MilkshakeVol1.enums.Orbs.UNDEAD,
+        [110] = MilkshakeVol1.enums.Orbs.RANDOM, --ROCK
+        [111] = MilkshakeVol1.enums.Orbs.WATER,
+        [112] = MilkshakeVol1.enums.Orbs.UNHOLY,
+        [113] = MilkshakeVol1.enums.Orbs.PSYCHIC,
+        [114] = MilkshakeVol1.enums.Orbs.FIRE,
+        [115] = MilkshakeVol1.enums.Orbs.UNDEAD,
+        [116] = MilkshakeVol1.enums.Orbs.HOLY,
+        [117] = MilkshakeVol1.enums.Orbs.ELECTRIC,
+        [118] = MilkshakeVol1.enums.Orbs.POISON,
+        [119] = MilkshakeVol1.enums.Orbs.RANDOM, --ROCK
+        [120] = MilkshakeVol1.enums.Orbs.NATURE,
     }
     for i, value in pairs(ffPills) do
         MilkshakeVol1.API:AddOrbsPerPill(i, value)
