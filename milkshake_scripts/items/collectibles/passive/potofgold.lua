@@ -40,7 +40,7 @@ function MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
     for i = 1, #rainbowPennies do
         total = total + rainbowPennies[i].weight
     end
-    local randomFloat = rng:RandomFloat() * total
+    local randomFloat = TSIL.Random.GetRandomFloat(0, total, rng)
     for i = 1, #rainbowPennies do
         if randomFloat < rainbowPennies[i].weight then
             return rainbowPennies[i]
