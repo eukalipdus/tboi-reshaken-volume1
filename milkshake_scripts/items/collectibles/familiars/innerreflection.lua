@@ -24,6 +24,25 @@ for _, animation in ipairs(DIRECTIONAL_ANIMATIONS) do
 	end
 end
 
+local L_ROOM_CENTRE = Vector(580, 420)
+
+local L_ROOM_SHAPES = {
+	[RoomShape.ROOMSHAPE_LTL] = true,
+	[RoomShape.ROOMSHAPE_LTR] = true,
+	[RoomShape.ROOMSHAPE_LBL] = true,
+	[RoomShape.ROOMSHAPE_LBR] = true,
+}
+
+---@return Vector
+local function CoolerGetCenterPos()
+	local room = game:GetRoom()
+	if L_ROOM_SHAPES[room:GetRoomShape()] then
+		return L_ROOM_CENTRE
+	else
+		return room:GetCenterPos()
+	end
+end
+
 ---If animation is one of the directional ones, makes it head the other direction (e.g. "HeadLeft" becomes "HeadRight")
 ---@param mainAnimation string
 ---@return string
@@ -66,7 +85,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, innerreflection.Familia
 function innerreflection:PostFamiliarUpdate(familiar)
 	local player = familiar.Player
 
-	local centre = game:GetRoom():GetCenterPos()
+	local centre = CoolerGetCenterPos()
 
 	local centreToPlayer = player.Position-centre
 	local targetPos = centre - centreToPlayer
@@ -89,7 +108,11 @@ function innerreflection:PostFamiliarUpdate(familiar)
 	local pSprite = player:GetSprite()
 	local fSprite = familiar:GetSprite()
 	fSprite:SetFrame(MirroredAnimation(pSprite:GetAnimation()), pSprite:GetFrame())
-	fSprite:SetOverlayFrame(MirroredAnimation(pSprite:GetOverlayAnimation()), pSprite:GetOverlayFrame())
+	if pSprite:GetOverlayAnimation() == "" then
+		fSprite:RemoveOverlay()
+	else
+		fSprite:SetOverlayFrame(MirroredAnimation(pSprite:GetOverlayAnimation()), pSprite:GetOverlayFrame())
+	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, innerreflection.PostFamiliarUpdate, enums.Familiars.INNER_REFLECTION)
 
