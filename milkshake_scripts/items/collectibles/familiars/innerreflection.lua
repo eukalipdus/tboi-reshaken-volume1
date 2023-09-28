@@ -89,7 +89,11 @@ function innerreflection:PostFamiliarUpdate(familiar)
 	local pSprite = player:GetSprite()
 	local fSprite = familiar:GetSprite()
 	fSprite:SetFrame(MirroredAnimation(pSprite:GetAnimation()), pSprite:GetFrame())
-	fSprite:SetOverlayFrame(MirroredAnimation(pSprite:GetOverlayAnimation()), pSprite:GetOverlayFrame())
+	if pSprite:GetOverlayAnimation() == "" then
+		fSprite:RemoveOverlay()
+	else
+		fSprite:SetOverlayFrame(MirroredAnimation(pSprite:GetOverlayAnimation()), pSprite:GetOverlayFrame())
+	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, innerreflection.PostFamiliarUpdate, enums.Familiars.INNER_REFLECTION)
 
