@@ -6,6 +6,13 @@ local HORSE_PILL_INC = 2048
 local NO_PILL = 0
 local FF_PILL_BEGIN = 101
 local FF_PILL_END = 120
+local worldRenderPos = {
+    Vector(614, 471),
+}
+
+local orbPillHud = Sprite()
+orbPillHud:Load("gfx/ui/ui_orbpills.anm2", true)
+orbPillHud:Play("HUD")
 
 local playersCurrentPills = {}
 
@@ -40,6 +47,31 @@ local matchingPills = {
     [PillColor.PILL_GOLD + HORSE_PILL_INC] = enums.Orbs.RANDOM,
 
 }
+
+local pillAnimFrames = {
+    PillColor.PILL_BLUE_BLUE,
+    PillColor.PILL_WHITE_BLUE,
+    PillColor.PILL_ORANGE_ORANGE,
+    PillColor.PILL_WHITE_WHITE,
+    PillColor.PILL_REDDOTS_RED,
+    PillColor.PILL_PINK_RED,
+    PillColor.PILL_BLUE_CADETBLUE,
+    PillColor.PILL_YELLOW_ORANGE,
+    PillColor.PILL_ORANGEDOTS_WHITE,
+    PillColor.PILL_WHITE_AZURE,
+    PillColor.PILL_BLACK_YELLOW,
+    PillColor.PILL_WHITE_BLACK,
+    PillColor.PILL_WHITE_YELLOW,
+}
+
+local function GetFrameFromId(pillColor, frameTable)
+    for index, pillToCheck in ipairs(frameTable) do
+        if pillColor == pillToCheck then
+            return index
+        end
+    end
+end
+
 
 --- Adds a pill color and its horse pill variant and gives it a corresponding spirit orb
 ---@param pillColor integer
@@ -94,5 +126,20 @@ function witchDoctorMask:PostPickupUpdate(pickup)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, witchDoctorMask.PostPickupUpdate)
+
+function witchDoctorMask:postRender()
+    if Game():GetHUD():IsVisible() then
+        for i = 1, Game():GetNumPlayers() do
+            local player = Isaac.GetPlayer(i)
+            local heldPill = player:GetPill(0)
+            if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
+            and heldPill ~= 0 then
+                orbPillHud:Render(Isaac.WorldToRenderPosition(worldRenderPos[i]))
+                orbPillHud:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
+            end
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.postRender)
 
 return witchDoctorMask
