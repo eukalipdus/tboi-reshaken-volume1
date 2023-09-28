@@ -116,7 +116,7 @@ local function Massacre()
 		if enemy:ToNPC() and enemy:GetData().UnholyOrbFlag then
 			local damage = UnholyOrb.DamageMultiplier + utility:GetCurrentChapter()
 			enemy:TakeDamage(damage, DamageFlag.DAMAGE_CRUSH, EntityRef(enemy), 1)
-			enemy:AddEntityFlags(EntityFlag.FLAG_BRIMSTONE_MARKED | EntityFlag.FLAG_BLEED_OUT | EntityFlag.FLAG_EXTRA_GORE)
+			enemy:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT | EntityFlag.FLAG_EXTRA_GORE)
 			if enemy.Type == EntityType.ENTITY_SHOPKEEPER then
 				enemy:Kill()
 				for _ = 1, 2 do
@@ -124,6 +124,7 @@ local function Massacre()
 				end
 				enemy:GetData().UnholyOrbFlag = nil
 			end
+			enemy:ClearEntityFlags(EntityFlag.FLAG_FREEZE)
 			if not enemy:HasMortalDamage() then
 				enemy:GetData().UnholyOrbFlag = nil
 			end
@@ -187,7 +188,8 @@ function UnholyOrb:onPEffectUpdate(player)
 
 			local enemy = TargetPositions[1]
 			enemy:GetData().UnholyOrbFlag = player
-
+			enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE|EntityFlag.FLAG_BRIMSTONE_MARKED)
+			enemy:SetColor(Color(1,0.5,0.5), 450, 1, true, true)
 			player.Velocity = Vector.Zero
 			table.remove(TargetPositions, 1)
 			utility:SetData(player, "UnholyTargetPositions", TargetPositions)
@@ -202,6 +204,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, UnholyOrb.onPEffe
 
 function UnholyOrb:enemyUpd(enemy)
 	if not enemy:GetData().UnholyOrbFlag then return end
+
 	if enemy:HasMortalDamage() then
 		local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.BLOOD, 0, enemy.Position, Vector.Zero, nil):ToTear()
 		tear.CollisionDamage = UnholyOrb.DamageMultiplier + utility:GetCurrentChapter()
@@ -223,6 +226,7 @@ function UnholyOrb:OnUnholyOrbUse(_, player)
 		utility:SetData(player, "UnholyTargetPositions", TargetPositions)
 		utility:SetData(player, "UnholyPlayerPosition", player.Position)
 		--player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_DARK_ARTS, true, UnholyOrb.DarkArtsStack)
+		--player:UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, UseFlag.USE_NOANIM | UseFlag.USE_MIMIC)
 		local pentagram = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HERETIC_PENTAGRAM, 0, Game():GetRoom():GetCenterPos(), Vector.Zero, player):ToEffect()
 		pentagram:GetData().UnholyOrbFlag = true
 		--pentagram.CollisionDamage = 0
