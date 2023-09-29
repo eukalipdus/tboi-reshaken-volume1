@@ -152,8 +152,8 @@ function UnholyOrb:onPlayerCollision(player, collider)
 	if not utility:GetData(player, "UnholyPlayerPosition") then return end
 	if collider:ToNPC() and not collider:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) then
 		local enemy = collider:ToNPC()
-		Game():ShakeScreen(5)
-		local damage = UnholyOrb.DamageMultiplier + utility:GetCurrentChapter()
+		Game():ShakeScreen(UnholyOrb.DamageMultiplier)
+		local damage = UnholyOrb.DamageMultiplier + UnholyOrb.DamageMultiplier*utility:GetCurrentChapter()
 		enemy:TakeDamage(damage, DamageFlag.DAMAGE_CRUSH, EntityRef(player), 1)
 		enemy:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT | EntityFlag.FLAG_BRIMSTONE_MARKED | EntityFlag.FLAG_EXTRA_GORE)
 		enemy:GetData().UnholyOrbFlag = true
