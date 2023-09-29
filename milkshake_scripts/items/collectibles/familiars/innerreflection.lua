@@ -4,7 +4,7 @@ local game = Game()
 
 local InnerReflectionConfig = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.INNER_REFLECTION)
 
-local BASE_CONTACT_DAMAGE = 25
+local BASE_CONTACT_DAMAGE = 4
 
 local MIRROR_WORLD_DAMAGE_BONUS = 2.5
 local MAX_DAMAGE_MULTIPLIER_INCREASE = 1
@@ -21,6 +21,25 @@ for _, animation in ipairs(DIRECTIONAL_ANIMATIONS) do
 		local animName2 = animation .. opposite
 		ANIMATIONS_OPPOSITE_DIRECTION[animName1] = animName2
 		ANIMATIONS_OPPOSITE_DIRECTION[animName2] = animName1
+	end
+end
+
+local L_ROOM_CENTRE = Vector(580, 420)
+
+local L_ROOM_SHAPES = {
+	[RoomShape.ROOMSHAPE_LTL] = true,
+	[RoomShape.ROOMSHAPE_LTR] = true,
+	[RoomShape.ROOMSHAPE_LBL] = true,
+	[RoomShape.ROOMSHAPE_LBR] = true,
+}
+
+---@return Vector
+local function CoolerGetCenterPos()
+	local room = game:GetRoom()
+	if L_ROOM_SHAPES[room:GetRoomShape()] then
+		return L_ROOM_CENTRE
+	else
+		return room:GetCenterPos()
 	end
 end
 
@@ -59,7 +78,6 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, innerreflection.Evalua
 ---@param familiar EntityFamiliar
 function innerreflection:FamiliarInit(familiar)
 	familiar.Color = Color(1,1,1,0.5)
-	print(test)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, innerreflection.FamiliarInit, enums.Familiars.INNER_REFLECTION)
 
@@ -67,7 +85,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, innerreflection.Familia
 function innerreflection:PostFamiliarUpdate(familiar)
 	local player = familiar.Player
 
-	local centre = game:GetRoom():GetCenterPos()
+	local centre = CoolerGetCenterPos()
 
 	local centreToPlayer = player.Position-centre
 	local targetPos = centre - centreToPlayer
@@ -78,16 +96,23 @@ function innerreflection:PostFamiliarUpdate(familiar)
 		familiar.Velocity = targetPos - familiar.Position
 	end
 
-	local familiarMultiplier = 
+	local familiarMultiplier =
 	player:GetCollectibleNum(enums.Collectibles.INNER_REFLECTION)
 	+ player:GetEffects():GetCollectibleEffectNum(enums.Collectibles.INNER_REFLECTION)
 
-	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier
+	familiar.SpriteScale = player.SpriteScale
+	familiar.SizeMulti = player.SpriteScale
+	local sizeDamageMultiplier = familiar.SizeMulti.Y
+	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier * sizeDamageMultiplier
 
 	local pSprite = player:GetSprite()
 	local fSprite = familiar:GetSprite()
 	fSprite:SetFrame(MirroredAnimation(pSprite:GetAnimation()), pSprite:GetFrame())
-	fSprite:SetOverlayFrame(MirroredAnimation(pSprite:GetOverlayAnimation()), pSprite:GetOverlayFrame())
+	if pSprite:GetOverlayAnimation() == "" then
+		fSprite:RemoveOverlay()
+	else
+		fSprite:SetOverlayFrame(MirroredAnimation(pSprite:GetOverlayAnimation()), pSprite:GetOverlayFrame())
+	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, innerreflection.PostFamiliarUpdate, enums.Familiars.INNER_REFLECTION)
 
@@ -98,15 +123,33 @@ function innerreflection:PostNewRoom()
 	local badelinesActive = false
 	for index = 0, game:GetNumPlayers()-1 do
 		local player = Isaac.GetPlayer(index)
+		if not isMirrorDimension then
+			--I really wanna make sure it doesn't linger for whole run if player loses the item in mirror world or something.
+			player:TryRemoveNullCostume(enums.Costumes.CELESTIAL_MIRROR_ALT)
+		end
 		if HasFamiliar(player) then
+			if isMirrorDimension then
+				player:AddNullCostume(enums.Costumes.CELESTIAL_MIRROR_ALT)
+			end
 			player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
 			player:EvaluateItems()
 			badelinesActive = true
 		end
 	end
 	if badelinesActive then
+		local newSpriteName
+		if isMirrorDimension then
+			newSpriteName = "familiar_innerreflection_mirror"
+		else
+			newSpriteName = "familiar_innerreflection"
+		end
+		local spritePath = "gfx/familiar/" .. newSpriteName .. ".png"
 		for _, badeline in ipairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.INNER_REFLECTION)) do
-			--Imma sleep for now. This can wait until tomorrow.
+			local sprite = badeline:GetSprite()
+			for layer = 0, 14 do
+				sprite:ReplaceSpritesheet(layer, spritePath)
+			end
+			sprite:LoadGraphics()
 		end
 	end
 end

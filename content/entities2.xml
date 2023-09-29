@@ -16,7 +16,7 @@
     </entity>
 
     <entity anm2path="familiar_innerreflection.anm2" name="Inner Reflection" id="3" tags="cansacrifice"
-	collisionDamage="25" collisionMass="5" collisionRadius="18" friction="1" numGridCollisionPoints="40" shadowSize="16">
+	collisionDamage="25" collisionMass="5" collisionRadius="18" collisionInterval="1" friction="1" numGridCollisionPoints="40" shadowSize="16">
     </entity>
 
     <entity anm2path="familiar_doggy_bag.anm2" name="Doggy Bag" id="3" tags="cansacrifice"
