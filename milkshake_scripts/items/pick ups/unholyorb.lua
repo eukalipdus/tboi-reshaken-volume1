@@ -114,7 +114,7 @@ local function Massacre()
 	Game():ShakeScreen(10)
 	for _, enemy in pairs(Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 5000, EntityPartition.ENEMY)) do
 		if enemy:ToNPC() and enemy:GetData().UnholyOrbFlag then
-			local damage = UnholyOrb.DamageMultiplier + utility:GetCurrentChapter()
+			local damage = UnholyOrb.DamageMultiplier + UnholyOrb.DamageMultiplier*utility:GetCurrentChapter()
 			enemy:TakeDamage(damage, DamageFlag.DAMAGE_CRUSH, EntityRef(enemy), 1)
 			enemy:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT | EntityFlag.FLAG_EXTRA_GORE)
 			if enemy.Type == EntityType.ENTITY_SHOPKEEPER then
