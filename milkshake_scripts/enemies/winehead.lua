@@ -61,7 +61,7 @@ function WineHead:WineHead_Update(enemy)
             sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, .75, 0, false, 1.5, 0)
         end
 
-        if Game():GetRoom():CheckLine(enemy.Position, target.Position, 0, 0, false, false) then
+        if Game():GetRoom():CheckLine(enemy.Position, target.Position, 3, 0, false, false) then
             data.trigger = data.trigger - 1
         end
         if data.trigger <= 0 then
