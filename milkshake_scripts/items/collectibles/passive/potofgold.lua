@@ -1,5 +1,6 @@
 local potOfGold = {}
 
+local enums = MilkshakeVol1.enums
 local PENNY_CONVERT_CHANCE = 0.5
 
 ---@class RainbowPenny
@@ -10,6 +11,38 @@ local PENNY_CONVERT_CHANCE = 0.5
 
 ---@type RainbowPenny[]
 local rainbowPennies = {}
+
+local weightedRainbowPennies = { -- Workaround to the other table making items added first being more common
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.ROTTEN_PENNY, weight = 0.25},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.FLAT_PENNY, weight = 0.45},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BURNT_PENNY, weight = 0.45},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BUTT_PENNY, weight = 0.25},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CHARGED_PENNY, weight = 0.25},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CURSED_PENNY, weight = 0.10},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BLOODY_PENNY, weight = 0.45},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BLESSED_PENNY, weight = 0.15},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.COUNTERFEIT_PENNY, weight = 0.25},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.ACID_PENNY, weight = 0.15},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CRYSTAL_PENNY, weight = 0.15},
+}
+
+if FiendFolio then
+    table.insert(weightedRainbowPennies,
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.SHARP_PENNY, weight = 0.10}
+    )
+
+    table.insert(weightedRainbowPennies,
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.EGG_PENNY, weight = 0.15}
+    )
+
+    table.insert(weightedRainbowPennies,
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.FUZZY_PENNY, weight = 0.25}
+    )
+
+        table.insert(weightedRainbowPennies,
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.MOLTEN_PENNY, weight = 0.05}
+    )
+end
 
 ---Adds a special penny to the pool of pennies spawnable by Pot Of Gold
 ---@param variant PickupVariant
@@ -37,18 +70,18 @@ end
 ---@return RainbowPenny
 function MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
     local total = 0
-    for i = 1, #rainbowPennies do
-        total = total + rainbowPennies[i].weight
+    for i = 1, #weightedRainbowPennies do
+        total = total + weightedRainbowPennies[i].weight
     end
     local randomFloat = TSIL.Random.GetRandomFloat(0, total, rng)
-    for i = 1, #rainbowPennies do
-        if randomFloat < rainbowPennies[i].weight then
-            return rainbowPennies[i]
+    for i = 1, #weightedRainbowPennies do
+        if randomFloat < weightedRainbowPennies[i].weight then
+            return weightedRainbowPennies[i]
         end
-        randomFloat = randomFloat - rainbowPennies[i].weight
+        randomFloat = randomFloat - weightedRainbowPennies[i].weight
     end
 
-    return rainbowPennies[1]
+    return weightedRainbowPennies[1]
 end
 
 ---@param pickup EntityPickup
