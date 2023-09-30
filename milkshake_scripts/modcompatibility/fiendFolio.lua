@@ -632,31 +632,31 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
-        FiendFolio.ITEM.TRINKET.TIME_LOST_DIAMOND,
+        FiendFolio.ITEM.ROCK.TIME_LOST_DIAMOND,
         function()
             return FiendFolio.GolemExists()
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
-        FiendFolio.ITEM.TRINKET.TWENTY_SIDED_EMERALD,
+        FiendFolio.ITEM.ROCK.TWENTY_SIDED_EMERALD,
         function()
             return FiendFolio.GolemExists()
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
-        FiendFolio.ITEM.TRINKET.TECHNOLOGICAL_RUBY_2,
+        FiendFolio.ITEM.ROCK.TECHNOLOGICAL_RUBY_2,
         function()
             return FiendFolio.GolemExists()
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
-        FiendFolio.ITEM.TRINKET.FIENDISH_AMETHYST,
+        FiendFolio.ITEM.ROCK.FIENDISH_AMETHYST,
         function()
             return FiendFolio.GolemExists()
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
-        FiendFolio.ITEM.TRINKET.FRIENDLY_RAPID_FIRE_OPAL,
+        FiendFolio.ITEM.ROCK.FRIENDLY_RAPID_FIRE_OPAL,
         function()
             return FiendFolio.GolemExists()
         end
