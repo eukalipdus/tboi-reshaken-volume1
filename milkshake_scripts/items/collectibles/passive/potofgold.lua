@@ -17,7 +17,7 @@ local weightedRainbowPennies = { -- Workaround to the other table making items a
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.FLAT_PENNY, weight = 0.45},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BURNT_PENNY, weight = 0.45},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BUTT_PENNY, weight = 0.25},
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CHARGED_PENNY, weight = 0.25},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CHARGED_PENNY, weight = 0.20},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CURSED_PENNY, weight = 0.10},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BLOODY_PENNY, weight = 0.45},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BLESSED_PENNY, weight = 0.15},
