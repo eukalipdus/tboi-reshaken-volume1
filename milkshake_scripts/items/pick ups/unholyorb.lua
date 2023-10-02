@@ -162,10 +162,6 @@ function UnholyOrb:onPEffectUpdate(player)
 	local TargetPositions = utility:GetData(player, "UnholyTargetPositions")
 	local playerStartPos = utility:GetData(player, "UnholyPlayerPosition")
 	Game():SpawnParticles(player.Position, EffectVariant.HAEMO_TRAIL, 3, 1)
-	--local sptr = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SPRITE_TRAIL, 0, player.Position, Vector.Zero, nil)
-	--sptr:SetColor(Color(0,0,0,0.5,0.7),-1,1, false, false)
-	--Game():SpawnParticles(player.Position, EffectVariant.SPRITE_TRAIL, 3, 1, Color(0,0,0,1, 0.7)) -- test
-	--Game():SpawnParticles(player.Position, EffectVariant.DARK_BALL_SMOKE_PARTICLE, 3, 1, Color(0,0,0,1, 0.7))
 	if Game():GetRoom():GetFrameCount() == 1 then
 		utility:SetData(player, "UnholyTargetPositions", nil)
 		utility:SetData(player, "UnholyPlayerPosition", nil)
@@ -179,7 +175,7 @@ function UnholyOrb:onPEffectUpdate(player)
 			player.GridCollisionClass = utility:GetData(player, "UnholyPlayerGridCollision")
 			player.EntityCollisionClass = utility:GetData(player, "UnholyPlayerEntityCollision")
 			player.Velocity = Vector.Zero
-			SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
+			--SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
 			Game():ShakeScreen(10)
 			for _, enemy in pairs(Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 5000, EntityPartition.ENEMY)) do
 				if enemy:ToNPC() and enemy:GetData().UnholyOrbFlag then
@@ -188,12 +184,18 @@ function UnholyOrb:onPEffectUpdate(player)
 					enemy:GetData().UnholyFreeze = nil
 		        end
 			end
+			local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 2, player.Position, Vector.Zero, player)
+			poof:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
+			local ppff = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, player.Position, Vector.Zero, player):ToEffect()
+			ppff:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
+
 		elseif player.Position:Distance(playerStartPos) < UnholyOrb.MaxDistance then
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MinSpeed)
 		else
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MaxSpeed)
 		end
 	elseif #TargetPositions > 0 then
+
 		if TargetPositions[1]:Exists() then
 			if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
 
@@ -201,8 +203,8 @@ function UnholyOrb:onPEffectUpdate(player)
 				Game():ShakeScreen(2)
 				SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
 				local enemy = table.remove(TargetPositions, 1)
-				local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, enemy.Position, Vector.Zero, nil)
-				poof:SetColor(Color(0,0,0,0.5,0.7),-1,1, false, false)
+				local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 2, enemy.Position, Vector.Zero, nil)
+				poof:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
 				enemy:BloodExplode()
 				utility:SetData(player, "UnholyTargetPositions", TargetPositions) -- idk if necessary
 				if enemy:ToNPC() then
@@ -225,6 +227,7 @@ function UnholyOrb:onPEffectUpdate(player)
 					BeggarRewards(enemy)
 				end
 			elseif player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MaxDistance then
+
 				player.Velocity = (TargetPositions[1].Position - player.Position):Resized(UnholyOrb.MinSpeed)
 			else
 				player.Velocity = (TargetPositions[1].Position - player.Position):Resized(UnholyOrb.MaxSpeed)
@@ -268,11 +271,30 @@ function UnholyOrb:OnUnholyOrbUse(_, player)
 		--pentagram.CollisionDamage = 0
 		pentagram.Color = Color(1,0.1,0.1)
 		pentagram:SetTimeout(10)
+		local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, player.Position, Vector.Zero, nil)
+		poof:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
+		local sptr = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SPRITE_TRAIL, 0, player.Position, Vector.Zero, player):ToEffect()
+		sptr:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
+		--sptr.SpriteScale = sptr.SpriteScale * 2
+		sptr.Parent = player
+		sptr:FollowParent(player)
+		sptr:GetData().UnholyOrbFlag = true
 	else
 		player:UseActiveItem(CollectibleType.COLLECTIBLE_DARK_ARTS)
 	end
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, UnholyOrb.OnUnholyOrbUse, enums.Orbs.UNHOLY)
+
+function UnholyOrb:TrailUpdate(effect)
+	if effect:GetData().UnholyOrbFlag then
+		if not utility:GetData(effect.SpawnerEntity, "UnholyPlayerPosition") then
+			effect:GetData().UnholyOrbFlag = nil
+			effect:Remove()
+		end
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, UnholyOrb.TrailUpdate, EffectVariant.SPRITE_TRAIL)
+--]]
 
 function UnholyOrb:PentaUpdate(effect)
 	if effect:GetData().UnholyOrbFlag then
