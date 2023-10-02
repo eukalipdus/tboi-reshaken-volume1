@@ -43,6 +43,8 @@ UnholyOrb.MinSpeed = 7
 UnholyOrb.MinDistance = 15
 UnholyOrb.MaxDistance = 60
 UnholyOrb.DarkArtsStack = 60
+UnholyOrb.MaxHitPoints = 5
+
 
 local function BeggarRewards(collider)
 	local rng = collider:GetDropRNG()
@@ -109,6 +111,7 @@ local function GetTargets()
 	return positionsTable
 end
 
+--[[
 local function Massacre()
 	SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
 	Game():ShakeScreen(10)
@@ -139,19 +142,21 @@ local function Massacre()
 		end
 	end
 end
+--]]
 
 function UnholyOrb:onPEffectUpdate(player)
-
 	if not utility:GetData(player, "UnholyTargetPositions") then return end
 	player:SetColor(Color(0,0,0,0.5, 0.7), 12, 1, true, true)
 	player.Velocity = player.Velocity * 0.77
 	player:SetMinDamageCooldown(2)
-	player:AddControlsCooldown(2) -- ? idk if it would work -- it works
+	player:AddControlsCooldown(2) -- ? idk if it would work -- it works (Paralysis)
 	player.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE --EntityGridCollisionClass.GRIDCOLL_WALLS
 	player.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
 	local TargetPositions = utility:GetData(player, "UnholyTargetPositions")
 	local playerStartPos = utility:GetData(player, "UnholyPlayerPosition")
-	Game():SpawnParticles(player.Position, EffectVariant.DARK_BALL_SMOKE_PARTICLE, 3, 1, Color(0,0,0,1, 0.7))
+	Game():SpawnParticles(player.Position, EffectVariant.HAEMO_TRAIL, 3, 1)
+	--Game():SpawnParticles(player.Position, EffectVariant.SPRITE_TRAIL, 3, 1, Color(0,0,0,1, 0.7)) -- test
+	--Game():SpawnParticles(player.Position, EffectVariant.DARK_BALL_SMOKE_PARTICLE, 3, 1, Color(0,0,0,1, 0.7))
 	if Game():GetRoom():GetFrameCount() == 1 then
 		utility:SetData(player, "UnholyTargetPositions", nil)
 		utility:SetData(player, "UnholyPlayerPosition", nil)
@@ -159,40 +164,49 @@ function UnholyOrb:onPEffectUpdate(player)
 		player.EntityCollisionClass = utility:GetData(player, "UnholyPlayerEntityCollision")
 	elseif #TargetPositions <= 0 then
 		if player.Position:Distance(playerStartPos) < UnholyOrb.MinDistance then
-			--[[
-			if player:GetEffects():GetCollectibleEffect(CollectibleType.COLLECTIBLE_DARK_ARTS) then
-				player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_DARK_ARTS, UnholyOrb.DarkArtsStack)
-			end
-			--]]
-			--player.Position = utility:GetData(player, "UnholyPlayerPosition")
 			player:SetMinDamageCooldown(UnholyOrb.InvincibleFrames)
 			utility:SetData(player, "UnholyPlayerPosition", nil)
 			utility:SetData(player, "UnholyTargetPositions", nil)
 			player.GridCollisionClass = utility:GetData(player, "UnholyPlayerGridCollision")
 			player.EntityCollisionClass = utility:GetData(player, "UnholyPlayerEntityCollision")
 			player.Velocity = Vector.Zero
-			Massacre()
-			player:BloodExplode()
+			SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
+			Game():ShakeScreen(10)
+			for _, enemy in pairs(Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 5000, EntityPartition.ENEMY)) do
+				if enemy:ToNPC() and enemy:GetData().UnholyOrbFlag then
+					enemy:ClearEntityFlags(EntityFlag.FLAG_FREEZE)
+					enemy:GetData().UnholyOrbFlag = nil
+		        end
+			end
 		elseif player.Position:Distance(playerStartPos) < UnholyOrb.MaxDistance then
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MinSpeed)
 		else
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MaxSpeed)
 		end
 	elseif #TargetPositions > 0 then
-		--[[
-		if not player:GetEffects():GetCollectibleEffect(CollectibleType.COLLECTIBLE_DARK_ARTS) then
-			player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_DARK_ARTS, true, 1)
-		end
-		--]]
 		if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
-
-			local enemy = TargetPositions[1]
-			enemy:GetData().UnholyOrbFlag = player
-			enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE|EntityFlag.FLAG_BRIMSTONE_MARKED)
-			enemy:SetColor(Color(1,0.5,0.5), 450, 1, true, true)
 			player.Velocity = Vector.Zero
-			table.remove(TargetPositions, 1)
-			utility:SetData(player, "UnholyTargetPositions", TargetPositions)
+			Game():ShakeScreen(2)
+			SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
+			local damage = UnholyOrb.DamageMultiplier + UnholyOrb.DamageMultiplier*utility:GetCurrentChapter()
+			local enemy = table.remove(TargetPositions, 1)
+			utility:SetData(player, "UnholyTargetPositions", TargetPositions) -- idk if necessary
+			if enemy:ToNPC() then
+				enemy:GetData().UnholyOrbFlag = player
+				enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE|EntityFlag.FLAG_BRIMSTONE_MARKED | EntityFlag.FLAG_BLEED_OUT | EntityFlag.FLAG_EXTRA_GORE)
+				enemy:SetColor(Color(1,0.5,0.5), -1, 1, true, true)
+				enemy:TakeDamage(damage, DamageFlag.DAMAGE_CRUSH, EntityRef(enemy), 1)
+				if enemy.Type == EntityType.ENTITY_SHOPKEEPER then
+					enemy:Kill()
+					for _ = 1, 2 do
+						Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, enemy.Position, RandomVector()*3, nil)
+					end
+				end
+			else
+				enemy:Kill()
+				enemy:Remove()
+				BeggarRewards(enemy)
+			end
 		elseif player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MaxDistance then
 			player.Velocity = (TargetPositions[1].Position - player.Position):Resized(UnholyOrb.MinSpeed)
 		else
@@ -204,15 +218,14 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, UnholyOrb.onPEffe
 
 function UnholyOrb:enemyUpd(enemy)
 	if not enemy:GetData().UnholyOrbFlag then return end
-
-	if enemy:HasMortalDamage() then
+	if enemy:HasMortalDamage() and enemy.MaxHitPoints >= UnholyOrb.MaxHitPoints then
+		enemy:GetData().UnholyOrbFlag = nil
 		local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.BLOOD, 0, enemy.Position, Vector.Zero, nil):ToTear()
 		tear.CollisionDamage = UnholyOrb.DamageMultiplier + utility:GetCurrentChapter()
 		tear:AddTearFlags(TearFlags.TEAR_BURSTSPLIT)
 		tear.Scale = 1.5
 		tear.FallingAcceleration = 10
 		tear.FallingSpeed = 10
-		--local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_RED, 0, enemy.Position, Vector.Zero, nil):ToEffect()
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, UnholyOrb.enemyUpd)
@@ -220,7 +233,6 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, UnholyOrb.enemyUpd)
 function UnholyOrb:OnUnholyOrbUse(_, player)
     local TargetPositions = GetTargets() -- table of npc and slot position
 	if #TargetPositions > 0 then
-
 		utility:SetData(player, "UnholyPlayerGridCollision", player.GridCollisionClass)
 		utility:SetData(player, "UnholyPlayerEntityCollision", player.EntityCollisionClass)
 		utility:SetData(player, "UnholyTargetPositions", TargetPositions)
