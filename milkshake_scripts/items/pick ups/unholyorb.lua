@@ -94,12 +94,11 @@ local function BeggarRewards(collider)
 	end
 end
 
-local function GetTargets()
-	--- get near enemy's position, else return basePos position
+local function GetTargets(player)
 	local positionsTable = {}
 	for _, enemy in pairs(Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 5000, EntityPartition.ENEMY)) do
 		if enemy:ToNPC() and not enemy:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and (enemy.Type == EntityType.ENTITY_SHOPKEEPER or (enemy:IsActiveEnemy() and enemy:IsVulnerableEnemy())) then
-			table.insert(positionsTable, enemy)
+			table.insert(positionsTable, {entity=enemy, distance=enemy.Position:Distance(player.Position)})
 			enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE|EntityFlag.FLAG_BRIMSTONE_MARKED|EntityFlag.FLAG_EXTRA_GORE)
         end
 	end
@@ -108,8 +107,14 @@ local function GetTargets()
 			table.insert(positionsTable, slot)
 		end
 	end
-	positionsTable = utility:Shuffle(positionsTable, Game():GetSeeds():GetStartSeed()) -- shuffle table
-	return positionsTable
+	--positionsTable = utility:Shuffle(positionsTable, Game():GetSeeds():GetStartSeed()) -- shuffle table
+	table.sort(positionsTable, function(a, b) return a.distance < b.distance end)
+
+	local sortedEntities = {}
+	for _, data in ipairs(positionsTable) do
+		table.insert(sortedEntities, data.entity)
+	end
+	return sortedEntities
 end
 
 --[[
@@ -187,10 +192,14 @@ function UnholyOrb:onPEffectUpdate(player)
 	elseif #TargetPositions > 0 then
 		if TargetPositions[1]:Exists() then
 			if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
+
 				player.Velocity = Vector.Zero
 				Game():ShakeScreen(2)
 				SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
 				local enemy = table.remove(TargetPositions, 1)
+				local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, enemy.Position, Vector.Zero, nil)
+				poof:SetColor(Color(0,0,0,0.5,0.7),-1,1, false, false)
+				enemy:BloodExplode()
 				utility:SetData(player, "UnholyTargetPositions", TargetPositions) -- idk if necessary
 				if enemy:ToNPC() then
 					if enemy.Type == EntityType.ENTITY_SHOPKEEPER then
@@ -238,7 +247,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, UnholyOrb.enemyUpd)
 
 function UnholyOrb:OnUnholyOrbUse(_, player)
-    local TargetPositions = GetTargets() -- table of npc and slot position
+    local TargetPositions = GetTargets(player) -- table of npc and slot position
 	if #TargetPositions > 0 then
 		utility:SetData(player, "UnholyPlayerGridCollision", player.GridCollisionClass)
 		utility:SetData(player, "UnholyPlayerEntityCollision", player.EntityCollisionClass)
