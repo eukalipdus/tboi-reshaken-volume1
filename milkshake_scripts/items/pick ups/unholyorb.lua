@@ -99,7 +99,8 @@ local function GetTargets(player)
 	for _, enemy in pairs(Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 5000, EntityPartition.ENEMY)) do
 		if enemy:ToNPC() and not enemy:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and (enemy.Type == EntityType.ENTITY_SHOPKEEPER or (enemy:IsActiveEnemy() and enemy:IsVulnerableEnemy())) then
 			table.insert(positionsTable, {entity=enemy, distance=enemy.Position:Distance(player.Position)})
-			enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE|EntityFlag.FLAG_BRIMSTONE_MARKED|EntityFlag.FLAG_EXTRA_GORE)
+			enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE)
+			enemy:GetData().UnholyFreeze = true
         end
 	end
 	for _, slot in pairs(Isaac.FindByType(EntityType.ENTITY_SLOT)) do
@@ -161,6 +162,8 @@ function UnholyOrb:onPEffectUpdate(player)
 	local TargetPositions = utility:GetData(player, "UnholyTargetPositions")
 	local playerStartPos = utility:GetData(player, "UnholyPlayerPosition")
 	Game():SpawnParticles(player.Position, EffectVariant.HAEMO_TRAIL, 3, 1)
+	local sptr = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SPRITE_TRAIL, 0, player.Position, Vector.Zero, nil)
+	sptr:SetColor(Color(0,0,0,0.5,0.7),-1,1, false, false)
 	--Game():SpawnParticles(player.Position, EffectVariant.SPRITE_TRAIL, 3, 1, Color(0,0,0,1, 0.7)) -- test
 	--Game():SpawnParticles(player.Position, EffectVariant.DARK_BALL_SMOKE_PARTICLE, 3, 1, Color(0,0,0,1, 0.7))
 	if Game():GetRoom():GetFrameCount() == 1 then
@@ -182,6 +185,7 @@ function UnholyOrb:onPEffectUpdate(player)
 				if enemy:ToNPC() and enemy:GetData().UnholyOrbFlag then
 					enemy:ClearEntityFlags(EntityFlag.FLAG_FREEZE)
 					enemy:GetData().UnholyOrbFlag = nil
+					enemy:GetData().UnholyFreeze = nil
 		        end
 			end
 		elseif player.Position:Distance(playerStartPos) < UnholyOrb.MaxDistance then
@@ -209,7 +213,7 @@ function UnholyOrb:onPEffectUpdate(player)
 						end
 					else
 						enemy:GetData().UnholyOrbFlag = player
-						enemy:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT)
+						enemy:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT| EntityFlag.FLAG_EXTRA_GORE | EntityFlag.FLAG_BRIMSTONE_MARKED)
 						enemy:SetColor(Color(1,0.5,0.5), -1, 1, true, true)
 						local damage = UnholyOrb.DamageMultiplier + UnholyOrb.DamageMultiplier*utility:GetCurrentChapter()
 						enemy:TakeDamage(damage, DamageFlag.DAMAGE_CRUSH, EntityRef(enemy), 1)
@@ -233,6 +237,10 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, UnholyOrb.onPEffectUpdate)
 
 function UnholyOrb:enemyUpd(enemy)
+	if enemy:GetData().UnholyFreeze then
+		enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE)
+	end
+
 	if not enemy:GetData().UnholyOrbFlag then return end
 	if enemy:HasMortalDamage() and enemy.MaxHitPoints >= UnholyOrb.MaxHitPoints then
 		enemy:GetData().UnholyOrbFlag = nil
