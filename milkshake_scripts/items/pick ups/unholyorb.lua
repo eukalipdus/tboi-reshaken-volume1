@@ -184,33 +184,39 @@ function UnholyOrb:onPEffectUpdate(player)
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MaxSpeed)
 		end
 	elseif #TargetPositions > 0 then
-		if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
-			player.Velocity = Vector.Zero
-			Game():ShakeScreen(2)
-			SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
-			local damage = UnholyOrb.DamageMultiplier + UnholyOrb.DamageMultiplier*utility:GetCurrentChapter()
-			local enemy = table.remove(TargetPositions, 1)
-			utility:SetData(player, "UnholyTargetPositions", TargetPositions) -- idk if necessary
-			if enemy:ToNPC() then
-				enemy:GetData().UnholyOrbFlag = player
-				enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE|EntityFlag.FLAG_BRIMSTONE_MARKED | EntityFlag.FLAG_BLEED_OUT | EntityFlag.FLAG_EXTRA_GORE)
-				enemy:SetColor(Color(1,0.5,0.5), -1, 1, true, true)
-				enemy:TakeDamage(damage, DamageFlag.DAMAGE_CRUSH, EntityRef(enemy), 1)
-				if enemy.Type == EntityType.ENTITY_SHOPKEEPER then
-					enemy:Kill()
-					for _ = 1, 2 do
-						Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, enemy.Position, RandomVector()*3, nil)
+		if TargetPositions[1]:Exists() then
+			if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
+				player.Velocity = Vector.Zero
+				Game():ShakeScreen(2)
+				SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
+				local enemy = table.remove(TargetPositions, 1)
+				utility:SetData(player, "UnholyTargetPositions", TargetPositions) -- idk if necessary
+				if enemy:ToNPC() then
+					if enemy.Type == EntityType.ENTITY_SHOPKEEPER then
+						enemy:Kill()
+						for _ = 1, 2 do
+							Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, enemy.Position, RandomVector()*3, nil)
+						end
+					else
+						enemy:GetData().UnholyOrbFlag = player
+						enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE|EntityFlag.FLAG_BRIMSTONE_MARKED | EntityFlag.FLAG_BLEED_OUT | EntityFlag.FLAG_EXTRA_GORE)
+						enemy:SetColor(Color(1,0.5,0.5), -1, 1, true, true)
+						local damage = UnholyOrb.DamageMultiplier + UnholyOrb.DamageMultiplier*utility:GetCurrentChapter()
+						enemy:TakeDamage(damage, DamageFlag.DAMAGE_CRUSH, EntityRef(enemy), 1)
 					end
+				else
+					enemy:Kill()
+					enemy:Remove()
+					BeggarRewards(enemy)
 				end
+			elseif player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MaxDistance then
+				player.Velocity = (TargetPositions[1].Position - player.Position):Resized(UnholyOrb.MinSpeed)
 			else
-				enemy:Kill()
-				enemy:Remove()
-				BeggarRewards(enemy)
+				player.Velocity = (TargetPositions[1].Position - player.Position):Resized(UnholyOrb.MaxSpeed)
 			end
-		elseif player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MaxDistance then
-			player.Velocity = (TargetPositions[1].Position - player.Position):Resized(UnholyOrb.MinSpeed)
 		else
-			player.Velocity = (TargetPositions[1].Position - player.Position):Resized(UnholyOrb.MaxSpeed)
+			table.remove(TargetPositions, 1)
+			utility:SetData(player, "UnholyTargetPositions", TargetPositions) -- idk if necessary
 		end
 	end
 end
