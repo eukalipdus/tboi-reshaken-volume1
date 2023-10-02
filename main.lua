@@ -81,6 +81,7 @@ include("milkshake_scripts.items.pick ups.delugeOrb")
 include("milkshake_scripts.items.pick ups.revenanceOrb")
 include("milkshake_scripts.items.pick ups.toxicorb")
 include("milkshake_scripts.items.pick ups.unholyorb")
+include("milkshake_scripts.items.pick ups.rockorb")
 
 
 --Pools
