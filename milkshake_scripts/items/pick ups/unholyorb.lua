@@ -100,6 +100,7 @@ local function GetTargets()
 	for _, enemy in pairs(Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 5000, EntityPartition.ENEMY)) do
 		if enemy:ToNPC() and not enemy:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and (enemy.Type == EntityType.ENTITY_SHOPKEEPER or (enemy:IsActiveEnemy() and enemy:IsVulnerableEnemy())) then
 			table.insert(positionsTable, enemy)
+			enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE|EntityFlag.FLAG_BRIMSTONE_MARKED|EntityFlag.FLAG_EXTRA_GORE)
         end
 	end
 	for _, slot in pairs(Isaac.FindByType(EntityType.ENTITY_SLOT)) do
@@ -199,7 +200,7 @@ function UnholyOrb:onPEffectUpdate(player)
 						end
 					else
 						enemy:GetData().UnholyOrbFlag = player
-						enemy:AddEntityFlags(EntityFlag.FLAG_FREEZE|EntityFlag.FLAG_BRIMSTONE_MARKED | EntityFlag.FLAG_BLEED_OUT | EntityFlag.FLAG_EXTRA_GORE)
+						enemy:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT)
 						enemy:SetColor(Color(1,0.5,0.5), -1, 1, true, true)
 						local damage = UnholyOrb.DamageMultiplier + UnholyOrb.DamageMultiplier*utility:GetCurrentChapter()
 						enemy:TakeDamage(damage, DamageFlag.DAMAGE_CRUSH, EntityRef(enemy), 1)
