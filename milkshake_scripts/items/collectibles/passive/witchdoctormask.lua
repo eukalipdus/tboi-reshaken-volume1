@@ -6,15 +6,27 @@ local HORSE_PILL_INC = 2048
 local NO_PILL = 0
 local FF_PILL_BEGIN = 101
 local FF_PILL_END = 120
+local NON_P1_SCALE = Vector(0.5, 0.5)
+
 local worldRenderPos = {
     Vector(614, 471),
+    Vector(394, 147),
 }
 
-local orbPillHud = Sprite()
-orbPillHud:Load("gfx/ui/ui_orbpills.anm2", true)
-orbPillHud:Play("HUD")
+local function CreatePillOverlay()
+    local orbPillHud = Sprite()
+    orbPillHud:Load("gfx/ui/ui_orbpills.anm2", true)
+    orbPillHud:Play("HUD")
+    return orbPillHud
+end
 
 local playersCurrentPills = {}
+local orbPillHuds = {
+    CreatePillOverlay(),
+    CreatePillOverlay(),
+    CreatePillOverlay(),
+    CreatePillOverlay(),
+}
 
 local matchingPills = {
     [PillColor.PILL_BLUE_BLUE] = enums.Orbs.WATER,
@@ -71,7 +83,6 @@ local function GetFrameFromId(pillColor, frameTable)
         end
     end
 end
-
 
 --- Adds a pill color and its horse pill variant and gives it a corresponding spirit orb
 ---@param pillColor integer
@@ -134,8 +145,16 @@ function witchDoctorMask:postRender()
             local heldPill = player:GetPill(0)
             if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
             and heldPill ~= 0 then
-                orbPillHud:Render(Isaac.WorldToRenderPosition(worldRenderPos[i]))
-                orbPillHud:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
+
+                if player:GetPlayerType() ~= PlayerType.PLAYER_JACOB
+                and player:GetPlayerType() ~= PlayerType.PLAYER_ESAU then
+                    orbPillHuds[i]:Render(Isaac.WorldToRenderPosition(worldRenderPos[i]))
+                    orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
+                end
+
+                if i > 1 then
+                    orbPillHuds[i].Scale = NON_P1_SCALE
+                end
             end
         end
     end
