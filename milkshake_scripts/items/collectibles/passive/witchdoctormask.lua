@@ -7,6 +7,7 @@ local NO_PILL = 0
 local FF_PILL_BEGIN = 101
 local FF_PILL_END = 120
 local NON_P1_SCALE = Vector(0.5, 0.5)
+local SPAWN_DISTANCE = 40
 
 local worldRenderPos = {
     Vector(614, 471),
@@ -160,5 +161,13 @@ function witchDoctorMask:postRender()
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.postRender)
+
+function witchDoctorMask:PostItemPickup(player, collectible)
+    if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK then return end
+    local roll = TSIL.Random.GetRandomInt(1, PillColor.NUM_PILLS)
+    local spawnPos = Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE)
+    TSIL.PickupSpecific.SpawnPill(roll, spawnPos)
+end
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_ITEM_PICKUP, witchDoctorMask.PostItemPickup)
 
 return witchDoctorMask
