@@ -14,27 +14,45 @@ UnholyOrb.KillBill = {
 	[18] = true,
 }
 
---[[
-If Epiphany then
-local Converter = Isaac.GetEntityTypeByName('Converter Beggar)
-UnholyOrb.KillBill[Converter.Variant] = true
-end
---]]
+if FiendFolio then
+	UnholyOrb.FiendFolio ={}
+	UnholyOrb.KillBill[FiendFolio.FF.HugBeggar.Var] = true
+	UnholyOrb.KillBill[FiendFolio.FF.EvilBeggar.Var] = true
+	UnholyOrb.KillBill[FiendFolio.FF.ZodiacBeggar.Var] = true
+	UnholyOrb.KillBill[FiendFolio.FF.CellGame.Var] = true
+	UnholyOrb.KillBill[FiendFolio.FF.FakeBeggar.Var] = true
+	UnholyOrb.FiendFolio.Hearts = {
+		--immortal
+		--halfbalck
+	}
 
---[[
-if FF then
-local Hug = Isaac.GetEntityTypeByName('Hug Beggar)
-UnholyOrb.KillBill[Hug.Variant] = true
-local Evil = Isaac.GetEntityTypeByName('Evil Beggar)
-UnholyOrb.KillBill[Evil.Variant] = true
-local Zodiacc = Isaac.GetEntityTypeByName('Zodiacc Beggar)
-UnholyOrb.KillBill[Zodiacc.Variant] = true
-local Cell = Isaac.GetEntityTypeByName('Cell Game)
-UnholyOrb.KillBill[Cell.Variant] = true
-local Fake = Isaac.GetEntityTypeByName('Fake Beggar)
-UnholyOrb.KillBill[Fake.Variant] = true
 end
---]]
+
+if Epiphany then
+	UnholyOrb.Epiphany = {}
+	UnholyOrb.Epiphany.ConvertBegga = Isaac.GetEntityVariantByName("Converter Beggar")
+	UnholyOrb.KillBill[UnholyOrb.Epiphany.ConvertBegga] = true
+end
+
+
+--[
+if EclipsedMod then
+	UnholyOrb.Eclipsed ={}
+	UnholyOrb.KillBill[EclipsedMod.enums.Slots.MongoBeggar] = true
+	UnholyOrb.KillBill[EclipsedMod.enums.Slots.DeliriumBeggar] = true
+	UnholyOrb.Eclipsed.DeliVariants = {
+	EclipsedMod.enums.Pickups.DeliObjectCell,
+	EclipsedMod.enums.Pickups.DeliObjectBomb,
+	EclipsedMod.enums.Pickups.DeliObjectKey,
+	EclipsedMod.enums.Pickups.DeliObjectCard,
+	EclipsedMod.enums.Pickups.DeliObjectPill,
+	EclipsedMod.enums.Pickups.DeliObjectRune,
+	EclipsedMod.enums.Pickups.DeliObjectHeart,
+	EclipsedMod.enums.Pickups.DeliObjectCoin,
+	EclipsedMod.enums.Pickups.DeliObjectBattery,
+	}
+end
+--]
 
 UnholyOrb.DamageMultiplier = 5
 UnholyOrb.InvincibleFrames = 90 -- 1.5 sec
@@ -52,6 +70,7 @@ local function BeggarRewards(collider)
 		for _ = 0, rng:RandomInt(3) do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 5 then -- devil
 		if rng:RandomFloat() < 0.5 then
 			local card = Game():GetItemPool():GetCard(collider.InitSeed, true, false, false)
@@ -59,22 +78,27 @@ local function BeggarRewards(collider)
 		else
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 6 then -- shell
 		for _ = 0, rng:RandomInt(2)+2 do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 7 then -- key
 		for _ = 0, rng:RandomInt(2) do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 9 then -- bomb
 		for _ = 0, rng:RandomInt(2)+2 do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_BOMB, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 13 then -- battery
 		for _ = 0, rng:RandomInt(2) do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 15 then -- hell
 		if rng:RandomFloat() < 0.5 then
 			for _ = 0, 1 do
@@ -86,10 +110,57 @@ local function BeggarRewards(collider)
 				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collider.Position, RandomVector()*3, nil)
 			end
 		end
+		return
 	elseif collider.Variant == 18 then -- rotten
 		for _ = 0, rng:RandomInt(2) do
 			local randHeart = rng:RandomInt(2)+11 -- bone or rotten
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, randHeart, collider.Position, RandomVector()*3, nil)
+		end
+		return
+	end
+	if UnholyOrb.FiendFolio then
+		if collider.Variant == FiendFolio.FF.HugBeggar.Var then
+			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 0, collider.Position, RandomVector()*3, nil)
+			return
+		elseif collider.Variant == FiendFolio.FF.EvilBeggar.Var then
+			for _ = 0, rng:RandomInt(2)+1 do
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collider.Position, RandomVector()*3, nil)
+			end
+			--idk where is half black and immortal harts
+			return
+		elseif collider.Variant == FiendFolio.FF.ZodiacBeggar.Var then
+			for _ = 0, rng:RandomInt(2) do
+				local rune = Game():GetItemPool():GetCard(rng:GetSeed(), false, false, true)
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, collider.Position, RandomVector()*3, nil)
+			end
+			return
+		elseif collider.Variant == FiendFolio.FF.CellGame.Var then
+			for _ = 0, rng:RandomInt(2)+2 do
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, 0, collider.Position, RandomVector()*3, nil)
+			end
+			return
+		elseif collider.Variant == FiendFolio.FF.FakeBeggar.Var then
+			Isaac.Spawn(EntityType.ENTITY_BOMB, BombVariant.BOMB_TROLL, 0, collider.Position, RandomVector()*3, nil)
+			return
+		end
+	end
+	if UnholyOrb.Epiphany then
+		if collider.Variant == UnholyOrb.Epiphany.ConvertBegga then
+			for _ = 0, rng:RandomInt(2)+1 do
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 0, collider.Position, RandomVector()*3, nil)
+			end
+			return
+		end
+	end
+	if UnholyOrb.Eclipsed then
+		if collider.Variant == EclipsedMod.enums.Slots.MongoBeggar then
+			for _ = 0, rng:RandomInt(2)+2 do
+				Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.MINISAAC, 0, collider.Position, RandomVector()*5, nil)
+			end
+			return
+		elseif collider.Variant == EclipsedMod.enums.Slots.DeliriumBeggar then
+			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, UnholyOrb.Eclipsed.DeliVariants[collider:GetDropRNG():RandomInt(#UnholyOrb.Eclipsed.DeliVariants)+1], collider.Position, RandomVector()*5, nil)
+			return
 		end
 	end
 end
@@ -105,7 +176,8 @@ local function GetTargets(player)
 	end
 	for _, slot in pairs(Isaac.FindByType(EntityType.ENTITY_SLOT)) do
 		if UnholyOrb.KillBill[slot.Variant] then
-			table.insert(positionsTable, slot)
+			table.insert(positionsTable, {entity=slot, distance=slot.Position:Distance(player.Position)})
+			--table.insert(positionsTable, slot)
 		end
 	end
 	--positionsTable = utility:Shuffle(positionsTable, Game():GetSeeds():GetStartSeed()) -- shuffle table
@@ -188,6 +260,7 @@ function UnholyOrb:onPEffectUpdate(player)
 			poof:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
 			local ppff = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, player.Position, Vector.Zero, player):ToEffect()
 			ppff:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
+			Game():GetRoom():EmitBloodFromWalls(5, 10)
 
 		elseif player.Position:Distance(playerStartPos) < UnholyOrb.MaxDistance then
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MinSpeed)
