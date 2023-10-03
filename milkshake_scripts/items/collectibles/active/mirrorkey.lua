@@ -51,21 +51,31 @@ local MIRRORED_INPUTS = {
     [ButtonAction.ACTION_SHOOTLEFT] = ButtonAction.ACTION_SHOOTRIGHT,
     [ButtonAction.ACTION_SHOOTRIGHT] = ButtonAction.ACTION_SHOOTLEFT,
 }
+--- A mirror door with this index as target will travel to the mirror version of the room
+local MIRROR_DOOR_INDEX = 9999
 
-local IsMovingToMirrorRoom = false
-local PreviousMirrorDoorSlot = DoorSlot.NO_DOOR_SLOT
-
-
-TSIL.SaveManager.AddPersistentVariable(
-    MilkshakeVol1,
-    "MirrorDoorSlot",
-    DoorSlot.NO_DOOR_SLOT,
-    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
-)
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
     "IsInMirrorRoom",
     false,
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "EnableMirrorShader",
+    false,
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "MirrorDoorDoorSlot",
+    DoorSlot.NO_DOOR_SLOT,
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "PreviousRoomIndex",
+    -1,
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
 
@@ -98,7 +108,8 @@ end
 
 
 ---@param doorSlot DoorSlot
-local function SpawnFakeMirrorDoor(doorSlot)
+---@param target integer
+local function SpawnFakeMirrorDoor(doorSlot, target)
     local room = Game():GetRoom()
     local doorSlotPos = room:GetDoorSlotPosition(doorSlot)
 
@@ -113,6 +124,19 @@ local function SpawnFakeMirrorDoor(doorSlot)
     sprite.Rotation = rotation
     fakeDoor.Color = Color(1, 1, 1, 1, 0.2, 0.4, 0.7)
     fakeDoor.SortingLayer = SortingLayer.SORTING_DOOR
+
+    TSIL.Entities.SetEntityData(
+        MilkshakeVol1,
+        fakeDoor,
+        "MirrorDoorDoorSlot",
+        doorSlot
+    )
+    TSIL.Entities.SetEntityData(
+        MilkshakeVol1,
+        fakeDoor,
+        "MirrorDoorTarget",
+        target
+    )
 end
 
 
@@ -135,17 +159,7 @@ function MirrorKey:OnMirrorKeyUse(_, _, player)
         }
     end
 
-    local doorSlotPos = room:GetDoorSlotPosition(closeDoorSlot)
-    local wall = room:GetGridEntityFromPos(doorSlotPos)
-
-    wall.CollisionClass = GridCollisionClass.COLLISION_WALL_EXCEPT_PLAYER
-    SpawnFakeMirrorDoor(closeDoorSlot)
-
-    TSIL.SaveManager.SetPersistentVariable(
-        MilkshakeVol1,
-        "MirrorDoorSlot",
-        closeDoorSlot
-    )
+    SpawnFakeMirrorDoor(closeDoorSlot, MIRROR_DOOR_INDEX)
 
     return {
         Discharge = true,
@@ -160,59 +174,86 @@ MilkshakeVol1:AddCallback(
 )
 
 
----@param player EntityPlayer
-function MirrorKey:OnPlayerUpdate(player)
-    ---@type DoorSlot
-    local doorSlot = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "MirrorDoorSlot"
-    )
-    if doorSlot == DoorSlot.NO_DOOR_SLOT then return end
-
+---@param doorSlot DoorSlot
+local function PlacePlayersInDoorSlot(doorSlot)
     local room = Game():GetRoom()
-    local doorPosition = room:GetDoorSlotPosition(doorSlot)
-
-    if player.Position:DistanceSquared(doorPosition) <= ENTER_DOOR_DISTANCE ^ 2 then
-        IsMovingToMirrorRoom = true
-        PreviousMirrorDoorSlot = doorSlot
-
-        local cmd = GetGotoCommandForCurrentRoom()
-        Isaac.ExecuteCommand(cmd)
-        Game():StartRoomTransition(
-            GridRooms.ROOM_DEBUG_IDX,
-            Direction.LEFT,
-            RoomTransitionAnim.FADE_MIRROR
-        )
-    end
-end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_PEFFECT_UPDATE,
-    MirrorKey.OnPlayerUpdate
-)
-
-
-function MirrorKey:OnNewRoom()
-    if not IsMovingToMirrorRoom then return end
-    IsMovingToMirrorRoom = false
-
-    local room = Game():GetRoom()
-    local doorSlot = PreviousMirrorDoorSlot
-
-    TSIL.Doors.RemoveDoors(TSIL.Doors.GetDoors())
-    SpawnFakeMirrorDoor(doorSlot)
-
     local doorSlotPosition = room:GetDoorSlotPosition(doorSlot)
     local playerPosOffset = Vector(0, 40):Rotated(ROTATION_PER_DOOR_SLOT[doorSlot])
 
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         player.Position = doorSlotPosition + playerPosOffset
     end
+end
 
+
+---@param isActive boolean
+local function SetMirrorShaderActive(isActive)
     TSIL.SaveManager.SetPersistentVariable(
         MilkshakeVol1,
-        "IsInMirrorRoom",
-        true
+        "EnableMirrorShader",
+        isActive
     )
+end
+
+
+local function RemoveAllPickups()
+    local pickups = TSIL.EntitySpecific.GetPickups()
+    pickups = TSIL.Utils.Tables.Filter(pickups, function (_, pickup)
+        return pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE
+        or pickup.Price ~= 0
+    end)
+
+    for _, pickup in ipairs(pickups) do
+        pickup:Remove()
+    end
+end
+
+
+local function RemoveTallLadder()
+    local tallLadders = TSIL.EntitySpecific.GetEffects(EffectVariant.TALL_LADDER)
+    for _, ladder in ipairs(tallLadders) do
+        ladder:Remove()
+    end
+end
+
+
+local function AddLostCurse()
+    for _, player in ipairs(TSIL.Players.GetPlayers()) do
+        local effects = player:GetEffects()
+        effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
+    end
+end
+
+
+local function RemoveLostCurse()
+    for _, player in ipairs(TSIL.Players.GetPlayers()) do
+        local effects = player:GetEffects()
+        effects:RemoveNullEffect(NullItemID.ID_LOST_CURSE)
+    end
+end
+
+
+function MirrorKey:OnNewRoom()
+    local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "IsInMirrorRoom"
+    )
+    if not isInMirrorRoom then return end
+
+    local doorSlot = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "MirrorDoorDoorSlot"
+    )
+    local prevRoomIndex = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "PreviousRoomIndex"
+    )
+
+    TSIL.Doors.RemoveDoors(TSIL.Doors.GetDoors())
+    SpawnFakeMirrorDoor(doorSlot, prevRoomIndex)
+
+    SetMirrorShaderActive(true)
+    PlacePlayersInDoorSlot(doorSlot)
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
@@ -224,7 +265,7 @@ function MirrorKey:GetShaderParams(shaderName)
     if shaderName == "Milkshake Mirror Room" then
         local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
             MilkshakeVol1,
-            "IsInMirrorRoom"
+            "EnableMirrorShader"
         )
 
         local enableShader = 0.0
@@ -282,4 +323,160 @@ end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_INPUT_ACTION,
     MirrorKey.OnInput
+)
+
+
+---@param door EntityEffect
+function MirrorKey:OnMirrorDoorInit(door)
+    local sprite = door:GetSprite()
+    sprite:Play("Closed", true)
+
+    TSIL.Entities.SetEntityData(
+        MilkshakeVol1,
+        door,
+        "IsClosed",
+        true
+    )
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_INIT,
+    MirrorKey.OnMirrorDoorInit,
+    MilkshakeVol1.enums.Effects.MIRROR_KEY_DOOR
+)
+
+
+---@param door EntityEffect
+local function UpdateOpenState(door)
+    local sprite = door:GetSprite()
+    local room = Game():GetRoom()
+    local wall = room:GetGridEntityFromPos(door.Position)
+    local isClear = room:IsClear()
+
+    local isClosed = TSIL.Entities.GetEntityData(
+        MilkshakeVol1,
+        door,
+        "IsClosed"
+    )
+
+    if isClear and isClosed then
+        sprite:Play("Open", true)
+        wall.CollisionClass = GridCollisionClass.COLLISION_WALL_EXCEPT_PLAYER
+        TSIL.Entities.SetEntityData(
+            MilkshakeVol1,
+            door,
+            "IsClosed",
+            false
+        )
+    elseif not isClear and not isClosed then
+        sprite:Play("Close", true)
+        wall.CollisionClass = GridCollisionClass.COLLISION_WALL
+        TSIL.Entities.SetEntityData(
+            MilkshakeVol1,
+            door,
+            "IsClosed",
+            true
+        )
+    end
+
+    if sprite:IsFinished("Close") then
+        sprite:Play("Closed", true)
+    elseif sprite:IsFinished("Opened") then
+        sprite:Play("Opened")
+    end
+end
+
+
+---@param door EntityEffect
+local function CheckIfPlayerEnters(door)
+    local player = Game():GetNearestPlayer(door.Position)
+    local room = Game():GetRoom()
+    local gridIndex = room:GetGridIndex(door.Position)
+    local doorPosition = room:GetGridPosition(gridIndex)
+
+    if player.Position:DistanceSquared(doorPosition) <= ENTER_DOOR_DISTANCE ^ 2 then
+        local target = TSIL.Entities.GetEntityData(
+            MilkshakeVol1,
+            door,
+            "MirrorDoorTarget"
+        )
+        local doorSlot = TSIL.Entities.GetEntityData(
+            MilkshakeVol1,
+            door,
+            "MirrorDoorDoorSlot"
+        )
+
+        if target == MIRROR_DOOR_INDEX then
+            local level = Game():GetLevel()
+            local roomIndex = level:GetCurrentRoomIndex()
+
+            TSIL.Utils.Functions.RunNextCallback(
+                MilkshakeVol1,
+                ModCallbacks.MC_POST_NEW_ROOM,
+                function ()
+                    RemoveAllPickups()
+                    RemoveTallLadder()
+                    AddLostCurse()
+                end
+            )
+
+            TSIL.SaveManager.SetPersistentVariable(
+                MilkshakeVol1,
+                "IsInMirrorRoom",
+                true
+            )
+            TSIL.SaveManager.SetPersistentVariable(
+                MilkshakeVol1,
+                "MirrorDoorDoorSlot",
+                doorSlot
+            )
+            TSIL.SaveManager.SetPersistentVariable(
+                MilkshakeVol1,
+                "PreviousRoomIndex",
+                roomIndex
+            )
+
+            local cmd = GetGotoCommandForCurrentRoom()
+            Isaac.ExecuteCommand(cmd)
+            Game():StartRoomTransition(
+                GridRooms.ROOM_DEBUG_IDX,
+                Direction.LEFT,
+                RoomTransitionAnim.FADE_MIRROR
+            )
+        else
+            TSIL.SaveManager.SetPersistentVariable(
+                MilkshakeVol1,
+                "IsInMirrorRoom",
+                false
+            )
+            TSIL.Utils.Functions.RunNextCallback(
+                MilkshakeVol1,
+                ModCallbacks.MC_POST_NEW_ROOM,
+                function ()
+                    SetMirrorShaderActive(false)
+                    Game():GetHUD():SetVisible(true)
+                    PlacePlayersInDoorSlot(doorSlot)
+                    RemoveLostCurse()
+                end
+            )
+
+            Game():StartRoomTransition(
+                target,
+                Direction.LEFT,
+                RoomTransitionAnim.FADE_MIRROR
+            )
+        end
+    end
+end
+
+
+---@param door EntityEffect
+function MirrorKey:OnMirrorDoorUpdate(door)
+    UpdateOpenState(door)
+
+    CheckIfPlayerEnters(door)
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_UPDATE,
+    MirrorKey.OnMirrorDoorUpdate,
+    MilkshakeVol1.enums.Effects.MIRROR_KEY_DOOR
 )
