@@ -34,7 +34,11 @@ function prismaticDice:FamiliarUpdate(familiar)
         end
         
     elseif familiar.Variant == FamiliarVariant.ANGELIC_PRISM then
-        familiar.Visible = false
+        for _, currentPrism in ipairs(wispPrisms) do
+            if GetPtrHash(familiar) == currentPrism.PrismPtr then
+                familiar.Visible = false
+            end
+        end
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate)
