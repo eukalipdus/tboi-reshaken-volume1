@@ -6,6 +6,8 @@ local RED = Color(141 / 255, 2 / 255, 0, 1, 141 / 255, 2 / 255, 0)
 local YELLOW = Color(135 / 255, 140 / 255, 20 / 255, 1, 135 / 255, 140 / 255, 20 / 255)
 local GREEN = Color(0, 133 / 255, 2 / 255, 1, 0, 133 / 255, 2 / 255)
 local BLUE = Color(4 / 255, 99 / 255, 147 / 255, 1, 4 / 255, 99 / 255, 147 / 255)
+local TEAR_COLLISION_RADIUS = 10
+local LASER_COLLISION_RADIUS = 30
 
 --- Mimicks the effect of Angelic Prism
 ---@param redEntity Entity
@@ -66,7 +68,7 @@ function prismaticDice:FamiliarUpdate(familiar)
     local bombsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_BOMB)
     for _, bomb in ipairs(bombsInRoom) do
         bomb = bomb:ToBomb()
-        if bomb.Position:Distance(familiar.Position, bomb.Position) < 10
+        if bomb.Position:Distance(familiar.Position, bomb.Position) < TEAR_COLLISION_RADIUS
         and bomb.IsFetus
         and not utility:GetData(bomb, "PrismaticWispBomb") then
             bomb:Remove()
