@@ -47,8 +47,6 @@ function prismaticDice:PostNewRoom()
     local prisms = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ANGELIC_PRISM)
     for _, currentPrism in ipairs(prisms) do
         for _, storedPrism in ipairs(wispPrisms) do
-            print(GetPtrHash(currentPrism))
-            print(storedPrism.PrismPtr)
             if GetPtrHash(currentPrism) == storedPrism.PrismPtr then
                 currentPrism:Remove()
             end
