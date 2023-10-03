@@ -65,7 +65,9 @@ function prismaticDice:FamiliarUpdate(familiar)
 
     local bombsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_BOMB)
     for _, bomb in ipairs(bombsInRoom) do
+        bomb = bomb:ToBomb()
         if bomb.Position:Distance(familiar.Position, bomb.Position) < 10
+        and bomb.IsFetus
         and not utility:GetData(bomb, "PrismaticWispBomb") then
             bomb:Remove()
 
