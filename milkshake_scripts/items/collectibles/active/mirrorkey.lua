@@ -198,6 +198,11 @@ end
 
 local function RemoveAllPickups()
     local pickups = TSIL.EntitySpecific.GetPickups()
+    pickups = TSIL.Utils.Tables.Filter(pickups, function (_, pickup)
+        return pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE
+        or pickup.Price ~= 0
+    end)
+
     for _, pickup in ipairs(pickups) do
         pickup:Remove()
     end
