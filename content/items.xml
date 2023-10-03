@@ -41,6 +41,7 @@
     <trinket name="Acid Penny"    description="Wealth of Sickness" gfx="trinkets_acidpenny.png" />
     <trinket name="Crystal Penny" description="Wealth of Knowledge"  gfx="trinkets_crystalpenny.png" />
     <trinket name="Rock Wheel"    description="Stone Aged Allies"    gfx="rock_wheel.png" cache="speed" tags="nogreed"/>
+    <trinket name="Amber Shard" description="Hidden placeholder power..." gfx="trinkets_ambergem.png" tags="nogreed"/>
 
     <!-- Hidden items -->
     <passive id="500" name="BRENDA CUSTOM FIRE WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
