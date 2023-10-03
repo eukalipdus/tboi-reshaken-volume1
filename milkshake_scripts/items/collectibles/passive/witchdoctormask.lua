@@ -139,7 +139,7 @@ function witchDoctorMask:PostPickupUpdate(pickup)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, witchDoctorMask.PostPickupUpdate)
 
-function witchDoctorMask:postRender()
+function witchDoctorMask:PostRender()
     if Game():GetHUD():IsVisible() then
         for i = 1, Game():GetNumPlayers() do
             local player = Isaac.GetPlayer(i)
@@ -160,7 +160,7 @@ function witchDoctorMask:postRender()
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.postRender)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.PostRender)
 
 function witchDoctorMask:PostItemPickup(player, collectible)
     if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK then return end
