@@ -212,6 +212,22 @@ local function RemoveTallLadder()
 end
 
 
+local function AddLostCurse()
+    for _, player in ipairs(TSIL.Players.GetPlayers()) do
+        local effects = player:GetEffects()
+        effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
+    end
+end
+
+
+local function RemoveLostCurse()
+    for _, player in ipairs(TSIL.Players.GetPlayers()) do
+        local effects = player:GetEffects()
+        effects:RemoveNullEffect(NullItemID.ID_LOST_CURSE)
+    end
+end
+
+
 function MirrorKey:OnNewRoom()
     local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
@@ -394,6 +410,7 @@ local function CheckIfPlayerEnters(door)
                 function ()
                     RemoveAllPickups()
                     RemoveTallLadder()
+                    AddLostCurse()
                 end
             )
 
@@ -433,6 +450,7 @@ local function CheckIfPlayerEnters(door)
                     SetMirrorShaderActive(false)
                     Game():GetHUD():SetVisible(true)
                     PlacePlayersInDoorSlot(doorSlot)
+                    RemoveLostCurse()
                 end
             )
 
