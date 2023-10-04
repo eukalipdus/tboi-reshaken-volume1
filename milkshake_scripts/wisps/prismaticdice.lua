@@ -6,8 +6,8 @@ local RED = Color(141 / 255, 2 / 255, 0, 1, 141 / 255, 2 / 255, 0)
 local YELLOW = Color(135 / 255, 140 / 255, 20 / 255, 1, 135 / 255, 140 / 255, 20 / 255)
 local GREEN = Color(0, 133 / 255, 2 / 255, 1, 0, 133 / 255, 2 / 255)
 local BLUE = Color(4 / 255, 99 / 255, 147 / 255, 1, 4 / 255, 99 / 255, 147 / 255)
+local BRIM_MAX_DISTANCE = 33 -- Azazel's is 77, for reference
 local TEAR_COLLISION_RADIUS = 10
-local LASER_COLLISION_RADIUS = 30
 
 --- Mimicks the effect of Angelic Prism
 ---@param redEntity Entity
@@ -31,6 +31,19 @@ local function CreateAngelicPrismSplit(redEntity, yellowEntity, greenEntity, blu
     greenEntity.Color = GREEN
     blueEntity.Color = BLUE
     return splitEntities
+end
+
+local function ShouldLaserSplit(laser)
+    local wispsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.WISP, enums.Collectibles.PRISMATIC_DICE)
+    local samples = laser:GetNonOptimizedSamples()
+    for _, wisp in ipairs(wispsInRoom) do
+        for i = 0, #samples - 1 do
+            local point = samples:Get(i)
+            if point:Distance(wisp.Position, laser.Position) < TEAR_COLLISION_RADIUS then
+                return true
+            end
+        end
+    end
 end
 
 function prismaticDice:FamiliarUpdate(familiar)
@@ -90,7 +103,56 @@ function prismaticDice:FamiliarUpdate(familiar)
             blueBomb.Velocity = (blueBomb.Velocity):Rotated(-30)
         end
     end
+
+    local lasersInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_LASER)
+    for _, laser in ipairs(lasersInRoom) do
+        laser = laser:ToLaser()
+        if ShouldLaserSplit(laser)
+        and (laser.Parent).Type == EntityType.ENTITY_PLAYER
+        and not utility:GetData(laser, "PrismaticDiceWispLaser") then
+            utility:SetData(laser, "PrismaticDiceWispLaser", true)
+            if laser.Variant == LaserVariant.THICK_RED then
+                laser.MaxDistance = BRIM_MAX_DISTANCE
+
+                local redLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
+                local yellowLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
+                local greenLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
+                local blueLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
+
+                local splitLasers = CreateAngelicPrismSplit(redLaser,
+                                                            yellowLaser,
+                                                            greenLaser,
+                                                            blueLaser,
+                                                            "PrismaticDiceWispLaser")
+
+                utility:SetData(laser, "WispLaserChildren", splitLasers)
+
+                for _, currentLaser in ipairs(splitLasers) do
+                    currentLaser.Position = currentLaser.Position + Vector(5,5)
+                end
+
+                redLaser.Angle = redLaser.Angle + 30
+                yellowLaser.Angle = yellowLaser.Angle + 10
+                greenLaser.Angle = greenLaser.Angle - 10
+                blueLaser.Angle = blueLaser.Angle - 30
+            end
+        end
+    end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate, FamiliarVariant.WISP)
+
+
+function prismaticDice:PostLaserUpdate(laser)
+    if not utility:GetData(laser, "WispLaserChildren") then return end
+    if not ShouldLaserSplit(laser) then
+        for _, splitLaser in ipairs(utility:GetData(laser, "WispLaserChildren")) do
+            splitLaser:Remove()
+        end
+        laser.MaxDistance = 9999
+        utility:SetData(laser, "WispLaserChildren", nil)
+        utility:SetData(laser, "PrismaticDiceWispLaser", false)
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE, prismaticDice.PostLaserUpdate)
 
 return prismaticDice
