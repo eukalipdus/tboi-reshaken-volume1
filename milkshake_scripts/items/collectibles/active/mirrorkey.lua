@@ -78,6 +78,85 @@ TSIL.SaveManager.AddPersistentVariable(
     -1,
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "RoomsMirrorKeyWasUsed",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+
+
+---@return integer
+local function GetCurrentRoomIndex()
+    local level = Game():GetLevel()
+    local roomDesc = level:GetCurrentRoomDesc()
+    return roomDesc.ListIndex
+end
+
+
+local function CanUseMirrorKey()
+    local level = Game():GetLevel()
+    local roomIndex = level:GetCurrentRoomIndex()
+    if roomIndex == GridRooms.ROOM_DEBUG_IDX then
+        return false
+    end
+
+    local roomsMirrorKeyWasUsed = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "RoomsMirrorKeyWasUsed"
+    )
+    local roomListIndex = GetCurrentRoomIndex()
+
+    local wasMirrorKeyUsed = roomsMirrorKeyWasUsed[roomListIndex]
+    return not wasMirrorKeyUsed
+end
+
+
+---@param oldItem CollectibleType
+---@param newItem CollectibleType
+local function ReplaceItems(oldItem, newItem)
+    for _, player in ipairs(TSIL.Players.GetPlayers()) do
+        for activeSlot = ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_POCKET2, 1 do
+            local activeItem = player:GetActiveItem(activeSlot)
+            if oldItem == activeItem then
+                local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
+                player:AddCollectible(
+                    newItem,
+                    charge,
+                    false,
+                    activeSlot
+                )
+            end
+        end
+    end
+
+    local collectibles = TSIL.EntitySpecific.GetPickups(PickupVariant.PICKUP_COLLECTIBLE, oldItem)
+    for _, collectible in ipairs(collectibles) do
+        collectible:Morph(
+            collectible.Type,
+            collectible.Variant,
+            newItem,
+            true,
+            true
+        )
+    end
+end
+
+
+---Changes all mirror keys to uncharged mirror if the item can't be use and viceversa
+local function UpdateMirrorKeyChargeState()
+    if CanUseMirrorKey() then
+        ReplaceItems(
+            MilkshakeVol1.enums.Collectibles.UNCHARGED_MIRROR_KEY,
+            MilkshakeVol1.enums.Collectibles.MIRROR_KEY
+        )
+    else
+        ReplaceItems(
+            MilkshakeVol1.enums.Collectibles.MIRROR_KEY,
+            MilkshakeVol1.enums.Collectibles.UNCHARGED_MIRROR_KEY
+        )
+    end
+end
 
 
 ---Returns the goto command that has to be run to teleport to a copy of the current room.
@@ -159,7 +238,15 @@ function MirrorKey:OnMirrorKeyUse(_, _, player)
         }
     end
 
+    local roomsMirrorKeyWasUsed = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "RoomsMirrorKeyWasUsed"
+    )
+    local roomIndex = GetCurrentRoomIndex()
+    roomsMirrorKeyWasUsed[roomIndex] = true
+
     SpawnFakeMirrorDoor(closeDoorSlot, MIRROR_DOOR_INDEX)
+    UpdateMirrorKeyChargeState()
 
     return {
         Discharge = true,
@@ -171,6 +258,19 @@ MilkshakeVol1:AddCallback(
     ModCallbacks.MC_USE_ITEM,
     MirrorKey.OnMirrorKeyUse,
     MilkshakeVol1.enums.Collectibles.MIRROR_KEY
+)
+
+
+function MirrorKey:OnUnnchargedMirrorKeyUse()
+    return {
+        Discharge = false,
+        ShowAnim = false
+    }
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_USE_ITEM,
+    MirrorKey.OnUnnchargedMirrorKeyUse,
+    MilkshakeVol1.enums.Collectibles.UNCHARGED_MIRROR_KEY
 )
 
 
@@ -234,6 +334,8 @@ end
 
 
 function MirrorKey:OnNewRoom()
+    UpdateMirrorKeyChargeState()
+
     local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "IsInMirrorRoom"

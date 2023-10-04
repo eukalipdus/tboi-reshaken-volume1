@@ -26,6 +26,7 @@
     <passive id="28" name="Rainbow Fragment" description="Taste the rainbow" cache="luck" gfx="collectibles_rainbowfragment.png" tags="offensive summonable" quality="0"/>
     <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" quality="2" />
     <active id="30" name="Mirror Key" description="Mirror clean" quality="4" gfx="mirror_key.png" maxcharges="4" />
+    <active id="30" name="Mirror Key " description="Mirror clean" quality="4" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" />
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="Hidden clairvoyant power..." gfx="trinkets_amethystcluster.png" tags="nogreed"/>
