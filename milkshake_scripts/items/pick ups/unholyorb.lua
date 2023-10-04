@@ -14,46 +14,6 @@ UnholyOrb.KillBill = {
 	[18] = true,
 }
 
-if FiendFolio then
-	UnholyOrb.FiendFolio ={}
-	UnholyOrb.KillBill[FiendFolio.FF.HugBeggar.Var] = true
-	UnholyOrb.KillBill[FiendFolio.FF.EvilBeggar.Var] = true
-	UnholyOrb.KillBill[FiendFolio.FF.ZodiacBeggar.Var] = true
-	UnholyOrb.KillBill[FiendFolio.FF.CellGame.Var] = true
-	UnholyOrb.KillBill[FiendFolio.FF.FakeBeggar.Var] = true
-	UnholyOrb.FiendFolio.Hearts = {
-		--immortal
-		--halfbalck
-	}
-
-end
-
-if Epiphany then
-	UnholyOrb.Epiphany = {}
-	UnholyOrb.Epiphany.ConvertBegga = Isaac.GetEntityVariantByName("Converter Beggar")
-	UnholyOrb.KillBill[UnholyOrb.Epiphany.ConvertBegga] = true
-end
-
-
---[
-if EclipsedMod then
-	UnholyOrb.Eclipsed ={}
-	UnholyOrb.KillBill[EclipsedMod.enums.Slots.MongoBeggar] = true
-	UnholyOrb.KillBill[EclipsedMod.enums.Slots.DeliriumBeggar] = true
-	UnholyOrb.Eclipsed.DeliVariants = {
-	EclipsedMod.enums.Pickups.DeliObjectCell,
-	EclipsedMod.enums.Pickups.DeliObjectBomb,
-	EclipsedMod.enums.Pickups.DeliObjectKey,
-	EclipsedMod.enums.Pickups.DeliObjectCard,
-	EclipsedMod.enums.Pickups.DeliObjectPill,
-	EclipsedMod.enums.Pickups.DeliObjectRune,
-	EclipsedMod.enums.Pickups.DeliObjectHeart,
-	EclipsedMod.enums.Pickups.DeliObjectCoin,
-	EclipsedMod.enums.Pickups.DeliObjectBattery,
-	}
-end
---]
-
 UnholyOrb.DamageMultiplier = 5
 UnholyOrb.InvincibleFrames = 90 -- 1.5 sec
 UnholyOrb.MaxSpeed = 30
@@ -62,6 +22,48 @@ UnholyOrb.MinDistance = 15
 UnholyOrb.MaxDistance = 60
 UnholyOrb.DarkArtsStack = 60
 UnholyOrb.MaxHitPoints = 5
+
+
+function UnholyOrb:GameStart(isSave)
+	if FiendFolio then
+		UnholyOrb.FiendFolio ={}
+		UnholyOrb.KillBill[FiendFolio.FF.HugBeggar.Var] = true
+		UnholyOrb.KillBill[FiendFolio.FF.EvilBeggar.Var] = true
+		UnholyOrb.KillBill[FiendFolio.FF.ZodiacBeggar.Var] = true
+		UnholyOrb.KillBill[FiendFolio.FF.CellGame.Var] = true
+		UnholyOrb.KillBill[FiendFolio.FF.FakeBeggar.Var] = true
+		UnholyOrb.FiendFolio.Hearts = {
+			--immortal
+			--halfbalck
+		}
+	end
+	if Epiphany then
+		UnholyOrb.Epiphany = {}
+		UnholyOrb.Epiphany.ConvertBegga = Isaac.GetEntityVariantByName("Converter Beggar")
+		UnholyOrb.KillBill[UnholyOrb.Epiphany.ConvertBegga] = true
+	end
+	if EclipsedMod then
+		UnholyOrb.Eclipsed ={}
+		UnholyOrb.KillBill[EclipsedMod.enums.Slots.MongoBeggar] = true
+		UnholyOrb.KillBill[EclipsedMod.enums.Slots.DeliriumBeggar] = true
+		UnholyOrb.Eclipsed.DeliVariants = {
+			EclipsedMod.enums.Pickups.DeliObjectCell,
+			EclipsedMod.enums.Pickups.DeliObjectBomb,
+			EclipsedMod.enums.Pickups.DeliObjectKey,
+			EclipsedMod.enums.Pickups.DeliObjectCard,
+			EclipsedMod.enums.Pickups.DeliObjectPill,
+			EclipsedMod.enums.Pickups.DeliObjectRune,
+			EclipsedMod.enums.Pickups.DeliObjectHeart,
+			EclipsedMod.enums.Pickups.DeliObjectCoin,
+			EclipsedMod.enums.Pickups.DeliObjectBattery,
+		}
+	end
+
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, UnholyOrb.GameStart)
+
+
+
 
 
 local function BeggarRewards(collider)
