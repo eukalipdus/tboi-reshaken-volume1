@@ -112,49 +112,50 @@ function prismaticDice:FamiliarUpdate(familiar)
     local lasersInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_LASER)
     for _, laser in ipairs(lasersInRoom) do
         laser = laser:ToLaser()
-        if ShouldLaserSplit(laser)
-        and (laser.Parent).Type == EntityType.ENTITY_PLAYER
-        and not (utility:GetData(laser, "PrismaticDiceWispLaser") or utility:GetData(laser, "PrismaticDiceWispRingLaser")) then
-            utility:SetData(laser, "PrismaticDiceWispLaser", true)
-            if laser.Variant == LaserVariant.THICK_RED then
-                utility:SetData(laser, "OrigMaxDistance", laser.MaxDistance)
-                local origMaxDistance = utility:GetData(laser, "OrigMaxDistance")
-                laser.MaxDistance = BRIM_MAX_DISTANCE
+        if ShouldLaserSplit(laser) then
+            if (laser.Parent).Type == EntityType.ENTITY_PLAYER
+            and not (utility:GetData(laser, "PrismaticDiceWispLaser") or utility:GetData(laser, "PrismaticDiceWispRingLaser")) then
+                utility:SetData(laser, "PrismaticDiceWispLaser", true)
+                if laser.Variant == LaserVariant.THICK_RED then
+                    utility:SetData(laser, "OrigMaxDistance", laser.MaxDistance)
+                    local origMaxDistance = utility:GetData(laser, "OrigMaxDistance")
+                    laser.MaxDistance = BRIM_MAX_DISTANCE
 
-                local redLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
-                local yellowLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
-                local greenLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
-                local blueLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
+                    local redLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
+                    local yellowLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
+                    local greenLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
+                    local blueLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
 
-                local splitLasers = CreateAngelicPrismSplit(redLaser,
-                                                            yellowLaser,
-                                                            greenLaser,
-                                                            blueLaser,
-                                                            "PrismaticDiceWispLaser")
+                    local splitLasers = CreateAngelicPrismSplit(redLaser,
+                                                                yellowLaser,
+                                                                greenLaser,
+                                                                blueLaser,
+                                                                "PrismaticDiceWispLaser")
 
-                utility:SetData(laser, "WispLaserChildren", splitLasers)
+                    utility:SetData(laser, "WispLaserChildren", splitLasers)
 
-                for _, currentLaser in ipairs(splitLasers) do
-                    currentLaser.Position = currentLaser.Position + MOVE_LASER_BY
-                    currentLaser.MaxDistance = origMaxDistance
+                    for _, currentLaser in ipairs(splitLasers) do
+                        currentLaser.Position = currentLaser.Position + MOVE_LASER_BY
+                        currentLaser.MaxDistance = origMaxDistance
+                    end
+
+                    redLaser.Angle = redLaser.Angle + 30
+                    yellowLaser.Angle = yellowLaser.Angle + 10
+                    greenLaser.Angle = greenLaser.Angle - 10
+                    blueLaser.Angle = blueLaser.Angle - 30
+                
+                elseif LaserVariant.THIN_RED and
+                laser.SubType == LaserSubType.LASER_SUBTYPE_RING_PROJECTILE then
+                    laser:Remove()
+                    local velocity = laser.Velocity
+
+                    local redLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
+                    local yellowLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
+                    local greenLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
+                    local blueLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
+
+                    CreateAngelicPrismSplit(redLaser, yellowLaser, greenLaser, blueLaser, "PrismaticDiceWispRingLaser")
                 end
-
-                redLaser.Angle = redLaser.Angle + 30
-                yellowLaser.Angle = yellowLaser.Angle + 10
-                greenLaser.Angle = greenLaser.Angle - 10
-                blueLaser.Angle = blueLaser.Angle - 30
-            
-            elseif LaserVariant.THIN_RED and
-            laser.SubType == LaserSubType.LASER_SUBTYPE_RING_PROJECTILE then
-                laser:Remove()
-                local velocity = laser.Velocity
-
-                local redLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
-                local yellowLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
-                local greenLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
-                local blueLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
-
-                CreateAngelicPrismSplit(redLaser, yellowLaser, greenLaser, blueLaser, "PrismaticDiceWispRingLaser")
             end
         end
     end
