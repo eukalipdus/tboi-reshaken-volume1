@@ -240,24 +240,59 @@ if FiendFolio then
 end
 
 AddBumFamiliar(enums.Familiars.SPIRIT_BUM, enums.Collectibles.SPIRIT_BUM, false, 3, spiritBumPickups, {
-	{chance = 25, value = {
+	{chance = 10, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,
 		subtype = enums.Orbs.ELECTRIC
 	}},
-	{chance = 25, value = {
+	{chance = 10, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,
 		subtype = enums.Orbs.FIRE
 	}},
-	{chance = 25, value = {
+	{chance = 10, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,
 		subtype = enums.Orbs.NATURE
 	}},
-	{chance = 25, value = {
+	{chance = 10, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,
 		subtype = enums.Orbs.PSYCHIC
+	}},
+	{chance = 10, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_TAROTCARD,
+		subtype = enums.Orbs.RANDOM
+	}},
+	{chance = 10, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_TAROTCARD,
+		subtype = enums.Orbs.HOLY
+	}},
+	{chance = 10, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_TAROTCARD,
+		subtype = enums.Orbs.UNHOLY
+	}},
+	{chance = 10, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_TAROTCARD,
+		subtype = enums.Orbs.POISON
+	}},
+	{chance = 10, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_TAROTCARD,
+		subtype = enums.Orbs.UNDEAD
+	}},
+	{chance = 10, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_TAROTCARD,
+		subtype = enums.Orbs.WATER
+	}},
+	{chance = 10, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_TAROTCARD,
+		subtype = enums.Orbs.ROCK
 	}},
 })
