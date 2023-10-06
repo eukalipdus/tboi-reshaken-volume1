@@ -112,6 +112,8 @@ function prismaticDice:FamiliarUpdate(familiar)
         and not utility:GetData(laser, "PrismaticDiceWispLaser") then
             utility:SetData(laser, "PrismaticDiceWispLaser", true)
             if laser.Variant == LaserVariant.THICK_RED then
+                utility:SetData(laser, "OrigMaxDistance", laser.MaxDistance)
+                local origMaxDistance = utility:GetData(laser, "OrigMaxDistance")
                 laser.MaxDistance = BRIM_MAX_DISTANCE
 
                 local redLaser = EntityLaser.ShootAngle(laser.Variant, familiar.Position, laser.Angle, laser.Timeout, Vector.Zero, player)
@@ -129,6 +131,7 @@ function prismaticDice:FamiliarUpdate(familiar)
 
                 for _, currentLaser in ipairs(splitLasers) do
                     currentLaser.Position = currentLaser.Position + Vector(5,5)
+                    currentLaser.MaxDistance = origMaxDistance
                 end
 
                 redLaser.Angle = redLaser.Angle + 30
@@ -141,14 +144,13 @@ function prismaticDice:FamiliarUpdate(familiar)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate, FamiliarVariant.WISP)
 
-
 function prismaticDice:PostLaserUpdate(laser)
     if not utility:GetData(laser, "WispLaserChildren") then return end
     if not ShouldLaserSplit(laser) then
         for _, splitLaser in ipairs(utility:GetData(laser, "WispLaserChildren")) do
             splitLaser:Remove()
         end
-        laser.MaxDistance = 9999
+        laser.MaxDistance = utility:GetData(laser, "OrigMaxDistance")
         utility:SetData(laser, "WispLaserChildren", nil)
         utility:SetData(laser, "PrismaticDiceWispLaser", false)
     end
