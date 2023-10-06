@@ -27,10 +27,22 @@ local function CreateAngelicPrismSplit(redEntity, yellowEntity, greenEntity, blu
     for _, entry in ipairs(splitEntities) do
         utility:SetData(entry, identifierString, true)
     end
+
     redEntity.Color = RED
     yellowEntity.Color = YELLOW
     greenEntity.Color = GREEN
     blueEntity.Color = BLUE
+
+    if redEntity.Type == EntityType.ENTITY_TEAR
+    or redEntity.Type == EntityType.ENTITY_BOMB
+    or (redEntity.Type == EntityType.ENTITY_LASER and redEntity.SubType == LaserSubType.LASER_SUBTYPE_RING_PROJECTILE) then
+
+        redEntity.Velocity = (redEntity.Velocity):Rotated(30)
+        yellowEntity.Velocity = (yellowEntity.Velocity):Rotated(10)
+        greenEntity.Velocity = (greenEntity.Velocity):Rotated(-10)
+        blueEntity.Velocity = (blueEntity.Velocity):Rotated(-30)
+    end
+
     return splitEntities
 end
 
@@ -71,11 +83,6 @@ function prismaticDice:FamiliarUpdate(familiar)
                     entry:ChangeVariant(tear.Variant)
                 end
             end
-
-            redTear.Velocity = (redTear.Velocity):Rotated(30)
-            yellowTear.Velocity = (yellowTear.Velocity):Rotated(10)
-            greenTear.Velocity = (greenTear.Velocity):Rotated(-10)
-            blueTear.Velocity = (blueTear.Velocity):Rotated(-30)
         end
     end
 
@@ -97,11 +104,6 @@ function prismaticDice:FamiliarUpdate(familiar)
                                     greenBomb,
                                     blueBomb,
                                     "PrismaticWispBomb")
-
-            redBomb.Velocity = (redBomb.Velocity):Rotated(30)
-            yellowBomb.Velocity = (yellowBomb.Velocity):Rotated(10)
-            greenBomb.Velocity = (greenBomb.Velocity):Rotated(-10)
-            blueBomb.Velocity = (blueBomb.Velocity):Rotated(-30)
         end
     end
 
