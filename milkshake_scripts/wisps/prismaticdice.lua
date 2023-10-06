@@ -46,6 +46,8 @@ local function CreateAngelicPrismSplit(redEntity, yellowEntity, greenEntity, blu
     return splitEntities
 end
 
+--- Used to see if a laser is colliding with a Prismatic Dice wisp
+---@param EntityLaser
 local function ShouldLaserSplit(laser)
     local wispsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.WISP, enums.Collectibles.PRISMATIC_DICE)
     local samples = laser:GetNonOptimizedSamples()
