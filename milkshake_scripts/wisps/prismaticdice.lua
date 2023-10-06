@@ -51,7 +51,7 @@ function prismaticDice:FamiliarUpdate(familiar)
     local tearsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_TEAR)
     local player = familiar.Player
     for _, tear in ipairs(tearsInRoom) do
-        if tear.Position:Distance(familiar.Position, tear.Position) < 10
+        if tear.Position:Distance(familiar.Position, tear.Position) < TEAR_COLLISION_RADIUS
         and not utility:GetData(tear, "PrismaticWispTear") then
             tear:Remove()
 
