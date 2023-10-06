@@ -114,7 +114,7 @@ function prismaticDice:FamiliarUpdate(familiar)
         laser = laser:ToLaser()
         if ShouldLaserSplit(laser)
         and (laser.Parent).Type == EntityType.ENTITY_PLAYER
-        and not utility:GetData(laser, "PrismaticDiceWispLaser") then
+        and not (utility:GetData(laser, "PrismaticDiceWispLaser") or utility:GetData(laser, "PrismaticDiceWispRingLaser")) then
             utility:SetData(laser, "PrismaticDiceWispLaser", true)
             if laser.Variant == LaserVariant.THICK_RED then
                 utility:SetData(laser, "OrigMaxDistance", laser.MaxDistance)
@@ -143,6 +143,18 @@ function prismaticDice:FamiliarUpdate(familiar)
                 yellowLaser.Angle = yellowLaser.Angle + 10
                 greenLaser.Angle = greenLaser.Angle - 10
                 blueLaser.Angle = blueLaser.Angle - 30
+            
+            elseif LaserVariant.THIN_RED and
+            laser.SubType == LaserSubType.LASER_SUBTYPE_RING_PROJECTILE then
+                laser:Remove()
+                local velocity = laser.Velocity
+
+                local redLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
+                local yellowLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
+                local greenLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
+                local blueLaser = player:FireTechXLaser(laser.Position, velocity, laser.Radius, player)
+
+                CreateAngelicPrismSplit(redLaser, yellowLaser, greenLaser, blueLaser, "PrismaticDiceWispRingLaser")
             end
         end
     end
