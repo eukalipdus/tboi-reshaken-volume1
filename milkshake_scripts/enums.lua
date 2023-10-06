@@ -31,6 +31,7 @@ enums.Collectibles = {
     WITCH_DOCTOR_MASK = Isaac.GetItemIdByName("Witch Doctor Mask"),
     RAINBOW_FRAGMENT = Isaac.GetItemIdByName("Rainbow Fragment"),
     MIRROR_KEY = Isaac.GetItemIdByName("Mirror Key"),
+    UNCHARGED_MIRROR_KEY = Isaac.GetItemIdByName("Mirror Key "),
 
     SPECIAL_BRENDA_FIRE_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM FIRE WISP"),
     SPECIAL_BRENDA_PSYCHIC_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM PSYCHIC WISP"),
