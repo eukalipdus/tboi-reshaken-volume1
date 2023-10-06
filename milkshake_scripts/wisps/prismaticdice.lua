@@ -8,6 +8,7 @@ local GREEN = Color(0, 133 / 255, 2 / 255, 1, 0, 133 / 255, 2 / 255)
 local BLUE = Color(4 / 255, 99 / 255, 147 / 255, 1, 4 / 255, 99 / 255, 147 / 255)
 local BRIM_MAX_DISTANCE = 33 -- Azazel's is 77, for reference
 local TEAR_COLLISION_RADIUS = 10
+local MOVE_LASER_BY = Vector(5,5)
 
 --- Mimicks the effect of Angelic Prism
 ---@param redEntity Entity
@@ -130,7 +131,7 @@ function prismaticDice:FamiliarUpdate(familiar)
                 utility:SetData(laser, "WispLaserChildren", splitLasers)
 
                 for _, currentLaser in ipairs(splitLasers) do
-                    currentLaser.Position = currentLaser.Position + Vector(5,5)
+                    currentLaser.Position = currentLaser.Position + MOVE_LASER_BY
                     currentLaser.MaxDistance = origMaxDistance
                 end
 
