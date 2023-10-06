@@ -163,6 +163,23 @@ function prismaticDice:FamiliarUpdate(familiar)
             end
         end
     end
+
+    local knivesInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_KNIFE)
+    for _, knife in ipairs(knivesInRoom) do
+        knife = knife:ToKnife()
+        if knife.Position:Distance(familiar.Position, knife.Position) < TEAR_COLLISION_RADIUS
+        and knife:IsFlying()
+        and not utility:GetData(knife, "PrismaticWispKnife") then
+            knife:Remove()
+            local redKnife = player:FireKnife(player, knife.RotationOffset)
+            local yellowKnife = player:FireKnife(player, knife.RotationOffset)
+            local greenKnife = player:FireKnife(player, knife.RotationOffset)
+            local blueKnife = player:FireKnife(player, knife.RotationOffset)
+            
+
+            CreateAngelicPrismSplit(redKnife, yellowKnife, greenKnife, blueKnife, "PrismaticWispKnife")
+        end
+    end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, prismaticDice.FamiliarUpdate, FamiliarVariant.WISP)
 

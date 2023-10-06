@@ -1,4 +1,171 @@
 local enums = MilkshakeVol1.enums
+local BumFamiliars = {}
+
+local BUM_PAYOUT_DISTANCE_SQR = 65*65
+
+---@class EntityToSpawn
+---@field type EntityType
+---@field variant integer
+---@field subtype integer
+
+---@class EntityToPickup
+---@field variant PickupVariant
+---@field subtype integer
+
+---@class bumPickups
+---@field reward integer
+---@field value EntityToPickup
+---@field spawn nil | EntityToSpawn
+
+---@class bumPayouts
+---@field chance number
+---@field value EntityToSpawn
+
+---@class bumInfo
+---@field collectible CollectibleType
+---@field superBum boolean
+---@field cost integer
+---@field pickups bumPickups[]
+---@field payouts bumPayouts[]
+
+---Custom function to define a familiar variant as a "Bum Familiar"
+---@param familiarVariant FamiliarVariant
+---@param collectibleType CollectibleType
+---@param contributesToSuperBum boolean
+---@param payoutCost number 
+---@param pickups bumPickups[]
+---@param payouts bumPayouts[]
+local function AddBumFamiliar(familiarVariant, collectibleType, contributesToSuperBum, payoutCost, pickups, payouts)
+	BumFamiliars[familiarVariant] = {
+		collectible = collectibleType,
+		superBum = contributesToSuperBum,
+		cost = payoutCost,
+		pickups = pickups,
+		payouts = payouts
+	}
+end
+
+---@param familiar EntityFamiliar
+local function BumFamiliarInit(_, familiar)
+	if BumFamiliars[familiar.Variant] then
+		local player = familiar.SpawnerEntity
+		local aa = player
+		---@diagnostic disable-next-line: need-check-nil
+		while aa.Child ~= nil do
+			---@diagnostic disable-next-line: need-check-nil
+			aa = aa.Child
+		end
+		---@diagnostic disable-next-line: assign-type-mismatch
+		familiar.Parent = aa
+		aa.Child = familiar
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, BumFamiliarInit)
+
+
+---@param familiar EntityFamiliar
+local function BumFamiliarUpdate(_, familiar)
+	---@type bumInfo
+	local bumInfo = BumFamiliars[familiar.Variant]
+
+	if not bumInfo then return end
+
+	local sprite = familiar:GetSprite()
+
+	if sprite:IsFinished("IdleDown") then
+		sprite:Play("FloatDown", true)
+	end
+
+	local newPos = familiar.Parent.Position - familiar.Position
+
+	local closestEntity
+	local bumPickup
+	local closestDist = math.huge
+
+	for _, pickup in ipairs(TSIL.EntitySpecific.GetPickups()) do
+		local distance = pickup.Position:DistanceSquared(familiar.Position)
+		if pickup:Exists() and not pickup:IsDead() and distance < closestDist and not pickup:IsShopItem() then
+			local foundBumPickup = TSIL.Utils.Tables.FindFirst(bumInfo.pickups, function (_, foundBumPickup)
+				return pickup.Variant == foundBumPickup.value.variant and
+				pickup.SubType == foundBumPickup.value.subtype
+			end)
+
+			if foundBumPickup then
+				closestEntity = pickup
+				closestDist = distance
+				bumPickup = foundBumPickup
+			end
+		end
+	end
+
+	if sprite:IsPlaying("PreSpawn") or sprite:IsPlaying("Spawn") then
+		newPos = Vector.Zero
+	elseif sprite:IsFinished("PreSpawn") then
+		sprite:Play("Spawn")
+		local reward = TSIL.Random.GetRandomElementFromWeightedList(familiar:GetDropRNG(), bumInfo.payouts)
+		Isaac.Spawn(
+			---@diagnostic disable-next-line: undefined-field
+			reward.type,
+			---@diagnostic disable-next-line: undefined-field
+			reward.variant,
+			---@diagnostic disable-next-line: undefined-field
+			reward.subtype,
+			familiar.Position,
+			Vector.Zero,
+			familiar
+		)
+		familiar.Coins = familiar.Coins - bumInfo.cost
+		newPos = Vector.Zero
+	elseif sprite:IsFinished("Spawn") then
+		familiar:GetSprite():Play("FloatDown")
+		newPos = Vector.Zero
+	elseif closestEntity then
+		newPos = closestEntity.Position - familiar.Position
+		if (newPos:LengthSquared() < 100 and bumPickup.reward > 0) then
+			familiar.Coins = familiar.Coins + bumPickup.reward
+			if bumPickup.spawn then
+				Isaac.Spawn(
+					bumPickup.spawn.type,
+					bumPickup.spawn.variant,
+					bumPickup.spawn.subtype,
+					familiar.Position,
+					Vector.Zero,
+					familiar
+				)
+			end
+			closestEntity:PlayPickupSound()
+			closestEntity.Velocity = Vector(0, 0)
+			closestEntity.EntityCollisionClass = 0
+			closestEntity:GetSprite():Play("Collect", true)
+			closestEntity:Die()
+		end
+	elseif (familiar.Coins >= bumInfo.cost and familiar.Position:DistanceSquared(familiar.SpawnerEntity.Position) < BUM_PAYOUT_DISTANCE_SQR) then
+		familiar:GetSprite():Play("PreSpawn", true)
+		newPos = Vector.Zero
+	elseif (familiar.Parent:ToPlayer() and newPos:DistanceSquared(Vector.Zero) < BUM_PAYOUT_DISTANCE_SQR) or
+	(newPos:DistanceSquared(Vector.Zero) < 40*40) then
+		newPos = Vector.Zero
+	end
+
+	newPos:Resize(3)
+	---@diagnostic disable-next-line: assign-type-mismatch, param-type-mismatch
+	familiar.Velocity = TSIL.Utils.Math.Lerp(familiar.Velocity, newPos, 0.25)
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, BumFamiliarUpdate)
+
+---@param player EntityPlayer
+local function EvaluateCache(_, player)
+	for familiarType, _ in pairs(BumFamiliars) do
+		---@type bumInfo
+		local bumInfo = BumFamiliars[familiarType]
+		TSIL.Familiars.CheckFamiliarFromCollectibles(
+			player,
+			bumInfo.collectible,
+			familiarType
+		)
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, EvaluateCache, CacheFlag.CACHE_FAMILIARS)
 
 ---@type bumPickups[]
 local spiritBumPickups = {
@@ -72,7 +239,7 @@ if FiendFolio then
 	}
 end
 
-BumAPI:AddBumFamiliar(enums.Familiars.SPIRIT_BUM, enums.Collectibles.SPIRIT_BUM, false, 3, spiritBumPickups, {
+AddBumFamiliar(enums.Familiars.SPIRIT_BUM, enums.Collectibles.SPIRIT_BUM, false, 3, spiritBumPickups, {
 	{chance = 25, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,

@@ -6,7 +6,7 @@ include("milkshake_scripts.enums")
 include("milkshake_scripts.utility")
 MilkshakeVol1.API = {}
 
-include("milkshake_scripts.bumAPI.core")
+--include("milkshake_scripts.bumAPI.core")
 
 local eid = include("milkshake_scripts.modcompatibility.eid")
 eid:addEid()
