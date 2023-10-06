@@ -28,10 +28,13 @@ local function CreateAngelicPrismSplit(redEntity, yellowEntity, greenEntity, blu
         utility:SetData(entry, identifierString, true)
     end
 
-    redEntity.Color = RED
-    yellowEntity.Color = YELLOW
-    greenEntity.Color = GREEN
-    blueEntity.Color = BLUE
+    if not (redEntity.Type == EntityType.ENTITY_LASER
+    and redEntity.Variant == LaserVariant.THIN_RED) then
+        redEntity.Color = RED
+        yellowEntity.Color = YELLOW
+        greenEntity.Color = GREEN
+        blueEntity.Color = BLUE
+    end
 
     if redEntity.Type == EntityType.ENTITY_TEAR
     or redEntity.Type == EntityType.ENTITY_BOMB
@@ -116,7 +119,9 @@ function prismaticDice:FamiliarUpdate(familiar)
             if (laser.Parent).Type == EntityType.ENTITY_PLAYER
             and not (utility:GetData(laser, "PrismaticDiceWispLaser") or utility:GetData(laser, "PrismaticDiceWispRingLaser")) then
                 utility:SetData(laser, "PrismaticDiceWispLaser", true)
-                if laser.Variant == LaserVariant.THICK_RED then
+                if (laser.Variant == LaserVariant.THICK_RED and laser.SubType ~= LaserSubType.LASER_SUBTYPE_RING_PROJECTILE)
+                or laser.Variant == LaserVariant.BRIM_TECH and laser.SubType == LaserSubType.LASER_SUBTYPE_LINEAR
+                or (laser.Variant == LaserVariant.THIN_RED and laser.SubType == LaserSubType.LASER_SUBTYPE_LINEAR) then
                     utility:SetData(laser, "OrigMaxDistance", laser.MaxDistance)
                     local origMaxDistance = utility:GetData(laser, "OrigMaxDistance")
                     laser.MaxDistance = BRIM_MAX_DISTANCE
@@ -144,8 +149,7 @@ function prismaticDice:FamiliarUpdate(familiar)
                     greenLaser.Angle = greenLaser.Angle - 10
                     blueLaser.Angle = blueLaser.Angle - 30
                 
-                elseif LaserVariant.THIN_RED and
-                laser.SubType == LaserSubType.LASER_SUBTYPE_RING_PROJECTILE then
+                elseif laser.SubType == LaserSubType.LASER_SUBTYPE_RING_PROJECTILE then
                     laser:Remove()
                     local velocity = laser.Velocity
 
