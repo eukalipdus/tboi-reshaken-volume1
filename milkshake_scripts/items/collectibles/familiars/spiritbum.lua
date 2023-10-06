@@ -2,6 +2,7 @@ local enums = MilkshakeVol1.enums
 local BumFamiliars = {}
 
 local BUM_PAYOUT_DISTANCE_SQR = 65*65
+local SPIRIT_BUM_SOUL_COST = 2
 
 ---@class EntityToSpawn
 ---@field type EntityType
@@ -239,7 +240,7 @@ if FiendFolio then
 	}
 end
 
-AddBumFamiliar(enums.Familiars.SPIRIT_BUM, enums.Collectibles.SPIRIT_BUM, false, 3, spiritBumPickups, {
+AddBumFamiliar(enums.Familiars.SPIRIT_BUM, enums.Collectibles.SPIRIT_BUM, false, SPIRIT_BUM_SOUL_COST, spiritBumPickups, {
 	{chance = 10, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TAROTCARD,
