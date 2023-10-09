@@ -95,7 +95,7 @@
 	flameColor="flame_purple" coreColor="core_purple" tearColor="tear_purple"/>
 
 	<!-- Special Brenda Nature Wisp -->
-	<wisp id="502" hp="10" layer="1" damage="3" fireDelay="15"
+	<wisp id="502" hp="10" layer="1" damage="3" fireDelay="15" coreGfx="nature.png"
 	flameColor="flame_green" coreColor="core_green" tearColor="tear_blue"/>
 
 	<!-- Special Brenda Electric Wisp -->
@@ -115,7 +115,7 @@
 	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
 
 	<!-- Prismatic Dice -->
-	<wisp id="13" hp="2" canShoot="false" count="0"
+	<wisp id="13" hp="2" canShoot="false"
 	flameColor="flame_pink" coreColor="core_cyan" />
 
 	<!-- Golden shovel -->

@@ -6,15 +6,28 @@ local HORSE_PILL_INC = 2048
 local NO_PILL = 0
 local FF_PILL_BEGIN = 101
 local FF_PILL_END = 120
+local NON_P1_SCALE = Vector(0.5, 0.5)
+local SPAWN_DISTANCE = 40
+
 local worldRenderPos = {
     Vector(614, 471),
+    Vector(394, 147),
 }
 
-local orbPillHud = Sprite()
-orbPillHud:Load("gfx/ui/ui_orbpills.anm2", true)
-orbPillHud:Play("HUD")
+local function CreatePillOverlay()
+    local orbPillHud = Sprite()
+    orbPillHud:Load("gfx/ui/ui_orbpills.anm2", true)
+    orbPillHud:Play("HUD")
+    return orbPillHud
+end
 
 local playersCurrentPills = {}
+local orbPillHuds = {
+    CreatePillOverlay(),
+    CreatePillOverlay(),
+    CreatePillOverlay(),
+    CreatePillOverlay(),
+}
 
 local matchingPills = {
     [PillColor.PILL_BLUE_BLUE] = enums.Orbs.WATER,
@@ -72,7 +85,6 @@ local function GetFrameFromId(pillColor, frameTable)
     end
 end
 
-
 --- Adds a pill color and its horse pill variant and gives it a corresponding spirit orb
 ---@param pillColor integer
 ---@param spiritOrb number
@@ -127,19 +139,35 @@ function witchDoctorMask:PostPickupUpdate(pickup)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, witchDoctorMask.PostPickupUpdate)
 
-function witchDoctorMask:postRender()
+function witchDoctorMask:PostRender()
     if Game():GetHUD():IsVisible() then
         for i = 1, Game():GetNumPlayers() do
             local player = Isaac.GetPlayer(i)
             local heldPill = player:GetPill(0)
             if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
             and heldPill ~= 0 then
-                orbPillHud:Render(Isaac.WorldToRenderPosition(worldRenderPos[i]))
-                orbPillHud:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
+
+                if player:GetPlayerType() ~= PlayerType.PLAYER_JACOB
+                and player:GetPlayerType() ~= PlayerType.PLAYER_ESAU then
+                    orbPillHuds[i]:Render(Isaac.WorldToRenderPosition(worldRenderPos[i]))
+                    orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
+                end
+
+                if i > 1 then
+                    orbPillHuds[i].Scale = NON_P1_SCALE
+                end
             end
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.postRender)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.PostRender)
+
+function witchDoctorMask:PostItemPickup(player, collectible)
+    if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK then return end
+    local roll = TSIL.Random.GetRandomInt(1, PillColor.NUM_PILLS)
+    local spawnPos = Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE)
+    TSIL.PickupSpecific.SpawnPill(roll, spawnPos)
+end
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_ITEM_PICKUP, witchDoctorMask.PostItemPickup)
 
 return witchDoctorMask

@@ -31,6 +31,7 @@ enums.Collectibles = {
     WITCH_DOCTOR_MASK = Isaac.GetItemIdByName("Witch Doctor Mask"),
     RAINBOW_FRAGMENT = Isaac.GetItemIdByName("Rainbow Fragment"),
     MIRROR_KEY = Isaac.GetItemIdByName("Mirror Key"),
+    UNCHARGED_MIRROR_KEY = Isaac.GetItemIdByName("Mirror Key "),
 
     SPECIAL_BRENDA_FIRE_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM FIRE WISP"),
     SPECIAL_BRENDA_PSYCHIC_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM PSYCHIC WISP"),
@@ -55,6 +56,7 @@ enums.Trinkets = {
     ONYX_SHARD = Isaac.GetTrinketIdByName("Onyx Shard"),
     DIAMOND_SHARD = Isaac.GetTrinketIdByName("Diamond Shard"),
     SAPPHIRE_SHARD = Isaac.GetTrinketIdByName("Sapphire Shard"),
+    AMBER_SHARD = Isaac.GetTrinketIdByName("Amber Shard"),
 }
 
 enums.Cards = {
