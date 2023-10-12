@@ -86,7 +86,6 @@ function HolyOrb:BeamCollision(laser)
     -- check for collisions by getting the samples of a laser
     -- dont let the method name spook you. this is the only way.
     local samples = laser:GetNonOptimizedSamples()
-    local room = Game():GetRoom()
     for i = 0, #samples - 1 do
         local point = samples:Get(i)
         DestroyGridAtPosition(point, laser)
