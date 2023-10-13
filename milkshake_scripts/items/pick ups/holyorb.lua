@@ -1,19 +1,21 @@
 local HolyOrb = {}
 local enums = MilkshakeVol1.enums
 
--- length of the appear animation
-local APPEAR_LENGTH = 15
-
-local FALL_DELAY_DURATION = 10
-local FLOAT_UP_OFFSET = 24
-local FALL_TIME = 15
-local PRE_LASER_WAIT_TIME = 7
 local LASER_DURATION = 60
 
-local APPEAR_STATE = 1
-local FALL_STATE = 10
-local PRE_LASER_WAIT_STATE = 20
-local LASER_STATE = 30
+--Extra measure for catching rocks on edges of lasers.
+local ROCK_SEARCH_RANGE = 15
+local ROCK_SEARCH_ANGLE_STEP = 45
+
+--For falling animation.
+local GRAVITY = 0.1
+local THROW_VELOCITY = -2.5
+
+--For changing color as it falls.
+local RED_COLOR_LEVEL = 0.8
+local GREEN_COLOR_LEVEL = 0.6
+local BLUE_COLOR_LEVEL = 0.2
+local COLOR_SCALING_RATE = 0.06
 
 local GRID_DESTRUCTION_WHITELIST = TSIL.Utils.Tables.ConstructDictionaryFromTable({
     GridEntityType.GRID_POOP,
@@ -32,10 +34,6 @@ local GRID_DESTRUCTION_WHITELIST = TSIL.Utils.Tables.ConstructDictionaryFromTabl
 local function getLaserDamagePerTick()
     local stage = MilkshakeVol1.utility:GetCurrentChapter()
     return 2.93 * math.max(math.ceil(stage / 2.5), 1)
-end
-
-local function vLerp(vec1, vec2, percent)
-    return vec1 * (1 - percent) + vec2 * percent
 end
 
 ---@param player EntityPlayer
@@ -57,8 +55,29 @@ local function orbAttack(player, position)
     end
 end
 
+---@param position Vector
+---@param source Entity
+local function DestroyGridAtPosition(position, source)
+    local room = Game():GetRoom()
+    local gridEntity = room:GetGridEntityFromPos(position)
+
+    if gridEntity then
+        if gridEntity:GetType() == GridEntityType.GRID_DOOR then
+            local door = gridEntity:ToDoor()
+            if door:CanBlowOpen() then
+                door:TryBlowOpen(true, source)
+            end
+        elseif GRID_DESTRUCTION_WHITELIST[gridEntity:GetType()] then
+            gridEntity:Destroy(false)
+        end
+    end
+end
+
 ---@param laser EntityLaser
 function HolyOrb:BeamCollision(laser)
+    if laser.FrameCount ~= 2 then   --Making the destruction apply only once shouldn't be a big deal, and I'm gonna make this code way worse.
+        return
+    end
     local data = laser:GetData()
     if not data.MilkshakeSalvationBeam then
         return
@@ -67,20 +86,12 @@ function HolyOrb:BeamCollision(laser)
     -- check for collisions by getting the samples of a laser
     -- dont let the method name spook you. this is the only way.
     local samples = laser:GetNonOptimizedSamples()
-    local room = Game():GetRoom()
     for i = 0, #samples - 1 do
         local point = samples:Get(i)
-        local gridEntity = room:GetGridEntityFromPos(point)
-
-        if gridEntity then
-            if gridEntity:GetType() == GridEntityType.GRID_DOOR then
-                local door = gridEntity:ToDoor()
-                if door:CanBlowOpen() then
-                    door:TryBlowOpen(true, laser)
-                end
-            elseif GRID_DESTRUCTION_WHITELIST[gridEntity:GetType()] then
-                gridEntity:Destroy(false)
-            end
+        DestroyGridAtPosition(point, laser)
+        for angle = 0, 360, ROCK_SEARCH_ANGLE_STEP do
+            local pointOffset = Vector.One:Rotated(angle) * ROCK_SEARCH_RANGE
+            DestroyGridAtPosition(point + pointOffset, laser)
         end
     end
 end
@@ -96,48 +107,18 @@ function HolyOrb:OrbEffect(orb)
     local sprite = orb:GetSprite()
     local data = orb:GetData()
 
-    data.Timer = data.Timer or 0
-    data.FloorPosition = data.FloorPosition or Game():GetRoom():GetCenterPos()
     orb.DepthOffset = 10000
     orb.Timeout = -1
 
-    if sprite:IsPlaying("Rise") then
-        local progress = sprite:GetFrame() / APPEAR_LENGTH
-        local offset = Vector(0, -progress * FLOAT_UP_OFFSET)
-        orb.PositionOffset = offset
-    end
-
-    if sprite:IsFinished("Rise") then
-        orb.State = APPEAR_STATE
-        sprite:Play("Idle", true)
-    end
-
     if sprite:IsPlaying("Idle") then
-        if orb.State == APPEAR_STATE then
-            data.Timer = data.Timer + 1
-            if data.Timer > FALL_DELAY_DURATION then
-                orb.State = FALL_STATE
-                data.Timer = 0
-            end
-        elseif orb.State == FALL_STATE then
-            if data.Timer / FALL_TIME >=1 then
-                orb.State = PRE_LASER_WAIT_STATE
-                data.Timer = 0
-                return
-            end
-
-            data.Timer = data.Timer + 1
-
-            local progress = data.Timer / FALL_TIME
-            orb.PositionOffset = vLerp(orb.PositionOffset, Vector.Zero, progress)
-            orb.Position = vLerp(orb.Position, data.FloorPosition, progress)
-        elseif orb.State == PRE_LASER_WAIT_STATE then
-            data.Timer = data.Timer + 1
-            if data.Timer > PRE_LASER_WAIT_TIME then
-                orb.State = LASER_STATE
-                sprite:Play("Attack", true)
-            end
+        --I almost failed physics in high school so please be patient.
+        sprite.Offset.Y = data.StartHeight + THROW_VELOCITY*orb.FrameCount + GRAVITY*(orb.FrameCount^2)
+        local offsetScale = orb.FrameCount*COLOR_SCALING_RATE
+        sprite.Color:SetOffset(RED_COLOR_LEVEL*offsetScale, GREEN_COLOR_LEVEL*offsetScale, BLUE_COLOR_LEVEL*offsetScale)
+        if sprite.Offset.Y > 0 then
+            sprite:Play("Attack")
         end
+        return
     end
 
     if sprite:IsPlaying("Attack") and not sprite:WasEventTriggered("Attack") then
@@ -149,7 +130,7 @@ function HolyOrb:OrbEffect(orb)
         -- we dont want it to error cause it is nice to be able to test the animations
         local player = orb.SpawnerEntity and orb.SpawnerEntity:ToPlayer()
         if player then
-            orbAttack(player, orb.Position)
+            orbAttack(player, orb.Position+Vector(0,-10))
         end
     end
 
@@ -172,11 +153,11 @@ function HolyOrb:OnHolyOrbUse(_, player)
     sprite:Play("Idle", true)
     player:AnimatePickup(sprite, true, "UseItem")
 
-    -- "where did you get -40 from" it came to me in a prophecy
-    local orbPosition = Vector(0, -40) * (player.SpriteScale.Y + player.PositionOffset.Y)
-    local position = player.Position + orbPosition
-    local orb = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.SALVATION_ORB, 0, position, Vector.Zero, player)
-    orb:GetData().FloorPosition = player.Position
+    local orb = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.SALVATION_ORB, 0, player.Position, Vector.Zero, player)
+    local data = orb:GetData()
+    -- "where did you get ~~-40~~ -20 from" it came to me in a prophecy
+    data.StartHeight = -20 * (player.SpriteScale.Y + player.PositionOffset.Y)
+    orb:GetSprite().Offset.Y = data.StartHeight
 end
 
 MilkshakeVol1:AddCallback(

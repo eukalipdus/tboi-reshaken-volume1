@@ -4,7 +4,7 @@ local game = Game()
 
 local InnerReflectionConfig = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.INNER_REFLECTION)
 
-local BASE_CONTACT_DAMAGE = 4
+local BASE_CONTACT_DAMAGE = 2.5
 
 local MIRROR_WORLD_DAMAGE_BONUS = 2.5
 local MAX_DAMAGE_MULTIPLIER_INCREASE = 1
@@ -103,7 +103,7 @@ function innerreflection:PostFamiliarUpdate(familiar)
 	familiar.SpriteScale = player.SpriteScale
 	familiar.SizeMulti = player.SpriteScale
 	local sizeDamageMultiplier = familiar.SizeMulti.Y
-	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier * sizeDamageMultiplier
+	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier --* sizeDamageMultiplier
 
 	local pSprite = player:GetSprite()
 	local fSprite = familiar:GetSprite()

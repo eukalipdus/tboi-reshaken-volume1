@@ -14,28 +14,6 @@ UnholyOrb.KillBill = {
 	[18] = true,
 }
 
---[[
-If Epiphany then
-local Converter = Isaac.GetEntityTypeByName('Converter Beggar)
-UnholyOrb.KillBill[Converter.Variant] = true
-end
---]]
-
---[[
-if FF then
-local Hug = Isaac.GetEntityTypeByName('Hug Beggar)
-UnholyOrb.KillBill[Hug.Variant] = true
-local Evil = Isaac.GetEntityTypeByName('Evil Beggar)
-UnholyOrb.KillBill[Evil.Variant] = true
-local Zodiacc = Isaac.GetEntityTypeByName('Zodiacc Beggar)
-UnholyOrb.KillBill[Zodiacc.Variant] = true
-local Cell = Isaac.GetEntityTypeByName('Cell Game)
-UnholyOrb.KillBill[Cell.Variant] = true
-local Fake = Isaac.GetEntityTypeByName('Fake Beggar)
-UnholyOrb.KillBill[Fake.Variant] = true
-end
---]]
-
 UnholyOrb.DamageMultiplier = 5
 UnholyOrb.InvincibleFrames = 90 -- 1.5 sec
 UnholyOrb.MaxSpeed = 30
@@ -46,12 +24,55 @@ UnholyOrb.DarkArtsStack = 60
 UnholyOrb.MaxHitPoints = 5
 
 
+function UnholyOrb:GameStart(isSave)
+	if FiendFolio then
+		UnholyOrb.FiendFolio ={}
+		UnholyOrb.KillBill[FiendFolio.FF.HugBeggar.Var] = true
+		UnholyOrb.KillBill[FiendFolio.FF.EvilBeggar.Var] = true
+		UnholyOrb.KillBill[FiendFolio.FF.ZodiacBeggar.Var] = true
+		UnholyOrb.KillBill[FiendFolio.FF.CellGame.Var] = true
+		UnholyOrb.KillBill[FiendFolio.FF.FakeBeggar.Var] = true
+		UnholyOrb.FiendFolio.Hearts = {
+			--immortal
+			--halfbalck
+		}
+	end
+	if Epiphany then
+		UnholyOrb.Epiphany = {}
+		UnholyOrb.Epiphany.ConvertBegga = Isaac.GetEntityVariantByName("Converter Beggar")
+		UnholyOrb.KillBill[UnholyOrb.Epiphany.ConvertBegga] = true
+	end
+	if EclipsedMod then
+		UnholyOrb.Eclipsed ={}
+		UnholyOrb.KillBill[EclipsedMod.enums.Slots.MongoBeggar] = true
+		UnholyOrb.KillBill[EclipsedMod.enums.Slots.DeliriumBeggar] = true
+		UnholyOrb.Eclipsed.DeliVariants = {
+			EclipsedMod.enums.Pickups.DeliObjectCell,
+			EclipsedMod.enums.Pickups.DeliObjectBomb,
+			EclipsedMod.enums.Pickups.DeliObjectKey,
+			EclipsedMod.enums.Pickups.DeliObjectCard,
+			EclipsedMod.enums.Pickups.DeliObjectPill,
+			EclipsedMod.enums.Pickups.DeliObjectRune,
+			EclipsedMod.enums.Pickups.DeliObjectHeart,
+			EclipsedMod.enums.Pickups.DeliObjectCoin,
+			EclipsedMod.enums.Pickups.DeliObjectBattery,
+		}
+	end
+
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, UnholyOrb.GameStart)
+
+
+
+
+
 local function BeggarRewards(collider)
 	local rng = collider:GetDropRNG()
 	if collider.Variant == 4 then -- beggar
 		for _ = 0, rng:RandomInt(3) do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 5 then -- devil
 		if rng:RandomFloat() < 0.5 then
 			local card = Game():GetItemPool():GetCard(collider.InitSeed, true, false, false)
@@ -59,22 +80,27 @@ local function BeggarRewards(collider)
 		else
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 6 then -- shell
 		for _ = 0, rng:RandomInt(2)+2 do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 7 then -- key
 		for _ = 0, rng:RandomInt(2) do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 9 then -- bomb
 		for _ = 0, rng:RandomInt(2)+2 do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_BOMB, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 13 then -- battery
 		for _ = 0, rng:RandomInt(2) do
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, 0, collider.Position, RandomVector()*3, nil)
 		end
+		return
 	elseif collider.Variant == 15 then -- hell
 		if rng:RandomFloat() < 0.5 then
 			for _ = 0, 1 do
@@ -86,10 +112,57 @@ local function BeggarRewards(collider)
 				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collider.Position, RandomVector()*3, nil)
 			end
 		end
+		return
 	elseif collider.Variant == 18 then -- rotten
 		for _ = 0, rng:RandomInt(2) do
 			local randHeart = rng:RandomInt(2)+11 -- bone or rotten
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, randHeart, collider.Position, RandomVector()*3, nil)
+		end
+		return
+	end
+	if UnholyOrb.FiendFolio then
+		if collider.Variant == FiendFolio.FF.HugBeggar.Var then
+			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 0, collider.Position, RandomVector()*3, nil)
+			return
+		elseif collider.Variant == FiendFolio.FF.EvilBeggar.Var then
+			for _ = 0, rng:RandomInt(2)+1 do
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collider.Position, RandomVector()*3, nil)
+			end
+			--idk where is half black and immortal harts
+			return
+		elseif collider.Variant == FiendFolio.FF.ZodiacBeggar.Var then
+			for _ = 0, rng:RandomInt(2) do
+				local rune = Game():GetItemPool():GetCard(rng:GetSeed(), false, false, true)
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, collider.Position, RandomVector()*3, nil)
+			end
+			return
+		elseif collider.Variant == FiendFolio.FF.CellGame.Var then
+			for _ = 0, rng:RandomInt(2)+2 do
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, 0, collider.Position, RandomVector()*3, nil)
+			end
+			return
+		elseif collider.Variant == FiendFolio.FF.FakeBeggar.Var then
+			Isaac.Spawn(EntityType.ENTITY_BOMB, BombVariant.BOMB_TROLL, 0, collider.Position, RandomVector()*3, nil)
+			return
+		end
+	end
+	if UnholyOrb.Epiphany then
+		if collider.Variant == UnholyOrb.Epiphany.ConvertBegga then
+			for _ = 0, rng:RandomInt(2)+1 do
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 0, collider.Position, RandomVector()*3, nil)
+			end
+			return
+		end
+	end
+	if UnholyOrb.Eclipsed then
+		if collider.Variant == EclipsedMod.enums.Slots.MongoBeggar then
+			for _ = 0, rng:RandomInt(2)+2 do
+				Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.MINISAAC, 0, collider.Position, RandomVector()*5, nil)
+			end
+			return
+		elseif collider.Variant == EclipsedMod.enums.Slots.DeliriumBeggar then
+			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, UnholyOrb.Eclipsed.DeliVariants[collider:GetDropRNG():RandomInt(#UnholyOrb.Eclipsed.DeliVariants)+1], collider.Position, RandomVector()*5, nil)
+			return
 		end
 	end
 end
@@ -105,7 +178,8 @@ local function GetTargets(player)
 	end
 	for _, slot in pairs(Isaac.FindByType(EntityType.ENTITY_SLOT)) do
 		if UnholyOrb.KillBill[slot.Variant] then
-			table.insert(positionsTable, slot)
+			table.insert(positionsTable, {entity=slot, distance=slot.Position:Distance(player.Position)})
+			--table.insert(positionsTable, slot)
 		end
 	end
 	--positionsTable = utility:Shuffle(positionsTable, Game():GetSeeds():GetStartSeed()) -- shuffle table
@@ -162,10 +236,6 @@ function UnholyOrb:onPEffectUpdate(player)
 	local TargetPositions = utility:GetData(player, "UnholyTargetPositions")
 	local playerStartPos = utility:GetData(player, "UnholyPlayerPosition")
 	Game():SpawnParticles(player.Position, EffectVariant.HAEMO_TRAIL, 3, 1)
-	--local sptr = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SPRITE_TRAIL, 0, player.Position, Vector.Zero, nil)
-	--sptr:SetColor(Color(0,0,0,0.5,0.7),-1,1, false, false)
-	--Game():SpawnParticles(player.Position, EffectVariant.SPRITE_TRAIL, 3, 1, Color(0,0,0,1, 0.7)) -- test
-	--Game():SpawnParticles(player.Position, EffectVariant.DARK_BALL_SMOKE_PARTICLE, 3, 1, Color(0,0,0,1, 0.7))
 	if Game():GetRoom():GetFrameCount() == 1 then
 		utility:SetData(player, "UnholyTargetPositions", nil)
 		utility:SetData(player, "UnholyPlayerPosition", nil)
@@ -179,7 +249,7 @@ function UnholyOrb:onPEffectUpdate(player)
 			player.GridCollisionClass = utility:GetData(player, "UnholyPlayerGridCollision")
 			player.EntityCollisionClass = utility:GetData(player, "UnholyPlayerEntityCollision")
 			player.Velocity = Vector.Zero
-			SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
+			--SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
 			Game():ShakeScreen(10)
 			for _, enemy in pairs(Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 5000, EntityPartition.ENEMY)) do
 				if enemy:ToNPC() and enemy:GetData().UnholyOrbFlag then
@@ -188,12 +258,19 @@ function UnholyOrb:onPEffectUpdate(player)
 					enemy:GetData().UnholyFreeze = nil
 		        end
 			end
+			local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 2, player.Position, Vector.Zero, player)
+			poof:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
+			local ppff = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, player.Position, Vector.Zero, player):ToEffect()
+			ppff:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
+			Game():GetRoom():EmitBloodFromWalls(5, 10)
+
 		elseif player.Position:Distance(playerStartPos) < UnholyOrb.MaxDistance then
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MinSpeed)
 		else
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MaxSpeed)
 		end
 	elseif #TargetPositions > 0 then
+
 		if TargetPositions[1]:Exists() then
 			if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
 
@@ -201,8 +278,8 @@ function UnholyOrb:onPEffectUpdate(player)
 				Game():ShakeScreen(2)
 				SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
 				local enemy = table.remove(TargetPositions, 1)
-				local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, enemy.Position, Vector.Zero, nil)
-				poof:SetColor(Color(0,0,0,0.5,0.7),-1,1, false, false)
+				local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 2, enemy.Position, Vector.Zero, nil)
+				poof:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
 				enemy:BloodExplode()
 				utility:SetData(player, "UnholyTargetPositions", TargetPositions) -- idk if necessary
 				if enemy:ToNPC() then
@@ -225,6 +302,7 @@ function UnholyOrb:onPEffectUpdate(player)
 					BeggarRewards(enemy)
 				end
 			elseif player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MaxDistance then
+
 				player.Velocity = (TargetPositions[1].Position - player.Position):Resized(UnholyOrb.MinSpeed)
 			else
 				player.Velocity = (TargetPositions[1].Position - player.Position):Resized(UnholyOrb.MaxSpeed)
@@ -268,11 +346,30 @@ function UnholyOrb:OnUnholyOrbUse(_, player)
 		--pentagram.CollisionDamage = 0
 		pentagram.Color = Color(1,0.1,0.1)
 		pentagram:SetTimeout(10)
+		local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, player.Position, Vector.Zero, nil)
+		poof:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
+		local sptr = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SPRITE_TRAIL, 0, player.Position, Vector.Zero, player):ToEffect()
+		sptr:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
+		--sptr.SpriteScale = sptr.SpriteScale * 2
+		sptr.Parent = player
+		sptr:FollowParent(player)
+		sptr:GetData().UnholyOrbFlag = true
 	else
 		player:UseActiveItem(CollectibleType.COLLECTIBLE_DARK_ARTS)
 	end
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, UnholyOrb.OnUnholyOrbUse, enums.Orbs.UNHOLY)
+
+function UnholyOrb:TrailUpdate(effect)
+	if effect:GetData().UnholyOrbFlag then
+		if not utility:GetData(effect.SpawnerEntity, "UnholyPlayerPosition") then
+			effect:GetData().UnholyOrbFlag = nil
+			effect:Remove()
+		end
+	end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, UnholyOrb.TrailUpdate, EffectVariant.SPRITE_TRAIL)
+--]]
 
 function UnholyOrb:PentaUpdate(effect)
 	if effect:GetData().UnholyOrbFlag then

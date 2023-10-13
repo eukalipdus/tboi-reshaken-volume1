@@ -6,7 +6,7 @@ include("milkshake_scripts.enums")
 include("milkshake_scripts.utility")
 MilkshakeVol1.API = {}
 
-include("milkshake_scripts.bumAPI.core")
+--include("milkshake_scripts.bumAPI.core")
 
 local eid = include("milkshake_scripts.modcompatibility.eid")
 eid:addEid()
@@ -64,6 +64,7 @@ include("milkshake_scripts.items.trinkets.garnetshard")
 include("milkshake_scripts.items.trinkets.onyxshard")
 include("milkshake_scripts.items.trinkets.diamondshard")
 include("milkshake_scripts.items.trinkets.tourmalineshard")
+include("milkshake_scripts.items.trinkets.ambershard")
 
 --Pick ups
 include("milkshake_scripts.items.pick ups.cardspawner")
@@ -108,3 +109,12 @@ include("milkshake_scripts.enemies.beerhead")
 include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
+
+
+--- Shader crash fix
+--- Credits to Cucco
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function()
+    if #Isaac.FindByType(EntityType.ENTITY_PLAYER) == 0 then
+        Isaac.ExecuteCommand("reloadshaders")
+    end
+end)
