@@ -112,9 +112,12 @@ function HolyOrb:OrbEffect(orb)
 
     if sprite:IsPlaying("Idle") then
         --I almost failed physics in high school so please be patient.
-        sprite.Offset.Y = data.StartHeight + THROW_VELOCITY*orb.FrameCount + GRAVITY*(orb.FrameCount^2)
+        local height = data.StartHeight + THROW_VELOCITY*orb.FrameCount + GRAVITY*(orb.FrameCount^2)
+        sprite.Offset = Vector(0, height)
         local offsetScale = orb.FrameCount*COLOR_SCALING_RATE
-        sprite.Color:SetOffset(RED_COLOR_LEVEL*offsetScale, GREEN_COLOR_LEVEL*offsetScale, BLUE_COLOR_LEVEL*offsetScale)
+        local color = Color(1,1,1)
+        color:SetOffset(RED_COLOR_LEVEL*offsetScale, GREEN_COLOR_LEVEL*offsetScale, BLUE_COLOR_LEVEL*offsetScale)
+        sprite.Color = color
         if sprite.Offset.Y > 0 then
             sprite:Play("Attack")
         end
@@ -157,7 +160,7 @@ function HolyOrb:OnHolyOrbUse(_, player)
     local data = orb:GetData()
     -- "where did you get ~~-40~~ -20 from" it came to me in a prophecy
     data.StartHeight = -20 * (player.SpriteScale.Y + player.PositionOffset.Y)
-    orb:GetSprite().Offset.Y = data.StartHeight
+    orb:GetSprite().Offset = Vector(0, data.StartHeight)
 end
 
 MilkshakeVol1:AddCallback(

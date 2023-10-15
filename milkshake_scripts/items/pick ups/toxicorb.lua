@@ -4,51 +4,50 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 ToxicOrb.TearVariant = TearVariant.BLUE
-ToxicOrb.Timeout = 30*30
+ToxicOrb.Timeout = 30*15
 ToxicOrb.GfxPath = ""
-ToxicOrb.SizeUp = 0.5
+ToxicOrb.SizeUp = 0.1
+ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
 	[HeartSubType.HEART_FULL] =1,
 	[HeartSubType.HEART_HALF] = 1,
 	[HeartSubType.HEART_DOUBLEPACK] =2,
 }
 
---[[
-function ToxicOrb:TearUpdate(tear)
-	if not tear:GetData().ToxicBomb then return end
-	--if tear:CollidesWithGrid() or
+local function pooffy(position, color)
+	SFXManager():Play(SoundEffect.SOUND_SUMMON_POOF, 1.5)
+	local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, position, Vector.Zero, nil)
+	if color then
+		poof:SetColor(color,-1,1, false, false)
+	end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, ToxicOrb.TearUpdate, ToxicOrb.TearVariant)
 
-function ToxicOrb:TearCollision(tear, collider)
-	if not tear:GetData().ToxicBomb then return end
-
-
+local function Rotten(pos, area)
+	for _, pickup in pairs(Isaac.FindInRadius(pos, area, EntityPartition.PICKUP)) do
+		if pickup:ToPickup() and pickup.Variant == PickupVariant.PICKUP_HEART and ToxicOrb.Hearts[pickup.SubType] then
+			pickup:Remove()
+			pooffy(pickup.Position, Color(0.1,1,0.1))
+			for _ = 1, ToxicOrb.Hearts[pickup.SubType] do
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, pickup.Position, pickup.Velocity, nil)
+			end
+		elseif pickup.Type == EntityType.ENTITY_SLOT and pickup.Variant == 4 then
+			pickup:Remove()
+			Isaac.Spawn(EntityType.ENTITY_SLOT, 18, 0, pickup.Position, Vector.Zero, nil)
+			pooffy(pickup.Position, Color(0.1,1,0.1))
+		end
+	end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, ToxicOrb.TearCollision, ToxicOrb.TearVariant)
---]]
-
-
 
 function ToxicOrb:CloudUpdate(poisonCloud)
 	if not poisonCloud:GetData().ToxicOrbCloud then return end
-	for _, enemy in pairs(Isaac.FindInRadius(poisonCloud.Position, poisonCloud.Size * (poisonCloud.Scale-0.2), EntityPartition.ENEMY)) do
+	local area = 40 * (poisonCloud.Scale)
+	for _, enemy in pairs(Isaac.FindInRadius(poisonCloud.Position, area, EntityPartition.ENEMY)) do
 		if enemy:ToNPC() and enemy:HasMortalDamage() then
-			poisonCloud.Scale = poisonCloud.Scale + 0.5
+			poisonCloud.Scale = poisonCloud.Scale + enemy.MaxHitPoints/100 + ToxicOrb.SizeUp
+			poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
 		end
 	end
-	for _, hearts in pairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART)) do
-		if ToxicOrb.Hearts[hearts.SubType] then
-			hearts.Remove()
-			for _ = 1, ToxicOrb.Hearts[hearts.SubType] do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, hearts.Position, hearts.Velocity, nil)
-			end
-		end
-	end
-	for _, beggar in pairs(Isaac.FindByType(EntityType.ENTITY_SLOT, 4)) do
-		beggar:Remove()
-		Isaac.Spawn(EntityType.ENTITY_SLOT, 18, 0, beggar.Position, Vector.Zero, nil)
-	end
+	Rotten(poisonCloud.Position, area)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, ToxicOrb.CloudUpdate, EffectVariant.SMOKE_CLOUD)
 
@@ -56,19 +55,27 @@ function ToxicOrb:PEffectUpdate(player)
 	if utility:GetData(player, "ToxicOrbShoot") then
 		local tear = utility:GetData(player, "ToxicOrbShoot")
 		if not tear:Exists() then
-			Game():Fart(tear.Position, 80, player)
-			Game():BombExplosionEffects(tear.Position, 0)
+			utility:SetData(player, "ToxicOrbShoot", nil)
+			local FartArea = 135
+			Game():Fart(tear.Position, FartArea, player, 1.6)
+			Rotten(tear.Position, FartArea)
+			--Game():BombExplosionEffects(tear.Position, 0)
 			local poisonCloud = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD, 0, tear.Position, Vector.Zero, player):ToEffect()
+			poisonCloud.CollisionDamage = utility:GetCurrentChapter()
 			poisonCloud:GetData().ToxicOrbCloud = true
 			poisonCloud:SetTimeout(ToxicOrb.Timeout)
 		end
 	elseif utility:GetData(player, "ToxicOrbLift") then
 		if not player:IsHoldingItem() then
 			player:AddCard(enums.Orbs.POISON)
+			utility:SetData(player, "ToxicOrbLift", nil)
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
+			player:AnimateCard(enums.Orbs.POISON, "HideItem")
             utility:SetData(player, "ToxicOrbLift", nil)
 	        --ToxicBomb(player.Position, player:GetLastDirection())
-	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, player:GetAimDirection()*7, nil):ToTear() --BOBS_HEAD
+	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, player:GetAimDirection()*14, nil):ToTear() --BOBS_HEAD
+			tear.FallingSpeed = 1.35
+			tear:AddTearFlags(TearFlags.TEAR_SPECTRAL)
 			tear.CollisionDamage = 0
 			tear:GetData().ToxicBomb = true
 			local orbSprite = tear:GetSprite()
