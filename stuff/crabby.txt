@@ -1,0 +1,209 @@
+    Name: ?.Fly
+    ID: 25
+    Variant: 20
+    Subtype: 0
+    Element: Psychic
+
+    Name: Coal Fly
+    ID: 25
+    Variant: 22
+    Subtype: 0
+    Element: Fire
+
+    Name: I.Fly
+    ID: 25
+    Variant: 21
+    Subtype: 0
+    Element: Chaos
+
+    Name: Enraged Bones
+    ID: 834
+    Variant: 20
+    Element: Undead
+
+    Name: Zealot
+    ID: 833
+    Variant: 20
+    Element: Psychic
+    
+    Name: Flood Cap
+    ID: 300
+    Variant: 999
+    Element: Water
+
+    Name: Dank Gazing Globin Spawner
+    ID: 24
+    Variant: 2
+    Subtype: 20
+    Element: Poison
+    
+    Name: Dank Gazing Globin
+    ID: 24
+    Variant: 1
+    Subtype: 20
+    Element: Poison
+    
+    Name: Aqua Worm
+    ID: 825
+    Variant: 20
+    Element: Water
+    
+    Name: Flooder
+    ID: 109
+    Variant: 15
+    Element: Water
+    
+    Name: Psy Willo
+    ID: 838
+    Variant: 20
+    Element: Psychic
+    
+    Name: Red Willo
+    ID: 838
+    Variant: 21
+    Element: Electric
+    
+    Name: Full Willo
+    ID: 838
+    Variant: 22
+    Element: Water
+    
+    Name: Danker
+    ID: 109
+    Variant: 5
+    Element: Poison
+    
+    Name: Hanging Danker
+    ID: 109
+    Variant: 6
+    Element: Poison
+    
+    Name: Tainted Hanger
+    ID: 90
+    Variant: 21
+    Element: Unholy
+    
+    Name: Vessel
+    ID: 284
+    Variant: 40
+    Element: Psychic
+    
+    Name: Vessel(geh)
+    ID: 284
+    Variant: 40
+    Subtype: 1
+    Element: Unholy
+    
+    Name: Spec-Soul
+    ID: 26
+    Variant: 20
+    Element: Psychic
+    
+    Name: Spec-Soul(geh)
+    ID: 26
+    Variant: 20
+    Subtype: 1
+    Element: Unholy
+    
+    Name: Chainlink
+    ID: 109
+    Variant: 0
+    Element: Rock
+    
+    Name: The Holy One
+    ID: 109
+    Variant: 1
+    Element: Holy
+    
+    Name: The Holy One Corpse
+    ID: 109
+    Variant: 1
+    Subtype: 1
+    Element: Holy
+    
+    Name: The Blighted
+    ID: 109
+    Variant: 2
+    Element: Unholy
+    
+    Name: Sealed
+    ID: 109
+    Variant: 16
+    Element: Unholy
+    
+    Name: Bombardier
+    ID: 109
+    Variant: 4
+    Element: Fire
+    
+    Name: Coaly
+    ID: 109
+    Variant: 17
+    Subtype: 0
+    Element: Fire
+    
+    Name: VisHeart
+    ID: 92
+    Variant: 100
+    Element: Fire
+    
+    Name: VisMask
+    ID: 93
+    Variant: 100
+    Element: Fire
+    
+    Name: Rib Fly
+    ID: 214
+    Variant: 20
+    Element: Undead
+    
+    Name: Camillo
+    ID: 109
+    Variant: 10
+    Element: Electric
+    
+    Name: Mini Camillo
+    ID: 109
+    Variant: 11
+    Element: Electric
+    
+    Name: Waddoo
+    ID: 284
+    Variant: 50
+    Element: Unholy
+    
+    Name: Seam
+    ID: 881
+    Variant: 5
+    Element: Chaos
+    
+    Name: Maiden
+    ID: 109
+    Variant: 13
+    Element: Electric
+    
+    Name: Pharaoh's Tomb
+    ID: 109
+    Variant: 14
+    Element: Rock
+    
+    Name: Globlobber
+    ID: 109
+    Variant: 12
+    Element: Chaos
+    
+    Name: Shroomy
+    ID: 109
+    Variant: 7
+    Element: Nature
+    
+    Name: Ramble Gag
+    ID: 109
+    Variant: 8
+    Element: Nature
+    
+    Name: Tainted Mushroom
+    ID: 109
+    Variant: 9
+    Element: Nature
+    
