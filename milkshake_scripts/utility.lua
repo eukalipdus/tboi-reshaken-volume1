@@ -23,6 +23,14 @@ function utility:ShardTrinkets(trinketType, cardType, gridEntity, chance)
     end
 end
 
+function utility:RenderCrystalRockSprite(gridEntity, animName)
+    local sprite = gridEntity:GetSprite()
+    sprite:Load("gfx/grid/grid_crystalrock.anm2", true)
+    sprite:Play("tinted")
+    sprite:PlayOverlay("crystal")
+    print(sprite:GetLayerCount())
+end
+
 ---Returns the tears stat after adding some value
 ---
 ---Provided by Hybrid
