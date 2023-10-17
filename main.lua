@@ -110,6 +110,9 @@ include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
 
+--Misc
+include("milkshake_scripts.shardrockoverlay")
+
 
 --- Shader crash fix
 --- Credits to Cucco

@@ -23,12 +23,14 @@ function utility:ShardTrinkets(trinketType, cardType, gridEntity, chance)
     end
 end
 
+--- Used to render crystal overlays over rocks if a player has a shard trinket
+---@param gridEntity GridEntity
+---@param animName string
 function utility:RenderCrystalRockSprite(gridEntity, animName)
-    local sprite = gridEntity:GetSprite()
+    local sprite = Sprite()
     sprite:Load("gfx/grid/grid_crystalrock.anm2", true)
-    sprite:Play("tinted")
-    sprite:PlayOverlay("crystal")
-    print(sprite:GetLayerCount())
+    sprite:Play(animName, true)
+    sprite:Render(Isaac.WorldToScreen(gridEntity.Position))
 end
 
 ---Returns the tears stat after adding some value
@@ -387,6 +389,19 @@ end
 ---@return boolean
 function utility:IsEnemyConfused(enemy)
     return enemy:HasEntityFlags(EntityFlag.FLAG_CONFUSION)
+end
+
+--- Find out if at least one player has a given trinket, returns the first player found that has it
+---@param trinketType integer
+---@return EntityPlayer | nil
+function utility:DoesTrinketExist(trinketType)
+    for i = 0, Game():GetNumPlayers() - 1 do
+      local player = Isaac.GetPlayer(i)
+      if player:HasTrinket(trinketType) then
+        return player
+      end
+    end
+    return nil
 end
 
 
