@@ -1,215 +1,191 @@
-    <!-- Circe Swine -->
-    <entity anm2path="monsters/retribution/monster_swine.anm2" reroll="true" baseHP="16" boss="0" champion="1" collisionDamage="0" collisionMass="3" collisionRadius="17" friction="1" id="793" name="Circe Swine" numGridCollisionPoints="12" shadowSize="17" stageHP="2" variant="1888" portrait="3" shutdoors="false">
-        <gibs amount="8" blood="1" bone="1" eye="1" gut="1" large="1" />
-    </entity>
 
-    <!-- Spirit -->
-    <entity anm2path="monsters/retribution/monster_soulfly.anm2" reroll="true" baseHP="16" boss="0" champion="1" collisionDamage="1" collisionMass="3" collisionRadius="17" friction="1" id="793" name="Spirit" numGridCollisionPoints="12" shadowSize="17" stageHP="2" variant="1889" portrait="3" shutdoors="false" tags="fly">
-        <bestiary transform="0,0,1" anim="Fly" />
-        <gibs amount="8" blood="1" bone="1" eye="1" gut="1" large="1" />
-    </entity>
+    Name: Circe Swine
+    ID: 793
+    Variant: 1888
+    Element: 
 
-    <!-- Lifeseed Spirit -->
-    <entity anm2path="monsters/retribution/monster_soulfly_lil.anm2" reroll="true" baseHP="8" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="793" name="Lifeseed Spirit" numGridCollisionPoints="12" shadowSize="8" stageHP="2" variant="1890" portrait="3" shutdoors="false" tags="fly">
-        <bestiary transform="0,0,1" anim="Fly" />
-        <gibs amount="4" blood="1" bone="1" eye="1" gut="1" large="0" />
-    </entity>
+    Name: Spirit
+    ID: 793
+    Variant: 1889
+    Element: 
 
-    <!-- Viscerine -->
-    <entity anm2path="monsters/retribution/monster_viscerine.anm2" reroll="true" baseHP="8" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="17" friction="1" id="793" name="Viscerine" numGridCollisionPoints="0" shadowSize="11" stageHP="0" variant="1891" subtype="0" portrait="6" gridCollision="none" shutdoors="false" tags="fly"/>
+    Name: Lifeseed Spirit
+    ID: 793
+    Variant: 1890
+    Element: 
 
-    <!-- Pig Bang -->
-    <entity anm2path="pig_bang.anm2" reroll="true" baseHP="16" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="17" friction="1" id="793" name="Pig Bang" numGridCollisionPoints="12" shadowSize="17" stageHP="2" variant="1892" portrait="3" shutdoors="false">
-        <gibs amount="8" blood="1" bone="1" eye="1" gut="1" large="1" />
-    </entity>
+    Name: Viscerine
+    ID: 793
+    Variant: 1891
+    Subtype: 0
+    Element: 
 
-        <entity name="Hogma" anm2path="monsters/retribution/dogma/monster_swine.anm2" id="950" variant="1873" baseHP="20" boss="0" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="12" friction="1" numGridCollisionPoints="8" portrait="0" shadowSize="17" stageHP="0" shutdoors="false">
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" poop="0"/>
-    </entity>
+    Name: Pig Bang
+    ID: 793
+    Variant: 1892
+    Element: 
 
-        <!-- Samael's Baby -->
-    <entity anm2path="bosses/retribution/samael/monster_babyskeltal.anm2" baseHP="45" boss="0" champion="1" collisionDamage="1" collisionMass="10" collisionRadius="13" friction="1" gridCollision="walls" id="38" name="Samael Angel" numGridCollisionPoints="8" portrait="33" reroll="true" shadowSize="16" stageHP="0" variant="1" subtype="118">
-        <bestiary anim="Move" transform="0,3,1"/>
-        <gibs amount="5" blood="0" bone="1" dust="1" eye="0" gut="0" large="0" sound_bone="1"/>
-        <preload-snd id="44"/>
-    </entity>
+    Name: Hogma
+    ID: 950
+    Variant: 1873
+    Element: 
 
-        <!-- Curdle -->
-    <entity anm2path="monsters/retribution/monster_curdle.anm2" reroll="true" baseHP="10" boss="0" champion="0" collisionDamage="1" collisionMass="10" collisionRadius="13" friction="1" id="15" name=" Curdle " numGridCollisionPoints="12" shadowSize="20" stageHP="0" variant="1873" portrait="10">
-        <bestiary transform="0,0,1" anim="Hop" />
-        <gibs amount="5" blood="1" bone="0" eye="1" gut="1" large="0" />
-    </entity>
+    Name: Samael Angel
+    ID: 38
+    Variant: 1
+    Subtype: 118
+    Element: 
 
-    <!-- MegaClot -->
-    <entity anm2path="monsters/retribution/monster_megaclot.anm2" reroll="true" baseHP="20" boss="0" champion="1" collisionDamage="1" collisionMass="10" collisionRadius="13" friction="1" id="282" name="Mega Clot" numGridCollisionPoints="12" shadowSize="28" stageHP="0" variant="1873" portrait="128">
-        <bestiary transform="0,0,1" anim="Hop" />
-        <gibs amount="6" blood="1" bone="1" eye="1" gut="0" large="0" worm="1" />
-    </entity>
+    Name: Curdle
+    ID: 15
+    Variant: 1873
+    Element: 
 
-    <!-- Kaboom Fly -->
-    <entity anm2path="monsters/retribution/monster_kaboomfly.anm2" reroll="true" baseHP="24" boss="0" champion="1" collisionDamage="1" collisionMass="7" collisionRadius="13" friction="1" id="25" name="Kaboom Fly" numGridCollisionPoints="12" shadowSize="20" stageHP="0" variant="1873" portrait="19" gridCollision="walls" tags="fly explosive_soul">
-        <bestiary transform="0,0,1" anim="Fly" />
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
-    </entity>
+    Name: Mega Clot
+    ID: 282
+    Variant: 1873
+    Element: 
 
-    <!-- Bloated Fly -->
-    <entity anm2path="monsters/retribution/monster_bloatedfly.anm2" reroll="true" baseHP="24" boss="0" champion="1" collisionDamage="1" collisionMass="7" collisionRadius="13" friction="1" id="25" name="Bloated Fly" numGridCollisionPoints="12" shadowSize="20" stageHP="0" variant="1874" portrait="19" gridCollision="walls" tags="fly explosive_soul">
-        <bestiary transform="0,0,1" anim="Fly" />
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
-    </entity>
+    Name: Kaboom Fly
+    ID: 25
+    Variant: 1873
+    Element: 
 
-    <!-- Spew Fly -->
-    <entity anm2path="monsters/retribution/monster_spewfly.anm2" reroll="true" baseHP="12" boss="0" champion="1" collisionDamage="1" collisionMass="7" collisionRadius="13" friction="1" id="25" name="Spew Fly" numGridCollisionPoints="12" shadowSize="20" stageHP="0" variant="1875" portrait="19" gridCollision="walls" tags="fly">
-        <bestiary transform="0,0,1" anim="Fly" />
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
-    </entity>
+    Name: Bloated Fly
+    ID: 25
+    Variant: 1874
+    Element: 
 
-    <!-- Buttmuncher -->
-    <entity anm2path="monsters/retribution/monster_buttmuncher.anm2" baseHP="25" boss="0" champion="0" collisionDamage="1" collisionMass="30" collisionRadius="13" friction="1" id="89" name="Buttmuncher" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="0" subtype="183" portrait="55">
-        <bestiary transform="0,0,1" anim="WalkDown" />
-        <gibs amount="5" blood="1" bone="1" eye="1" gut="1" large="0" />
-    </entity>
+    Name: Spew Fly
+    ID: 25
+    Variant: 1875
+    Element: 
 
-    <!-- Drowned Grub -->
-    <entity id="239" variant="0" subtype="183" name="Drowned Grub" baseHP="12" stageHP="2.5" boss="0" champion="0" collisionDamage="1" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="22" portrait="102" anm2path="monsters/retribution/monster_drownedgrub.anm2">
-        <bestiary transform="0,0,1" anim="AttackHeadDown" />
-        <gibs amount="8" blood="0" bone="1" eye="0" gut="1" large="0" />
-    </entity>
-    <entity anm2path="monsters/retribution/monster_drownedmaggot.anm2" reroll="true" baseHP="15" boss="0" champion="1" collisionDamage="1" collisionMass="7" collisionRadius="13" friction="1" id="21" name="Drowned Maggot" numGridCollisionPoints="12" shadowSize="17" stageHP="0" variant="1873" portrait="14">
-        <bestiary transform="0,-3,1" anim="Move Hori" />
-        <gibs amount="4" blood="1" bone="0" eye="0" gut="1" large="0" />
-    </entity>
-    <entity anm2path="monsters/retribution/monster_drownedspitty.anm2" reroll="true" baseHP="10" boss="0" champion="1" collisionDamage="2" collisionMass="10" collisionRadius="13" friction="1" id="31" name="Drowned Spitty" numGridCollisionPoints="12" shadowSize="26" stageHP="0" variant="1873" portrait="29">
-        <bestiary transform="0,-3,1" anim="Move Hori" />
-        <gibs amount="5" blood="1" bone="0" eye="1" gut="1" large="0" />
-        <preload-snd id="319" /> <!-- SOUND_LITTLE_SPIT -->
-    </entity>
-    <entity id="243" variant="1873" name="Drowned Conjoined Spitty" reroll="true" baseHP="18" stageHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="24" portrait="96" anm2path="monsters/retribution/monster_drownedconjoinedspitty.anm2">
-        <bestiary transform="0,0,1" anim="Move Hori" />
-        <gibs amount="7" blood="1" bone="0" eye="0" gut="1" large="0" />
-    </entity>
+    Name: Buttmuncher
+    ID: 89
+    Variant: 0
+    Subtype: 183
+    Element: 
 
-    <!-- Dripling -->
-    <entity id="217" variant="1873" name="Dripling" reroll="true" baseHP="5" stageHP="1" boss="0" champion="0" collisionDamage="1" collisionMass="6" collisionRadius="9" friction="1" numGridCollisionPoints="12" shadowSize="12" portrait="85" anm2path="monsters/retribution/monster_dripling.anm2">
-        <bestiary transform="0,0,1" anim="Idle" />
-        <gibs amount="5" blood="0" bone="0" eye="0" gut="0" large="0" poop="1" />
-        <preload-snd id="60" /> <!-- SOUND_BABY_HURT -->
-    </entity>
+    Name: Drowned Grub
+    ID: 239
+    Variant: 0
+    Subtype: 183
+    Element: 
 
-    <!-- Dropling -->
-    <entity id="220" variant="1873" name="Dropling" reroll="true" baseHP="20" stageHP="6" boss="0" champion="0" collisionDamage="1" collisionMass="30" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="21" portrait="87" anm2path="monsters/retribution/monster_dropling.anm2">
-        <bestiary transform="0,0,1" anim="Idle" />
-        <gibs amount="5" blood="1" bone="0" eye="0" gut="0" large="0" poop="1" />
-        <preload id="217" variant="0" />
-        <preload-snd id="57" /> <!-- SOUND_CHILD_ANGRY_ROAR -->
-    </entity>
-    <entity id="220" variant="1873" subtype="1" name="Dank Dropling" reroll="true" baseHP="20" stageHP="6" boss="0" champion="0" collisionDamage="1" collisionMass="30" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="21" portrait="87" anm2path="monsters/retribution/monster_dankdropling.anm2">
-        <bestiary transform="0,0,1" anim="Idle" />
-        <gibs amount="5" blood="1" bone="0" eye="0" gut="0" large="0" poop="1" />
-        <preload id="217" variant="0" />
-        <preload-snd id="57" /> <!-- SOUND_CHILD_ANGRY_ROAR -->
-    </entity>
+    Name: Drowned Maggot
+    ID: 21
+    Variant: 1873
+    Element: 
 
-    <!-- Drossling -->
-    <entity id="223" variant="1873" name="Drossling" reroll="true" baseHP="65" stageHP="0" boss="0" champion="0" collisionDamage="2" collisionMass="3" collisionRadius="17" friction="1" numGridCollisionPoints="12" shadowSize="11" portrait="90" anm2path="monsters/retribution/monster_drossling.anm2">
-        <bestiary transform="0,0,1" anim="Wiggle" />
-        <gibs amount="8" blood="0" bone="0" eye="0" gut="0" large="0" poop="1" />
-        <preload id="220" variant="0" />
-        <preload-snd id="48" /> <!-- SOUND_FORESTBOSS_STOMPS -->
-    </entity>
+    Name: Drowned Spitty
+    ID: 31
+    Variant: 1873
+    Element: 
 
-    <!-- Full Sucker -->
-    <entity anm2path="monsters/retribution/monster_fullsucker.anm2" reroll="true" baseHP="14" boss="0" champion="1" collisionDamage="1" collisionMass="7" collisionRadius="17" friction="1" id="61" name="Full Sucker" numGridCollisionPoints="0" shadowSize="14" stageHP="0" variant="1873" portrait="51" gridCollision="walls" tags="fly">
-        <bestiary transform="0,0,1" anim="Fly" />
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
-    </entity>
+    Name: Drowned Conjoined Spitty
+    ID: 243
+    Variant: 1873
+    Element: 
 
-     <!-- Full Spit -->
-    <entity anm2path="monsters/retribution/monster_fullspit.anm2" reroll="true" baseHP="14" boss="0" champion="1" collisionDamage="1" collisionMass="7" collisionRadius="17" friction="1" id="61" name="Full Spit" numGridCollisionPoints="0" shadowSize="14" stageHP="0" variant="1874" portrait="51" gridCollision="walls" tags="fly explosive_soul">
-        <bestiary transform="0,0,1" anim="Fly" />
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
-    </entity>
+    Name: Dripling
+    ID: 217
+    Variant: 1873
+    Element: 
 
-    <!-- Sip -->
-    <entity anm2path="monsters/retribution/monster_sip.anm2" reroll="true" baseHP="7" boss="0" champion="1" collisionDamage="1" collisionMass="7" collisionRadius="17" friction="1" id="61" name="Sip" numGridCollisionPoints="0" shadowSize="14" stageHP="0" variant="1875" portrait="51" gridCollision="walls" tags="fly">
-        <bestiary transform="0,0,1" anim="Fly" />
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
-    </entity>
+    Name: Dropling
+    ID: 220
+    Variant: 1873
+    Element: 
 
-    <!-- Stumbling Boil -->
-    <entity anm2path="monsters/retribution/monster_stumblingboil.anm2" reroll="true" baseHP="24" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="13" friction="1" id="88" name="Stumbling Boil" numGridCollisionPoints="12" shadowSize="14" stageHP="0" variant="0" subtype="183" portrait="63">
-        <bestiary transform="0,0,1" anim="WalkVert" />
-        <gibs amount="6" blood="1" bone="0" eye="0" gut="1" large="0" />
-    </entity>
+    Name: Dank Dropling
+    ID: 220
+    Variant: 1873
+    Subtype: 1
+    Element: 
 
-    <!-- Stumbling Gut -->
-    <entity anm2path="monsters/retribution/monster_stumblinggut.anm2" reroll="true" baseHP="24" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="13" friction="1" id="88" name="Stumbling Gut" numGridCollisionPoints="12" shadowSize="14" stageHP="0" variant="1" subtype="183" portrait="63" tags="explosive_soul">
-        <bestiary transform="0,0,1" anim="WalkVert" />
-        <gibs amount="6" blood="1" bone="0" eye="0" gut="1" large="0" />
-    </entity>
+    Name: Drossling
+    ID: 223
+    Variant: 1873
+    Element: 
 
-    <!-- Stumbling Sack -->
-    <entity anm2path="monsters/retribution/monster_stumblingnest.anm2" reroll="true" baseHP="24" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="13" friction="1" id="88" name="Stumbling Sack" numGridCollisionPoints="12" shadowSize="14" stageHP="0" variant="2" subtype="183" portrait="64">
-        <bestiary transform="0,0,1" anim="WalkVert" />
-        <gibs amount="6" blood="1" bone="0" eye="0" gut="1" large="0" />
-    </entity>
+    Name: Full Sucker
+    ID: 61
+    Variant: 1873
+    Element: 
 
-    <!-- Wall Writhe -->
-    <entity id="240" variant="1873" name="Wall Writhe" baseHP="15" stageHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0" portrait="93" anm2path="monsters/retribution/monster_writhe.anm2" tags="spider">
-        <bestiary transform="0,0,1" anim="Walk" />
-        <gibs amount="4" blood="1" bone="0" eye="0" gut="1" large="0" />
-        <preload-snd id="317" /> <!-- SOUND_SPIDER_SPIT_ROAR -->
-    </entity>
+    Name: Full Spit
+    ID: 61
+    Variant: 1874
+    Element: 
 
-    <!-- Blind Writhe -->
-    <entity id="242" variant="1873" name="Blind Writhe" baseHP="15" stageHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0" portrait="95" anm2path="monsters/retribution/monster_writheblind.anm2" tags="spider">
-        <bestiary transform="0,0,1" anim="Walk" />
-        <gibs amount="4" blood="1" bone="0" eye="0" gut="1" large="0" />
-    </entity>
+    Name: Sip
+    ID: 61
+    Variant: 1875
+    Element: 
 
-    <!-- Rage Writhe -->
-    <entity id="241" variant="1873" name="Rage Writhe" baseHP="15" stageHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0" portrait="94" anm2path="monsters/retribution/monster_writherage.anm2" tags="spider brimstone_soul">
-        <bestiary transform="0,0,1" anim="Walk" />
-        <gibs amount="4" blood="1" bone="0" eye="0" gut="1" large="0" />
-        <preload id="7" variant="1" />
-        <preload id="1000" variant="50" subtype="1" />
-        <preload-snd id="5" /> <!-- SOUND_BLOOD_LASER -->
-    </entity>
+    Name: Stumbling Boil
+    ID: 88
+    Variant: 0
+    Subtype: 183
+    Element: 
 
-    <!-- Huskie -->
-    <entity id="288" variant="1873" name="Huskie" reroll="true" baseHP="30" stageHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="20" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="17" portrait="146" anm2path="monsters/retribution/monster_huskie.anm2" shutdoors="true" gridCollision="walls">
-        <bestiary transform="0,0,1" anim="Idle" />
-        <gibs amount="8" blood="1" bone="1" eye="1" gut="1" large="0" />
-    </entity>
+    Name: Stumbling Gut
+    ID: 88
+    Variant: 1
+    Subtype: 183
+    Element: 
 
-    <!-- Pinhead -->
-    <entity id="244" variant="1873" name="Pinhead" reroll="true" baseHP="15" stageHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="100" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0" portrait="97" anm2path="monsters/retribution/monster_pinhead.anm2">
-        <bestiary transform="0,0,1" anim="Idle" />
-        <gibs amount="6" blood="1" bone="0" eye="1" gut="1" large="0" />
-        <preload-snd id="318" /> <!-- SOUND_WORM_SPIT -->
-    </entity>
+    Name: Stumbling Sack
+    ID: 88
+    Variant: 2
+    Subtype: 183
+    Element: 
 
-    <!-- Pinprick -->
-    <entity id="255" anm2path="monsters/retribution/monster_pinprick.anm2" reroll="true" variant="1873" name="Pinprick" baseHP="40" stageHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="100" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="0" portrait="97">
-        <bestiary transform="0,0,1" anim="Idle" />
-        <gibs amount="6" blood="1" bone="0" eye="1" gut="1" large="0" />
-    </entity>
+    Name: Wall Writhe
+    ID: 240
+    Variant: 1873
+    Element: 
 
-    <!-- Walking Blue Boil -->
-    <entity anm2path="monsters/retribution/monster_walking_blueboil.anm2" reroll="true" baseHP="25" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="13" friction="1" id="88" name="Walking Blue Boil" numGridCollisionPoints="12" shadowSize="14" stageHP="0" variant="0" subtype="184" portrait="63">
-        <bestiary transform="0,0,1" anim="WalkVert" />
-        <gibs amount="6" blood="1" bone="0" eye="0" gut="1" large="0" />
-    </entity>
+    Name: Blind Writhe
+    ID: 242
+    Variant: 1873
+    Element: 
 
-    <!-- Stumbling Blue Boil -->
-    <entity anm2path="monsters/retribution/monster_stumblingblueboil.anm2" reroll="true" baseHP="30" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="13" friction="1" id="88" name="Stumbling Blue Boil" numGridCollisionPoints="12" shadowSize="14" stageHP="0" variant="0" subtype="185" portrait="63">
-        <bestiary transform="0,0,1" anim="WalkVert" />
-        <gibs amount="6" blood="1" bone="0" eye="0" gut="1" large="0" />
-    </entity>
+    Name: Rage Writhe
+    ID: 241
+    Variant: 1873
+    Element: 
 
-    <!-- Mega Pooter -->
-    <entity anm2path="monsters/retribution/monster_megapooter.anm2" reroll="true" baseHP="8" boss="0" champion="1" collisionDamage="0" collisionMass="4" collisionRadius="17" friction="1" id="14" name="Mega Pooter" numGridCollisionPoints="0" shadowSize="11" stageHP="0" variant="0" subtype="183" portrait="6" gridCollision="walls" tags="fly">
-        <bestiary transform="0,0,1" anim="Fly" />
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
-        <preload-snd id="178" /> <!-- bloodshoot -->
-    </entity>
+    Name: Huskie
+    ID: 288
+    Variant: 1873
+    Element: 
+
+    Name: Pinhead
+    ID: 244
+    Variant: 1873
+    Element: 
+
+    Name: Pinprick
+    ID: 255
+    Variant: 1873
+    Element: 
+
+    Name: Walking Blue Boil
+    ID: 88
+    Variant: 0
+    Subtype: 184
+    Element: 
+
+    Name: Stumbling Blue Boil
+    ID: 88
+    Variant: 0
+    Subtype: 185
+    Element: 
+
+    Name: Mega Pooter
+    ID: 14
+    Variant: 0
+    Subtype: 183
+    Element: 
