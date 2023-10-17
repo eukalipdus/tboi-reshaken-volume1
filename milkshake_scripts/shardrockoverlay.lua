@@ -3,6 +3,15 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local shardTrinkets = {
+    enums.Trinkets.AMETHYST_SHARD,
+    enums.Trinkets.RUBY_SHARD,
+    enums.Trinkets.TOURMALINE_SHARD,
+    enums.Trinkets.EMERALD_SHARD,
+    enums.Trinkets.PERIDOT_SHARD,
+    enums.Trinkets.GARNET_SHARD,
+    enums.Trinkets.ONYX_SHARD,
+    enums.Trinkets.DIAMOND_SHARD,
+    enums.Trinkets.SAPPHIRE_SHARD,
     enums.Trinkets.AMBER_SHARD,
 }
 
