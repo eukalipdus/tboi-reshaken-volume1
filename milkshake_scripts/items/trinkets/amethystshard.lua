@@ -7,9 +7,14 @@ function amethystShard:postGridEntityBroken(gridEntity)
 end
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GRID_ENTITY_BROKEN, amethystShard.postGridEntityBroken)
 
-function amethystShard:PostGridEntityInit(gridEntity)
-    if gridEntity:GetType() ~= GridEntityType.GRID_ROCKT then return end
-    utility:RenderCrystalRockSprite(gridEntity, "amethyst")
+function amethystShard:PostEffectRender()
+    if not utility:DoesTrinketExist(enums.Trinkets.AMETHYST_SHARD) then return end
+    local tintedRocks = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT)
+    for _, gridEntity in ipairs(tintedRocks) do
+        if gridEntity.State ~= 2 then
+            utility:RenderCrystalRockSprite(gridEntity, "amethyst")
+        end
+    end
 end
-MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GRID_ENTITY_INIT, amethystShard.PostGridEntityInit)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_RENDER, amethystShard.PostEffectRender)
 return amethystShard
