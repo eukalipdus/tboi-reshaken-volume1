@@ -19,8 +19,9 @@ function shardRockOverlay:PostGridEntityInit()
     local emptyEffects = TSIL.EntitySpecific.GetEffects(enums.Effects.EFFECT_REPLACER)
     if #emptyEffects > 1 then return end
     for _, trinket in ipairs(shardTrinkets) do
-         if utility:DoesTrinketExist(trinket) then
-            TSIL.EntitySpecific.SpawnEffect(enums.Effects.EFFECT_REPLACER, 0, Vector.Zero, Vector.Zero, Isaac.GetPlayer(0), Random() + 1)
+        local player = utility:DoesTrinketExist(trinket)
+         if player then
+            TSIL.EntitySpecific.SpawnEffect(enums.Effects.EFFECT_REPLACER, 0, Vector.Zero, Vector.Zero, player, Random() + 1)
             break
          end
     end
