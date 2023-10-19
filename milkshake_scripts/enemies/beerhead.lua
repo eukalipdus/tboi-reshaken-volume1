@@ -284,7 +284,7 @@ function BeerHead:BeerHead_Update(enemy)
                 enemy
             )
             creep.SpriteScale = Vector(7, 7)
-            creep.Scale = 1.25
+            creep.Scale = 1.5
             GetGlassHeadData(creep).BeerHead = true
             creep.Timeout = 300
             creep:Update()
