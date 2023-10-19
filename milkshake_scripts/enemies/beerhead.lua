@@ -9,6 +9,16 @@ local BEER_COLOR = Color(.5, .5, .5, 1, 1, .5, 0)
 local BEER_PROJECTILE_COLOR = Color(1, 1, 1, 1, 1, .5, 0)
 BEER_PROJECTILE_COLOR:SetColorize(1, .9, .75, .8)
 
+local function NearSpike(enemy)
+    for g = 0, Game():GetRoom():GetGridSize() do
+        local grid = Game():GetRoom():GetGridEntity(g)
+
+        if grid and grid:ToSpikes() and grid.State == 0 
+        and enemy.Position:Distance(grid.Position) <= 40 then 
+            return true
+        end
+    end
+end
 
 ---@param enemy Entity
 ---@return table
@@ -101,7 +111,7 @@ function BeerHead:BeerHead_Update(enemy)
 
 
         if enemy.Pathfinder:HasPathToPos(data.targpos, false) or (utility:IsEnemyScared(enemy) or utility:IsEnemyConfused(enemy)) then
-            if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and
+            if (enemy:CollidesWithGrid() or data.gridCountdown > 0 or NearSpike(enemy)) and
                 (data.targpos:Distance(enemy.Position) > 100 or data.targpos:Distance(enemy.Position) < 100 and
                     not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then
                 enemy.Pathfinder:FindGridPath(data.targpos, Speed, 1, false)
@@ -273,14 +283,15 @@ function BeerHead:BeerHead_Update(enemy)
                 Vector.Zero,
                 enemy
             )
-            creep.SpriteScale = Vector(3.5, 3.5)
+            creep.SpriteScale = Vector(7, 7)
+            creep.Scale = 1.25
             GetGlassHeadData(creep).BeerHead = true
             creep.Timeout = 300
             creep:Update()
             data.creep = creep
 
             for _ = 1, 5 do
-                local dist = rng:RandomInt(40) + 30
+                local dist = rng:RandomInt(40) + 40
                 local smallCreep = TSIL.EntitySpecific.SpawnEffect(
                     EffectVariant.CREEP_SLIPPERY_BROWN,
                     0,

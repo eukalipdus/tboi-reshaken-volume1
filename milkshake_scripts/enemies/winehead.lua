@@ -7,6 +7,17 @@ local WINEHEAD_SPEED = .4
 local WINE_COLOR = Color(.75, .75, .75, 1, .3, 0, .3)
 WINE_COLOR:SetColorize(1, 1, 1, .9)
 
+local function NearSpike(enemy)
+    for g = 0, Game():GetRoom():GetGridSize() do
+        local grid = Game():GetRoom():GetGridEntity(g)
+
+        if grid and grid:ToSpikes() and grid.State == 0 
+        and enemy.Position:Distance(grid.Position) <= 40 then 
+            return true
+        end
+    end
+end
+
 ---@param enemy Entity
 ---@return table
 local function GetGlassHeadData(enemy)
@@ -145,7 +156,7 @@ function WineHead:WineHead_Update(enemy)
         data.targpos = Game():GetRoom():GetClampedPosition(data.targpos + target.Velocity, 0)
 
         if enemy.Pathfinder:HasPathToPos(data.targpos, false) or (utility:IsEnemyScared(enemy) or utility:IsEnemyConfused(enemy)) then
-            if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and
+            if (enemy:CollidesWithGrid() or data.gridCountdown > 0 or NearSpike(enemy)) and
                 (data.targpos:Distance(enemy.Position) > 100 or data.targpos:Distance(enemy.Position) < 100 and
                     not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then
                 enemy.Pathfinder:FindGridPath(data.targpos, WINEHEAD_SPEED, 1, false)
