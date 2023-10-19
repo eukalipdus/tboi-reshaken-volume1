@@ -404,5 +404,32 @@ function utility:DoesTrinketExist(trinketType)
     return nil
 end
 
+--- Returns an x and y relative to the given x and y taking into account the HUD offset
+--- Provided by Sectimus
+---@param x number
+---@param y number
+---@param anchor string
+function utility:HUDOffset(x, y, anchor)
+    local notches = math.floor(Options.HUDOffset * 10 + 0.5)
+    local xoffset = (notches*2)
+    local yoffset = ((1/8)*(10*notches+(-1)^notches+7))
+    if anchor == 'topleft' then
+      xoffset = x+xoffset
+      yoffset = y+yoffset
+    elseif anchor == 'topright' then
+      xoffset = x-xoffset
+      yoffset = y+yoffset
+    elseif anchor == 'bottomleft' then
+      xoffset = x+xoffset
+      yoffset = y-yoffset
+    elseif anchor == 'bottomright' then
+      xoffset = x-xoffset * 0.8
+      yoffset = y-notches * 0.6
+    else
+      error('invalid anchor provided. Must be one of: \'topleft\', \'topright\', \'bottomleft\', \'bottomright\'', 2)
+    end
+    return math.floor(xoffset + 0.5), math.floor(yoffset + 0.5)
+end
+
 
 MilkshakeVol1.utility = utility
