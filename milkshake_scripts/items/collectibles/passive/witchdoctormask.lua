@@ -9,8 +9,8 @@ local FF_PILL_END = 120
 local NON_P1_SCALE = Vector(0.5, 0.5)
 local SPAWN_DISTANCE = 40
 
-local worldRenderPos = {
-    Vector(614, 471),
+local addToVector = {
+    Vector(-28, -18),
     Vector(394, 147),
 }
 
@@ -149,7 +149,8 @@ function witchDoctorMask:PostRender()
 
                 if player:GetPlayerType() ~= PlayerType.PLAYER_JACOB
                 and player:GetPlayerType() ~= PlayerType.PLAYER_ESAU then
-                    orbPillHuds[i]:Render(Isaac.WorldToRenderPosition(worldRenderPos[i]))
+                    local position = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) + addToVector[i]
+                    orbPillHuds[i]:Render(position)
                     orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                 end
 
