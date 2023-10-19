@@ -5,6 +5,17 @@ local sfx = SFXManager()
 
 local GLASSHEAD_SPEED = .5
 
+-- know when near spikes to change gridpath
+local function NearSpike(enemy)
+    for g = 0, Game():GetRoom():GetGridSize() do
+        local grid = Game():GetRoom():GetGridEntity(g)
+
+        if grid and grid:ToSpikes() and grid.State == 0 
+        and enemy.Position:Distance(grid.Position) <= 40 then 
+            return true
+        end
+    end
+end
 
 ---@param enemy Entity
 ---@return table
@@ -79,9 +90,9 @@ function GlassHeads:GlassHead_Update(enemy)
         else
             data.targpos = target.Position
         end
-
+        
         if enemy.Pathfinder:HasPathToPos(data.targpos, false) or (utility:IsEnemyScared(enemy) or utility:IsEnemyConfused(enemy)) then
-            if (enemy:CollidesWithGrid() or data.gridCountdown > 0) and
+            if (enemy:CollidesWithGrid() or data.gridCountdown > 0 or NearSpike(enemy)) and
                 (data.targpos:Distance(enemy.Position) > 100 or data.targpos:Distance(enemy.Position) < 100 and
                     not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then
                 enemy.Pathfinder:FindGridPath(data.targpos, GLASSHEAD_SPEED, 1, false)
