@@ -257,16 +257,4 @@ function prismaticDice:onUse(_, _, player, useFlags)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
 
-function prismaticDice:PreEntitySpawn(type, variant, _, position, _, _, seed)
-    if Game():GetRoom():GetFrameCount() > 1 then return end
-    if type == EntityType.ENTITY_EFFECT
-    and variant == EffectVariant.POOF01 then
-        local prisms = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.ANGELIC_PRISM)
-        for _, familiar in ipairs(prisms) do
-            if position:Distance(familiar.Position) < 5 then return {type, enums.Effects.EFFECT_REPLACER, 0, seed} end
-        end
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_ENTITY_SPAWN, prismaticDice.PreEntitySpawn)
-
 return prismaticDice
