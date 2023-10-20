@@ -144,7 +144,8 @@ function witchDoctorMask:PostPickupUpdate(pickup)
         if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
         and pickup.Variant == PickupVariant.PICKUP_PILL then
             if not utility:GetData(pickup, "SpiritPillSprite") then
-                if pickup.SubType < FF_PILL_BEGIN then
+                if pickup.SubType < FF_PILL_BEGIN
+                or pickup.SubType > PillColor.PILL_GIANT_FLAG then
                     pickup:GetSprite():ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pills ground.png")
 
                 elseif pickup.SubType >= FF_PILL_BEGIN and pickup.SubType <= FF_PILL_END then
