@@ -209,7 +209,7 @@ local function SpawnCollectible(collectibleType, position, player)
     return Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectibleType, position, Vector.Zero, player):ToPickup()
 end
 
-function prismaticDice:onUse(_, _, player, useFlags)
+function prismaticDice:onUse(_, rng, player, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return true end
     for _, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
@@ -240,9 +240,15 @@ function prismaticDice:onUse(_, _, player, useFlags)
                      collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
                      collectible:Remove()
                      local newCollectibleID
-                     if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+                    if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
+                        local roll = 4 + rng:RandomInt(2)
+                        for _ = 1, roll do
+                            splitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID)
+                        end
+
+                    elseif player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
                          for _ = 1, 2 do
-                             splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
+                            splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
                          end
                      else
                          splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
