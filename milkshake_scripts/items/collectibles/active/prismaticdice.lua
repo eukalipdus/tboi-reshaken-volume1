@@ -22,7 +22,7 @@ local SCHEDULE_FRAMES = 2
 ---@param second number
 ---@param collectible EntityPickup
 ---@return Vector
-local function getSplitPosition(index, first, second, collectible)
+local function GetSplitPosition(index, first, second, collectible)
     local spawnPosition
     
     if index == first then
@@ -41,7 +41,7 @@ end
 --- Plays the color flash animations on the newly spawned collectibles
 ---@param index number
 ---@param currentCollecible EntityPickup
-local function playSplitAnimation(index, currentCollecible)
+local function PlaySplitAnimation(index, currentCollecible)
     if index == 0 then
         --SOLID_CYAN:SetColorize(0, 2, 2, 3)
         currentCollecible:SetColor(SOLID_CYAN, SHATTERED_SOLID_FRAMES, 2, false, false)
@@ -87,7 +87,7 @@ end
 ---@param collectible EntityPickup
 ---@param quality number
 ---@param newCollectibleID number
-local function splitCollectible(player, collectible, quality, newCollectibleID)
+local function SplitCollectible(player, collectible, quality, newCollectibleID)
     local shatteredCollectible
     local willBreakfast = true
     local itemPool = Game():GetItemPool()
@@ -118,7 +118,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
 
             willBreakfast = false
 
-            local spawnPosition = getSplitPosition(i, 0, 1, collectible)
+            local spawnPosition = GetSplitPosition(i, 0, 1, collectible)
 
             ---@diagnostic disable-next-line: param-type-mismatch
             shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
@@ -135,7 +135,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 end
             end
 
-            playSplitAnimation(i, shatteredCollectible)
+            PlaySplitAnimation(i, shatteredCollectible)
 
             if shatteredCollectible and collectible:IsShopItem() then
                 if collectible.Price == PickupPrice.PRICE_THREE_SOULHEARTS then
@@ -168,7 +168,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
     if willBreakfast == true then
         for i = 0, 1 do
             local splitQuality = quality - 1
-            local spawnPosition = getSplitPosition(i, 1, 2, collectible)
+            local spawnPosition = GetSplitPosition(i, 1, 2, collectible)
 
             if splitQuality == 0 then
                 ---@diagnostic disable-next-line: param-type-mismatch
@@ -195,7 +195,7 @@ local function splitCollectible(player, collectible, quality, newCollectibleID)
                 end
             end
 
-            playSplitAnimation(i, shatteredCollectible)
+            PlaySplitAnimation(i, shatteredCollectible)
 
         end
     end
@@ -209,7 +209,7 @@ local function SpawnCollectible(collectibleType, position, player)
     return Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectibleType, position, Vector.Zero, player):ToPickup()
 end
 
-function prismaticDice:onUse(_, rng, player, useFlags)
+function prismaticDice:UseItem(_, rng, player, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return true end
     for _, entity in pairs(Isaac.GetRoomEntities()) do
         if entity.Type == EntityType.ENTITY_PICKUP
@@ -243,15 +243,15 @@ function prismaticDice:onUse(_, rng, player, useFlags)
                     if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
                         local roll = 4 + rng:RandomInt(2)
                         for _ = 1, roll do
-                            splitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID)
+                            SplitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID)
                         end
 
                     elseif player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
                          for _ = 1, 2 do
-                            splitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
+                            SplitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
                          end
                      else
-                         splitCollectible(player, collectible, collectibleQuality, newCollectibleID)
+                         SplitCollectible(player, collectible, collectibleQuality, newCollectibleID)
                      end
                  end
     
@@ -261,6 +261,6 @@ function prismaticDice:onUse(_, rng, player, useFlags)
     end
     return true
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.onUse, enums.Collectibles.PRISMATIC_DICE)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.UseItem, enums.Collectibles.PRISMATIC_DICE)
 
 return prismaticDice
