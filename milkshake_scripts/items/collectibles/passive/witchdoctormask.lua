@@ -2,7 +2,6 @@ local witchDoctorMask = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local HORSE_PILL_INC = 2048
 local NO_PILL = 0
 local FF_PILL_BEGIN = 101
 local FF_PILL_END = 120
@@ -49,20 +48,20 @@ local matchingPills = {
     [PillColor.PILL_WHITE_BLACK] = enums.Orbs.NATURE,
     [PillColor.PILL_WHITE_YELLOW] = enums.Orbs.RANDOM,
     [PillColor.PILL_GOLD] = enums.Orbs.RANDOM,
-    [PillColor.PILL_BLUE_BLUE + HORSE_PILL_INC] = enums.Orbs.WATER,
-    [PillColor.PILL_WHITE_BLUE + HORSE_PILL_INC] = enums.Orbs.HOLY,
-    [PillColor.PILL_ORANGE_ORANGE + HORSE_PILL_INC] = enums.Orbs.RANDOM,
-    [PillColor.PILL_WHITE_WHITE + HORSE_PILL_INC] = enums.Orbs.UNDEAD,
-    [PillColor.PILL_REDDOTS_RED + HORSE_PILL_INC] = enums.Orbs.RANDOM,
-    [PillColor.PILL_PINK_RED + HORSE_PILL_INC] = enums.Orbs.UNHOLY,
-    [PillColor.PILL_BLUE_CADETBLUE + HORSE_PILL_INC] = enums.Orbs.PSYCHIC,
-    [PillColor.PILL_YELLOW_ORANGE + HORSE_PILL_INC] = enums.Orbs.POISON,
-    [PillColor.PILL_ORANGEDOTS_WHITE + HORSE_PILL_INC] = enums.Orbs.FIRE,
-    [PillColor.PILL_WHITE_AZURE + HORSE_PILL_INC] = enums.Orbs.ELECTRIC,
-    [PillColor.PILL_BLACK_YELLOW + HORSE_PILL_INC] = enums.Orbs.RANDOM,
-    [PillColor.PILL_WHITE_BLACK + HORSE_PILL_INC] = enums.Orbs.NATURE,
-    [PillColor.PILL_WHITE_YELLOW + HORSE_PILL_INC] = enums.Orbs.RANDOM,
-    [PillColor.PILL_GOLD + HORSE_PILL_INC] = enums.Orbs.RANDOM,
+    [PillColor.PILL_BLUE_BLUE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.WATER,
+    [PillColor.PILL_WHITE_BLUE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.HOLY,
+    [PillColor.PILL_ORANGE_ORANGE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.RANDOM,
+    [PillColor.PILL_WHITE_WHITE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.UNDEAD,
+    [PillColor.PILL_REDDOTS_RED | PillColor.PILL_GIANT_FLAG] = enums.Orbs.RANDOM,
+    [PillColor.PILL_PINK_RED | PillColor.PILL_GIANT_FLAG] = enums.Orbs.UNHOLY,
+    [PillColor.PILL_BLUE_CADETBLUE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.PSYCHIC,
+    [PillColor.PILL_YELLOW_ORANGE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.POISON,
+    [PillColor.PILL_ORANGEDOTS_WHITE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.FIRE,
+    [PillColor.PILL_WHITE_AZURE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.ELECTRIC,
+    [PillColor.PILL_BLACK_YELLOW | PillColor.PILL_GIANT_FLAG] = enums.Orbs.RANDOM,
+    [PillColor.PILL_WHITE_BLACK | PillColor.PILL_GIANT_FLAG] = enums.Orbs.NATURE,
+    [PillColor.PILL_WHITE_YELLOW | PillColor.PILL_GIANT_FLAG] = enums.Orbs.RANDOM,
+    [PillColor.PILL_GOLD | PillColor.PILL_GIANT_FLAG] = enums.Orbs.RANDOM,
 
 }
 
@@ -80,6 +79,21 @@ local pillAnimFrames = {
     PillColor.PILL_BLACK_YELLOW,
     PillColor.PILL_WHITE_BLACK,
     PillColor.PILL_WHITE_YELLOW,
+    PillColor.PILL_BLUE_BLUE | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_WHITE_BLUE | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_ORANGE_ORANGE | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_WHITE_WHITE | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_REDDOTS_RED | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_PINK_RED | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_BLUE_CADETBLUE | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_YELLOW_ORANGE | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_ORANGEDOTS_WHITE | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_WHITE_AZURE | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_BLACK_YELLOW | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_WHITE_BLACK | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_GOLD,
+    PillColor.PILL_GOLD | PillColor.PILL_GIANT_FLAG,
+    PillColor.PILL_WHITE_YELLOW | PillColor.PILL_GIANT_FLAG,
 }
 
 local function GetFrameFromId(pillColor, frameTable)
@@ -95,7 +109,7 @@ end
 ---@param spiritOrb number
 function MilkshakeVol1.API:AddOrbsPerPill(pillColor, spiritOrb)
     matchingPills[pillColor] = spiritOrb
-    matchingPills[pillColor + HORSE_PILL_INC] = spiritOrb
+    matchingPills[pillColor | PillColor.PILL_GIANT_FLAG] = spiritOrb
 end
 
 function witchDoctorMask:UsePill(_, player)
