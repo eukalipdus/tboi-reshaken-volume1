@@ -67,7 +67,7 @@ vec2 mirrorclamp(vec2 uv, vec2 m)
 
 void main(void)
 {
-    if(Enabled0 > 0) {
+    if(Enabled0 > 0.0) {
 	    float time = Time0 * 6.28318530718 * 0.5;
         float amount = Amount0+0.1;
         
