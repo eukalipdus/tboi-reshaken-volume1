@@ -54,6 +54,12 @@ local MIRRORED_INPUTS = {
 --- A mirror door with this index as target will travel to the mirror version of the room
 local MIRROR_DOOR_INDEX = 9999
 
+local DoorFrameSprite = Sprite()
+DoorFrameSprite:Load("gfx/1000.154_door outline.anm2", true)
+DoorFrameSprite.Color = Color(1, 1, 1, 0.3, 0.5, 3, 4)
+DoorFrameSprite:Play("Idle", true)
+
+
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
     "IsInMirrorRoom",
@@ -581,4 +587,35 @@ MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
     MirrorKey.OnMirrorDoorUpdate,
     MilkshakeVol1.enums.Effects.MIRROR_KEY_DOOR
+)
+
+
+function MirrorKey:OnRender()
+    if not CanUseMirrorKey() then return end
+    if not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.MIRROR_KEY) then return end
+
+    local unusedDoorSlots = TSIL.Doors.GetUnusedDoorSlots()
+    local room = Game():GetRoom()
+
+    if room:GetRenderMode() ~= RenderMode.RENDER_NULL then return end
+
+    for _, doorSlot in ipairs(unusedDoorSlots) do
+        local doorPos = room:GetDoorSlotPosition(doorSlot)
+        local rotation = ROTATION_PER_DOOR_SLOT[doorSlot]
+        local offset = Vector(0, 20):Rotated(rotation)
+
+        local renderPos = Isaac.WorldToScreen(doorPos + offset)
+        renderPos = renderPos - Game().ScreenShakeOffset
+
+        DoorFrameSprite.Rotation = rotation
+        DoorFrameSprite:Render(renderPos)
+    end
+
+    if not Game():IsPaused() then
+        DoorFrameSprite:Update()
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_RENDER,
+    MirrorKey.OnRender
 )
