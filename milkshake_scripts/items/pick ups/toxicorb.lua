@@ -5,7 +5,7 @@ local utility = MilkshakeVol1.utility
 
 ToxicOrb.TearVariant = TearVariant.BLUE
 ToxicOrb.Timeout = 30*15
-ToxicOrb.GfxPath = ""
+ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
 ToxicOrb.SizeUp = 0.1
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
@@ -42,9 +42,12 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 	if not poisonCloud:GetData().ToxicOrbCloud then return end
 	local area = 40 * (poisonCloud.Scale)
 	for _, enemy in pairs(Isaac.FindInRadius(poisonCloud.Position, area, EntityPartition.ENEMY)) do
-		if enemy:ToNPC() and enemy:HasMortalDamage() then
-			poisonCloud.Scale = poisonCloud.Scale + enemy.MaxHitPoints/100 + ToxicOrb.SizeUp
-			poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
+		if enemy:ToNPC() then
+			enemy:TakeDamage(utility:GetCurrentChapter(), DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 15)
+			if enemy:HasMortalDamage() then
+				poisonCloud.Scale = poisonCloud.Scale + enemy.MaxHitPoints/100 + ToxicOrb.SizeUp
+				poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
+			end
 		end
 	end
 	Rotten(poisonCloud.Position, area)
@@ -61,7 +64,9 @@ function ToxicOrb:PEffectUpdate(player)
 			Rotten(tear.Position, FartArea)
 			--Game():BombExplosionEffects(tear.Position, 0)
 			local poisonCloud = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD, 0, tear.Position, Vector.Zero, player):ToEffect()
-			poisonCloud.CollisionDamage = utility:GetCurrentChapter()
+			poisonCloud.Scale = 2 * poisonCloud.Scale
+			poisonCloud.CollisionDamage = 0
+			--poisonCloud.CollisionDamage = utility:GetCurrentChapter()
 			poisonCloud:GetData().ToxicOrbCloud = true
 			poisonCloud:SetTimeout(ToxicOrb.Timeout)
 		end
@@ -92,9 +97,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, ToxicOrb.PEffectU
 function ToxicOrb:OnToxicOrbUse(card, player)
     utility:SetData(player, "ToxicOrbLift", true)
     --EffectVariant.SMOKE_CLOUD
-
     player:AnimateCard(card, "LiftItem")
-
     --player:UseActiveItem(CollectibleType.COLLECTIBLE_MEGA_BEAN)
 end
 MilkshakeVol1:AddCallback(
