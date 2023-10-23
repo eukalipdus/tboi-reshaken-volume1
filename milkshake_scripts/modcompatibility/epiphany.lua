@@ -166,4 +166,10 @@ MilkshakeVol1:AddModCompatibility("Epiphany", function()
             }
         }
     })
+
+    --Unholy orb beggars
+    MilkshakeVol1.API:AddUnholyOrbBeggar(Isaac.GetEntityVariantByName("Converter Beggar"), {
+        Config = {Count = 2, MinCount = 1},
+        {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_HEART, SubType = 0},
+    })
 end)
