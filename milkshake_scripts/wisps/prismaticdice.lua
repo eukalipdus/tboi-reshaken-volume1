@@ -50,12 +50,13 @@ local function CreateAngelicPrismSplit(redEntity, yellowEntity, greenEntity, blu
 end
 
 --- Used to see if a laser is colliding with a Prismatic Dice wisp
----@param EntityLaser
+---@param laser EntityLaser
 local function ShouldLaserSplit(laser)
     local wispsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_FAMILIAR, FamiliarVariant.WISP, enums.Collectibles.PRISMATIC_DICE)
     local samples = laser:GetNonOptimizedSamples()
     for _, wisp in ipairs(wispsInRoom) do
         for i = 0, #samples - 1 do
+            ---@diagnostic disable-next-line: undefined-field
             local point = samples:Get(i)
             if point:Distance(wisp.Position, laser.Position) < TEAR_COLLISION_RADIUS then
                 return true
@@ -69,7 +70,7 @@ function prismaticDice:FamiliarUpdate(familiar)
     local tearsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_TEAR)
     local player = familiar.Player
     for _, tear in ipairs(tearsInRoom) do
-        if tear.Position:Distance(familiar.Position, tear.Position) < TEAR_COLLISION_RADIUS
+        if tear.Position:Distance(familiar.Position) < TEAR_COLLISION_RADIUS
         and not utility:GetData(tear, "PrismaticWispTear") then
             tear:Remove()
 
@@ -94,7 +95,7 @@ function prismaticDice:FamiliarUpdate(familiar)
     local bombsInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_BOMB)
     for _, bomb in ipairs(bombsInRoom) do
         bomb = bomb:ToBomb()
-        if bomb.Position:Distance(familiar.Position, bomb.Position) < TEAR_COLLISION_RADIUS
+        if bomb.Position:Distance(familiar.Position) < TEAR_COLLISION_RADIUS
         and bomb.IsFetus
         and not utility:GetData(bomb, "PrismaticWispBomb") then
             bomb:Remove()
@@ -167,7 +168,7 @@ function prismaticDice:FamiliarUpdate(familiar)
     local knivesInRoom = TSIL.Entities.GetEntities(EntityType.ENTITY_KNIFE)
     for _, knife in ipairs(knivesInRoom) do
         knife = knife:ToKnife()
-        if knife.Position:Distance(familiar.Position, knife.Position) < TEAR_COLLISION_RADIUS
+        if knife.Position:Distance(familiar.Position) < TEAR_COLLISION_RADIUS
         and knife:IsFlying()
         and not utility:GetData(knife, "PrismaticWispKnife") then
             knife:Remove()
