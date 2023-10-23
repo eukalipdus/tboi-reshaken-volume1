@@ -590,29 +590,55 @@ MilkshakeVol1:AddCallback(
 )
 
 
+---@return boolean
+local function ShouldSpawnMirrorDoorOutlines()
+    if not CanUseMirrorKey() then return false end
+    return TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.MIRROR_KEY)
+end
+
+
+local function AreThereDoorOutlines()
+    return Isaac.CountEntities(nil, EntityType.ENTITY_EFFECT, MilkshakeVol1.enums.Effects.MIRROR_DOOR_OUTLINE) > 0
+end
+
+
+---@param door EntityEffect
+function MirrorKey:OnMirrorDoorOutlineUpdate(door)
+    if not ShouldSpawnMirrorDoorOutlines() then
+        door:Remove()
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_UPDATE,
+    MirrorKey.OnMirrorDoorOutlineUpdate,
+    MilkshakeVol1.enums.Effects.MIRROR_DOOR_OUTLINE
+)
+
+
 function MirrorKey:OnRender()
-    if not CanUseMirrorKey() then return end
-    if not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.MIRROR_KEY) then return end
+    if not ShouldSpawnMirrorDoorOutlines() then return end
+    if AreThereDoorOutlines() then return end
 
     local unusedDoorSlots = TSIL.Doors.GetUnusedDoorSlots()
     local room = Game():GetRoom()
-
-    if room:GetRenderMode() ~= RenderMode.RENDER_NULL then return end
 
     for _, doorSlot in ipairs(unusedDoorSlots) do
         local doorPos = room:GetDoorSlotPosition(doorSlot)
         local rotation = ROTATION_PER_DOOR_SLOT[doorSlot]
         local offset = Vector(0, 20):Rotated(rotation)
+        local spawnPos = doorPos + offset
 
-        local renderPos = Isaac.WorldToScreen(doorPos + offset)
-        renderPos = renderPos - Game().ScreenShakeOffset
-
-        DoorFrameSprite.Rotation = rotation
-        DoorFrameSprite:Render(renderPos)
-    end
-
-    if not Game():IsPaused() then
-        DoorFrameSprite:Update()
+        local door = TSIL.EntitySpecific.SpawnEffect(
+            MilkshakeVol1.enums.Effects.MIRROR_DOOR_OUTLINE,
+            0,
+            spawnPos
+        )
+        door.SortingLayer = SortingLayer.SORTING_DOOR
+        local sprite = door:GetSprite()
+        sprite:Load("gfx/1000.154_door outline.anm2", true)
+        sprite:Play("Idle", true)
+        sprite.Color = Color(1, 1, 1, 0.3, 0.5, 3, 4)
+        sprite.Rotation = rotation
     end
 end
 MilkshakeVol1:AddCallback(
