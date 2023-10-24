@@ -65,6 +65,7 @@ function ToxicOrb:PEffectUpdate(player)
 			utility:SetData(player, "ToxicOrbShoot", nil)
 			local FartArea = 135
 			Game():Fart(tear.Position, FartArea, player, 1.6)
+			SFXManager():Stop(SoundEffect.SOUND_FART) -- idk
 			Rotten(tear.Position, FartArea)
 			--Game():BombExplosionEffects(tear.Position, 0)
 			local poisonCloud = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD, 0, tear.Position, Vector.Zero, player):ToEffect()
@@ -73,6 +74,7 @@ function ToxicOrb:PEffectUpdate(player)
 			--poisonCloud.CollisionDamage = utility:GetCurrentChapter()
 			poisonCloud:GetData().ToxicOrbCloud = true
 			poisonCloud:SetTimeout(ToxicOrb.Timeout)
+			SFXManager():Play(SoundEffect.SOUND_PESTILENCE_HEAD_EXPLODE, 1.5)
 		end
 	elseif utility:GetData(player, "ToxicOrbLift") then
 		if not player:IsHoldingItem() then
