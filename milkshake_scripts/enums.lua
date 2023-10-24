@@ -88,7 +88,8 @@ enums.Effects = {
     SALVATION_ORB = Isaac.GetEntityVariantByName("Salvation Orb"),
     EFFECT_REPLACER = Isaac.GetEntityVariantByName("Effect Replacer"),
 
-    MIRROR_KEY_DOOR = Isaac.GetEntityVariantByName("Mirror Key Door")
+    MIRROR_KEY_DOOR = Isaac.GetEntityVariantByName("Mirror Key Door"),
+    MIRROR_DOOR_OUTLINE = Isaac.GetEntityVariantByName("Mirror Key Door Outline")
 }
 
 enums.Enemies = {

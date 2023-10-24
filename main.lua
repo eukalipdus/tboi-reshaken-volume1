@@ -13,8 +13,11 @@ eid:addEid()
 
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
+include("milkshake_scripts.modcompatibility.crabbyCretins")
+include("milkshake_scripts.modcompatibility.eclipsed")
 include("milkshake_scripts.modcompatibility.epiphany")
 include("milkshake_scripts.modcompatibility.fiendFolio")
+include("milkshake_scripts.modcompatibility.retribution")
 
 -- Custom callbacks
 include("milkshake_scripts.custom_callbacks.chest_opened")

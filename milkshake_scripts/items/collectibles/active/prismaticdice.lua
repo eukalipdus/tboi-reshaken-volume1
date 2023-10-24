@@ -87,7 +87,8 @@ end
 ---@param collectible EntityPickup
 ---@param quality number
 ---@param newCollectibleID number
-local function SplitCollectible(player, collectible, quality, newCollectibleID)
+---@param originalQuality number | nil
+local function SplitCollectible(player, collectible, quality, newCollectibleID, originalQuality)
     local shatteredCollectible
     local willBreakfast = true
     local itemPool = Game():GetItemPool()
@@ -162,7 +163,12 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID)
         local rng = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE)
         local seed = rng:GetSeed()
         local roomType = Game():GetRoom():GetType()
-        utility:RecycleCollectible(collectible.Position, player, roomType, itemPool, seed, rng, false)
+        local pickupAmount = 1
+        if originalQuality then
+            pickupAmount = originalQuality - (quality - 1)
+        end
+        print(pickupAmount)
+        utility:RecycleCollectible(collectible.Position, player, roomType, itemPool, seed, rng, false, pickupAmount)
     end
     ::failsafe::
     if willBreakfast == true then
@@ -243,15 +249,15 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
                     if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
                         local roll = 4 + rng:RandomInt(2)
                         for _ = 1, roll do
-                            SplitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID)
+                            SplitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID, collectibleQuality)
                         end
 
                     elseif player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
                          for _ = 1, 2 do
-                            SplitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID)
+                            SplitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID, collectibleQuality)
                          end
                      else
-                         SplitCollectible(player, collectible, collectibleQuality, newCollectibleID)
+                         SplitCollectible(player, collectible, collectibleQuality, newCollectibleID, nil)
                      end
                  end
     

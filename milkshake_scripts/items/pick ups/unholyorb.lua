@@ -13,8 +13,8 @@ UnholyOrb.MaxDistance = 60
 UnholyOrb.DarkArtsStack = 60
 UnholyOrb.MaxHitPoints = 5
 
-function MilkshakeVol1.API:AddUnholyOrbBeggars(beggarType, datatable)
-	UnholyOrb.KillBill[beggarType] = {datatable}
+function MilkshakeVol1.API:AddUnholyOrbBeggar(beggarType, datatable)
+	UnholyOrb.KillBill[beggarType] = datatable
 	--[[
 	datatable = {
 		-- Count - how many rewards
@@ -65,7 +65,7 @@ local BeggarTables = {
 	},
 }
 for key, datatable in pairs(BeggarTables) do
-	MilkshakeVol1.API:AddUnholyOrbBeggars(key, datatable)
+	MilkshakeVol1.API:AddUnholyOrbBeggar(key, datatable)
 end
 
 local function BeggarRewards(collider)
@@ -191,81 +191,6 @@ local function BeggarRewards(collider)
 	end
 end
 --]]
-
-function UnholyOrb:GameStart(isSave)
-	if FiendFolio then
-		local FiendBeggars = {
-			[FiendFolio.FF.HugBeggar.Var] = {
-				Config = {Count = 1, MinCount = 0},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_HEART, SubType = 0},
-			},
-			[FiendFolio.FF.EvilBeggar.Var] = {
-				Config = {Count = 2, MinCount = 1},
-				--idk where is half black and immoral harts
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_HEART, SubType = HeartSubType.HEART_BLACK},
-			},
-			[FiendFolio.FF.ZodiacBeggar.Var] = {
-				Config = {Count = 2, MinCount = 0, OnlyRune = true},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = -1},
-			},
-			[FiendFolio.FF.CellGame.Var] = {
-				Config = {Count = 2, MinCount = 2},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_KEY, SubType = 0},
-			},
-			[FiendFolio.FF.FakeBeggar.Var] = {
-				Config = {Count = 1, MinCount = 0},
-				{Type = EntityType.ENTITY_BOMB, Variant = BombVariant.BOMB_TROLL, SubType = 0},
-			},
-		}
-		for key, datatable in pairs(FiendBeggars) do
-			MilkshakeVol1.API:AddUnholyOrbBeggars(key, datatable)
-		end
-	end
-	if Epiphany then
-		MilkshakeVol1.API:AddUnholyOrbBeggars(Isaac.GetEntityVariantByName("Converter Beggar"), {
-			Config = {Count = 2, MinCount = 1},
-			{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_HEART, SubType = 0},
-		})
-	end
-	if EclipsedMod then
-		local EclipsedBeggars = {
-			[EclipsedMod.enums.Slots.MongoBeggar] = {
-				Config = {Count = 2, MinCount = 2},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.MINISAAC, SubType = 0},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLUE_FLY, SubType = 0},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLUE_FLY, SubType = 1},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLUE_FLY, SubType = 2},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLUE_FLY, SubType = 3},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLUE_FLY, SubType = 4},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLUE_SPIDER, SubType = 0},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLOOD_BABY, SubType = 0},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLOOD_BABY, SubType = 1},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLOOD_BABY, SubType = 2},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLOOD_BABY, SubType = 3},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLOOD_BABY, SubType = 4},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLOOD_BABY, SubType = 5},
-				{Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLOOD_BABY, SubType = 6},
-			},
-			[EclipsedMod.enums.Slots.DeliriumBeggar] = {
-				Config = {Count = 1, MinCount = 0},
-				--idk where is half black and immoral harts
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectCell,},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectBomb,},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectKey,},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectCard,},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectPill,},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectRune,},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectHeart,},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectCoin,},
-				{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectBattery,},
-			},
-		}
-		for key, datatable in pairs(EclipsedBeggars) do
-			MilkshakeVol1.API:AddUnholyOrbBeggars(key, datatable)
-		end
-	end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, UnholyOrb.GameStart)
 
 
 local function GetTargets(player)

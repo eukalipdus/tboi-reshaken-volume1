@@ -174,11 +174,12 @@ end
 ---@param seed integer
 ---@param rng RNG
 ---@param specialPickupOnly boolean
-function utility:RecycleCollectible(position, player, roomType, itemPool, seed, rng, specialPickupOnly)
+---@param amount number
+function utility:RecycleCollectible(position, player, roomType, itemPool, seed, rng, specialPickupOnly, amount)
     local mulVecBy = 4
     if not specialPickupOnly then
-        local coins = rng:RandomInt(3) + 2
-        local keysBombsHearts = rng:RandomInt(3) + 1
+        local coins = (rng:RandomInt(3) + 2) * amount
+        local keysBombsHearts = (rng:RandomInt(3) + 1) * amount
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, position, Vector.Zero, player)
         SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
 
@@ -199,20 +200,30 @@ function utility:RecycleCollectible(position, player, roomType, itemPool, seed, 
     end
 
     if roomType == RoomType.ROOM_ANGEL then
-        TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_ETERNAL, position, RandomVector() * mulVecBy, player)
+        for _ = 1, amount do
+            TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_ETERNAL, position, RandomVector() * mulVecBy, player)
+        end
     
     elseif roomType == RoomType.ROOM_DEVIL then
-        TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_BLACK, position, RandomVector() * mulVecBy, player)
+        for _ = 1, amount do
+            TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_BLACK, position, RandomVector() * mulVecBy, player) 
+        end
     
     elseif roomType == RoomType.ROOM_SECRET then
-        TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_BONE, position, RandomVector() * mulVecBy, player)
+        for _ = 1, amount do
+            TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_BONE, position, RandomVector() * mulVecBy, player)
+        end
     
     elseif roomType == RoomType.ROOM_CURSE then
-        TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_ROTTEN, position, RandomVector() * mulVecBy, player)
+        for _ = 1, amount do
+            TSIL.PickupSpecific.SpawnHeart(HeartSubType.HEART_ROTTEN, position, RandomVector() * mulVecBy, player)
+        end
         
     elseif roomType == RoomType.ROOM_PLANETARIUM then
-        local rune = itemPool:GetCard(seed, false, true, true)
-        TSIL.PickupSpecific.SpawnCard(rune, position, RandomVector() * mulVecBy, player, rng)
+        for _ = 1, amount do
+            local rune = itemPool:GetCard(seed, false, true, true)
+            TSIL.PickupSpecific.SpawnCard(rune, position, RandomVector() * mulVecBy, player, rng)
+        end
     end
 end
 
