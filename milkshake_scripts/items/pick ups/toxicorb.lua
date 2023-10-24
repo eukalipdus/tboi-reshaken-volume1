@@ -6,6 +6,7 @@ local utility = MilkshakeVol1.utility
 ToxicOrb.TearVariant = TearVariant.BLUE
 ToxicOrb.Timeout = 30*15
 ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
+ToxicOrb.InitSize = 1.5
 ToxicOrb.SizeUp = 0.1
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
@@ -13,6 +14,7 @@ ToxicOrb.Hearts = {
 	[HeartSubType.HEART_HALF] = 1,
 	[HeartSubType.HEART_DOUBLEPACK] =2,
 }
+
 
 local function pooffy(position, color)
 	SFXManager():Play(SoundEffect.SOUND_SUMMON_POOF, 1.5)
@@ -43,9 +45,11 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 	local area = 40 * (poisonCloud.Scale)
 	for _, enemy in pairs(Isaac.FindInRadius(poisonCloud.Position, area, EntityPartition.ENEMY)) do
 		if enemy:ToNPC() then
-			enemy:TakeDamage(utility:GetCurrentChapter(), DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 15)
+			if not enemy:HasEntityFlags(EntityFlag.FLAG_POISON) then
+				enemy:TakeDamage(utility:GetCurrentChapter(), DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 15)
+			end
 			if enemy:HasMortalDamage() then
-				poisonCloud.Scale = poisonCloud.Scale + enemy.MaxHitPoints/100 + ToxicOrb.SizeUp
+				poisonCloud.Scale = poisonCloud.Scale + ToxicOrb.SizeUp
 				poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
 			end
 		end
@@ -64,7 +68,7 @@ function ToxicOrb:PEffectUpdate(player)
 			Rotten(tear.Position, FartArea)
 			--Game():BombExplosionEffects(tear.Position, 0)
 			local poisonCloud = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD, 0, tear.Position, Vector.Zero, player):ToEffect()
-			poisonCloud.Scale = 2 * poisonCloud.Scale
+			poisonCloud.Scale = ToxicOrb.InitSize * poisonCloud.Scale
 			poisonCloud.CollisionDamage = 0
 			--poisonCloud.CollisionDamage = utility:GetCurrentChapter()
 			poisonCloud:GetData().ToxicOrbCloud = true
@@ -79,6 +83,7 @@ function ToxicOrb:PEffectUpdate(player)
             utility:SetData(player, "ToxicOrbLift", nil)
 	        --ToxicBomb(player.Position, player:GetLastDirection())
 	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, player:GetAimDirection()*14, nil):ToTear() --BOBS_HEAD
+			tear.Height = 42
 			tear.FallingSpeed = 1.35
 			tear:AddTearFlags(TearFlags.TEAR_SPECTRAL)
 			tear.CollisionDamage = 0

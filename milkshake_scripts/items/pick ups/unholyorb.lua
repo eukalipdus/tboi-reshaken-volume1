@@ -68,7 +68,6 @@ for key, datatable in pairs(BeggarTables) do
 	MilkshakeVol1.API:AddUnholyOrbBeggars(key, datatable)
 end
 
-
 local function BeggarRewards(collider)
 	local rng = collider:GetDropRNG()
 	local data = UnholyOrb.KillBill[collider.Variant]
