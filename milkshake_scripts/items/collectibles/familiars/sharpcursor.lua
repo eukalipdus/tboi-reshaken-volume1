@@ -28,7 +28,7 @@ TSIL.SaveManager.AddPersistentVariable(
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
     "SharpCursorFollowMouse",
-    true,
+    false,
     TSIL.Enums.VariablePersistenceMode.NONE
 )
 
