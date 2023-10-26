@@ -393,6 +393,10 @@ function Lyra:OnClearAwardSpawn(rng, pos)
 
     if rng:RandomFloat() >= CLEAR_REWARD_REPLACE_CHANCE then return end
 
+    local hasContract = TSIL.Players.DoesAnyPlayerHasItem(CollectibleType.COLLECTIBLE_CONTRACT_FROM_BELOW)
+
+    if hasContract and rng:RandomFloat() < 0.33 then return true end
+
     pos = room:FindFreePickupSpawnPosition(pos)
     local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
     TSIL.EntitySpecific.SpawnPickup(
@@ -400,6 +404,16 @@ function Lyra:OnClearAwardSpawn(rng, pos)
         orb,
         pos
     )
+
+    if hasContract then
+        pos = room:FindFreePickupSpawnPosition(pos)
+        orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_TAROTCARD,
+            orb,
+            pos
+        )
+    end
 
     return true
 end
