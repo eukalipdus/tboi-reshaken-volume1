@@ -333,7 +333,10 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_UPDATE, SharpCursor.OnUpdate)
 ---@param player EntityPlayer
 function SharpCursor:OnPlayerRender(player)
     if not Options.MouseControl then return end
-    if not player:HasCollectible(enums.Collectibles.SHARP_CURSOR) then return end
+    local effects = player:GetEffects()
+    if not player:HasCollectible(enums.Collectibles.SHARP_CURSOR)
+    and not effects:HasCollectibleEffect(enums.Collectibles.SHARP_CURSOR) then return end
+
     if player.ControllerIndex ~= 0 then return end
     if not Input.IsActionTriggered(ButtonAction.ACTION_DROP, 0) then return end
 
