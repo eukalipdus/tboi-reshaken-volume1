@@ -8,6 +8,7 @@ ToxicOrb.Timeout = 30*15
 ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
 ToxicOrb.InitSize = 1.5
 ToxicOrb.SizeUp = 0.1
+ToxicOrb.TearHigh = -42
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
 	[HeartSubType.HEART_FULL] =1,
@@ -85,7 +86,7 @@ function ToxicOrb:PEffectUpdate(player)
             utility:SetData(player, "ToxicOrbLift", nil)
 	        --ToxicBomb(player.Position, player:GetLastDirection())
 	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, player:GetAimDirection()*14, nil):ToTear() --BOBS_HEAD
-			tear.Height = 42
+			tear.Height = ToxicOrb.TearHigh
 			tear.FallingSpeed = 1.35
 			tear:AddTearFlags(TearFlags.TEAR_SPECTRAL)
 			tear.CollisionDamage = 0
