@@ -6,7 +6,7 @@ local utility = MilkshakeVol1.utility
 ToxicOrb.TearVariant = TearVariant.BLUE
 ToxicOrb.Timeout = 30*60
 ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
-ToxicOrb.InitSize = 1.5
+ToxicOrb.InitSize = 2.5
 ToxicOrb.SizeUp = 0.1
 ToxicOrb.TearHigh = -120
 ToxicOrb.ExtraDmgTickFrame = 14 -- use even numbers
@@ -50,7 +50,7 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 		if enemy:ToNPC() then
 			--not enemy:HasEntityFlags(EntityFlag.FLAG_POISON) and
 			if poisonCloud.FrameCount%ToxicOrb.ExtraDmgTickFrame == 0 then
-				enemy:TakeDamage(utility:GetCurrentChapter()*ToxicOrb.DMGMulti, DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 15)
+				enemy:TakeDamage(utility:GetCurrentChapter()*ToxicOrb.DMGMulti, DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 1)
 			end
 			if enemy:HasMortalDamage() and not enemy:GetData().ToxicDead then
 				enemy:GetData().ToxicDead = true
