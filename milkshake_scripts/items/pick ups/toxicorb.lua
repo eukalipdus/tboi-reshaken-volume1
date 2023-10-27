@@ -9,6 +9,7 @@ ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
 ToxicOrb.InitSize = 1.5
 ToxicOrb.SizeUp = 0.1
 ToxicOrb.TearHigh = -42
+ToxicOrb.ExtraDmgTickFrame = 15
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
 	[HeartSubType.HEART_FULL] =1,
@@ -46,10 +47,11 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 	local area = 40 * (poisonCloud.Scale)
 	for _, enemy in pairs(Isaac.FindInRadius(poisonCloud.Position, area, EntityPartition.ENEMY)) do
 		if enemy:ToNPC() then
-			if not enemy:HasEntityFlags(EntityFlag.FLAG_POISON) then
+			if not enemy:HasEntityFlags(EntityFlag.FLAG_POISON) and poisonCloud.FrameCount%ToxicOrb.ExtraDmgTickFrame == 0 then
 				enemy:TakeDamage(utility:GetCurrentChapter(), DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 15)
 			end
-			if enemy:HasMortalDamage() then
+			if enemy:HasMortalDamage() and not enemy:GetData().ToxicDead then
+				enemy:GetData().ToxicDead = true
 				poisonCloud.Scale = poisonCloud.Scale + ToxicOrb.SizeUp
 				poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
 			end
