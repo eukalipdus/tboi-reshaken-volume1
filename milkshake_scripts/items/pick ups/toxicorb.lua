@@ -9,7 +9,7 @@ ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
 ToxicOrb.InitSize = 1.5
 ToxicOrb.SizeUp = 0.1
 ToxicOrb.TearHigh = -120
-ToxicOrb.ExtraDmgTickFrame = 15
+ToxicOrb.ExtraDmgTickFrame = 14 -- use even numbers
 ToxicOrb.DMGMulti = 3
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
@@ -48,7 +48,8 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 	local area = 40 * (poisonCloud.Scale)
 	for _, enemy in pairs(Isaac.FindInRadius(poisonCloud.Position, area, EntityPartition.ENEMY)) do
 		if enemy:ToNPC() then
-			if not enemy:HasEntityFlags(EntityFlag.FLAG_POISON) and poisonCloud.FrameCount%ToxicOrb.ExtraDmgTickFrame == 0 then
+			--not enemy:HasEntityFlags(EntityFlag.FLAG_POISON) and
+			if poisonCloud.FrameCount%ToxicOrb.ExtraDmgTickFrame == 0 then
 				enemy:TakeDamage(utility:GetCurrentChapter()*ToxicOrb.DMGMulti, DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 15)
 			end
 			if enemy:HasMortalDamage() and not enemy:GetData().ToxicDead then
@@ -75,7 +76,7 @@ function ToxicOrb:PEffectUpdate(player)
 			local poisonCloud = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD, 0, tear.Position, Vector.Zero, player):ToEffect()
 			poisonCloud.Scale = ToxicOrb.InitSize * poisonCloud.Scale
 			poisonCloud.CollisionDamage = 0
-			--poisonCloud.CollisionDamage = utility:GetCurrentChapter()
+			--poisonCloud.CollisionDamage = utility:GetCurrentChapter()*ToxicOrb.DMGMulti
 			poisonCloud:GetData().ToxicOrbCloud = true
 			poisonCloud:SetTimeout(ToxicOrb.Timeout)
 			SFXManager():Play(SoundEffect.SOUND_PESTILENCE_HEAD_EXPLODE, 1.5)
