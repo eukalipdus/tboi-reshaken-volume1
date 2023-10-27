@@ -1,8 +1,12 @@
 local eid = {}
+local enums = MilkshakeVol1.enums
 local descriptions = include("milkshake_scripts.modcompatibility.descriptions")
 
 function eid:addEid()
     if not EID then return end
+
+    EID:setModIndicatorName("Isaac Reshaken! ")
+    EID:setModIndicatorIcon("Collectible"..enums.Collectibles.MILKSHAKE .."")
 
     -- Collectibles
     for collectible, translations in pairs(descriptions.Collectibles) do

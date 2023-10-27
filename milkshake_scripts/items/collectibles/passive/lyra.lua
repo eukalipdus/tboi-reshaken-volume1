@@ -277,6 +277,20 @@ local function HandleLyraInput(player, playerUsingLyraData)
                 CreateNoteSplash(firstNote.direction, noteSplashPos)
             end
             local shockwavePos = Isaac.ScreenToWorld(noteSplashPos * Isaac.GetScreenPointScale())
+            if Options.MaxRenderScale ~= Options.MaxScale then
+                local x = 0
+                if firstNote.direction == NOTE_DIRECTION.LEFT then
+                    x = -20
+                elseif firstNote.direction == NOTE_DIRECTION.UP then
+                    x = -7
+                elseif firstNote.direction == NOTE_DIRECTION.DOWN then
+                    x = 7
+                elseif firstNote.direction == NOTE_DIRECTION.RIGHT then
+                    x = 20
+                end
+                local y = -45 * player.SpriteScale.Y
+                shockwavePos = player.Position + Vector(x, y)
+            end
             TSIL.Utils.Functions.RunNextCallback(
                 MilkshakeVol1,
                 ModCallbacks.MC_POST_UPDATE,
@@ -379,6 +393,10 @@ function Lyra:OnClearAwardSpawn(rng, pos)
 
     if rng:RandomFloat() >= CLEAR_REWARD_REPLACE_CHANCE then return end
 
+    local hasContract = TSIL.Players.DoesAnyPlayerHasItem(CollectibleType.COLLECTIBLE_CONTRACT_FROM_BELOW)
+
+    if hasContract and rng:RandomFloat() < 0.33 then return true end
+
     pos = room:FindFreePickupSpawnPosition(pos)
     local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
     TSIL.EntitySpecific.SpawnPickup(
@@ -386,6 +404,16 @@ function Lyra:OnClearAwardSpawn(rng, pos)
         orb,
         pos
     )
+
+    if hasContract then
+        pos = room:FindFreePickupSpawnPosition(pos)
+        orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_TAROTCARD,
+            orb,
+            pos
+        )
+    end
 
     return true
 end
