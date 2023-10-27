@@ -7,7 +7,7 @@ ToxicOrb.TearVariant = TearVariant.BLUE
 ToxicOrb.Timeout = 30*60
 ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
 ToxicOrb.InitSize = 2.5
-ToxicOrb.SizeUp = 0.1
+ToxicOrb.SizeUp = 0.01
 ToxicOrb.TearHigh = -120
 ToxicOrb.ExtraDmgTickFrame = 14 -- use even numbers
 ToxicOrb.DMGMulti = 3
@@ -51,8 +51,8 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 			--not enemy:HasEntityFlags(EntityFlag.FLAG_POISON) and
 			if poisonCloud.FrameCount%ToxicOrb.ExtraDmgTickFrame == 0 then
 				enemy:TakeDamage(utility:GetCurrentChapter()*ToxicOrb.DMGMulti, DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 1)
-			end
-			if enemy:HasMortalDamage() and not enemy:GetData().ToxicDead then
+			--end
+			--if enemy:HasMortalDamage() and not enemy:GetData().ToxicDead then
 				enemy:GetData().ToxicDead = true
 				poisonCloud.Scale = poisonCloud.Scale + ToxicOrb.SizeUp
 				poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
@@ -91,7 +91,7 @@ function ToxicOrb:PEffectUpdate(player)
 	        --ToxicBomb(player.Position, player:GetLastDirection())
 	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, player:GetAimDirection()*14, nil):ToTear() --BOBS_HEAD
 			tear.Height = ToxicOrb.TearHigh
-			tear.FallingSpeed = 1.35
+			tear.FallingSpeed = 1.8
 			tear:AddTearFlags(TearFlags.TEAR_SPECTRAL)
 			tear.CollisionDamage = 0
 			tear:GetData().ToxicBomb = true
@@ -113,7 +113,7 @@ function ToxicOrb:OnToxicOrbUse(card, player)
     --player:UseActiveItem(CollectibleType.COLLECTIBLE_MEGA_BEAN)
 end
 MilkshakeVol1:AddCallback(
-    MilkshakeVol1.enums.Callbacks.ON_ORB_USE,
+    enums.Callbacks.ON_ORB_USE,
     ToxicOrb.OnToxicOrbUse,
     enums.Orbs.POISON
 )
