@@ -4,11 +4,11 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 ToxicOrb.TearVariant = TearVariant.BLUE
-ToxicOrb.Timeout = 30*15
+ToxicOrb.Timeout = 30*60
 ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
 ToxicOrb.InitSize = 1.5
 ToxicOrb.SizeUp = 0.1
-ToxicOrb.TearHigh = -42
+ToxicOrb.TearHigh = -120
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
 	[HeartSubType.HEART_FULL] =1,
@@ -47,7 +47,7 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 	for _, enemy in pairs(Isaac.FindInRadius(poisonCloud.Position, area, EntityPartition.ENEMY)) do
 		if enemy:ToNPC() then
 			if not enemy:HasEntityFlags(EntityFlag.FLAG_POISON) then
-				enemy:TakeDamage(utility:GetCurrentChapter(), DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 15)
+				enemy:TakeDamage(utility:GetCurrentChapter()*3, DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 15)
 			end
 			if enemy:HasMortalDamage() then
 				poisonCloud.Scale = poisonCloud.Scale + ToxicOrb.SizeUp
