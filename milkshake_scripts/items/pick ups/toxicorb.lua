@@ -72,7 +72,7 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 					pps:GetData().ToxicOrbCloud = true
 					pps:SetTimeout(ToxicOrb.Timeout)
 					--]]
-					SFXManager():Play(SoundEffect.SOUND_PESTILENCE_HEAD_EXPLODE, 1.5)
+					SFXManager():Play(SoundEffect.SOUND_MOTHER_WRIST_EXPLODE, 1.5)
 				end
 			end
 		end

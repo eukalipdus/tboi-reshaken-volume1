@@ -8,6 +8,10 @@ function eid:addEid()
     EID:setModIndicatorName("Isaac Reshaken! ")
     EID:setModIndicatorIcon("Collectible"..enums.Collectibles.MILKSHAKE .."")
 
+    local mySprite = Sprite()
+    mySprite:Load("gfx/spirit_chaos.anm2", true)
+    EID:addIcon("SpiritOrb", "EIDIcon", 1, 16, 16, 6, 6, mySprite)
+
     -- Collectibles
     for collectible, translations in pairs(descriptions.Collectibles) do
         for language, description in pairs(translations) do

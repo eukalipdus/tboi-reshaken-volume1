@@ -47,7 +47,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.MILKSHAKE] = {
         en_us = {
             name = "Milkshake",
-            description = "{{Blank}}{{ArrowUp}} 1.1x to 1.5x multiplier for all stats!",
+            description = "{{Heart}} +1 Soul Heart, Black Heart, or Health up randomly" ..
+            "#{{ArrowUp}} {{ArrowUp}} 1.1x to 1.5x multiplier to all stats!"
         },
         spa = {
             name = "Batido",
@@ -57,7 +58,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.SHARP_CURSOR] = {
         en_us = {
             name = "Sharp Cursor",
-            description = "#Cursor familiar targets the furthest enemy from the player #Pressing a shooting key makes it click, dealing 10% player damage #Double press ctrl to switch to mouse control mode.",
+            description = "#Targets the furthest enemy in the room #{{Damage}} Pressing a shooting key makes it click, dealing 10% of Isaac's damage #{{Warning}} Double press ctrl to toggle mouse control mode.",
         },
         spa = {
             name = "Cursor Afilado",
@@ -87,7 +88,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.FIRECRACKER_ROSE] = {
         en_us = {
             name = "Firecracker Flower",
-            description = "{{Burning}} Chance to shoot a seed tear that inflicts enemies with Kabloom #Kabloomed enemies will explode into exploding petal tears after 5 seconds",
+            description = "{{Burning}} Chance to shoot a seed tear that inflicts enemies with Kabloom #Kabloomed enemies will burst into exploding petal tears after 5 seconds",
         },
         spa = {
             name = "Flor De Fuego",
@@ -97,7 +98,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.GLOBIN_IN_A_BUCKET] = {
         en_us = {
             name = "Globin In A Bucket",
-            description = "Spawns a friendly globin that fights by your side",
+            description = "Spawns a friendly globin that fights by your side" ..
+            "#Chance to spawn different globin variants depending on the floor",
         },
         spa = {
             name = "Globin En Un Cubo",
@@ -107,7 +109,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.GOLDEN_SHOVEL] = {
         en_us = {
             name = "Golden Shovel",
-            description = "On use, digs into the ground, spawning 1-2 golden chests and a random golden pickup. #Digs up a golden crawlspace if used on decoration tiles",
+            description = "Digs up 1-2 golden chests and a random golden pickup. #{{LadderRoom}} Opens up a member card trapdoor if used on a decorative floor tile.",
         },
         spa = {
             name = "Pala Dorada",
@@ -117,13 +119,226 @@ descriptions.Collectibles = {
     [enums.Collectibles.LA_CHANCLA] = {
         en_us = {
             name = "La Chancla",
-            description = "{{Blank}} {{Speed}} 0.3 Speed up #Makes Isaac immune to stomping attacks (Such as {{MomBossSmall}} Mom and {{SatanSmall}} Satan)",
+            description = "\1 0.3 Speed up #Immune to {{MomBossSmall}} stomping attacks",
         },
         spa = {
             name = "La Chancla",
             description = "{{Blank}} {{Speed}} 0.3 de velocidad #Hace a Isaac inmune a los ataques de pisotones (Como {{MomBossSmall}} Mama o {{SatanSmall}} Satan)"
         },
     },
+    [enums.Collectibles.LYRA] = {
+        en_us = {
+            name = "Lyra",
+            description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
+            "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destoryed machines" .. 
+            "#\1 Starts a short rhythm minigame on spirit orb use, successful completion activates the spirit orb with double effect",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.EMPTY_SLOT] = {
+        en_us = {
+            name = "Empty Slot",
+            description = "{{Coin}} Inserts a coin",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.SHATTERED_ORB] = {
+        en_us = {
+            name = "Shattered Orb",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.PRISMATIC_DICE] = {
+        en_us = {
+            name = "Prismatic Dice",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.SPIRIT_BUM] = {
+        en_us = {
+            name = "Spirit Bum",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.INNER_REFLECTION] = {
+        en_us = {
+            name = "Celestial Mirror",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.SICKLE_CELL] = {
+        en_us = {
+            name = "Sickle Cell",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.SPOILED_BREAKFAST] = {
+        en_us = {
+            name = "Spoiled Breakfast",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.BALANCED_BREAKFAST] = {
+        en_us = {
+            name = "Balanced Breakfast",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.HEARTY_BREAKFAST] = {
+        en_us = {
+            name = "Hearty Breakfast",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.POT_OF_GOLD] = {
+        en_us = {
+            name = "Pot of Gold",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.FRAGILE_MIRROR] = {
+        en_us = {
+            name = "Glass Idol",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.LEVITICUS] = {
+        en_us = {
+            name = "Leviticus",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.BATTERY_ACID] = {
+        en_us = {
+            name = "Battery Acid",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.DOGGY_BAG] = {
+        en_us = {
+            name = "Doggy Bag",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.DADS_MITT] = {
+        en_us = {
+            name = "Dad's Mitt",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.LIL_BISHOP] = {
+        en_us = {
+            name = "Lil Bishop",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.RAINBOW_FRAGMENT] = {
+        en_us = {
+            name = "Rainbow Fragment",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.WITCH_DOCTOR_MASK] = {
+        en_us = {
+            name = "Witch Doctor Mask",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.MIRROR_KEY] = {
+        en_us = {
+            name = "Mirror Key",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    [enums.Collectibles.UNCHARGED_MIRROR_KEY] = {
+        en_us = {
+            name = "Mirror Key (Uncharged)",
+            description = "",
+        },
+        spa = {
+            name = "Lyra",
+            description = ""
+        },
+    },
+    
 }
 
 --TRINKET DESCRIPTIONS
