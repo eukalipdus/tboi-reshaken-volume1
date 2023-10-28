@@ -30,14 +30,14 @@ local function Rotten(pos, area)
 	for _, pickup in pairs(Isaac.FindInRadius(pos, area, EntityPartition.PICKUP)) do
 		if pickup:ToPickup() and pickup.Variant == PickupVariant.PICKUP_HEART and ToxicOrb.Hearts[pickup.SubType] then
 			pickup:Remove()
-			pooffy(pickup.Position, Color(0.1,1,0.1))
+			pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
 			for _ = 1, ToxicOrb.Hearts[pickup.SubType] do
 				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, pickup.Position, pickup.Velocity, nil)
 			end
 		elseif pickup.Type == EntityType.ENTITY_SLOT and pickup.Variant == 4 then
 			pickup:Remove()
 			Isaac.Spawn(EntityType.ENTITY_SLOT, 18, 0, pickup.Position, Vector.Zero, nil)
-			pooffy(pickup.Position, Color(0.1,1,0.1))
+			pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
 		end
 	end
 end
