@@ -81,7 +81,7 @@ enums.Effects = {
     GLOBIN_IN_A_BUCKET = Isaac.GetEntityVariantByName("Globin In A Bucket"),
     DELUGE_LASER = Isaac.GetEntityVariantByName("Deluge Laser"),
     GLASS_IDOL_SHATTER = Isaac.GetEntityVariantByName("Glass Idol Shatter"),
-
+    TOXIC_GAS = Isaac.GetEntityVariantByName("Toxic Gasso"),
     FLASK_HEAD_HEAD_PUFF = Isaac.GetEntityVariantByName("Flask Head Head Puff"),
     FLASK_HEAD_PUFF = Isaac.GetEntityVariantByName("Flask Head Puff"),
 

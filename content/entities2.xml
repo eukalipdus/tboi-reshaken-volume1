@@ -103,6 +103,9 @@
     collisionMass="3" collisionRadius="30" friction="1" >
     </entity>
 
+    <entity name="Toxic Gasso" anm2path="toxic_gas.anm2" id="1000">
+    </entity>
+
     <!--
 	<entity anm2path="monster_gravin.anm2" 
 		baseHP="3" boss="0" champion="0" collisionDamage="0" collisionMass="200" 
