@@ -131,7 +131,8 @@ descriptions.Collectibles = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
             "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destoryed machines" .. 
-            "#\1 Starts a short rhythm minigame on spirit orb use, successful completion activates the spirit orb with double effect",
+            "#\1 Using a spirit orb starts a short rhythm mini game." ..
+            "#{{Blank}} Successful completion activates the spirit orb with double effect",
         },
         spa = {
             name = "Lyra",
@@ -141,7 +142,9 @@ descriptions.Collectibles = {
     [enums.Collectibles.EMPTY_SLOT] = {
         en_us = {
             name = "Empty Slot",
-            description = "{{Coin}} Inserts a coin",
+            description = "{{Coin}} Inserts a coin" ..
+            "#After 10 coins, has a 1% chance to explode and spawn double the coins inserted" ..
+            "#Guranteed to explode at 100 coins inserted",
         },
         spa = {
             name = "Lyra",
@@ -151,7 +154,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.SHATTERED_ORB] = {
         en_us = {
             name = "Shattered Orb",
-            description = "",
+            description = "Can be thrown at enemies to capture their soul" ..
+            "#{{SpiritOrb}} Captured enemies are turned into spirit orbs corresponding to their soul's element",
         },
         spa = {
             name = "Lyra",
@@ -161,7 +165,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.PRISMATIC_DICE] = {
         en_us = {
             name = "Prismatic Dice",
-            description = "",
+            description = "Splits pedestal items in the room into two pedestals of 1 less quality" ..
+            "#Quality {{Quality0}} items are split into random pickups",
         },
         spa = {
             name = "Lyra",
@@ -171,7 +176,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.SPIRIT_BUM] = {
         en_us = {
             name = "Spirit Bum",
-            description = "",
+            description = "{{SoulHeart}} Picks up nearby soul hearts" ..
+            "#{{SpiritOrb}} Spawns random spirit orbs in return",
         },
         spa = {
             name = "Lyra",
@@ -181,7 +187,9 @@ descriptions.Collectibles = {
     [enums.Collectibles.INNER_REFLECTION] = {
         en_us = {
             name = "Celestial Mirror",
-            description = "",
+            description = "Mirrors Isaac's movement" ..
+            "#Deals 75 damage a second" ..
+            "#\1  {{MirrorRoom}} +2.5 Damage in the mirror world",
         },
         spa = {
             name = "Lyra",
@@ -191,7 +199,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.SICKLE_CELL] = {
         en_us = {
             name = "Sickle Cell",
-            description = "",
+            description = "Piercing tears" ..
+            "#{{BleedingOut}} Tears cause bleeding, which makes enemies leave creep and take damage when they move",
         },
         spa = {
             name = "Lyra",
@@ -201,7 +210,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.SPOILED_BREAKFAST] = {
         en_us = {
             name = "Spoiled Breakfast",
-            description = "",
+            description = "\1 +1 Health" ..
+            "#{{EmptyHeart}} Removes half a heart",
         },
         spa = {
             name = "Lyra",
@@ -211,7 +221,10 @@ descriptions.Collectibles = {
     [enums.Collectibles.BALANCED_BREAKFAST] = {
         en_us = {
             name = "Balanced Breakfast",
-            description = "",
+            description = "\1 +1 Health" ..
+            "#\1 +1 Luck" ..
+            "#{{SoulHeart}} +1 Soul Heart" ..
+            "#{{Heart}} Heals 1 heart",
         },
         spa = {
             name = "Lyra",
@@ -221,7 +234,11 @@ descriptions.Collectibles = {
     [enums.Collectibles.HEARTY_BREAKFAST] = {
         en_us = {
             name = "Hearty Breakfast",
-            description = "",
+            description = "\1 +1 Health" ..
+            "#\1 +0.5 Damage" ..
+            "#\1 +0.3 Fire rate" ..
+            "#\1 +1 Luck" ..
+            "#{{Heart}} Full heal",
         },
         spa = {
             name = "Lyra",
@@ -231,7 +248,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.POT_OF_GOLD] = {
         en_us = {
             name = "Pot of Gold",
-            description = "",
+            description = "Converts all bomb, key, and most coin pickups into rainbow pennies" ..
+            "#{{Trinket52}} Rainbow pennies activate the effect of their corresponding penny trinkets on pickup",
         },
         spa = {
             name = "Lyra",
@@ -241,7 +259,11 @@ descriptions.Collectibles = {
     [enums.Collectibles.FRAGILE_MIRROR] = {
         en_us = {
             name = "Glass Idol",
-            description = "",
+            description = "\1 +1 Life while intact" ..
+            "#{{SoulHeart}} Isaac respawns with +1 Soul heart and 10 seconds of invinicibility on death" ..
+            "#Respawns the next floor" ..
+            "#Blocks 3 projectiles before shattering" ..
+            "#\2 -1 Luck while shattered",
         },
         spa = {
             name = "Lyra",
@@ -251,7 +273,9 @@ descriptions.Collectibles = {
     [enums.Collectibles.LEVITICUS] = {
         en_us = {
             name = "Leviticus",
-            description = "",
+            description = "{{EternalHeart}} +1 Eternal Heart" ..
+            "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item",
+            --+1 Immortal Heart instead if Immortal Hearts mod is installed
         },
         spa = {
             name = "Lyra",
@@ -261,7 +285,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.BATTERY_ACID] = {
         en_us = {
             name = "Battery Acid",
-            description = "",
+            description = "{{Battery}} Doubles active item charge from clearing rooms" ..
+            "#\2 Drains 1 charge every 15 seconds",
         },
         spa = {
             name = "Lyra",
@@ -271,7 +296,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.DOGGY_BAG] = {
         en_us = {
             name = "Doggy Bag",
-            description = "",
+            description = "Poop",
         },
         spa = {
             name = "Lyra",
@@ -281,7 +306,9 @@ descriptions.Collectibles = {
     [enums.Collectibles.DADS_MITT] = {
         en_us = {
             name = "Dad's Mitt",
-            description = "",
+            description = "\1 +10% Fire rate" ..
+            "#\2 -0.2 Shot speed" ..
+            "#Tears become influenced by Isaac's movement",
         },
         spa = {
             name = "Lyra",
@@ -291,7 +318,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.LIL_BISHOP] = {
         en_us = {
             name = "Lil Bishop",
-            description = "",
+            description = "Blocks projectiles" ..
+            "#When hit, 20% chance to shield Isaac for 5 seconds",
         },
         spa = {
             name = "Lyra",
@@ -301,7 +329,9 @@ descriptions.Collectibles = {
     [enums.Collectibles.RAINBOW_FRAGMENT] = {
         en_us = {
             name = "Rainbow Fragment",
-            description = "",
+            description = "\1 +1 Luck up" ..
+            "#Spawns 4 rainbow pennies" ..
+            "#{{Trinket52}} Rainbow pennies activate the effect of their corresponding penny trinkets on pickup",
         },
         spa = {
             name = "Lyra",
@@ -311,7 +341,9 @@ descriptions.Collectibles = {
     [enums.Collectibles.WITCH_DOCTOR_MASK] = {
         en_us = {
             name = "Witch Doctor Mask",
-            description = "",
+            description = "{{Pill}} Spawns 1 pill" ..
+            "#Converts all pills into spirit pills" ..
+            "#{{SpiritOrb}} Spirit pills activate a spirit orb effect on top of their pill effect",
         },
         spa = {
             name = "Lyra",
@@ -321,7 +353,10 @@ descriptions.Collectibles = {
     [enums.Collectibles.MIRROR_KEY] = {
         en_us = {
             name = "Mirror Key",
-            description = "",
+            description = "{{MirrorRoom}} Creates a mirror dimension door on the wall, indicated by a door outline" ..
+            "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
+            "#{{Warning}} Item pedestals are not regenerated" ..
+            "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
         },
         spa = {
             name = "Lyra",
@@ -331,7 +366,10 @@ descriptions.Collectibles = {
     [enums.Collectibles.UNCHARGED_MIRROR_KEY] = {
         en_us = {
             name = "Mirror Key (Uncharged)",
-            description = "",
+            description = "{{MirrorRoom}} Creates a mirror dimension door on the wall, indicated by a door outline" ..
+            "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
+            "#{{Warning}} Item pedestals are not regenerated" ..
+            "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
         },
         spa = {
             name = "Lyra",
