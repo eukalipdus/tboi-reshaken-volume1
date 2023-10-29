@@ -52,8 +52,8 @@ descriptions.Collectibles = {
         },
         spa = {
             name = "Batido",
-            description = "{{Heart}} +1 Soul Heart, Black Heart, or Health up randomly" ..
-            "#{{ArrowUp}} {{ArrowUp}} 1.1x to 1.5x multiplier to all stats!"
+            description = "{{Heart}} +1 Corazón de Alma, Corazón Negro, o Corazón Rojo aleatoriamente" ..
+            "#{{ArrowUp}} {{ArrowUp}} de 1.1x a 1.5x para todas las estadísticas!"
         },
         ru = {
             name = "Milkshake",
@@ -64,11 +64,15 @@ descriptions.Collectibles = {
     [enums.Collectibles.SHARP_CURSOR] = {
         en_us = {
             name = "Sharp Cursor",
-            description = "#Targets the furthest enemy in the room #{{Damage}} Pressing a shooting key makes it click, dealing 10% of Isaac's damage #{{Warning}} Double press ctrl to toggle mouse control mode.",
+            description = "#Targets the furthest enemy in the room" ..
+            "#{{Damage}} Pressing a shooting key makes it click, dealing 10% of Isaac's damage" ..
+            "#{{Warning}} Double press ctrl to toggle mouse control mode",
         },
         spa = {
             name = "Cursor Afilado",
-            description = "#Targets the furthest enemy in the room #{{Damage}} Pressing a shooting key makes it click, dealing 10% of Isaac's damage #{{Warning}} Double press ctrl to toggle mouse control mode.",
+            description = "#Apunta al enemigo más lejano en la habitación" ..
+            "#{{Damage}} Presionar una tecla de disparo lo hace hacer clic, causando un 10% del daño de Isaac" ..
+            "#{{Warning}} Pulsa dos veces Ctrl para alternar el modo de control de ratón",
         },
         ru = {
             name = "Sharp Cursor",
@@ -109,8 +113,8 @@ descriptions.Collectibles = {
             description = "{{Burning}} Chance to shoot a seed tear that inflicts enemies with Kabloom #Kabloomed enemies will burst into exploding petal tears after 5 seconds",
         },
         spa = {
-            name = "Firecracker Flower",
-            description = "{{Burning}} Chance to shoot a seed tear that inflicts enemies with Kabloom #Kabloomed enemies will burst into exploding petal tears after 5 seconds",
+            name = "Flor Petardo",
+            description = "{{Burning}} Posibilidad de disparar una semilla que inflige a los enemigos con Kabloom #Los enemigos con Kabloom explotarán en lágrimas de pétalos explosivos después de 5 segundos",
         },
         ru = {
             name = "Firecracker Flower",
@@ -124,9 +128,9 @@ descriptions.Collectibles = {
             "#Chance to spawn different globin variants depending on the floor",
         },
         spa = {
-            name = "Globin En Un Cubo",
-            description = "Spawns a friendly globin that fights by your side" ..
-            "#Chance to spawn different globin variants depending on the floor",
+            name = "Globin en un Cubo",
+            description = "Invoca a un globin amigable que lucha a tu lado" ..
+            "#Posibilidad de invocar diferentes variantes según el piso",
         },
         ru = {
             name = "Globin In A Bucket",
@@ -137,11 +141,13 @@ descriptions.Collectibles = {
     [enums.Collectibles.GOLDEN_SHOVEL] = {
         en_us = {
             name = "Golden Shovel",
-            description = "Digs up 1-2 golden chests and a random golden pickup. #{{LadderRoom}} Opens up a member card trapdoor if used on a decorative floor tile.",
+            description = "Digs up 1-2 golden chests and a random golden pickup." ..
+            "#{{LadderRoom}} Opens up a member card trapdoor if used on a decorative floor tile.",
         },
         spa = {
             name = "Pala Dorada",
-            description = "Digs up 1-2 golden chests and a random golden pickup. #{{LadderRoom}} Opens up a member card trapdoor if used on a decorative floor tile.",
+            description = "Desentierra de 1 a 2 cofres dorados y un pickup dorado al azar." ..
+            "#{{LadderRoom}} Abre una trampilla de tarjeta de miembro si se usa en una baldosa decorativa del suelo.",
         },
         ru = {
             name = "Golden Shovel",
@@ -151,11 +157,13 @@ descriptions.Collectibles = {
     [enums.Collectibles.LA_CHANCLA] = {
         en_us = {
             name = "La Chancla",
-            description = "\1 0.3 Speed up #Immune to {{MomBossSmall}} stomping attacks",
+            description = "\1 0.3 Speed up" ..
+            "#Immune to {{MomBossSmall}} stomping attacks",
         },
         spa = {
             name = "La Chancla",
-            description = "{{Blank}} {{Speed}} 0.3 de velocidad #Hace a Isaac inmune a los ataques de pisotones (Como {{MomBossSmall}} Mama o {{SatanSmall}} Satan)"
+            description = "\1 0.3 de velocidad" ..
+            "#Hace a Isaac inmune a los ataques de {{MomBossSmall}} pisotones"
         },
         ru = {
             name = "La Chancla",
@@ -172,10 +180,10 @@ descriptions.Collectibles = {
         },
         spa = {
             name = "Lyra",
-            description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
-            "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destoryed machines" .. 
-            "#\1 Using a spirit orb starts a short rhythm mini game." ..
-            "#{{Blank}} Successful completion activates the spirit orb with double effect",
+            description = "{{SpiritOrb}} 15% de probabilidad de que la recompensa por completar la habitación sea un orbe espiritual aleatorio" ..
+            "#{{SpiritOrb}} Posibilidad de obtener un orbe espiritual adicional de cofres, rocas marcadas y al destruir máquinas" ..
+            "#\1 Usar un orbe espiritual inicia un minijuego de ritmo corto." ..
+            "#{{Blank}} Completarlo con éxito activa el orbe espiritual con efecto doble",
         },
         ru = {
             name = "Lyra",
@@ -193,10 +201,10 @@ descriptions.Collectibles = {
             "#Guranteed to explode at 100 coins inserted",
         },
         spa = {
-            name = "Empty Slot",
-            description = "{{Coin}} Inserts a coin" ..
-            "#After 10 coins, has a 1% chance to explode and spawn double the coins inserted" ..
-            "#Guranteed to explode at 100 coins inserted",
+            name = "Tragaperras Vacía",
+            description = "{{Coin}} Inserta una moneda" ..
+            "#Después de 10 monedas, tiene un 1% de probabilidad de explotar y generar el doble de las monedas insertadas" ..
+            "#Garantizado que explotará al insertar 100 monedas",
         },
         ru = {
             name = "Empty Slot",
@@ -212,9 +220,9 @@ descriptions.Collectibles = {
             "#{{SpiritOrb}} Captured enemies are turned into spirit orbs corresponding to their soul's element",
         },
         spa = {
-            name = "Shattered Orb",
-            description = "Can be thrown at enemies to capture their soul" ..
-            "#{{SpiritOrb}} Captured enemies are turned into spirit orbs corresponding to their soul's element",
+            name = "Orbe Fragmentado",
+            description = "Puede arrojarse a los enemigos para capturar sus almas" ..
+            "#{{SpiritOrb}} Los enemigos capturados se convierten en orbes espirituales que corresponden al elemento de su alma",
         },
         ru = {
             name = "Shattered Orb",
@@ -229,9 +237,9 @@ descriptions.Collectibles = {
             "#Quality {{Quality0}} items are split into random pickups",
         },
         spa = {
-            name = "Prismatic Dice",
-            description = "Splits pedestal items in the room into two pedestals of 1 less quality" ..
-            "#Quality {{Quality0}} items are split into random pickups",
+            name = "Dado Prismático",
+            description = "Divide los pedestales en la habitación en dos pedestales de 1 calidad inferior" ..
+            "#Los objetos de calidad {{Quality0}} se dividen en objetos aleatorios",
         },
         ru = {
             name = "Prismatic Dice",
@@ -246,9 +254,9 @@ descriptions.Collectibles = {
             "#{{SpiritOrb}} Spawns random spirit orbs in return",
         },
         spa = {
-            name = "Spirit Bum",
-            description = "{{SoulHeart}} Picks up nearby soul hearts" ..
-            "#{{SpiritOrb}} Spawns random spirit orbs in return",
+            name = "Mendigo Espiritual",
+            description = "{{SoulHeart}} Recoge corazones de alma cercanos" ..
+            "#{{SpiritOrb}} Genera orbes espirituales aleatorios a cambio",
         },
         ru = {
             name = "Spirit Bum",
@@ -264,10 +272,10 @@ descriptions.Collectibles = {
             "#\1  {{MirrorRoom}} +2.5 Damage in the mirror world",
         },
         spa = {
-            name = "Celestial Mirror",
-            description = "Mirrors Isaac's movement" ..
-            "#Deals 75 damage a second" ..
-            "#\1  {{MirrorRoom}} +2.5 Damage in the mirror world",
+            name = "Espejo Celestial",
+            description = "Refleja el movimiento de Isaac" ..
+            "#Inflige 75 puntos de daño por segundo" ..
+            "#\1  {{MirrorRoom}} +2.5 de daño en la dimensión espejo",
         },
         ru = {
             name = "Celestial Mirror",
@@ -283,9 +291,9 @@ descriptions.Collectibles = {
             "#{{BleedingOut}} Tears cause bleeding, which makes enemies leave creep and take damage when they move",
         },
         spa = {
-            name = "Sickle Cell",
-            description = "Piercing tears" ..
-            "#{{BleedingOut}} Tears cause bleeding, which makes enemies leave creep and take damage when they move",
+            name = "Célula Falciforme",
+            description = "Lágrimas perforantes" ..
+            "#{{BleedingOut}} Las lágrimas causan sangrado, lo que hace que los enemigos dejen sangre y reciban daño al moverse",
         },
         ru = {
             name = "Sickle Cell",
@@ -300,9 +308,9 @@ descriptions.Collectibles = {
             "#{{EmptyHeart}} Removes half a heart",
         },
         spa = {
-            name = "Spoiled Breakfast",
-            description = "\1 +1 Health" ..
-            "#{{EmptyHeart}} Removes half a heart",
+            name = "Desayuno Estropeado",
+            description = "\1 +1 Contenedor de corazón" ..
+            "#{{EmptyHeart}} Quita medio corazón",
         },
         ru = {
             name = "Spoiled Breakfast",
@@ -319,11 +327,11 @@ descriptions.Collectibles = {
             "#{{Heart}} Heals 1 heart",
         },
         spa = {
-            name = "Balanced Breakfast",
-            description = "\1 +1 Health" ..
-            "#\1 +1 Luck" ..
-            "#{{SoulHeart}} +1 Soul Heart" ..
-            "#{{Heart}} Heals 1 heart",
+            name = "Desayuno Equilibrado",
+            description = "\1 +1 Contenedor de corazón" ..
+            "#\1 +1 Suerte" ..
+            "#{{SoulHeart}} +1 Corazón de Alma" ..
+            "#{{Heart}} Restaura 1 corazón",
         },
         ru = {
             name = "Balanced Breakfast",
@@ -343,12 +351,12 @@ descriptions.Collectibles = {
             "#{{Heart}} Full heal",
         },
         spa = {
-            name = "Hearty Breakfast",
-            description = "\1 +1 Health" ..
-            "#\1 +0.5 Damage" ..
-            "#\1 +0.3 Fire rate" ..
-            "#\1 +1 Luck" ..
-            "#{{Heart}} Full heal",
+            name = "Desayuno Copioso",
+            description = "\1 +1 Contenedor de corazón" ..
+            "#\1 +0.5 Daño" ..
+            "#\1 +0.3 Velocidad de disparo" ..
+            "#\1 +1 Suerte" ..
+            "#{{Heart}} Restaura completamente la salud",
         },
         ru = {
             name = "Hearty Breakfast",
@@ -366,9 +374,9 @@ descriptions.Collectibles = {
             "#{{Trinket52}} Rainbow pennies activate the effect of their corresponding penny trinkets on pickup",
         },
         spa = {
-            name = "Pot of Gold",
-            description = "Converts all bomb, key, and most coin pickups into rainbow pennies" ..
-            "#{{Trinket52}} Rainbow pennies activate the effect of their corresponding penny trinkets on pickup",
+            name = "Olla de Oro",
+            description = "Convierte todas las bombas, llaves y la mayoría de monedas en monedas arcoíris" ..
+            "#{{Trinket52}} Las monedas arcoíris activan el efecto de sus respectivas baratijas al recogerlos",
         },
         ru = {
             name = "Pot of Gold",
@@ -386,12 +394,12 @@ descriptions.Collectibles = {
             "#\2 -1 Luck while shattered",
         },
         spa = {
-            name = "Glass Idol",
-            description = "\1 +1 Life while intact" ..
-            "#{{SoulHeart}} Isaac respawns with +1 Soul heart and 10 seconds of invinicibility on death" ..
-            "#Respawns the next floor" ..
-            "#Blocks 3 projectiles before shattering" ..
-            "#\2 -1 Luck while shattered",
+            name = "Ídolo de Cristal",
+            description = "\1 +1 Vida mientras esté intacto" ..
+            "#{{SoulHeart}} Isaac resucita con +1 Corazón de Alma y 10 segundos de invulnerabilidad al morir" ..
+            "#Vuelve a aparecer en el siguiente piso" ..
+            "#Bloquea 3 proyectiles antes de romperse" ..
+            "#\2 -1 Suerte mientras está roto",
         },
         ru = {
             name = "Glass Idol",
@@ -410,10 +418,10 @@ descriptions.Collectibles = {
             --+1 Immortal Heart instead if Immortal Hearts mod is installed
         },
         spa = {
-            name = "Leviticus",
-            description = "{{EternalHeart}} +1 Eternal Heart" ..
-            "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item",
-            --+1 Immortal Heart instead if Immortal Hearts mod is installed
+            name = "Levítico",
+            description = "{{EternalHeart}} +1 Corazón Eterno" ..
+            "#{{AngelRoom}} Usar el objeto antes de la contra el jefe hace que la recompensa sea un objeto de ángel",
+            --+1 Corazón Inmortal en su lugar si está instalado el mod de Corazones Inmortales
         },
         ru = {
             name = "Leviticus",
@@ -429,9 +437,9 @@ descriptions.Collectibles = {
             "#\2 Drains 1 charge every 15 seconds",
         },
         spa = {
-            name = "Battery Acid",
-            description = "{{Battery}} Doubles active item charge from clearing rooms" ..
-            "#\2 Drains 1 charge every 15 seconds",
+            name = "Ácido de Batería",
+            description = "{{Battery}} Duplica la carga del objeto activo al limpiar habitaciones" ..
+            "#\2 Agota 1 carga cada 15 segundos",
         },
         ru = {
             name = "Battery Acid",
@@ -461,10 +469,10 @@ descriptions.Collectibles = {
             "#Tears become influenced by Isaac's movement",
         },
         spa = {
-            name = "Dad's Mitt",
-            description = "\1 +10% Fire rate" ..
-            "#\2 -0.2 Shot speed" ..
-            "#Tears become influenced by Isaac's movement",
+            name = "Guante de Papá",
+            description = "\1 +10% Velocidad de disparo" ..
+            "#\2 -0.2 Velocidad de lágrima" ..
+            "#Las lágrimas se ven afectadas por el movimiento de Isaac",
         },
         ru = {
             name = "Dad's Mitt",
@@ -480,9 +488,9 @@ descriptions.Collectibles = {
             "#When hit, 20% chance to shield Isaac for 5 seconds",
         },
         spa = {
-            name = "Lil Bishop",
-            description = "Blocks projectiles" ..
-            "#When hit, 20% chance to shield Isaac for 5 seconds",
+            name = "Pequeño Obispo",
+            description = "Bloquea proyectiles" ..
+            "#Cuando recibe un golpe, 20% de probabilidad de proteger a Isaac durante 5 segundos",
         },
         ru = {
             name = "Lil Bishop",
@@ -498,10 +506,10 @@ descriptions.Collectibles = {
             "#{{Trinket52}} Rainbow pennies activate the effect of their corresponding penny trinkets on pickup",
         },
         spa = {
-            name = "Rainbow Fragment",
-            description = "\1 +1 Luck up" ..
-            "#Spawns 4 rainbow pennies" ..
-            "#{{Trinket52}} Rainbow pennies activate the effect of their corresponding penny trinkets on pickup",
+            name = "Fragmento de Arcoíris",
+            description = "\1 +1 Aumento de Suerte" ..
+            "#Genera 4 monedas arcoíris" ..
+            "#{{Trinket52}} Las monedas arcoíris activan el efecto de sus baratijas correspondientes al recogerlas",
         },
         ru = {
             name = "Rainbow Fragment",
@@ -518,10 +526,10 @@ descriptions.Collectibles = {
             "#{{SpiritOrb}} Spirit pills activate a spirit orb effect on top of their pill effect",
         },
         spa = {
-            name = "Witch Doctor Mask",
-            description = "{{Pill}} Spawns 1 pill" ..
-            "#Converts all pills into spirit pills" ..
-            "#{{SpiritOrb}} Spirit pills activate a spirit orb effect on top of their pill effect",
+            name = "Máscara de Médico Brujo",
+            description = "{{Pill}} Genera 1 píldora" ..
+            "#Convierte todas las píldoras en píldoras espirituales" ..
+            "#{{SpiritOrb}} Las píldoras espirituales activan un efecto de orbe espiritual además de su efecto de píldora",
         },
         ru = {
             name = "Witch Doctor Mask",
@@ -539,11 +547,11 @@ descriptions.Collectibles = {
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
         },
         spa = {
-            name = "Mirror Key",
-            description = "{{MirrorRoom}} Creates a mirror dimension door on the wall, indicated by a door outline" ..
-            "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
-            "#{{Warning}} Item pedestals are not regenerated" ..
-            "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
+            name = "Llave de Espejo",
+            description = "{{MirrorRoom}} Crea una puerta a la dimensión espejo en la pared, indicada por un contorno de puerta" ..
+            "#Las habitaciones reflejadas regeneran todas los objetos, obstáculos y enemigos" ..
+            "#{{Warning}} Los pedestales no se regeneran" ..
+            "#{{BossRoom}} Permite volver a luchar contra el jefe para obtener una recompensa adicional",
         },
         ru = {
             name = "Mirror Key",
@@ -562,11 +570,11 @@ descriptions.Collectibles = {
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
         },
         spa = {
-            name = "Mirror Key (Uncharged)",
-            description = "{{MirrorRoom}} Creates a mirror dimension door on the wall, indicated by a door outline" ..
-            "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
-            "#{{Warning}} Item pedestals are not regenerated" ..
-            "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
+            name = "Llave de Espejo (Sin Cargar)",
+            description = "{{MirrorRoom}} Crea una puerta a la dimensión espejo en la pared, indicada por un contorno de puerta" ..
+            "#Las habitaciones reflejadas regeneran todas los objetos, obstáculos y enemigos" ..
+            "#{{Warning}} Los pedestales no se regeneran" ..
+            "#{{BossRoom}} Permite volver a luchar contra el jefe para obtener una recompensa adicional",
         },
         ru = {
             name = "Mirror Key (Uncharged)",
