@@ -3,12 +3,12 @@ local ToxicOrb = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-ToxicOrb.TearVariant = TearVariant.BOOGER
+ToxicOrb.TearVariant = TearVariant.STONE
 ToxicOrb.Timeout = 30*60
 ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
 ToxicOrb.InitSize = 1.5
 ToxicOrb.SizeUp = 0.05
-ToxicOrb.ExtraDmgTickFrame = 14 -- use even numbers
+ToxicOrb.ExtraDmgTickFrame = 15
 ToxicOrb.BaseDMG = 3
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
@@ -42,6 +42,15 @@ local function Rotten(pos, area)
 end
 
 function ToxicOrb:CloudUpdate(poisonCloud)
+	if poisonCloud.Timeout <= 0 then
+		if poisonCloud:GetData().ToxicOrbCloud then poisonCloud:GetData().ToxicOrbCloud = nil end
+		poisonCloud.Scale = poisonCloud.Scale - 0.1
+		poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
+		if poisonCloud.Scale < 0.5 then
+			poisonCloud:Remove()
+			return
+		end
+	end
 	if not poisonCloud:GetData().ToxicOrbCloud then return end
 	local area = 40 * (poisonCloud.Scale)
 	if poisonCloud.FrameCount%ToxicOrb.ExtraDmgTickFrame == 0 then
@@ -59,6 +68,10 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 					fart:SetColor(Color(1,1,1, 1, 0.3,0.3,0),-1,1,true,true)
 					fart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.FART, 0, enemy.Position, Vector.Zero, nil):ToEffect()
 					fart:SetColor(Color(1,1,1, 1, 0.5,0.3,0),-1,1,true,true)
+					if poisonCloud.Scale < utility:GetCurrentChapter()+ToxicOrb.BaseDMG then
+						poisonCloud.Scale = poisonCloud.Scale + (ToxicOrb.SizeUp/(utility:GetCurrentChapter()+1))
+						poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
+					end
 					SFXManager():Play(SoundEffect.SOUND_MOTHER_WRIST_EXPLODE, 1.5)
 				end
 			end
