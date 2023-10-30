@@ -17,8 +17,6 @@ ToxicOrb.Hearts = {
 	[HeartSubType.HEART_DOUBLEPACK] =2,
 }
 
-
-
 local function pooffy(position, color)
 	SFXManager():Play(SoundEffect.SOUND_SUMMON_POOF, 1.5)
 	local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, position, Vector.Zero, nil)
@@ -61,17 +59,6 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 					fart:SetColor(Color(1,1,1, 1, 0.3,0.3,0),-1,1,true,true)
 					fart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.FART, 0, enemy.Position, Vector.Zero, nil):ToEffect()
 					fart:SetColor(Color(1,1,1, 1, 0.5,0.3,0),-1,1,true,true)
-					poisonCloud.Scale = poisonCloud.Scale + (ToxicOrb.SizeUp/(utility:GetCurrentChapter()+1))
-					poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
-					--[[
-					local FartArea = 60
-					Rotten(enemy.Position, FartArea)
-					--Game():BombExplosionEffects(tear.Position, 0)
-					local pps = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.TOXIC_GAS, 0, enemy.Position, Vector.Zero, nil):ToEffect()
-					pps:SetColor(Color(1,1,1, 1, 0.5,0.5,0),-1,1,true,true)
-					pps:GetData().ToxicOrbCloud = true
-					pps:SetTimeout(ToxicOrb.Timeout)
-					--]]
 					SFXManager():Play(SoundEffect.SOUND_MOTHER_WRIST_EXPLODE, 1.5)
 				end
 			end
@@ -93,7 +80,6 @@ function ToxicOrb:PEffectUpdate(player)
 			fart.SpriteScale = fart.SpriteScale * ToxicOrb.InitSize
 			fart:SetColor(Color(1,1,1, 1, 0.5,0.3,0),-1,1,true,true)
 			Rotten(tear.Position, FartArea)
-			--Game():BombExplosionEffects(tear.Position, 0)
 			local poisonCloud = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.TOXIC_GAS, 0, tear.Position, Vector.Zero, player):ToEffect()
 			poisonCloud.Scale = ToxicOrb.InitSize * poisonCloud.Scale
 			poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
