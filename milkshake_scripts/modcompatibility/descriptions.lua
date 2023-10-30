@@ -389,7 +389,7 @@ descriptions.Collectibles = {
             name = "Glass Idol",
             description = "\1 +1 Life while intact" ..
             "#{{SoulHeart}} Isaac respawns with +1 Soul heart and 10 seconds of invinicibility on death" ..
-            "#Respawns the next floor" ..
+            "#Can revive Isaac once per floor" ..
             "#Blocks 3 projectiles before shattering" ..
             "#\2 -1 Luck while shattered",
         },
@@ -397,7 +397,7 @@ descriptions.Collectibles = {
             name = "Ídolo de Cristal",
             description = "\1 +1 Vida mientras esté intacto" ..
             "#{{SoulHeart}} Isaac resucita con +1 Corazón de Alma y 10 segundos de invulnerabilidad al morir" ..
-            "#Vuelve a aparecer en el siguiente piso" ..
+            "#Can revive Isaac once per floor" ..
             "#Bloquea 3 proyectiles antes de romperse" ..
             "#\2 -1 Suerte mientras está roto",
         },
@@ -405,7 +405,7 @@ descriptions.Collectibles = {
             name = "Glass Idol",
             description = "\1 +1 Life while intact" ..
             "#{{SoulHeart}} Isaac respawns with +1 Soul heart and 10 seconds of invinicibility on death" ..
-            "#Respawns the next floor" ..
+            "#Can revive Isaac once per floor" ..
             "#Blocks 3 projectiles before shattering" ..
             "#\2 -1 Luck while shattered",
         },
@@ -413,20 +413,26 @@ descriptions.Collectibles = {
     [enums.Collectibles.LEVITICUS] = {
         en_us = {
             name = "Leviticus",
-            description = "{{EternalHeart}} +1 Eternal Heart" ..
-            "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item",
+            description = "{{SoulHeart}} Must be charged by picking up soul hearts" ..
+            "#{{EternalHeart}} +1 Eternal Heart" ..
+            "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item" ..
+            "#{{DevilRoom}} The angel item will cost money if a devil deal was taken previously",
             --+1 Immortal Heart instead if Immortal Hearts mod is installed
         },
         spa = {
             name = "Levítico",
-            description = "{{EternalHeart}} +1 Corazón Eterno" ..
-            "#{{AngelRoom}} Usar el objeto antes de la contra el jefe hace que la recompensa sea un objeto de ángel",
+            description = "{{SoulHeart}} Must be charged by picking up soul hearts" ..
+            "#{{EternalHeart}} +1 Corazón Eterno" ..
+            "#{{AngelRoom}} Usar el objeto antes de la contra el jefe hace que la recompensa sea un objeto de ángel" ..
+            "#{{DevilRoom}} The angel item will cost money if a devil deal was taken previously",
             --+1 Corazón Inmortal en su lugar si está instalado el mod de Corazones Inmortales
         },
         ru = {
             name = "Leviticus",
-            description = "{{EternalHeart}} +1 Eternal Heart" ..
-            "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item",
+            description = "{{SoulHeart}} Must be charged by picking up soul hearts" ..
+            "#{{EternalHeart}} +1 Eternal Heart" ..
+            "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item" ..
+            "#{{DevilRoom}} The angel item will cost money if a devil deal was taken previously",
             --+1 Immortal Heart instead if Immortal Hearts mod is installed
         },
     },
@@ -541,7 +547,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.MIRROR_KEY] = {
         en_us = {
             name = "Mirror Key",
-            description = "{{MirrorRoom}} Creates a mirror dimension door on the wall, indicated by a door outline" ..
+            description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
@@ -564,7 +570,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.UNCHARGED_MIRROR_KEY] = {
         en_us = {
             name = "Mirror Key (Uncharged)",
-            description = "{{MirrorRoom}} Creates a mirror dimension door on the wall, indicated by a door outline" ..
+            description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
