@@ -116,6 +116,7 @@ include("milkshake_scripts.enemies.winehead")
 
 --Misc
 include("milkshake_scripts.shardrockoverlay")
+include("milkshake_scripts.nonreplaceabletnt")
 
 
 --- Shader crash fix
