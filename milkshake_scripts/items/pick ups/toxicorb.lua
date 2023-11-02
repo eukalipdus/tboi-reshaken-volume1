@@ -69,7 +69,7 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 					fart:SetColor(Color(1,1,1, 1, 0.3,0.3,0),-1,1,true,true)
 					fart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.FART, 0, enemy.Position, Vector.Zero, nil):ToEffect()
 					fart:SetColor(Color(1,1,1, 1, 0.5,0.3,0),-1,1,true,true)
-					if poisonCloud.Scale < utility:GetCurrentChapter()+ToxicOrb.BaseDMG then
+					if poisonCloud.Scale < ToxicOrb.SizeLimit then
 						poisonCloud.Scale = poisonCloud.Scale + (ToxicOrb.SizeUp/(utility:GetCurrentChapter()+1))
 						poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
 					end
