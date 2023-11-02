@@ -8,8 +8,9 @@ ToxicOrb.Timeout = 30*60
 ToxicOrb.GfxPath = "gfx/tears/toxic_orb_tear.png"
 ToxicOrb.InitSize = 1.5
 ToxicOrb.SizeUp = 0.05
-ToxicOrb.ExtraDmgTickFrame = 14 -- use even numbers
+ToxicOrb.ExtraDmgTickFrame = 15
 ToxicOrb.BaseDMG = 3
+ToxicOrb.SizeLimit = 4
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
 	[HeartSubType.HEART_FULL] =1,
@@ -50,11 +51,11 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 				enemy:SetColor(Color(1,1,1, 1, 0.5,0.5,0),ToxicOrb.ExtraDmgTickFrame,1,true,true)
 				enemy:TakeDamage(utility:GetCurrentChapter()+ToxicOrb.BaseDMG, DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 1)
 				enemy:GetData().ToxicDead = true
-				if poisonCloud.Scale < utility:GetCurrentChapter()+ToxicOrb.BaseDMG then
+				if poisonCloud.Scale < ToxicOrb.SizeLimit then
 					poisonCloud.Scale = poisonCloud.Scale + (ToxicOrb.SizeUp/(utility:GetCurrentChapter()+1))
 					poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
 				end
-				if enemy:HasMortalDamage() then
+				if enemy:HasMortalDamage() then -- I dealt mortal damage
 					local fart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, enemy.Position, Vector.Zero, nil):ToEffect()
 					fart:SetColor(Color(1,1,1, 1, 0.3,0.3,0),-1,1,true,true)
 					fart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.FART, 0, enemy.Position, Vector.Zero, nil):ToEffect()
