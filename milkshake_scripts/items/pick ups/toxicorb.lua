@@ -57,6 +57,7 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 	if poisonCloud.FrameCount%ToxicOrb.ExtraDmgTickFrame == 0 then
 		for _, enemy in pairs(Isaac.FindInRadius(poisonCloud.Position, area, EntityPartition.ENEMY)) do
 			if enemy:IsVulnerableEnemy() and not enemy:HasMortalDamage() then
+				enemy:AddSlowing(EntityRef(poisonCloud), ToxicOrb.ExtraDmgTickFrame, 0.5, Color(1,1,1))
 				enemy:SetColor(Color(1,1,1, 1, 0.5,0.5,0),ToxicOrb.ExtraDmgTickFrame,1,true,true)
 				enemy:TakeDamage(utility:GetCurrentChapter()+ToxicOrb.BaseDMG, DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 1)
 				enemy:GetData().ToxicDead = true
