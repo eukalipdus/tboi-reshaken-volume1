@@ -139,7 +139,9 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 451, variant = 40, },                      --Coalby
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 451, variant = 41, },                      --Coupile
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 451, variant = 42, },                      --Cairn
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 114, variant = 8, subtype = 1,},           --Crucible (ignited)
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 170, variant = 110, },                     --Blastcore
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 450, variant = 40, },                      --Rufus
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 160, variant = 640, },                     --Zapbladder
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 160, variant = 641, },                     --Wire
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 170, variant = 30, },                      --Lightning Fly
@@ -239,12 +241,6 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 450, variant = 3 },                        --Cherub
         { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 160, variant = 720 },                      --Warden
         { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 212, variant = 450 },                      --Cherubskull
-        { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 160, variant = 870 },                      --Armoured Looker
-        { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 160, variant = 870,  subtype = 1 },        --Looker
-        { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 160, variant = 960 },                      --Seeker
-        { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 108, variant = 111 },                      --Watcher
-        { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 108, variant = 112 },                      --Watcher Eye
-        { orb = MilkshakeVol1.enums.Orbs.HOLY,     type = 450, variant = 37 },                       --Dogrock
         { orb = MilkshakeVol1.enums.Orbs.POISON,   type = 160, variant = 10 },                       --Dung
         { orb = MilkshakeVol1.enums.Orbs.POISON,   type = 160, variant = 500 },                      --Tall Boi
         { orb = MilkshakeVol1.enums.Orbs.POISON,   type = 160, variant = 501 },                      --Shitling
