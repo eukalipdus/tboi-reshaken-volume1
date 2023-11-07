@@ -271,6 +271,36 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.WATER,    type = 244, variant = 1 },               --Tube Worm
     { orb = enums.Orbs.WATER,    type = 244, variant = 3 },               --Tainted Tube Worm
     { orb = enums.Orbs.WATER,    type = 815, variant = 0 },               --Fissure
+    { orb = enums.Orbs.ROCK,     type = 821, variant = 0 },               --Blaster
+    { orb = enums.Orbs.ROCK,     type = 27,  variant = 3 },               --Hard Host
+    { orb = enums.Orbs.ROCK,     type = 41,  variant = 0 },               --Knight
+    { orb = enums.Orbs.ROCK,     type = 41,  variant = 1 },               --Selfless Knight
+    { orb = enums.Orbs.ROCK,     type = 41,  variant = 2 },               --Loose Knight
+    { orb = enums.Orbs.ROCK,     type = 41,  variant = 3 },               --Brainless Knight
+    { orb = enums.Orbs.ROCK,     type = 254, variant = 0 },               --Floating Knight
+    { orb = enums.Orbs.ROCK,     type = 283, variant = 0 },               --Bone Knight
+    { orb = enums.Orbs.ROCK,     type = 818, variant = 0 },               --Rock Spider
+    { orb = enums.Orbs.ROCK,     type = 818, variant = 1 },               --Tinted Rock Spider
+    { orb = enums.Orbs.ROCK,     type = 302, variant = 0 },               --Stoney
+    { orb = enums.Orbs.ROCK,     type = 302, variant = 10 },              --Cross Stoney
+    { orb = enums.Orbs.ROCK,     type = 823, variant = 0 },               --Quakey
+    { orb = enums.Orbs.ROCK,     type = 826, variant = 0 },               --Hardy
+    { orb = enums.Orbs.ROCK,     type = 829, variant = 0 },               --Mole
+    { orb = enums.Orbs.ROCK,     type = 829, variant = 1 },               --Tainted Mole
+    { orb = enums.Orbs.ROCK,     type = 42,  variant = 0 },               --Stone Grimace
+    { orb = enums.Orbs.ROCK,     type = 42,  variant = 2 },               --Triple Grimace
+    { orb = enums.Orbs.ROCK,     type = 202, variant = 0 },               --Constant Stone Shooter
+    { orb = enums.Orbs.ROCK,     type = 202, variant = 10 },              --Cross Stone Shooter
+    { orb = enums.Orbs.ROCK,     type = 235, variant = 0 },               --Gaping Maw
+    { orb = enums.Orbs.ROCK,     type = 236, variant = 0 },               --Broken Gaping Maw
+    { orb = enums.Orbs.ROCK,     type = 804, variant = 0 },               --Quake Grimace
+    { orb = enums.Orbs.ROCK,     type = 44,  variant = 0 },               --Poky
+    { orb = enums.Orbs.ROCK,     type = 44,  variant = 1 },               --Slide
+    { orb = enums.Orbs.ROCK,     type = 218, variant = 0 },               --Wall Hugger
+    { orb = enums.Orbs.ROCK,     type = 877, variant = 0 },               --Grudge
+    { orb = enums.Orbs.ROCK,     type = 893, variant = 0 },               --Ball and Chain
+    { orb = enums.Orbs.ROCK,     type = 852, variant = 0 },               --Spikeball
+    { orb = enums.Orbs.ROCK,     type = 915, variant = 1 },               --Singe's Ball
 }
 MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerEnemy)
 
@@ -499,7 +529,6 @@ function GetEntityOrb(entity)
 
     return orb
 end
-
 
 ---@param shatteredOrb EntityEffect
 local function SpawnWisps(shatteredOrb)
