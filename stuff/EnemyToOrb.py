@@ -3,7 +3,7 @@
 # You'll also have to replace "orb = enums" with "orb = MilkshakeVol1.enums" in the FF file
 # although a simple ctrl+f replacement works well enough
 
-orb = "water"
+orb = "rock"
 orb = orb.upper()
 
 input_file_path = "{}.txt".format(orb.lower())

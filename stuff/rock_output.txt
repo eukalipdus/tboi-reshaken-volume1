@@ -1,0 +1,71 @@
+
+
+{orb = enums.Orbs.ROCK, type = 821, variant = 0 }, --Blaster
+{orb = enums.Orbs.ROCK, type = 27, variant = 3 }, --Hard Host
+{orb = enums.Orbs.ROCK, type = 41, variant = 0 }, --Knight
+{orb = enums.Orbs.ROCK, type = 41, variant = 1 }, --Selfless Knight
+{orb = enums.Orbs.ROCK, type = 41, variant = 2 }, --Loose Knight
+{orb = enums.Orbs.ROCK, type = 41, variant = 3 }, --Brainless Knight
+{orb = enums.Orbs.ROCK, type = 254, variant = 0 }, --Floating Knight
+{orb = enums.Orbs.ROCK, type = 283, variant = 0 }, --Bone Knight
+{orb = enums.Orbs.ROCK, type = 818, variant = 0 }, --Rock Spider
+{orb = enums.Orbs.ROCK, type = 818, variant = 1 }, --Tinted Rock Spider
+{orb = enums.Orbs.ROCK, type = 302, variant = 0 }, --Stoney
+{orb = enums.Orbs.ROCK, type = 302, variant = 10 }, --Cross Stoney
+{orb = enums.Orbs.ROCK, type = 823, variant = 0 }, --Quakey
+{orb = enums.Orbs.ROCK, type = 826, variant = 0 }, --Hardy
+{orb = enums.Orbs.ROCK, type = 829, variant = 0 }, --Mole
+{orb = enums.Orbs.ROCK, type = 829, variant = 1 }, --Tainted Mole
+{orb = enums.Orbs.ROCK, type = 42, variant = 0 }, --Stone Grimace
+{orb = enums.Orbs.ROCK, type = 42, variant = 2 }, --Triple Grimace
+{orb = enums.Orbs.ROCK, type = 202, variant = 0 }, --Constant Stone Shooter
+{orb = enums.Orbs.ROCK, type = 202, variant = 10 }, --Cross Stone Shooter
+{orb = enums.Orbs.ROCK, type = 235, variant = 0 }, --Gaping Maw
+{orb = enums.Orbs.ROCK, type = 236, variant = 0 }, --Broken Gaping Maw
+{orb = enums.Orbs.ROCK, type = 804, variant = 0 }, --Quake Grimace
+{orb = enums.Orbs.ROCK, type = 44, variant = 0 }, --Poky
+{orb = enums.Orbs.ROCK, type = 44, variant = 1 }, --Slide
+{orb = enums.Orbs.ROCK, type = 218, variant = 0 }, --Wall Hugger
+{orb = enums.Orbs.ROCK, type = 877, variant = 0 }, --Grudge
+{orb = enums.Orbs.ROCK, type = 893, variant = 0 }, --Ball and Chain
+{orb = enums.Orbs.ROCK, type = 852, variant = 0 }, --Spikeball
+{orb = enums.Orbs.ROCK, type = 915, variant = 1 }, --Singe's Ball
+
+
+
+{orb = enums.Orbs.ROCK, type = 160, variant = 490 }, --Tap
+{orb = enums.Orbs.ROCK, type = 829, variant = 450 }, --Blasted
+{orb = enums.Orbs.ROCK, type = 151, variant = 2 }, --Stoney Slammer
+{orb = enums.Orbs.ROCK, type = 227, variant = 960 }, --Hollow Knight
+{orb = enums.Orbs.ROCK, type = 160, variant = 330 }, --Squire
+{orb = enums.Orbs.ROCK, type = 666, variant = 200 }, --Patzer
+{orb = enums.Orbs.ROCK, type = 120, variant = 230 }, --King
+{orb = enums.Orbs.ROCK, type = 160, variant = 580 }, --Tombit
+{orb = enums.Orbs.ROCK, type = 160, variant = 581 }, --Gravin
+{orb = enums.Orbs.ROCK, type = 877, variant = 114 }, --Grievance
+{orb = enums.Orbs.ROCK, type = 150, variant = 31 }, --Dangerous Disc
+{orb = enums.Orbs.ROCK, type = 450, variant = 35 }, --Apega
+{orb = enums.Orbs.ROCK, type = 42, variant = 963 }, --Sensory Grimace
+{orb = enums.Orbs.ROCK, type = 114, variant = 58 }, --Thwammy
+{orb = enums.Orbs.ROCK, type = 41, variant = 750 }, --Strobila
+{orb = enums.Orbs.ROCK, type = 155, variant = 5 }, --Diagetic
+{orb = enums.Orbs.ROCK, type = 160, variant = 870 }, --Armoured Looker
+{orb = enums.Orbs.ROCK, type = 160, variant = 870, subtype = 1}, --Looker
+{orb = enums.Orbs.ROCK, type = 160, variant = 960 }, --Seeker
+{orb = enums.Orbs.ROCK, type = 108, variant = 111 }, --Watcher
+{orb = enums.Orbs.ROCK, type = 450, variant = 37 }, --Dogrock
+{orb = enums.Orbs.ROCK, type = 750, variant = 190 }, --Lonely Knight
+{orb = enums.Orbs.ROCK, type = 151, variant = 10 }, --Flinty
+{orb = enums.Orbs.ROCK, type = 451, variant = 240 }, --Pillar John
+{orb = enums.Orbs.ROCK, type = 160, variant = 1200 }, --Super Grimace
+{orb = enums.Orbs.ROCK, type = 29, variant = 1, subtype = 5}, --Bombmuncher
+{orb = enums.Orbs.ROCK, type = 151, variant = 10 }, --Flinty
+{orb = enums.Orbs.ROCK, type = 160, variant = 680 }, --Fossilized Boom Fly
+{orb = enums.Orbs.ROCK, type = 114, variant = 6 }, --Frowny
+{orb = enums.Orbs.ROCK, type = 114, variant = 31 }, --Quaker
+{orb = enums.Orbs.ROCK, type = 114, variant = 18 }, --Stalagnaught (hanging)
+{orb = enums.Orbs.ROCK, type = 114, variant = 18, subtype = 1}, --Stalagnaught (buried)
+{orb = enums.Orbs.ROCK, type = 451, variant = 130 }, --Speleo
+{orb = enums.Orbs.ROCK, type = 114, variant = 19 }, --Anti Golem
+{orb = enums.Orbs.ROCK, type = 114, variant = 19, subtype = 1}, --Anti Golem (with bomb)
+{orb = enums.Orbs.ROCK, type = 114, variant = 8 }, --Crucible
