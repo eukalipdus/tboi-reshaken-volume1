@@ -111,7 +111,7 @@ function ToxicOrb:PEffectUpdate(player)
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
 			player:AnimateCard(enums.Orbs.POISON, "HideItem")
             utility:SetData(player, "ToxicOrbLift", nil)
-			local velo = (player:GetAimDirection()*ToxicOrb.TearSpeedMulti)+player:GetTearMovementInheritance(player:GetShootingInput())
+			local velo = (player:GetAimDirection()*ToxicOrb.TearSpeedMulti)+player:GetTearMovementInheritance(player:GetMovementInput())
 	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, velo, nil):ToTear() --BOBS_HEAD
 			tear.Height = -72
 			tear.FallingSpeed = -5
