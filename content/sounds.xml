@@ -14,4 +14,48 @@
      <sound name="water flow">
         <sample weight="1" path="water_flow_mleb.wav"/>
     </sound>
+
+    <sound name="Spirit Of Chaos">
+        <sample weight="1" path="Spirit Of Chaos.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Clairvoyance">
+        <sample weight="1" path="Spirit Of Clairvoyance.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Conductivity">
+        <sample weight="1" path="Spirit Of Conductivity.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Deluge">
+        <sample weight="1" path="Spirit Of Deluge.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Druidity">
+        <sample weight="1" path="Spirit Of Druidity.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Inferno">
+        <sample weight="1" path="Spirit Of Inferno.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Revenance">
+        <sample weight="1" path="Spirit Of Revenance.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Sacrilege">
+        <sample weight="1" path="Spirit Of Sacrilege.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Salvation">
+        <sample weight="1" path="Spirit Of Salvation.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Terrastrium">
+        <sample weight="1" path="Spirit Of Terrastrium.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Virulence">
+        <sample weight="1" path="Spirit Of Virulence.wav"/>
+    </sound>
 </sounds>

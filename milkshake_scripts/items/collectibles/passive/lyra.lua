@@ -196,7 +196,7 @@ local function StopUsingLyra(player, data, success)
         flags = flags | enums.UseOrbFlags.DOUBLE_POWER
     end
 
-    MilkshakeVol1:UseSpiritOrb(data.orb, player, flags)
+    MilkshakeVol1:UseSpiritOrb(data.orb, player, flags | enums.UseOrbFlags.NO_SOUND)
 end
 
 
