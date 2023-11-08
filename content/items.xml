@@ -17,16 +17,16 @@
     <passive id="19" name="Balanced Breakfast" description="HP + luck up" maxhearts="1" hearts="2" cache="luck" soulhearts="1" gfx="balanced_breakfast.png" tags="food nocantrip noeden" quality="2" />
     <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="1" hearts="24" cache="damage luck firedelay" soulhearts="2" gfx="tasty_breakfast.png" tags="food nocantrip noeden" quality="3" />
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" tags="lazarussharedglobal nocantrip offensive summonable" quality="3" gfx="potofgold.png"/>
-    <familiar id="22" name="Glass Idol" description="Shattering Resurgance" tags="summonable" quality="3" gfx="glass_idol.png"/>
+    <familiar id="22" name="Glass Idol" description="Shattering Resurgance" tags="summonable" quality="2" gfx="glass_idol.png"/>
     <active id="23" name="Leviticus" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
-    <passive id="24" name="Battery Acid" description="PH down" tags="battery nocantrip offensive summonable" quality="2" gfx="collectibles_batteryacid.png"/>
+    <passive id="24" name="Battery Acid" description="PH down" tags="battery nocantrip offensive summonable" quality="3" gfx="collectibles_batteryacid.png"/>
     <familiar id="25" name="Doggy Bag" description="Clean up after yourself" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive poop summonable" quality="1"/>
     <passive id="26" name="Dad's Mitt" description="Curve Ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2"/>
     <familiar id="27" name="Lil Bishop" description="Shielding friend" gfx="collectibles_lilbishop.png" tags="monstermanual summonable" quality="2"/>
-    <passive id="28" name="Rainbow Fragment" description="Taste the rainbow" cache="luck" gfx="collectibles_rainbowfragment.png" tags="offensive summonable" quality="0"/>
-    <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" quality="2" />
-    <active id="30" name="Mirror Key" description="Mirror clean" quality="4" gfx="mirror_key.png" maxcharges="4" />
-    <active id="30" name="Mirror Key " description="Mirror clean" quality="4" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" />
+    <passive id="28" name="Rainbow Fragment" description="Taste the rainbow" cache="luck" gfx="collectibles_rainbowfragment.png" tags="offensive summonable" quality="1"/>
+    <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" tags="offensive summonable lazarussharedglobal" quality="2" />
+    <active id="30" name="Mirror Key" description="Otherside" quality="3" gfx="mirror_key.png" maxcharges="4" tags="lazarussharedglobal nocantrip nogreed offensive"/>
+    <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" />
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="Hidden clairvoyant power..." gfx="trinkets_amethystcluster.png" tags="nogreed"/>
