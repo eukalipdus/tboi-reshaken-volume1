@@ -534,42 +534,42 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.WATER,    type = 150, variant = 1,    subtype = 8 },    --Bubble
         { orb = MilkshakeVol1.enums.Orbs.WATER,    type = 150, variant = 1,    subtype = 9 },    --Bubble
         { orb = MilkshakeVol1.enums.Orbs.WATER,    type = 150, variant = 1,    subtype = 10 },   --Bubble (Isopoly)
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 160, variant = 490 },                  --Tap
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 829, variant = 450 },                  --Blasted
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 151, variant = 2 },                    --Stoney Slammer
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 227, variant = 960 },                  --Hollow Knight
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 160, variant = 330 },                  --Squire
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 666, variant = 200 },                  --Patzer
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 120, variant = 230 },                  --King
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 160, variant = 580 },                  --Tombit
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 160, variant = 581 },                  --Gravin
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 877, variant = 114 },                  --Grievance
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 150, variant = 31 },                   --Dangerous Disc
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 450, variant = 35 },                   --Apega
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 42,  variant = 963 },                  --Sensory Grimace
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 114, variant = 58 },                   --Thwammy
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 41,  variant = 750 },                  --Strobila
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 155, variant = 5 },                    --Diagetic
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 160, variant = 870 },                  --Armoured Looker
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 160, variant = 870,  subtype = 1 },    --Looker
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 160, variant = 960 },                  --Seeker
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 108, variant = 111 },                  --Watcher
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 450, variant = 37 },                   --Dogrock
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 750, variant = 190 },                  --Lonely Knight
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 151, variant = 10 },                   --Flinty
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 451, variant = 240 },                  --Pillar John
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 160, variant = 1200 },                 --Super Grimace
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 29,  variant = 1,    subtype = 5 },    --Bombmuncher
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 151, variant = 10 },                   --Flinty
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 160, variant = 680 },                  --Fossilized Boom Fly
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 114, variant = 6 },                    --Frowny
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 114, variant = 31 },                   --Quaker
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 114, variant = 18 },                   --Stalagnaught (hanging)
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 114, variant = 18,   subtype = 1 },    --Stalagnaught (buried)
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 451, variant = 130 },                  --Speleo
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 114, variant = 19 },                   --Anti Golem
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 114, variant = 19,   subtype = 1 },    --Anti Golem (with bomb)
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,                   type = 114, variant = 8 },                    --Crucible
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 490 },                  --Tap
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 829, variant = 450 },                  --Blasted
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 151, variant = 2 },                    --Stoney Slammer
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 227, variant = 960 },                  --Hollow Knight
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 330 },                  --Squire
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 666, variant = 200 },                  --Patzer
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 120, variant = 230 },                  --King
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 580 },                  --Tombit
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 581 },                  --Gravin
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 877, variant = 114 },                  --Grievance
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 150, variant = 31 },                   --Dangerous Disc
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 450, variant = 35 },                   --Apega
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 42,  variant = 963 },                  --Sensory Grimace
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 58 },                   --Thwammy
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 41,  variant = 750 },                  --Strobila
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 155, variant = 5 },                    --Diagetic
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 870 },                  --Armoured Looker
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 870,  subtype = 1 },    --Looker
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 960 },                  --Seeker
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 108, variant = 111 },                  --Watcher
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 450, variant = 37 },                   --Dogrock
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 750, variant = 190 },                  --Lonely Knight
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 151, variant = 10 },                   --Flinty
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 451, variant = 240 },                  --Pillar John
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 1200 },                 --Super Grimace
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 29,  variant = 1,    subtype = 5 },    --Bombmuncher
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 151, variant = 10 },                   --Flinty
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 680 },                  --Fossilized Boom Fly
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 6 },                    --Frowny
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 31 },                   --Quaker
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 18 },                   --Stalagnaught (hanging)
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 18,   subtype = 1 },    --Stalagnaught (buried)
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 451, variant = 130 },                  --Speleo
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 19 },                   --Anti Golem
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 19,   subtype = 1 },    --Anti Golem (with bomb)
+        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 8 },                    --Crucible
 
     }
     MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerFiendFolioEntities)
@@ -583,7 +583,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         [107] = MilkshakeVol1.enums.Orbs.NATURE,
         [108] = MilkshakeVol1.enums.Orbs.ELECTRIC,
         [109] = MilkshakeVol1.enums.Orbs.UNDEAD,
-        [110] = MilkshakeVol1.enums.Orbs.RANDOM, --ROCK
+        [110] = MilkshakeVol1.enums.Orbs.ROCK, --ROCK
         [111] = MilkshakeVol1.enums.Orbs.WATER,
         [112] = MilkshakeVol1.enums.Orbs.UNHOLY,
         [113] = MilkshakeVol1.enums.Orbs.PSYCHIC,
@@ -592,7 +592,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         [116] = MilkshakeVol1.enums.Orbs.HOLY,
         [117] = MilkshakeVol1.enums.Orbs.ELECTRIC,
         [118] = MilkshakeVol1.enums.Orbs.POISON,
-        [119] = MilkshakeVol1.enums.Orbs.RANDOM, --ROCK
+        [119] = MilkshakeVol1.enums.Orbs.ROCK, --ROCK
         [120] = MilkshakeVol1.enums.Orbs.NATURE,
     }
     for i, value in pairs(ffPills) do
