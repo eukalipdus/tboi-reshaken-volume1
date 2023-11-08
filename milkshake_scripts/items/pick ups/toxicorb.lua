@@ -11,6 +11,7 @@ ToxicOrb.SizeUp = 0.05
 ToxicOrb.ExtraDmgTickFrame = 15
 ToxicOrb.BaseDMG = 3
 ToxicOrb.SizeLimit = 4
+ToxicOrb.TearSpeedMulti = 14
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
 	[HeartSubType.HEART_FULL] =1,
@@ -110,7 +111,8 @@ function ToxicOrb:PEffectUpdate(player)
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
 			player:AnimateCard(enums.Orbs.POISON, "HideItem")
             utility:SetData(player, "ToxicOrbLift", nil)
-	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, player:GetAimDirection()*14, nil):ToTear() --BOBS_HEAD
+			local velo = (player:GetAimDirection()*ToxicOrb.TearSpeedMulti)+player:GetTearMovementInheritance(player:GetShootingInput())
+	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, velo, nil):ToTear() --BOBS_HEAD
 			tear.Height = -72
 			tear.FallingSpeed = -5
 			tear.FallingAcceleration = 1
