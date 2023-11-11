@@ -300,7 +300,8 @@
     <entity name="Mirror Key Door" id="1000" anm2path="grid/door_01_normaldoor.anm2">
     </entity>
 
-    <entity name="Mirror Key Door Outline" id="1000" anm2path="1000.154_door outline.anm2.anm2">
+    <entity name="Mirror Key Door Outline" id="1000" anm2path="1000.154_door outline.anm2">
+    </entity>
     </entity>
 
 </entities>
