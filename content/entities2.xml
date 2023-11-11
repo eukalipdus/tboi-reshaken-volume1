@@ -302,6 +302,8 @@
 
     <entity name="Mirror Key Door Outline" id="1000" anm2path="1000.154_door outline.anm2">
     </entity>
+
+    <entity name="Terra Stalagmite" id="1000" anm2path="terrastrium_spike.anm2">
     </entity>
 
 </entities>
