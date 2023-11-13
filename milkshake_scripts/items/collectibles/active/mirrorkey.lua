@@ -197,6 +197,18 @@ local function GetGotoCommandForCurrentRoom()
 end
 
 
+local function GetTrueUnusedDoorSlots()
+    local level = Game():GetLevel()
+    local roomDesc = level:GetCurrentRoomDesc()
+    local roomData = roomDesc.Data
+    local doorSlots = TSIL.Doors.GetDoorSlotsFromDoorSlotBitMask(roomData.Doors)
+
+    local room = Game():GetRoom()
+    return TSIL.Utils.Tables.Filter(doorSlots, function (_, doorSlot)
+        return not room:GetDoor(doorSlot)
+    end)
+end
+
 ---@return string
 local function GetCurrentRoomStringDesc()
     local level = Game():GetLevel()
@@ -244,7 +256,7 @@ end
 function MirrorKey:OnMirrorKeyUse(_, _, player)
     local room = Game():GetRoom()
 
-    local unusedDoorSlots = TSIL.Doors.GetUnusedDoorSlots()
+    local unusedDoorSlots = GetTrueUnusedDoorSlots()
     local closeDoorSlot = TSIL.Utils.Tables.FindFirst(unusedDoorSlots, function (_, doorSlot)
         local doorSlotPos = room:GetDoorSlotPosition(doorSlot)
 
@@ -400,6 +412,7 @@ function MirrorKey:OnNewRoom()
 
     SetMirrorShaderActive(true)
     PlacePlayersInDoorSlot(doorSlot)
+    AddLostCurse()
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
@@ -690,7 +703,7 @@ function MirrorKey:OnRender()
     if not ShouldSpawnMirrorDoorOutlines() then return end
     if AreThereDoorOutlines() then return end
 
-    local unusedDoorSlots = TSIL.Doors.GetUnusedDoorSlots()
+    local unusedDoorSlots = GetTrueUnusedDoorSlots()
     local room = Game():GetRoom()
 
     for _, doorSlot in ipairs(unusedDoorSlots) do
