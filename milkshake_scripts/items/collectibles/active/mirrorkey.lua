@@ -86,6 +86,12 @@ TSIL.SaveManager.AddPersistentVariable(
 )
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
+    "MirrorRoomDesc",
+    "",
+    TSIL.Enums.VariablePersistenceMode.RESET_RUN
+)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
     "RoomsMirrorKeyWasUsed",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
@@ -190,6 +196,16 @@ local function GetGotoCommandForCurrentRoom()
     cmd = cmd .. roomData.Variant
 
     return cmd
+end
+
+
+---@return string
+local function GetCurrentRoomStringDesc()
+    local level = Game():GetLevel()
+    local roomDesc = level:GetCurrentRoomDesc()
+    local roomData = roomDesc.Data
+
+    return roomData.Type .. "-" .. roomData.Variant .. "-" .. roomData.Subtype
 end
 
 
@@ -348,6 +364,29 @@ function MirrorKey:OnNewRoom()
         "IsInMirrorRoom"
     )
     if not isInMirrorRoom then return end
+
+    local roomDesc = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "MirrorRoomDesc"
+    )
+    local currentRoomDesc = GetCurrentRoomStringDesc()
+    local level = Game():GetLevel()
+    local currentRoomIndex = level:GetCurrentRoomIndex()
+
+    if currentRoomIndex ~= GridRooms.ROOM_DEBUG_IDX and roomDesc ~= currentRoomDesc then
+        --They teleported out of the mirror room or got out somehow without using the door
+        TSIL.SaveManager.SetPersistentVariable(
+            MilkshakeVol1,
+            "IsInMirrorRoom",
+            false
+        )
+
+        SetMirrorShaderActive(false)
+        Game():GetHUD():SetVisible(true)
+        RemoveLostCurse()
+
+        return
+    end
 
     local doorSlot = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
@@ -542,6 +581,11 @@ local function CheckIfPlayerEnters(door)
                 MilkshakeVol1,
                 "PreviousRoomIndex",
                 roomIndex
+            )
+            TSIL.SaveManager.SetPersistentVariable(
+                MilkshakeVol1,
+                "MirrorRoomDesc",
+                GetCurrentRoomStringDesc()
             )
 
             local cmd = GetGotoCommandForCurrentRoom()
