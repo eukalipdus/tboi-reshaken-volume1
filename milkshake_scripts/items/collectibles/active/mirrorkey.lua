@@ -103,7 +103,8 @@ end
 local function CanUseMirrorKey()
     local level = Game():GetLevel()
     local roomIndex = level:GetCurrentRoomIndex()
-    if roomIndex == GridRooms.ROOM_DEBUG_IDX then
+    --If we use goto in a grid room, we'll end up in an infinite loop.
+    if roomIndex < 0 then
         return false
     end
 
