@@ -635,10 +635,24 @@ end
 
 
 ---@param door EntityEffect
+local function CheckIfDoorExists(door)
+    local room = Game():GetRoom()
+    local gridEntity = room:GetGridEntityFromPos(door.Position)
+
+    if gridEntity and gridEntity:GetType() == GridEntityType.GRID_DOOR then
+        SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK)
+        door:Remove()
+    end
+end
+
+
+---@param door EntityEffect
 function MirrorKey:OnMirrorDoorUpdate(door)
     UpdateOpenState(door)
 
     CheckIfPlayerEnters(door)
+
+    CheckIfDoorExists(door)
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
