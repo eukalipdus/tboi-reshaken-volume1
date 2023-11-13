@@ -12,8 +12,6 @@ local ROTATION_PER_DOOR_SLOT = {
     [DoorSlot.UP0] = 0,
     [DoorSlot.UP1] = 0
 }
---- Distance to the door the player needs to be to enter it
-local ENTER_DOOR_DISTANCE = 10
 local GOTO_KEYWORD_PER_ROOM_TYPE = {
     [RoomType.ROOM_DEFAULT] = "default",
     [RoomType.ROOM_SHOP] = "shop",
@@ -534,14 +532,28 @@ local function UpdateOpenState(door)
 end
 
 
+---@param doorDir Direction
+---@param doorPos Vector
+---@param playerPos Vector
+local function IsPositionInEnterRange(doorDir, doorPos, playerPos)
+    local posDiff = playerPos - doorPos
+
+    return (doorDir == Direction.DOWN and posDiff.Y < 0)
+    or (doorDir == Direction.LEFT and posDiff.X > 0)
+    or (doorDir == Direction.RIGHT and posDiff.X < 0)
+    or (doorDir == Direction.UP and posDiff.Y > 0)
+end
+
+
 ---@param door EntityEffect
 local function CheckIfPlayerEnters(door)
     local player = Game():GetNearestPlayer(door.Position)
     local room = Game():GetRoom()
     local gridIndex = room:GetGridIndex(door.Position)
     local doorPosition = room:GetGridPosition(gridIndex)
+    local direction = TSIL.Direction.AngleToDirection(door:GetSprite().Rotation + 90)
 
-    if player.Position:DistanceSquared(doorPosition) <= ENTER_DOOR_DISTANCE ^ 2 then
+    if IsPositionInEnterRange(direction, doorPosition, player.Position) then
         local target = TSIL.Entities.GetEntityData(
             MilkshakeVol1,
             door,
