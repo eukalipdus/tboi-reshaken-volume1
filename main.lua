@@ -17,6 +17,7 @@ include("milkshake_scripts.modcompatibility.crabbyCretins")
 include("milkshake_scripts.modcompatibility.eclipsed")
 include("milkshake_scripts.modcompatibility.epiphany")
 include("milkshake_scripts.modcompatibility.fiendFolio")
+include("milkshake_scripts.modcompatibility.immortalHearts")
 include("milkshake_scripts.modcompatibility.retribution")
 
 -- Custom callbacks
