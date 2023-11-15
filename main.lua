@@ -130,6 +130,10 @@ end)
 
 --- EID Mirror world description flip fix
 if EID then
-    EID:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, EID.OnRender) -- add render function to shader callback
+    EID:AddPriorityCallback(ModCallbacks.MC_GET_SHADER_PARAMS, math.mininteger, function (_, shaderParams)
+        if shaderParams == "Milkshake Mirror Room" then
+            EID.OnRender()
+        end
+    end) -- add render function to shader callback
     EID:RemoveCallback(ModCallbacks.MC_POST_RENDER, EID.OnRender) -- remove original render function
 end
