@@ -12,8 +12,6 @@ local ROTATION_PER_DOOR_SLOT = {
     [DoorSlot.UP0] = 0,
     [DoorSlot.UP1] = 0
 }
---- Distance to the door the player needs to be to enter it
-local ENTER_DOOR_DISTANCE = 10
 local GOTO_KEYWORD_PER_ROOM_TYPE = {
     [RoomType.ROOM_DEFAULT] = "default",
     [RoomType.ROOM_SHOP] = "shop",
@@ -86,6 +84,12 @@ TSIL.SaveManager.AddPersistentVariable(
 )
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
+    "MirrorRoomDesc",
+    "",
+    TSIL.Enums.VariablePersistenceMode.RESET_RUN
+)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
     "RoomsMirrorKeyWasUsed",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
@@ -103,7 +107,8 @@ end
 local function CanUseMirrorKey()
     local level = Game():GetLevel()
     local roomIndex = level:GetCurrentRoomIndex()
-    if roomIndex == GridRooms.ROOM_DEBUG_IDX then
+    --If we use goto in a grid room, we'll end up in an infinite loop.
+    if roomIndex < 0 then
         return false
     end
 
@@ -192,6 +197,28 @@ local function GetGotoCommandForCurrentRoom()
 end
 
 
+local function GetTrueUnusedDoorSlots()
+    local level = Game():GetLevel()
+    local roomDesc = level:GetCurrentRoomDesc()
+    local roomData = roomDesc.Data
+    local doorSlots = TSIL.Doors.GetDoorSlotsFromDoorSlotBitMask(roomData.Doors)
+
+    local room = Game():GetRoom()
+    return TSIL.Utils.Tables.Filter(doorSlots, function (_, doorSlot)
+        return not room:GetDoor(doorSlot)
+    end)
+end
+
+---@return string
+local function GetCurrentRoomStringDesc()
+    local level = Game():GetLevel()
+    local roomDesc = level:GetCurrentRoomDesc()
+    local roomData = roomDesc.Data
+
+    return roomData.Type .. "-" .. roomData.Variant .. "-" .. roomData.Subtype
+end
+
+
 ---@param doorSlot DoorSlot
 ---@param target integer
 local function SpawnFakeMirrorDoor(doorSlot, target)
@@ -229,7 +256,7 @@ end
 function MirrorKey:OnMirrorKeyUse(_, _, player)
     local room = Game():GetRoom()
 
-    local unusedDoorSlots = TSIL.Doors.GetUnusedDoorSlots()
+    local unusedDoorSlots = GetTrueUnusedDoorSlots()
     local closeDoorSlot = TSIL.Utils.Tables.FindFirst(unusedDoorSlots, function (_, doorSlot)
         local doorSlotPos = room:GetDoorSlotPosition(doorSlot)
 
@@ -348,6 +375,29 @@ function MirrorKey:OnNewRoom()
     )
     if not isInMirrorRoom then return end
 
+    local roomDesc = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "MirrorRoomDesc"
+    )
+    local currentRoomDesc = GetCurrentRoomStringDesc()
+    local level = Game():GetLevel()
+    local currentRoomIndex = level:GetCurrentRoomIndex()
+
+    if currentRoomIndex ~= GridRooms.ROOM_DEBUG_IDX and roomDesc ~= currentRoomDesc then
+        --They teleported out of the mirror room or got out somehow without using the door
+        TSIL.SaveManager.SetPersistentVariable(
+            MilkshakeVol1,
+            "IsInMirrorRoom",
+            false
+        )
+
+        SetMirrorShaderActive(false)
+        Game():GetHUD():SetVisible(true)
+        RemoveLostCurse()
+
+        return
+    end
+
     local doorSlot = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "MirrorDoorDoorSlot"
@@ -362,6 +412,7 @@ function MirrorKey:OnNewRoom()
 
     SetMirrorShaderActive(true)
     PlacePlayersInDoorSlot(doorSlot)
+    AddLostCurse()
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
@@ -494,14 +545,28 @@ local function UpdateOpenState(door)
 end
 
 
+---@param doorDir Direction
+---@param doorPos Vector
+---@param playerPos Vector
+local function IsPositionInEnterRange(doorDir, doorPos, playerPos)
+    local posDiff = playerPos - doorPos
+
+    return (doorDir == Direction.DOWN and posDiff.Y < 0)
+    or (doorDir == Direction.LEFT and posDiff.X > 0)
+    or (doorDir == Direction.RIGHT and posDiff.X < 0)
+    or (doorDir == Direction.UP and posDiff.Y > 0)
+end
+
+
 ---@param door EntityEffect
 local function CheckIfPlayerEnters(door)
     local player = Game():GetNearestPlayer(door.Position)
     local room = Game():GetRoom()
     local gridIndex = room:GetGridIndex(door.Position)
     local doorPosition = room:GetGridPosition(gridIndex)
+    local direction = TSIL.Direction.AngleToDirection(door:GetSprite().Rotation + 90)
 
-    if player.Position:DistanceSquared(doorPosition) <= ENTER_DOOR_DISTANCE ^ 2 then
+    if IsPositionInEnterRange(direction, doorPosition, player.Position) then
         local target = TSIL.Entities.GetEntityData(
             MilkshakeVol1,
             door,
@@ -542,6 +607,11 @@ local function CheckIfPlayerEnters(door)
                 "PreviousRoomIndex",
                 roomIndex
             )
+            TSIL.SaveManager.SetPersistentVariable(
+                MilkshakeVol1,
+                "MirrorRoomDesc",
+                GetCurrentRoomStringDesc()
+            )
 
             local cmd = GetGotoCommandForCurrentRoom()
             Isaac.ExecuteCommand(cmd)
@@ -578,10 +648,24 @@ end
 
 
 ---@param door EntityEffect
+local function CheckIfDoorExists(door)
+    local room = Game():GetRoom()
+    local gridEntity = room:GetGridEntityFromPos(door.Position)
+
+    if gridEntity and gridEntity:GetType() == GridEntityType.GRID_DOOR then
+        SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK)
+        door:Remove()
+    end
+end
+
+
+---@param door EntityEffect
 function MirrorKey:OnMirrorDoorUpdate(door)
     UpdateOpenState(door)
 
     CheckIfPlayerEnters(door)
+
+    CheckIfDoorExists(door)
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_EFFECT_UPDATE,
@@ -619,7 +703,7 @@ function MirrorKey:OnRender()
     if not ShouldSpawnMirrorDoorOutlines() then return end
     if AreThereDoorOutlines() then return end
 
-    local unusedDoorSlots = TSIL.Doors.GetUnusedDoorSlots()
+    local unusedDoorSlots = GetTrueUnusedDoorSlots()
     local room = Game():GetRoom()
 
     for _, doorSlot in ipairs(unusedDoorSlots) do

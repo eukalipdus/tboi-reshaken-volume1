@@ -415,6 +415,10 @@ function Lyra:OnClearAwardSpawn(rng, pos)
         )
     end
 
+    local level = Game():GetLevel()
+    local roomDesc = level:GetRoomByIdx(level:GetCurrentRoomIndex())
+    roomDesc.AwardSeed = rng:GetSeed()
+
     return true
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, Lyra.OnClearAwardSpawn)
@@ -442,7 +446,7 @@ end
 function Lyra:OnTintedRockBreak(gridEntity)
     if not TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA) then return end
 
-    local rng = gridEntity:GetRNG()
+    local rng = TSIL.RNG.NewRNG(gridEntity:GetSaveState().SpawnSeed)
     if rng:RandomFloat() >= ORB_REPLACE_CHANCE then return end
 
     SpawnRewardOrb(rng, gridEntity.Position)
