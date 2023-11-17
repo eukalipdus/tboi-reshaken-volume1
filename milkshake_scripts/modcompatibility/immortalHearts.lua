@@ -15,7 +15,7 @@ MilkshakeVol1:AddModCompatibility("ComplianceImmortal", function ()
             "{{SoulHeart}} Debe ser cargado usando corazones de alma" ..
             "#{{ImmortalHeart}} +1 Corazón Inmortal" ..
             "#{{AngelRoom}} Usar el objeto antes de la contra el jefe hace que la recompensa sea un objeto de ángel" ..
-            "#{{DevilRoom}} El objeto costará dinerp si se ha tomado un pacto con el diablo",
+            "#{{DevilRoom}} El objeto costará dinero si se ha tomado un pacto con el diablo",
             "Levítico",
             "spa"
         )
