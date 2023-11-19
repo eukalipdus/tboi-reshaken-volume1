@@ -9,6 +9,7 @@
 	<costume id="17" anm2path="sicklecell.anm2" type="passive" hasSkinAlt="false" />
 	<costume id="21" anm2path="potofgold.anm2" type="passive" hasSkinAlt="true" hasOverlay="true"/>
 	<costume id="24" anm2path="batteryacid.anm2" type="passive" hasSkinAlt="true" />
+	<costume id="28" anm2path="rainbowfragment.anm2" type="passive" hasSkinAlt="true" />
 	<costume id="26" anm2path="dadsmitt.anm2" type="passive" hasSkinAlt="false" />
 	<costume id="29" anm2path="witchdoctormask.anm2" type="passive" hasSkinAlt="true" />
 
