@@ -1,6 +1,5 @@
 local rockOrb = {}
 local enums = MilkshakeVol1.enums
-local utility = MilkshakeVol1.utility
 
 local LONG_ROOM_GRID_SIZE = 252
 local NORMAL_MIN = 5
@@ -42,7 +41,6 @@ local function SpawnRandomStalagmites(player, stageName)
         return enemy:IsVulnerableEnemy()
     end)
 
-    --local rng = player:GetCardRNG(orb)
     local max
     local min
     if Game():GetRoom():GetGridSize() > LONG_ROOM_GRID_SIZE then
@@ -90,7 +88,6 @@ local function SpawnRandomStalagmites(player, stageName)
         end
 
         sprite:Play("Windup")
-        --utility:SetData(stalagmite, "Target", target[1])
     end
 end
 
@@ -108,7 +105,6 @@ MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, rockOrb.OnOrbUse)
 
 function rockOrb:PostEffectUpdate(stalagmite)
     local sprite = stalagmite:GetSprite()
-    --local target = utility:GetData(stalagmite, "Target")
     if sprite:IsFinished("Windup") then
         sprite:Play("Appear")
         TSIL.Utils.Functions.RunInFrames(function ()
