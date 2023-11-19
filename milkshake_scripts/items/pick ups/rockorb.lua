@@ -59,8 +59,9 @@ local function SpawnRandomStalagmites(player, stageName)
     for itr = 1, stalagmiteCount do
         local stalagmite
         if itr >= #enemies then
-            stalagmite = TSIL.EntitySpecific.SpawnEffect(
-                enums.Effects.STALAGMITE,
+            stalagmite = TSIL.EntitySpecific.SpawnNPC(
+                enums.Enemies.STALAGMITE,
+                1,
                 0,
                 Isaac.GetRandomPosition(),
                 Vector.Zero,
@@ -68,28 +69,28 @@ local function SpawnRandomStalagmites(player, stageName)
             )
         else
             local target = TSIL.Random.GetRandomElementsFromTable(enemies)
-            stalagmite = TSIL.EntitySpecific.SpawnEffect(
-                enums.Effects.STALAGMITE,
+            stalagmite = TSIL.EntitySpecific.SpawnNPC(
+                enums.Enemies.STALAGMITE,
+                1,
                 0,
                 target[1].Position,
                 Vector.Zero,
                 player
             )
         end
+        stalagmite.CollisionDamage = 0
         local sprite = stalagmite:GetSprite()
-
+        local spritePath = floorRockSprites[stageName]
         if stageName ~= "Basement" then
             local roomType = Game():GetRoom():GetType()
 
             if roomType == RoomType.ROOM_SECRET
             or roomType == RoomType.ROOM_SUPERSECRET then
-                local spritePath = floorRockSprites[stageName]
                 spritePath = floorRockSprites["Secret"]
-                sprite:ReplaceSpritesheet(1, spritePath)
-                sprite:LoadGraphics()
             end
+            sprite:ReplaceSpritesheet(1, spritePath)
+            sprite:LoadGraphics()
         end
-
         sprite:Play("Windup")
     end
 end
@@ -106,7 +107,8 @@ function rockOrb:OnOrbUse(orb, player, _, isLyra)
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, rockOrb.OnOrbUse)
 
-function rockOrb:PostEffectUpdate(stalagmite)
+function rockOrb:NpcUpdate(stalagmite)
+    if stalagmite.Type ~= enums.Enemies.STALAGMITE then return end
     local sprite = stalagmite:GetSprite()
     if sprite:IsFinished("Windup") then
         sprite:Play("Appear")
@@ -128,18 +130,33 @@ function rockOrb:PostEffectUpdate(stalagmite)
     if sprite:IsPlaying("Appear") and sprite:GetFrame() == KILL_FRAME then
         local target = Isaac.FindInRadius(stalagmite.Position, KILL_RADIUS, EntityPartition.ENEMY)
         for _, enemy in ipairs(target) do
-            enemy:TakeDamage(STALAGMITE_DMG, 0, EntityRef(stalagmite), 0)
+            if enemy.Type ~= enums.Enemies.STALAGMITE then
+                enemy:TakeDamage(STALAGMITE_DMG, 0, EntityRef(stalagmite), 0)
+            end
         end
 
-        TSIL.Utils.Functions.RunInFrames(function ()
-            sprite:Play("Disappear")
-        end, 15, {})
+        -- TSIL.Utils.Functions.RunInFrames(function ()
+        --     sprite:Play("Disappear")
+        -- end, 15, {})
     end
 
-    if sprite:IsFinished("Disappear") then
-        stalagmite:Remove()
-    end
+    -- if sprite:IsFinished("Disappear") then
+    --     stalagmite:Remove()
+    -- end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, rockOrb.PostEffectUpdate, enums.Effects.STALAGMITE)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_RENDER, rockOrb.NpcUpdate)
+
+function rockOrb:PostNpcDeath(stalagmite)
+    if stalagmite.Variant ~= 1 then return end
+    TSIL.EntitySpecific.SpawnEffect(
+        EffectVariant.ROCK_PARTICLE,
+        0,
+        stalagmite.Position,
+        Vector.Zero,
+        stalagmite
+    )
+    SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, rockOrb.PostNpcDeath, enums.Enemies.STALAGMITE)
 
 return rockOrb

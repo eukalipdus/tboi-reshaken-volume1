@@ -91,6 +91,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, RevenanceOrb.onNewRoom)
 
 --- gravestone destroyed
 function RevenanceOrb:GravestonDeath(gravestone)
+	if gravestone.Variant == 1 then return end
 	SoundParticle(gravestone.Position)
 	local stageCounter = MilkshakeVol1.utility:GetCurrentChapter()
 	local dmag = RevenanceOrb.SkeletonDMG + stageCounter
