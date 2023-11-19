@@ -74,6 +74,12 @@ function rockOrb:PostEffectUpdate(stalagmite)
         sprite:Play("Appear")
         TSIL.Utils.Functions.RunInFrames(function ()
             SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
+            local gridEntities = TSIL.GridEntities.GetGridEntities()
+            for _, gridEntity in ipairs(gridEntities) do
+                if gridEntity.Position:Distance(stalagmite.Position) <= KILL_RADIUS then
+                    gridEntity:Destroy()
+                end
+            end
         end, 5)
     end
 
