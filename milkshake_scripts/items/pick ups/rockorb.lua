@@ -34,6 +34,9 @@ local floorRockSprites = {
 
 }
 
+--- Spawns a random amount of stalagmite effects
+---@param player EntityPlayer
+---@param stageName string
 local function SpawnRandomStalagmites(player, stageName)
     local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
 
