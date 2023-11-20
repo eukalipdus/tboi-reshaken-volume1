@@ -90,12 +90,12 @@ enums.Effects = {
 
     MIRROR_KEY_DOOR = Isaac.GetEntityVariantByName("Mirror Key Door"),
     MIRROR_DOOR_OUTLINE = Isaac.GetEntityVariantByName("Mirror Key Door Outline"),
-    STALAGMITE = Isaac.GetEntityVariantByName("Terra Stalagmite"),
 }
 
 enums.Enemies = {
     GRAVESTONE = Isaac.GetEntityTypeByName("Gravestone"),
     GLASS_HEAD = Isaac.GetEntityTypeByName("Glass Head"),
+    STALAGMITE = Isaac.GetEntityTypeByName("Terra Stalagmite"),
 }
 
 enums.GlassHeadVariant = {

@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="11/1/2023 7:50:14 PM" Version="5" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="11/19/2023 6:37:03 PM" Version="7" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="grid\terrastrium_spike_basement.png" Id="0"/>
