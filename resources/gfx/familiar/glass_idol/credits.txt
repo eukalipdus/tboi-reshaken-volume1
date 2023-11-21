@@ -10,9 +10,9 @@ Ferpe: wario, yippie
 
 TheSilentGamer: thinker, shattering_of_humanity, checkmate, sinister, greg, trophy, fused_souls, big_ben
 
-Bardia: grayfruit, wayne
+Bardia: grayfruit, fiend, golden_fiend, wayne
 
-Fewer: peat, fiend, golden_fiend, gate, totem, house, saxxy
+Fewer: peat, gate, totem, house, saxxy
 
 BrendenPerson?: heart, milkshake, warpheart
 
@@ -57,3 +57,7 @@ Amy: morsel
 GooseCultist: paul
 
 Gash: worm
+
+Scooperman: red_baby2
+
+moofy: borb
