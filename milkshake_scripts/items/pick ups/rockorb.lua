@@ -82,6 +82,7 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
             Vector.Zero,
             player
         )
+        stalagmite.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
         utility:SetData(stalagmite, "TargetPosition", target.Position)
         if isGrid then
             DelayedDestroyGridEntity(target, true)
@@ -155,7 +156,7 @@ local function SpawnRandomStalagmites(player, stageName, rng)
     end
     for _ = 1, numEnemiesToTarget do
         local stalagmite = SpawnStalagmite(player, rng, false, enemies)
-        SetStalagmiteInfo(stalagmite, stageName, nil)
+        SetStalagmiteInfo(stalagmite, stageName, utility:GetData(stalagmite, "TargetPosition"))
     end
     stalagmiteCount = ((stalagmiteCount - numEnemiesToTarget) - numPillarBlockTargets) - numTintedRocksToTarget
     
