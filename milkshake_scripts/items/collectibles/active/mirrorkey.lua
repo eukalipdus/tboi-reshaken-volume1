@@ -430,6 +430,10 @@ function MirrorKey:OnNewRoom()
     SetMirrorShaderActive(true)
     PlacePlayersInDoorSlot(doorSlot)
     AddLostCurse()
+
+    if EID then
+        EID.isMirrorRoom = true
+    end
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
@@ -746,3 +750,32 @@ MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_RENDER,
     MirrorKey.OnRender
 )
+
+
+if EID then
+    EID:AddPriorityCallback(ModCallbacks.MC_GET_SHADER_PARAMS, math.mininteger, function (_, shaderParams)
+        if shaderParams == "Milkshake Mirror Room" then
+            local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
+                MilkshakeVol1,
+                "EnableMirrorShader"
+            )
+
+            if isInMirrorRoom then
+                EID.OnRender()
+            end
+        end
+    end)
+
+    EID:AddCallback(ModCallbacks.MC_POST_RENDER, function()
+        local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
+            MilkshakeVol1,
+            "EnableMirrorShader"
+        )
+
+        if not isInMirrorRoom then
+            EID.OnRender()
+        end
+    end)
+
+    EID:RemoveCallback(ModCallbacks.MC_POST_RENDER, EID.OnRender) -- remove original render function
+end
