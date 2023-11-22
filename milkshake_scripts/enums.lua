@@ -89,12 +89,13 @@ enums.Effects = {
     EFFECT_REPLACER = Isaac.GetEntityVariantByName("Effect Replacer"),
 
     MIRROR_KEY_DOOR = Isaac.GetEntityVariantByName("Mirror Key Door"),
-    MIRROR_DOOR_OUTLINE = Isaac.GetEntityVariantByName("Mirror Key Door Outline")
+    MIRROR_DOOR_OUTLINE = Isaac.GetEntityVariantByName("Mirror Key Door Outline"),
 }
 
 enums.Enemies = {
     GRAVESTONE = Isaac.GetEntityTypeByName("Gravestone"),
     GLASS_HEAD = Isaac.GetEntityTypeByName("Glass Head"),
+    STALAGMITE = Isaac.GetEntityTypeByName("Terra Stalagmite"),
 }
 
 enums.GlassHeadVariant = {
@@ -120,6 +121,19 @@ enums.Sounds = {
     GLASSHEAD_LIQUID = Isaac.GetSoundIdByName("glass head liquid"),
     GLASSHEAD_SHATTER = Isaac.GetSoundIdByName("glass head shatter"),
     WATER_FLOW = Isaac.GetSoundIdByName("water flow"),
+    ELECTROCUTE_MACHINE = Isaac.GetSoundIdByName("electrocute machine"),
+
+    SPIRIT_CHAOS = Isaac.GetSoundIdByName("Spirit Of Chaos"),
+    SPIRIT_CLAIRVOYANCE = Isaac.GetSoundIdByName("Spirit Of Clairvoyance"),
+    SPIRIT_CONDUCTIVITY = Isaac.GetSoundIdByName("Spirit Of Conductivity"),
+    SPIRIT_DELUGE = Isaac.GetSoundIdByName("Spirit Of Deluge"),
+    SPIRIT_DRUIDITY = Isaac.GetSoundIdByName("Spirit Of Druidity"),
+    SPIRIT_INFERNO = Isaac.GetSoundIdByName("Spirit Of Inferno"),
+    SPIRIT_REVENANCE = Isaac.GetSoundIdByName("Spirit Of Revenance"),
+    SPIRIT_SACRILEGE = Isaac.GetSoundIdByName("Spirit Of Sacrilege"),
+    SPIRIT_SALVATION = Isaac.GetSoundIdByName("Spirit Of Salvation"),
+    SPIRIT_TERRASTRIUM = Isaac.GetSoundIdByName("Spirit Of Terrastrium"),
+    SPIRIT_VIRULENCE = Isaac.GetSoundIdByName("Spirit Of Virulence")
 }
 
 enums.Costumes = {
@@ -218,7 +232,8 @@ enums.Callbacks = {
 enums.UseOrbFlags = {
     NONE = 0 << 0,
     DOUBLE_POWER = 1 << 0,
-    ALLOW_LYRA = 1 << 1
+    ALLOW_LYRA = 1 << 1,
+    NO_SOUND = 1 << 2
 }
 
 enums.ItemPools = {

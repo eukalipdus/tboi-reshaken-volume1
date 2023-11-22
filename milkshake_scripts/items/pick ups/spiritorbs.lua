@@ -1,11 +1,29 @@
 local SpiritOrbs = {}
 local enums = MilkshakeVol1.enums
 
+local SoundPerOrb = {
+    [enums.Orbs.ELECTRIC] = enums.Sounds.SPIRIT_CONDUCTIVITY,
+    [enums.Orbs.FIRE] = enums.Sounds.SPIRIT_INFERNO,
+    [enums.Orbs.HOLY] = enums.Sounds.SPIRIT_SALVATION,
+    [enums.Orbs.NATURE] = enums.Sounds.SPIRIT_DRUIDITY,
+    [enums.Orbs.POISON] = enums.Sounds.SPIRIT_VIRULENCE,
+    [enums.Orbs.PSYCHIC] = enums.Sounds.SPIRIT_CLAIRVOYANCE,
+    [enums.Orbs.RANDOM] = enums.Sounds.SPIRIT_CHAOS,
+    [enums.Orbs.ROCK] = enums.Sounds.SPIRIT_TERRASTRIUM,
+    [enums.Orbs.UNDEAD] = enums.Sounds.SPIRIT_REVENANCE,
+    [enums.Orbs.UNHOLY] = enums.Sounds.SPIRIT_SACRILEGE,
+    [enums.Orbs.WATER] = enums.Sounds.SPIRIT_DELUGE,
+
+}
 
 ---@param orb Card
 ---@param player EntityPlayer
 ---@param flags UseOrbFlag | integer
 function MilkshakeVol1:UseSpiritOrb(orb, player, flags)
+    if not TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.NO_SOUND) then
+        SFXManager():Play(SoundPerOrb[orb])
+    end
+
     Isaac.RunCallbackWithParam(enums.Callbacks.ON_ORB_USE, orb, orb, player, flags)
 end
 

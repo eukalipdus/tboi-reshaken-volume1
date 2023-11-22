@@ -10,6 +10,8 @@ ToxicOrb.InitSize = 1.5
 ToxicOrb.SizeUp = 0.05
 ToxicOrb.ExtraDmgTickFrame = 15
 ToxicOrb.BaseDMG = 3
+ToxicOrb.SizeLimit = 4
+ToxicOrb.TearSpeedMulti = 14
 ToxicOrb.BaseSpriteScale = Vector(1.18758, 1.18758)
 ToxicOrb.Hearts = {
 	[HeartSubType.HEART_FULL] =1,
@@ -56,19 +58,20 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 	if poisonCloud.FrameCount%ToxicOrb.ExtraDmgTickFrame == 0 then
 		for _, enemy in pairs(Isaac.FindInRadius(poisonCloud.Position, area, EntityPartition.ENEMY)) do
 			if enemy:IsVulnerableEnemy() and not enemy:HasMortalDamage() then
+				enemy:AddSlowing(EntityRef(poisonCloud), ToxicOrb.ExtraDmgTickFrame, 0.5, Color(1,1,1))
 				enemy:SetColor(Color(1,1,1, 1, 0.5,0.5,0),ToxicOrb.ExtraDmgTickFrame,1,true,true)
 				enemy:TakeDamage(utility:GetCurrentChapter()+ToxicOrb.BaseDMG, DamageFlag.DAMAGE_POISON_BURN, EntityRef(poisonCloud), 1)
 				enemy:GetData().ToxicDead = true
-				if poisonCloud.Scale < utility:GetCurrentChapter()+ToxicOrb.BaseDMG then
+				if poisonCloud.Scale < ToxicOrb.SizeLimit then
 					poisonCloud.Scale = poisonCloud.Scale + (ToxicOrb.SizeUp/(utility:GetCurrentChapter()+1))
 					poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
 				end
-				if enemy:HasMortalDamage() then
+				if enemy:HasMortalDamage() then -- I dealt mortal damage
 					local fart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, enemy.Position, Vector.Zero, nil):ToEffect()
 					fart:SetColor(Color(1,1,1, 1, 0.3,0.3,0),-1,1,true,true)
 					fart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.FART, 0, enemy.Position, Vector.Zero, nil):ToEffect()
 					fart:SetColor(Color(1,1,1, 1, 0.5,0.3,0),-1,1,true,true)
-					if poisonCloud.Scale < utility:GetCurrentChapter()+ToxicOrb.BaseDMG then
+					if poisonCloud.Scale < ToxicOrb.SizeLimit then
 						poisonCloud.Scale = poisonCloud.Scale + (ToxicOrb.SizeUp/(utility:GetCurrentChapter()+1))
 						poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
 					end
@@ -83,7 +86,9 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, ToxicOrb.CloudUpda
 
 local function ThrowOrb(player, vector)
 	utility:SetData(player, "ToxicOrbLift", nil)
-	local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, vector*14, nil):ToTear() --BOBS_HEAD
+	local velo = (vector*ToxicOrb.TearSpeedMulti)+player:GetTearMovementInheritance(player:GetMovementInput())
+	local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, velo, nil):ToTear() --BOBS_HEAD
+	--local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, vector*14, nil):ToTear() --BOBS_HEAD
 	tear.Height = -72
 	tear.FallingSpeed = -5
 	tear.FallingAcceleration = 1
@@ -123,7 +128,8 @@ function ToxicOrb:PEffectUpdate(player)
 			--utility:SetData(player, "ToxicOrbLift", nil)
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
 			player:AnimateCard(enums.Orbs.POISON, "HideItem")
-            ThrowOrb(player, player:GetAimDirection())
+            utility:SetData(player, "ToxicOrbLift", nil)
+			ThrowOrb(player, player:GetAimDirection())
 			--[[
 			utility:SetData(player, "ToxicOrbLift", nil)
 	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, player:GetAimDirection()*14, nil):ToTear() --BOBS_HEAD

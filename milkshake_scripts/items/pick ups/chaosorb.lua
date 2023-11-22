@@ -22,7 +22,7 @@ function ChaosOrb:OnChaosOrbUse(_, player, flags)
 
     local orbToUse = MilkshakeVol1.utility:GetRandomSpiritOrb(false, rng)
 
-    MilkshakeVol1:UseSpiritOrb(orbToUse, player, flags)
+    MilkshakeVol1:UseSpiritOrb(orbToUse, player, flags | enums.UseOrbFlags.NO_SOUND)
 
     local sprite = Sprite()
     sprite:Load("/gfx/chaos_orb_flash.anm2", true)
