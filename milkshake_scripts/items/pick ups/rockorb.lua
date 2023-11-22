@@ -161,6 +161,7 @@ local function SpawnRandomStalagmites(player, stageName, rng)
     
     for _ = 1, stalagmiteCount do
         local stalagmite = SpawnStalagmite(player, rng, false, nil)
+        SetStalagmiteInfo(stalagmite, stageName, nil)
     end
 end
 
