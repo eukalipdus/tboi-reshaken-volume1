@@ -8,11 +8,12 @@ local NORMAL_MAX = 6
 local BIG_MIN = 7
 local BIG_MAX = 9
 local KILL_FRAME = 7
-local KILL_RADIUS = 20
+local KILL_RADIUS = 40
 local SHAKE_TIMEOUT = 25
 local STALAGMITE_DMG = 200
 local PILLAR_TARGETS = 2
 local TINTED_TARGETS = 1
+local BASE_BOSS_DAMAGE = 50
 
 local floorRockSprites = {
     ["???"] = "gfx/grid/terrastrium_spike_bluewomb.png",
@@ -58,6 +59,14 @@ local function SetStalagmiteInfo(stalagmite, stageName, forcePosition)
     sprite:Play("Windup")
 end
 
+local function GetVulnerableEnemies()
+    local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
+    enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
+        return enemy:IsVulnerableEnemy()
+    end)
+    return enemies
+end
+
 local function DelayedDestroyGridEntity(gridEntity, remove)
     TSIL.Utils.Functions.RunInFrames(function ()
         SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
@@ -65,6 +74,22 @@ local function DelayedDestroyGridEntity(gridEntity, remove)
             TSIL.GridEntities.RemoveGridEntity(gridEntity)
         else
             gridEntity:Destroy()
+        end
+    end, 10)
+end
+
+local function DelayedStalagmiteDamage(stalagmite)
+    local enemies = GetVulnerableEnemies()
+    TSIL.Utils.Functions.RunInFrames(function ()
+        for _, enemy in ipairs(enemies) do
+            if enemy.Type ~= enums.Enemies.STALAGMITE
+            and (enemy.Position):Distance(stalagmite.Position) <= KILL_RADIUS then
+                if enemy:IsBoss() then
+                    enemy:TakeDamage(BASE_BOSS_DAMAGE + (BASE_BOSS_DAMAGE * utility:GetCurrentChapter()), 0, EntityRef(stalagmite), 0)
+                else
+                    enemy:Kill()
+                end
+            end
         end
     end, 10)
 end
@@ -105,10 +130,7 @@ end
 ---@param player EntityPlayer
 ---@param stageName string
 local function SpawnRandomStalagmites(player, stageName, rng)
-    local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
-    enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
-        return enemy:IsVulnerableEnemy()
-    end)
+    local enemies = GetVulnerableEnemies()
 
     local blockAndPillarTargets = utility:TableConcat(TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKB),
                                                       TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_PILLAR)
@@ -157,6 +179,7 @@ local function SpawnRandomStalagmites(player, stageName, rng)
     for _ = 1, numEnemiesToTarget do
         local stalagmite = SpawnStalagmite(player, rng, false, enemies)
         SetStalagmiteInfo(stalagmite, stageName, utility:GetData(stalagmite, "TargetPosition"))
+        DelayedStalagmiteDamage(stalagmite)
     end
     stalagmiteCount = ((stalagmiteCount - numEnemiesToTarget) - numPillarBlockTargets) - numTintedRocksToTarget
     
