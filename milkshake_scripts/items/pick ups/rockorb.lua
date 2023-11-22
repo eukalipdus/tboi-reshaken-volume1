@@ -69,7 +69,6 @@ end
 
 local function DelayedDestroyGridEntity(gridEntity, remove)
     TSIL.Utils.Functions.RunInFrames(function ()
-        SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
         if remove then
             TSIL.GridEntities.RemoveGridEntity(gridEntity)
         else
@@ -198,6 +197,9 @@ function rockOrb:OnOrbUse(orb, player, _, isLyra)
     stageName = string.gsub(stageName, " ", "")
 
     TSIL.Utils.Functions.RunInFrames(SpawnRandomStalagmites, 15, player, stageName, player:GetCardRNG(orb))
+    TSIL.Utils.Functions.RunInFrames(function ()
+        SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
+    end, 30)
 end
 MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, rockOrb.OnOrbUse)
 
