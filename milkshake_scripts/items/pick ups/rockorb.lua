@@ -42,6 +42,7 @@ local function SetStalagmiteInfo(stalagmite, stageName, forcePosition)
         utility:SetData(stalagmite, "ForcePosition", forcePosition)
     end
     stalagmite.CollisionDamage = 0
+    stalagmite.GridCollisionClass = GridCollisionClass.COLLISION_NONE
     local sprite = stalagmite:GetSprite()
     local spritePath = floorRockSprites[stageName]
     if stageName ~= "Basement" then
@@ -182,32 +183,6 @@ function rockOrb:NpcUpdate(stalagmite)
     if forcePosition then
         stalagmite.Position = forcePosition
     end
-
-    local sprite = stalagmite:GetSprite()
-    --if sprite:IsFinished("Windup") then
-    --    sprite:Play("Appear")
-    --end
-
-    if sprite:IsFinished("Appear") then
-        sprite:Play("Idle")
-    end
-
-    if sprite:IsPlaying("Appear") and sprite:GetFrame() == KILL_FRAME then
-        local target = Isaac.FindInRadius(stalagmite.Position, KILL_RADIUS, EntityPartition.ENEMY)
-        for _, enemy in ipairs(target) do
-            if enemy.Type ~= enums.Enemies.STALAGMITE then
-                enemy:TakeDamage(STALAGMITE_DMG, 0, EntityRef(stalagmite), 0)
-            end
-        end
-
-        -- TSIL.Utils.Functions.RunInFrames(function ()
-        --     sprite:Play("Disappear")
-        -- end, 15, {})
-    end
-
-    -- if sprite:IsFinished("Disappear") then
-    --     stalagmite:Remove()
-    -- end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_RENDER, rockOrb.NpcUpdate)
 
