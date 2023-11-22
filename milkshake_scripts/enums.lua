@@ -124,7 +124,7 @@ enums.Sounds = {
 
     SPIRIT_CHAOS = Isaac.GetSoundIdByName("Spirit Of Chaos"),
     SPIRIT_CLAIRVOYANCE = Isaac.GetSoundIdByName("Spirit Of Clairvoyance"),
-    SPIRIT_CONDUCTIVITY = Isaac.GetSoundIdByName("Spirit Of Deluge"),
+    SPIRIT_CONDUCTIVITY = Isaac.GetSoundIdByName("Spirit Of Conductivity"),
     SPIRIT_DELUGE = Isaac.GetSoundIdByName("Spirit Of Deluge"),
     SPIRIT_DRUIDITY = Isaac.GetSoundIdByName("Spirit Of Druidity"),
     SPIRIT_INFERNO = Isaac.GetSoundIdByName("Spirit Of Inferno"),
