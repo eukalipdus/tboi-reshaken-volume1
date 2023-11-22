@@ -15,7 +15,6 @@
 # but you need to put an empty line between different enemies.
 
 input_files = [
-    "./stuff/crabby.txt",
     "./stuff/retribution.txt"
 ]
 
@@ -51,9 +50,9 @@ for input_file_path in input_files:
             elif len(line) == 0:
                 if not (current_element is None or current_id is None or current_variant is None or current_name is None):
                     if current_subtype is None:
-                        output_lines.append(f"{{orb = Milkshake.enums.Orbs.{current_element}, type = {current_id}, variant = {current_variant}}}, -- {current_name}")
+                        output_lines.append(f"{{orb = MilkshakeVol1.enums.Orbs.{current_element}, type = {current_id}, variant = {current_variant}}}, -- {current_name}")
                     else:
-                        output_lines.append(f"{{orb = Milkshake.enums.Orbs.{current_element}, type = {current_id}, variant = {current_variant}, subtype = {current_subtype}}}, -- {current_name}")
+                        output_lines.append(f"{{orb = MilkshakeVol1.enums.Orbs.{current_element}, type = {current_id}, variant = {current_variant}, subtype = {current_subtype}}}, -- {current_name}")
                 
                 current_name = None
                 current_id = None
