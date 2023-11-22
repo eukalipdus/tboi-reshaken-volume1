@@ -3,7 +3,7 @@ MilkshakeVol1:AddModCompatibility("Retribution", function()
         { orb = MilkshakeVol1.enums.Orbs.NATURE, type = 793, variant = 1888 },    -- circe swine
         { orb = MilkshakeVol1.enums.Orbs.NATURE, type = 793, variant = 1889 },    -- spirit
         { orb = MilkshakeVol1.enums.Orbs.NATURE, type = 793, variant = 1890 },    -- lifeseed spirit
-        { orb = MilkshakeVol1.enums.Orbs.NATURE, type = 793, variant = 1891, subtype = 0 }, -- viscerine
+        { orb = MilkshakeVol1.enums.Orbs.NATURE, type = 793, variant = 1891,}, -- viscerine
         { orb = MilkshakeVol1.enums.Orbs.FIRE,   type = 793, variant = 1892 },    -- pig bang
         { orb = MilkshakeVol1.enums.Orbs.HOLY,   type = 950, variant = 1873 },    -- hogma
         { orb = MilkshakeVol1.enums.Orbs.UNHOLY, type = 38,  variant = 1,    subtype = 118 }, -- samael angel

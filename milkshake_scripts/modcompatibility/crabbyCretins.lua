@@ -1,8 +1,8 @@
 MilkshakeVol1:AddModCompatibility("CrabbyCertins", function()
     local OrbsPerCrabbyEntities = {
-        { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 25,  variant = 20, subtype = 0 }, -- ?.fly
-        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 25,  variant = 22, subtype = 0 }, -- coal fly
-        { orb = MilkshakeVol1.enums.Orbs.CHAOS,    type = 25,  variant = 21, subtype = 0 }, -- i.fly
+        { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 25,  variant = 20,}, -- ?.fly
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 25,  variant = 22,}, -- coal fly
+        { orb = MilkshakeVol1.enums.Orbs.CHAOS,    type = 25,  variant = 21,}, -- i.fly
         { orb = MilkshakeVol1.enums.Orbs.UNDEAD,   type = 834, variant = 20 },          -- enraged bones
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 833, variant = 20 },          -- zealot
         { orb = MilkshakeVol1.enums.Orbs.WATER,    type = 300, variant = 999 },         -- flood cap
@@ -26,7 +26,7 @@ MilkshakeVol1:AddModCompatibility("CrabbyCertins", function()
         { orb = MilkshakeVol1.enums.Orbs.UNHOLY,   type = 109, variant = 2 },           -- the blighted
         { orb = MilkshakeVol1.enums.Orbs.UNHOLY,   type = 109, variant = 16 },          -- sealed
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 109, variant = 4 },           -- bombardier
-        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 109, variant = 17, subtype = 0 }, -- coaly
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 109, variant = 17,}, -- coaly
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 92,  variant = 100 },         -- visheart
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 93,  variant = 100 },         -- vismask
         { orb = MilkshakeVol1.enums.Orbs.UNDEAD,   type = 214, variant = 20 },          -- rib fly
