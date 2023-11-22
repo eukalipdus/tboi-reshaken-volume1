@@ -122,27 +122,16 @@ function ToxicOrb:PEffectUpdate(player)
 		end
 	elseif utility:GetData(player, "ToxicOrbLift") then
 		if not player:IsHoldingItem() then
-			--player:AddCard(enums.Orbs.POISON)
-			--if player:GetLastDirection() then
+			if Game():GetRoom():GetFrameCount() == 0 then
+				player:AddCard(enums.Orbs.POISON)
+				utility:SetData(player, "ToxicOrbLift", nil)
+				return
+			end
 			ThrowOrb(player, player:GetLastDirection())
-			--utility:SetData(player, "ToxicOrbLift", nil)
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
 			player:AnimateCard(enums.Orbs.POISON, "HideItem")
             utility:SetData(player, "ToxicOrbLift", nil)
 			ThrowOrb(player, player:GetAimDirection())
-			--[[
-			utility:SetData(player, "ToxicOrbLift", nil)
-	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, player:GetAimDirection()*14, nil):ToTear() --BOBS_HEAD
-			tear.Height = -72
-			tear.FallingSpeed = -5
-			tear.FallingAcceleration = 1
-			tear.CollisionDamage = 0
-			tear:GetData().ToxicBomb = true
-			local orbSprite = tear:GetSprite()
-			orbSprite:ReplaceSpritesheet(0, ToxicOrb.GfxPath)
-			orbSprite:LoadGraphics()
-			utility:SetData(player, "ToxicOrbShoot", tear)
-			--]]
         end
     end
 end
