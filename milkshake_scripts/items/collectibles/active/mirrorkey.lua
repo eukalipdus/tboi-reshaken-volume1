@@ -131,6 +131,13 @@ local function ReplaceItems(oldItem, newItem)
             local activeItem = player:GetActiveItem(activeSlot)
             if oldItem == activeItem then
                 local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
+
+                player:RemoveCollectible(
+                    oldItem,
+                    false,
+                    activeSlot
+                )
+
                 player:AddCollectible(
                     newItem,
                     charge,
@@ -254,6 +261,16 @@ end
 
 ---@param player EntityPlayer
 function MirrorKey:OnMirrorKeyUse(_, _, player)
+    if not CanUseMirrorKey() then
+        UpdateMirrorKeyChargeState()
+
+        return {
+            Discharge = false,
+            ShowAnim = false,
+            Remove = false
+        }
+    end
+
     local room = Game():GetRoom()
 
     local unusedDoorSlots = GetTrueUnusedDoorSlots()

@@ -423,7 +423,7 @@ descriptions.Collectibles = {
             name = "Levítico",
             description = "{{SoulHeart}} Debe ser cargado usando corazones de alma" ..
             "#{{EternalHeart}} +1 Corazón Eterno" ..
-            "#{{AngelRoom}} Usar el objeto antes de la contra el jefe hace que la recompensa sea un objeto de ángel" ..
+            "#{{AngelRoom}} Usar el objeto antes de la pelea contra el jefe hace que la recompensa sea un objeto de ángel" ..
             "#{{DevilRoom}} El objeto costará dinerp si se ha tomado un pacto con el diablo",
             --+1 Corazón Inmortal en su lugar si está instalado el mod de Corazones Inmortales
         },
