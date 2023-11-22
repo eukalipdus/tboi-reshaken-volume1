@@ -8,13 +8,11 @@ MilkshakeVol1.API = {}
 
 --include("milkshake_scripts.bumAPI.core")
 
-local eid = include("milkshake_scripts.modcompatibility.eid")
-eid:addEid()
-
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
 include("milkshake_scripts.modcompatibility.crabbyCretins")
 include("milkshake_scripts.modcompatibility.eclipsed")
+include("milkshake_scripts.modcompatibility.eid")
 include("milkshake_scripts.modcompatibility.epiphany")
 include("milkshake_scripts.modcompatibility.fiendFolio")
 include("milkshake_scripts.modcompatibility.immortalHearts")
