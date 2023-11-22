@@ -35,6 +35,10 @@ local floorRockSprites = {
     ["Womb"] = "gfx/grid/terrastrium_spike_womb.png",
 }
 
+--- Changes the sprite of the stalagmite depending on the floor or room and sets various other members, and begins the Windup animation
+---@param stalagmite Entity
+---@param stageName string
+---@param forcePosition Vector - A position that the stalagmite will be forced into every frame
 local function SetStalagmiteInfo(stalagmite, stageName, forcePosition)
     if forcePosition then
         utility:SetData(stalagmite, "ForcePosition", forcePosition)
@@ -56,6 +60,8 @@ local function SetStalagmiteInfo(stalagmite, stageName, forcePosition)
     sprite:Play("Windup")
 end
 
+--- Returns a table of all the vulnerable enemies in the room
+---@return table
 local function GetVulnerableEnemies()
     local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
     enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
@@ -64,6 +70,9 @@ local function GetVulnerableEnemies()
     return enemies
 end
 
+--- Destroys a given grid entity 10 frames after being called
+---@param gridEntity GridEntity
+---@param remove boolean - If true, calls Remove instead of Destroy on gridEntity
 local function DelayedDestroyGridEntity(gridEntity, remove)
     TSIL.Utils.Functions.RunInFrames(function ()
         if remove then
@@ -74,6 +83,8 @@ local function DelayedDestroyGridEntity(gridEntity, remove)
     end, 10)
 end
 
+--- Kills enemies in range of the stalagmite and damages bosses in range, 10 frames after being called
+---@param stalagmite Entity
 local function DelayedStalagmiteDamage(stalagmite)
     local enemies = GetVulnerableEnemies()
     TSIL.Utils.Functions.RunInFrames(function ()
@@ -90,6 +101,11 @@ local function DelayedStalagmiteDamage(stalagmite)
     end, 10)
 end
 
+--- Spawns a stalagmite
+---@param player EntityPlayer
+---@param rng RNG
+---@param isGrid boolean - Is it a GridEntity?
+---@param targetTable table - Table of entities to randomly select a target from for the stalagmite
 local function SpawnStalagmite(player, rng, isGrid, targetTable)
     local stalagmite
     if targetTable then
@@ -124,7 +140,8 @@ end
 
 --- Spawns a random amount of stalagmite effects
 ---@param player EntityPlayer
----@param stageName string
+---@param stageName string - Must be within the floorRockSprites table declared at the top
+---@param rng RNG
 local function SpawnRandomStalagmites(player, stageName, rng)
     local enemies = GetVulnerableEnemies()
 
