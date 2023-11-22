@@ -1,5 +1,5 @@
 MilkshakeVol1:AddModCompatibility("Retribution", function()
-    local OrbsPerFiendFolioEntities = {
+    local OrbsPerRetributionEntities = {
         { orb = MilkshakeVol1.enums.Orbs.NATURE, type = 793, variant = 1888 },    -- circe swine
         { orb = MilkshakeVol1.enums.Orbs.NATURE, type = 793, variant = 1889 },    -- spirit
         { orb = MilkshakeVol1.enums.Orbs.NATURE, type = 793, variant = 1890 },    -- lifeseed spirit
@@ -36,5 +36,5 @@ MilkshakeVol1:AddModCompatibility("Retribution", function()
         { orb = MilkshakeVol1.enums.Orbs.UNDEAD, type = 88,  variant = 0,    subtype = 184 }, -- walking blue boil
         { orb = MilkshakeVol1.enums.Orbs.UNDEAD, type = 88,  variant = 0,    subtype = 185 }, -- stumbling blue boil
     }
-    MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerFiendFolioEntities)
+    MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerRetributionEntities)
 end)

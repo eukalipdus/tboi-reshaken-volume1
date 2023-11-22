@@ -1,5 +1,5 @@
 MilkshakeVol1:AddModCompatibility("CrabbyCertins", function()
-    local OrbsPerFiendFolioEntities = {
+    local OrbsPerCrabbyEntities = {
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 25,  variant = 20, subtype = 0 }, -- ?.fly
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 25,  variant = 22, subtype = 0 }, -- coal fly
         { orb = MilkshakeVol1.enums.Orbs.CHAOS,    type = 25,  variant = 21, subtype = 0 }, -- i.fly
@@ -41,4 +41,5 @@ MilkshakeVol1:AddModCompatibility("CrabbyCertins", function()
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 109, variant = 8 },           -- ramble gag
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 109, variant = 9 },           -- tainted mushroom
     }
+    MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerCrabbyEntities)
 end)
