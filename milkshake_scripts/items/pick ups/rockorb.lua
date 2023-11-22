@@ -121,8 +121,11 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
         )
         stalagmite.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
         utility:SetData(stalagmite, "TargetPosition", target.Position)
-        if isGrid then
-            DelayedDestroyGridEntity(target, true)
+        if isGrid
+        and target:GetType() == GridEntityType.GRID_ROCKT then
+            DelayedDestroyGridEntity(target, false)
+        elseif isGrid then
+            DelayedDestroyGridEntity(target, false)
         end
         table.remove(targetTable, idxToRemove)
     else
