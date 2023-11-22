@@ -7,10 +7,8 @@ local NORMAL_MIN = 5
 local NORMAL_MAX = 6
 local BIG_MIN = 7
 local BIG_MAX = 9
-local KILL_FRAME = 7
 local KILL_RADIUS = 40
 local SHAKE_TIMEOUT = 25
-local STALAGMITE_DMG = 200
 local PILLAR_TARGETS = 2
 local TINTED_TARGETS = 1
 local BASE_BOSS_DAMAGE = 50
@@ -35,7 +33,6 @@ local floorRockSprites = {
     ["Sheol"] = "gfx/grid/terrastrium_spike_sheol.png",
     ["Utero"] = "gfx/grid/terrastrium_spike_utero.png",
     ["Womb"] = "gfx/grid/terrastrium_spike_womb.png",
-
 }
 
 local function SetStalagmiteInfo(stalagmite, stageName, forcePosition)
