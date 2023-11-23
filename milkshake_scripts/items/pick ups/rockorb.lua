@@ -77,7 +77,7 @@ end
 ---@param gridEntity GridEntity
 ---@param remove boolean - If true, calls Remove instead of Destroy on gridEntity
 local function DelayedDestroyGridEntity(gridEntity, remove)
-    TSIL.Utils.Functions.RunInFrames(function ()
+    TSIL.Utils.Functions.RunInFramesTemporary(function ()
         if remove then
             TSIL.GridEntities.RemoveGridEntity(gridEntity)
         else
@@ -90,7 +90,7 @@ end
 ---@param stalagmite Entity
 local function DelayedStalagmiteDamage(stalagmite)
     local enemies = GetVulnerableEnemies()
-    TSIL.Utils.Functions.RunInFrames(function ()
+    TSIL.Utils.Functions.RunInFramesTemporary(function ()
         for _, enemy in ipairs(enemies) do
             if enemy.Type ~= enums.Enemies.STALAGMITE
             and (enemy.Position):Distance(stalagmite.Position) <= KILL_RADIUS then
@@ -98,7 +98,7 @@ local function DelayedStalagmiteDamage(stalagmite)
                     enemy:TakeDamage(BASE_BOSS_DAMAGE + (BASE_BOSS_DAMAGE * utility:GetCurrentChapter()), 0, EntityRef(stalagmite), 0)
                 else
                     enemy:Kill()
-                    TSIL.Utils.Functions.RunInFrames(function () -- For globins, gapers, etc
+                    TSIL.Utils.Functions.RunInFramesTemporary(function () -- For globins, gapers, etc
                         enemy:Kill()
                     end, 5, {})
                 end
@@ -229,8 +229,8 @@ function rockOrb:OnOrbUse(orb, player, _, isLyra)
     stageName = string.gsub(stageName, "I", "")
     stageName = string.gsub(stageName, " ", "")
 
-    TSIL.Utils.Functions.RunInFrames(SpawnRandomStalagmites, 15, player, stageName, player:GetCardRNG(orb), isLyra)
-    TSIL.Utils.Functions.RunInFrames(function ()
+    TSIL.Utils.Functions.RunInFramesTemporary(SpawnRandomStalagmites, 15, player, stageName, player:GetCardRNG(orb), isLyra)
+    TSIL.Utils.Functions.RunInFramesTemporary(function ()
         SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
     end, 30)
 end
