@@ -114,6 +114,10 @@
 	<wisp id="506" hp="10" layer="1" damage="3" fireDelay="15" coreGfx="cross.png"
 	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
 
+	<!-- Special Brenda Terra Wisp -->
+	<wisp id="507" hp="10" layer="1" damage="3" fireDelay="50" tearFlags="70"
+	flameColor="flame_brown" coreColor="core_brown" tearVariant="42"/>
+
 	<!-- Prismatic Dice -->
 	<wisp id="13" hp="2" canShoot="false"
 	flameColor="flame_pink" coreColor="core_cyan" />
