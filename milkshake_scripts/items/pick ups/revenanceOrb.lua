@@ -39,16 +39,23 @@ function RevenanceOrb:GravestonUpd(gravestone)
 		gravestone.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_BULLET and EntityGridCollisionClass.GRIDCOLL_GROUND
 		gravestone.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL
 	end
+	local grbData = gravestone:GetData()
 	gravestone.Velocity = Vector.Zero
 	for _, enemytear in pairs(Isaac.FindInRadius(gravestone.Position, 12, EntityPartition.BULLET)) do
-		gravestone:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE, EntityRef(enemytear), 1)
+		gravestone:TakeDamage(1, 0, EntityRef(enemytear), 1)
 		enemytear:Kill()
+		grbData.HitByOne = true
+		return
 	end
 	for _, tear in pairs(Isaac.FindInRadius(gravestone.Position, 12, EntityPartition.TEAR)) do
 		if tear:ToTear() then
-			gravestone:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE, EntityRef(tear), 1)
+			gravestone:TakeDamage(1, 0, EntityRef(tear), 1)
+			grbData.HitByOne = true
+			return
 		elseif tear:ToKnife() and (tear.Variant ~= 0 and tear:ToKnife():IsFlying() or tear.Variant == 0 or tear.Variant == 5) then
-			gravestone:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE, EntityRef(tear), 1)
+			gravestone:TakeDamage(1, 0, EntityRef(tear), 1)
+			grbData.HitByOne = true
+			return
 		end
 	end
 end
@@ -57,9 +64,10 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.Graveston
 function RevenanceOrb:GravestonDMG(entity, amount, damageFlags, source, DamageCountdown) -- no way to change amount, blame someone
 	--- do damage effects
 	local grbData = entity:GetData()
-	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 or damageFlags & DamageFlag.DAMAGE_INVINCIBLE > 0 then
+	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 or grbData.HitByOne then
+		grbData.HitByOne = nil
 		return true
-	elseif source.Entity and source.Entity:ToKnife() or damageFlags & DamageFlag.DAMAGE_LASER > 0 then
+	elseif (source.Entity and source.Entity:ToKnife()) or damageFlags & DamageFlag.DAMAGE_LASER > 0 then
 		if not grbData.GravetoneTouched or game:GetFrameCount() - grbData.GravetoneTouched > RevenanceOrb.TombTakeDMGCooldown then
 			grbData.CustomDamage = false
 			grbData.GravetoneTouched = game:GetFrameCount()
@@ -109,13 +117,16 @@ function RevenanceOrb:GravestonDeath(gravestone)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, RevenanceOrb.GravestonDeath, enums.Enemies.GRAVESTONE) --E
 
-function RevenanceOrb:OnRevenanceOrbUse(card, player) -- useFlag
+function RevenanceOrb:OnRevenanceOrbUse(card, player, flags) -- useFlag
 	local room = game:GetRoom()
 	local rng = player:GetCardRNG(card)
+	local double = flags & enums.UseOrbFlags.DOUBLE_POWER > 0 and 2 or 1
 	game:ShakeScreen(RevenanceOrb.Timeout)
 	---get room shape and num of gravestones
 	local tombNum = rng:RandomInt(2)+4
 	if room:GetRoomShape() > 7 then tombNum = tombNum+2 end
+	tombNum = tombNum * double
+	--tombNum = tombNum + ((double-1)*2)  -- +2 extra tombs
 	--- spawn gravestones
 	for _ = 1, tombNum do
 		--local pos =  Isaac.GetFreeNearPosition(room:GetRandomPosition(0), 10)

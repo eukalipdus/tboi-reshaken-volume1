@@ -265,6 +265,7 @@ function UnholyOrb:onPEffectUpdate(player)
 	if Game():GetRoom():GetFrameCount() == 1 then
 		utility:SetData(player, "UnholyTargetPositions", nil)
 		utility:SetData(player, "UnholyPlayerPosition", nil)
+		utility:SetData(player, "UnholyDouble", nil)
 		player.GridCollisionClass = utility:GetData(player, "UnholyPlayerGridCollision")
 		player.EntityCollisionClass = utility:GetData(player, "UnholyPlayerEntityCollision")
 	elseif #TargetPositions <= 0 then
@@ -277,11 +278,13 @@ function UnholyOrb:onPEffectUpdate(player)
 			player.Velocity = Vector.Zero
 			--SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)
 			Game():ShakeScreen(10)
+			local doubler = false
 			for _, enemy in pairs(Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 5000, EntityPartition.ENEMY)) do
 				if enemy:ToNPC() and enemy:GetData().UnholyOrbFlag then
 					enemy:ClearEntityFlags(EntityFlag.FLAG_FREEZE)
 					enemy:GetData().UnholyOrbFlag = nil
 					enemy:GetData().UnholyFreeze = nil
+					doubler = true
 		        end
 			end
 			local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 2, player.Position, Vector.Zero, player)
@@ -289,7 +292,10 @@ function UnholyOrb:onPEffectUpdate(player)
 			local ppff = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, player.Position, Vector.Zero, player):ToEffect()
 			ppff:SetColor(Color(0,0,0,1,0.7),-1,1, false, false)
 			Game():GetRoom():EmitBloodFromWalls(5, 10)
-
+			if utility:GetData(player, "UnholyDouble") and doubler then
+				MilkshakeVol1:UseSpiritOrb(enums.Orbs.UNHOLY, player, enums.UseOrbFlags.NO_SOUND)
+			end
+			utility:SetData(player, "UnholyDouble", nil)
 		elseif player.Position:Distance(playerStartPos) < UnholyOrb.MaxDistance then
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MinSpeed)
 		else
@@ -358,9 +364,10 @@ function UnholyOrb:enemyUpd(enemy)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, UnholyOrb.enemyUpd)
 
-function UnholyOrb:OnUnholyOrbUse(_, player)
+function UnholyOrb:OnUnholyOrbUse(_, player, flags)
     local TargetPositions = GetTargets(player) -- table of npc and slot position
 	if #TargetPositions > 0 then
+		utility:SetData(player, "UnholyDouble", flags & enums.UseOrbFlags.DOUBLE_POWER > 0)
 		utility:SetData(player, "UnholyPlayerGridCollision", player.GridCollisionClass)
 		utility:SetData(player, "UnholyPlayerEntityCollision", player.EntityCollisionClass)
 		utility:SetData(player, "UnholyTargetPositions", TargetPositions)
