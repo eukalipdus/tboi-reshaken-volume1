@@ -167,7 +167,6 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
         if originalQuality then
             pickupAmount = originalQuality - (quality - 1)
         end
-        print(pickupAmount)
         utility:RecycleCollectible(collectible.Position, player, roomType, itemPool, seed, rng, false, pickupAmount)
     end
     ::failsafe::
