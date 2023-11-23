@@ -29,6 +29,10 @@ MilkshakeVol1:AddModCompatibility("EID", function ()
     spr:Load("gfx/spirit_chaos.anm2", true)
     EID:addIcon("SpiritOrb", "EIDIcon", 1, 16, 16, 6, 6, spr)
 
+    local spr = Sprite()
+    spr:Load("gfx/fruit_heart.anm2", true)
+    EID:addIcon("FruitHeart", "EIDIcon", 1, 16, 16, 6, 6, spr)
+
     -- Collectibles
     for collectible, translations in pairs(descriptions.Collectibles) do
         for language, description in pairs(translations) do

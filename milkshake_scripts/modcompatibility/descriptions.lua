@@ -1,6 +1,6 @@
 local descriptions = {}
 local enums = MilkshakeVol1.enums
-
+local LyraIcon = "{{Collectible"..enums.Collectibles.LYRA .."}}"
 --[[
     Available Languages:
         -English: "en_us"
@@ -612,9 +612,155 @@ descriptions.Cards = {
     [enums.Orbs.NATURE] = {
         en_us = {
             name = "Spirit of Druidity",
+            description = "#Traps all enemies in the room in vines for 12 seconds. Trapped enemies drop a fruit heart on death." ..
+            "#{{FruitHeart}} Fruit Hearts heal half a red heart, or half a soul heart if full." ..
+            "#" ..LyraIcon.. " {{ColorYellow}}Doubles fruit heart drops"
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.ELECTRIC] = {
+        en_us = {
+            name = "Spirit of Conductivity",
             description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
         },
         spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.FIRE] = {
+        en_us = {
+            name = "Spirit of Inferno",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.PSYCHIC] = {
+        en_us = {
+            name = "Spirit of Clairvoyance",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.UNDEAD] = {
+        en_us = {
+            name = "Spirit of Revenance",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.POISON] = {
+        en_us = {
+            name = "Spirit of Virulence",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.HOLY] = {
+        en_us = {
+            name = "Spirit of Salvation",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.UNHOLY] = {
+        en_us = {
+            name = "Spirit of Sacrilege",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.WATER] = {
+        en_us = {
+            name = "Spirit of Deluge",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.ROCK] = {
+        en_us = {
+            name = "Spirit of Terrastrium",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    },
+    [enums.Orbs.RANDOM] = {
+        en_us = {
+            name = "Spirit of Chaos",
+            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+        },
+        spa = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        },
+        ru = {
             name = "Orbe Druidico",
             description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
         }
