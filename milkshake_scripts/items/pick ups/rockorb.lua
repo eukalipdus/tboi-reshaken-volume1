@@ -47,15 +47,12 @@ local function SetStalagmiteInfo(stalagmite, stageName, forcePosition)
     stalagmite.GridCollisionClass = GridCollisionClass.COLLISION_NONE
     local sprite = stalagmite:GetSprite()
     local spritePath = floorRockSprites[stageName]
-    if stageName ~= "Basement" then
+    if spritePath and stageName ~= "Basement" then
         local roomType = Game():GetRoom():GetType()
 
         if roomType == RoomType.ROOM_SECRET
         or roomType == RoomType.ROOM_SUPERSECRET then
             spritePath = floorRockSprites["Secret"]
-        end
-        if not spritePath then
-            spritePath = floorRockSprites["Basement"]
         end
         sprite:ReplaceSpritesheet(1, spritePath)
         sprite:LoadGraphics()
