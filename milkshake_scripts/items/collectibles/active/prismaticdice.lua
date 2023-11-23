@@ -15,6 +15,7 @@ local SPLIT_COLOR_FRAMES = 2
 local SHATTERED_SOLID_FRAMES = 7
 local SHATTERED_COLOR_FRAMES = 20
 local SCHEDULE_FRAMES = 2
+local JUDAS_REROLL_CHANCE = 30
 
 --- Gets a spawn position for a split collectible
 ---@param index number
@@ -100,6 +101,13 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
                 local roomType = Game():GetRoom():GetType()
                 local seed = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE):GetSeed()
                 local roomPool = itemPool:GetPoolForRoom(roomType, seed)
+
+                if utility:IsJudasBirthright(player) then
+                    local roll = TSIL.Random.GetRandomInt(1, 100)
+                    if roll <= JUDAS_REROLL_CHANCE then
+                        roomPool = ItemPoolType.POOL_DEVIL
+                    end
+                end
 
                 if roomPool == ItemPoolType.POOL_NULL
                 or counter >= INITIAL_BREAKFAST_CHECK then
