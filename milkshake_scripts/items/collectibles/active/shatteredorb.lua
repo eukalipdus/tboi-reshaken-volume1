@@ -513,10 +513,8 @@ function GetEntityOrb(entity)
                 if orbsPerVariant.entities then
                     local orbsPerSubtype = orbsPerVariant.entities[entity.SubType]
 
-                    if orbsPerSubtype then
-                        if orbsPerSubtype.orb then
-                            orb = orbsPerVariant.orb
-                        end
+                    if orbsPerSubtype and orbsPerSubtype.orb then
+                        orb = orbsPerSubtype.orb
                     end
                 end
             end
