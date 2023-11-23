@@ -124,6 +124,7 @@ function ToxicOrb:PEffectUpdate(player)
 			poisonCloud:SetColor(Color(1,1,1, 1, 0.5,0.5,0),-1,1,true,true)
 			poisonCloud:GetData().ToxicOrbCloud = true
 			poisonCloud:SetTimeout(ToxicOrb.Timeout * double)
+			poisonCloud.DepthOffset = 500
 			SFXManager():Play(SoundEffect.SOUND_PESTILENCE_HEAD_EXPLODE, 1.5 * double)
 			Rotten(tear.Position, area)
 		end
