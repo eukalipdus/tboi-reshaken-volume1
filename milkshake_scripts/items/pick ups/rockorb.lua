@@ -152,7 +152,8 @@ end
 ---@param player EntityPlayer
 ---@param stageName string - Must be within the floorRockSprites table declared at the top
 ---@param rng RNG
-local function SpawnRandomStalagmites(player, stageName, rng)
+---@param isLyra boolean - If true, Lyra's double effect is activated, if false it's not
+local function SpawnRandomStalagmites(player, stageName, rng, isLyra)
     local enemies = GetVulnerableEnemies()
 
     local blockAndPillarTargets = utility:TableConcat(TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKB),
@@ -169,6 +170,11 @@ local function SpawnRandomStalagmites(player, stageName, rng)
     else
         min = NORMAL_MIN
         max = NORMAL_MAX
+    end
+
+    if isLyra then
+        min = min * 2
+        max = max * 2
     end
 
     local stalagmiteCount = TSIL.Random.GetRandomInt(min, max, rng)
@@ -220,7 +226,7 @@ function rockOrb:OnOrbUse(orb, player, _, isLyra)
     stageName = string.gsub(stageName, "I", "")
     stageName = string.gsub(stageName, " ", "")
 
-    TSIL.Utils.Functions.RunInFrames(SpawnRandomStalagmites, 15, player, stageName, player:GetCardRNG(orb))
+    TSIL.Utils.Functions.RunInFrames(SpawnRandomStalagmites, 15, player, stageName, player:GetCardRNG(orb), isLyra)
     TSIL.Utils.Functions.RunInFrames(function ()
         SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
     end, 30)
