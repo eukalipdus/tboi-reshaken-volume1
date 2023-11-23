@@ -98,6 +98,7 @@ local function DelayedStalagmiteDamage(stalagmite)
                 end
             end
         end
+        utility:SetData(stalagmite, "Target", nil)
     end, 10)
 end
 
@@ -121,6 +122,9 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
         )
         stalagmite.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
         utility:SetData(stalagmite, "TargetPosition", target.Position)
+        if target.Type and target:IsEnemy() then
+            utility:SetData(stalagmite, "Target", target)
+        end
         if isGrid
         and target:GetType() == GridEntityType.GRID_ROCKT then
             DelayedDestroyGridEntity(target, false)
@@ -224,7 +228,11 @@ function rockOrb:NpcUpdate(stalagmite)
     if stalagmite.Type ~= enums.Enemies.STALAGMITE then return end
 
     local forcePosition = utility:GetData(stalagmite, "ForcePosition")
-    if forcePosition then
+    local target = utility:GetData(stalagmite, "Target")
+
+    if target and not target:IsDead() then
+        stalagmite.Position = target.Position
+    elseif forcePosition then
         stalagmite.Position = forcePosition
     end
 end
