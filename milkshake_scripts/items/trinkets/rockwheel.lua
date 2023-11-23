@@ -1,8 +1,10 @@
 local game = Game()
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 local RockWheel = {}
 
 local SPEED_BONUS = 0.1
+local STONEY_COLLISION_DAMAGE = 4
 
 local GRIMACES = TSIL.Utils.Tables.ConstructDictionaryFromTable({
     EntityType.ENTITY_STONEHEAD,
@@ -11,7 +13,25 @@ local GRIMACES = TSIL.Utils.Tables.ConstructDictionaryFromTable({
     EntityType.ENTITY_GAPING_MAW,
     EntityType.ENTITY_BROKEN_GAPING_MAW,
     EntityType.ENTITY_QUAKE_GRIMACE,
+    EntityType.ENTITY_STONEY,
 })
+
+---@param npc EntityNPC
+local function FindEnemyTarget(npc)
+    local closestDistance
+    local closest
+    for _, entity in ipairs(Isaac.GetRoomEntities()) do
+        if not (entity:IsActiveEnemy(false) and entity:IsVulnerableEnemy()) then
+            goto continue
+        end
+        if not closest or npc.Position:DistanceSquared(entity.Position) < closestDistance then
+            closest = entity
+            closestDistance = npc.Position:DistanceSquared(entity.Position)
+        end
+        ::continue::
+    end
+    npc.Target = closest
+end
 
 ---@param npc EntityNPC
 function RockWheel:NPCInit(npc)
@@ -23,7 +43,10 @@ function RockWheel:NPCInit(npc)
     end
 
     npc:AddEntityFlags(EntityFlag.FLAG_FRIENDLY)
+    utility:SetData(npc, "HasRockWheelCharm", true)
+    npc.CollisionDamage = STONEY_COLLISION_DAMAGE
 end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_INIT, RockWheel.NPCInit)
 
 ---@param player EntityPlayer
 ---@param flag CacheFlag
@@ -32,7 +55,31 @@ function RockWheel:EvaluateCache(player, flag)
         player.MoveSpeed = player.MoveSpeed + SPEED_BONUS * player:GetTrinketMultiplier(enums.Trinkets.ROCK_WHEEL)
     end
 end
-
 MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, RockWheel.EvaluateCache, CacheFlag.CACHE_SPEED)
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_INIT, RockWheel.NPCInit)
+
+---@param projectile EntityProjectile
+function RockWheel:PostProjectileInit(projectile)
+    local spawner = projectile.SpawnerEntity
+    if not(spawner and (spawner.Type == EntityType.ENTITY_CONSTANT_STONE_SHOOTER or spawner.Type == EntityType.ENTITY_STONEHEAD)) then
+        return
+    end
+    if not (spawner:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and utility:GetData(spawner, "HasRockWheelCharm")) then
+        return
+    end
+    projectile:AddProjectileFlags(ProjectileFlags.HIT_ENEMIES)
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PROJECTILE_INIT, RockWheel.PostProjectileInit)
+
+---@param npc EntityNPC
+function RockWheel:PostNPCUpdate(npc)
+    if not (npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and utility:GetData(npc, "HasRockWheelCharm")) then
+        return
+    end
+    if npc.Target == nil or npc.Target:IsDead() or npc.Target.Type == EntityType.ENTITY_PLAYER then
+        FindEnemyTarget(npc)
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, RockWheel.PostNPCUpdate, EntityType.ENTITY_STONEHEAD)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, RockWheel.PostNPCUpdate, EntityType.ENTITY_STONEY)
+
 return RockWheel

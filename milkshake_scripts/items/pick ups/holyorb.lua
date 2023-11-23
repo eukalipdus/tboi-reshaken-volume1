@@ -1,5 +1,6 @@
 local HolyOrb = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local LASER_DURATION = 60
 
@@ -38,16 +39,19 @@ end
 
 ---@param player EntityPlayer
 ---@param position Vector
-local function orbAttack(player, position)
+---@param isLyra boolean
+local function orbAttack(player, position, isLyra)
     local damage = getLaserDamagePerTick()
-    for angle = 0, 45, 45 do
-        for directions = 0, 360, 90 do
-            local laser = EntityLaser.ShootAngle(LaserVariant.LIGHT_BEAM, position, angle + directions, LASER_DURATION, Vector.Zero, player)
-            laser.CollisionDamage = damage
-            laser.OneHit = false
-            laser.DisableFollowParent = true
-            laser:GetData().MilkshakeSalvationBeam = true
-        end
+    local angleStep = 45
+    if isLyra then
+        angleStep = angleStep/2
+    end
+    for angle = 0, 360, angleStep do
+        local laser = EntityLaser.ShootAngle(LaserVariant.LIGHT_BEAM, position, angle, LASER_DURATION, Vector.Zero, player)
+        laser.CollisionDamage = damage
+        laser.OneHit = false
+        laser.DisableFollowParent = true
+        laser:GetData().MilkshakeSalvationBeam = true
     end
 
     for _, projectile in ipairs(Isaac.FindByType(EntityType.ENTITY_PROJECTILE)) do
@@ -133,7 +137,7 @@ function HolyOrb:OrbEffect(orb)
         -- we dont want it to error cause it is nice to be able to test the animations
         local player = orb.SpawnerEntity and orb.SpawnerEntity:ToPlayer()
         if player then
-            orbAttack(player, orb.Position+Vector(0,-10))
+            orbAttack(player, orb.Position+Vector(0,-10), utility:GetData(orb, "IsLyraBoosted"))
         end
     end
 
@@ -149,7 +153,8 @@ MilkshakeVol1:AddCallback(
 )
 
 ---@param player EntityPlayer
-function HolyOrb:OnHolyOrbUse(_, player)
+---@param flags integer
+function HolyOrb:OnHolyOrbUse(_, player, flags)
     -- hide the sprite because we are going to animate it
     local sprite = Sprite()
     sprite:Load("gfx/held_item.anm2", true)
@@ -161,6 +166,8 @@ function HolyOrb:OnHolyOrbUse(_, player)
     -- "where did you get ~~-40~~ -20 from" it came to me in a prophecy
     data.StartHeight = -20 * (player.SpriteScale.Y + player.PositionOffset.Y)
     orb:GetSprite().Offset = Vector(0, data.StartHeight)
+
+    utility:SetData(orb, "IsLyraBoosted", flags & enums.UseOrbFlags.DOUBLE_POWER > 0)
 end
 
 MilkshakeVol1:AddCallback(
