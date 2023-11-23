@@ -72,6 +72,7 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 	if effect:GetSprite():IsFinished("Start") then
 		effect:GetSprite():Play("Loop")
 	end
+	local double = utility:GetData(effect, "DelugeOrb")
 	local player = effect.Parent:ToPlayer()
 	---flush effect
 	if utility:GetData(effect, "DelugeFlushed") and effect.FrameCount == 1 then
@@ -91,7 +92,11 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 		end, 2)
 	end
 	---magnetite
-	game:UpdateStrangeAttractor(effect.Position, DelugeOrb.Force, DelugeOrb.Radius)
+	local attractForce = DelugeOrb.Force
+	if double > 1 then
+		attractForce = attractForce * 1.3
+	end
+	game:UpdateStrangeAttractor(effect.Position, DelugeOrb.Force, DelugeOrb.Radius * double)
 	for _, pickup in pairs(Isaac.FindInRadius(effect.Position, DelugeOrb.Radius, EntityPartition.PICKUP)) do
 		if pickup:ToPickup() then
 			pickup.GridCollisionClass = GridCollisionClass.COLLISION_WALL
@@ -117,7 +122,6 @@ function DelugeOrb:onWaterfallDownUpdate(effect)
 				enemy:TakeDamage(dmg, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(player), 1)
 			end
 		end
-
 	end
 	---end of effect
 	if effect.Timeout <= 1 then
@@ -142,12 +146,13 @@ function DelugeOrb:onWaterfallUpUpdate(effect)
 	if not utility:GetData(effect, "DelugeOrb") then return end
 	effect.ParentOffset = Vector(0, -32*effect.Parent.SpriteScale.Y)
 	if effect.FrameCount == DelugeOrb.DelayBetweenLasers then
+		local double = utility:GetData(effect, "DelugeOrb")
 		local effectDown = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER, 0, game:GetRoom():GetCenterPos(), Vector.Zero, effect.Parent):ToEffect()
-		utility:SetData(effectDown, "DelugeOrb", true)
+		utility:SetData(effectDown, "DelugeOrb", double)
 		effectDown.Parent = effect.Parent:ToPlayer()
 		effectDown.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
 		effectDown.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_WALLS
-		effectDown:SetTimeout(DelugeOrb.Timeout)
+		effectDown:SetTimeout(DelugeOrb.Timeout*double)
 		effectDown:SetDamageSource(EntityType.ENTITY_PLAYER)
 		effectDown:GetSprite():Play("Start")
 		if not game:GetRoom():HasWater() then
@@ -179,7 +184,7 @@ if MMC then
 	)
 end
 
-function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
+function DelugeOrb:OnDelugeOrbUse(_, player, flags) -- useFlag
 	utility:SetData(player, "DelugeOrbUsed", true)
 	local laserUp = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP)
 	local laserDown = Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER)
@@ -189,12 +194,15 @@ function DelugeOrb:OnDelugeOrbUse(_, player) -- useFlag
 	else
 		DelugeOrb.SetBlindfold(player, true)
 		player:AddNullCostume(enums.Costumes.DELUGE_ORB)
+
+		local double = flags & enums.UseOrbFlags.DOUBLE_POWER > 0 and 2 or 1
+
 		local effectUp = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP, 0, player.Position, Vector.Zero, player):ToEffect()
-		utility:SetData(effectUp, "DelugeOrb", true)
+		utility:SetData(effectUp, "DelugeOrb", double)
 		effectUp.Parent = player
 		effectUp:FollowParent(player)
 		effectUp.ParentOffset = Vector(0, -32*player.SpriteScale.Y)
-		effectUp:SetTimeout(2*DelugeOrb.Timeout)
+		effectUp:SetTimeout(2*DelugeOrb.Timeout*double)
 		effectUp.DepthOffset = 999
 		sfx:Play(enums.Sounds.WATER_FLOW, 0.75, 0, true, 1, 0)
 	end

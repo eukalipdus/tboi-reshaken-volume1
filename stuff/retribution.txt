@@ -2,190 +2,190 @@
     Name: Circe Swine
     ID: 793
     Variant: 1888
-    Element: 
+    Element: nature
 
     Name: Spirit
     ID: 793
     Variant: 1889
-    Element: 
+    Element: nature
 
     Name: Lifeseed Spirit
     ID: 793
     Variant: 1890
-    Element: 
+    Element: nature
 
     Name: Viscerine
     ID: 793
     Variant: 1891
     Subtype: 0
-    Element: 
+    Element: nature
 
     Name: Pig Bang
     ID: 793
     Variant: 1892
-    Element: 
+    Element: fire
 
     Name: Hogma
     ID: 950
     Variant: 1873
-    Element: 
+    Element: holy
 
     Name: Samael Angel
     ID: 38
     Variant: 1
     Subtype: 118
-    Element: 
+    Element: unholy
 
     Name: Curdle
     ID: 15
     Variant: 1873
-    Element: 
+    Element: chaos
 
     Name: Mega Clot
     ID: 282
     Variant: 1873
-    Element: 
+    Element: poison
 
     Name: Kaboom Fly
     ID: 25
     Variant: 1873
-    Element: 
+    Element: fire
 
     Name: Bloated Fly
     ID: 25
     Variant: 1874
-    Element: 
+    Element: water
 
     Name: Spew Fly
     ID: 25
     Variant: 1875
-    Element: 
+    Element: nature
 
     Name: Buttmuncher
     ID: 89
     Variant: 0
     Subtype: 183
-    Element: 
+    Element: poison
 
     Name: Drowned Grub
     ID: 239
     Variant: 0
     Subtype: 183
-    Element: 
+    Element: water
 
     Name: Drowned Maggot
     ID: 21
     Variant: 1873
-    Element: 
+    Element: water
 
     Name: Drowned Spitty
     ID: 31
     Variant: 1873
-    Element: 
+    Element: water
 
     Name: Drowned Conjoined Spitty
     ID: 243
     Variant: 1873
-    Element: 
+    Element: water
 
     Name: Dripling
     ID: 217
     Variant: 1873
-    Element: 
+    Element: poison
 
     Name: Dropling
     ID: 220
     Variant: 1873
-    Element: 
+    Element: poison
 
     Name: Dank Dropling
     ID: 220
     Variant: 1873
     Subtype: 1
-    Element: 
+    Element: poison
 
     Name: Drossling
     ID: 223
     Variant: 1873
-    Element: 
+    Element: poison
 
     Name: Full Sucker
     ID: 61
     Variant: 1873
-    Element: 
+    Element: nature
 
     Name: Full Spit
     ID: 61
     Variant: 1874
-    Element: 
+    Element: poison
 
     Name: Sip
     ID: 61
     Variant: 1875
-    Element: 
+    Element: water
 
     Name: Stumbling Boil
     ID: 88
     Variant: 0
     Subtype: 183
-    Element: 
+    Element: chaos
 
     Name: Stumbling Gut
     ID: 88
     Variant: 1
     Subtype: 183
-    Element: 
+    Element: poison
 
     Name: Stumbling Sack
     ID: 88
     Variant: 2
     Subtype: 183
-    Element: 
+    Element: chaos
 
     Name: Wall Writhe
     ID: 240
     Variant: 1873
-    Element: 
+    Element: chaos
 
     Name: Blind Writhe
     ID: 242
     Variant: 1873
-    Element: 
+    Element: chaos
 
     Name: Rage Writhe
     ID: 241
     Variant: 1873
-    Element: 
+    Element: unholy
 
     Name: Huskie
     ID: 288
     Variant: 1873
-    Element: 
+    Element: chaos
 
     Name: Pinhead
     ID: 244
     Variant: 1873
-    Element: 
+    Element: nature
 
     Name: Pinprick
     ID: 255
     Variant: 1873
-    Element: 
+    Element: fire
 
     Name: Walking Blue Boil
     ID: 88
     Variant: 0
     Subtype: 184
-    Element: 
+    Element: undead
 
     Name: Stumbling Blue Boil
     ID: 88
     Variant: 0
     Subtype: 185
-    Element: 
+    Element: undead
 
     Name: Mega Pooter
     ID: 14
     Variant: 0
     Subtype: 183
-    Element: 
+    Element: nature

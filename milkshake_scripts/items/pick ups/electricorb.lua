@@ -434,6 +434,8 @@ local function ElectrocuteSlots(player, rng)
     local frameCount = Game():GetFrameCount()
 
     electrocutedSlotFrames[tostring(ptrHash)] = frameCount
+
+    SFXManager():Play(enums.Sounds.ELECTROCUTE_MACHINE)
 end
 
 ---@param player EntityPlayer
