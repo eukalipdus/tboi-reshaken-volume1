@@ -129,12 +129,6 @@ function ToxicOrb:PEffectUpdate(player)
 		end
 	elseif utility:GetData(player, "ToxicOrbLift") then
 		if not player:IsHoldingItem() then -- set it back to ur pocket
-			--[[if utility:GetData(player, "ToxicOrbFlags") & enums.UseOrbFlags.NO_SOUND == 0 then
-				utility:SetData(player, "ToxicOrbLift", nil)
-				player:AddCard(enums.Orbs.POISON)
-			else
-			end
-			--]]
 			player:AnimateCard(enums.Orbs.POISON, "LiftItem")
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
 			player:AnimateCard(enums.Orbs.POISON, "HideItem")
@@ -149,12 +143,12 @@ function ToxicOrb:OnToxicOrbUse(card, player, flags)
 	if flags & enums.UseOrbFlags.DOUBLE_POWER > 0 then
 		utility:SetData(player, "ToxicDouble", true)
 	end
-	if flags & enums.UseOrbFlags.NO_SOUND > 0 or player:HasCollectible(enums.Collectibles.LYRA) then
-		utility:SetData(player, "ToxicOrbLift", true)
-	else
-		utility:SetData(player, "ToxicOrbLift", true)
+	if flags & enums.UseOrbFlags.NO_SOUND == 0 then
+		--player:GetSprite():Play("LiftItem", true)
 		player:AnimateCard(card, "LiftItem")
 	end
+
+	utility:SetData(player, "ToxicOrbLift", true)
 end
 MilkshakeVol1:AddCallback(
     enums.Callbacks.ON_ORB_USE,
