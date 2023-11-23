@@ -134,7 +134,7 @@
 	<wisp id="1" hp="5" layer="1" damage="3" fireDelay="15"
 	flameColor="flame_red" coreColor="core_red" tearColor="tear_red"/>
 
-	<!-- Globin in a bucket -->
-	<wisp id="10" hp="1" layer="2" canShoot="false"
+	<!-- Empty Slot -->
+	<wisp id="10" hp="1" layer="1" canShoot="false"
 	flameColor="flame_yellow" coreColor="core_yellow" tearColor="tear_yellow"/>
 </wisps>
