@@ -367,3 +367,18 @@ MilkshakeVol1:AddCallback(
 	RubyOrb.OnTearRemove,
 	EntityType.ENTITY_TEAR
 )
+
+
+function RubyOrb:OnNewRoomEarly()
+	for _, player in ipairs(TSIL.Players.GetPlayers()) do
+		if GetExhalingInfo(player) then
+			player:TryRemoveNullCostume(enums.Costumes.INFERNO_ORB)
+			utility:SetCanShoot(player, true)
+		end
+	end
+end
+MilkshakeVol1:AddPriorityCallback(
+	TSIL.Enums.CustomCallback.POST_NEW_ROOM_EARLY,
+	math.mininteger,
+	RubyOrb.OnNewRoomEarly
+)
