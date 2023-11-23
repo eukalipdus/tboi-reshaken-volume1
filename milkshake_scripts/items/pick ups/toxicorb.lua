@@ -138,9 +138,11 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, ToxicOrb.PEffectUpdate)
 
 
-function ToxicOrb:OnToxicOrbUse(card, player)
-    utility:SetData(player, "ToxicOrbLift", true)
-    player:AnimateCard(card, "LiftItem")
+function ToxicOrb:OnToxicOrbUse(card, player, flags)
+	utility:SetData(player, "ToxicOrbLift", true)
+	if flags & enums.UseOrbFlags.NO_SOUND == 0 then
+		player:AnimateCard(card, "LiftItem")
+	end
 end
 MilkshakeVol1:AddCallback(
     enums.Callbacks.ON_ORB_USE,
