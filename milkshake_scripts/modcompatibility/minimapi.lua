@@ -1,28 +1,30 @@
 local enums = MilkshakeVol1.enums
 
 MilkshakeVol1:AddModCompatibility("MinimapAPI", function ()
-    local ICON_ANM2_PER_CARD = {
-        [enums.Orbs.ELECTRIC] = "gfx/spirit_conductivity.anm2",
-        [enums.Orbs.FIRE] = "gfx/spirit_inferno.anm2",
-        [enums.Orbs.HOLY] = "gfx/spirit_salvation.anm2",
-        [enums.Orbs.NATURE] = "gfx/spirit_druidity.anm2",
-        [enums.Orbs.POISON] = "gfx/spirit_biohazard.anm2",
-        [enums.Orbs.PSYCHIC] = "gfx/spirit_clairvoyance.anm2",
-        [enums.Orbs.RANDOM] = "gfx/spirit_chaos.anm2",
-        [enums.Orbs.ROCK] = "gfx/spirit_terra.anm2",
-        [enums.Orbs.UNDEAD] = "gfx/spirit_undead.anm2",
-        [enums.Orbs.UNHOLY] = "gfx/spirit_demonic.anm2",
-        [enums.Orbs.WATER] = "gfx/spirit_water.anm2",
-        [enums.Cards.TATTERED_PAGE] = "gfx/tattered_page.anm2"
+    local ICON_ANIM_PER_CARD = {
+        [enums.Orbs.ELECTRIC] = "spiritElectric",
+        [enums.Orbs.FIRE] = "spiritFire",
+        [enums.Orbs.HOLY] = "spiritHoly",
+        [enums.Orbs.NATURE] = "spiritNature",
+        [enums.Orbs.POISON] = "spiritPoison",
+        [enums.Orbs.PSYCHIC] = "spiritPsychic",
+        [enums.Orbs.RANDOM] = "spiritChaos",
+        [enums.Orbs.ROCK] = "spiritRock",
+        [enums.Orbs.UNDEAD] = "spiritUndead",
+        [enums.Orbs.UNHOLY] = "spiritUnholy",
+        [enums.Orbs.WATER] = "spiritWater",
+        --RIP tattered page
+        --[enums.Cards.TATTERED_PAGE] = "gfx/tattered_page.anm2"
     }
+    local anm2 = "gfx/ui/orb_mapicons.anm2"
 
-    for orb, anm2 in pairs(ICON_ANM2_PER_CARD) do
+    for orb, anim in pairs(ICON_ANIM_PER_CARD) do
         local spr = Sprite()
         spr:Load(anm2, true)
 
         local id = "Card" .. orb
 
-        MinimapAPI:AddIcon(id, spr, "HUDSmall", 0)
+        MinimapAPI:AddIcon(id, spr, anim, 0)
         MinimapAPI:AddPickup(
             id,
             id,
