@@ -95,6 +95,9 @@ local function DelayedStalagmiteDamage(stalagmite)
                     enemy:TakeDamage(BASE_BOSS_DAMAGE + (BASE_BOSS_DAMAGE * utility:GetCurrentChapter()), 0, EntityRef(stalagmite), 0)
                 else
                     enemy:Kill()
+                    TSIL.Utils.Functions.RunInFrames(function () -- For globins, gapers, etc
+                        enemy:Kill()
+                    end, 5, {})
                 end
             end
         end
