@@ -9,7 +9,7 @@ RevenanceOrb.SkeletonDMG = 3
 --cuz if you have high tearrate and hit it a lot it has a lot of tears that dont damage it
 RevenanceOrb.TombTakeDMGCooldown = 5
 RevenanceOrb.BoneBridgeGfx = "gfx/grid/bone_bridge_better.png"
-
+RevenanceOrb.SkeletonDMGCooldown = 2 * 30
 
 RevenanceOrb.Undeads = {
 [EntityType.ENTITY_BONY] = true,
@@ -159,6 +159,22 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PROJECTILE_UPDATE, RevenanceOrb.OnBoneyMShoot, ProjectileVariant.PROJECTILE_BONE)
 
 function RevenanceOrb:onEnemyTakesDMG(entity, amount, damageFlags, source, DamageCountdown) -- no way to change amount, blame someone
+	if RevenanceOrb.Undeads[entity.Type] then
+		local grbData = entity:GetData()
+		if grbData.DamagedCountdown then
+			if game:GetFrameCount() - grbData.DamagedCountdown < RevenanceOrb.SkeletonDMGCooldown then
+				entity:SetColor(Color(2,2,2), RevenanceOrb.SkeletonDMGCooldown, 1, true, false)
+				return false
+			else
+				grbData.DamagedCountdown = game:GetFrameCount() -- nil
+				return
+			end
+		else
+			grbData.DamagedCountdown = game:GetFrameCount()
+			return
+		end
+
+	end
 	--- reapply damage
 	if source.Entity and source.Entity:ToProjectile() and source.Entity:GetData().BoneyMShootUPD then
 		local dmg = source.Entity:GetData().BoneyMShootUPD
