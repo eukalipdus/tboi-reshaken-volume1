@@ -258,7 +258,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_RENDER, rockOrb.NpcUpdate)
 
 function rockOrb:PostNpcDeath(stalagmite)
-    if stalagmite.Variant ~= 1 then return end
+    if stalagmite.Variant ~= enums.GravestoneType.TERRA then return end
     TSIL.EntitySpecific.SpawnEffect(
         EffectVariant.ROCK_PARTICLE,
         0,

@@ -99,6 +99,11 @@ enums.Enemies = {
     STALAGMITE = Isaac.GetEntityTypeByName("Terra Stalagmite"),
 }
 
+enums.GravestoneType = {
+    NORMAL = 0,
+    TERRA = 1,
+}
+
 enums.GlassHeadVariant = {
     GLASS_HEAD = Isaac.GetEntityVariantByName("Glass Head"),
     FLASK_HEAD = Isaac.GetEntityVariantByName("Flask Head"),
