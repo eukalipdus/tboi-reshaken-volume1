@@ -14,6 +14,7 @@ local PossibleWisps = {
     enums.Collectibles.SPECIAL_BRENDA_WATER_WISP,
     enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
     enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP,
     CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
     CollectibleType.COLLECTIBLE_SATANIC_BIBLE
 }
@@ -538,7 +539,7 @@ local function SpawnWisps(shatteredOrb)
 
     local wisps = TSIL.Random.GetRandomElementsFromTable(
         PossibleWisps,
-        4,
+        3,
         player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB)
     )
     for _, wisp in ipairs(wisps) do
