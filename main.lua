@@ -108,6 +108,9 @@ include("milkshake_scripts.wisps.goldenshovel")
 include("milkshake_scripts.wisps.leviticus")
 include("milkshake_scripts.wisps.prismaticdice")
 
+--Locusts
+include("milkshake_scripts.locusts.prismaticdice")
+
 --Enemies
 include("milkshake_scripts.enemies.beerhead")
 include("milkshake_scripts.enemies.flaskhead")
