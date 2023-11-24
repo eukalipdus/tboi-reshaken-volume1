@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 local Utilities = MilkshakeVol1.utility
 
 
-local CLAIRVOYANCE_ORB_DURATION = 30 * 50
+local CLAIRVOYANCE_ORB_DURATION = 30 * 60
 local PROJECTILE_REFLECTION_RADIUS = 135
 local PROJECTILE_REFLECTION_INTERVAL = 10
 local FAKE_CENSER_RADIUS = 70
@@ -156,7 +156,7 @@ local function FakeCenserEffect(player)
 
     local nearProjectiles = Isaac.FindInRadius(
         player.Position,
-        FAKE_CENSER_RADIUS,
+        radius,
         EntityPartition.BULLET
     )
 
@@ -172,7 +172,7 @@ local function FakeCenserEffect(player)
 
     local nearEnemies = Isaac.FindInRadius(
         player.Position,
-        FAKE_CENSER_RADIUS,
+        radius,
         EntityPartition.ENEMY
     )
 
@@ -216,7 +216,7 @@ function SapphireOrb:OnPeffectUpdate(player)
         projectileReflectInterval = math.floor(projectileReflectInterval/2)
     end
 
-    if orbDuration % PROJECTILE_REFLECTION_INTERVAL == 0 then
+    if orbDuration % projectileReflectInterval == 0 then
         TryReflectProjectile(player)
     end
 
