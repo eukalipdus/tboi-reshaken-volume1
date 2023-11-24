@@ -272,6 +272,13 @@ TSIL.SaveManager.AddPersistentVariable(
 
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
+    "PlayerUsingSapphireOrbDoubleEffect",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
+)
+
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
     "PlayerSelfConductivityTear",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
@@ -363,6 +370,12 @@ function SapphireOrb:OnSapphireOrbUse(_, player, flags)
 
     local frameCount = Game():GetFrameCount()
     if TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER) then
+        local playerUsingSapphireOrbDoubleEffect = TSIL.SaveManager.GetPersistentVariable(
+            MilkshakeVol1,
+            "PlayerUsingSapphireOrbDoubleEffect"
+        )
+        playerUsingSapphireOrbDoubleEffect[playerIndex] = true
+
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount + SAPPHIRE_ORB_DURATION
     else
         playersUsingSapphireOrbFrames[tostring(playerIndex)] = frameCount
@@ -411,8 +424,15 @@ local function ElectrocuteSlots(player, rng)
     if rng:RandomFloat() <= 0.05 then return end
 
     local electrocutedSlotFrames = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "ElectrocutedSlotFrames")
+    local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PlayerUsingSapphireOrbDoubleEffect")
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local isDouble = doubleEffectPerPlayer[playerIndex]
 
-    local entitiesInRadius = Isaac.FindInRadius(player.Position, SLOT_ELECTROCUTE_RADIUS)
+    local radius = SLOT_ELECTROCUTE_RADIUS
+    if isDouble then
+        radius = radius * 2
+    end
+    local entitiesInRadius = Isaac.FindInRadius(player.Position, radius)
     local slotsInRadius = TSIL.Utils.Tables.Filter(entitiesInRadius, function(_, entity)
         local entityPtr = GetPtrHash(entity)
 
@@ -434,6 +454,8 @@ local function ElectrocuteSlots(player, rng)
     local frameCount = Game():GetFrameCount()
 
     electrocutedSlotFrames[tostring(ptrHash)] = frameCount
+
+    SFXManager():Play(enums.Sounds.ELECTROCUTE_MACHINE)
 end
 
 ---@param player EntityPlayer

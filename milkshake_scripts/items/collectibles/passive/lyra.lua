@@ -208,7 +208,13 @@ local function RenderLyraNotes(player, playerUsingLyraData)
 
     local renderPos = Isaac.WorldToScreen(player.Position)
     local baseYPos = -40 * player.SpriteScale.Y
-    playerUsingLyraData.noteMarkerSprite.FlipX = isMirror
+
+    if isMirror then
+        local midPos = Isaac.GetScreenWidth()/2
+        local diff = midPos - renderPos.X
+        renderPos = Vector(midPos + diff, renderPos.Y)
+    end
+
     playerUsingLyraData.noteMarkerSprite:Render(renderPos + Vector(0, baseYPos))
 
     TSIL.Utils.Tables.ForEach(playerUsingLyraData.notes, function (_, note)
@@ -217,7 +223,6 @@ local function RenderLyraNotes(player, playerUsingLyraData)
         end
 
         local spriteToRender = NOTE_SPRITES_PER_DIRECTION[note.direction]
-        spriteToRender.FlipX = isMirror
         spriteToRender:Render(renderPos + Vector(0, baseYPos - note.height))
     end)
 end
@@ -330,7 +335,7 @@ function Lyra:OnPlayerRender(player)
 
     HandleLyraInput(player, playerUsingLyraData)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Lyra.OnPlayerRender)
+--MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, Lyra.OnPlayerRender)
 
 
 ---@param entity Entity
@@ -357,6 +362,10 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_INPUT_ACTION, Lyra.OnInput)
 
 
 function Lyra:OnRender()
+    for _, player in ipairs(TSIL.Players.GetPlayers()) do
+        Lyra:OnPlayerRender(player)
+    end
+
     local filteredSplashes = {}
 
     TSIL.Utils.Tables.ForEach(noteSplashes, function (_, noteSplash)

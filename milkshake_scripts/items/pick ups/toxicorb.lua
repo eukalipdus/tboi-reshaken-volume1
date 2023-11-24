@@ -84,53 +84,72 @@ function ToxicOrb:CloudUpdate(poisonCloud)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, ToxicOrb.CloudUpdate, enums.Effects.TOXIC_GAS)
 
+local function ThrowOrb(player, vector)
+	utility:SetData(player, "ToxicOrbLift", nil)
+	local velo = (vector*ToxicOrb.TearSpeedMulti)+player:GetTearMovementInheritance(player:GetMovementInput())
+	local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, velo, nil):ToTear() --BOBS_HEAD
+	--local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, vector*14, nil):ToTear() --BOBS_HEAD
+	tear.Height = -72
+	tear.FallingSpeed = -5
+	tear.FallingAcceleration = 1
+	tear.CollisionDamage = 0
+	tear:GetData().ToxicBomb = true
+	local orbSprite = tear:GetSprite()
+	orbSprite:ReplaceSpritesheet(0, ToxicOrb.GfxPath)
+	orbSprite:LoadGraphics()
+	utility:SetData(player, "ToxicOrbShoot", tear)
+end
+
 function ToxicOrb:PEffectUpdate(player)
 	if utility:GetData(player, "ToxicOrbShoot") then
 		local tear = utility:GetData(player, "ToxicOrbShoot")
 		if not tear:Exists() then
 			utility:SetData(player, "ToxicOrbShoot", nil)
-			local FartArea = 135
+			local double = utility:GetData(player, "ToxicDouble") and 2 or 1
+			local size = ToxicOrb.InitSize
+			local area = 135
+			if double > 1 then
+				size = size * 1.5
+				area = area * 1.5
+			end
+			utility:SetData(player, "ToxicDouble", nil)
 			local fart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, tear.Position, Vector.Zero, player):ToEffect()
 			fart:SetColor(Color(1,1,1, 1, 0.3,0.3,0),-1,1,true,true)
 			fart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.FART, 0, tear.Position, Vector.Zero, player):ToEffect()
-			fart.SpriteScale = fart.SpriteScale * ToxicOrb.InitSize
+			fart.SpriteScale = fart.SpriteScale * size
 			fart:SetColor(Color(1,1,1, 1, 0.5,0.3,0),-1,1,true,true)
-			Rotten(tear.Position, FartArea)
 			local poisonCloud = Isaac.Spawn(EntityType.ENTITY_EFFECT, enums.Effects.TOXIC_GAS, 0, tear.Position, Vector.Zero, player):ToEffect()
-			poisonCloud.Scale = ToxicOrb.InitSize * poisonCloud.Scale
+			poisonCloud.Scale = size * poisonCloud.Scale
 			poisonCloud.SpriteScale = ToxicOrb.BaseSpriteScale * poisonCloud.Scale
 			poisonCloud:SetColor(Color(1,1,1, 1, 0.5,0.5,0),-1,1,true,true)
 			poisonCloud:GetData().ToxicOrbCloud = true
-			poisonCloud:SetTimeout(ToxicOrb.Timeout)
-			SFXManager():Play(SoundEffect.SOUND_PESTILENCE_HEAD_EXPLODE, 1.5)
+			poisonCloud:SetTimeout(ToxicOrb.Timeout * double)
+			poisonCloud.DepthOffset = 500
+			SFXManager():Play(SoundEffect.SOUND_PESTILENCE_HEAD_EXPLODE, 1.5 * double)
+			Rotten(tear.Position, area)
 		end
 	elseif utility:GetData(player, "ToxicOrbLift") then
-		if not player:IsHoldingItem() then
-			player:AddCard(enums.Orbs.POISON)
-			utility:SetData(player, "ToxicOrbLift", nil)
+		if not player:IsHoldingItem() then -- set it back to ur pocket
+			player:AnimateCard(enums.Orbs.POISON, "LiftItem")
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
 			player:AnimateCard(enums.Orbs.POISON, "HideItem")
-            utility:SetData(player, "ToxicOrbLift", nil)
-			local velo = (player:GetAimDirection()*ToxicOrb.TearSpeedMulti)+player:GetTearMovementInheritance(player:GetMovementInput())
-	        local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, velo, nil):ToTear() --BOBS_HEAD
-			tear.Height = -72
-			tear.FallingSpeed = -5
-			tear.FallingAcceleration = 1
-			tear.CollisionDamage = 0
-			tear:GetData().ToxicBomb = true
-			local orbSprite = tear:GetSprite()
-			orbSprite:ReplaceSpritesheet(0, ToxicOrb.GfxPath)
-			orbSprite:LoadGraphics()
-			utility:SetData(player, "ToxicOrbShoot", tear)
+			ThrowOrb(player, player:GetAimDirection())
         end
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, ToxicOrb.PEffectUpdate)
 
 
-function ToxicOrb:OnToxicOrbUse(card, player)
-    utility:SetData(player, "ToxicOrbLift", true)
-    player:AnimateCard(card, "LiftItem")
+function ToxicOrb:OnToxicOrbUse(card, player, flags)
+	if flags & enums.UseOrbFlags.DOUBLE_POWER > 0 then
+		utility:SetData(player, "ToxicDouble", true)
+	end
+	if flags & enums.UseOrbFlags.NO_SOUND == 0 then
+		--player:GetSprite():Play("LiftItem", true)
+		player:AnimateCard(card, "LiftItem")
+	end
+
+	utility:SetData(player, "ToxicOrbLift", true)
 end
 MilkshakeVol1:AddCallback(
     enums.Callbacks.ON_ORB_USE,

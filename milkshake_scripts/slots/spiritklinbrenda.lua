@@ -67,7 +67,8 @@ local possibleWisps = {
     enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
     enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
     CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
-    CollectibleType.COLLECTIBLE_SATANIC_BIBLE
+    CollectibleType.COLLECTIBLE_SATANIC_BIBLE,
+    enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP,
 }
 
 ---Adds a custom character's soul stone to the Spirit Klin's reward pool.

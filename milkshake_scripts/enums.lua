@@ -40,6 +40,7 @@ enums.Collectibles = {
     SPECIAL_BRENDA_WATER_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM WATER WISP"),
     SPECIAL_BRENDA_POISON_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM POISON WISP"),
     SPECIAL_BRENDA_HOLY_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM HOLY WISP"),
+    SPECIAL_BRENDA_TERRA_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM TERRA WISP"),
 }
 
 enums.Trinkets = {
@@ -121,6 +122,7 @@ enums.Sounds = {
     GLASSHEAD_LIQUID = Isaac.GetSoundIdByName("glass head liquid"),
     GLASSHEAD_SHATTER = Isaac.GetSoundIdByName("glass head shatter"),
     WATER_FLOW = Isaac.GetSoundIdByName("water flow"),
+    ELECTROCUTE_MACHINE = Isaac.GetSoundIdByName("electrocute machine"),
 
     SPIRIT_CHAOS = Isaac.GetSoundIdByName("Spirit Of Chaos"),
     SPIRIT_CLAIRVOYANCE = Isaac.GetSoundIdByName("Spirit Of Clairvoyance"),

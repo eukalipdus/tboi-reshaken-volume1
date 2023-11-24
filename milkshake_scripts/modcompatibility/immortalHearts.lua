@@ -14,7 +14,7 @@ MilkshakeVol1:AddModCompatibility("ComplianceImmortal", function ()
             MilkshakeVol1.enums.Collectibles.LEVITICUS,
             "{{SoulHeart}} Debe ser cargado usando corazones de alma" ..
             "#{{ImmortalHeart}} +1 Corazón Inmortal" ..
-            "#{{AngelRoom}} Usar el objeto antes de la contra el jefe hace que la recompensa sea un objeto de ángel" ..
+            "#{{AngelRoom}} Usar el objeto antes de la pelea contra el jefe hace que la recompensa sea un objeto de ángel" ..
             "#{{DevilRoom}} El objeto costará dinero si se ha tomado un pacto con el diablo",
             "Levítico",
             "spa"

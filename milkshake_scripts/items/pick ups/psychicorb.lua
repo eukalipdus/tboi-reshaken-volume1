@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 local Utilities = MilkshakeVol1.utility
 
 
-local CLAIRVOYANCE_ORB_DURATION = 30 * 75
+local CLAIRVOYANCE_ORB_DURATION = 30 * 50
 local PROJECTILE_REFLECTION_RADIUS = 135
 local PROJECTILE_REFLECTION_INTERVAL = 10
 local FAKE_CENSER_RADIUS = 70
@@ -53,6 +53,9 @@ function SapphireOrb:OnAmethystOrbUse(_, player, flags)
     aura.Parent = player
     aura:FollowParent(player)
     aura.DepthOffset = -100
+    if TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER) then
+        aura.SpriteScale = aura.SpriteScale * 1.5
+    end
 end
 MilkshakeVol1:AddCallback(
     enums.Callbacks.ON_ORB_USE,

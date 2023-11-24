@@ -8,16 +8,15 @@ MilkshakeVol1.API = {}
 
 --include("milkshake_scripts.bumAPI.core")
 
-local eid = include("milkshake_scripts.modcompatibility.eid")
-eid:addEid()
-
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
 include("milkshake_scripts.modcompatibility.crabbyCretins")
 include("milkshake_scripts.modcompatibility.eclipsed")
+include("milkshake_scripts.modcompatibility.eid")
 include("milkshake_scripts.modcompatibility.epiphany")
 include("milkshake_scripts.modcompatibility.fiendFolio")
 include("milkshake_scripts.modcompatibility.immortalHearts")
+include("milkshake_scripts.modcompatibility.minimapi")
 include("milkshake_scripts.modcompatibility.retribution")
 
 -- Custom callbacks
@@ -127,13 +126,3 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function()
         Isaac.ExecuteCommand("reloadshaders")
     end
 end)
-
---- EID Mirror world description flip fix
-if EID then
-    EID:AddPriorityCallback(ModCallbacks.MC_GET_SHADER_PARAMS, math.mininteger, function (_, shaderParams)
-        if shaderParams == "Milkshake Mirror Room" then
-            EID.OnRender()
-        end
-    end) -- add render function to shader callback
-    EID:RemoveCallback(ModCallbacks.MC_POST_RENDER, EID.OnRender) -- remove original render function
-end
