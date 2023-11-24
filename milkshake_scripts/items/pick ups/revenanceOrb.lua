@@ -159,7 +159,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PROJECTILE_UPDATE, RevenanceOrb.OnBoneyMShoot, ProjectileVariant.PROJECTILE_BONE)
 
 function RevenanceOrb:onEnemyTakesDMG(entity, amount, damageFlags, source, DamageCountdown) -- no way to change amount, blame someone
-	if RevenanceOrb.Undeads[entity.Type] then
+	if RevenanceOrb.Undeads[entity.Type] and entity:GetData().TearDamage then
 		local grbData = entity:GetData()
 		if grbData.DamagedCountdown then
 			if game:GetFrameCount() - grbData.DamagedCountdown < RevenanceOrb.SkeletonDMGCooldown then
@@ -173,7 +173,6 @@ function RevenanceOrb:onEnemyTakesDMG(entity, amount, damageFlags, source, Damag
 			grbData.DamagedCountdown = game:GetFrameCount()
 			return
 		end
-
 	end
 	--- reapply damage
 	if source.Entity and source.Entity:ToProjectile() and source.Entity:GetData().BoneyMShootUPD then
