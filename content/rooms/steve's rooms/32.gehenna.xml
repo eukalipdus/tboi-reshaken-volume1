@@ -1753,6 +1753,9 @@
 		<spawn x="6" y="1">
 			<entity type="17" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
+		<spawn x="6" y="2">
+			<entity type="61" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
 		<spawn x="4" y="3">
 			<entity type="5" variant="10" subtype="0" weight="1.0"/>
 		</spawn>
