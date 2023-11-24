@@ -14,40 +14,52 @@ local TINTED_TARGETS = 1
 local BASE_BOSS_DAMAGE = 50
 
 local floorRockSprites = {
-    ["???"] = "gfx/grid/terrastrium_spike_bluewomb.png",
-    ["BurningBasement"] = "gfx/grid/terrastrium_spike_burningbasement.png",
-    ["Catacombs"] = "gfx/grid/terrastrium_spike_catacombs.png",
-    ["Cathedral"] = "gfx/grid/terrastrium_spike_cathedral.png",
-    ["Caves"] = "gfx/grid/terrastrium_spike_caves.png",
-    ["Cellar"] = "gfx/grid/terrastrium_spike_cellar.png",
-    ["Corpse"] = "gfx/grid/terrastrium_spike_corpse.png",
-    ["Depths"] = "gfx/grid/terrastrium_spike_depths.png",
-    ["Downpour"] = "gfx/grid/terrastrium_spike_downpour.png",
-    ["Dross"] = "gfx/grid/terrastrium_spike_dross.png",
-    ["FloodedCaves"] = "gfx/grid/terrastrium_spike_floodedcaves.png",
-    ["Gehenna"] = "gfx/grid/terrastrium_spike_gehenna.png",
-    ["Mausoleum"] = "gfx/grid/terrastrium_spike_mausoleum.png",
-    ["Mines"] = "gfx/grid/terrastrium_spike_mines.png",
-    ["ScarredWomb"] = "gfx/grid/terrastrium_spike_scarredwomb.png",
-    ["Secret"] = "gfx/grid/terrastrium_spike_secretroom.png",
-    ["Sheol"] = "gfx/grid/terrastrium_spike_sheol.png",
-    ["Utero"] = "gfx/grid/terrastrium_spike_utero.png",
-    ["Womb"] = "gfx/grid/terrastrium_spike_womb.png",
+    [BackdropType.BLUE_WOMB] = "gfx/grid/terrastrium_spike_bluewomb.png",
+    [BackdropType.BURNT_BASEMENT] = "gfx/grid/terrastrium_spike_burningbasement.png",
+    [BackdropType.CATACOMBS] = "gfx/grid/terrastrium_spike_catacombs.png",
+    [BackdropType.CATHEDRAL] = "gfx/grid/terrastrium_spike_cathedral.png",
+    [BackdropType.CAVES] = "gfx/grid/terrastrium_spike_caves.png",
+    [BackdropType.CELLAR] = "gfx/grid/terrastrium_spike_cellar.png",
+    [BackdropType.CORPSE_ENTRANCE] = "gfx/grid/terrastrium_spike_corpse.png",
+    [BackdropType.CORPSE] = "gfx/grid/terrastrium_spike_corpse.png",
+    [BackdropType.DUNGEON_ROTGUT] = "gfx/grid/terrastrium_spike_corpse.png",
+    [BackdropType.DEPTHS] = "gfx/grid/terrastrium_spike_depths.png",
+    [BackdropType.NECROPOLIS] = "gfx/grid/terrastrium_spike_depths.png",
+    [BackdropType.DANK_DEPTHS] = "gfx/grid/terrastrium_spike_depths.png",
+    [BackdropType.DOWNPOUR_ENTRANCE] = "gfx/grid/terrastrium_spike_downpour.png",
+    [BackdropType.DOWNPOUR] = "gfx/grid/terrastrium_spike_downpour.png",
+    [BackdropType.DROSS] = "gfx/grid/terrastrium_spike_dross.png",
+    [BackdropType.FLOODED_CAVES] = "gfx/grid/terrastrium_spike_floodedcaves.png",
+    [BackdropType.GEHENNA] = "gfx/grid/terrastrium_spike_gehenna.png",
+    [BackdropType.MAUSOLEUM_ENTRANCE] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MAUSOLEUM] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MAUSOLEUM2] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MAUSOLEUM3] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MAUSOLEUM4] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MINES_ENTRANCE] = "gfx/grid/terrastrium_spike_mines.png",
+    [BackdropType.MINES] = "gfx/grid/terrastrium_spike_mines.png",
+    [BackdropType.ASHPIT] = "gfx/grid/terrastrium_spike_mines.png",
+    [BackdropType.ASHPIT_SHAFT] = "gfx/grid/terrastrium_spike_mines.png",
+    [BackdropType.SCARRED_WOMB] = "gfx/grid/terrastrium_spike_scarredwomb.png",
+    [BackdropType.SECRET] = "gfx/grid/terrastrium_spike_secretroom.png",
+    [BackdropType.SHEOL] = "gfx/grid/terrastrium_spike_sheol.png",
+    [BackdropType.UTERO] = "gfx/grid/terrastrium_spike_utero.png",
+    [BackdropType.WOMB] = "gfx/grid/terrastrium_spike_womb.png",
 }
 
 --- Changes the sprite of the stalagmite depending on the floor or room and sets various other members, and begins the Windup animation
 ---@param stalagmite Entity
----@param stageName string
+---@param backdropType integer
 ---@param forcePosition Vector - A position that the stalagmite will be forced into every frame
-local function SetStalagmiteInfo(stalagmite, stageName, forcePosition)
+local function SetStalagmiteInfo(stalagmite, backdropType, forcePosition)
     if forcePosition then
         utility:SetData(stalagmite, "ForcePosition", forcePosition)
     end
     stalagmite.CollisionDamage = 0
     stalagmite.GridCollisionClass = GridCollisionClass.COLLISION_NONE
     local sprite = stalagmite:GetSprite()
-    local spritePath = floorRockSprites[stageName]
-    if spritePath and stageName ~= "Basement" then
+    local spritePath = floorRockSprites[backdropType]
+    if spritePath then
         local roomType = Game():GetRoom():GetType()
 
         if roomType == RoomType.ROOM_SECRET
@@ -150,10 +162,10 @@ end
 
 --- Spawns a random amount of stalagmite effects
 ---@param player EntityPlayer
----@param stageName string - Must be within the floorRockSprites table declared at the top
+---@param backdropType integer - Must be within the floorRockSprites table declared at the top, if nil will default to Basement sprite
 ---@param rng RNG
 ---@param isLyra boolean - If true, Lyra's double effect is activated, if false it's not
-local function SpawnRandomStalagmites(player, stageName, rng, isLyra)
+local function SpawnRandomStalagmites(player, backdropType, rng, isLyra)
     local enemies = GetVulnerableEnemies()
 
     local blockAndPillarTargets = utility:TableConcat(TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKB),
@@ -194,12 +206,12 @@ local function SpawnRandomStalagmites(player, stageName, rng, isLyra)
 
     for _ = 1, numPillarBlockTargets do
         local stalagmite = SpawnStalagmite(player, rng, true, blockAndPillarTargets)
-        SetStalagmiteInfo(stalagmite, stageName, utility:GetData(stalagmite, "TargetPosition"))
+        SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
     end
 
     for _ = 1, numTintedRocksToTarget do
         local stalagmite = SpawnStalagmite(player, rng, true, tintedRockTargets)
-        SetStalagmiteInfo(stalagmite, stageName, utility:GetData(stalagmite, "TargetPosition"))
+        SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
     end
 
     if numEnemiesToTarget > #enemies then
@@ -207,14 +219,14 @@ local function SpawnRandomStalagmites(player, stageName, rng, isLyra)
     end
     for _ = 1, numEnemiesToTarget do
         local stalagmite = SpawnStalagmite(player, rng, false, enemies)
-        SetStalagmiteInfo(stalagmite, stageName, utility:GetData(stalagmite, "TargetPosition"))
+        SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
         DelayedStalagmiteDamage(stalagmite)
     end
     stalagmiteCount = ((stalagmiteCount - numEnemiesToTarget) - numPillarBlockTargets) - numTintedRocksToTarget
     
     for _ = 1, stalagmiteCount do
         local stalagmite = SpawnStalagmite(player, rng, false, nil)
-        SetStalagmiteInfo(stalagmite, stageName, nil)
+        SetStalagmiteInfo(stalagmite, backdropType, nil)
     end
 end
 
@@ -222,11 +234,9 @@ function rockOrb:OnOrbUse(orb, player, _, isLyra)
     if orb ~= enums.Orbs.ROCK then return end
 
     Game():ShakeScreen(SHAKE_TIMEOUT)
-    local stageName = Game():GetLevel():GetName()
-    stageName = string.gsub(stageName, "I", "")
-    stageName = string.gsub(stageName, " ", "")
+    local backdropType = Game():GetRoom():GetBackdropType()
 
-    TSIL.Utils.Functions.RunInFramesTemporary(SpawnRandomStalagmites, 15, player, stageName, player:GetCardRNG(orb), isLyra)
+    TSIL.Utils.Functions.RunInFramesTemporary(SpawnRandomStalagmites, 15, player, backdropType, player:GetCardRNG(orb), isLyra)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
     end, 30)
