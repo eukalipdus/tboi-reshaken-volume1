@@ -34,7 +34,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, doggyBag.PostNewRoom)
 function doggyBag:PostPEffectUpdate(player)
     local entityPoops = TSIL.Entities.GetEntities(EntityType.ENTITY_POOP)
     for _, poop in ipairs(entityPoops) do
-        if (player.Position):Distance(poop.Position) <= HOLD_RADIUS then
+        if (player.Position):Distance(poop.Position) <= HOLD_RADIUS
+        and not player:IsHoldingItem() then
             if poop.Variant == TSIL.Enums.PoopEntityVariant.CORNY then
                 poop:Remove()
                 player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
@@ -47,7 +48,8 @@ function doggyBag:PostPEffectUpdate(player)
     local gridPoops = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_POOP)
     for _, poop in ipairs(gridPoops) do
         if (player.Position):Distance(poop.Position) <= (HOLD_RADIUS * 1.5) then
-            if poop.Variant == TSIL.Enums.PoopGridEntityVariant.CORN then
+            if poop.Variant == TSIL.Enums.PoopGridEntityVariant.CORN
+            and not player:IsHoldingItem() then
                 poop:Remove()
                 player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
             else
