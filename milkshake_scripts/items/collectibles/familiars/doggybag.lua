@@ -5,6 +5,19 @@ local utility = MilkshakeVol1.utility
 local HOLD_RADIUS = 20
 local DEAD_POOP = 1.0
 local EMPTY_PATH = "gfx/familiar_doggy_bag_empty.anm2"
+local POOP_STEP = 20
+
+local safePoops = {
+    TSIL.Enums.PoopEntityVariant.NORMAL,
+    TSIL.Enums.PoopEntityVariant.GOLDEN,
+    TSIL.Enums.PoopEntityVariant.WHITE,
+    TSIL.Enums.PoopEntityVariant.CORN,
+    TSIL.Enums.PoopEntityVariant.BURNING,
+    TSIL.Enums.PoopEntityVariant.STINKY,
+    TSIL.Enums.PoopEntityVariant.BLACK,
+    TSIL.Enums.PoopEntityVariant.HOLY,
+    TSIL.Enums.PoopGridEntityVariant.RAINBOW,
+}
 
 local spritesheetPaths = {
     [TSIL.Enums.PoopEntityVariant.NORMAL] = "gfx/familiar_doggy_bag.anm2",
@@ -15,6 +28,7 @@ local spritesheetPaths = {
     [TSIL.Enums.PoopEntityVariant.STINKY] = "gfx/familiar_doggy_bag_stinky.anm2",
     [TSIL.Enums.PoopEntityVariant.BLACK] = "gfx/familiar_doggy_bag_black.anm2",
     [TSIL.Enums.PoopEntityVariant.HOLY] = "gfx/familiar_doggy_bag_holy.anm2",
+    [TSIL.Enums.PoopGridEntityVariant.RAINBOW] = "gfx/familiar_doggy_bag_rainbow.anm2",
 }
 
 local function GetDoggyBags(player)
@@ -26,7 +40,14 @@ local function GetDoggyBags(player)
 end
 
 local function SpawnPoop(bag)
-    local poop = Isaac.Spawn(EntityType.ENTITY_POOP, utility:GetData(bag, "PoopType"), 0, bag.Position, Vector.Zero, bag)
+    local poop
+    local poopType = utility:GetData(bag, "PoopType")
+
+    if poopType ~= TSIL.Enums.PoopGridEntityVariant.RAINBOW then
+        poop = Isaac.Spawn(EntityType.ENTITY_POOP, poopType, 0, bag.Position, Vector.Zero, bag)
+    else
+        poop = TSIL.GridSpecific.SpawnPoop(poopType, Isaac.GetFreeNearPosition(bag.Position, POOP_STEP), false)
+    end
     utility:SetData(bag, "PoopType", nil)
     utility:SetData(poop, "DoggyBagPoop", true)
 end
@@ -37,7 +58,7 @@ function doggyBag:PostNewRoom()
         local doggyBags = GetDoggyBags(player)
         local rng =  player:GetCollectibleRNG(enums.Collectibles.DOGGY_BAG)
         for _, bag in ipairs(doggyBags) do
-            local poopType = TSIL.Random.GetRandomElementsFromTable(TSIL.Enums.PoopEntityVariant, 1, rng)
+            local poopType = TSIL.Random.GetRandomElementsFromTable(safePoops, 1, rng)
             utility:SetData(bag, "PoopType", poopType[1])
             local sprite = bag:GetSprite()
             sprite:Load(spritesheetPaths[poopType[1]], true)
