@@ -3,6 +3,7 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local HOLD_RADIUS = 20
+local DEAD_POOP = 1.0
 
 local function GetDoggyBags(player)
     local familiars = TSIL.Familiars.GetPlayerFamiliars(player)
@@ -32,13 +33,29 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, doggyBag.PostNewRoom)
 
 function doggyBag:PostPEffectUpdate(player)
-    local doggyBagPoops = TSIL.Entities.GetEntities(EntityType.ENTITY_POOP)
-    for _, poop in ipairs(doggyBagPoops) do
-        if (player.Position):Distance(poop.Position) <= HOLD_RADIUS then
+    local entityPoops = TSIL.Entities.GetEntities(EntityType.ENTITY_POOP)
+    for _, poop in ipairs(entityPoops) do
+        local canHold = (not player:IsHoldingItem() and poop.HitPoints > DEAD_POOP)
+        if (player.Position):Distance(poop.Position) <= HOLD_RADIUS
+        and canHold then
             if poop.Variant == TSIL.Enums.PoopEntityVariant.CORNY then
                 poop:Remove()
                 player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
-            else
+            elseif canHold then
+                player:UseActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
+            end
+        end
+    end
+
+    local gridPoops = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_POOP)
+    for _, poop in ipairs(gridPoops) do
+        if (player.Position):Distance(poop.Position) <= (HOLD_RADIUS * 1.5) then
+            local canHold =  (not player:IsHoldingItem() and poop.State ~= TSIL.Enums.PoopState.DESTROYED)
+            if poop.Variant == TSIL.Enums.PoopGridEntityVariant.CORN
+            and canHold then
+                poop:Remove()
+                player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
+            elseif canHold then
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
             end
         end
