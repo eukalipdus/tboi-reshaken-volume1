@@ -1,47 +1,65 @@
 local doggyBag = {}
 local enums = MilkshakeVol1.enums
-local sfx = SFXManager()
+local utility = MilkshakeVol1.utility
 
-local FLIES_TO_SPAWN = 1
-local FLIES_TO_SPAWN_BFFS = 2
-local DIPS_TO_SPAWN = 2
-local DIPS_TO_SPAWN_BFFS = 4
+local HOLD_RADIUS = 20
 
-local CLOUD_ALPHA = 0.3
-local CLOUD_OFFSET = Vector(0,-11)
-
----@param bag EntityFamiliar
-local function DoggyBagTrigger(bag)
-    local player = bag.Player
-    if not player then --I have no idea if playerless familiars are even possible, but better safe than sorry.
-        return end
-
-    local dipsToSpawn
-    local fliesToSpawn
-    if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
-        dipsToSpawn = DIPS_TO_SPAWN_BFFS
-        fliesToSpawn = FLIES_TO_SPAWN_BFFS
-    else
-        dipsToSpawn = DIPS_TO_SPAWN
-        fliesToSpawn = FLIES_TO_SPAWN
-    end
-
----@diagnostic disable-next-line: param-type-mismatch
-    player:AddBlueFlies(fliesToSpawn, bag.Position, nil)
-    for i = 1, dipsToSpawn do
-        player:AddFriendlyDip(0, bag.Position)
-    end
-    sfx:Play(SoundEffect.SOUND_PLOP)
+local function GetDoggyBags(player)
+    local familiars = TSIL.Familiars.GetPlayerFamiliars(player)
+    local doggyBags = TSIL.Utils.Tables.Filter(familiars, function (_, fam)
+        return fam.Variant == enums.Familiars.DOGGY_BAG
+    end)
+    return doggyBags
 end
 
-function doggyBag:PostRoomClear()
-    for _, bag in ipairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.DOGGY_BAG)) do
-        bag:GetSprite():Play("Spawn")
+local function SpawnPoop(bag)
+    local poop = Isaac.Spawn(EntityType.ENTITY_POOP, utility:GetData(bag, "PoopType"), 0, bag.Position, Vector.Zero, bag)
+    utility:SetData(bag, "PoopType", nil)
+    utility:SetData(poop, "DoggyBagPoop", true)
+end
+
+function doggyBag:PostNewRoom()
+    for i = 0, Game():GetNumPlayers() - 1 do
+		local player = Game():GetPlayer(i)
+        local doggyBags = GetDoggyBags(player)
+        local rng =  player:GetCollectibleRNG(enums.Collectibles.DOGGY_BAG)
+        for _, bag in ipairs(doggyBags) do
+            local poopType = TSIL.Random.GetRandomElementsFromTable(TSIL.Enums.PoopEntityVariant, 1, rng)
+            utility:SetData(bag, "PoopType", poopType[1])
+        end
     end
 end
-MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_ROOM_CLEAR_CHANGED, doggyBag.PostRoomClear)
-MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GREED_MODE_WAVE, doggyBag.PostRoomClear)
-MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_AMBUSH_WAVE, doggyBag.PostRoomClear)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, doggyBag.PostNewRoom)
+
+function doggyBag:PostPEffectUpdate(player)
+    local doggyBagPoops = TSIL.Entities.GetEntities(EntityType.ENTITY_POOP)
+    for _, poop in ipairs(doggyBagPoops) do
+        if (player.Position):Distance(poop.Position) <= HOLD_RADIUS then
+            if poop.Variant == TSIL.Enums.PoopEntityVariant.CORNY then
+                poop:Remove()
+                player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
+            else
+                player:UseActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
+            end
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, doggyBag.PostPEffectUpdate)
+
+function doggyBag:EntityTakeDmg(entity)
+    if not entity then return end
+    local player = entity:ToPlayer()
+    if not player then return end
+    if player:HasCollectible(enums.Collectibles.DOGGY_BAG) then
+        local doggyBags = GetDoggyBags(player)
+        for _, bag in ipairs(doggyBags) do
+            if utility:GetData(bag, "PoopType") then
+                bag:GetSprite():Play("Spawn")
+            end
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, doggyBag.EntityTakeDmg, EntityType.ENTITY_PLAYER)
 
 ---@param player EntityPlayer
 function doggyBag:EvaluateCache(player)
@@ -55,19 +73,6 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, doggyBag.EvaluateCache
 
 ---@param bag EntityFamiliar
 function doggyBag:FamiliarInit(bag)
-    local aura = Isaac.Spawn(
-        EntityType.ENTITY_EFFECT,
-        EffectVariant.FART_RING,
-        0,
-        bag.Position,
-        Vector.Zero,
-        bag
-    ):ToEffect()
-    aura:FollowParent(bag)
-    aura:AddEntityFlags(EntityFlag.FLAG_PERSISTENT)
-    aura.Color = Color(1, 1, 1, CLOUD_ALPHA)
-    aura.ParentOffset = CLOUD_OFFSET
-    bag.Child = aura
     bag:AddToFollowers()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, doggyBag.FamiliarInit, enums.Familiars.DOGGY_BAG)
@@ -77,16 +82,9 @@ function doggyBag:FamiliarUpdate(bag)
     bag:FollowParent()
     local sprite = bag:GetSprite()
     if sprite:IsEventTriggered("Spawn") then
-        DoggyBagTrigger(bag)
+        SpawnPoop(bag)
     elseif sprite:IsFinished("Spawn") then
         sprite:Play("Idle")
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, doggyBag.FamiliarUpdate, enums.Familiars.DOGGY_BAG)
-
-function doggyBag:RemoveCloud(bag)
-    if bag.Variant ~= enums.Familiars.DOGGY_BAG or not bag.Child then
-        return end
-    bag.Child:Die()
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, doggyBag.RemoveCloud, EntityType.ENTITY_FAMILIAR)
