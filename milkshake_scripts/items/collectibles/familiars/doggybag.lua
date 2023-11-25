@@ -32,10 +32,22 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, doggyBag.PostNewRoom)
 
 function doggyBag:PostPEffectUpdate(player)
-    local doggyBagPoops = TSIL.Entities.GetEntities(EntityType.ENTITY_POOP)
-    for _, poop in ipairs(doggyBagPoops) do
+    local entityPoops = TSIL.Entities.GetEntities(EntityType.ENTITY_POOP)
+    for _, poop in ipairs(entityPoops) do
         if (player.Position):Distance(poop.Position) <= HOLD_RADIUS then
             if poop.Variant == TSIL.Enums.PoopEntityVariant.CORNY then
+                poop:Remove()
+                player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
+            else
+                player:UseActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
+            end
+        end
+    end
+
+    local gridPoops = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_POOP)
+    for _, poop in ipairs(gridPoops) do
+        if (player.Position):Distance(poop.Position) <= (HOLD_RADIUS * 1.5) then
+            if poop.Variant == TSIL.Enums.PoopGridEntityVariant.CORN then
                 poop:Remove()
                 player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
             else
