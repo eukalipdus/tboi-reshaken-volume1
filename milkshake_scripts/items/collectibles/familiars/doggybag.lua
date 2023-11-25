@@ -4,6 +4,18 @@ local utility = MilkshakeVol1.utility
 
 local HOLD_RADIUS = 20
 local DEAD_POOP = 1.0
+local EMPTY_PATH = "gfx/familiar_doggy_bag_empty.anm2"
+
+local spritesheetPaths = {
+    [TSIL.Enums.PoopEntityVariant.NORMAL] = "gfx/familiar_doggy_bag.anm2",
+    [TSIL.Enums.PoopEntityVariant.GOLDEN] = "gfx/familiar_doggy_bag_gold.anm2",
+    [TSIL.Enums.PoopEntityVariant.STONE] = "gfx/familiar_doggy_bag_stone.anm2",
+    [TSIL.Enums.PoopEntityVariant.CORNY] = "gfx/familiar_doggy_bag_corny.anm2",
+    [TSIL.Enums.PoopEntityVariant.BURNING] = "gfx/familiar_doggy_bag_fire.anm2",
+    [TSIL.Enums.PoopEntityVariant.STINKY] = "gfx/familiar_doggy_bag_stinky.anm2",
+    [TSIL.Enums.PoopEntityVariant.BLACK] = "gfx/familiar_doggy_bag_black.anm2",
+    [TSIL.Enums.PoopEntityVariant.HOLY] = "gfx/familiar_doggy_bag_holy.anm2",
+}
 
 local function GetDoggyBags(player)
     local familiars = TSIL.Familiars.GetPlayerFamiliars(player)
@@ -27,6 +39,9 @@ function doggyBag:PostNewRoom()
         for _, bag in ipairs(doggyBags) do
             local poopType = TSIL.Random.GetRandomElementsFromTable(TSIL.Enums.PoopEntityVariant, 1, rng)
             utility:SetData(bag, "PoopType", poopType[1])
+            local sprite = bag:GetSprite()
+            sprite:Load(spritesheetPaths[poopType[1]], true)
+            sprite:Play("Idle")
         end
     end
 end
@@ -101,6 +116,8 @@ function doggyBag:FamiliarUpdate(bag)
     if sprite:IsEventTriggered("Spawn") then
         SpawnPoop(bag)
     elseif sprite:IsFinished("Spawn") then
+        sprite:Load(EMPTY_PATH, true)
+        sprite:LoadGraphics()
         sprite:Play("Idle")
     end
 end
