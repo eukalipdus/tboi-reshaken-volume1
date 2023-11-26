@@ -201,7 +201,8 @@ enums.CardSpawnerSubtypePerCard = {
     [7] = enums.Orbs.UNHOLY,
     [8] = enums.Orbs.POISON,
     [9] = enums.Orbs.UNDEAD,
-    [10] = enums.Orbs.WATER
+    [10] = enums.Orbs.WATER,
+    [11] = enums.Orbs.ROCK,
 }
 
 
