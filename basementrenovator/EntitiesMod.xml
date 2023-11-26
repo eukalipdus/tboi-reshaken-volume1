@@ -12,7 +12,7 @@
     <entity Name="Spirit of Virulence"      ID="618" Variant="124"  Subtype="8"  Group="Consumables" Image="MilkshakeSprites/VirulenceSpirit.png"  Kind="Milkshake!" Metadata="1" />
     <entity Name="Spirit of Revenance"      ID="618" Variant="124"  Subtype="9"  Group="Consumables" Image="MilkshakeSprites/RevenanceSpirit.png" Kind="Milkshake!" Metadata="1" />
     <entity Name="Spirit of Deluge"         ID="618" Variant="124"  Subtype="10" Group="Consumables" Image="MilkshakeSprites/DelugeSpirit.png"     Kind="Milkshake!" Metadata="1" />
-    <entity Name="Spirit of Terra"          ID="618" Variant="124"  Subtype="11" Group="Consumables" Image="MilkshakeSprites/TerraSpirit.png"     Kind="Milkshake!" Metadata="1" />
+    <entity Name="Spirit of Terrastrium"          ID="618" Variant="124"  Subtype="11" Group="Consumables" Image="MilkshakeSprites/TerraSpirit.png"     Kind="Milkshake!" Metadata="1" />
 
     <entity Name="Fruit Heart"              ID="5" Variant="10"   Subtype="743"  Group="Pickups"     Image="MilkshakeSprites/FruitHeart.png"               Kind="Milkshake!" />
 

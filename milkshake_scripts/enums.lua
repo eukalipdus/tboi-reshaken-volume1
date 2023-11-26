@@ -186,7 +186,7 @@ enums.Orbs = {
     POISON = Isaac.GetCardIdByName("Spirit Of Virulence"),
     UNDEAD = Isaac.GetCardIdByName("Spirit Of Revenance"),
     WATER = Isaac.GetCardIdByName("Spirit Of Deluge"),
-    ROCK = Isaac.GetCardIdByName("Spirit Of Terra"),
+    ROCK = Isaac.GetCardIdByName("Spirit Of Terrastrium"),
 }
 
 
