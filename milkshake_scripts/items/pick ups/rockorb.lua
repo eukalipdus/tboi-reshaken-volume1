@@ -144,7 +144,7 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
         and target:GetType() == GridEntityType.GRID_ROCKT then
             DelayedDestroyGridEntity(target, false)
         elseif isGrid then
-            DelayedDestroyGridEntity(target, false)
+            DelayedDestroyGridEntity(target, true)
         end
         table.remove(targetTable, idxToRemove)
     else
