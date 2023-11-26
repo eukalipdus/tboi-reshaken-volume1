@@ -64,7 +64,7 @@ local function SetStalagmiteInfo(stalagmite, backdropType, forcePosition)
 
         if roomType == RoomType.ROOM_SECRET
         or roomType == RoomType.ROOM_SUPERSECRET then
-            spritePath = floorRockSprites["Secret"]
+            spritePath = floorRockSprites[BackdropType.SECRET]
         end
         sprite:ReplaceSpritesheet(1, spritePath)
         sprite:LoadGraphics()
