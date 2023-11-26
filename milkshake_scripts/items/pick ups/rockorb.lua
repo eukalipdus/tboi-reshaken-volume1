@@ -77,7 +77,7 @@ end
 local function GetVulnerableEnemies()
     local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
     enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
-        return enemy:IsVulnerableEnemy()
+        return enemy:IsEnemy()
     end)
     return enemies
 end
