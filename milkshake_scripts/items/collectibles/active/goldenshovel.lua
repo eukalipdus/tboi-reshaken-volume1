@@ -62,7 +62,7 @@ local function SpawnGoldenPickup(rng, position)
     elseif roll == 2 then
         variant = PickupVariant.PICKUP_HEART
         subtype = HeartSubType.HEART_GOLDEN
-    else
+    elseif roll == 3 then
         variant = PickupVariant.PICKUP_COIN
         subtype = CoinSubType.COIN_GOLDEN
     end
