@@ -84,6 +84,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, doggyBag.PostNewRoom)
 
 function doggyBag:PostPEffectUpdate(player)
+    if not player:HasCollectible(enums.Collectibles.DOGGY_BAG) then return end
     local entityPoops = TSIL.Entities.GetEntities(EntityType.ENTITY_POOP)
     local playerSprite = player:GetSprite()
     for _, poop in ipairs(entityPoops) do
