@@ -34,7 +34,7 @@ local BeggarTables = {
 	},
 	[5] = {
 		Config = {Count = 3, MinCount = 0},
-		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = -1},
+		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = 0},
 		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_HEART, SubType = HeartSubType.HEART_BLACK},
 	},
 	[6] = {
@@ -55,7 +55,7 @@ local BeggarTables = {
 	},
 	[15] = {
 		Config = {Count = 2, MinCount = 0},
-		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = -1},
+		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = 0},
 		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_HEART, SubType = HeartSubType.HEART_BLACK},
 	},
 	[18] = {
