@@ -47,6 +47,27 @@ local floorRockSprites = {
     [BackdropType.WOMB] = "gfx/grid/terrastrium_spike_womb.png",
 }
 
+local safeGridEntities = {
+    GridEntityType.GRID_ROCK,
+    GridEntityType.GRID_ROCKB,
+    GridEntityType.GRID_ROCKT,
+    GridEntityType.GRID_ROCK_BOMB,
+    GridEntityType.GRID_ROCK_ALT,
+    GridEntityType.GRID_LOCK,
+    GridEntityType.GRID_TNT,
+    GridEntityType.GRID_ROCK_SS,
+    GridEntityType.GRID_PILLAR,
+    GridEntityType.GRID_ROCK_SPIKED,
+    GridEntityType.GRID_ROCK_ALT2,
+    GridEntityType.GRID_ROCK_GOLD,
+}
+
+local removeRequired = {
+    GridEntityType.GRID_ROCKB,
+    GridEntityType.GRID_LOCK,
+    GridEntityType.GRID_PILLAR,
+}
+
 --- Changes the sprite of the stalagmite depending on the floor or room and sets various other members, and begins the Windup animation
 ---@param stalagmite Entity
 ---@param backdropType integer
@@ -64,7 +85,7 @@ local function SetStalagmiteInfo(stalagmite, backdropType, forcePosition)
 
         if roomType == RoomType.ROOM_SECRET
         or roomType == RoomType.ROOM_SUPERSECRET then
-            spritePath = floorRockSprites["Secret"]
+            spritePath = floorRockSprites[BackdropType.SECRET]
         end
         sprite:ReplaceSpritesheet(1, spritePath)
         sprite:LoadGraphics()
@@ -77,7 +98,7 @@ end
 local function GetVulnerableEnemies()
     local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
     enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
-        return enemy:IsVulnerableEnemy()
+        return enemy:IsEnemy()
     end)
     return enemies
 end
@@ -94,6 +115,22 @@ local function DelayedDestroyGridEntity(gridEntity, remove)
         end
     end, 10)
 end
+
+local function DestroyNearbyGridEntities(stalagmite)
+    local nearbyGridEntities = TSIL.GridEntities.GetGridEntities()
+    for _, grid in ipairs(nearbyGridEntities) do
+        local canDestroy = stalagmite.Position:Distance(grid.Position) <= (KILL_RADIUS * 1.4) and TSIL.Utils.Tables.IsIn(safeGridEntities, grid:GetType())
+        if canDestroy
+        and TSIL.Utils.Tables.IsIn(nearbyGridEntities, grid) then
+            if TSIL.Utils.Tables.IsIn(removeRequired, grid) then
+                TSIL.GridEntities.RemoveGridEntity(grid)
+            elseif canDestroy then
+                grid:Destroy()
+            end
+        end
+    end
+end
+
 
 --- Kills enemies in range of the stalagmite and damages bosses in range, 10 frames after being called
 ---@param stalagmite Entity
@@ -144,7 +181,7 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
         and target:GetType() == GridEntityType.GRID_ROCKT then
             DelayedDestroyGridEntity(target, false)
         elseif isGrid then
-            DelayedDestroyGridEntity(target, false)
+            DelayedDestroyGridEntity(target, true)
         end
         table.remove(targetTable, idxToRemove)
     else
@@ -245,6 +282,10 @@ MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, rockOrb.OnOrbUse)
 
 function rockOrb:NpcUpdate(stalagmite)
     if stalagmite.Type ~= enums.Enemies.STALAGMITE then return end
+
+    if not stalagmite:GetSprite():IsPlaying("Windup") then
+        DestroyNearbyGridEntities(stalagmite)
+    end
 
     local forcePosition = utility:GetData(stalagmite, "ForcePosition")
     local target = utility:GetData(stalagmite, "Target")
