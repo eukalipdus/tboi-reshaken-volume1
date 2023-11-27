@@ -1,5 +1,6 @@
 local ChaosOrb = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 
 local SPRITESHEET_PER_ORB = {
@@ -14,6 +15,32 @@ local SPRITESHEET_PER_ORB = {
     [enums.Orbs.WATER] = "spirit_water",
 }
 
+local movePillHudPerPlayer = {
+    Vector(-13, -12),
+    Vector(394, 147),
+}
+
+local playerAnchor = {
+    "bottomright",
+}
+
+local function CreatePillOverlay()
+    local orbPillHud = Sprite()
+    orbPillHud:Load("gfx/ui/ui_chaosorb.anm2", true)
+    orbPillHud:Play("Spirit Of Chaos")
+    return orbPillHud
+end
+
+local orbPillHuds = {
+    CreatePillOverlay(),
+    CreatePillOverlay(),
+    CreatePillOverlay(),
+    CreatePillOverlay(),
+}
+
+local NON_P1_SCALE = Vector(0.5, 0.5)
+
+local frame = 1
 
 ---@param player EntityPlayer
 ---@param flags UseOrbFlag
@@ -37,3 +64,30 @@ MilkshakeVol1:AddCallback(
     ChaosOrb.OnChaosOrbUse,
     enums.Orbs.RANDOM
 )
+
+function ChaosOrb:PostRender()
+    frame = frame + 0.15
+    if frame > 60 then frame = 1 end
+    if Game():GetHUD():IsVisible() then
+        for i = 1, Game():GetNumPlayers() do
+            local player = Isaac.GetPlayer(i)
+            local heldPill = player:GetPill(0)
+            if player:GetCard(0) == enums.Orbs.RANDOM then
+
+                if player:GetPlayerType() ~= PlayerType.PLAYER_JACOB
+                and player:GetPlayerType() ~= PlayerType.PLAYER_ESAU then
+                    local position = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) + movePillHudPerPlayer[i]
+                    local x, y = utility:HUDOffset(position.X, position.Y, playerAnchor[i])
+                    position = Vector(x,y)
+                    orbPillHuds[i]:Render(position)
+                    orbPillHuds[i]:SetFrame(math.floor(frame))
+                end
+
+                if i > 1 then
+                    orbPillHuds[i].Scale = NON_P1_SCALE
+                end
+            end
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, ChaosOrb.PostRender)
