@@ -98,7 +98,7 @@ end
 local function GetVulnerableEnemies()
     local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
     enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
-        return enemy:IsEnemy()
+        return enemy:IsEnemy() and enemy.Type ~= enums.Enemies.STALAGMITE
     end)
     return enemies
 end
@@ -161,7 +161,7 @@ end
 ---@param targetTable table - Table of entities to randomly select a target from for the stalagmite
 local function SpawnStalagmite(player, rng, isGrid, targetTable)
     local stalagmite
-    if targetTable then
+    if targetTable and #targetTable > 0 then
         local idxToRemove = TSIL.Random.GetRandomInt(1, #targetTable, rng)
         local target = targetTable[idxToRemove]
         stalagmite = TSIL.EntitySpecific.SpawnNPC(
@@ -251,9 +251,6 @@ local function SpawnRandomStalagmites(player, backdropType, rng, isLyra)
         SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
     end
 
-    if numEnemiesToTarget > #enemies then
-        numEnemiesToTarget = #enemies
-    end
     for _ = 1, numEnemiesToTarget do
         local stalagmite = SpawnStalagmite(player, rng, false, enemies)
         SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
