@@ -95,7 +95,7 @@ end
 
 --- Returns a table of all the vulnerable enemies in the room
 ---@return table
-local function GetVulnerableEnemies()
+local function GetEnemyTargets()
     local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
     enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
         return enemy:IsEnemy() and enemy.Type ~= enums.Enemies.STALAGMITE
@@ -135,7 +135,7 @@ end
 --- Kills enemies in range of the stalagmite and damages bosses in range, 10 frames after being called
 ---@param stalagmite Entity
 local function DelayedStalagmiteDamage(stalagmite)
-    local enemies = GetVulnerableEnemies()
+    local enemies = GetEnemyTargets()
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         for _, enemy in ipairs(enemies) do
             if enemy.Type ~= enums.Enemies.STALAGMITE
@@ -197,13 +197,13 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
     return stalagmite
 end
 
---- Spawns a random amount of stalagmite effects
+--- Spawns a random amount of stalagmite NPCs
 ---@param player EntityPlayer
 ---@param backdropType integer - Must be within the floorRockSprites table declared at the top, if nil will default to Basement sprite
 ---@param rng RNG
 ---@param isLyra boolean - If true, Lyra's double effect is activated, if false it's not
-local function SpawnRandomStalagmites(player, backdropType, rng, isLyra)
-    local enemies = GetVulnerableEnemies()
+local function SpawnSetStalagmites(player, backdropType, rng, isLyra)
+    local enemies = GetEnemyTargets()
 
     local blockAndPillarTargets = utility:TableConcat(TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKB),
                                                       TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_PILLAR)
@@ -270,7 +270,7 @@ function rockOrb:OnOrbUse(orb, player, _, isLyra)
     Game():ShakeScreen(SHAKE_TIMEOUT)
     local backdropType = Game():GetRoom():GetBackdropType()
 
-    TSIL.Utils.Functions.RunInFramesTemporary(SpawnRandomStalagmites, 15, player, backdropType, player:GetCardRNG(orb), isLyra)
+    TSIL.Utils.Functions.RunInFramesTemporary(SpawnSetStalagmites, 15, player, backdropType, player:GetCardRNG(orb), isLyra)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
     end, 30)
