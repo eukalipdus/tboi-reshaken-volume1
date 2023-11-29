@@ -16,7 +16,7 @@ local SPRITESHEET_PER_ORB = {
 }
 
 local moveOrbHudPerPlayer = {
-    Vector(-13, -12),
+    Vector(-15, -12),
     Vector(394, 147),
 }
 
