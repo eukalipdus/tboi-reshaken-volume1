@@ -134,7 +134,7 @@ function ToxicOrb:PEffectUpdate(player)
 			player:AnimateCard(enums.Orbs.POISON, "LiftItem")
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
 			player:AnimateCard(enums.Orbs.POISON, "HideItem")
-			ThrowOrb(player, player:GetShootingInput()) -- GetAimDirection
+			ThrowOrb(player, player:GetAimDirection():Normalized()) -- GetAimDirection GetShootingInput
         end
     end
 end
