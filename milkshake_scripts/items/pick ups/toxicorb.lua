@@ -85,6 +85,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, ToxicOrb.CloudUpdate, enums.Effects.TOXIC_GAS)
 
 local function ThrowOrb(player, vector)
+	--vector = vector or player:GetAimDirection() -- :GetShootingInput()
 	utility:SetData(player, "ToxicOrbLift", nil)
 	local velo = (vector*ToxicOrb.TearSpeedMulti)+player:GetTearMovementInheritance(player:GetMovementInput())
 	local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, velo, nil):ToTear() --BOBS_HEAD
@@ -133,7 +134,7 @@ function ToxicOrb:PEffectUpdate(player)
 			player:AnimateCard(enums.Orbs.POISON, "LiftItem")
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
 			player:AnimateCard(enums.Orbs.POISON, "HideItem")
-			ThrowOrb(player, player:GetAimDirection())
+			ThrowOrb(player, player:GetShootingInput()) -- GetAimDirection
         end
     end
 end
