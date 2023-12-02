@@ -116,6 +116,8 @@ local function DelayedDestroyGridEntity(gridEntity, remove)
     end, 10)
 end
 
+--- Locates nearby GridEntities 
+---@param stalagmite EntityNPC - The stalagmite to look from
 local function DestroyNearbyGridEntities(stalagmite)
     local nearbyGridEntities = TSIL.GridEntities.GetGridEntities()
     for _, grid in ipairs(nearbyGridEntities) do
