@@ -211,7 +211,9 @@ local function SpawnSetStalagmites(player, backdropType, rng, isLyra)
                                                       TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_PILLAR)
                                                      )
 
-    local tintedRockTargets = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT)
+    local tintedRockTargets = utility:TableConcat(TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT),
+                                                  TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCK_SS)
+                                                 )
 
     local max
     local min
