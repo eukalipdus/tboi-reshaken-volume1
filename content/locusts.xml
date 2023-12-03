@@ -2,8 +2,14 @@
     <!-- Vanilla Colors -->
 	<color name="default" />
 	<color name="fly_pink" r="1024" g="512" b="768" or="0" og="-255" ob="0"/>
-	<!-- <color name="fly_cyan" r="680" g="1024" b="1024" or="0" og="0" ob="0"/> -->
+
+    <!-- Custom Colors -->
+    <color name="fly_white" r="1024" g="1024" b="1024"/>
 
     <!-- Prismatic Dice -->
     <locust id="13" color="fly_pink" />
+
+
+    <!-- Dad's Mitt -->
+    <locust id="26" color="fly_white" />
 </locusts>
