@@ -12,6 +12,8 @@ local SHAKE_TIMEOUT = 25
 local PILLAR_TARGETS = 2
 local TINTED_TARGETS = 1
 local BASE_BOSS_DAMAGE = 50
+local WALL_MARGIN = 15
+local TIMES_CAN_FAIL = 1000
 
 local floorRockSprites = {
     [BackdropType.BLUE_WOMB] = "gfx/grid/terrastrium_spike_bluewomb.png",
@@ -68,6 +70,17 @@ local removeRequired = {
     GridEntityType.GRID_PILLAR,
 }
 
+local function GetRandomNonWallPosition()
+    local attempts = 0
+    local position
+    while not position or not Game():GetRoom():IsPositionInRoom(position, WALL_MARGIN) do
+        position = Isaac.GetRandomPosition()
+        attempts = attempts + 1
+        if attempts >= TIMES_CAN_FAIL then break end
+    end
+    return position
+end
+
 --- Changes the sprite of the stalagmite depending on the floor or room and sets various other members, and begins the Windup animation
 ---@param stalagmite Entity
 ---@param backdropType integer
@@ -98,7 +111,7 @@ end
 local function GetEnemyTargets()
     local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
     enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
-        return enemy:IsEnemy() and enemy.Type ~= enums.Enemies.STALAGMITE
+        return enemy:IsEnemy() and enemy.Type ~= enums.Enemies.STALAGMITE and Game():GetRoom():IsPositionInRoom(enemy.Position, WALL_MARGIN)
     end)
     return enemies
 end
@@ -132,7 +145,6 @@ local function DestroyNearbyGridEntities(stalagmite)
         end
     end
 end
-
 
 --- Kills enemies in range of the stalagmite and damages bosses in range, 10 frames after being called
 ---@param stalagmite Entity
@@ -191,7 +203,7 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
             enums.Enemies.STALAGMITE,
             1,
             0,
-            Isaac.GetRandomPosition(),
+            GetRandomNonWallPosition(),
             Vector.Zero,
             player
         )
