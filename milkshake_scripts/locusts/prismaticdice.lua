@@ -49,11 +49,11 @@ function prismaticDice:EntityTakeDmg(entity, _, _, source)
     local sourceEntity = source.Entity
     local familiar = sourceEntity:ToFamiliar()
     if not familiar then return end
+    if (familiar.Variant ~= FamiliarVariant.ABYSS_LOCUST or familiar.SubType ~= enums.Collectibles.PRISMATIC_DICE) then return end
     local player = familiar.Player
     local rng = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE)
     local roll = TSIL.Random.GetRandomInt(1, 100, rng)
     if roll <= DOWNGRADE_CHANCE
-    and familiar.SubType == enums.Collectibles.PRISMATIC_DICE
     and not utility:GetData(player, "LocustSplit") then
         SplitEnemy(player, entity)
     end
