@@ -231,18 +231,29 @@ local function SpawnSetStalagmites(player, backdropType, rng, isLyra)
     end
 
     local stalagmiteCount = TSIL.Random.GetRandomInt(min, max, rng)
+    local undecidedStalagmites = stalagmiteCount
 
+    local numTintedRocksToTarget = 0
     local numPillarBlockTargets = PILLAR_TARGETS
+
+    if #tintedRockTargets > 0 then
+        undecidedStalagmites = undecidedStalagmites - TINTED_TARGETS
+        numTintedRocksToTarget = TINTED_TARGETS
+    end
+   
     if #blockAndPillarTargets < PILLAR_TARGETS then
         numPillarBlockTargets = #blockAndPillarTargets
     end
 
-    local numEnemiesToTarget = stalagmiteCount - numPillarBlockTargets
-    local numTintedRocksToTarget = 0
-
-    if #tintedRockTargets > 0 then
-        numEnemiesToTarget = numEnemiesToTarget - TINTED_TARGETS
-        numTintedRocksToTarget = TINTED_TARGETS
+    if #blockAndPillarTargets - numPillarBlockTargets > 0 then
+        local remainingPossibleTargets = #blockAndPillarTargets - undecidedStalagmites
+        for _ = 0, undecidedStalagmites do
+            if remainingPossibleTargets < 1 then
+                break
+            end
+            numPillarBlockTargets = numPillarBlockTargets + 1
+            remainingPossibleTargets = remainingPossibleTargets - 1
+        end
     end
 
     for _ = 1, numPillarBlockTargets do
@@ -255,14 +266,23 @@ local function SpawnSetStalagmites(player, backdropType, rng, isLyra)
         SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
     end
 
-    for _ = 1, numEnemiesToTarget do
+    local enemiesToTarget
+    if undecidedStalagmites > #enemies then
+        enemiesToTarget = #enemies
+        undecidedStalagmites = undecidedStalagmites - enemiesToTarget
+    else
+        enemiesToTarget = undecidedStalagmites
+        undecidedStalagmites = 0
+    end
+
+    for _ = 1, enemiesToTarget do
         local stalagmite = SpawnStalagmite(player, rng, false, enemies)
         SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
         DelayedStalagmiteDamage(stalagmite)
     end
-    stalagmiteCount = ((stalagmiteCount - numEnemiesToTarget) - numPillarBlockTargets) - numTintedRocksToTarget
+    --stalagmiteCount = ((stalagmiteCount - numEnemiesToTarget) - numPillarBlockTargets) - numTintedRocksToTarget
     
-    for _ = 1, stalagmiteCount do
+    for _ = 1, undecidedStalagmites do
         local stalagmite = SpawnStalagmite(player, rng, false, nil)
         SetStalagmiteInfo(stalagmite, backdropType, nil)
     end
