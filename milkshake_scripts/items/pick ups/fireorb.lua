@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local INHALING_DURATION = 60
-local ANGLE_VARIANCE = 10;
+local ANGLE_VARIANCE = 20;
 local MAX_ANGLE = 180;
 local BLEND_AMOUNT = 0.2;
 
@@ -152,6 +152,7 @@ end
 ---@param angle number
 ---@param doublePower boolean
 local function SpawnFireProjectile(player, angle, doublePower)
+	local rng = player:GetCardRNG(enums.Orbs.FIRE)
 	local shotSpeed = SHOT_SPEED
 	if doublePower then
 		shotSpeed = SHOT_SPEED_DOUBLE_POWER
@@ -189,7 +190,8 @@ end
 ---@param player EntityPlayer
 function RubyOrb:UseCard(_, player, doublePower)
 	CreateInhalingInfo(player, doublePower)
-
+	local data = player:GetData()
+	if not data.FireOrbLastDir ~= nil then data.FireOrbLastDir = 90 end
 	SFXManager():Play(SoundEffect.SOUND_LOW_INHALE)
 end
 MilkshakeVol1:AddCallback(
@@ -213,8 +215,14 @@ function CheckInhaling(player)
 	end
 
 	local angle = aimDir:GetAngleDegrees()
+	local LastAngle = aimDir:GetAngleDegrees()
+
+	local data = player:GetData()
+	if not data.FireOrbLastDir then data.FireOrbLastDir = 90 end
 	if aimDir:Length() == 0 then
-		angle = 90.0
+		angle = data.FireOrbLastDir
+	else
+		data.FireOrbLastDir = angle
 	end
 
 	inhalingInfo.currentDirection = angle
@@ -320,6 +328,20 @@ MilkshakeVol1:AddCallback(
 )
 
 
+-- Returns the shortest distance to an angle
+local function ShortAngleDis(from, to)
+	local maxAngle = 360
+	local disAngle = (to - from) % maxAngle
+	
+	return ((2 * disAngle) % maxAngle) - disAngle
+end
+
+-- Lerps the angle and returns the result
+local function LerpAngle(from, to, fraction)
+	return from + ShortAngleDis(from, to) * fraction
+end
+
+
 ---@param player EntityPlayer
 local function OnPlayerRender(player)
 	local inhalingInfo = GetInhalingInfo(player)
@@ -327,7 +349,8 @@ local function OnPlayerRender(player)
 
 	local renderPos = Isaac.WorldToScreen(player.Position)
 
-	ARROW_SPRITE.Rotation = inhalingInfo.currentDirection - 90
+	local newRotation = inhalingInfo.currentDirection - 90
+	ARROW_SPRITE.Rotation = LerpAngle(ARROW_SPRITE.Rotation, newRotation, 0.35)
 	ARROW_SPRITE:Render(renderPos)
 end
 
@@ -356,10 +379,10 @@ function RubyOrb:OnTearRemove(entity)
 
 	local poof = TSIL.EntitySpecific.SpawnEffect(
 		EffectVariant.POOF01,
-		0,
+		1,
 		entity.Position
 	)
-	poof.Color = Color(1, 1, 1, 0.5)
+	poof.Color = Color(1, 0.6, 0.5, 0.5, 0.5, 0.25, 0)
 	poof.SpriteScale = Vector(0.6, 0.6)
 end
 MilkshakeVol1:AddCallback(
