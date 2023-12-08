@@ -51,6 +51,24 @@ MilkshakeVol1:AddModCompatibility("EID", function ()
     for card, translations in pairs(descriptions.Cards) do
         for language, description in pairs(translations) do
             EID:addCard(card, description.description, description.name, language)
+
+            if description.lyra_extra then
+                EID:addDescriptionModifier("Lyra" .. card .. language,
+                    --Modifier condition
+                    function (descObj)
+                        return EID:getLanguage() == language
+                        and TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA)
+                        and descObj.ObjType == EntityType.ENTITY_PICKUP
+                        and descObj.ObjVariant == PickupVariant.PICKUP_TAROTCARD
+                        and descObj.ObjSubType == card
+                    end,
+                    --Modifier callback
+                    function (descObj)
+                        EID:appendToDescription(descObj, description.lyra_extra)
+                        return descObj
+                    end
+                )
+        end
         end
     end
 end)

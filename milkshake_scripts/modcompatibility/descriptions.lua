@@ -801,8 +801,8 @@ descriptions.Cards = {
         en_us = {
             name = "Spirit of Druidity",
             description = "Traps all enemies in the room in vines for 12 seconds. Trapped enemies drop a fruit heart on death" ..
-            "#{{BlendedHeart}} Fruit Hearts heal half a red heart, or half a soul heart if full" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Doubles fruit heart drops"
+            "#{{BlendedHeart}} Fruit Hearts heal half a red heart, or half a soul heart if full",
+            lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Doubles fruit heart drops"
         },
         spa = {
             name = "Orbe Druidico",
@@ -817,8 +817,8 @@ descriptions.Cards = {
         en_us = {
             name = "Spirit of Conductivity",
             description = "Shoots a wave of electricity in all directions, damaging nearby enemies" ..
-            "#{{ArcadeRoom}} Short circuits all machines in radius, causing them to pay out multiple times and explode" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Doubles electricity duration and range"
+            "#{{ArcadeRoom}} Short circuits all machines in radius, causing them to pay out multiple times and explode",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles electricity duration and range"
         },
         spa = {
             name = "Orbe Druidico",
@@ -833,8 +833,8 @@ descriptions.Cards = {
         en_us = {
             name = "Spirit of Inferno",
             description = "{{Burning}} Shoots a stream of high damage flames in a chosen direction" ..
-            "#{{BossRoom}} Pierces Boss Armor" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Doubles flames shot"
+            "#{{BossRoom}} Pierces Boss Armor",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles flames shot"
         },
         spa = {
             name = "Orbe Druidico",
@@ -848,8 +848,8 @@ descriptions.Cards = {
     [enums.Orbs.PSYCHIC] = {
         en_us = {
             name = "Spirit of Clairvoyance",
-            description = "{{Timer}} Grants an aura that slows enemies and reflects projectiles for 100 seconds" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Doubles duration and reflects faster"
+            description = "{{Timer}} Grants an aura that slows enemies and reflects projectiles for 100 seconds",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles duration and reflects faster"
         },
         spa = {
             name = "Orbe Druidico",
@@ -864,8 +864,8 @@ descriptions.Cards = {
         en_us = {
             name = "Spirit of Revenance",
             description = "Summons 4-6 graves around the room that spawn friendly bonies or ghosts when destroyed" ..
-            "#Fills all pits in the room with bones" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Doubles spawned graves"
+            "#Fills all pits in the room with bones",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles spawned graves"
         },
         spa = {
             name = "Orbe Druidico",
@@ -882,8 +882,8 @@ descriptions.Cards = {
             description = "{{Throwable}} Throws a toxic orb that explodes into a damaging poison cloud" ..
             "#{{Slow}} Enemies inside will be slowed and take damage over time" ..
             "#The cloud grows larger the more damage it deals" ..
-            "#{{RottenHeart}} Transforms hearts and beggars into their rotten variants {{RottenBeggar}}" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Doubles cloud size"
+            "#{{RottenHeart}} Transforms hearts and beggars into their rotten variants {{RottenBeggar}}",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles cloud size"
         },
         spa = {
             name = "Orbe Druidico",
@@ -898,8 +898,8 @@ descriptions.Cards = {
         en_us = {
             name = "Spirit of Salvation",
             description = "#Shoots 8 damaging beams of light in all directions" ..
-            "#Beams can destroy rocks and open secret rooms" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Shoots 16 beams"
+            "#Beams can destroy rocks and open secret rooms",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Shoots 16 beams"
         },
         spa = {
             name = "Orbe Druidico",
@@ -914,8 +914,8 @@ descriptions.Cards = {
         en_us = {
             name = "Spirit of Sacrilege",
             description = "#{{BleedingOut}} Slashes through all enemies and beggars in the room, inflicting them with bleeding and brimstone curse" ..
-            "#Slain beggars drop extra pickups" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Slashes through enemies a second time"
+            "#Slain beggars drop extra pickups",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Slashes through enemies a second time"
         },
         spa = {
             name = "Orbe Druidico",
@@ -929,8 +929,8 @@ descriptions.Cards = {
     [enums.Orbs.WATER] = {
         en_us = {
             name = "Spirit of Deluge",
-            description = "#{{Timer}} For 8 seconds, Isaac's tears are replaced with a controllable waterfall cyclone that sucks in enemies and pickups" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Doubles duration"
+            description = "#{{Timer}} For 8 seconds, Isaac's tears are replaced with a controllable waterfall cyclone that sucks in enemies and pickups",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles duration"
         },
         spa = {
             name = "Orbe Druidico",
@@ -944,8 +944,8 @@ descriptions.Cards = {
     [enums.Orbs.ROCK] = {
         en_us = {
             name = "Spirit of Terrastrium",
-            description = "#Summons 4-5 rock stalagmites that impale enemies and break through metal blocks" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Spawns 8-10 stalagmites"
+            description = "#Summons 4-5 rock stalagmites that impale enemies and break through metal blocks",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Spawns 8-10 stalagmites"
         },
         spa = {
             name = "Orbe Druidico",
@@ -959,8 +959,8 @@ descriptions.Cards = {
     [enums.Orbs.RANDOM] = {
         en_us = {
             name = "Spirit of Chaos",
-            description = "#Uses a random spirit orb effect" ..
-            "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
+            description = "#Uses a random spirit orb effect",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         spa = {
             name = "Orbe Druidico",
