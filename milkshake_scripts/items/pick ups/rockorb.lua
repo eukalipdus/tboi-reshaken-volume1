@@ -3,8 +3,8 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local LONG_ROOM_GRID_SIZE = 252
-local NORMAL_MIN = 5
-local NORMAL_MAX = 6
+local NORMAL_MIN = 4
+local NORMAL_MAX = 5
 local BIG_MIN = 7
 local BIG_MAX = 9
 local KILL_RADIUS = 40

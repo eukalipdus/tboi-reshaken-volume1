@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 local Utilities = MilkshakeVol1.utility
 
 
-local CLAIRVOYANCE_ORB_DURATION = 30 * 60
+local CLAIRVOYANCE_ORB_DURATION = 30 * 100
 local PROJECTILE_REFLECTION_RADIUS = 135
 local PROJECTILE_REFLECTION_INTERVAL = 10
 local FAKE_CENSER_RADIUS = 70

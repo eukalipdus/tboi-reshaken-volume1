@@ -121,7 +121,7 @@
             <gibs amount="4" blood="0" bone="1" eye="0" gut="0" large="0" />
     </entity>
 
-    <entity anm2path="terrastrium_spike.anm2" baseHP="10" boss="0" champion="0" collisionDamage="1"
+    <entity anm2path="terrastrium_spike.anm2" baseHP="7" boss="0" champion="0" collisionDamage="1"
             id="961" reroll="false"
             collisionMass="200" collisionRadius="12" friction="1" name="Terra Stalagmite"
             numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="1" shutdoors="false">

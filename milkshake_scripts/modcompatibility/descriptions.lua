@@ -456,7 +456,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.DOGGY_BAG] = {
         en_us = {
             name = "Doggy Bag",
-            description = "Poop",
+            description = "Taking damage spawns a random poop" ..
+            "#Isaac can pick up poops by walking into them",
         },
         spa = {
             name = "Doggy Bag",
@@ -598,13 +599,200 @@ descriptions.Trinkets = {
     [enums.Trinkets.TUNGSTEN_CUBE] = {
         en_us = {
             name = "Tungsten Cube",
-            description = "{{Blank}}{{ArrowDown}} -0.2 speed down. #Dropping it creates a huge shockwave that deals big damage",
+            description = "{{ArrowDown}} -0.2 Speed. #Dropping it creates a huge damaging shockwave",
         },
         spa = {
             name = "Cubo De Tungsteno",
             description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
         },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
     },
+    [enums.Trinkets.ACID_PENNY] = {
+        en_us = {
+            name = "Acid Penny",
+            description = "{{Pill11}} Picking up a coin has an 8% chance to spawn a pill",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.CRYSTAL_PENNY] = {
+        en_us = {
+            name = "Crystal Penny",
+            description = "{{Card}} Picking up a coin has an 8% chance to spawn a card",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.ROCK_WHEEL] = {
+        en_us = {
+            name = "Rock Wheel",
+            description = "Stonies and grimaces target hostile enemies",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.AMETHYST_SHARD] = {
+        en_us = {
+            name = "Amethyst Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Clairvoyance when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.RUBY_SHARD] = {
+        en_us = {
+            name = "Ruby Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Inferno when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.TOURMALINE_SHARD] = {
+        en_us = {
+            name = "Tourmaline Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Conductivity when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.EMERALD_SHARD] = {
+        en_us = {
+            name = "Emerald Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Druidity when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.PERIDOT_SHARD] = {
+        en_us = {
+            name = "Peridot Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Virulence when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.GARNET_SHARD] = {
+        en_us = {
+            name = "Garnet Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Sacrilege when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.ONYX_SHARD] = {
+        en_us = {
+            name = "Onyx Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Revenance when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.DIAMOND_SHARD] = {
+        en_us = {
+            name = "Diamond Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Salvation when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.SAPPHIRE_SHARD] = {
+        en_us = {
+            name = "Sapphire Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Deluge when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    [enums.Trinkets.AMBER_SHARD] = {
+        en_us = {
+            name = "Amber Shard",
+            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Terrastrium when destroyed",
+        },
+        spa = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+        ru = {
+            name = "Cubo De Tungsteno",
+            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+        },
+    },
+    
 }
 
 --CARD DESCRIPTIONS
@@ -612,9 +800,9 @@ descriptions.Cards = {
     [enums.Orbs.NATURE] = {
         en_us = {
             name = "Spirit of Druidity",
-            description = "#Traps all enemies in the room in vines for 12 seconds. Trapped enemies drop a fruit heart on death." ..
-            "#{{FruitHeart}} Fruit Hearts heal half a red heart, or half a soul heart if full." ..
-            "#" ..LyraIcon.. " {{ColorYellow}}Doubles fruit heart drops"
+            description = "Traps all enemies in the room in vines for 12 seconds. Trapped enemies drop a fruit heart on death" ..
+            "#{{BlendedHeart}} Fruit Hearts heal half a red heart, or half a soul heart if full" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Doubles fruit heart drops"
         },
         spa = {
             name = "Orbe Druidico",
@@ -628,7 +816,9 @@ descriptions.Cards = {
     [enums.Orbs.ELECTRIC] = {
         en_us = {
             name = "Spirit of Conductivity",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "Shoots a wave of electricity in all directions, damaging nearby enemies" ..
+            "#{{ArcadeRoom}} Short circuits all machines in radius, causing them to pay out multiple times and explode" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Doubles electricity duration and range"
         },
         spa = {
             name = "Orbe Druidico",
@@ -642,7 +832,9 @@ descriptions.Cards = {
     [enums.Orbs.FIRE] = {
         en_us = {
             name = "Spirit of Inferno",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "{{Burning}} Shoots a stream of high damage flames in a chosen direction" ..
+            "#{{BossRoom}} Pierces Boss Armor" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Doubles flames shot"
         },
         spa = {
             name = "Orbe Druidico",
@@ -656,7 +848,8 @@ descriptions.Cards = {
     [enums.Orbs.PSYCHIC] = {
         en_us = {
             name = "Spirit of Clairvoyance",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "{{Timer}} Grants an aura that slows enemies and reflects projectiles for 100 seconds" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Doubles duration and reflects faster"
         },
         spa = {
             name = "Orbe Druidico",
@@ -670,7 +863,9 @@ descriptions.Cards = {
     [enums.Orbs.UNDEAD] = {
         en_us = {
             name = "Spirit of Revenance",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "Summons 4-6 graves around the room that spawn friendly bonies or ghosts when destroyed" ..
+            "#Fills all pits in the room with bones" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Doubles spawned graves"
         },
         spa = {
             name = "Orbe Druidico",
@@ -684,7 +879,11 @@ descriptions.Cards = {
     [enums.Orbs.POISON] = {
         en_us = {
             name = "Spirit of Virulence",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "{{Throwable}} Throws a toxic orb that explodes into a damaging poison cloud" ..
+            "#{{Slow}} Enemies inside will be slowed and take damage over time" ..
+            "#The cloud grows larger the more damage it deals" ..
+            "#{{RottenHeart}} Transforms hearts and beggars into their rotten variants {{RottenBeggar}}" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Doubles cloud size"
         },
         spa = {
             name = "Orbe Druidico",
@@ -698,7 +897,9 @@ descriptions.Cards = {
     [enums.Orbs.HOLY] = {
         en_us = {
             name = "Spirit of Salvation",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "#Shoots 8 damaging beams of light in all directions" ..
+            "#Beams can destroy rocks and open secret rooms" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Shoots 16 beams"
         },
         spa = {
             name = "Orbe Druidico",
@@ -712,7 +913,9 @@ descriptions.Cards = {
     [enums.Orbs.UNHOLY] = {
         en_us = {
             name = "Spirit of Sacrilege",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "#{{BleedingOut}} Slashes through all enemies and beggars in the room, inflicting them with bleeding and brimstone curse" ..
+            "#Slain beggars drop extra pickups" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Slashes through enemies a second time"
         },
         spa = {
             name = "Orbe Druidico",
@@ -726,7 +929,8 @@ descriptions.Cards = {
     [enums.Orbs.WATER] = {
         en_us = {
             name = "Spirit of Deluge",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "#{{Timer}} For 8 seconds, Isaac's tears are replaced with a controllable waterfall cyclone that sucks in enemies and pickups" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Doubles duration"
         },
         spa = {
             name = "Orbe Druidico",
@@ -740,7 +944,8 @@ descriptions.Cards = {
     [enums.Orbs.ROCK] = {
         en_us = {
             name = "Spirit of Terrastrium",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "#Summons 4-5 rock stalagmites that impale enemies and break through metal blocks" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Spawns 8-10 stalagmites"
         },
         spa = {
             name = "Orbe Druidico",
@@ -754,7 +959,8 @@ descriptions.Cards = {
     [enums.Orbs.RANDOM] = {
         en_us = {
             name = "Spirit of Chaos",
-            description = "#Traps all enemies in the room in vines for 20 seconds. Trapped enemies drop a fruit heart on death."
+            description = "#Uses a random spirit orb effect" ..
+            "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         spa = {
             name = "Orbe Druidico",
