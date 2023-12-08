@@ -460,8 +460,9 @@ descriptions.Collectibles = {
             "#Isaac can pick up poops by walking into them",
         },
         spa = {
-            name = "Doggy Bag",
-            description = "Poop",
+            name = "Bolsa de Perro",
+            description = "Recibir daño genera una caca aleatoria" ..
+            "#Isaac puede coger cacas al andar hacia ellas",
         },
         ru = {
             name = "Doggy Bag",
@@ -616,8 +617,8 @@ descriptions.Trinkets = {
             description = "{{Pill11}} Picking up a coin has an 8% chance to spawn a pill",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Penique Ácido",
+            description = "{{Pill11}} Recoger una moneda tiene un 8% de probabilidad de crear una píldora",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -630,8 +631,8 @@ descriptions.Trinkets = {
             description = "{{Card}} Picking up a coin has an 8% chance to spawn a card",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Penique Cristalino",
+            description = "{{Pill11}} Recoger una moneda tiene un 8% de probabilidad de crear una carta",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -644,8 +645,8 @@ descriptions.Trinkets = {
             description = "Stonies and grimaces target hostile enemies",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Rueda de Roca",
+            description = "Los enemigos rocosos atacan a otros enemigos",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -658,8 +659,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Clairvoyance when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Amatista",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Premonición",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -672,8 +673,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Inferno when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Rubí",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Infernal",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -686,8 +687,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Conductivity when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Turmalina",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Conductividad",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -700,8 +701,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Druidity when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Esmeralda",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Druídico",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -714,8 +715,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Virulence when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Peridoto",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Virulencia",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -728,8 +729,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Sacrilege when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Granate",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Sacrilegio",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -742,8 +743,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Revenance when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Ónix",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Renacido",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -756,8 +757,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Salvation when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Diamante",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Salvación",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -770,8 +771,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Deluge when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Zafiro",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Diluvio",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -784,8 +785,8 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Terrastrium when destroyed",
         },
         spa = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Fragmento de Ámbar",
+            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Terrastrium",
         },
         ru = {
             name = "Cubo De Tungsteno",
