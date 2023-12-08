@@ -15,4 +15,10 @@ function dadsMitt:FamiliarUpdate(familiar)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, dadsMitt.FamiliarUpdate, FamiliarVariant.ABYSS_LOCUST)
 
+function dadsMitt:FamiliarInit(familiar)
+    if familiar.SubType ~= enums.Collectibles.DADS_MITT then return end
+    familiar.Color = Color.Default
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, dadsMitt.FamiliarInit, FamiliarVariant.ABYSS_LOCUST)
+
 return dadsMitt
