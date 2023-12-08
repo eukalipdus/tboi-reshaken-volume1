@@ -805,8 +805,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Doubles fruit heart drops"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu Druídico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 12 segundoss. Matar a un enemigo enredado genera un corazon frutal" ..
+            "#{{BlendedHeart}} Los corazones frutales dan un corazón rojo, o medio corazón de alma si está lleno",
+            lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Duplica los corazones frutales generados"
         },
         ru = {
             name = "Orbe Druidico",
@@ -821,8 +823,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles electricity duration and range"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu de Conductividad",
+            description = "Dispara ondas eléctricas en todas direcciones, dañando a los enemigos cercanos" ..
+            "#{{ArcadeRoom}} Cortocircuita todas las máquinas cercanas, causando que paguen algunas veces y exploten",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración y el rango de las ondas"
         },
         ru = {
             name = "Orbe Druidico",
@@ -837,8 +841,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles flames shot"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu Infernal",
+            description = "{{Burning}} Dispara un chorro de poderosas llamas en la dirección elegida" ..
+            "#{{BossRoom}} Penetra la Armadura de Jefe",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica las llamas disparadas"
         },
         ru = {
             name = "Orbe Druidico",
@@ -852,8 +858,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles duration and reflects faster"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu de Premonición",
+            description = "{{Timer}} Otorga un aura que ralentiza enemigos y refleja proyectiles durante 100 segundos",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración y refleja más rapido"
         },
         ru = {
             name = "Orbe Druidico",
@@ -868,8 +875,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles spawned graves"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu del Renacido",
+            description = "Crea 4-6 tumbas en la habitación que generan bonies amistosos o fantasmas cuando se destruyen" ..
+            "#Rellena todos los fosos de la habitación con huesos",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la cantidad de tumbas"
         },
         ru = {
             name = "Orbe Druidico",
@@ -886,8 +895,12 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles cloud size"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu de Virulencia",
+            description = "{{Throwable}} Lanza un orbe tóxico que explota en una nube venenosa" ..
+            "#{{Slow}} Los enemigos dentro de la nube se ralentizan y envenenan" ..
+            "#Cuanto más daño haga la nube, más crecerá" ..
+            "#{{RottenHeart}} Transforma corazones y mendigos en sus versiones podridas {{RottenBeggar}}",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el tamaño de la nube"
         },
         ru = {
             name = "Orbe Druidico",
@@ -902,8 +915,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Shoots 16 beams"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu de la Salvación",
+            description = "#Dispara 8 rayos de luz en todas direcciones" ..
+            "#Los rayos pueden destruir rocas y abrir habitaciones secretas",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Dispara 16 rayos"
         },
         ru = {
             name = "Orbe Druidico",
@@ -918,8 +933,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Slashes through enemies a second time"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu del Sacrilegio",
+            description = "#{{BleedingOut}} Atraviesa a todos los enemigos y mendigos en la habitación, inflingiendo sangrado y maldición de azufre" ..
+            "#Los mendigos asesinados dan más recompensa",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Atraviesa a todos los enemigos dos veces"
         },
         ru = {
             name = "Orbe Druidico",
@@ -933,8 +950,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles duration"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu del Diluvio",
+            description = "#{{Timer}} Durante 8 segundos reemplaza las lágrimas de Isaac con un ciclón de agua controlable que atrae enemigos y objetos",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración"
         },
         ru = {
             name = "Orbe Druidico",
@@ -948,8 +966,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Spawns 8-10 stalagmites"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu de Terrastrium",
+            description = "#Crea 4-5 estalagmitas de piedra, que empalan a los enemigos y pueden romper incluso bloques de metal",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Crea el doble de estalagmitas"
         },
         ru = {
             name = "Orbe Druidico",
@@ -963,8 +982,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         spa = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Espíritu de Caos",
+            description = "#Usa un efecto de orbe espiritual aleatorio",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el efecto elegido"
         },
         ru = {
             name = "Orbe Druidico",
