@@ -13,6 +13,7 @@ local SPRITESHEET_PER_ORB = {
     [enums.Orbs.POISON] = "spirit_poison",
     [enums.Orbs.UNDEAD] = "spirit_undead",
     [enums.Orbs.WATER] = "spirit_water",
+    [enums.Orbs.ROCK] = "spirit_ground",
 }
 
 local moveOrbHudPerPlayer = {
