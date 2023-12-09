@@ -67,17 +67,45 @@ local function SpawnPoop(bag)
     utility:SetData(poop, "DoggyBagPoop", true)
 end
 
+local function TrackDoggyBagPoop(player, poopType)
+    if not TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags") then
+        TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "TrackedDoggyBags", {})
+    end
+    
+    local playerIndex = utility:GetPlayerIndex(player)
+    local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
+    local playerAndBags = {
+        playerIndex,
+        {}
+    }
+
+    if #trackedSets > 0 then
+        for _, set in ipairs(trackedSets) do
+            if set[1] == playerIndex then
+                playerAndBags = set
+            end
+        end
+    end
+
+    playerAndBags[2][#playerAndBags+1] = poopType
+    table.insert(trackedSets, #trackedSets+1, playerAndBags)
+    TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags", trackedSets)
+end
+
 function doggyBag:PostNewRoom()
     for i = 0, Game():GetNumPlayers() - 1 do
 		local player = Game():GetPlayer(i)
         local doggyBags = GetDoggyBags(player)
         local rng =  player:GetCollectibleRNG(enums.Collectibles.DOGGY_BAG)
         for _, bag in ipairs(doggyBags) do
-            local poopType = TSIL.Random.GetRandomElementsFromTable(poopStrings, 1, rng)
-            utility:SetData(bag, "PoopType", poopType[1])
             local sprite = bag:GetSprite()
-            sprite:Load(spritesheetPaths[poopType[1]], true)
-            sprite:Play("Idle")
+            if sprite:GetFilename() == EMPTY_PATH then
+                local poopType = TSIL.Random.GetRandomElementsFromTable(poopStrings, 1, rng)
+                utility:SetData(bag, "PoopType", poopType[1])
+                TrackDoggyBagPoop(player, poopType)
+                sprite:Load(spritesheetPaths[poopType[1]], true)
+                sprite:Play("Idle")
+            end
         end
     end
 end
