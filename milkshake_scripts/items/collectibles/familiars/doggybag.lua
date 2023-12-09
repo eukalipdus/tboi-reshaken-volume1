@@ -64,15 +64,31 @@ local function SpawnPoop(bag)
         poop = TSIL.GridSpecific.SpawnPoop(safePoops[poopType], Isaac.GetFreeNearPosition(bag.Position, POOP_STEP), false)
     end
     utility:SetData(bag, "PoopType", nil)
+    utility:SetData(bag, "PlayerHit", true)
     utility:SetData(poop, "DoggyBagPoop", true)
+end
+
+local function FindSetIndex(allSets, playerIndex)
+    for index, set in ipairs(allSets) do
+        if set[1] == playerIndex then
+            return index
+        end
+    end
+    return -1
+end
+
+local function ApplyPoopType(bag, sprite, type)
+    utility:SetData(bag, "PoopType", type)
+    sprite:Load(spritesheetPaths[type], true)
+    sprite:Play("Idle")
 end
 
 local function TrackDoggyBagPoop(player, poopType)
     if not TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags") then
         TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "TrackedDoggyBags", {})
     end
-    
-    local playerIndex = utility:GetPlayerIndex(player)
+
+    local playerIndex = utility:GetPlayerIdentifier(player)
     local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
     local playerAndBags = {
         playerIndex,
@@ -80,19 +96,18 @@ local function TrackDoggyBagPoop(player, poopType)
     }
 
     if #trackedSets > 0 then
-        for _, set in ipairs(trackedSets) do
-            if set[1] == playerIndex then
-                playerAndBags = set
-            end
+        local index = FindSetIndex(trackedSets, playerIndex)
+        if index ~= -1 then
+            playerAndBags = trackedSets[index]
         end
     end
-
-    playerAndBags[2][#playerAndBags+1] = poopType
+    local nextBagIndex = #(playerAndBags[2]) + 1
+    playerAndBags[2][nextBagIndex] = poopType
     table.insert(trackedSets, #trackedSets+1, playerAndBags)
     TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags", trackedSets)
 end
 
-function doggyBag:PostNewRoom()
+function doggyBag:PostNewRoomReordered()
     for i = 0, Game():GetNumPlayers() - 1 do
 		local player = Game():GetPlayer(i)
         local doggyBags = GetDoggyBags(player)
@@ -101,15 +116,13 @@ function doggyBag:PostNewRoom()
             local sprite = bag:GetSprite()
             if sprite:GetFilename() == EMPTY_PATH then
                 local poopType = TSIL.Random.GetRandomElementsFromTable(poopStrings, 1, rng)
-                utility:SetData(bag, "PoopType", poopType[1])
-                TrackDoggyBagPoop(player, poopType)
-                sprite:Load(spritesheetPaths[poopType[1]], true)
-                sprite:Play("Idle")
+                ApplyPoopType(bag, sprite, poopType[1])
+                TrackDoggyBagPoop(player, poopType[1])
             end
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, doggyBag.PostNewRoom)
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, doggyBag.PostNewRoomReordered)
 
 function doggyBag:PostPEffectUpdate(player)
     if not player:HasCollectible(enums.Collectibles.DOGGY_BAG) then return end
@@ -153,6 +166,16 @@ function doggyBag:EntityTakeDmg(entity)
         for _, bag in ipairs(doggyBags) do
             if utility:GetData(bag, "PoopType") then
                 bag:GetSprite():Play("Spawn")
+
+                local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
+                local index = FindSetIndex(trackedSets, utility:GetPlayerIdentifier(player))
+                if index ~= -1 then
+                    for poopTypeIdx, type in ipairs(trackedSets[index][2]) do
+                        if type == utility:GetData(bag, "PoopType") then
+                            table.remove(trackedSets[index][2], poopTypeIdx)
+                        end
+                    end
+                end
             end
         end
     end
@@ -172,6 +195,18 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, doggyBag.EvaluateCache
 ---@param bag EntityFamiliar
 function doggyBag:FamiliarInit(bag)
     bag:AddToFollowers()
+    local sprite = bag:GetSprite()
+    if sprite:GetFilename() == EMPTY_PATH
+    and not utility:SetData(bag, "PlayerHit") then
+        local player = bag.Player
+        local bagCount = 1
+        if utility:GetData(player, "BagCount") then
+            bagCount = utility:GetData(player, "BagCount")
+            utility:SetData(player, "BagCount", bagCount + 1)
+        else
+            utility:SetData(player, "BagCount", 1)
+        end
+    end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, doggyBag.FamiliarInit, enums.Familiars.DOGGY_BAG)
 
@@ -188,3 +223,22 @@ function doggyBag:FamiliarUpdate(bag)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, doggyBag.FamiliarUpdate, enums.Familiars.DOGGY_BAG)
+
+function doggyBag:PostGameStartedReordered(isContinued)
+    if isContinued then
+        local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
+        for i = 0, Game():GetNumPlayers() - 1 do
+            local player = Isaac.GetPlayer(i)
+            local index = FindSetIndex(trackedSets, utility:GetPlayerIdentifier(player))
+            local doggyBags = GetDoggyBags(player)
+            for currentBag, bag in pairs(doggyBags) do
+                if index ~= -1 then
+                    ApplyPoopType(bag, bag:GetSprite(), trackedSets[index][2][currentBag])
+                end
+            end
+        end
+    else
+        TSIL.SaveManager.RemovePersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
+    end
+end
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, doggyBag.PostGameStartedReordered)
