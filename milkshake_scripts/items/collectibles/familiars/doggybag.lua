@@ -20,6 +20,19 @@ local safePoops = {
     ["Charming"] = TSIL.Enums.PoopGridEntityVariant.CHARMING,
 }
 
+local poopWeights = {
+    {chance = 1, value = "Normal"},
+    {chance = 0.5, value = "Golden"},
+    {chance = 1, value = "White"},
+    {chance = 1, value = "Corn"},
+    {chance = 1, value = "Burning"},
+    {chance = 1, value = "Stinky"},
+    {chance = 1, value = "Black"},
+    {chance = 1, value = "Holy"},
+    {chance = 0.5, value = "Rainbow"},
+    {chance = 1, value = "Charming"},
+}
+
 local spritesheetPaths = {
     ["Normal"] = "gfx/familiar_doggy_bag.anm2",
     ["Golden"] = "gfx/familiar_doggy_bag_gold.anm2",
@@ -31,19 +44,6 @@ local spritesheetPaths = {
     ["Holy"] = "gfx/familiar_doggy_bag_holy.anm2",
     ["Rainbow"] = "gfx/familiar_doggy_bag_rainbow.anm2",
     ["Charming"] = "gfx/familiar_doggy_bag_charming.anm2",
-}
-
-local poopStrings = {
-    "Normal",
-    "Golden",
-    "White",
-    "Corn",
-    "Burning",
-    "Stinky",
-    "Black",
-    "Holy",
-    "Rainbow",
-    "Charming",
 }
 
 local function GetDoggyBags(player)
@@ -115,9 +115,9 @@ function doggyBag:PostNewRoomReordered()
         for _, bag in ipairs(doggyBags) do
             local sprite = bag:GetSprite()
             if sprite:GetFilename() == EMPTY_PATH then
-                local poopType = TSIL.Random.GetRandomElementsFromTable(poopStrings, 1, rng)
-                ApplyPoopType(bag, sprite, poopType[1])
-                TrackDoggyBagPoop(player, poopType[1])
+                local poopType = TSIL.Random.GetRandomElementFromWeightedList(rng, poopWeights)
+                ApplyPoopType(bag, sprite, poopType)
+                TrackDoggyBagPoop(player, poopType)
             end
         end
     end
