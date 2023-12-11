@@ -450,4 +450,15 @@ function utility:IsJudasBirthright(player)
 end
 
 
+---Checks if the boss versus screen is currently playing.
+---@return boolean
+function utility:IsVersusScreenPlaying()
+    local room = Game():GetRoom()
+    return Game():IsPaused()
+        and room:GetFrameCount() == 0
+        and room:GetType() == RoomType.ROOM_BOSS
+        and not room:IsClear()
+end
+
+
 MilkshakeVol1.utility = utility

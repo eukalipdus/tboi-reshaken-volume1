@@ -449,7 +449,7 @@ function MirrorKey:GetShaderParams(shaderName)
         )
 
         local enableShader = 0.0
-        if isInMirrorRoom then
+        if isInMirrorRoom and not MilkshakeVol1.utility:IsVersusScreenPlaying() then
             enableShader = 1.0
 
             local hud = Game():GetHUD()
