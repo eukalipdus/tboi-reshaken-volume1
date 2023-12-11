@@ -223,6 +223,29 @@ local exampledirectory = {
                 tooltip = { strset = { 'play click', 'sound with', 'sharp cursor' } }
             },
 
+            -- LEVITICUS SPRITE
+            {
+                str = 'leviticus sprite',
+                fsize = 2,
+                choices = { 'vanilla', 'aladar', 'fancy' },
+                setting = 1,
+                variable = 'LeviticusSprite',
+                load = function()
+                    return TSIL.SaveManager.GetPersistentVariable(
+                        MilkshakeVol1,
+                        "LeviticusSprite"
+                    )
+                end,
+                store = function(var)
+                    TSIL.SaveManager.SetPersistentVariable(
+                        MilkshakeVol1,
+                        "LeviticusSprite",
+                        var
+                    )
+                end,
+                tooltip = { strset = { 'what sprite', 'leviticus', 'will use' } }
+            },
+
             { str = "", nosel = true },
 
             -- ENEMY SETTINGS DEST
