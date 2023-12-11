@@ -11,6 +11,7 @@ MilkshakeVol1.API = {}
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
 include("milkshake_scripts.modcompatibility.crabbyCretins")
+include("milkshake_scripts.modcompatibility.dssMenu")
 include("milkshake_scripts.modcompatibility.eclipsed")
 include("milkshake_scripts.modcompatibility.eid")
 include("milkshake_scripts.modcompatibility.epiphany")
