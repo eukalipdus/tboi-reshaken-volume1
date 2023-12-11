@@ -749,6 +749,12 @@ end
 
 
 local function TryPlayBossMusic()
+    local customMusicEnabled = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "CustomMirrorWorldBossMusic"
+    )
+    if not customMusicEnabled then return end
+
     local isInMirror = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "IsInMirrorRoom"
