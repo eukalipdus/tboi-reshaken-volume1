@@ -1,0 +1,3 @@
+<music root="music/">
+    <track name="Glass Boss" intro="glass_intro.ogg" path="glass_loop.ogg" loop="true" />
+</music>

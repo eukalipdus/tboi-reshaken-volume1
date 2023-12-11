@@ -252,4 +252,8 @@ enums.ItemPools = {
     GLASS = 0
 }
 
+enums.Music = {
+    GLASS_BOSS = Isaac.GetMusicIdByName("Glass Boss")
+}
+
 MilkshakeVol1.enums = enums

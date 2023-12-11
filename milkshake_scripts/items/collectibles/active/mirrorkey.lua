@@ -720,7 +720,7 @@ MilkshakeVol1:AddCallback(
 )
 
 
-function MirrorKey:OnRender()
+local function TryRenderOutlines()
     if not ShouldSpawnMirrorDoorOutlines() then return end
     if AreThereDoorOutlines() then return end
 
@@ -745,6 +745,39 @@ function MirrorKey:OnRender()
         sprite.Color = Color(1, 1, 1, 0.3, 0.5, 3, 4)
         sprite.Rotation = rotation
     end
+end
+
+
+local function TryPlayBossMusic()
+    local isInMirror = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "IsInMirrorRoom"
+    )
+    if not isInMirror then return end
+
+    if Game():IsPaused() then return end
+
+    local room = Game():GetRoom()
+    if room:GetType() ~= RoomType.ROOM_BOSS then return end
+    if room:IsClear() then return end
+
+    local musicManager = MusicManager()
+
+    if musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER
+    or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER2
+    or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER3 then
+        return
+    end
+
+    if musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS then
+        musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS)
+    end
+end
+
+
+function MirrorKey:OnRender()
+    TryRenderOutlines()
+    TryPlayBossMusic()
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_RENDER,
