@@ -1,6 +1,6 @@
 <entities anm2root="gfx/" version="5" deathanm2="gfx/death enemies.anm2">
     <!-- Effects with variant 40 get instanly removed after being spawned -->
-    <entity name="www doesnt exist" anm2path="vines.anm2" id="1000" variant="40">
+    <entity name="www doesnt exist" anm2path="" id="1000" variant="40">
 	</entity>
 
     <entity anm2path="sharp_cursor.anm2" name="Sharp Cursor" id="3" tags="cansacrifice"
@@ -307,6 +307,18 @@
     </entity>
 
     <entity name="Mirror Key Door Outline" id="1000" anm2path="1000.154_door outline.anm2">
+    </entity>
+
+    <entity name="Sacrilege Wall Overlay" id="1000" anm2path="backdrop/spirit rooms/unholy/sacrilege_wall.anm2">
+    </entity>
+
+    <entity name="Sacrilege Floor Overlay" id="1000" anm2path="backdrop/spirit rooms/unholy/sacrilege_ground.anm2">
+    </entity>
+
+    <entity name="Sacrilege Screen Overlay" id="1000" anm2path="backdrop/spirit rooms/unholy/sacrilege_overlay.anm2">
+    </entity>
+
+    <entity name="Sacrilege Pentagram Overlay" id="1000" anm2path="backdrop/spirit rooms/unholy/sacrilege_pentagram.anm2">
     </entity>
 
 </entities>

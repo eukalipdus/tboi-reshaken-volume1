@@ -120,10 +120,12 @@ include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
 
+--Room ecorations
+include("milkshake_scripts.room_decorations.sacrilege")
+
 --Misc
 include("milkshake_scripts.shardrockoverlay")
 include("milkshake_scripts.nonreplaceabletnt")
-
 
 --- Shader crash fix
 --- Credits to Cucco
