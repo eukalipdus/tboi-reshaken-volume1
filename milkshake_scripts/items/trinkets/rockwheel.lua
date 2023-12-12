@@ -9,6 +9,10 @@ local BASE_TARGET_SEARCH_RADIUS = 120
 
 local LINECHECK_MODE_HIT_OBSTACLES_ONLY = 3
 
+local CHARM_FLASH_COLOR = Color(0.6,0.6,0.6,1,1,0.4,0.6)
+local CHARM_FLASH_DURATION = 30
+
+
 local GRIMACES = TSIL.Utils.Tables.ConstructDictionaryFromTable({
     EntityType.ENTITY_STONEHEAD,
     EntityType.ENTITY_CONSTANT_STONE_SHOOTER,
@@ -52,6 +56,7 @@ function RockWheel:NPCInit(npc)
         return
     end
 
+    npc:SetColor(CHARM_FLASH_COLOR, CHARM_FLASH_DURATION, 1, true, false)
     npc:AddEntityFlags(EntityFlag.FLAG_FRIENDLY)
     utility:SetData(npc, "HasRockWheelCharm", true)
     npc.CollisionDamage = STONEY_COLLISION_DAMAGE
