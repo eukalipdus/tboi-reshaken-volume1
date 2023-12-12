@@ -37,4 +37,45 @@ MilkshakeVol1:AddModCompatibility("Retribution", function()
         { orb = MilkshakeVol1.enums.Orbs.UNDEAD, type = 88,  variant = 0,    subtype = 185 }, -- stumbling blue boil
     }
     MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerRetributionEntities)
+
+    ---Toxic orb
+    MilkshakeVol1.API:AddToxicOrbBeggar(Isaac.GetEntityVariantByName("Swine Beggar"))
+    MilkshakeVol1.API:AddToxicOrbBeggar(Isaac.GetEntityVariantByName("Angelic Swine Beggar"))
+    MilkshakeVol1.API:AddToxicOrbBeggar(Isaac.GetEntityVariantByName("Demonic Swine Beggar"))
+    ---Unholy orb
+    local capsules = {
+        Config = { Count = 1, MinCount = 0 },
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Damage Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Health Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Luck Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Range Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Shotspeed Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Speed Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Tears Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HD Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LD Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("RD Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("SD Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("MD Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("TD Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HL Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HR Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HS Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HM Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HT Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LR Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LS Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LM Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LT Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("RS Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("RM Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("RT Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("SM Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("ST Capsule"), SubType = 0},
+        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("MT Capsule"), SubType = 0},
+    }
+    MilkshakeVol1.API:AddUnholyOrbBeggar(Isaac.GetEntityVariantByName("Swine Beggar"), capsules)
+    MilkshakeVol1.API:AddUnholyOrbBeggar(Isaac.GetEntityVariantByName("Angelic Swine Beggar"), capsules)
+    MilkshakeVol1.API:AddUnholyOrbBeggar(Isaac.GetEntityVariantByName("Demonic Swine Beggar"), capsules)
+
 end)

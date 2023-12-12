@@ -2,7 +2,8 @@ local enums = MilkshakeVol1.enums
 local ShatteredOrb = {}
 
 local SHATTERED_ORB_THROW_SPEED = 8
-local SHATTERED_ORB_FALL_ACCEL = 0.1
+local SHATTERED_ORB_FALL_ACCEL = 0.025
+local SHATTERED_ORB_TIME_UNTIL_FALL = 5
 local SHATTERED_ORB_RADIUS = 20
 
 --TODO: Find a better place to put this in so it's not repeated
@@ -14,6 +15,7 @@ local PossibleWisps = {
     enums.Collectibles.SPECIAL_BRENDA_WATER_WISP,
     enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
     enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP,
     CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
     CollectibleType.COLLECTIBLE_SATANIC_BIBLE
 }
@@ -483,7 +485,7 @@ function ShatteredOrb:OnPlayerUpdate(player)
 
     SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 
-    local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + player.Velocity
+    local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + (player.Velocity * 0.9)
     AddShatteredOrbData(shatteredOrb, direction)
 end
 
@@ -538,7 +540,7 @@ local function SpawnWisps(shatteredOrb)
 
     local wisps = TSIL.Random.GetRandomElementsFromTable(
         PossibleWisps,
-        4,
+        3,
         player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB)
     )
     for _, wisp in ipairs(wisps) do
@@ -571,9 +573,13 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
     shatteredOrb.Velocity = shatteredOrbData.direction
 
     shatteredOrb.SpriteOffset = shatteredOrb.SpriteOffset + Vector(0, shatteredOrbData.fallingSpeed)
-    shatteredOrbData.fallingSpeed = shatteredOrbData.fallingSpeed + SHATTERED_ORB_FALL_ACCEL
 
-    if shatteredOrb.SpriteOffset.Y >= 0 then
+    if shatteredOrb.FrameCount >= SHATTERED_ORB_TIME_UNTIL_FALL then
+        shatteredOrbData.fallingSpeed = shatteredOrbData.fallingSpeed + SHATTERED_ORB_FALL_ACCEL * (shatteredOrb.FrameCount - SHATTERED_ORB_TIME_UNTIL_FALL)
+    end
+
+
+    if shatteredOrb.SpriteOffset.Y >= -10 then
         SpawnWisps(shatteredOrb)
         SFXManager():Play(SoundEffect.SOUND_MIRROR_BREAK, 1, 2, false, 1.3)
 
@@ -584,6 +590,8 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
 
         sprite:Load("/gfx/shattered_orb_effects.anm2", true)
         sprite:Play("Shatter", true)
+
+        shatteredOrb:Die()
 
         return
     end

@@ -3,8 +3,8 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local LONG_ROOM_GRID_SIZE = 252
-local NORMAL_MIN = 5
-local NORMAL_MAX = 6
+local NORMAL_MIN = 4
+local NORMAL_MAX = 5
 local BIG_MIN = 7
 local BIG_MAX = 9
 local KILL_RADIUS = 40
@@ -12,47 +12,93 @@ local SHAKE_TIMEOUT = 25
 local PILLAR_TARGETS = 2
 local TINTED_TARGETS = 1
 local BASE_BOSS_DAMAGE = 50
+local WALL_MARGIN = 15
+local TIMES_CAN_FAIL = 1000
 
 local floorRockSprites = {
-    ["???"] = "gfx/grid/terrastrium_spike_bluewomb.png",
-    ["BurningBasement"] = "gfx/grid/terrastrium_spike_burningbasement.png",
-    ["Catacombs"] = "gfx/grid/terrastrium_spike_catacombs.png",
-    ["Cathedral"] = "gfx/grid/terrastrium_spike_cathedral.png",
-    ["Caves"] = "gfx/grid/terrastrium_spike_caves.png",
-    ["Cellar"] = "gfx/grid/terrastrium_spike_cellar.png",
-    ["Corpse"] = "gfx/grid/terrastrium_spike_corpse.png",
-    ["Depths"] = "gfx/grid/terrastrium_spike_depths.png",
-    ["Downpour"] = "gfx/grid/terrastrium_spike_downpour.png",
-    ["Dross"] = "gfx/grid/terrastrium_spike_dross.png",
-    ["FloodedCaves"] = "gfx/grid/terrastrium_spike_floodedcaves.png",
-    ["Gehenna"] = "gfx/grid/terrastrium_spike_gehenna.png",
-    ["Mausoleum"] = "gfx/grid/terrastrium_spike_mausoleum.png",
-    ["Mines"] = "gfx/grid/terrastrium_spike_mines.png",
-    ["ScarredWomb"] = "gfx/grid/terrastrium_spike_scarredwomb.png",
-    ["Secret"] = "gfx/grid/terrastrium_spike_secretroom.png",
-    ["Sheol"] = "gfx/grid/terrastrium_spike_sheol.png",
-    ["Utero"] = "gfx/grid/terrastrium_spike_utero.png",
-    ["Womb"] = "gfx/grid/terrastrium_spike_womb.png",
+    [BackdropType.BLUE_WOMB] = "gfx/grid/terrastrium_spike_bluewomb.png",
+    [BackdropType.BURNT_BASEMENT] = "gfx/grid/terrastrium_spike_burningbasement.png",
+    [BackdropType.CATACOMBS] = "gfx/grid/terrastrium_spike_catacombs.png",
+    [BackdropType.CATHEDRAL] = "gfx/grid/terrastrium_spike_cathedral.png",
+    [BackdropType.CAVES] = "gfx/grid/terrastrium_spike_caves.png",
+    [BackdropType.CELLAR] = "gfx/grid/terrastrium_spike_cellar.png",
+    [BackdropType.CORPSE_ENTRANCE] = "gfx/grid/terrastrium_spike_corpse.png",
+    [BackdropType.CORPSE] = "gfx/grid/terrastrium_spike_corpse.png",
+    [BackdropType.DUNGEON_ROTGUT] = "gfx/grid/terrastrium_spike_corpse.png",
+    [BackdropType.DEPTHS] = "gfx/grid/terrastrium_spike_depths.png",
+    [BackdropType.NECROPOLIS] = "gfx/grid/terrastrium_spike_depths.png",
+    [BackdropType.DANK_DEPTHS] = "gfx/grid/terrastrium_spike_depths.png",
+    [BackdropType.DOWNPOUR_ENTRANCE] = "gfx/grid/terrastrium_spike_downpour.png",
+    [BackdropType.DOWNPOUR] = "gfx/grid/terrastrium_spike_downpour.png",
+    [BackdropType.DROSS] = "gfx/grid/terrastrium_spike_dross.png",
+    [BackdropType.FLOODED_CAVES] = "gfx/grid/terrastrium_spike_floodedcaves.png",
+    [BackdropType.GEHENNA] = "gfx/grid/terrastrium_spike_gehenna.png",
+    [BackdropType.MAUSOLEUM_ENTRANCE] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MAUSOLEUM] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MAUSOLEUM2] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MAUSOLEUM3] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MAUSOLEUM4] = "gfx/grid/terrastrium_spike_mausoleum.png",
+    [BackdropType.MINES_ENTRANCE] = "gfx/grid/terrastrium_spike_mines.png",
+    [BackdropType.MINES] = "gfx/grid/terrastrium_spike_mines.png",
+    [BackdropType.ASHPIT] = "gfx/grid/terrastrium_spike_mines.png",
+    [BackdropType.ASHPIT_SHAFT] = "gfx/grid/terrastrium_spike_mines.png",
+    [BackdropType.SCARRED_WOMB] = "gfx/grid/terrastrium_spike_scarredwomb.png",
+    [BackdropType.SECRET] = "gfx/grid/terrastrium_spike_secretroom.png",
+    [BackdropType.SHEOL] = "gfx/grid/terrastrium_spike_sheol.png",
+    [BackdropType.UTERO] = "gfx/grid/terrastrium_spike_utero.png",
+    [BackdropType.WOMB] = "gfx/grid/terrastrium_spike_womb.png",
 }
+
+local safeGridEntities = {
+    GridEntityType.GRID_ROCK,
+    GridEntityType.GRID_ROCKB,
+    GridEntityType.GRID_ROCKT,
+    GridEntityType.GRID_ROCK_BOMB,
+    GridEntityType.GRID_ROCK_ALT,
+    GridEntityType.GRID_LOCK,
+    GridEntityType.GRID_TNT,
+    GridEntityType.GRID_ROCK_SS,
+    GridEntityType.GRID_PILLAR,
+    GridEntityType.GRID_ROCK_SPIKED,
+    GridEntityType.GRID_ROCK_ALT2,
+    GridEntityType.GRID_ROCK_GOLD,
+}
+
+local removeRequired = {
+    GridEntityType.GRID_ROCKB,
+    GridEntityType.GRID_LOCK,
+    GridEntityType.GRID_PILLAR,
+}
+
+local function GetRandomNonWallPosition()
+    local attempts = 0
+    local position
+    while not position or not Game():GetRoom():IsPositionInRoom(position, WALL_MARGIN) do
+        position = Isaac.GetRandomPosition()
+        attempts = attempts + 1
+        if attempts >= TIMES_CAN_FAIL then break end
+    end
+    return position
+end
 
 --- Changes the sprite of the stalagmite depending on the floor or room and sets various other members, and begins the Windup animation
 ---@param stalagmite Entity
----@param stageName string
+---@param backdropType integer
 ---@param forcePosition Vector - A position that the stalagmite will be forced into every frame
-local function SetStalagmiteInfo(stalagmite, stageName, forcePosition)
+local function SetStalagmiteInfo(stalagmite, backdropType, forcePosition)
     if forcePosition then
         utility:SetData(stalagmite, "ForcePosition", forcePosition)
     end
     stalagmite.CollisionDamage = 0
     stalagmite.GridCollisionClass = GridCollisionClass.COLLISION_NONE
     local sprite = stalagmite:GetSprite()
-    local spritePath = floorRockSprites[stageName]
-    if spritePath and stageName ~= "Basement" then
+    local spritePath = floorRockSprites[backdropType]
+    if spritePath then
         local roomType = Game():GetRoom():GetType()
 
         if roomType == RoomType.ROOM_SECRET
         or roomType == RoomType.ROOM_SUPERSECRET then
-            spritePath = floorRockSprites["Secret"]
+            spritePath = floorRockSprites[BackdropType.SECRET]
         end
         sprite:ReplaceSpritesheet(1, spritePath)
         sprite:LoadGraphics()
@@ -62,10 +108,10 @@ end
 
 --- Returns a table of all the vulnerable enemies in the room
 ---@return table
-local function GetVulnerableEnemies()
+local function GetEnemyTargets()
     local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
     enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
-        return enemy:IsVulnerableEnemy()
+        return enemy:IsEnemy() and enemy.Type ~= enums.Enemies.STALAGMITE and Game():GetRoom():IsPositionInRoom(enemy.Position, WALL_MARGIN)
     end)
     return enemies
 end
@@ -83,10 +129,27 @@ local function DelayedDestroyGridEntity(gridEntity, remove)
     end, 10)
 end
 
+--- Locates nearby GridEntities 
+---@param stalagmite EntityNPC - The stalagmite to look from
+local function DestroyNearbyGridEntities(stalagmite)
+    local nearbyGridEntities = TSIL.GridEntities.GetGridEntities()
+    for _, grid in ipairs(nearbyGridEntities) do
+        local canDestroy = stalagmite.Position:Distance(grid.Position) <= (KILL_RADIUS * 1.4) and TSIL.Utils.Tables.IsIn(safeGridEntities, grid:GetType())
+        if canDestroy
+        and TSIL.Utils.Tables.IsIn(nearbyGridEntities, grid) then
+            if TSIL.Utils.Tables.IsIn(removeRequired, grid) then
+                TSIL.GridEntities.RemoveGridEntity(grid)
+            elseif canDestroy then
+                grid:Destroy()
+            end
+        end
+    end
+end
+
 --- Kills enemies in range of the stalagmite and damages bosses in range, 10 frames after being called
 ---@param stalagmite Entity
 local function DelayedStalagmiteDamage(stalagmite)
-    local enemies = GetVulnerableEnemies()
+    local enemies = GetEnemyTargets()
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         for _, enemy in ipairs(enemies) do
             if enemy.Type ~= enums.Enemies.STALAGMITE
@@ -112,7 +175,7 @@ end
 ---@param targetTable table - Table of entities to randomly select a target from for the stalagmite
 local function SpawnStalagmite(player, rng, isGrid, targetTable)
     local stalagmite
-    if targetTable then
+    if targetTable and #targetTable > 0 then
         local idxToRemove = TSIL.Random.GetRandomInt(1, #targetTable, rng)
         local target = targetTable[idxToRemove]
         stalagmite = TSIL.EntitySpecific.SpawnNPC(
@@ -132,7 +195,7 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
         and target:GetType() == GridEntityType.GRID_ROCKT then
             DelayedDestroyGridEntity(target, false)
         elseif isGrid then
-            DelayedDestroyGridEntity(target, false)
+            DelayedDestroyGridEntity(target, true)
         end
         table.remove(targetTable, idxToRemove)
     else
@@ -140,7 +203,7 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
             enums.Enemies.STALAGMITE,
             1,
             0,
-            Isaac.GetRandomPosition(),
+            GetRandomNonWallPosition(),
             Vector.Zero,
             player
         )
@@ -148,19 +211,21 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
     return stalagmite
 end
 
---- Spawns a random amount of stalagmite effects
+--- Spawns a random amount of stalagmite NPCs
 ---@param player EntityPlayer
----@param stageName string - Must be within the floorRockSprites table declared at the top
+---@param backdropType integer - Must be within the floorRockSprites table declared at the top, if nil will default to Basement sprite
 ---@param rng RNG
 ---@param isLyra boolean - If true, Lyra's double effect is activated, if false it's not
-local function SpawnRandomStalagmites(player, stageName, rng, isLyra)
-    local enemies = GetVulnerableEnemies()
+local function SpawnSetStalagmites(player, backdropType, rng, isLyra)
+    local enemies = GetEnemyTargets()
 
     local blockAndPillarTargets = utility:TableConcat(TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKB),
                                                       TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_PILLAR)
                                                      )
 
-    local tintedRockTargets = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT)
+    local tintedRockTargets = utility:TableConcat(TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT),
+                                                  TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCK_SS)
+                                                 )
 
     local max
     local min
@@ -178,43 +243,60 @@ local function SpawnRandomStalagmites(player, stageName, rng, isLyra)
     end
 
     local stalagmiteCount = TSIL.Random.GetRandomInt(min, max, rng)
+    local undecidedStalagmites = stalagmiteCount
 
+    local numTintedRocksToTarget = 0
     local numPillarBlockTargets = PILLAR_TARGETS
+
+    if #tintedRockTargets > 0 then
+        undecidedStalagmites = undecidedStalagmites - TINTED_TARGETS
+        numTintedRocksToTarget = TINTED_TARGETS
+    end
+   
     if #blockAndPillarTargets < PILLAR_TARGETS then
         numPillarBlockTargets = #blockAndPillarTargets
     end
 
-    local numEnemiesToTarget = stalagmiteCount - numPillarBlockTargets
-    local numTintedRocksToTarget = 0
-
-    if #tintedRockTargets > 0 then
-        numEnemiesToTarget = numEnemiesToTarget - TINTED_TARGETS
-        numTintedRocksToTarget = TINTED_TARGETS
+    if #blockAndPillarTargets - numPillarBlockTargets > 0 then
+        local remainingPossibleTargets = #blockAndPillarTargets - undecidedStalagmites
+        for _ = 0, undecidedStalagmites do
+            if remainingPossibleTargets < 1 then
+                break
+            end
+            numPillarBlockTargets = numPillarBlockTargets + 1
+            remainingPossibleTargets = remainingPossibleTargets - 1
+        end
     end
 
     for _ = 1, numPillarBlockTargets do
         local stalagmite = SpawnStalagmite(player, rng, true, blockAndPillarTargets)
-        SetStalagmiteInfo(stalagmite, stageName, utility:GetData(stalagmite, "TargetPosition"))
+        SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
     end
 
     for _ = 1, numTintedRocksToTarget do
         local stalagmite = SpawnStalagmite(player, rng, true, tintedRockTargets)
-        SetStalagmiteInfo(stalagmite, stageName, utility:GetData(stalagmite, "TargetPosition"))
+        SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
     end
 
-    if numEnemiesToTarget > #enemies then
-        numEnemiesToTarget = #enemies
+    local enemiesToTarget
+    if undecidedStalagmites > #enemies then
+        enemiesToTarget = #enemies
+        undecidedStalagmites = undecidedStalagmites - enemiesToTarget
+    else
+        enemiesToTarget = undecidedStalagmites
+        undecidedStalagmites = 0
     end
-    for _ = 1, numEnemiesToTarget do
+
+    for _ = 1, enemiesToTarget do
         local stalagmite = SpawnStalagmite(player, rng, false, enemies)
-        SetStalagmiteInfo(stalagmite, stageName, utility:GetData(stalagmite, "TargetPosition"))
+        SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
         DelayedStalagmiteDamage(stalagmite)
     end
-    stalagmiteCount = ((stalagmiteCount - numEnemiesToTarget) - numPillarBlockTargets) - numTintedRocksToTarget
+    --stalagmiteCount = ((stalagmiteCount - numEnemiesToTarget) - numPillarBlockTargets) - numTintedRocksToTarget
     
-    for _ = 1, stalagmiteCount do
+    for _ = 1, undecidedStalagmites do
         local stalagmite = SpawnStalagmite(player, rng, false, nil)
-        SetStalagmiteInfo(stalagmite, stageName, nil)
+        SetStalagmiteInfo(stalagmite, backdropType, nil)
     end
 end
 
@@ -222,11 +304,9 @@ function rockOrb:OnOrbUse(orb, player, _, isLyra)
     if orb ~= enums.Orbs.ROCK then return end
 
     Game():ShakeScreen(SHAKE_TIMEOUT)
-    local stageName = Game():GetLevel():GetName()
-    stageName = string.gsub(stageName, "I", "")
-    stageName = string.gsub(stageName, " ", "")
+    local backdropType = Game():GetRoom():GetBackdropType()
 
-    TSIL.Utils.Functions.RunInFramesTemporary(SpawnRandomStalagmites, 15, player, stageName, player:GetCardRNG(orb), isLyra)
+    TSIL.Utils.Functions.RunInFramesTemporary(SpawnSetStalagmites, 15, player, backdropType, player:GetCardRNG(orb), isLyra)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
     end, 30)
@@ -235,6 +315,10 @@ MilkshakeVol1:AddCallback(enums.Callbacks.ON_ORB_USE, rockOrb.OnOrbUse)
 
 function rockOrb:NpcUpdate(stalagmite)
     if stalagmite.Type ~= enums.Enemies.STALAGMITE then return end
+
+    if not stalagmite:GetSprite():IsPlaying("Windup") then
+        DestroyNearbyGridEntities(stalagmite)
+    end
 
     local forcePosition = utility:GetData(stalagmite, "ForcePosition")
     local target = utility:GetData(stalagmite, "Target")
@@ -248,7 +332,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_RENDER, rockOrb.NpcUpdate)
 
 function rockOrb:PostNpcDeath(stalagmite)
-    if stalagmite.Variant ~= 1 then return end
+    if stalagmite.Variant ~= enums.GravestoneType.TERRA then return end
     TSIL.EntitySpecific.SpawnEffect(
         EffectVariant.ROCK_PARTICLE,
         0,

@@ -11,6 +11,7 @@ MilkshakeVol1.API = {}
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
 include("milkshake_scripts.modcompatibility.crabbyCretins")
+include("milkshake_scripts.modcompatibility.dssMenu")
 include("milkshake_scripts.modcompatibility.eclipsed")
 include("milkshake_scripts.modcompatibility.eid")
 include("milkshake_scripts.modcompatibility.epiphany")
@@ -108,16 +109,24 @@ include("milkshake_scripts.wisps.goldenshovel")
 include("milkshake_scripts.wisps.leviticus")
 include("milkshake_scripts.wisps.prismaticdice")
 
+--Locusts
+include("milkshake_scripts.locusts.prismaticdice")
+include("milkshake_scripts.locusts.dadsmitt")
+include("milkshake_scripts.locusts.celestialmirror")
+include("milkshake_scripts.locusts.sicklecell")
+
 --Enemies
 include("milkshake_scripts.enemies.beerhead")
 include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
 
+--Room ecorations
+include("milkshake_scripts.room_decorations.sacrilege")
+
 --Misc
 include("milkshake_scripts.shardrockoverlay")
 include("milkshake_scripts.nonreplaceabletnt")
-
 
 --- Shader crash fix
 --- Credits to Cucco

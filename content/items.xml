@@ -26,7 +26,7 @@
     <passive id="28" name="Rainbow Fragment" description="Taste the rainbow" cache="luck" gfx="collectibles_rainbowfragment.png" tags="offensive summonable" quality="1"/>
     <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" tags="offensive summonable lazarussharedglobal" quality="2" />
     <active id="30" name="Mirror Key" description="Otherside" quality="3" gfx="mirror_key.png" maxcharges="4" tags="lazarussharedglobal nocantrip nogreed offensive"/>
-    <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" />
+    <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" tags="noeden" />
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="Hidden clairvoyant power..." gfx="trinkets_amethystcluster.png" tags="nogreed"/>
@@ -52,6 +52,7 @@
     <passive id="504" name="BRENDA CUSTOM WATER WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="505" name="BRENDA CUSTOM POISON WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
 
     <!-- unused -->
     <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true"/> 

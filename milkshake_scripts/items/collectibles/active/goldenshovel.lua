@@ -53,35 +53,26 @@ local function SpawnGoldenPickup(rng, position)
     local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
     local roll = TSIL.Random.GetRandomInt(0, 3, rng)
 
-    if roll == 0 then
-        TSIL.EntitySpecific.SpawnPickup(
-            PickupVariant.PICKUP_BOMB,
-            BombSubType.BOMB_GOLDEN,
-            spawnPos,
-            goldenShovelData.PICKUP_VELOCITY
-        )
-    elseif roll == 1 then
-        TSIL.EntitySpecific.SpawnPickup(
-            PickupVariant.PICKUP_KEY,
-            KeySubType.KEY_GOLDEN,
-            spawnPos,
-            goldenShovelData.PICKUP_VELOCITY
-        )
+    local variant = PickupVariant.PICKUP_BOMB
+    local subtype = BombSubType.BOMB_GOLDEN
+
+    if roll == 1 then
+        variant = PickupVariant.PICKUP_KEY
+        subtype = KeySubType.KEY_GOLDEN
     elseif roll == 2 then
-        TSIL.EntitySpecific.SpawnPickup(
-            PickupVariant.PICKUP_HEART,
-            HeartSubType.HEART_GOLDEN,
-            spawnPos,
-            goldenShovelData.PICKUP_VELOCITY
-        )
-    else
-        TSIL.EntitySpecific.SpawnPickup(
-            PickupVariant.PICKUP_COIN,
-            CoinSubType.COIN_GOLDEN,
-            spawnPos,
-            goldenShovelData.PICKUP_VELOCITY
-        )
+        variant = PickupVariant.PICKUP_HEART
+        subtype = HeartSubType.HEART_GOLDEN
+    elseif roll == 3 then
+        variant = PickupVariant.PICKUP_COIN
+        subtype = CoinSubType.COIN_GOLDEN
     end
+    
+    TSIL.EntitySpecific.SpawnPickup(
+        variant,
+        subtype,
+        spawnPos,
+        goldenShovelData.PICKUP_VELOCITY:Rotated(TSIL.Random.GetRandomInt(0, 360, rng))
+    )
 end
 
 

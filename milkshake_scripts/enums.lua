@@ -40,6 +40,7 @@ enums.Collectibles = {
     SPECIAL_BRENDA_WATER_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM WATER WISP"),
     SPECIAL_BRENDA_POISON_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM POISON WISP"),
     SPECIAL_BRENDA_HOLY_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM HOLY WISP"),
+    SPECIAL_BRENDA_TERRA_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM TERRA WISP"),
 }
 
 enums.Trinkets = {
@@ -90,12 +91,22 @@ enums.Effects = {
 
     MIRROR_KEY_DOOR = Isaac.GetEntityVariantByName("Mirror Key Door"),
     MIRROR_DOOR_OUTLINE = Isaac.GetEntityVariantByName("Mirror Key Door Outline"),
+
+    SACRILEGE_WALL = Isaac.GetEntityVariantByName("Sacrilege Wall Overlay"),
+    SACRILEGE_FLOOR = Isaac.GetEntityVariantByName("Sacrilege Floor Overlay"),
+    SACRILEGE_OVERLAY = Isaac.GetEntityVariantByName("Sacrilege Screen Overlay"),
+    SACRILEGE_PENTAGRAM = Isaac.GetEntityVariantByName("Sacrilege Pentagram Overlay")
 }
 
 enums.Enemies = {
     GRAVESTONE = Isaac.GetEntityTypeByName("Gravestone"),
     GLASS_HEAD = Isaac.GetEntityTypeByName("Glass Head"),
     STALAGMITE = Isaac.GetEntityTypeByName("Terra Stalagmite"),
+}
+
+enums.GravestoneType = {
+    NORMAL = 0,
+    TERRA = 1,
 }
 
 enums.GlassHeadVariant = {
@@ -180,7 +191,7 @@ enums.Orbs = {
     POISON = Isaac.GetCardIdByName("Spirit Of Virulence"),
     UNDEAD = Isaac.GetCardIdByName("Spirit Of Revenance"),
     WATER = Isaac.GetCardIdByName("Spirit Of Deluge"),
-    ROCK = Isaac.GetCardIdByName("Spirit Of Terra"),
+    ROCK = Isaac.GetCardIdByName("Spirit Of Terrastrium"),
 }
 
 
@@ -195,7 +206,8 @@ enums.CardSpawnerSubtypePerCard = {
     [7] = enums.Orbs.UNHOLY,
     [8] = enums.Orbs.POISON,
     [9] = enums.Orbs.UNDEAD,
-    [10] = enums.Orbs.WATER
+    [10] = enums.Orbs.WATER,
+    [11] = enums.Orbs.ROCK,
 }
 
 
@@ -238,6 +250,10 @@ enums.UseOrbFlags = {
 
 enums.ItemPools = {
     GLASS = 0
+}
+
+enums.Music = {
+    GLASS_BOSS = Isaac.GetMusicIdByName("Glass Boss")
 }
 
 MilkshakeVol1.enums = enums

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <rooms>
-	<room variant="0" name="[RE] - steve2552 - BURN ALL WHO OPPOSE YOU (rare)" type="1" subtype="0" shape="2" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29000" name="[RE] - steve2552 - BURN ALL WHO OPPOSE YOU (rare)" type="1" subtype="0" shape="2" width="13" height="7" difficulty="1" weight="0.1">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="False" x="13" y="3"/>
 		<spawn x="9" y="2">
@@ -40,7 +40,7 @@
 			<entity type="3000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="1" name="[RE] - steve2552 - BURN ALL WHO OPPOSE YOU (rare)(mirrored)" type="1" subtype="0" shape="2" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29001" name="[RE] - steve2552 - BURN ALL WHO OPPOSE YOU (rare)(mirrored)" type="1" subtype="0" shape="2" width="13" height="7" difficulty="1" weight="0.1">
 		<door exists="False" x="-1" y="3"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="2">
@@ -80,7 +80,7 @@
 			<entity type="33" variant="1" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="2" name="[RE] - steve2552 - generic fire orb room 1" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
+	<room variant="29002" name="[RE] - steve2552 - generic fire orb room 1" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -119,7 +119,7 @@
 			<entity type="33" variant="1" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="3" name="[RE] - steve2552 - generic fire orb room 2" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
+	<room variant="29003" name="[RE] - steve2552 - generic fire orb room 2" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -182,7 +182,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="4" name="[RE] - steve2552 - generic fire orb room 3" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
+	<room variant="29004" name="[RE] - steve2552 - generic fire orb room 3" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -269,7 +269,7 @@
 			<entity type="3000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="5" name="[RE] - steve2552 - nah" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
+	<room variant="29005" name="[RE] - steve2552 - nah" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -308,7 +308,7 @@
 			<entity type="33" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="6" name="[RE] - steve2552 - key for pain?" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.3">
+	<room variant="29006" name="[RE] - steve2552 - key for pain?" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.3">
 		<door exists="False" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -362,7 +362,7 @@
 			<entity type="33" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="7" name="[RE] - steve2552 - big boi room" type="1" subtype="0" shape="8" width="26" height="14" difficulty="10" weight="0.3">
+	<room variant="29007" name="[RE] - steve2552 - big boi room" type="1" subtype="0" shape="8" width="26" height="14" difficulty="10" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="-1" y="10"/>
 		<door exists="True" x="6" y="-1"/>
@@ -594,7 +594,7 @@
 			<entity type="33" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="8" name="[RE] - steve2552 - not for free" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.3">
+	<room variant="29008" name="[RE] - steve2552 - not for free" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="False" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -648,7 +648,7 @@
 			<entity type="1300" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="9" name="[RE] - steve2552 - nice! a freebie (kinda rare)" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.3">
+	<room variant="29009" name="[RE] - steve2552 - nice! a freebie (kinda rare)" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -705,7 +705,7 @@
 			<entity type="884" variant="0" subtype="3" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="10" name=" [RE] - steve2552 - he senses an orb" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.3">
+	<room variant="29010" name=" [RE] - steve2552 - he senses an orb" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.3">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>

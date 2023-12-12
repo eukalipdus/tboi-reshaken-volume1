@@ -1,0 +1,1157 @@
+<?xml version="1.0" ?>
+<rooms>
+	<room variant="29000" name="[RE] - steve2552 - Threekers" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="2" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29001" name="[RE] - steve2552 - Fourkers" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="3" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29002" name="[RE] - steve2552 - Conjoining chemical" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="False" x="13" y="3"/>
+		<spawn x="12" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="3">
+			<entity type="257" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29003" name="[RE] - steve2552 - Beakerstro" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="9" y="1">
+			<entity type="20" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="20" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29004" name="[RE] - steve2552 - The Beak" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="1" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="69" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29005" name="[RE] - steve2552 - no wornder he's hreen" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="False" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="4" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="1">
+			<entity type="46" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="2">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29006" name="[RE] - steve2552 - She's married. To science." type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="5" y="2">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="4">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="47" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29007" name="[RE] - steve2552 - smol" type="1" subtype="0" shape="2" width="13" height="7" difficulty="5" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="5" y="2">
+			<entity type="868" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="2">
+			<entity type="868" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="2">
+			<entity type="868" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29008" name="[RE] - steve2552 - CURSE OF MEAT " type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="10" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="2">
+			<entity type="15" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="2">
+			<entity type="15" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="15" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="4">
+			<entity type="15" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29009" name="[RE] - steve2552 - GREEN" type="1" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="13" y="3"/>
+		<door exists="True" x="13" y="10"/>
+		<spawn x="6" y="4">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="5">
+			<entity type="46" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="7">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="7">
+			<entity type="46" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="7">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="9">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="9">
+			<entity type="46" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="10">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29010" name="[RE] - steve2552 - A bit of a pest" type="1" subtype="0" shape="9" width="26" height="14" difficulty="5" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="6"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="12" y="3"/>
+		<door exists="True" x="19" y="-1"/>
+		<door exists="True" x="19" y="14"/>
+		<door exists="True" x="26" y="3"/>
+		<door exists="True" x="26" y="10"/>
+		<spawn x="19" y="4">
+			<entity type="64" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="18" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="8">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="8">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="9">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="10">
+			<entity type="64" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29011" name="[RE] - steve2552 - YEAH BABY" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="2" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="1">
+			<entity type="87" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="64" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="5">
+			<entity type="87" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29012" name="[RE] - steve2552 - Okey" type="1" subtype="0" shape="8" width="26" height="14" difficulty="10" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="19" y="-1"/>
+		<door exists="True" x="19" y="14"/>
+		<door exists="True" x="26" y="3"/>
+		<door exists="True" x="26" y="10"/>
+		<spawn x="13" y="1">
+			<entity type="261" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="2">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="13" y="4">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="7">
+			<entity type="261" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="19" y="7">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="8">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="13" y="11">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="12">
+			<entity type="261" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29013" name="[RE] - steve2552 - Fivekers" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="4" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29014" name="[RE] - steve2552 - Rag me dry" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0" lastTestTime="2023-11-24T20:03+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="False" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="6" y="4">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="5">
+			<entity type="405" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="6">
+			<entity type="214" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="6">
+			<entity type="214" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29015" name="[RE] - steve2552 - too round" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="2" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="2">
+			<entity type="276" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="2">
+			<entity type="276" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="4">
+			<entity type="276" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="4">
+			<entity type="276" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29016" name="[RE] - steve2552 - Toughy Tought" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="False" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="6" y="0">
+			<entity type="266" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29017" name="[RE] - steve2552 - Laser EYES" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="9" y="1">
+			<entity type="230" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="2">
+			<entity type="60" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="1" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="4">
+			<entity type="60" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="230" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29018" name="[RE] - steve2552 - SLURPPP" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="2" y="1">
+			<entity type="61" variant="5" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="1">
+			<entity type="61" variant="5" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="3">
+			<entity type="61" variant="5" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="1" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="61" variant="5" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="5">
+			<entity type="61" variant="5" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="5">
+			<entity type="61" variant="5" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29019" name="[RE] - steve2552 - SPICY" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="1" y="0">
+			<entity type="10" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="0">
+			<entity type="10" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="65" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="618" variant="124" subtype="2" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="6">
+			<entity type="10" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="6">
+			<entity type="10" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29020" name="[RE] - steve2552 - Burning Chest" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="3" y="1">
+			<entity type="15" variant="3" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="54" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="208" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="2" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="208" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="54" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="15" variant="3" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29021" name="[RE] - steve2552 - WWWRETCHED BOY RRROTTEN SON" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="0" y="0">
+			<entity type="215" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="100" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="618" variant="124" subtype="3" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="6">
+			<entity type="215" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29022" name="[RE] - steve2552 - Fat Bats" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="3" y="1">
+			<entity type="258" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="2">
+			<entity type="258" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="3" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="3">
+			<entity type="258" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="4">
+			<entity type="258" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="4">
+			<entity type="258" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29023" name="[RE] - steve2552 - Rag on 'em!" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="4" y="3">
+			<entity type="405" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="4" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="405" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29024" name="[RE] - steve2552 - Psy" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="2" y="0">
+			<entity type="248" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="0">
+			<entity type="248" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="4" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="6">
+			<entity type="248" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="6">
+			<entity type="248" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29025" name="[RE] - steve2552 - Flesh Blob Family" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="3" y="1">
+			<entity type="305" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="305" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="20" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="618" variant="124" subtype="5" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="305" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="305" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29026" name="[RE] - steve2552 - Gapa Gapa Gapa" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="2" y="0">
+			<entity type="10" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="0">
+			<entity type="10" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="2">
+			<entity type="10" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="2">
+			<entity type="10" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="2">
+			<entity type="10" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="284" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="5" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="284" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="4">
+			<entity type="10" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="4">
+			<entity type="10" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="6">
+			<entity type="10" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="6">
+			<entity type="10" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29027" name="[RE] - steve2552 - Soul heart sound effect" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="4" y="3">
+			<entity type="618" variant="124" subtype="6" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="65" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="22" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29028" name="[RE] - steve2552 - Cathedral Room??" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="3" y="1">
+			<entity type="38" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="227" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="6" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="227" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="38" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29029" name="[RE] - steve2552 - Sinny Sinny" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="4" y="3">
+			<entity type="50" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="7" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="47" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29030" name="[RE] - steve2552 - baby greeds" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="3" y="1">
+			<entity type="86" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="86" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="3">
+			<entity type="86" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="7" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="86" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="86" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="86" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29031" name="[RE] - steve2552 - Pest" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="3" y="1">
+			<entity type="61" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="61" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="64" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="618" variant="124" subtype="8" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="61" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="61" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29032" name="[RE] - steve2552 - BOOM" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="3" y="2">
+			<entity type="87" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="2">
+			<entity type="87" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="238" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="8" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="238" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="4">
+			<entity type="87" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="4">
+			<entity type="87" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29033" name="[RE] - steve2552 - skullemoji" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="9" y="1">
+			<entity type="227" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="66" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="618" variant="124" subtype="9" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="227" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29034" name="[RE] - steve2552 - You have entered the bone zone" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="3" y="1">
+			<entity type="277" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="1">
+			<entity type="277" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="227" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="9" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="227" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="5">
+			<entity type="277" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="277" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29035" name="[RE] - steve2552 - BLU TEAM" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="4" y="2">
+			<entity type="244" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="2">
+			<entity type="244" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="3">
+			<entity type="879" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="10" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="3">
+			<entity type="879" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="4">
+			<entity type="244" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="4">
+			<entity type="244" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29036" name="[RE] - steve2552 - im so wet" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="0" y="0">
+			<entity type="23" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="0">
+			<entity type="23" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="3">
+			<entity type="22" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="10" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="22" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="0" y="6">
+			<entity type="23" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="6">
+			<entity type="23" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29037" name="[RE] - steve2552 - Poky Poky" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="0" y="0">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="0">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="1">
+			<entity type="44" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="44" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="11" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="44" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="44" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="0" y="6">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="6">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29038" name="[RE] - steve2552 - STONEY SLIDE HECK YEAH" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="0.2">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="0" y="0">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="0">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="1">
+			<entity type="44" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="1">
+			<entity type="44" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="3">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="302" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="618" variant="124" subtype="11" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="302" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="5">
+			<entity type="44" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="5">
+			<entity type="44" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="0" y="6">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="6">
+			<entity type="4500" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29039" name="[RE] - TSG - Touhou's Bizarre Adventure" type="1" subtype="0" shape="8" width="26" height="14" difficulty="1" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="19" y="-1"/>
+		<door exists="True" x="19" y="14"/>
+		<door exists="True" x="26" y="3"/>
+		<door exists="True" x="26" y="10"/>
+		<spawn x="22" y="1">
+			<entity type="0" variant="10" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="2">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="17" y="3">
+			<entity type="0" variant="20" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="4">
+			<entity type="0" variant="20" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="5">
+			<entity type="962" variant="3" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="5">
+			<entity type="15" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="5">
+			<entity type="962" variant="3" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="7">
+			<entity type="0" variant="10" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="7">
+			<entity type="15" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="7">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="7">
+			<entity type="15" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="20" y="7">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="24" y="7">
+			<entity type="0" variant="20" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="9">
+			<entity type="962" variant="3" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="9">
+			<entity type="15" variant="2" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="9">
+			<entity type="962" variant="3" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="11">
+			<entity type="0" variant="20" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="23" y="11">
+			<entity type="0" variant="10" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29040" name="[RE] - TSG - Chest Redhead1" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="False" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="5" y="0">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="0">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="1">
+			<entity type="0" variant="10" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="2">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="2">
+			<entity type="269" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="2">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="4">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="4">
+			<entity type="0" variant="10" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29041" name="[RE] - TSG - Chest Redhead2" type="1" subtype="0" shape="3" width="13" height="7" difficulty="1" weight="1.0">
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<spawn x="5" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29042" name="[RE] - TSG - Chest Redhead3" type="1" subtype="0" shape="5" width="13" height="14" difficulty="1" weight="1.0">
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<spawn x="5" y="2">
+			<entity type="0" variant="10" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="6">
+			<entity type="24" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="6">
+			<entity type="24" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="8">
+			<entity type="0" variant="20" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="10">
+			<entity type="0" variant="20" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29043" name="[RE] - TSG - Chest Redhead4" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0" lastTestTime="2023-08-29T03:07+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="False" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="5" y="0">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="0">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="1">
+			<entity type="0" variant="10" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="2">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="2">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="263" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="4">
+			<entity type="0" variant="10" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="4">
+			<entity type="0" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="29044" name="[RE] - TSG - Chest Redhead5" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0" lastTestTime="2023-08-29T04:14+00:00">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="5" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="2">
+			<entity type="15" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="15" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="33" variant="3" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="15" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="15" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+</rooms>

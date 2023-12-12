@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="catinsurance" CreatedOn="12.10.2023 20:52:49" Version="13" Fps="30"/>
+	<Info CreatedBy="catinsurance" CreatedOn="11/26/2023 8:00:15 PM" Version="14" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="items\pick ups\spirit_holy.png" Id="0"/>
+			<Spritesheet Path="items\pick ups\spirit_orbs.png" Id="0"/>
 			<Spritesheet Path="effects\salvation_glow.png" Id="1"/>
 		</Spritesheets>
 		<Layers>
@@ -24,7 +24,7 @@
 					<Frame XPosition="0" YPosition="0" XPivot="32" YPivot="48" XCrop="0" YCrop="0" Width="65" Height="65" XScale="25" YScale="25" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="0" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 				</LayerAnimation>
 				<LayerAnimation LayerId="0" Visible="true">
-					<Frame XPosition="0" YPosition="0" XPivot="16" YPivot="24" XCrop="0" YCrop="0" Width="32" Height="32" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+					<Frame XPosition="0" YPosition="0" XPivot="16" YPivot="24" XCrop="32" YCrop="256" Width="32" Height="32" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>

@@ -64,4 +64,15 @@
     <sound name="Spirit Of Virulence">
         <sample weight="1" path="Spirit Of Virulence.wav"/>
     </sound>
+
+    <sound name="Im sory">
+        <sample weight="1" path="im sory.wav"/>
+    </sound>
+
+    <sound name="deadseascrolls_pop">
+        <sample weight="1" path="deadseascrolls/pop.wav" />
+    </sound>
+    <sound name="deadseascrolls_whoosh">
+        <sample weight="1" path="deadseascrolls/whoosh.wav" />
+    </sound>
 </sounds>

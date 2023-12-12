@@ -34,7 +34,7 @@ local BeggarTables = {
 	},
 	[5] = {
 		Config = {Count = 3, MinCount = 0},
-		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = -1},
+		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = 0},
 		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_HEART, SubType = HeartSubType.HEART_BLACK},
 	},
 	[6] = {
@@ -55,7 +55,7 @@ local BeggarTables = {
 	},
 	[15] = {
 		Config = {Count = 2, MinCount = 0},
-		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = -1},
+		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = 0},
 		{Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_HEART, SubType = HeartSubType.HEART_BLACK},
 	},
 	[18] = {
@@ -256,6 +256,7 @@ function UnholyOrb:onPEffectUpdate(player)
 	player:SetColor(Color(0,0,0,0.5, 0.7), 12, 1, true, true)
 	player.Velocity = player.Velocity * 0.77
 	player:SetMinDamageCooldown(2)
+	--if player.ControlsEnabled then player.ControlsEnabled = false end
 	player:AddControlsCooldown(2) -- ? idk if it would work -- it works (Paralysis)
 	player.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE --EntityGridCollisionClass.GRIDCOLL_WALLS
 	player.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
@@ -302,10 +303,8 @@ function UnholyOrb:onPEffectUpdate(player)
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MaxSpeed)
 		end
 	elseif #TargetPositions > 0 then
-
 		if TargetPositions[1]:Exists() then
 			if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
-
 				player.Velocity = Vector.Zero
 				Game():ShakeScreen(2)
 				SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2)

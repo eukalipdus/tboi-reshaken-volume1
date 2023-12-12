@@ -18,6 +18,14 @@ ToxicOrb.Hearts = {
 	[HeartSubType.HEART_HALF] = 1,
 	[HeartSubType.HEART_DOUBLEPACK] =2,
 }
+ToxicOrb.BeggarVariants = {
+	[4] = true,
+}
+
+function MilkshakeVol1.API:AddToxicOrbBeggar(beggarType)
+	ToxicOrb.BeggarVariants[beggarType] = true
+end
+
 
 local function pooffy(position, color)
 	SFXManager():Play(SoundEffect.SOUND_SUMMON_POOF, 1.5)
@@ -33,9 +41,9 @@ local function Rotten(pos, area)
 			pickup:Remove()
 			pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
 			for _ = 1, ToxicOrb.Hearts[pickup.SubType] do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, pickup.Position, pickup.Velocity, nil)
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, Isaac.GetFreeNearPosition(pickup.Position, 10), pickup.Velocity, nil)
 			end
-		elseif pickup.Type == EntityType.ENTITY_SLOT and pickup.Variant == 4 then
+		elseif pickup.Type == EntityType.ENTITY_SLOT and ToxicOrb.BeggarVariants[pickup.Variant] then
 			pickup:Remove()
 			Isaac.Spawn(EntityType.ENTITY_SLOT, 18, 0, pickup.Position, Vector.Zero, nil)
 			pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
@@ -85,6 +93,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, ToxicOrb.CloudUpdate, enums.Effects.TOXIC_GAS)
 
 local function ThrowOrb(player, vector)
+	--vector = vector or player:GetAimDirection() -- :GetShootingInput()
 	utility:SetData(player, "ToxicOrbLift", nil)
 	local velo = (vector*ToxicOrb.TearSpeedMulti)+player:GetTearMovementInheritance(player:GetMovementInput())
 	local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, ToxicOrb.TearVariant , 0, player.Position, velo, nil):ToTear() --BOBS_HEAD
@@ -133,7 +142,7 @@ function ToxicOrb:PEffectUpdate(player)
 			player:AnimateCard(enums.Orbs.POISON, "LiftItem")
 		elseif player:GetFireDirection() ~= Direction.NO_DIRECTION then
 			player:AnimateCard(enums.Orbs.POISON, "HideItem")
-			ThrowOrb(player, player:GetAimDirection())
+			ThrowOrb(player, player:GetAimDirection():Normalized()) -- GetAimDirection GetShootingInput
         end
     end
 end

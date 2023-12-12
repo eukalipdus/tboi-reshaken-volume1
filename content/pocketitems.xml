@@ -10,7 +10,7 @@
     <card type="object" pickup="481" description="Toxic Cloud" name="Spirit Of Virulence" hud="Spirit Of Virulence" mimiccharge="6" />
     <card type="object" pickup="482" description="Tomb Raiser" name="Spirit Of Revenance" hud="Spirit Of Revenance" mimiccharge="6" />
     <card type="object" pickup="483" description="Waterfall Cyclone" name="Spirit Of Deluge" hud="Spirit Of Deluge" mimiccharge="6" />
-    <card type="object" pickup="484" description="Unstoppable Force" name="Spirit Of Terra" hud="Spirit Of Terra" mimiccharge="6" />
+    <card type="object" pickup="484" description="Unstoppable Force" name="Spirit Of Terrastrium" hud="Spirit Of Terrastrium" mimiccharge="6" />
     
     <!-- Tattered Page -->
     <card type="special" pickup="473" description="Discarded Archive" name="Tattered Page" hud="Tattered Page" mimiccharge="3" />
