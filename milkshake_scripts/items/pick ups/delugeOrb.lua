@@ -45,6 +45,7 @@ local function SetCanShoot(Player, CanShoot)
 end
 --]]
 
+
 function DelugeOrb.ExtraUse(lasers, double)
 	double = double or 1
 	for _, laser in pairs(lasers) do
