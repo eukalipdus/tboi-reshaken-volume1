@@ -88,7 +88,7 @@ local function TrackDoggyBagPoop(player, poopType)
         TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "TrackedDoggyBags", {})
     end
 
-    local playerIndex = utility:GetPlayerIdentifier(player)
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
     local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
     local playerAndBags = {
         playerIndex,
@@ -168,7 +168,7 @@ function doggyBag:EntityTakeDmg(entity)
                 bag:GetSprite():Play("Spawn")
 
                 local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
-                local index = FindSetIndex(trackedSets, utility:GetPlayerIdentifier(player))
+                local index = FindSetIndex(trackedSets, TSIL.Players.GetPlayerIndex(player))
                 if index ~= -1 then
                     for poopTypeIdx, type in ipairs(trackedSets[index][2]) do
                         if type == utility:GetData(bag, "PoopType") then
@@ -229,7 +229,7 @@ function doggyBag:PostGameStartedReordered(isContinued)
         local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
         for i = 0, Game():GetNumPlayers() - 1 do
             local player = Isaac.GetPlayer(i)
-            local index = FindSetIndex(trackedSets, utility:GetPlayerIdentifier(player))
+            local index = FindSetIndex(trackedSets, TSIL.Players.GetPlayerIndex(player))
             local doggyBags = GetDoggyBags(player)
             for currentBag, bag in pairs(doggyBags) do
                 if index ~= -1 then

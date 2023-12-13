@@ -79,7 +79,7 @@ function GlassHeads:GlassHead_Update(enemy)
         sfx:Play(SoundEffect.SOUND_FETUS_LAND, .5, 0, false, 1, 0)
         sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, .25, 0, false, 1, 0)
     end
-
+ 
     if data.state == 1 then
         if utility:IsEnemyScared(enemy) then
             data.targpos = enemy.Position + (enemy.Position - target.Position)
@@ -117,7 +117,7 @@ function GlassHeads:GlassHead_Update(enemy)
                 end
             end
         else
-            sprite:SetFrame('WalkVert', 0)
+            sprite:Play('Idle')
             enemy.Velocity = enemy.Velocity * .5
         end
     elseif data.state == 6 then
@@ -229,6 +229,8 @@ function GlassHeads:GlassHead_Update(enemy)
 
         enemy.Velocity = enemy.Velocity * .85
     end
+
+
 end
 
 MilkshakeVol1:AddCallback(
@@ -244,7 +246,11 @@ MilkshakeVol1:AddCallback(
 ---@param enemy Entity
 ---@param amount number
 ---@param flags DamageFlag
-function GlassHeads:GlassHeads_Dmg(enemy, amount, flags)
+function GlassHeads:GlassHeads_Dmg(enemy, amount, flags, source, cool)
+
+    source = source.Entity
+    local shouldFreeze = (enemy:HasEntityFlags(EntityFlag.FLAG_ICE) or (source and source.Type==2 and source:ToTear():HasTearFlags(TearFlags.TEAR_ICE)))
+
     if amount > 0
         and (
             TSIL.Utils.Flags.HasFlags(flags, DamageFlag.DAMAGE_FIRE)
@@ -256,8 +262,8 @@ function GlassHeads:GlassHeads_Dmg(enemy, amount, flags)
     if GetGlassHeadData(enemy).state == 6 then
         return false
     end
-
-    if 0 >= enemy.HitPoints - amount then
+   
+    if not shouldFreeze and 0 >= enemy.HitPoints - amount  then
         GetGlassHeadData(enemy).state = 6
         enemy.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
         enemy.Velocity = -enemy.Velocity:Resized(5)

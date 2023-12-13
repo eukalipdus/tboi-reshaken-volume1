@@ -449,11 +449,16 @@ function utility:IsJudasBirthright(player)
     return (player:GetPlayerType() == PlayerType.PLAYER_JUDAS or player:GetPlayerType() == PlayerType.PLAYER_BLACKJUDAS) and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
 end
 
---- Returns the index of a player
----@param player EntityPlayer
-function utility:GetPlayerIdentifier(player)
-    return player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_SAD_ONION):GetSeed()
-  end
+
+---Checks if the boss versus screen is currently playing.
+---@return boolean
+function utility:IsVersusScreenPlaying()
+    local room = Game():GetRoom()
+    return Game():IsPaused()
+        and room:GetFrameCount() == 0
+        and room:GetType() == RoomType.ROOM_BOSS
+        and not room:IsClear()
+end
 
 
 MilkshakeVol1.utility = utility

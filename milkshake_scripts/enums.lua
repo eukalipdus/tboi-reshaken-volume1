@@ -91,6 +91,11 @@ enums.Effects = {
 
     MIRROR_KEY_DOOR = Isaac.GetEntityVariantByName("Mirror Key Door"),
     MIRROR_DOOR_OUTLINE = Isaac.GetEntityVariantByName("Mirror Key Door Outline"),
+
+    SACRILEGE_WALL = Isaac.GetEntityVariantByName("Sacrilege Wall Overlay"),
+    SACRILEGE_FLOOR = Isaac.GetEntityVariantByName("Sacrilege Floor Overlay"),
+    SACRILEGE_OVERLAY = Isaac.GetEntityVariantByName("Sacrilege Screen Overlay"),
+    SACRILEGE_PENTAGRAM = Isaac.GetEntityVariantByName("Sacrilege Pentagram Overlay")
 }
 
 enums.Enemies = {
@@ -245,6 +250,10 @@ enums.UseOrbFlags = {
 
 enums.ItemPools = {
     GLASS = 0
+}
+
+enums.Music = {
+    GLASS_BOSS = Isaac.GetMusicIdByName("Glass Boss")
 }
 
 MilkshakeVol1.enums = enums

@@ -128,7 +128,9 @@ function dadsMitt:ReplaceBoneClub(entity)
     local sprite = entity:GetSprite()
     local data = entity:GetData()
     if data.DadsMittDidReplaceSpriteSheet ~= true then
-        if entity.Parent:ToPlayer():HasCollectible(enums.Collectibles.DADS_MITT) then
+        if entity.Parent
+        and entity.Parent:ToPlayer()
+        and entity.Parent:ToPlayer():HasCollectible(enums.Collectibles.DADS_MITT) then
             sprite:ReplaceSpritesheet(0, "gfx/effects/effect_boneclub_dadsmitt.png")
             sprite:LoadGraphics()
             data.DadsMittDidReplaceSpriteSheet = true

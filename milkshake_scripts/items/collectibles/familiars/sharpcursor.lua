@@ -249,7 +249,14 @@ local function ClickCursor(familiar)
     local player = familiar.Player
     local familiarSpr = familiar:GetSprite()
 
-    SFXManager():Play(enums.Sounds.CLICK)
+    local clickSFXEnabled = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "SharpCursorClickSound"
+    )
+    if clickSFXEnabled then
+        SFXManager():Play(enums.Sounds.CLICK)
+    end
+
     familiarSpr:Play("Click", true)
 
     ClickDamageEnemies(familiar, player)
