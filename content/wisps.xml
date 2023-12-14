@@ -123,18 +123,18 @@
 	flameColor="flame_pink" coreColor="core_cyan" />
 
 	<!-- Golden shovel -->
-	<wisp id="3" hp="4" layer="1" damage="3" fireDelay="15"
-	flameColor="flame_yellow" coreColor="core_yellow" tearColor="tear_blue"/>
+	<wisp id="3" hp="4" layer="1" damage="3" fireDelay="30"
+	flameColor="flame_yellow" coreColor="core_yellow" tearColor="tear_gold"/>
 
 	<!-- Leviticus -->
-	<wisp id="23" hp="10" layer="1" damage="3" fireDelay="15" coreGfx="cross.png"
+	<wisp id="23" hp="8" layer="0" damage="3" fireDelay="30" coreGfx="cross.png"
 	flameColor="flame_white" coreColor="core_white" tearColor="tear_blue"/>
 
 	<!-- Globin in a bucket -->
-	<wisp id="1" hp="3" layer="1" damage="3" fireDelay="15"
+	<wisp id="1" hp="3" layer="1" damage="3" fireDelay="30"
 	flameColor="flame_red" coreColor="core_red" tearColor="tear_red"/>
 
 	<!-- Empty Slot -->
 	<wisp id="10" hp="1" layer="0" canShoot="false"
-	flameColor="flame_yellow" coreColor="core_yellow" coreGfx="coin.png" tearColor="tear_yellow"/>
+	flameColor="flame_yellow" coreColor="core_gold" coreGfx="coin.png" tearColor="tear_gold"/>
 </wisps>
