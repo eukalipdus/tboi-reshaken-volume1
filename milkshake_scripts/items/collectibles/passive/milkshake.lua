@@ -199,6 +199,11 @@ local function RenderMultiplier(player, startingFrame)
         baseYPos = baseYPos + 10
     end
 
+    if utility:AnyPlayerIsCharacter(PlayerType.PLAYER_BLUEBABY_B) and utility:IsMultiplayer() then
+        --If there is a t.blue baby and playing coop poop is separate from bombs
+        baseYPos = baseYPos + 10
+    end
+
     if TSIL.Players.IsJacobOrEsau(Isaac.GetPlayer()) then
         --If the main player is jacob and esau lower it a bit
         baseYPos = baseYPos + 16
