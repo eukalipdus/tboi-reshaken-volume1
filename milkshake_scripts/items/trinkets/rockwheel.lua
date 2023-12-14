@@ -5,6 +5,13 @@ local RockWheel = {}
 
 local SPEED_BONUS = 0.1
 local STONEY_COLLISION_DAMAGE = 4
+local BASE_TARGET_SEARCH_RADIUS = 120
+
+local LINECHECK_MODE_HIT_OBSTACLES_ONLY = 3
+
+local CHARM_FLASH_COLOR = Color(0.6,0.6,0.6,1,1,0.4,0.6)
+local CHARM_FLASH_DURATION = 30
+
 
 local GRIMACES = TSIL.Utils.Tables.ConstructDictionaryFromTable({
     EntityType.ENTITY_STONEHEAD,
@@ -17,11 +24,18 @@ local GRIMACES = TSIL.Utils.Tables.ConstructDictionaryFromTable({
 })
 
 ---@param npc EntityNPC
-local function FindEnemyTarget(npc)
+---@param searchRadius number
+local function FindEnemyTarget(npc, searchRadius)
+    local room = game:GetRoom()
     local closestDistance
     local closest
-    for _, entity in ipairs(Isaac.GetRoomEntities()) do
-        if not (entity:IsActiveEnemy(false) and entity:IsVulnerableEnemy()) then
+    for _, entity in ipairs(Isaac.FindInRadius(npc.Position, searchRadius, EntityPartition.ENEMY)) do
+        if not (
+            entity:IsActiveEnemy(false)
+            and entity:IsVulnerableEnemy()
+            and not entity:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)
+            and room:CheckLine(npc.Position, entity.Position, LINECHECK_MODE_HIT_OBSTACLES_ONLY)
+        ) then
             goto continue
         end
         if not closest or npc.Position:DistanceSquared(entity.Position) < closestDistance then
@@ -42,6 +56,7 @@ function RockWheel:NPCInit(npc)
         return
     end
 
+    npc:SetColor(CHARM_FLASH_COLOR, CHARM_FLASH_DURATION, 1, true, false)
     npc:AddEntityFlags(EntityFlag.FLAG_FRIENDLY)
     utility:SetData(npc, "HasRockWheelCharm", true)
     npc.CollisionDamage = STONEY_COLLISION_DAMAGE
@@ -75,8 +90,13 @@ function RockWheel:PostNPCUpdate(npc)
     if not (npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and utility:GetData(npc, "HasRockWheelCharm")) then
         return
     end
-    if npc.Target == nil or npc.Target:IsDead() or npc.Target.Type == EntityType.ENTITY_PLAYER then
-        FindEnemyTarget(npc)
+    if npc.Target == nil
+    or npc.Target:IsDead()
+    or npc.Target.Type == EntityType.ENTITY_PLAYER
+    or npc.Position:DistanceSquared(npc.Target.Position) > BASE_TARGET_SEARCH_RADIUS^2
+    or not game:GetRoom():CheckLine(npc.Position, npc.Target.Position, LINECHECK_MODE_HIT_OBSTACLES_ONLY)
+    then
+        FindEnemyTarget(npc, BASE_TARGET_SEARCH_RADIUS)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, RockWheel.PostNPCUpdate, EntityType.ENTITY_STONEHEAD)

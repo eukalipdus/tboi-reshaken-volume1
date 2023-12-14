@@ -125,7 +125,8 @@ descriptions.Collectibles = {
         en_us = {
             name = "Globin In A Bucket",
             description = "Spawns a friendly globin that fights by your side" ..
-            "#Chance to spawn different globin variants depending on the floor",
+            "#Chance to spawn different globin variants depending on the floor" .. 
+            "#A maximum of 4 globins can be spawned at once",
         },
         spa = {
             name = "Globin en un Cubo",

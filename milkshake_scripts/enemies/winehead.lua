@@ -96,13 +96,18 @@ function WineHead:WineHead_Update(enemy)
             local spawnPos = enemy.Position + posOffset
             local spawnVel = (spawnPos - enemy.Position):Resized(rng:RandomInt(5) + 4)
 
-            local proj = TSIL.EntitySpecific.SpawnProjectile(
+            -- Projectiles collide with enemy when perma charmed
+            --[[local proj = TSIL.EntitySpecific.SpawnProjectile(
                 ProjectileVariant.PROJECTILE_NORMAL,
                 0,
                 spawnPos,
                 spawnVel,
                 enemy
-            )
+            )]]
+
+            local proj = enemy:FireBossProjectiles(1, spawnPos, 0, ProjectileParams())
+            proj.Velocity = spawnVel
+
             proj.Scale = (rng:RandomInt(15) + 5) / 12
             proj.FallingSpeed = rng:RandomInt(5) - 20
             proj.FallingAccel = rng:RandomInt(1) + 1
@@ -304,6 +309,7 @@ function WineHead:WineHead_Update(enemy)
 
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, .5, 0, false, 1, 0)
+
         elseif sprite:IsFinished("Death") then
             enemy.CanShutDoors = false
             enemy.DepthOffset = -10
