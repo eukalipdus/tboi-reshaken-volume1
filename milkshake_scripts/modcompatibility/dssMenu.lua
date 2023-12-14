@@ -141,6 +141,16 @@ local dssmenucore = include("milkshake_scripts.modcompatibility.dssmenucore")
 local dssmod = dssmenucore.init(DSSModName, MenuProvider)
 
 
+local sanchoSprite = Sprite()
+sanchoSprite:Load("gfx/ui/giantbook/sancho.anm2", true)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, function ()
+    if sanchoSprite:IsFinished() then return end
+
+    sanchoSprite:Render(TSIL.UI.GetScreenCenterPosition())
+    sanchoSprite:Update()
+end)
+
+
 -- Adding a Menu
 
 -- Creating a menu like any other DSS menu is a simple process. You need a "Directory", which
@@ -374,7 +384,18 @@ local exampledirectory = {
                 setting = 1,
                 variable = 'SanchoMode',
                 choices = { 'on', 'off' },
-                tooltip = { strset = { 'whether sancho', 'mode should', 'be active' } }
+                tooltip = { strset = { 'whether sancho', 'mode should', 'be active' } },
+                changefunc = function (button)
+                    if button.setting == 1 then
+                        if sanchoSprite:GetAnimation() == "Celestial" then return end
+                        SFXManager():Play(SoundEffect.SOUND_HOLY)
+                        sanchoSprite:Play("Celestial", true)
+                    else
+                        if sanchoSprite:GetAnimation() == "Evil" then return end
+                        SFXManager():Play(SoundEffect.SOUND_UNHOLY)
+                        sanchoSprite:Play("Evil", true)
+                    end
+                end
             },
             { str = "", fsize = 1, nosel = true },
 

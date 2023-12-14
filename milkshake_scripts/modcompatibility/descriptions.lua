@@ -1025,7 +1025,7 @@ descriptions.Cards = {
 }
 
 --ENTITY DESCRIPTIONS
-local BRENDA = EntityType.ENTITY_SLOT + "." + MilkshakeVol1.enums.Slots.SPIRIT_KLIN_BRENDA
+local BRENDA = EntityType.ENTITY_SLOT .. "." .. MilkshakeVol1.enums.Slots.SPIRIT_KLIN_BRENDA
 
 descriptions.Entities = {
     [BRENDA] = {
