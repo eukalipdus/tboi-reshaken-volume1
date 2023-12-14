@@ -184,7 +184,9 @@ local function RenderMultiplier(player, startingFrame)
         end
     end
 
-    if Game().Difficulty == Difficulty.DIFFICULTY_NORMAL and TSIL.Run.CanRunUnlockAchievements() then
+    if Game().Challenge == Challenge.CHALLENGE_NULL
+    and Game().Difficulty == Difficulty.DIFFICULTY_NORMAL
+    and TSIL.Run.CanRunUnlockAchievements() then
         --If there are no symbols (Hard mode, greed, achievements disabled, etc..) move the ui up
         baseYPos = baseYPos - 15.5
     end
