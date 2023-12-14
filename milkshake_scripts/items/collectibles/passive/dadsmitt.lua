@@ -124,7 +124,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, dadsMitt.PostKnifeUpdate)
 
 function dadsMitt:ReplaceBoneClub(entity)
-    if entity.Variant ~= WeaponType.WEAPON_BONE then return end
+    if entity.Variant ~= 1 then return end -- Bone club
     local sprite = entity:GetSprite()
     local data = entity:GetData()
     if data.DadsMittDidReplaceSpriteSheet ~= true then
