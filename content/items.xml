@@ -59,4 +59,5 @@
     <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true"/>
     <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip nolostbr summonable noeden" quality="2" gfx="collectibles_glassheart.png" hidden="true"/>
     <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" tags="noeden" quality="1" hidden="true"/>
+    <passive id="50" name="Saataa Andagii" description="Saataa Andagii" tags="nocantrip nolostbr noeden" quality="5" maxhearts="1" hearts="4" gfx="sata_andagi.png" hidden="true"/>
 </items>
