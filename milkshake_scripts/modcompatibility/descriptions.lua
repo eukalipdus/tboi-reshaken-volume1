@@ -1024,4 +1024,20 @@ descriptions.Cards = {
     }
 }
 
+--ENTITY DESCRIPTIONS
+local BRENDA = EntityType.ENTITY_SLOT + "." + MilkshakeVol1.enums.Slots.SPIRIT_KLIN_BRENDA
+
+descriptions.Entities = {
+    [BRENDA] = {
+        en_us = {
+            name = "Brenda the Spirit Klin",
+            description = "bitch"
+        },
+        spa = {
+            name = "Brenda la Forja Espiritual",
+            description = "zorra"
+        }
+    }
+}
+
 return descriptions

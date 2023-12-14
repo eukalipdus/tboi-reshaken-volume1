@@ -1,9 +1,9 @@
 local enums = MilkshakeVol1.enums
 local descriptions = include("milkshake_scripts.modcompatibility.descriptions")
 
-MilkshakeVol1:AddModCompatibility("EID", function ()
+MilkshakeVol1:AddModCompatibility("EID", function()
     EID:setModIndicatorName("Isaac Reshaken! ")
-    EID:setModIndicatorIcon("Collectible"..enums.Collectibles.MILKSHAKE .."")
+    EID:setModIndicatorIcon("Collectible" .. enums.Collectibles.MILKSHAKE .. "")
 
     local ICON_ANM2_PER_CARD = {
         [enums.Orbs.ELECTRIC] = "gfx/spirit_conductivity.anm2",
@@ -67,20 +67,39 @@ MilkshakeVol1:AddModCompatibility("EID", function ()
             if description.lyra_extra then
                 EID:addDescriptionModifier("Lyra" .. card .. language,
                     --Modifier condition
-                    function (descObj)
+                    function(descObj)
                         return EID:getLanguage() == language
-                        and TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA)
-                        and descObj.ObjType == EntityType.ENTITY_PICKUP
-                        and descObj.ObjVariant == PickupVariant.PICKUP_TAROTCARD
-                        and descObj.ObjSubType == card
+                            and TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA)
+                            and descObj.ObjType == EntityType.ENTITY_PICKUP
+                            and descObj.ObjVariant == PickupVariant.PICKUP_TAROTCARD
+                            and descObj.ObjSubType == card
                     end,
                     --Modifier callback
-                    function (descObj)
+                    function(descObj)
                         EID:appendToDescription(descObj, description.lyra_extra)
                         return descObj
                     end
                 )
+            end
         end
+    end
+
+    -- Entities
+    for entity, translations in pairs(descriptions.Entities) do
+        local tokens = TSIL.Utils.String.Split(entity, ".")
+        local type = tokens[1]
+        local variant = tokens[2] or 0
+        local subtype = tokens[3] or 0
+
+        for language, description in pairs(translations) do
+            EID:addEntity(
+                type,
+                variant,
+                subtype,
+                description.name,
+                description.description,
+                language
+            )
         end
     end
 end)
