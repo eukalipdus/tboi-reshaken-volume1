@@ -366,6 +366,25 @@ end
 ---Helper function to make a player able/unable to shoot.
 ---@param player EntityPlayer
 ---@param canShoot boolean
+function utility:SetBlindfold(player, enabled) -- true is blind, false for cry
+	---Blindfold
+    local challenge = Isaac.GetChallenge()
+    if enabled and player:CanShoot() then
+        game.Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
+        player:UpdateCanShoot()
+        game.Challenge = challenge
+        player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
+		utility:SetData(player, "SetBlind", true)
+    elseif not enabled and utility:GetData(player, "SetBlind") then --if player:CanShoot() then
+		if not player:CanShoot() then
+			game.Challenge = Challenge.CHALLENGE_NULL
+			player:UpdateCanShoot()
+			game.Challenge = challenge
+		end
+		utility:SetData(player, "SetBlind", nil)
+    end
+end
+--[[
 function utility:SetCanShoot(player, canShoot)
     --whats this??
 	-- local data = player:GetData()
@@ -384,6 +403,8 @@ function utility:SetCanShoot(player, canShoot)
         Game().Challenge = challenge
     end
 end
+--]]
+
 
 
 ---Helper function to check if an enemy should have a scared behaviour.
