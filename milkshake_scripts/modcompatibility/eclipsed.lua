@@ -1,6 +1,6 @@
 MilkshakeVol1:AddModCompatibility("EclipsedMod", function ()
     local EclipsedBeggars = {
-        [EclipsedMod.enums.Slots.MongoBeggar] = {
+        [Isaac.GetEntityVariantByName("Mongo Beggar")] = {
             Config = {Count = 2, MinCount = 2},
             {Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.MINISAAC, SubType = 0},
             {Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLUE_FLY, SubType = 0},
@@ -17,7 +17,7 @@ MilkshakeVol1:AddModCompatibility("EclipsedMod", function ()
             {Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLOOD_BABY, SubType = 5},
             {Type = EntityType.ENTITY_FAMILIAR, Variant = FamiliarVariant.BLOOD_BABY, SubType = 6},
         },
-        [EclipsedMod.enums.Slots.DeliriumBeggar] = {
+        [Isaac.GetEntityVariantByName("Delirious Bum")] = {
             Config = {Count = 1, MinCount = 0},
             --idk where is half black and immoral harts
             {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectCell,},
