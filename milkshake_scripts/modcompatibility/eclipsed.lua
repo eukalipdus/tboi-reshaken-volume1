@@ -20,15 +20,15 @@ MilkshakeVol1:AddModCompatibility("EclipsedMod", function ()
         [Isaac.GetEntityVariantByName("Delirious Bum")] = {
             Config = {Count = 1, MinCount = 0},
             --idk where is half black and immoral harts
-            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectCell,},
-            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectBomb,},
-            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectKey,},
-            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectCard,},
-            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectPill,},
-            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectRune,},
-            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectHeart,},
-            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectCoin,},
-            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = EclipsedMod.enums.Pickups.DeliObjectBattery,},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Object"),},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Bomb"),},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Key"),},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Card"),},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Pill"),},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Rune"),},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Heart"),},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Coin"),},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Battery"),},
         },
     }
     for key, datatable in pairs(EclipsedBeggars) do
