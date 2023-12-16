@@ -118,34 +118,35 @@ end
 ---@param player EntityPlayer
 function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
     if not player then return end
-    local globins = utility:TableConcat(Isaac.FindByType(EntityType.ENTITY_GLOBIN),
-                                        Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.GLOBIN_IN_A_BUCKET)
-                                       )
+    local globinsOnly = Isaac.FindByType(EntityType.ENTITY_GLOBIN)
+    local globinsAndEffects = utility:TableConcat(globinsOnly,
+                                                  Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.GLOBIN_IN_A_BUCKET)
+                                                 )
 
     local count = 0
-    for i = 1, #globins do
-        if GetPtrHash(globins[i].SpawnerEntity) == GetPtrHash(player) then
+    for i = 1, #globinsAndEffects do
+        if GetPtrHash(globinsAndEffects[i].SpawnerEntity) == GetPtrHash(player) then
             count = count + 1
         end
     end
 
-    local lowestHealthGlobin
+    local oldestGlobin
     if count == GLOBIN_LIMIT then
-        lowestHealthGlobin = globins[1]
-        for i = 2, #globins do
-            if globins[i].HitPoints < lowestHealthGlobin.HitPoints then
-                lowestHealthGlobin = globins[i]
+        oldestGlobin = globinsOnly[1]
+        for i = 2, #globinsOnly do
+            if globinsOnly[i].FrameCount > oldestGlobin.FrameCount then
+                oldestGlobin = globinsOnly[i]
             end
         end
     end
-    if lowestHealthGlobin then
-        if lowestHealthGlobin.Type == EntityType.ENTITY_GLOBIN then
-            lowestHealthGlobin:Kill()
+    if oldestGlobin then
+        if oldestGlobin.Type == EntityType.ENTITY_GLOBIN then
+            oldestGlobin:Kill()
             TSIL.Utils.Functions.RunInFrames(function ()
-                lowestHealthGlobin:Kill()
+                oldestGlobin:Kill()
             end, 1, {})
-        elseif lowestHealthGlobin.Type == EntityType.ENTITY_EFFECT then
-            lowestHealthGlobin:Remove()
+        elseif oldestGlobin.Type == EntityType.ENTITY_EFFECT then
+            oldestGlobin:Remove()
         end
     end
 
