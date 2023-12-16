@@ -15,6 +15,19 @@ local shardTrinkets = {
     enums.Trinkets.AMBER_SHARD,
 }
 
+local shardTrinketNames = {
+    "amethyst",
+    "ruby",
+    "tourmaline",
+    "emerald",
+    "peridot",
+    "garnet",
+    "onyx",
+    "diamond",
+    "sapphire",
+    "amber",
+}
+
 function shardRockOverlay:PostGridEntityInit()
     local emptyEffects = TSIL.EntitySpecific.GetEffects(enums.Effects.EFFECT_REPLACER)
     if #emptyEffects > 1 then return end
@@ -27,5 +40,20 @@ function shardRockOverlay:PostGridEntityInit()
     end
 end
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GRID_ENTITY_INIT, shardRockOverlay.PostGridEntityInit)
+
+function shardRockOverlay:PostEffectRender(effect)
+    for idx, trinketId in ipairs(shardTrinkets) do
+        if Game():GetRoom():GetRenderMode() == RenderMode.RENDER_WATER_REFLECT
+        or effect.Variant ~= enums.Effects.EFFECT_REPLACER
+        or not utility:DoesTrinketExist(trinketId) then return end
+        local tintedRocks = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT)
+        for _, gridEntity in ipairs(tintedRocks) do
+            if gridEntity.State ~= 2 then
+                utility:RenderCrystalRockSprite(gridEntity, shardTrinketNames[idx])
+            end
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_RENDER, shardRockOverlay.PostEffectRender)
 
 return shardRockOverlay

@@ -7,16 +7,4 @@ function diamondShard:postGridEntityBroken(gridEntity)
 end
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GRID_ENTITY_BROKEN, diamondShard.postGridEntityBroken)
 
-function diamondShard:PostEffectRender(effect)
-    if Game():GetRoom():GetRenderMode() == RenderMode.RENDER_WATER_REFLECT
-    or effect.Variant ~= enums.Effects.EFFECT_REPLACER
-    or not utility:DoesTrinketExist(enums.Trinkets.DIAMOND_SHARD) then return end
-    local tintedRocks = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT)
-    for _, gridEntity in ipairs(tintedRocks) do
-        if gridEntity.State ~= 2 then
-            utility:RenderCrystalRockSprite(gridEntity, "diamond")
-        end
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_RENDER, diamondShard.PostEffectRender)
 return diamondShard
