@@ -147,6 +147,8 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
             PlaySplitAnimation(i, shatteredCollectible)
 
             if shatteredCollectible and collectible:IsShopItem() then
+                shatteredCollectible.AutoUpdatePrice = false
+
                 if collectible.Price == PickupPrice.PRICE_THREE_SOULHEARTS then
                     shatteredCollectible.Price = PickupPrice.PRICE_TWO_SOUL_HEARTS
 
@@ -161,7 +163,6 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
                     shatteredCollectible.Price = PickupPrice.PRICE_ONE_HEART
                 
                 else
-                    shatteredCollectible.AutoUpdatePrice = false
                     shatteredCollectible.Price = math.floor(collectible.Price / 2)
                 end
             end
