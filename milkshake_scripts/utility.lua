@@ -423,19 +423,6 @@ function utility:IsEnemyConfused(enemy)
     return enemy:HasEntityFlags(EntityFlag.FLAG_CONFUSION)
 end
 
---- Find out if at least one player has a given trinket, returns the first player found that has it
----@param trinketType integer
----@return EntityPlayer | nil
-function utility:DoesTrinketExist(trinketType)
-    for i = 0, Game():GetNumPlayers() - 1 do
-      local player = Isaac.GetPlayer(i)
-      if player:HasTrinket(trinketType) then
-        return player
-      end
-    end
-    return nil
-end
-
 --- Returns an x and y relative to the given x and y taking into account the HUD offset
 --- Provided by Sectimus
 ---@param x number
