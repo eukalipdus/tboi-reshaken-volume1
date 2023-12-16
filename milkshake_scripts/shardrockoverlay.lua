@@ -42,13 +42,14 @@ MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GRID_ENTITY_INIT, shard
 
 function shardRockOverlay:PostEffectRender(effect)
     for idx, trinketId in ipairs(shardTrinkets) do
-        if Game():GetRoom():GetRenderMode() == RenderMode.RENDER_WATER_REFLECT
-        or effect.Variant ~= enums.Effects.EFFECT_REPLACER
-        or not TSIL.Players.DoesAnyPlayerHasTrinket(trinketId) then return end
-        local tintedRocks = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT)
-        for _, gridEntity in ipairs(tintedRocks) do
-            if gridEntity.State ~= 2 then
-                utility:RenderCrystalRockSprite(gridEntity, shardTrinketNames[idx])
+        if Game():GetRoom():GetRenderMode() ~= RenderMode.RENDER_WATER_REFLECT
+        and effect.Variant == enums.Effects.EFFECT_REPLACER
+        and TSIL.Players.DoesAnyPlayerHasTrinket(trinketId) then
+            local tintedRocks = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT)
+            for _, gridEntity in ipairs(tintedRocks) do
+                if gridEntity.State ~= 2 then
+                    utility:RenderCrystalRockSprite(gridEntity, shardTrinketNames[idx])
+                end
             end
         end
     end
