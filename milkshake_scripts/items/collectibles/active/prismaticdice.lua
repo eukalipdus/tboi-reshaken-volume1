@@ -199,6 +199,10 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
             elseif splitQuality == 3 then
                 ---@diagnostic disable-next-line: param-type-mismatch
                 shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
+            
+            elseif splitQuality == 4 then
+                ---@diagnostic disable-next-line: param-type-mismatch
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.GOLDEN_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
             end
 
             if i == 0 then
