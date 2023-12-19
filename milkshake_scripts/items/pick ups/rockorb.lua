@@ -261,6 +261,15 @@ local function SpawnSetStalagmites(player, backdropType, rng, isLyra)
     stalagmiteCount = stalagmiteCount - numPillarBlockTargets
     local remainingPillarBlocks = #blockAndPillarTargets - numPillarBlockTargets
 
+    local enemiesToTarget
+    if stalagmiteCount > #enemies then
+        enemiesToTarget = #enemies
+        stalagmiteCount = stalagmiteCount - enemiesToTarget
+    else
+        enemiesToTarget = stalagmiteCount
+        stalagmiteCount = 0
+    end
+
     while stalagmiteCount > 0 do
         remainingPillarBlocks = remainingPillarBlocks - 1
         numPillarBlockTargets = numPillarBlockTargets + 1
@@ -275,15 +284,6 @@ local function SpawnSetStalagmites(player, backdropType, rng, isLyra)
     for _ = 1, numTintedRocksToTarget do
         local stalagmite = SpawnStalagmite(player, rng, true, tintedRockTargets)
         SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
-    end
-
-    local enemiesToTarget
-    if stalagmiteCount > #enemies then
-        enemiesToTarget = #enemies
-        stalagmiteCount = stalagmiteCount - enemiesToTarget
-    else
-        enemiesToTarget = stalagmiteCount
-        stalagmiteCount = 0
     end
 
     for _ = 1, enemiesToTarget do
