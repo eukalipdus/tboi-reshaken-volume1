@@ -27,7 +27,7 @@
     <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" tags="offensive summonable lazarussharedglobal" quality="2" />
     <active id="30" name="Mirror Key" description="Otherside" quality="3" gfx="mirror_key.png" maxcharges="4" tags="lazarussharedglobal nocantrip nogreed offensive"/>
     <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" tags="noeden" />
-    <passive id="31" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" tags="food nocantrip noeden" quality="4" />
+    <passive id="31" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" tags="nocantrip noeden hidden" quality="4" />
 
     <!-- Trinkets -->
     <trinket name="Amethyst Shard" description="Hidden clairvoyant power..." gfx="trinkets_amethystcluster.png" tags="nogreed"/>
