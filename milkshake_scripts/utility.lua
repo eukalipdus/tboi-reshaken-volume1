@@ -468,5 +468,17 @@ function utility:IsVersusScreenPlaying()
         and not room:IsClear()
 end
 
+--- Find a player through their Sad Onion rng seed
+---@param playerIndex integer
+---@return EntityPlayer | nil
+function utility:GetPlayerFromIndex(playerIndex)
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        if TSIL.Players.GetPlayerIndex(player) == playerIndex then
+            return player
+        end
+    end
+    return nil
+end
 
 MilkshakeVol1.utility = utility
