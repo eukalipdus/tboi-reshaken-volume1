@@ -271,7 +271,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlobinInABucket.on
 function GlobinInABucket:PostNewRoom()
     for index, globEffect in ipairs(trackGlobinEffects) do
         local globinInfo = globEffect.Info
-        local player = utility:GetPlayerFromIndex(globEffect.Player)
+        local player = TSIL.Players.GetPlayerByIndex(globEffect.Player)
         if player then
             local globin = TSIL.EntitySpecific.SpawnNPC(
                 globinInfo.type,

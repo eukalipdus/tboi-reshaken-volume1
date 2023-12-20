@@ -24,13 +24,19 @@ function utility:ShardTrinkets(trinketType, cardType, gridEntity, chance)
 end
 
 --- Used to render crystal overlays over rocks if a player has a shard trinket
----@param gridEntity GridEntity
+---@param entity Entity
 ---@param animName string
-function utility:RenderCrystalRockSprite(gridEntity, animName)
+function utility:RenderCrystalRockSprite(entity, animName)
+    local renderPos
+    if entity.Type == EntityType.ENTITY_PLAYER then
+        renderPos =  Isaac.WorldToScreen(entity.Position - Vector(0,45))
+    else
+        renderPos = Isaac.WorldToScreen(entity.Position)
+    end
     local sprite = Sprite()
     sprite:Load("gfx/grid/grid_crystalrock.anm2", true)
     sprite:Play(animName, true)
-    sprite:Render(Isaac.WorldToScreen(gridEntity.Position))
+    sprite:Render(renderPos)
 end
 
 ---Returns the tears stat after adding some value
@@ -466,19 +472,6 @@ function utility:IsVersusScreenPlaying()
         and room:GetFrameCount() == 0
         and room:GetType() == RoomType.ROOM_BOSS
         and not room:IsClear()
-end
-
---- Find a player through their Sad Onion rng seed
----@param playerIndex integer
----@return EntityPlayer | nil
-function utility:GetPlayerFromIndex(playerIndex)
-    for i = 0, Game():GetNumPlayers() - 1 do
-        local player = Isaac.GetPlayer(i)
-        if TSIL.Players.GetPlayerIndex(player) == playerIndex then
-            return player
-        end
-    end
-    return nil
 end
 
 MilkshakeVol1.utility = utility
