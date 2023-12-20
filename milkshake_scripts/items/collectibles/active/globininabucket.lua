@@ -2,6 +2,9 @@ local GlobinInABucket = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
+local SPAWN_DISTANCE = 20
+
+local trackGlobinEffects = {}
 
 ---@class GlobinInfo
 ---@field anm2 any
@@ -159,7 +162,7 @@ function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
         SoundEffect.SOUND_MEAT_JUMPS
     )
 
-    TSIL.EntitySpecific.SpawnEffect(
+    local globinEffect = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.GLOBIN_IN_A_BUCKET,
         0,
         player.Position,
@@ -167,6 +170,7 @@ function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
         player,
         rng
     )
+    table.insert(trackGlobinEffects, {Entity = globinEffect, Info = GetGlobinEffectInfo(globinEffect), Player = TSIL.Players.GetPlayerIndex(player)})
     return true
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, GlobinInABucket.OnGlobinBucketUse, enums.Collectibles.GLOBIN_IN_A_BUCKET)
@@ -256,5 +260,30 @@ function GlobinInABucket:onNPCUpdate(entity)
 
         entity:Remove()
     end
+    for index, globinEffect in ipairs(trackGlobinEffects) do
+        if not globinEffect.Entity:Exists() then
+            table.remove(trackGlobinEffects, index)
+        end
+    end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlobinInABucket.onNPCUpdate, enums.Effects.GLOBIN_IN_A_BUCKET)
+
+function GlobinInABucket:PostNewRoom()
+    for index, globEffect in ipairs(trackGlobinEffects) do
+        local globinInfo = globEffect.Info
+        local player = utility:GetPlayerFromIndex(globEffect.Player)
+        if player then
+            local globin = TSIL.EntitySpecific.SpawnNPC(
+                globinInfo.type,
+                globinInfo.variant,
+                globinInfo.subtype,
+                Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE),
+                Vector.Zero,
+                player
+            )
+            globin:AddCharmed(EntityRef(player), -1)
+        end
+        table.remove(trackGlobinEffects, index)
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, GlobinInABucket.PostNewRoom)
