@@ -243,6 +243,7 @@ local function SpawnFakeMirrorDoor(doorSlot, target)
     sprite.Rotation = rotation
     fakeDoor.Color = Color(1, 1, 1, 1, 0.2, 0.4, 0.7)
     fakeDoor.SortingLayer = SortingLayer.SORTING_DOOR
+    fakeDoor:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
 
     TSIL.Entities.SetEntityData(
         MilkshakeVol1,
