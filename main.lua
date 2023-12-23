@@ -113,8 +113,8 @@ include("milkshake_scripts.wisps.prismaticdice")
 --Locusts
 include("milkshake_scripts.locusts.prismaticdice")
 include("milkshake_scripts.locusts.dadsmitt")
-include("milkshake_scripts.locusts.celestialmirror")
 include("milkshake_scripts.locusts.sicklecell")
+include("milkshake_scripts.locusts.firecrackerrose")
 
 --Enemies
 include("milkshake_scripts.enemies.beerhead")
