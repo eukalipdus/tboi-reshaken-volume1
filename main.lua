@@ -122,6 +122,8 @@ include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
 
+--Challenges
+include("milkshake_scripts.challenges.isaacclicker")
 --Room ecorations
 include("milkshake_scripts.room_decorations.sacrilege")
 
