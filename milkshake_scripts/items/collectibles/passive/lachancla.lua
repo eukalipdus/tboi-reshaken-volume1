@@ -2,7 +2,12 @@ local laChancla = {}
 local enums = MilkshakeVol1.enums
 
 local SPEED_UP = 0.3
-local COLLISION_DIST = 20
+
+local stompers = {
+    EntityType.ENTITY_MOM,
+    EntityType.ENTITY_SATAN,
+    EntityType.ENTITY_DADDYLONGLEGS
+}
 
 function laChancla:EvaluateCache(player, cacheFlag)
     if player:HasCollectible(enums.Collectibles.LA_CHANCLA) then
@@ -25,10 +30,10 @@ function laChancla:EntityTakeDmg(entity, _, flags, source)
             effect = source.Entity:ToEffect()
             variant = effect.Variant
         end
-
-
+        print(flags)
         if (flags & DamageFlag.DAMAGE_CRUSH == 0)
-        and (effect and variant == EffectVariant.MOM_FOOT_STOMP or source.Entity.Type == EntityType.ENTITY_MOM or source.Entity.Type == EntityType.ENTITY_SATAN) == false
+        and not (effect and variant == EffectVariant.MOM_FOOT_STOMP
+                or TSIL.Utils.Tables.IsIn(stompers, source.Entity.Type))
         then return end
     
         return false
