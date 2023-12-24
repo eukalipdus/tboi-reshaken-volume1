@@ -3,8 +3,8 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local LONG_ROOM_GRID_SIZE = 252
-local NORMAL_MIN = 5
-local NORMAL_MAX = 6
+local NORMAL_MIN = 4
+local NORMAL_MAX = 5
 local BIG_MIN = 7
 local BIG_MAX = 9
 local KILL_RADIUS = 40
@@ -12,6 +12,8 @@ local SHAKE_TIMEOUT = 25
 local PILLAR_TARGETS = 2
 local TINTED_TARGETS = 1
 local BASE_BOSS_DAMAGE = 50
+local WALL_MARGIN = 15
+local TIMES_CAN_FAIL = 1000
 
 local floorRockSprites = {
     [BackdropType.BLUE_WOMB] = "gfx/grid/terrastrium_spike_bluewomb.png",
@@ -68,6 +70,17 @@ local removeRequired = {
     GridEntityType.GRID_PILLAR,
 }
 
+local function GetRandomNonWallPosition()
+    local attempts = 0
+    local position
+    while not position or not Game():GetRoom():IsPositionInRoom(position, WALL_MARGIN) do
+        position = Isaac.GetRandomPosition()
+        attempts = attempts + 1
+        if attempts >= TIMES_CAN_FAIL then break end
+    end
+    return position
+end
+
 --- Changes the sprite of the stalagmite depending on the floor or room and sets various other members, and begins the Windup animation
 ---@param stalagmite Entity
 ---@param backdropType integer
@@ -95,10 +108,10 @@ end
 
 --- Returns a table of all the vulnerable enemies in the room
 ---@return table
-local function GetVulnerableEnemies()
+local function GetEnemyTargets()
     local enemies = TSIL.EntitySpecific.GetNPCs(nil, nil, nil, true)
     enemies = TSIL.Utils.Tables.Filter(enemies, function (_, enemy)
-        return enemy:IsEnemy()
+        return enemy:IsEnemy() and enemy.Type ~= enums.Enemies.STALAGMITE and Game():GetRoom():IsPositionInRoom(enemy.Position, WALL_MARGIN)
     end)
     return enemies
 end
@@ -116,6 +129,8 @@ local function DelayedDestroyGridEntity(gridEntity, remove)
     end, 10)
 end
 
+--- Locates nearby GridEntities 
+---@param stalagmite EntityNPC - The stalagmite to look from
 local function DestroyNearbyGridEntities(stalagmite)
     local nearbyGridEntities = TSIL.GridEntities.GetGridEntities()
     for _, grid in ipairs(nearbyGridEntities) do
@@ -131,11 +146,10 @@ local function DestroyNearbyGridEntities(stalagmite)
     end
 end
 
-
 --- Kills enemies in range of the stalagmite and damages bosses in range, 10 frames after being called
 ---@param stalagmite Entity
 local function DelayedStalagmiteDamage(stalagmite)
-    local enemies = GetVulnerableEnemies()
+    local enemies = GetEnemyTargets()
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         for _, enemy in ipairs(enemies) do
             if enemy.Type ~= enums.Enemies.STALAGMITE
@@ -161,7 +175,7 @@ end
 ---@param targetTable table - Table of entities to randomly select a target from for the stalagmite
 local function SpawnStalagmite(player, rng, isGrid, targetTable)
     local stalagmite
-    if targetTable then
+    if targetTable and #targetTable > 0 then
         local idxToRemove = TSIL.Random.GetRandomInt(1, #targetTable, rng)
         local target = targetTable[idxToRemove]
         stalagmite = TSIL.EntitySpecific.SpawnNPC(
@@ -189,7 +203,7 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
             enums.Enemies.STALAGMITE,
             1,
             0,
-            Isaac.GetRandomPosition(),
+            GetRandomNonWallPosition(),
             Vector.Zero,
             player
         )
@@ -197,19 +211,21 @@ local function SpawnStalagmite(player, rng, isGrid, targetTable)
     return stalagmite
 end
 
---- Spawns a random amount of stalagmite effects
+--- Spawns a random amount of stalagmite NPCs
 ---@param player EntityPlayer
 ---@param backdropType integer - Must be within the floorRockSprites table declared at the top, if nil will default to Basement sprite
 ---@param rng RNG
 ---@param isLyra boolean - If true, Lyra's double effect is activated, if false it's not
-local function SpawnRandomStalagmites(player, backdropType, rng, isLyra)
-    local enemies = GetVulnerableEnemies()
+local function SpawnSetStalagmites(player, backdropType, rng, isLyra)
+    local enemies = GetEnemyTargets()
 
     local blockAndPillarTargets = utility:TableConcat(TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKB),
                                                       TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_PILLAR)
                                                      )
 
-    local tintedRockTargets = TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT)
+    local tintedRockTargets = utility:TableConcat(TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCKT),
+                                                  TSIL.GridEntities.GetGridEntities(GridEntityType.GRID_ROCK_SS)
+                                                 )
 
     local max
     local min
@@ -228,17 +244,36 @@ local function SpawnRandomStalagmites(player, backdropType, rng, isLyra)
 
     local stalagmiteCount = TSIL.Random.GetRandomInt(min, max, rng)
 
-    local numPillarBlockTargets = PILLAR_TARGETS
-    if #blockAndPillarTargets < PILLAR_TARGETS then
-        numPillarBlockTargets = #blockAndPillarTargets
-    end
-
-    local numEnemiesToTarget = stalagmiteCount - numPillarBlockTargets
     local numTintedRocksToTarget = 0
+    local numPillarBlockTargets = PILLAR_TARGETS
 
     if #tintedRockTargets > 0 then
-        numEnemiesToTarget = numEnemiesToTarget - TINTED_TARGETS
+        stalagmiteCount = stalagmiteCount - TINTED_TARGETS
         numTintedRocksToTarget = TINTED_TARGETS
+    end
+   
+    if #blockAndPillarTargets < PILLAR_TARGETS then
+        numPillarBlockTargets = #blockAndPillarTargets
+    elseif #blockAndPillarTargets == 0 then
+        numPillarBlockTargets = 0
+    end
+
+    stalagmiteCount = stalagmiteCount - numPillarBlockTargets
+    local remainingPillarBlocks = #blockAndPillarTargets - numPillarBlockTargets
+
+    local enemiesToTarget
+    if stalagmiteCount > #enemies then
+        enemiesToTarget = #enemies
+        stalagmiteCount = stalagmiteCount - enemiesToTarget
+    else
+        enemiesToTarget = stalagmiteCount
+        stalagmiteCount = 0
+    end
+
+    while stalagmiteCount > 0 do
+        remainingPillarBlocks = remainingPillarBlocks - 1
+        numPillarBlockTargets = numPillarBlockTargets + 1
+        stalagmiteCount = stalagmiteCount - 1
     end
 
     for _ = 1, numPillarBlockTargets do
@@ -251,16 +286,12 @@ local function SpawnRandomStalagmites(player, backdropType, rng, isLyra)
         SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
     end
 
-    if numEnemiesToTarget > #enemies then
-        numEnemiesToTarget = #enemies
-    end
-    for _ = 1, numEnemiesToTarget do
+    for _ = 1, enemiesToTarget do
         local stalagmite = SpawnStalagmite(player, rng, false, enemies)
         SetStalagmiteInfo(stalagmite, backdropType, utility:GetData(stalagmite, "TargetPosition"))
         DelayedStalagmiteDamage(stalagmite)
     end
-    stalagmiteCount = ((stalagmiteCount - numEnemiesToTarget) - numPillarBlockTargets) - numTintedRocksToTarget
-    
+
     for _ = 1, stalagmiteCount do
         local stalagmite = SpawnStalagmite(player, rng, false, nil)
         SetStalagmiteInfo(stalagmite, backdropType, nil)
@@ -273,7 +304,7 @@ function rockOrb:OnOrbUse(orb, player, _, isLyra)
     Game():ShakeScreen(SHAKE_TIMEOUT)
     local backdropType = Game():GetRoom():GetBackdropType()
 
-    TSIL.Utils.Functions.RunInFramesTemporary(SpawnRandomStalagmites, 15, player, backdropType, player:GetCardRNG(orb), isLyra)
+    TSIL.Utils.Functions.RunInFramesTemporary(SpawnSetStalagmites, 15, player, backdropType, player:GetCardRNG(orb), isLyra)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
     end, 30)

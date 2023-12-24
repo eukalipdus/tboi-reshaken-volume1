@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 
 local SPEED_UP = 0.3
 
-function laChancla:onCache(player, cacheFlag)
+function laChancla:EvaluateCache(player, cacheFlag)
     if player:HasCollectible(enums.Collectibles.LA_CHANCLA) then
         if cacheFlag == CacheFlag.CACHE_SPEED then
             local increase = player:GetCollectibleNum(enums.Collectibles.LA_CHANCLA, true)
@@ -11,9 +11,9 @@ function laChancla:onCache(player, cacheFlag)
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, laChancla.onCache)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, laChancla.EvaluateCache)
 
-function laChancla:onHit(entity, amount, flags, source)
+function laChancla:EntityTakeDmg(entity, _, flags, source)
     local effect, variant
     local player = entity:ToPlayer()
     if not player then return end
@@ -29,9 +29,9 @@ function laChancla:onHit(entity, amount, flags, source)
         if (flags & DamageFlag.DAMAGE_CRUSH == 0)
         and (variant == EffectVariant.MOM_FOOT_STOMP or source.Entity.Type == EntityType.ENTITY_MOM or source.Entity.Type == EntityType.ENTITY_SATAN) == false
         then return end
-        
+    
         return false
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, laChancla.onHit, EntityType.ENTITY_PLAYER)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, laChancla.EntityTakeDmg, EntityType.ENTITY_PLAYER)
 return laChancla

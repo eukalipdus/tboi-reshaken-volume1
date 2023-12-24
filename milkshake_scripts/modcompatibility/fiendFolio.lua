@@ -718,10 +718,12 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
             Config = { Count = 2, MinCount = 1 },
             --idk where is half black and immoral harts
             { Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_HEART, SubType = HeartSubType.HEART_BLACK },
+            { Type = EntityType.ENTITY_PICKUP, Variant = FiendFolio.PICKUP.HALF_BLACK_HEART, SubType = 0 },
+            { Type = EntityType.ENTITY_PICKUP, Variant = FiendFolio.PICKUP.IMMORAL_HEART, SubType = 0 },
         },
         [FiendFolio.FF.ZodiacBeggar.Var] = {
             Config = { Count = 2, MinCount = 0, OnlyRune = true },
-            { Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = -1 },
+            { Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = 0 },
         },
         [FiendFolio.FF.CellGame.Var] = {
             Config = { Count = 2, MinCount = 2 },

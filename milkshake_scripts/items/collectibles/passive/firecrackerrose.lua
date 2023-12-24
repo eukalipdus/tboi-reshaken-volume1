@@ -59,7 +59,7 @@ end
 
 ---@param npc EntityNPC
 ---@param player EntityPlayer
-local function AddCrackered(npc, player)
+function MilkshakeVol1.API:AddCrackered(npc, player)
     local colliderPtr = GetPtrHash(npc)
     local crackeredEnemies = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "CrackeredEnemies")
 
@@ -152,7 +152,7 @@ local function OnFirecrackerTearCollision(tear, collider)
 
     if player == nil then return end
 
-    AddCrackered(npc, player)
+    MilkshakeVol1.API:AddCrackered(npc, player)
 end
 
 
@@ -316,7 +316,7 @@ function CheckForFirecrackerLaser(npc, source)
 
     if randomChance >= luckThershold then return end
 
-    AddCrackered(npc, player)
+    MilkshakeVol1.API:AddCrackered(npc, player)
 end
 
 
@@ -337,7 +337,7 @@ function CheckForFirecrackerKnife(npc, source)
 
     if randomChance >= luckThershold then return end
 
-    AddCrackered(npc, player)
+    MilkshakeVol1.API:AddCrackeredAddCrackered(npc, player)
 end
 
 

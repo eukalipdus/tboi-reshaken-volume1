@@ -7,6 +7,7 @@ local FF_PILL_BEGIN = 101
 local FF_PILL_END = 120
 local NON_P1_SCALE = Vector(0.5, 0.5)
 local SPAWN_DISTANCE = 40
+local COLLECTIBLE_NAME =  "Witch Doctor Mask"
 
 local movePillHudPerPlayer = {
     Vector(-12, -12),
@@ -36,7 +37,7 @@ local playerAnchor = {
 local matchingPills = {
     [PillColor.PILL_BLUE_BLUE] = enums.Orbs.WATER,
     [PillColor.PILL_WHITE_BLUE] = enums.Orbs.HOLY,
-    [PillColor.PILL_ORANGE_ORANGE] = enums.Orbs.RANDOM,
+    [PillColor.PILL_ORANGE_ORANGE] = enums.Orbs.ROCK,
     [PillColor.PILL_WHITE_WHITE] = enums.Orbs.UNDEAD,
     [PillColor.PILL_REDDOTS_RED] = enums.Orbs.RANDOM,
     [PillColor.PILL_PINK_RED] = enums.Orbs.UNHOLY,
@@ -50,7 +51,7 @@ local matchingPills = {
     [PillColor.PILL_GOLD] = enums.Orbs.RANDOM,
     [PillColor.PILL_BLUE_BLUE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.WATER,
     [PillColor.PILL_WHITE_BLUE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.HOLY,
-    [PillColor.PILL_ORANGE_ORANGE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.RANDOM,
+    [PillColor.PILL_ORANGE_ORANGE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.ROCK,
     [PillColor.PILL_WHITE_WHITE | PillColor.PILL_GIANT_FLAG] = enums.Orbs.UNDEAD,
     [PillColor.PILL_REDDOTS_RED | PillColor.PILL_GIANT_FLAG] = enums.Orbs.RANDOM,
     [PillColor.PILL_PINK_RED | PillColor.PILL_GIANT_FLAG] = enums.Orbs.UNHOLY,
@@ -159,7 +160,7 @@ function witchDoctorMask:PostPickupUpdate(pickup)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, witchDoctorMask.PostPickupUpdate)
 
-function witchDoctorMask:PostRender()
+function witchDoctorMask:GetShaderParams()
     if Game():GetHUD():IsVisible() then
         for i = 1, Game():GetNumPlayers() do
             local player = Isaac.GetPlayer(i)
@@ -183,10 +184,11 @@ function witchDoctorMask:PostRender()
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.PostRender)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.GetShaderParams)
 
-function witchDoctorMask:PostItemPickup(player, collectible)
-    if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK then return end
+function witchDoctorMask:PostItemPickup(player, collectible, firstTime)
+    if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK
+    or ((firstTime == false) and #(TSIL.Players.GetPlayersOfType(PlayerType.PLAYER_ISAAC_B)) > 0) then return end
     local roll = TSIL.Random.GetRandomInt(1, PillColor.NUM_PILLS)
     local spawnPos = Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE)
     TSIL.PickupSpecific.SpawnPill(roll, spawnPos)

@@ -1,9 +1,34 @@
 <locusts gfxroot="gfx/familiar/locusts/">
     <!-- Vanilla Colors -->
 	<color name="default" />
+	<color name="fly_red" r="768" g="512" b="512" or="0" og="-255" ob="-255"/>
+	<color name="fly_green" r="512" g="768" b="512" or="-255" og="0" ob="-255"/>
+	<color name="fly_blue" r="512" g="512" b="768" or="-255" og="-255" ob="0"/>
+	<color name="fly_yellow" r="1024" g="768" b="512" or="0" og="0" ob="-255"/>
+	<color name="fly_orange" r="1024" g="512" b="512" or="0" og="0" ob="-255"/>
+	<color name="fly_black" r="255" g="255" b="255"/>
+	<color name="fly_purple" r="768" g="512" b="1024" or="0" og="-255" ob="0"/>
 	<color name="fly_pink" r="1024" g="512" b="768" or="0" og="-255" ob="0"/>
-	<!-- <color name="fly_cyan" r="680" g="1024" b="1024" or="0" og="0" ob="0"/> -->
+	<color name="fly_cyan" r="680" g="1024" b="1024" or="0" og="0" ob="0"/>
+
+    <!-- Milkshake -->
+    <locust id="5" scale="1.5" gfx="big.png" color="fly_pink" backGfx="glow.png" backColor="fly_purple" damageMultiplier="2" speed="4"/>
+
+    <!-- Firecracker Flower -->
+    <locust id="6" color="fly_green" backGfx="flame.png" backColor="fly_orange"/>
 
     <!-- Prismatic Dice -->
-    <locust id="13" color="fly_pink" />
+    <locust id="13" color="fly_pink" backGfx="glow.png" backColor="fly_cyan"/>
+
+    <!-- Celestial Mirror -->
+    <locust id="16" color="fly_purple" />
+
+    <!-- Sickle Cell -->
+    <locust id="17" color="fly_red" backGfx="dripping.png" backColor="fly_red"/>
+
+    <!-- Leviticus -->
+    <locust id="23" tearFlags2="39" color="fly_blue" backGfx="glow.png" backColor="fly_cyan" />
+
+    <!-- Dad's Mitt -->
+    <locust id="26" color="default" gfx="locust_dadsmitt.png" damageMultiplier="1.2" speed="0.8"/>
 </locusts>

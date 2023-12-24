@@ -243,6 +243,7 @@ local function SpawnFakeMirrorDoor(doorSlot, target)
     sprite.Rotation = rotation
     fakeDoor.Color = Color(1, 1, 1, 1, 0.2, 0.4, 0.7)
     fakeDoor.SortingLayer = SortingLayer.SORTING_DOOR
+    fakeDoor:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
 
     TSIL.Entities.SetEntityData(
         MilkshakeVol1,
@@ -449,7 +450,7 @@ function MirrorKey:GetShaderParams(shaderName)
         )
 
         local enableShader = 0.0
-        if isInMirrorRoom then
+        if isInMirrorRoom and not MilkshakeVol1.utility:IsVersusScreenPlaying() then
             enableShader = 1.0
 
             local hud = Game():GetHUD()
@@ -572,10 +573,10 @@ end
 local function IsPositionInEnterRange(doorDir, doorPos, playerPos)
     local posDiff = playerPos - doorPos
 
-    return (doorDir == Direction.DOWN and posDiff.Y < 0)
-    or (doorDir == Direction.LEFT and posDiff.X > 0)
-    or (doorDir == Direction.RIGHT and posDiff.X < 0)
-    or (doorDir == Direction.UP and posDiff.Y > 0)
+    return (doorDir == Direction.DOWN and posDiff.Y < 0 and math.abs(posDiff.X) < 50)
+    or (doorDir == Direction.LEFT and posDiff.X > 0 and math.abs(posDiff.Y) < 50)
+    or (doorDir == Direction.RIGHT and posDiff.X < 0 and math.abs(posDiff.Y) < 50)
+    or (doorDir == Direction.UP and posDiff.Y > 0 and math.abs(posDiff.X) < 50)
 end
 
 
@@ -720,7 +721,7 @@ MilkshakeVol1:AddCallback(
 )
 
 
-function MirrorKey:OnRender()
+local function TryRenderOutlines()
     if not ShouldSpawnMirrorDoorOutlines() then return end
     if AreThereDoorOutlines() then return end
 
@@ -745,6 +746,45 @@ function MirrorKey:OnRender()
         sprite.Color = Color(1, 1, 1, 0.3, 0.5, 3, 4)
         sprite.Rotation = rotation
     end
+end
+
+
+local function TryPlayBossMusic()
+    local customMusicEnabled = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "CustomMirrorWorldBossMusic"
+    )
+    if not customMusicEnabled then return end
+
+    local isInMirror = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "IsInMirrorRoom"
+    )
+    if not isInMirror then return end
+
+    if Game():IsPaused() then return end
+
+    local room = Game():GetRoom()
+    if room:GetType() ~= RoomType.ROOM_BOSS then return end
+    if room:IsClear() then return end
+
+    local musicManager = MusicManager()
+
+    if musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER
+    or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER2
+    or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER3 then
+        return
+    end
+
+    if musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS then
+        musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS)
+    end
+end
+
+
+function MirrorKey:OnRender()
+    TryRenderOutlines()
+    TryPlayBossMusic()
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_RENDER,

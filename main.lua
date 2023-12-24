@@ -11,6 +11,7 @@ MilkshakeVol1.API = {}
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
 include("milkshake_scripts.modcompatibility.crabbyCretins")
+include("milkshake_scripts.modcompatibility.dssMenu")
 include("milkshake_scripts.modcompatibility.eclipsed")
 include("milkshake_scripts.modcompatibility.eid")
 include("milkshake_scripts.modcompatibility.epiphany")
@@ -53,6 +54,7 @@ include("milkshake_scripts.items.collectibles.familiars.lilbishop")
 include("milkshake_scripts.items.collectibles.passive.witchdoctormask")
 include("milkshake_scripts.items.collectibles.passive.rainbowfragment")
 include("milkshake_scripts.items.collectibles.active.mirrorkey")
+include("milkshake_scripts.items.collectibles.passive.sataandagi")
 
 -- Trinkets
 include("milkshake_scripts.items.trinkets.amethystshard")
@@ -110,6 +112,9 @@ include("milkshake_scripts.wisps.prismaticdice")
 
 --Locusts
 include("milkshake_scripts.locusts.prismaticdice")
+include("milkshake_scripts.locusts.dadsmitt")
+include("milkshake_scripts.locusts.sicklecell")
+include("milkshake_scripts.locusts.firecrackerrose")
 
 --Enemies
 include("milkshake_scripts.enemies.beerhead")
@@ -117,10 +122,12 @@ include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
 
+--Room ecorations
+include("milkshake_scripts.room_decorations.sacrilege")
+
 --Misc
 include("milkshake_scripts.shardrockoverlay")
 include("milkshake_scripts.nonreplaceabletnt")
-
 
 --- Shader crash fix
 --- Credits to Cucco

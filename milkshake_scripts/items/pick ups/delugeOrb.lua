@@ -18,24 +18,30 @@ DelugeOrb.SwirlScale = 0.8
 DelugeOrb.SwirlAlpha = 0.8
 
 local StopNextMusic = false
-
-
-
+--[[
+-- moved to utility
 --- Written by Zamiel, technique created by im_tem, tweaked
 function DelugeOrb.SetBlindfold(player, enabled)
 	---Blindfold
     local challenge = Isaac.GetChallenge()
-    if enabled then
+	print(player:CanShoot())
+    if enabled and player:CanShoot() then
         game.Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
         player:UpdateCanShoot()
         game.Challenge = challenge
         player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
-    else
-        game.Challenge = Challenge.CHALLENGE_NULL
-        player:UpdateCanShoot()
-        game.Challenge = challenge
+		utility:SetData(player, "SetBlind", true)
+    elseif not enabled and utility:GetData(player, "SetBlind") then --if player:CanShoot() then
+		if not player:CanShoot() then
+			game.Challenge = Challenge.CHALLENGE_NULL
+			player:UpdateCanShoot()
+			game.Challenge = challenge
+		end
+		utility:SetData(player, "SetBlind", nil)
     end
 end
+--]]
+
 
 function DelugeOrb.ExtraUse(lasers, double)
 	double = double or 1
@@ -52,7 +58,7 @@ function DelugeOrb:onPEffectUpdate(player)
 	if utility:GetData(player, "DelugeOrbUsed") then
 		if #Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP) == 0 and #Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.DELUGE_LASER) == 0 then
 			utility:SetData(player, "DelugeOrbUsed", nil)
-			DelugeOrb.SetBlindfold(player, false)
+			utility:SetBlindfold(player, false)
 			player:TryRemoveNullCostume(enums.Costumes.DELUGE_ORB)
 			sfx:Stop(enums.Sounds.WATER_FLOW)
 		else
@@ -192,11 +198,9 @@ function DelugeOrb:OnDelugeOrbUse(_, player, flags) -- useFlag
 		DelugeOrb.ExtraUse(laserUp, 2)
 		DelugeOrb.ExtraUse(laserDown)
 	else
-		DelugeOrb.SetBlindfold(player, true)
+		utility:SetBlindfold(player, true)
 		player:AddNullCostume(enums.Costumes.DELUGE_ORB)
-
 		local double = flags & enums.UseOrbFlags.DOUBLE_POWER > 0 and 2 or 1
-
 		local effectUp = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HUSH_LASER_UP, 0, player.Position, Vector.Zero, player):ToEffect()
 		utility:SetData(effectUp, "DelugeOrb", double)
 		effectUp.Parent = player

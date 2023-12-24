@@ -1,5 +1,7 @@
 local enums = MilkshakeVol1.enums
 
+local REPLACE_CHANCE = 3
+
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
     local randomPill = Game():GetItemPool():GetPill(Random() + 1)
     player:AddPill(randomPill)
@@ -61,3 +63,21 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_RENDER, function (_, picku
         SFXManager():Play(SoundEffect.SOUND_PENNYDROP)
     end
 end)
+
+function MilkshakeVol1:PostPickupInit(pickup)
+    if MilkshakeVol1.utility:DidEntityExist()
+    or (pickup.Variant ~= PickupVariant.PICKUP_COIN and pickup.SubType ~= CoinSubType.COIN_PENNY) then return end
+    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+    local roll = TSIL.Random.GetRandomInt(1, 100, rng)
+    if roll <= REPLACE_CHANCE then
+        local rainbowCoinType = MilkshakeVol1.API:GetRainbowPenny(rng)
+        pickup:Morph(
+            pickup.Type,
+            rainbowCoinType.variant,
+            rainbowCoinType.subtype,
+            true,
+            false
+        )
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, MilkshakeVol1.PostPickupInit)

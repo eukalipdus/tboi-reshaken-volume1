@@ -1,9 +1,9 @@
 local enums = MilkshakeVol1.enums
 local descriptions = include("milkshake_scripts.modcompatibility.descriptions")
 
-MilkshakeVol1:AddModCompatibility("EID", function ()
+MilkshakeVol1:AddModCompatibility("EID", function()
     EID:setModIndicatorName("Isaac Reshaken! ")
-    EID:setModIndicatorIcon("Collectible"..enums.Collectibles.MILKSHAKE .."")
+    EID:setModIndicatorIcon("Collectible" .. enums.Collectibles.MILKSHAKE .. "")
 
     local ICON_ANM2_PER_CARD = {
         [enums.Orbs.ELECTRIC] = "gfx/spirit_conductivity.anm2",
@@ -27,7 +27,7 @@ MilkshakeVol1:AddModCompatibility("EID", function ()
 
     local spr = Sprite()
     spr:Load("gfx/spirit_chaos.anm2", true)
-    EID:addIcon("SpiritOrb", "EIDIcon", 1, 16, 16, 6, 6, spr)
+    EID:addIcon("SpiritOrb", "EIDIcon", 1, 6, 6, 3, 6, spr)
 
     local spr = Sprite()
     spr:Load("gfx/fruit_heart.anm2", true)
@@ -37,6 +37,18 @@ MilkshakeVol1:AddModCompatibility("EID", function ()
     for collectible, translations in pairs(descriptions.Collectibles) do
         for language, description in pairs(translations) do
             EID:addCollectible(collectible, description.description, description.name, language)
+
+            if description.abyss then
+                EID.descriptions[language].abyssSynergies[collectible] = description.abyss
+            end
+
+            if description.book_of_virtues then
+                EID.descriptions[language].bookOfVirtuesWisps[collectible] = description.book_of_virtues
+            end
+
+            if description.book_of_belial then
+                EID.descriptions[language].bookOfBelialBuffs[collectible] = description.book_of_belial
+            end
         end
     end
 
@@ -51,6 +63,43 @@ MilkshakeVol1:AddModCompatibility("EID", function ()
     for card, translations in pairs(descriptions.Cards) do
         for language, description in pairs(translations) do
             EID:addCard(card, description.description, description.name, language)
+
+            if description.lyra_extra then
+                EID:addDescriptionModifier("Lyra" .. card .. language,
+                    --Modifier condition
+                    function(descObj)
+                        return EID:getLanguage() == language
+                            and TSIL.Players.DoesAnyPlayerHasItem(enums.Collectibles.LYRA)
+                            and descObj.ObjType == EntityType.ENTITY_PICKUP
+                            and descObj.ObjVariant == PickupVariant.PICKUP_TAROTCARD
+                            and descObj.ObjSubType == card
+                    end,
+                    --Modifier callback
+                    function(descObj)
+                        EID:appendToDescription(descObj, description.lyra_extra)
+                        return descObj
+                    end
+                )
+            end
+        end
+    end
+
+    -- Entities
+    for entity, translations in pairs(descriptions.Entities) do
+        local tokens = TSIL.Utils.String.Split(entity, ".")
+        local type = tokens[1]
+        local variant = tokens[2] or 0
+        local subtype = tokens[3] or 0
+
+        for language, description in pairs(translations) do
+            EID:addEntity(
+                type,
+                variant,
+                subtype,
+                description.name,
+                description.description,
+                language
+            )
         end
     end
 end)

@@ -1,6 +1,6 @@
 local LeviticusWisp = {}
 
-local ANGEL_CHANCE = 0.2
+local ANGEL_CHANCE = 0.25
 
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,

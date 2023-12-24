@@ -123,6 +123,22 @@ function dadsMitt:PostKnifeUpdate(knife)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, dadsMitt.PostKnifeUpdate)
 
+function dadsMitt:ReplaceBoneClub(entity)
+    if entity.Variant ~= 1 then return end -- Bone club
+    local sprite = entity:GetSprite()
+    local data = entity:GetData()
+    if data.DadsMittDidReplaceSpriteSheet ~= true then
+        if entity.Parent
+        and entity.Parent:ToPlayer()
+        and entity.Parent:ToPlayer():HasCollectible(enums.Collectibles.DADS_MITT) then
+            sprite:ReplaceSpritesheet(0, "gfx/effects/effect_boneclub_dadsmitt.png")
+            sprite:LoadGraphics()
+            data.DadsMittDidReplaceSpriteSheet = true
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, dadsMitt.ReplaceBoneClub)
+
 ---@param player EntityPlayer
 ---@param flag CacheFlag
 function dadsMitt:EvaluateCache(player, flag)

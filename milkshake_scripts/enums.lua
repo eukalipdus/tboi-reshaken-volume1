@@ -32,6 +32,8 @@ enums.Collectibles = {
     RAINBOW_FRAGMENT = Isaac.GetItemIdByName("Rainbow Fragment"),
     MIRROR_KEY = Isaac.GetItemIdByName("Mirror Key"),
     UNCHARGED_MIRROR_KEY = Isaac.GetItemIdByName("Mirror Key "),
+    SATA_ANDAGI = Isaac.GetItemIdByName("Saataa Andagii"),
+    GOLDEN_BREAKFAST = Isaac.GetItemIdByName("Golden Breakfast"),
 
     SPECIAL_BRENDA_FIRE_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM FIRE WISP"),
     SPECIAL_BRENDA_PSYCHIC_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM PSYCHIC WISP"),
@@ -91,6 +93,11 @@ enums.Effects = {
 
     MIRROR_KEY_DOOR = Isaac.GetEntityVariantByName("Mirror Key Door"),
     MIRROR_DOOR_OUTLINE = Isaac.GetEntityVariantByName("Mirror Key Door Outline"),
+
+    SACRILEGE_WALL = Isaac.GetEntityVariantByName("Sacrilege Wall Overlay"),
+    SACRILEGE_FLOOR = Isaac.GetEntityVariantByName("Sacrilege Floor Overlay"),
+    SACRILEGE_OVERLAY = Isaac.GetEntityVariantByName("Sacrilege Screen Overlay"),
+    SACRILEGE_PENTAGRAM = Isaac.GetEntityVariantByName("Sacrilege Pentagram Overlay")
 }
 
 enums.Enemies = {
@@ -128,6 +135,7 @@ enums.Sounds = {
     GLASSHEAD_SHATTER = Isaac.GetSoundIdByName("glass head shatter"),
     WATER_FLOW = Isaac.GetSoundIdByName("water flow"),
     ELECTROCUTE_MACHINE = Isaac.GetSoundIdByName("electrocute machine"),
+    SATA_ANDAGI = Isaac.GetSoundIdByName("Sata Andagi"),
 
     SPIRIT_CHAOS = Isaac.GetSoundIdByName("Spirit Of Chaos"),
     SPIRIT_CLAIRVOYANCE = Isaac.GetSoundIdByName("Spirit Of Clairvoyance"),
@@ -245,6 +253,10 @@ enums.UseOrbFlags = {
 
 enums.ItemPools = {
     GLASS = 0
+}
+
+enums.Music = {
+    GLASS_BOSS = Isaac.GetMusicIdByName("Glass Boss")
 }
 
 MilkshakeVol1.enums = enums
