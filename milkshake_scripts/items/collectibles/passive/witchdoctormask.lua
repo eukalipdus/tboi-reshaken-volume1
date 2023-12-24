@@ -7,6 +7,7 @@ local FF_PILL_BEGIN = 101
 local FF_PILL_END = 120
 local NON_P1_SCALE = Vector(0.5, 0.5)
 local SPAWN_DISTANCE = 40
+local COLLECTIBLE_NAME =  "Witch Doctor Mask"
 
 local movePillHudPerPlayer = {
     Vector(-12, -12),
@@ -185,8 +186,9 @@ function witchDoctorMask:GetShaderParams()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.GetShaderParams)
 
-function witchDoctorMask:PostItemPickup(player, collectible)
-    if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK then return end
+function witchDoctorMask:PostItemPickup(player, collectible, firstTime)
+    if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK
+    or ((firstTime == false) and #(TSIL.Players.GetPlayersOfType(PlayerType.PLAYER_ISAAC_B)) > 0) then return end
     local roll = TSIL.Random.GetRandomInt(1, PillColor.NUM_PILLS)
     local spawnPos = Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE)
     TSIL.PickupSpecific.SpawnPill(roll, spawnPos)
