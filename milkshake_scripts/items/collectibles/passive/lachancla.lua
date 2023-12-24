@@ -2,6 +2,7 @@ local laChancla = {}
 local enums = MilkshakeVol1.enums
 
 local SPEED_UP = 0.3
+local COLLISION_DIST = 20
 
 function laChancla:EvaluateCache(player, cacheFlag)
     if player:HasCollectible(enums.Collectibles.LA_CHANCLA) then
@@ -27,7 +28,7 @@ function laChancla:EntityTakeDmg(entity, _, flags, source)
 
 
         if (flags & DamageFlag.DAMAGE_CRUSH == 0)
-        and (variant == EffectVariant.MOM_FOOT_STOMP or source.Entity.Type == EntityType.ENTITY_MOM or source.Entity.Type == EntityType.ENTITY_SATAN) == false
+        and (effect and variant == EffectVariant.MOM_FOOT_STOMP or source.Entity.Type == EntityType.ENTITY_MOM or source.Entity.Type == EntityType.ENTITY_SATAN) == false
         then return end
     
         return false
