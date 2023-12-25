@@ -259,4 +259,9 @@ enums.Music = {
     GLASS_BOSS = Isaac.GetMusicIdByName("Glass Boss")
 }
 
+enums.Challenges = {
+    SPIRIT_SAGE = Isaac.GetChallengeIdByName("[Reshaken] Spirit Sage"),
+    ISAAC_CLICKER = Isaac.GetChallengeIdByName("[Reshaken] Isaac Clicker"),
+    WORLD_OF_LIGHT = Isaac.GetChallengeIdByName("[Reshaken] World of Light")
+}
 MilkshakeVol1.enums = enums

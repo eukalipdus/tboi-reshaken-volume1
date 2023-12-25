@@ -1,3 +1,4 @@
 <challenges version="1">
+    <challenge name="[Reshaken] Spirit Sage" endstage="8" secretpath="true" playertype="36" roomfilter="4" startingitems="454" />
     <challenge name="[Reshaken] Isaac Clicker" endstage="8" playertype="0" canshoot="false" roomfilter="4" />
 </challenges>
