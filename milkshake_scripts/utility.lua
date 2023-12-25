@@ -376,16 +376,16 @@ function utility:SetBlindfold(player, enabled) -- true is blind, false for cry
 	---Blindfold
     local challenge = Isaac.GetChallenge()
     if enabled and player:CanShoot() then
-        game.Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
+        Game().Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
         player:UpdateCanShoot()
-        game.Challenge = challenge
+        Game().Challenge = challenge
         player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
 		utility:SetData(player, "SetBlind", true)
     elseif not enabled and utility:GetData(player, "SetBlind") then --if player:CanShoot() then
 		if not player:CanShoot() then
-			game.Challenge = Challenge.CHALLENGE_NULL
+			Game().Challenge = Challenge.CHALLENGE_NULL
 			player:UpdateCanShoot()
-			game.Challenge = challenge
+			Game().Challenge = challenge
 		end
 		utility:SetData(player, "SetBlind", nil)
     end
