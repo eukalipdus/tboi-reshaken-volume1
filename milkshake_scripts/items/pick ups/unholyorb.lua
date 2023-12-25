@@ -269,6 +269,7 @@ function UnholyOrb:onPEffectUpdate(player)
 		utility:SetData(player, "UnholyDouble", nil)
 		player.GridCollisionClass = utility:GetData(player, "UnholyPlayerGridCollision")
 		player.EntityCollisionClass = utility:GetData(player, "UnholyPlayerEntityCollision")
+		player:GetData().TotalFrozen = nil
 	elseif #TargetPositions <= 0 then
 		if player.Position:Distance(playerStartPos) < UnholyOrb.MinDistance then
 			player:SetMinDamageCooldown(UnholyOrb.InvincibleFrames)
@@ -297,6 +298,7 @@ function UnholyOrb:onPEffectUpdate(player)
 				MilkshakeVol1:UseSpiritOrb(enums.Orbs.UNHOLY, player, enums.UseOrbFlags.NO_SOUND)
 			end
 			utility:SetData(player, "UnholyDouble", nil)
+			player:GetData().TotalFrozen = nil
 		elseif player.Position:Distance(playerStartPos) < UnholyOrb.MaxDistance then
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MinSpeed)
 		else
@@ -386,6 +388,7 @@ function UnholyOrb:OnUnholyOrbUse(_, player, flags)
 		sptr.Parent = player
 		sptr:FollowParent(player)
 		sptr:GetData().UnholyOrbFlag = true
+		player:GetData().TotalFrozen = true
 	else
 		player:UseActiveItem(CollectibleType.COLLECTIBLE_DARK_ARTS)
 	end
