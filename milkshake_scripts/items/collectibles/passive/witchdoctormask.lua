@@ -186,13 +186,13 @@ function witchDoctorMask:GetShaderParams()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.GetShaderParams)
 
-function witchDoctorMask:PostItemPickup(player, collectible, firstTime)
+function witchDoctorMask:PostPlayerCollectibleAdded(player, collectible, firstTime)
     if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK
     or ((firstTime == false) and #(TSIL.Players.GetPlayersOfType(PlayerType.PLAYER_ISAAC_B)) > 0) then return end
     local roll = TSIL.Random.GetRandomInt(1, PillColor.NUM_PILLS)
     local spawnPos = Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE)
     TSIL.PickupSpecific.SpawnPill(roll, spawnPos)
 end
-MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_ITEM_PICKUP, witchDoctorMask.PostItemPickup)
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED, witchDoctorMask.PostPlayerCollectibleAdded)
 
 return witchDoctorMask
