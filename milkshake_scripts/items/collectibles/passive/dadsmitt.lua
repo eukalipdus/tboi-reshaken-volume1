@@ -20,12 +20,24 @@ local KNIFE_VARIANT_BONE = 1
 local A_COMICALLY_SMALL_NUMBER = 0.01
 local DEADZONE_RANGE = math.cos(math.rad(DEADZONE_ANGLE/2))
 
+--I really hope there's a better way to handle this
+local TEAR_COPYING_FAMILIARS = TSIL.Utils.Tables.ConstructDictionaryFromTable({
+    FamiliarVariant.INCUBUS,
+    FamiliarVariant.CAINS_OTHER_EYE,
+    FamiliarVariant.FATES_REWARD,
+    FamiliarVariant.TWISTED_BABY,
+})
+
 ---@param projectile Entity
 local function DadsMittOwner(projectile)
-    if not projectile.SpawnerEntity then
+    local spawner = projectile.SpawnerEntity
+    if not spawner then
         return end
-    local player = projectile.SpawnerEntity:ToPlayer()
-    if not player and projectile.SpawnerEntity.SpawnerEntity then
+    local player = spawner:ToPlayer()
+    if not player
+    and spawner.Type == EntityType.ENTITY_FAMILIAR
+    and TEAR_COPYING_FAMILIARS[spawner.Variant]
+    and projectile.SpawnerEntity.SpawnerEntity then
         player = projectile.SpawnerEntity.SpawnerEntity:ToPlayer()
     end
     if not (player and player:HasCollectible(enums.Collectibles.DADS_MITT)) then
