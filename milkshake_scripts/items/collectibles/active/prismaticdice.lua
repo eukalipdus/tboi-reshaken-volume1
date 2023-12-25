@@ -89,7 +89,7 @@ end
 ---@param quality number
 ---@param newCollectibleID number
 ---@param originalQuality number | nil
-local function SplitCollectible(player, collectible, quality, newCollectibleID, originalQuality)
+function MilkshakeVol1.API.SplitCollectible(player, collectible, quality, newCollectibleID, originalQuality)
     local shatteredCollectible
     local willBreakfast = true
     local itemPool = Game():GetItemPool()
@@ -261,15 +261,15 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
                     if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
                         local roll = 4 + rng:RandomInt(2)
                         for _ = 1, roll do
-                            SplitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID, collectibleQuality)
+                            MilkshakeVol1.API.SplitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID, collectibleQuality)
                         end
 
                     elseif player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
                          for _ = 1, 2 do
-                            SplitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID, collectibleQuality)
+                            MilkshakeVol1.API.SplitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID, collectibleQuality)
                          end
                      else
-                         SplitCollectible(player, collectible, collectibleQuality, newCollectibleID, nil)
+                        MilkshakeVol1.API.SplitCollectible(player, collectible, collectibleQuality, newCollectibleID, nil)
                      end
                  end
     
