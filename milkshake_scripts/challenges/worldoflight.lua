@@ -7,6 +7,8 @@ local ignore = 0
 function worldOfLight:PostPlayerInit(player)
     if Game().Challenge == enums.Challenges.WORLD_OF_LIGHT then
         player:AddCollectible(enums.Collectibles.PRISMATIC_DICE)
+        local prismaticDiceCharges = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.PRISMATIC_DICE).MaxCharges
+        player:SetActiveCharge(prismaticDiceCharges)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, worldOfLight.PostPlayerInit)

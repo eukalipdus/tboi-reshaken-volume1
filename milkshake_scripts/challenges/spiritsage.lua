@@ -11,6 +11,8 @@ function spiritSage:PostPlayerInit(player)
         for _, collectible in ipairs(inventory) do
             player:AddCollectible(collectible)
         end
+        local shatteredOrbCharges = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.SHATTERED_ORB).MaxCharges
+        player:SetActiveCharge(shatteredOrbCharges)
         TSIL.Utils.Functions.RunInFrames(function ()
             player:RemoveCollectible(CollectibleType.COLLECTIBLE_LEMEGETON, true, ActiveSlot.SLOT_POCKET)
         end, 1, {})
