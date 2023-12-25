@@ -30,7 +30,7 @@ function laChancla:EntityTakeDmg(entity, _, flags, source)
             effect = source.Entity:ToEffect()
             variant = effect.Variant
         end
-        print(flags)
+
         if (flags & DamageFlag.DAMAGE_CRUSH == 0)
         and not (effect and variant == EffectVariant.MOM_FOOT_STOMP
                 or TSIL.Utils.Tables.IsIn(stompers, source.Entity.Type))
