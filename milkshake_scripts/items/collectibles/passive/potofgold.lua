@@ -102,7 +102,8 @@ local function TryReplacePickupWithRainbowPenny(pickup)
     if not CanPickupBeReplaced(pickup) then return end
     if not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD) then return end
 
-    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+    --local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+    local rng = pickup:GetDropRNG()
     local chosenCoin = MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
 
     pickup:Morph(
