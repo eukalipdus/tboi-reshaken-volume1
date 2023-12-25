@@ -69,6 +69,10 @@
         <sample weight="1" path="im sory.wav"/>
     </sound>
 
+    <sound name="Sata Andagi">
+        <sample weight="1" path="Sata Andagi.wav"/>
+    </sound>
+
     <sound name="deadseascrolls_pop">
         <sample weight="1" path="deadseascrolls/pop.wav" />
     </sound>

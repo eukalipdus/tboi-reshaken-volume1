@@ -89,7 +89,7 @@ end
 ---@param quality number
 ---@param newCollectibleID number
 ---@param originalQuality number | nil
-local function SplitCollectible(player, collectible, quality, newCollectibleID, originalQuality)
+function MilkshakeVol1.API.SplitCollectible(player, collectible, quality, newCollectibleID, originalQuality)
     local shatteredCollectible
     local willBreakfast = true
     local itemPool = Game():GetItemPool()
@@ -147,6 +147,8 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
             PlaySplitAnimation(i, shatteredCollectible)
 
             if shatteredCollectible and collectible:IsShopItem() then
+                shatteredCollectible.AutoUpdatePrice = false
+
                 if collectible.Price == PickupPrice.PRICE_THREE_SOULHEARTS then
                     shatteredCollectible.Price = PickupPrice.PRICE_TWO_SOUL_HEARTS
 
@@ -161,7 +163,6 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
                     shatteredCollectible.Price = PickupPrice.PRICE_ONE_HEART
                 
                 else
-                    shatteredCollectible.AutoUpdatePrice = false
                     shatteredCollectible.Price = math.floor(collectible.Price / 2)
                 end
             end
@@ -198,6 +199,10 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
             elseif splitQuality == 3 then
                 ---@diagnostic disable-next-line: param-type-mismatch
                 shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
+            
+            elseif splitQuality == 4 then
+                ---@diagnostic disable-next-line: param-type-mismatch
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.GOLDEN_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
             end
 
             if i == 0 then
@@ -256,15 +261,15 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
                     if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
                         local roll = 4 + rng:RandomInt(2)
                         for _ = 1, roll do
-                            SplitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID, collectibleQuality)
+                            MilkshakeVol1.API.SplitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID, collectibleQuality)
                         end
 
                     elseif player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
                          for _ = 1, 2 do
-                            SplitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID, collectibleQuality)
+                            MilkshakeVol1.API.SplitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID, collectibleQuality)
                          end
                      else
-                         SplitCollectible(player, collectible, collectibleQuality, newCollectibleID, nil)
+                        MilkshakeVol1.API.SplitCollectible(player, collectible, collectibleQuality, newCollectibleID, nil)
                      end
                  end
     

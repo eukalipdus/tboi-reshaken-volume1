@@ -227,13 +227,15 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, doggyBag.FamiliarUpda
 function doggyBag:PostGameStartedReordered(isContinued)
     if isContinued then
         local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
-        for i = 0, Game():GetNumPlayers() - 1 do
-            local player = Isaac.GetPlayer(i)
-            local index = FindSetIndex(trackedSets, TSIL.Players.GetPlayerIndex(player))
-            local doggyBags = GetDoggyBags(player)
-            for currentBag, bag in pairs(doggyBags) do
-                if index ~= -1 then
-                    ApplyPoopType(bag, bag:GetSprite(), trackedSets[index][2][currentBag])
+            if trackedSets then
+            for i = 0, Game():GetNumPlayers() - 1 do
+                local player = Isaac.GetPlayer(i)
+                local index = FindSetIndex(trackedSets, TSIL.Players.GetPlayerIndex(player))
+                local doggyBags = GetDoggyBags(player)
+                for currentBag, bag in pairs(doggyBags) do
+                    if index ~= -1 then
+                        ApplyPoopType(bag, bag:GetSprite(), trackedSets[index][2][currentBag])
+                    end
                 end
             end
         end

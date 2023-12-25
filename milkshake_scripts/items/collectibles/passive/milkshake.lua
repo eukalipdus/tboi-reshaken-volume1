@@ -184,7 +184,9 @@ local function RenderMultiplier(player, startingFrame)
         end
     end
 
-    if Game().Difficulty == Difficulty.DIFFICULTY_NORMAL and TSIL.Run.CanRunUnlockAchievements() then
+    if Game().Challenge == Challenge.CHALLENGE_NULL
+    and Game().Difficulty == Difficulty.DIFFICULTY_NORMAL
+    and TSIL.Run.CanRunUnlockAchievements() then
         --If there are no symbols (Hard mode, greed, achievements disabled, etc..) move the ui up
         baseYPos = baseYPos - 15.5
     end
@@ -196,6 +198,11 @@ local function RenderMultiplier(player, startingFrame)
 
     if utility:AnyPlayerIsCharacter(PlayerType.PLAYER_BETHANY_B) then
         --If the player is playing T.bethany, account for the red health charge
+        baseYPos = baseYPos + 10
+    end
+
+    if utility:AnyPlayerIsCharacter(PlayerType.PLAYER_BLUEBABY_B) and utility:IsMultiplayer() then
+        --If there is a t.blue baby and playing coop poop is separate from bombs
         baseYPos = baseYPos + 10
     end
 

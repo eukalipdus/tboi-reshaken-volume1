@@ -235,7 +235,7 @@ function CheckInhaling(player)
 	RemoveInhalingInfo(player)
 	CreateExhalingInfo(player, angle, inhalingInfo.doublePower)
 
-	utility:SetCanShoot(player, false)
+	utility:SetBlindfold(player, true)
 	player:AddNullCostume(enums.Costumes.INFERNO_ORB)
 
 	SFXManager():Play(SoundEffect.SOUND_GHOST_ROAR)
@@ -275,7 +275,7 @@ function CheckExhaling(player)
 	if info.count == 0 then
 		RemoveExhalingInfo(player)
 		player:TryRemoveNullCostume(enums.Costumes.INFERNO_ORB)
-		utility:SetCanShoot(player, true)
+		utility:SetBlindfold(player, false)
 	end
 end
 
@@ -396,7 +396,7 @@ function RubyOrb:OnNewRoomEarly()
 	for _, player in ipairs(TSIL.Players.GetPlayers()) do
 		if GetExhalingInfo(player) then
 			player:TryRemoveNullCostume(enums.Costumes.INFERNO_ORB)
-			utility:SetCanShoot(player, true)
+			utility:SetBlindfold(player, false)
 		end
 	end
 end

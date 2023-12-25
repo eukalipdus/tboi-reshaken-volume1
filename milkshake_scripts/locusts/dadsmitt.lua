@@ -1,7 +1,7 @@
 local dadsMitt = {}
 local enums = MilkshakeVol1.enums
 
-local MOVEMENT_RATIO = 0.2
+local MOVEMENT_RATIO = 0.13
 local DEADZONE_ANGLE = 60
 local DEADZONE_RANGE = math.cos(math.rad(DEADZONE_ANGLE/2))
 

@@ -48,12 +48,14 @@ descriptions.Collectibles = {
         en_us = {
             name = "Milkshake",
             description = "{{Heart}} +1 Soul Heart, Black Heart, or Health up randomly" ..
-            "#{{ArrowUp}} {{ArrowUp}} 1.1x to 1.5x multiplier to all stats!"
+            "#{{ArrowUp}} {{ArrowUp}} 1.1x to 1.5x multiplier to all stats!",
+            abyss = "Large, fast, pink locust that deals 2x Isaac's damage"
         },
         spa = {
             name = "Batido",
             description = "{{Heart}} +1 Corazón de Alma, Corazón Negro, o Corazón Rojo aleatoriamente" ..
-            "#{{ArrowUp}} {{ArrowUp}} de 1.1x a 1.5x para todas las estadísticas!"
+            "#{{ArrowUp}} {{ArrowUp}} de 1.1x a 1.5x para todas las estadísticas!",
+            abyss = "Langosta grande, rápida y rosa que hace 2 veces el daño de Isaac"
         },
         ru = {
             name = "Milkshake",
@@ -111,10 +113,12 @@ descriptions.Collectibles = {
         en_us = {
             name = "Firecracker Flower",
             description = "{{Burning}} Chance to shoot a seed tear that inflicts enemies with Kabloom #Kabloomed enemies will burst into exploding petal tears after 5 seconds",
+            abyss = "Green, burning locust that has a 10% chance to inflict {{Burning}} Kabloom"
         },
         spa = {
             name = "Flor Petardo",
             description = "{{Burning}} Posibilidad de disparar una semilla que inflige a los enemigos con Kabloom #Los enemigos con Kabloom explotarán en lágrimas de pétalos explosivos después de 5 segundos",
+            abyss = "Langosta verde que tiene un 10% de posibilidad de inflingir {{Burning}} Kabloom"
         },
         ru = {
             name = "Firecracker Flower",
@@ -125,12 +129,15 @@ descriptions.Collectibles = {
         en_us = {
             name = "Globin In A Bucket",
             description = "Spawns a friendly globin that fights by your side" ..
-            "#Chance to spawn different globin variants depending on the floor",
+            "#Chance to spawn different globin variants depending on the floor" .. 
+            "#A maximum of 4 globins can be spawned at once",
+            book_of_virtues = "Middle ring wisp#50% chance to reform on death"
         },
         spa = {
             name = "Globin en un Cubo",
             description = "Invoca a un globin amigable que lucha a tu lado" ..
             "#Posibilidad de invocar diferentes variantes según el piso",
+            book_of_virtues = "Anillo medio#50% de posibilida de regenerarse al morir"
         },
         ru = {
             name = "Globin In A Bucket",
@@ -143,11 +150,13 @@ descriptions.Collectibles = {
             name = "Golden Shovel",
             description = "Digs up 1-2 golden chests and a random golden pickup." ..
             "#{{LadderRoom}} Opens up a member card trapdoor if used on a decorative floor tile.",
+            book_of_virtues = "Middle ring wisp#High HP wisp#10% chance for {{Collectible202}} Midas' Touch tears"
         },
         spa = {
             name = "Pala Dorada",
             description = "Desentierra de 1 a 2 cofres dorados y un pickup dorado al azar." ..
             "#{{LadderRoom}} Abre una trampilla de tarjeta de miembro si se usa en una baldosa decorativa del suelo.",
+            book_of_virtues = "Anillo medio con mucha vida#10% de probabilidad de disparar lágrimas de {{Collectible202}} Toque de Midas"
         },
         ru = {
             name = "Golden Shovel",
@@ -199,12 +208,16 @@ descriptions.Collectibles = {
             description = "{{Coin}} Inserts a coin" ..
             "#After 10 coins, has a 1% chance to explode and spawn double the coins inserted" ..
             "#Guranteed to explode at 100 coins inserted",
+            book_of_virtues = "Inner ring wisp#Low HP wisp",
+            book_of_belial = "↑ {{Damage}} +0.066 Damage per coin inserted while held"
         },
         spa = {
             name = "Tragaperras Vacía",
             description = "{{Coin}} Inserta una moneda" ..
             "#Después de 10 monedas, tiene un 1% de probabilidad de explotar y generar el doble de las monedas insertadas" ..
             "#Garantizado que explotará al insertar 100 monedas",
+            book_of_virtues = "Anillo interior con poca vida",
+            book_of_belial = "↑ {{Damage}} +0.066 Daño por moneda insertada"
         },
         ru = {
             name = "Empty Slot",
@@ -218,11 +231,15 @@ descriptions.Collectibles = {
             name = "Shattered Orb",
             description = "Can be thrown at enemies to capture their soul" ..
             "#{{SpiritOrb}} Captured enemies are turned into spirit orbs corresponding to their soul's element",
+            book_of_virtues = "Upon shattering, spawns 3 random elemental wisps of varying effects",
+            book_of_belial = "50% chance to replace spawned {{SpiritOrb}} Spirit of Chaos with Spirit of Sacrilege"
         },
         spa = {
             name = "Orbe Fragmentado",
             description = "Puede arrojarse a los enemigos para capturar sus almas" ..
             "#{{SpiritOrb}} Los enemigos capturados se convierten en orbes espirituales que corresponden al elemento de su alma",
+            book_of_virtues = "Al romperse, genera 3 orbitales de fuego elementales, con efectos diversos",
+            book_of_belial = "50% de probabilidad de reemplazar {{SpiritOrb}} Espíritu del Caos con Espíritu de Sacrilegio",
         },
         ru = {
             name = "Shattered Orb",
@@ -235,11 +252,15 @@ descriptions.Collectibles = {
             name = "Prismatic Dice",
             description = "Splits pedestal items in the room into two pedestals of 1 less quality" ..
             "#Quality {{Quality0}} items are split into random pickups",
+            book_of_virtues = "Middle ring wisp#Cannot shoot tears#Splits Isaac's tears into 4 {{Collectible528}} angelic prism tears",
+            book_of_belial = "30% chance for split items to be {{DevilRoom}} Devil items"
         },
         spa = {
             name = "Dado Prismático",
             description = "Divide los pedestales en la habitación en dos pedestales de 1 calidad inferior" ..
             "#Los objetos de calidad {{Quality0}} se dividen en objetos aleatorios",
+            book_of_virtues = "Anillo medio#No dispara#Divide las lágrimas de Isaac en 4 lágrimas de {{Collectible528}} Prisma Angelical",
+            book_of_belial = "30% de posibilidad de reemplazar los pedestales divididos por {{DevilRoom}} objetos del demonio"
         },
         ru = {
             name = "Prismatic Dice",
@@ -289,11 +310,13 @@ descriptions.Collectibles = {
             name = "Sickle Cell",
             description = "Piercing tears" ..
             "#{{BleedingOut}} Tears cause bleeding, which makes enemies leave creep and take damage when they move",
+            abyss = "Red locust that inflicts {{BleedingOut}} Bleeding"
         },
         spa = {
             name = "Célula Falciforme",
             description = "Lágrimas perforantes" ..
             "#{{BleedingOut}} Las lágrimas causan sangrado, lo que hace que los enemigos dejen sangre y reciban daño al moverse",
+            abyss = "Langosta roja que inflige {{BleedingOut}} Sangrado"
         },
         ru = {
             name = "Sickle Cell",
@@ -417,7 +440,8 @@ descriptions.Collectibles = {
             "#{{EternalHeart}} +1 Eternal Heart" ..
             "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item" ..
             "#{{DevilRoom}} The angel item will cost money if a devil deal was taken previously",
-            --+1 Immortal Heart instead if Immortal Hearts mod is installed
+            book_of_virtues = "Inner ring wisp#High HP wisp#+10% {{AngelRoom}} Angel Room chance per Leviticus wisp",
+            abyss = "Blue, glowing locust that can spawn beams of light that deal deal 3x Isaac's damage",
         },
         spa = {
             name = "Levítico",
@@ -425,7 +449,8 @@ descriptions.Collectibles = {
             "#{{EternalHeart}} +1 Corazón Eterno" ..
             "#{{AngelRoom}} Usar el objeto antes de la pelea contra el jefe hace que la recompensa sea un objeto de ángel" ..
             "#{{DevilRoom}} El objeto costará dinerp si se ha tomado un pacto con el diablo",
-            --+1 Corazón Inmortal en su lugar si está instalado el mod de Corazones Inmortales
+            book_of_virtues = "Anillo interior con mucha vida#+10% {{AngelRoom}} de pacto de Ángel",
+            abyss = "Langosta azul y brillante que puede generar rayos de luz que hace 3x el daño de Isaac"
         },
         ru = {
             name = "Leviticus",
@@ -433,7 +458,6 @@ descriptions.Collectibles = {
             "#{{EternalHeart}} +1 Eternal Heart" ..
             "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item" ..
             "#{{DevilRoom}} The angel item will cost money if a devil deal was taken previously",
-            --+1 Immortal Heart instead if Immortal Hearts mod is installed
         },
     },
     [enums.Collectibles.BATTERY_ACID] = {
@@ -475,12 +499,14 @@ descriptions.Collectibles = {
             description = "\1 +10% Fire rate" ..
             "#\2 -0.2 Shot speed" ..
             "#Tears become influenced by Isaac's movement",
+            abyss = "Baseball locust that follows Isaac's movement momentum",
         },
         spa = {
             name = "Guante de Papá",
             description = "\1 +10% Velocidad de disparo" ..
             "#\2 -0.2 Velocidad de lágrima" ..
             "#Las lágrimas se ven afectadas por el movimiento de Isaac",
+            abyss = "Langosta bola de béisbol afectada por el movimiento de Isaac"
         },
         ru = {
             name = "Dad's Mitt",
@@ -553,6 +579,7 @@ descriptions.Collectibles = {
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
+            book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
         },
         spa = {
             name = "Llave de Espejo",
@@ -560,6 +587,7 @@ descriptions.Collectibles = {
             "#Las habitaciones reflejadas regeneran todas los objetos, obstáculos y enemigos" ..
             "#{{Warning}} Los pedestales no se regeneran" ..
             "#{{BossRoom}} Permite volver a luchar contra el jefe para obtener una recompensa adicional",
+            book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
         },
         ru = {
             name = "Mirror Key",
@@ -576,6 +604,7 @@ descriptions.Collectibles = {
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
+            book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
         },
         spa = {
             name = "Llave de Espejo (Sin Cargar)",
@@ -583,6 +612,7 @@ descriptions.Collectibles = {
             "#Las habitaciones reflejadas regeneran todas los objetos, obstáculos y enemigos" ..
             "#{{Warning}} Los pedestales no se regeneran" ..
             "#{{BossRoom}} Permite volver a luchar contra el jefe para obtener una recompensa adicional",
+            book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
         },
         ru = {
             name = "Mirror Key (Uncharged)",
@@ -990,6 +1020,22 @@ descriptions.Cards = {
         ru = {
             name = "Orbe Druidico",
             description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
+    }
+}
+
+--ENTITY DESCRIPTIONS
+local BRENDA = EntityType.ENTITY_SLOT .. "." .. MilkshakeVol1.enums.Slots.SPIRIT_KLIN_BRENDA
+
+descriptions.Entities = {
+    [BRENDA] = {
+        en_us = {
+            name = "Brenda the Spirit Klin",
+            description = "bitch"
+        },
+        spa = {
+            name = "Brenda la Forja Espiritual",
+            description = "zorra"
         }
     }
 }

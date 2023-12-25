@@ -2,6 +2,9 @@ local GlobinInABucket = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
+local SPAWN_DISTANCE = 20
+
+local trackGlobinEffects = {}
 
 ---@class GlobinInfo
 ---@field anm2 any
@@ -118,34 +121,35 @@ end
 ---@param player EntityPlayer
 function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
     if not player then return end
-    local globins = utility:TableConcat(Isaac.FindByType(EntityType.ENTITY_GLOBIN),
-                                        Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.GLOBIN_IN_A_BUCKET)
-                                       )
+    local globinsOnly = Isaac.FindByType(EntityType.ENTITY_GLOBIN)
+    local globinsAndEffects = utility:TableConcat(globinsOnly,
+                                                  Isaac.FindByType(EntityType.ENTITY_EFFECT, enums.Effects.GLOBIN_IN_A_BUCKET)
+                                                 )
 
     local count = 0
-    for i = 1, #globins do
-        if GetPtrHash(globins[i].SpawnerEntity) == GetPtrHash(player) then
+    for i = 1, #globinsAndEffects do
+        if GetPtrHash(globinsAndEffects[i].SpawnerEntity) == GetPtrHash(player) then
             count = count + 1
         end
     end
 
-    local lowestHealthGlobin
+    local oldestGlobin
     if count == GLOBIN_LIMIT then
-        lowestHealthGlobin = globins[1]
-        for i = 2, #globins do
-            if globins[i].HitPoints < lowestHealthGlobin.HitPoints then
-                lowestHealthGlobin = globins[i]
+        oldestGlobin = globinsOnly[1]
+        for i = 2, #globinsOnly do
+            if globinsOnly[i].FrameCount > oldestGlobin.FrameCount then
+                oldestGlobin = globinsOnly[i]
             end
         end
     end
-    if lowestHealthGlobin then
-        if lowestHealthGlobin.Type == EntityType.ENTITY_GLOBIN then
-            lowestHealthGlobin:Kill()
+    if oldestGlobin then
+        if oldestGlobin.Type == EntityType.ENTITY_GLOBIN then
+            oldestGlobin:Kill()
             TSIL.Utils.Functions.RunInFrames(function ()
-                lowestHealthGlobin:Kill()
+                oldestGlobin:Kill()
             end, 1, {})
-        elseif lowestHealthGlobin.Type == EntityType.ENTITY_EFFECT then
-            lowestHealthGlobin:Remove()
+        elseif oldestGlobin.Type == EntityType.ENTITY_EFFECT then
+            oldestGlobin:Remove()
         end
     end
 
@@ -158,7 +162,7 @@ function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
         SoundEffect.SOUND_MEAT_JUMPS
     )
 
-    TSIL.EntitySpecific.SpawnEffect(
+    local globinEffect = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.GLOBIN_IN_A_BUCKET,
         0,
         player.Position,
@@ -166,6 +170,7 @@ function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
         player,
         rng
     )
+    table.insert(trackGlobinEffects, {Entity = globinEffect, Info = GetGlobinEffectInfo(globinEffect), Player = TSIL.Players.GetPlayerIndex(player)})
     return true
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, GlobinInABucket.OnGlobinBucketUse, enums.Collectibles.GLOBIN_IN_A_BUCKET)
@@ -255,5 +260,30 @@ function GlobinInABucket:onNPCUpdate(entity)
 
         entity:Remove()
     end
+    for index, globinEffect in ipairs(trackGlobinEffects) do
+        if not globinEffect.Entity:Exists() then
+            table.remove(trackGlobinEffects, index)
+        end
+    end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlobinInABucket.onNPCUpdate, enums.Effects.GLOBIN_IN_A_BUCKET)
+
+function GlobinInABucket:PostNewRoom()
+    for index, globEffect in ipairs(trackGlobinEffects) do
+        local globinInfo = globEffect.Info
+        local player = TSIL.Players.GetPlayerByIndex(globEffect.Player)
+        if player then
+            local globin = TSIL.EntitySpecific.SpawnNPC(
+                globinInfo.type,
+                globinInfo.variant,
+                globinInfo.subtype,
+                Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE),
+                Vector.Zero,
+                player
+            )
+            globin:AddCharmed(EntityRef(player), -1)
+        end
+        table.remove(trackGlobinEffects, index)
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, GlobinInABucket.PostNewRoom)

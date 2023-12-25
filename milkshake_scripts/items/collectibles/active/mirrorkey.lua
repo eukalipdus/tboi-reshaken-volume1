@@ -243,6 +243,7 @@ local function SpawnFakeMirrorDoor(doorSlot, target)
     sprite.Rotation = rotation
     fakeDoor.Color = Color(1, 1, 1, 1, 0.2, 0.4, 0.7)
     fakeDoor.SortingLayer = SortingLayer.SORTING_DOOR
+    fakeDoor:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
 
     TSIL.Entities.SetEntityData(
         MilkshakeVol1,
@@ -572,10 +573,10 @@ end
 local function IsPositionInEnterRange(doorDir, doorPos, playerPos)
     local posDiff = playerPos - doorPos
 
-    return (doorDir == Direction.DOWN and posDiff.Y < 0)
-    or (doorDir == Direction.LEFT and posDiff.X > 0)
-    or (doorDir == Direction.RIGHT and posDiff.X < 0)
-    or (doorDir == Direction.UP and posDiff.Y > 0)
+    return (doorDir == Direction.DOWN and posDiff.Y < 0 and math.abs(posDiff.X) < 50)
+    or (doorDir == Direction.LEFT and posDiff.X > 0 and math.abs(posDiff.Y) < 50)
+    or (doorDir == Direction.RIGHT and posDiff.X < 0 and math.abs(posDiff.Y) < 50)
+    or (doorDir == Direction.UP and posDiff.Y > 0 and math.abs(posDiff.X) < 50)
 end
 
 
