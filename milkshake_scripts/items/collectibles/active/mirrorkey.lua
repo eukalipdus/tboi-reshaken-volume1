@@ -241,7 +241,6 @@ local function SpawnFakeMirrorDoor(doorSlot, target)
     local rotation = ROTATION_PER_DOOR_SLOT[doorSlot]
     sprite.Offset = Vector(0, 15):Rotated(rotation)
     sprite.Rotation = rotation
-    fakeDoor.Color = Color(1, 1, 1, 1, 0.2, 0.4, 0.7)
     fakeDoor.SortingLayer = SortingLayer.SORTING_DOOR
     fakeDoor:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
 
@@ -369,6 +368,8 @@ end
 
 
 local function AddLostCurse()
+    if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then return end
+
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         local effects = player:GetEffects()
         effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
@@ -377,6 +378,8 @@ end
 
 
 local function RemoveLostCurse()
+    if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then return end
+
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         local effects = player:GetEffects()
         effects:RemoveNullEffect(NullItemID.ID_LOST_CURSE)
@@ -450,7 +453,8 @@ function MirrorKey:GetShaderParams(shaderName)
         )
 
         local enableShader = 0.0
-        if isInMirrorRoom and not MilkshakeVol1.utility:IsVersusScreenPlaying() then
+        if isInMirrorRoom and not MilkshakeVol1.utility:IsVersusScreenPlaying()
+        and not TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then
             enableShader = 1.0
 
             local hud = Game():GetHUD()
@@ -561,8 +565,8 @@ local function UpdateOpenState(door)
 
     if sprite:IsFinished("Close") then
         sprite:Play("Closed", true)
-    elseif sprite:IsFinished("Opened") then
-        sprite:Play("Opened")
+    elseif sprite:IsFinished("Open") then
+        sprite:Play("Opened", true)
     end
 end
 
@@ -773,10 +777,14 @@ local function TryPlayBossMusic()
     if musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER
     or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER2
     or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER3 then
+        musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS_OUTRO)
+        musicManager:Queue(Music.MUSIC_BOSS_OVER)
+
         return
     end
 
-    if musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS then
+    if musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS
+    and musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS_OUTRO then
         musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS)
     end
 end

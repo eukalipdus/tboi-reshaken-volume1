@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="trtv" CreatedOn="12/3/2023 12:51:27 PM" Version="9" Fps="45"/>
+	<Info CreatedBy="trtv" CreatedOn="26/12/2023 10:00:09" Version="12" Fps="45"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="door_mirror_challenge.png" Id="0"/>
@@ -16,7 +16,7 @@
 		<Events/>
 	</Content>
 	<Animations DefaultAnimation="Opened">
-		<Animation Name="Opened" FrameNum="16" Loop="false">
+		<Animation Name="Opened" FrameNum="16" Loop="true">
 			<RootAnimation>
 				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 			</RootAnimation>

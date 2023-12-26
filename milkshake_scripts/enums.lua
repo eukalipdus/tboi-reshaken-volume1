@@ -256,7 +256,8 @@ enums.ItemPools = {
 }
 
 enums.Music = {
-    GLASS_BOSS = Isaac.GetMusicIdByName("Glass Boss")
+    GLASS_BOSS = Isaac.GetMusicIdByName("Glass Boss"),
+    GLASS_BOSS_OUTRO = Isaac.GetMusicIdByName("Glass Boss Outro")
 }
 
 enums.Challenges = {
