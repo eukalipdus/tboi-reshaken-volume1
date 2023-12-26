@@ -241,7 +241,6 @@ local function SpawnFakeMirrorDoor(doorSlot, target)
     local rotation = ROTATION_PER_DOOR_SLOT[doorSlot]
     sprite.Offset = Vector(0, 15):Rotated(rotation)
     sprite.Rotation = rotation
-    fakeDoor.Color = Color(1, 1, 1, 1, 0.2, 0.4, 0.7)
     fakeDoor.SortingLayer = SortingLayer.SORTING_DOOR
     fakeDoor:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
 
@@ -561,8 +560,8 @@ local function UpdateOpenState(door)
 
     if sprite:IsFinished("Close") then
         sprite:Play("Closed", true)
-    elseif sprite:IsFinished("Opened") then
-        sprite:Play("Opened")
+    elseif sprite:IsFinished("Open") then
+        sprite:Play("Opened", true)
     end
 end
 
