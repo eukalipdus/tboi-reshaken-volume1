@@ -137,6 +137,15 @@ local function AddBatteryAcidCharge(player, chargeToAdd)
     end
 end
 
+local function TryChargeTimedActive(player, slot)
+    local activeItem = player:GetActiveItem(slot)
+    if activeItem ~= 0
+    and itemConfig:GetCollectible(activeItem).ChargeType == CHARGETYPE_TIMED
+    and TSIL.Charge.GetChargesAwayFromMax(player, slot) > 0 then
+        TSIL.Charge.AddCharge(player, slot, player:GetCollectibleNum(enums.Collectibles.BATTERY_ACID), false)
+    end
+end
+
 function batteryAcid:PostRoomClear()
     local chargeToAdd
     local roomShape = game:GetRoom():GetRoomShape()
@@ -170,6 +179,7 @@ function batteryAcid:PrePickupCollision(battery, collider)
     local data = BatteryAcidData(player)
     data.DrainTimer = DrainTime(player)
 end
+---@diagnostic disable-next-line: param-type-mismatch
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, batteryAcid.PrePickupCollision, PickupVariant.PICKUP_LIL_BATTERY)
 
 
@@ -183,9 +193,9 @@ function batteryAcid:PostPeffectUpdate(player)
 
     local hasDischargableItems = false
     for _, slot in ipairs(AFFECTED_SLOTS) do
+        TryChargeTimedActive(player, slot)
         if CanBeDischarged(player, slot) then
             hasDischargableItems = true
-            break
         end
     end
     if not hasDischargableItems then
