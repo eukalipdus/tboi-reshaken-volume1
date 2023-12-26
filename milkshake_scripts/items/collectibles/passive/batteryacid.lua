@@ -21,6 +21,12 @@ local DRAIN_STACK_TIMER_DECREASE_SECONDS = 3
 local MIN_DRAIN_TIME_SECONDS = 5
 local DRAIN_INCREASE_SECONDS = 5
 
+local AFFECTED_SLOTS = {
+    ActiveSlot.SLOT_PRIMARY,
+    ActiveSlot.SLOT_SECONDARY,
+    ActiveSlot.SLOT_POCKET
+}
+
 local ONE_SECOND = 30
 
 local LARGE_ROOMS = {
@@ -48,6 +54,20 @@ TSIL.SaveManager.AddPersistentVariable(
     "BatteryAcidData",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_RUN)
+
+---@param player EntityPlayer
+---@param slot ActiveSlot
+---@return boolean
+local function CanBeDischarged(player, slot)
+    local item = player:GetActiveItem(slot)
+    if item == 0 then
+        return false end
+    if player:GetActiveCharge(slot) <= 0 then
+        return false end
+    if itemConfig:GetCollectible(item).ChargeType ~= CHARGETYPE_NORMAL then
+        return false end
+    return true
+end
 
 ---@param player EntityPlayer
 ---@return number
@@ -84,7 +104,7 @@ end
 local function AddBatteryAcidCharge(player, chargeToAdd)
     local data = BatteryAcidData(player)
     data.DrainTimer = data.DrainTimer + DRAIN_INCREASE
-    for _, slot in ipairs({ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_SECONDARY}) do
+    for _, slot in ipairs(AFFECTED_SLOTS) do
         local activeItem = player:GetActiveItem(slot)
 
         if activeItem ~= 0
@@ -95,7 +115,6 @@ local function AddBatteryAcidCharge(player, chargeToAdd)
                 DOUBLE_CHARGE_DELAY,
                 player, slot, chargeToAdd
             )
-            return
         end
     end
 end
@@ -141,32 +160,30 @@ function batteryAcid:PostPeffectUpdate(player)
     if not player:HasCollectible(enums.Collectibles.BATTERY_ACID) then
         return end
 
-    local primaryActiveItem = player:GetActiveItem(ActiveSlot.SLOT_PRIMARY)
-    local secondaryActiveItem = player:GetActiveItem(ActiveSlot.SLOT_SECONDARY)
-    local primaryNotSpecial
-    local secondaryNotSpecial
-    if primaryActiveItem ~= 0 then
-        primaryNotSpecial = itemConfig:GetCollectible(primaryActiveItem).ChargeType == CHARGETYPE_NORMAL
-    end
-    if secondaryActiveItem ~= 0 then
-        secondaryNotSpecial = itemConfig:GetCollectible(secondaryActiveItem).ChargeType == CHARGETYPE_NORMAL
-    end
+    local data = BatteryAcidData(player)
+    data.DrainTimer = data.DrainTimer-1
 
-    if
-    not ((primaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_PRIMARY) > 0)
-    or secondaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_SECONDARY) > 0) then
+    local hasDischargableItems = false
+    for _, slot in ipairs(AFFECTED_SLOTS) do
+        if CanBeDischarged(player, slot) then
+            hasDischargableItems = true
+            break
+        end
+    end
+    if not hasDischargableItems then
         return end
 
-    local data = BatteryAcidData(player)
-
-    data.DrainTimer = data.DrainTimer-1
     if data.DrainTimer <= 0 then
-        if primaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_PRIMARY) > 0 then
-            TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_PRIMARY, -1)
-        elseif secondaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_SECONDARY) > 0 then
-            TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_SECONDARY, -1)
+        local dischargedSomething = false
+        for _, slot in ipairs(AFFECTED_SLOTS) do
+            if CanBeDischarged(player, slot) then
+                TSIL.Charge.AddCharge(player, slot, -1)
+                dischargedSomething = true
+            end
         end
-        data.DrainTimer = DrainTime(player)
+        if dischargedSomething then
+            data.DrainTimer = DrainTime(player)
+        end
     end
     data.CreepTimer = data.CreepTimer-1
     if data.CreepTimer <= 0 then
