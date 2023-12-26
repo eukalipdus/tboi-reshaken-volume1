@@ -19,7 +19,10 @@ local DOUBLE_CHARGE_DELAY = 10
 local DRAIN_TIME_SECONDS = 15
 local DRAIN_STACK_TIMER_DECREASE_SECONDS = 3
 local MIN_DRAIN_TIME_SECONDS = 5
+
 local DRAIN_INCREASE_SECONDS = 5
+local DRAIN_PER_ROOM_DECREASE_SECONDS = 2
+local MIN_DRAIN_INCREASE_SECONDS = 1
 
 local AFFECTED_SLOTS = {
     ActiveSlot.SLOT_PRIMARY,
@@ -46,8 +49,14 @@ local CREEP_DURATION = math.floor(CREEP_DURATION_SECONDS * ONE_SECOND)
 local DRAIN_TIME = math.floor(DRAIN_TIME_SECONDS * ONE_SECOND)
 local DRAIN_STACK_TIMER_DECREASE = math.floor(DRAIN_STACK_TIMER_DECREASE_SECONDS * ONE_SECOND)
 local MIN_DRAIN_TIME = math.floor(MIN_DRAIN_TIME_SECONDS * ONE_SECOND)
+
 local DRAIN_INCREASE = math.floor(DRAIN_INCREASE_SECONDS * ONE_SECOND)
+local DRAIN_PER_ROOM_DECREASE = math.floor(DRAIN_PER_ROOM_DECREASE_SECONDS * ONE_SECOND)
+local MIN_DRAIN_INCREASE = math.floor(MIN_DRAIN_INCREASE_SECONDS * ONE_SECOND)
+
 local CHARGETYPE_NORMAL = 0
+local CHARGETYPE_TIMED = 1
+local CHARGETYPE_SPECIAL = 2
 
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
@@ -64,7 +73,7 @@ local function CanBeDischarged(player, slot)
         return false end
     if player:GetActiveCharge(slot) <= 0 then
         return false end
-    if itemConfig:GetCollectible(item).ChargeType ~= CHARGETYPE_NORMAL then
+    if itemConfig:GetCollectible(item).ChargeType == CHARGETYPE_SPECIAL then
         return false end
     return true
 end
@@ -94,16 +103,24 @@ local function BatteryAcidData(player)
     local key = player:GetCollectibleRNG(1):GetSeed()
 
     if not data[key] then
-        data[key] = {DrainTimer = DrainTime(player), CreepTimer = CreepCooldown(player)}
+        data[key] = {DrainTimer = DrainTime(player), CreepTimer = CreepCooldown(player), RoomsClearedSinceDrain = 0}
     end
     return data[key]
 end
 
 ---@param player EntityPlayer
+local function IncreaseDrainTimer(player)
+    local data = BatteryAcidData(player)
+    local increase = DRAIN_INCREASE - data.RoomsClearedSinceDrain*DRAIN_PER_ROOM_DECREASE
+    increase = math.max(increase, MIN_DRAIN_INCREASE)
+    data.DrainTimer = data.DrainTimer + increase
+    data.RoomsClearedSinceDrain = data.RoomsClearedSinceDrain + 1
+end
+
+---@param player EntityPlayer
 ---@param chargeToAdd integer
 local function AddBatteryAcidCharge(player, chargeToAdd)
-    local data = BatteryAcidData(player)
-    data.DrainTimer = data.DrainTimer + DRAIN_INCREASE
+    IncreaseDrainTimer(player)
     for _, slot in ipairs(AFFECTED_SLOTS) do
         local activeItem = player:GetActiveItem(slot)
 
@@ -177,12 +194,18 @@ function batteryAcid:PostPeffectUpdate(player)
         local dischargedSomething = false
         for _, slot in ipairs(AFFECTED_SLOTS) do
             if CanBeDischarged(player, slot) then
-                TSIL.Charge.AddCharge(player, slot, -1)
+                local config = itemConfig:GetCollectible(player:GetActiveItem(slot))
+                if config.ChargeType == CHARGETYPE_TIMED then
+                    TSIL.Charge.AddCharge(player, slot, -config.MaxCharges)
+                else
+                    TSIL.Charge.AddCharge(player, slot, -1)
+                end
                 dischargedSomething = true
             end
         end
         if dischargedSomething then
             data.DrainTimer = DrainTime(player)
+            data.RoomsClearedSinceDrain = 0
         end
     end
     data.CreepTimer = data.CreepTimer-1
