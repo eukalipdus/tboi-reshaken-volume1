@@ -114,7 +114,7 @@ local function IncreaseDrainTimer(player)
     local data = BatteryAcidData(player)
     local increase = DRAIN_INCREASE - data.RoomsClearedSinceDrain*DRAIN_PER_ROOM_DECREASE
     increase = math.max(increase, MIN_DRAIN_INCREASE)
-    data.DrainTimer = data.DrainTimer + increase
+    data.DrainTimer = math.max(data.DrainTimer + increase, increase)
     data.RoomsClearedSinceDrain = data.RoomsClearedSinceDrain + 1
 end
 
