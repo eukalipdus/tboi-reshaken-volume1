@@ -368,6 +368,8 @@ end
 
 
 local function AddLostCurse()
+    if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then return end
+
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         local effects = player:GetEffects()
         effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
@@ -376,6 +378,8 @@ end
 
 
 local function RemoveLostCurse()
+    if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then return end
+
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         local effects = player:GetEffects()
         effects:RemoveNullEffect(NullItemID.ID_LOST_CURSE)
@@ -449,7 +453,8 @@ function MirrorKey:GetShaderParams(shaderName)
         )
 
         local enableShader = 0.0
-        if isInMirrorRoom and not MilkshakeVol1.utility:IsVersusScreenPlaying() then
+        if isInMirrorRoom and not MilkshakeVol1.utility:IsVersusScreenPlaying()
+        and not TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then
             enableShader = 1.0
 
             local hud = Game():GetHUD()
