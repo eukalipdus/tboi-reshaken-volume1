@@ -4,7 +4,8 @@ local enums = MilkshakeVol1.enums
 local itemConfig = Isaac.GetItemConfig()
 local game = Game()
 
-local CREEP_SCALE = 0.5
+local CREEP_SCALE_TIMER_MULTIPLIER = 0.002
+local CREEP_SCALE_BASE = 0.2
 local CREEP_DAMAGE = 1.5
 local CREEP_COLOR = Color(0, 0, 0, 1, 0.5, 0.5, 0.1)
 
@@ -214,7 +215,7 @@ function batteryAcid:PostPeffectUpdate(player)
         creep:ToEffect():SetTimeout(CREEP_DURATION)
         creep.Color = CREEP_COLOR
         creep.CollisionDamage = CREEP_DAMAGE
-        creep.Scale = CREEP_SCALE
+        creep.Scale = CREEP_SCALE_BASE + math.max(0, data.DrainTimer)*CREEP_SCALE_TIMER_MULTIPLIER
         creep:Update()
         data.CreepTimer = CreepCooldown(player)
     end
