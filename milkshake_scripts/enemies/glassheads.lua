@@ -105,7 +105,9 @@ function GlassHeads:GlassHead_Update(enemy)
                 data.targpos = Game():GetRoom():GetRandomPosition(0)
             end
         else
-            if enemy.Pathfinder:HasPathToPos(target.Position, false) or not data.targpos then
+            if (enemy.Pathfinder:HasPathToPos(target.Position, false) and 
+            not (enemy.Pathfinder:HasPathToPos(target.Position) and room:GetGridPathFromPos(target.Position) > 950)) -- over rocks next to enemy
+            or not data.targpos then
                 data.targpos = target.Position
             end
         end
@@ -121,8 +123,7 @@ function GlassHeads:GlassHead_Update(enemy)
                 data.gridCountdown = data.gridCountdown - 1
             end
 
-            if data.gridCountdown == 0 and (not enemy.Pathfinder:HasPathToPos(target.Position) or 
-            (enemy.Pathfinder:HasPathToPos(target.Position) and room:GetGridPathFromPos(target.Position) > 950)) then -- over rocks next to enemy
+            if enemy.Position:Distance(data.targpos) < 50 then 
                 data.state = 2 
             end
 

@@ -161,7 +161,7 @@ function WineHead:WineHead_Update(enemy)
             sprite:SetFrame('WalkVert', 0)
         end
     end
-    
+
     if data.state == 1 then
         if utility:IsEnemyScared(enemy) then
             data.targpos = enemy.Position + (enemy.Position - target.Position)
@@ -169,8 +169,9 @@ function WineHead:WineHead_Update(enemy)
             if not data.targpos or enemy:IsFrame(25, 0) then
                 data.targpos = Game():GetRoom():GetRandomPosition(0)
             end
-        elseif enemy.Pathfinder:HasPathToPos(target.Position, false) then
-            if not data.targpos or enemy:IsFrame(30, 0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) then
+        elseif enemy.Pathfinder:HasPathToPos(target.Position, false) and 
+        not (enemy.Pathfinder:HasPathToPos(target.Position) and room:GetGridPathFromPos(target.Position) > 950) or not data.targpos then
+            if enemy:IsFrame(30, 0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) then
                 data.targpos = Game():GetRoom():GetClampedPosition(
                 target.Position + Vector(rng:RandomInt(50) - 25, rng:RandomInt(50) - 25), 0)
                 data.gridCountdown = 50 * (rng:RandomInt(2))
@@ -178,10 +179,7 @@ function WineHead:WineHead_Update(enemy)
             data.targpos = Game():GetRoom():GetClampedPosition(data.targpos + target.Velocity, 0)
         end
 
-        if (enemy:CollidesWithGrid() or data.gridCountdown >= 0 or NearSpike(enemy)) and
-            (data.targpos:Distance(enemy.Position) > 100 or data.targpos:Distance(enemy.Position) < 100 and
-            not room:CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then
-
+        if (enemy:CollidesWithGrid() or data.gridCountdown >= 0 or NearSpike(enemy)) then
             enemy.Pathfinder:FindGridPath(data.targpos, WINEHEAD_SPEED, 1, false)
             if data.gridCountdown <= 0 then
                 data.gridCountdown = 60
@@ -189,8 +187,7 @@ function WineHead:WineHead_Update(enemy)
                 data.gridCountdown = data.gridCountdown - 1
             end
 
-            if data.gridCountdown % 10 == 0 and enemy.Position:Distance(data.targpos) < 100 and (not enemy.Pathfinder:HasPathToPos(target.Position) or 
-            (enemy.Pathfinder:HasPathToPos(target.Position) and room:GetGridPathFromPos(target.Position) > 950)) then -- over rocks next to enemy
+            if enemy.Position:Distance(data.targpos) < 50 then 
                 data.state = 2 
             end
 
