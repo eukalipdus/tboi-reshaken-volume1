@@ -51,16 +51,20 @@ function WineHead:WineHead_Update(enemy)
     if not data.state then data.state = 1 end
     if not data.gridCountdown then data.gridCountdown = 0 end
     if not data.trigger then data.trigger = rng:RandomInt(100) + 50 end
+    if not data.targpos then data.targpos = enemy.Position end
 
     if data.init and data.state ~= 6 then
         data.init = data.init - 1
         if data.init <= 0 then
             data.init = nil
-            sprite:PlayOverlay("HeadIdle") 
         end
         enemy.Velocity = enemy.Velocity * .5
 
         return
+    end
+
+    if sprite:GetOverlayAnimation() == "" then 
+        sprite:PlayOverlay("HeadIdle") 
     end
 
     if sprite:IsEventTriggered("Step") then
@@ -147,7 +151,7 @@ function WineHead:WineHead_Update(enemy)
 
 
     if data.state ~= 6 then 
-        if enemy.Velocity:Length() > .1 then
+        if enemy.Velocity:Length() > .25 then
             if math.abs(enemy.Velocity.Y) > math.abs(enemy.Velocity.X) then
                 sprite:Play('WalkVert')
             else
@@ -170,7 +174,7 @@ function WineHead:WineHead_Update(enemy)
                 data.targpos = Game():GetRoom():GetRandomPosition(0)
             end
         elseif enemy.Pathfinder:HasPathToPos(target.Position, false) and 
-        not (enemy.Pathfinder:HasPathToPos(target.Position) and room:GetGridPathFromPos(target.Position) > 950) or not data.targpos then
+        not (enemy.Pathfinder:HasPathToPos(target.Position) and room:GetGridPathFromPos(target.Position) > 950) then
             if enemy:IsFrame(30, 0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) then
                 data.targpos = Game():GetRoom():GetClampedPosition(
                 target.Position + Vector(rng:RandomInt(50) - 25, rng:RandomInt(50) - 25), 0)
@@ -187,7 +191,7 @@ function WineHead:WineHead_Update(enemy)
                 data.gridCountdown = data.gridCountdown - 1
             end
 
-            if enemy.Position:Distance(data.targpos) < 50 then 
+            if enemy.Position:Distance(data.targpos) < 60 then 
                 data.state = 2 
             end
 
