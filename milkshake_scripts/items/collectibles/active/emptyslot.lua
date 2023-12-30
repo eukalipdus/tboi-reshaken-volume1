@@ -1,6 +1,8 @@
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 local EmptySlot = {}
 
+local DMG_BONUS = 0.066
 
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
@@ -21,6 +23,10 @@ function EmptySlot:OnEmptySlotUse(_, rng, player)
         }
     end
     player:AddCoins(-1)
+    if utility:IsJudasBirthright(player) then
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+        player:EvaluateItems()
+    end
 
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
@@ -98,3 +104,18 @@ MilkshakeVol1:AddCallback(
     EmptySlot.OnEmptySlotUse,
     enums.Collectibles.EMPTY_SLOT
 )
+
+function EmptySlot:EvaluateCache(player, cacheFlag)
+    if cacheFlag == CacheFlag.CACHE_DAMAGE
+    and utility:IsJudasBirthright(player)
+    and player:HasCollectible(enums.Collectibles.EMPTY_SLOT) then
+        local emptySlotCoinsPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+            MilkshakeVol1,
+            "EmptySlotCoinsPerPlayer"
+        )
+        local playerCoins = emptySlotCoinsPerPlayer[tostring(TSIL.Players.GetPlayerIndex(player))]
+        print("as modsd")
+        player.Damage = player.Damage + (DMG_BONUS * playerCoins)
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, EmptySlot.EvaluateCache)
