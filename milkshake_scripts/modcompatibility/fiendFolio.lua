@@ -651,6 +651,31 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         },
     })
 
+    -- Fuzzy Pickle
+    local referenceItems = {
+        Actives = {
+            {ID = MilkshakeVol1.enums.Collectibles.INNER_REFLECTION, Reference = "Celeste"},
+        },
+    
+        Passives = {
+            {ID = MilkshakeVol1.enums.Collectibles.MILKSHAKE, Reference = "Team Milkshake"},
+            {ID = MilkshakeVol1.enums.Collectibles.SHARP_CURSOR, Reference = "Cookie Clicker"},
+        },
+    }
+
+    for i = 1, #referenceItems.Actives do
+        table.insert(FiendFolio.ReferenceItems.Actives, referenceItems.Actives[i])
+    end
+
+    for i = 1, #referenceItems.Passives do
+        table.insert(FiendFolio.ReferenceItems.Passives, referenceItems.Passives[i])
+    end
+
+    for i = 1, #referenceItems.Trinkets do
+        table.insert(FiendFolio.ReferenceItems.Trinkets, referenceItems.Trinkets[i])
+    end
+
+
     --Glass trinkets
     MilkshakeVol1.API:AddGlassTrinkets(
         FiendFolio.ITEM.TRINKET.SHARD_OF_CHINA,
