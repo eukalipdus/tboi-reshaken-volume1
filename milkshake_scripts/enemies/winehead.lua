@@ -238,7 +238,7 @@ function WineHead:WineHead_Update(enemy)
             swirl.SpriteScale = Vector(1.5, 1.5)
             swirl:GetSprite().Color = WINE_COLOR
 
-            local bigCreep = TSIL.EntitySpecific.SpawnEffect(
+            --[[local bigCreep = TSIL.EntitySpecific.SpawnEffect(
                 EffectVariant.CREEP_RED,
                 0,
                 enemy.Position + Vector(
@@ -268,7 +268,7 @@ function WineHead:WineHead_Update(enemy)
                 creep.Timeout = 200
                 creep:GetSprite().Color = WINE_COLOR
                 creep:Update()
-            end
+            end]]
 
             local baseAngle = (target.Position - enemy.Position):Rotated(rng:RandomInt(50) - 25):GetAngleDegrees()
             local posOffset = Vector.FromAngle(baseAngle):Resized(rng:RandomInt(6) + 15)
