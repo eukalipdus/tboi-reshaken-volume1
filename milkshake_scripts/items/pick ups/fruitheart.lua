@@ -9,7 +9,7 @@ function FruitHeart:OnPlayerCollision(player, collider)
     if collider.Variant ~= PickupVariant.PICKUP_HEART then return end
     if collider.SubType ~= enums.Hearts.FRUIT_HEART then return end
 
-    if player:CanPickRedHearts() then
+    if player:CanPickRedHearts() and player:GetPlayerType() ~= PlayerType.PLAYER_BETHANY_B then
         player:AddHearts(1)
     else
         player:AddSoulHearts(1)
