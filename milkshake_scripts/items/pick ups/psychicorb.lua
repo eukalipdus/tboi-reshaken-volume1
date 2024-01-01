@@ -48,7 +48,9 @@ function SapphireOrb:OnAmethystOrbUse(_, player, flags)
     )
     doubleEffectPerPlayer[playerIndex] = TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER)
 
-    if wasUsingOrb then return end
+    if wasUsingOrb then
+        (Utilities:GetData(player, "CurrentPsychicOrbAura")):Remove()
+    end
     local aura = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.CLAIRVOYANCE_AURA,
         0,
@@ -60,6 +62,7 @@ function SapphireOrb:OnAmethystOrbUse(_, player, flags)
     if TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER) then
         aura.SpriteScale = aura.SpriteScale * 1.5
     end
+    Utilities:SetData(player, "CurrentPsychicOrbAura", aura)
 end
 MilkshakeVol1:AddCallback(
     enums.Callbacks.ON_ORB_USE,
