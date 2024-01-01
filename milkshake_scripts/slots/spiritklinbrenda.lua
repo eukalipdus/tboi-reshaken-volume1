@@ -19,6 +19,14 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 
+local function CanUseBrenda(player)
+    if (player:GetPlayerType() == PlayerType.PLAYER_THELOST or player:GetPlayerType() == PlayerType.PLAYER_THELOST_B)
+    and not player:HasCollectible(enums.Collectibles.LEVITICUS)
+    and not (player:HasCollectible(CollectibleType.COLLECTIBLE_ALABASTER_BOX) and player:GetActiveCharge() > 1) then
+        return false
+    else return true end
+end
+
 
 local soulStones = {
     Card.CARD_SOUL_ISAAC,
@@ -382,6 +390,7 @@ MilkshakeVol1:AddCallback(
 ---@param brenda Entity
 ---@param player EntityPlayer
 function SpiritKlin:OnBrendaCollision(brenda, player)
+    if not CanUseBrenda(player) then return end
     local sprite = brenda:GetSprite()
     if sprite:GetAnimation() ~= "Idle" then return end
 
