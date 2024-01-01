@@ -4,9 +4,13 @@ local Utilities = MilkshakeVol1.utility
 
 
 local CLAIRVOYANCE_ORB_DURATION = 30 * 100
+local BEGIN_FLASH = 30 * 5
 local PROJECTILE_REFLECTION_RADIUS = 135
 local PROJECTILE_REFLECTION_INTERVAL = 10
 local FAKE_CENSER_RADIUS = 70
+local FLASH_VISIBLE = 1
+local FLASH_HIDE = 2
+local FLASH_FRAMES = 5
 
 
 TSIL.SaveManager.AddPersistentVariable(
@@ -267,6 +271,24 @@ function SapphireOrb:OnClairvoyanceAuraUpdate(effect)
     if not playerUsedClairvoyanceFrame then
         effect:Remove()
         return
+    end
+
+    local frameCount = Game():GetFrameCount()
+    local flashMode = Utilities:GetData(effect, "ClairvoyanceFlashMode")
+
+    if (frameCount - playerUsedClairvoyanceFrame) >= BEGIN_FLASH
+    and not flashMode then
+        Utilities:SetData(effect, "ClairvoyanceFlashMode", FLASH_VISIBLE)
+    
+    elseif (frameCount - playerUsedClairvoyanceFrame) >= BEGIN_FLASH
+    and frameCount % FLASH_FRAMES == 0 then
+        if flashMode == FLASH_HIDE then
+            effect.Visible = true
+            Utilities:SetData(effect, "ClairvoyanceFlashMode", FLASH_VISIBLE)
+        else
+            effect.Visible = false
+            Utilities:SetData(effect, "ClairvoyanceFlashMode", FLASH_HIDE)
+        end
     end
 
     effect:FollowParent(effect.Parent)
