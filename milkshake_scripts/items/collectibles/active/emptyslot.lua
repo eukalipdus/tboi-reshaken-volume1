@@ -115,7 +115,6 @@ function EmptySlot:EvaluateCache(player, cacheFlag)
             "EmptySlotCoinsPerPlayer"
         )
         local playerCoins = emptySlotCoinsPerPlayer[tostring(TSIL.Players.GetPlayerIndex(player))]
-        print("as modsd")
         player.Damage = player.Damage + (DMG_BONUS * playerCoins)
     end
 end
