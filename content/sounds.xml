@@ -73,6 +73,14 @@
         <sample weight="1" path="Sata Andagi.wav"/>
     </sound>
 
+    <sound name="Brenda Hurt">
+        <sample weight="1" path="brenda_hurt.wav"/>
+    </sound>
+
+    <sound name="Brenda Activate">
+        <sample weight="1" path="brenda_activate.wav"/>
+    </sound>
+
     <sound name="deadseascrolls_pop">
         <sample weight="1" path="deadseascrolls/pop.wav" />
     </sound>
