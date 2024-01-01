@@ -228,7 +228,8 @@ end
 
 ---@param doorSlot DoorSlot
 ---@param target integer
-local function SpawnFakeMirrorDoor(doorSlot, target)
+---@param targetDimension Dimension
+local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension)
     local room = Game():GetRoom()
     local doorSlotPos = room:GetDoorSlotPosition(doorSlot)
 
@@ -255,6 +256,12 @@ local function SpawnFakeMirrorDoor(doorSlot, target)
         fakeDoor,
         "MirrorDoorTarget",
         target
+    )
+    TSIL.Entities.SetEntityData(
+        MilkshakeVol1,
+        fakeDoor,
+        "MirrorDoorTargetDimension",
+        targetDimension
     )
 end
 
@@ -295,7 +302,22 @@ function MirrorKey:OnMirrorKeyUse(_, _, player)
     local roomIndex = GetCurrentRoomIndex()
     roomsMirrorKeyWasUsed[roomIndex] = true
 
-    SpawnFakeMirrorDoor(closeDoorSlot, MIRROR_DOOR_INDEX)
+    local dimension = TSIL.Enums.Dimension.CURRENT
+    local target = MIRROR_DOOR_INDEX
+
+    local level = Game():GetLevel()
+    if level:GetStage() == LevelStage.STAGE1_2
+    and TSIL.Stage.OnRepentanceStage() then
+        target = level:GetCurrentRoomIndex()
+
+        if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then
+            dimension = TSIL.Enums.Dimension.MAIN
+        else
+            dimension = TSIL.Enums.Dimension.SECONDARY
+        end
+    end
+
+    SpawnFakeMirrorDoor(closeDoorSlot, target, dimension)
     UpdateMirrorKeyChargeState()
 
     return {
@@ -429,7 +451,7 @@ function MirrorKey:OnNewRoom()
     )
 
     TSIL.Doors.RemoveDoors(TSIL.Doors.GetDoors())
-    SpawnFakeMirrorDoor(doorSlot, prevRoomIndex)
+    SpawnFakeMirrorDoor(doorSlot, prevRoomIndex, TSIL.Enums.Dimension.CURRENT)
 
     SetMirrorShaderActive(true)
     PlacePlayersInDoorSlot(doorSlot)
@@ -647,26 +669,52 @@ local function CheckIfPlayerEnters(door)
                 RoomTransitionAnim.FADE_MIRROR
             )
         else
-            TSIL.SaveManager.SetPersistentVariable(
+            local dimension = TSIL.Entities.GetEntityData(
                 MilkshakeVol1,
-                "IsInMirrorRoom",
-                false
+                door,
+                "MirrorDoorTargetDimension"
             )
-            TSIL.Utils.Functions.RunNextCallback(
-                MilkshakeVol1,
-                ModCallbacks.MC_POST_NEW_ROOM,
-                function ()
-                    SetMirrorShaderActive(false)
-                    Game():GetHUD():SetVisible(true)
-                    PlacePlayersInDoorSlot(doorSlot)
-                    RemoveLostCurse()
-                end
-            )
+
+            if dimension == TSIL.Enums.Dimension.CURRENT then
+                TSIL.SaveManager.SetPersistentVariable(
+                    MilkshakeVol1,
+                    "IsInMirrorRoom",
+                    false
+                )
+                TSIL.Utils.Functions.RunNextCallback(
+                    MilkshakeVol1,
+                    ModCallbacks.MC_POST_NEW_ROOM,
+                    function ()
+                        SetMirrorShaderActive(false)
+                        Game():GetHUD():SetVisible(true)
+                        PlacePlayersInDoorSlot(doorSlot)
+                        RemoveLostCurse()
+                    end
+                )
+            elseif dimension == TSIL.Enums.Dimension.MAIN then
+                TSIL.Utils.Functions.RunNextCallback(
+                    MilkshakeVol1,
+                    ModCallbacks.MC_POST_NEW_ROOM,
+                    function ()
+                        RemoveLostCurse()
+                    end
+                )
+            elseif dimension == TSIL.Enums.Dimension.SECONDARY then
+                TSIL.Utils.Functions.RunNextCallback(
+                    MilkshakeVol1,
+                    ModCallbacks.MC_POST_NEW_ROOM,
+                    function ()
+                        AddLostCurse()
+                    end
+                )
+            end
 
             Game():StartRoomTransition(
                 target,
                 Direction.LEFT,
-                RoomTransitionAnim.FADE_MIRROR
+                RoomTransitionAnim.FADE_MIRROR,
+                nil,
+                dimension
             )
         end
     end
