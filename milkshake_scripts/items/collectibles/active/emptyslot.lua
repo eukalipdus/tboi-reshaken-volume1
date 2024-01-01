@@ -23,10 +23,6 @@ function EmptySlot:OnEmptySlotUse(_, rng, player)
         }
     end
     player:AddCoins(-1)
-    if utility:IsJudasBirthright(player) then
-        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-        player:EvaluateItems()
-    end
 
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
@@ -42,6 +38,11 @@ function EmptySlot:OnEmptySlotUse(_, rng, player)
 
     playerCoins = playerCoins + 1
     emptySlotCoinsPerPlayer[tostring(playerIndex)] = playerCoins
+
+    if utility:IsJudasBirthright(player) then
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+        player:EvaluateItems()
+    end
 
     if playerCoins > 10 and rng:RandomFloat() < 0.015 or playerCoins > 100 then
         local crater = TSIL.EntitySpecific.SpawnEffect(
