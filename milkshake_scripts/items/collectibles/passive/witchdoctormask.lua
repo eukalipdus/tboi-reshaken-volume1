@@ -20,6 +20,13 @@ local function CreatePillOverlay()
     return orbPillHud
 end
 
+local function CreateFFPillOverlay()
+    local orbPillHud = Sprite()
+    orbPillHud:Load("gfx/ui/ui_fforbpills.anm2", true)
+    orbPillHud:Play("HUD")
+    return orbPillHud
+end
+
 local playersCurrentPills = {}
 
 local orbPillHuds = {
@@ -27,6 +34,13 @@ local orbPillHuds = {
     CreatePillOverlay(),
     CreatePillOverlay(),
     CreatePillOverlay(),
+}
+
+local ffOrbPillHuds = {
+    CreateFFPillOverlay(),
+    CreateFFPillOverlay(),
+    CreateFFPillOverlay(),
+    CreateFFPillOverlay(),
 }
 
 local playerAnchor = {
@@ -95,6 +109,39 @@ local pillAnimFrames = {
     PillColor.PILL_GOLD | PillColor.PILL_GIANT_FLAG,
     PillColor.PILL_WHITE_YELLOW | PillColor.PILL_GIANT_FLAG,
 }
+
+local ffPillAnimFrames = {
+    101,
+    102,
+    103,
+    104,
+    109,
+    111,
+    113,
+    0,
+    115,
+    117,
+    0,
+    105,
+    106,
+    107,
+    115,
+    110,
+    112,
+    114,
+    0,
+    116,
+    118,
+    120,
+    119,
+}
+
+local function IsFiendFolioPill(id)
+    for _, ffPillId in ipairs(ffPillAnimFrames) do
+        if id == ffPillId then return true end
+    end
+    return false
+end
 
 local function GetFrameFromId(pillColor, frameTable)
     for index, pillToCheck in ipairs(frameTable) do
@@ -166,18 +213,33 @@ function witchDoctorMask:GetShaderParams()
             local heldPill = player:GetPill(0)
             if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
             and heldPill ~= 0 then
+                local isFiendFolio = IsFiendFolioPill(heldPill)
 
                 if player:GetPlayerType() ~= PlayerType.PLAYER_JACOB
                 and player:GetPlayerType() ~= PlayerType.PLAYER_ESAU then
                     local position = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) + movePillHudPerPlayer[i]
                     local x, y = utility:HUDOffset(position.X, position.Y, playerAnchor[i])
                     position = Vector(x,y)
-                    orbPillHuds[i]:Render(position)
-                    orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
+                    if isFiendFolio then
+                        print(heldPill)
+                        print(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
+                        ffOrbPillHuds[i]:Render(position)
+                        ffOrbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
+                        ffOrbPillHuds[i]:Play("HUD")
+                    else
+                        print("vanilla")
+                        orbPillHuds[i]:Render(position)
+                        orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
+                        orbPillHuds[i]:Play("HUD")
+                    end
                 end
 
                 if i > 1 then
-                    orbPillHuds[i].Scale = NON_P1_SCALE
+                    if isFiendFolio then
+                        orbPillHuds[i].Scale = NON_P1_SCALE
+                    else
+                        ffOrbPillHuds[i].Scale = NON_P1_SCALE
+                    end
                 end
             end
         end
