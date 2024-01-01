@@ -453,6 +453,26 @@ MilkshakeVol1:AddCallback(
 
 
 ---@param player EntityPlayer
+---@param direction Vector
+local function ThrowShatteredOrb(player, direction)
+    local shatteredOrb = TSIL.EntitySpecific.SpawnEffect(
+        enums.Effects.SHATTERED_ORB,
+        0,
+        player.Position,
+        Vector.Zero,
+        player
+    )
+
+    shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
+    shatteredOrb:GetSprite():Play("Thrown", true)
+
+    SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
+
+    AddShatteredOrbData(shatteredOrb, direction)
+end
+
+
+---@param player EntityPlayer
 function ShatteredOrb:OnPlayerUpdate(player)
     if not IsPlayerUsingShatteredOrb(player) then return end
 
@@ -474,21 +494,19 @@ function ShatteredOrb:OnPlayerUpdate(player)
     player:PlayExtraAnimation("HideItem")
     RemovePlayerUsingShatteredOrb(player)
 
-    local shatteredOrb = TSIL.EntitySpecific.SpawnEffect(
-        enums.Effects.SHATTERED_ORB,
-        0,
-        player.Position,
-        Vector.Zero,
-        player
-    )
-
-    shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
-    shatteredOrb:GetSprite():Play("Thrown", true)
-
-    SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
-
     local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + (player.Velocity * 0.9)
-    AddShatteredOrbData(shatteredOrb, direction)
+    ThrowShatteredOrb(player, direction)
+
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+        local rng = player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB)
+        local angleOffset = TSIL.Random.GetRandomInt(10, 20, rng)
+        if rng:RandomInt(2) == 0 then
+            angleOffset = -angleOffset
+        end
+        direction = direction:Rotated(angleOffset)
+
+        ThrowShatteredOrb(player, direction)
+    end
 end
 
 MilkshakeVol1:AddCallback(

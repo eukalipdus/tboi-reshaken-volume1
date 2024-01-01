@@ -103,11 +103,24 @@ local CHARACTERS_CANT_PICKUP_SOUL_HEARTS = {
     [PlayerType.PLAYER_KEEPER_B] = true
 }
 
-function Leviticus:onLeviticusUse(_, _, player)
+
+---@param player EntityPlayer
+---@param useFlags UseFlag
+function Leviticus:onLeviticusUse(_, _, player, useFlags)
+    if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then
+        return
+    end
+
+    local carBattery = player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY)
+
     if ComplianceImmortal then
-        ComplianceImmortal.AddImmortalHearts(player, 2)
+        local amount = 2
+        if carBattery then amount = amount * 2 end
+        ComplianceImmortal.AddImmortalHearts(player, amount)
     else
-        player:AddEternalHearts(1)
+        local amount = 1
+        if carBattery then amount = amount * 2 end
+        player:AddEternalHearts(amount)
     end
 
     if LibraryExpanded then

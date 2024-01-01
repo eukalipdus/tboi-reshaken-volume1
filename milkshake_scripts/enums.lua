@@ -136,6 +136,8 @@ enums.Sounds = {
     WATER_FLOW = Isaac.GetSoundIdByName("water flow"),
     ELECTROCUTE_MACHINE = Isaac.GetSoundIdByName("electrocute machine"),
     SATA_ANDAGI = Isaac.GetSoundIdByName("Sata Andagi"),
+    BRENDA_HURT = Isaac.GetSoundIdByName("Brenda Hurt"),
+    BRENDA_ACTIVATE = Isaac.GetSoundIdByName("Brenda Activate"),
 
     SPIRIT_CHAOS = Isaac.GetSoundIdByName("Spirit Of Chaos"),
     SPIRIT_CLAIRVOYANCE = Isaac.GetSoundIdByName("Spirit Of Clairvoyance"),

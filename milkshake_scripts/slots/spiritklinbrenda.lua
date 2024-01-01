@@ -278,6 +278,8 @@ local function OnSlotBroken(slot)
         end
     end
 
+    SFXManager():Play(enums.Sounds.BRENDA_HURT)
+
     local oldSprite = slot:GetSprite()
     local newSprite = newSlot:GetSprite()
 
@@ -403,6 +405,8 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
     else
         player:AddSoulHearts(-1)
     end
+
+    SFXManager():Play(enums.Sounds.BRENDA_ACTIVATE)
 
     sprite:Play("Prize", true)
     TSIL.Entities.SetEntityData(
