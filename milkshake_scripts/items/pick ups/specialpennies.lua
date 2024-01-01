@@ -1,6 +1,7 @@
 local enums = MilkshakeVol1.enums
 
 local REPLACE_CHANCE = 2
+local KEEPERB_REPLACE_CHANCE = 1
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
     local randomPill = Game():GetItemPool():GetPill(Random() + 1)
@@ -67,9 +68,11 @@ end)
 function MilkshakeVol1:PostPickupInit(pickup)
     if MilkshakeVol1.utility:DidEntityExist()
     or (pickup.Variant ~= PickupVariant.PICKUP_COIN and pickup.SubType ~= CoinSubType.COIN_PENNY) then return end
+    local chance
+    if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B) then chance = KEEPERB_REPLACE_CHANCE else chance = REPLACE_CHANCE end
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local roll = TSIL.Random.GetRandomInt(1, 100, rng)
-    if roll <= REPLACE_CHANCE then
+    if roll <= chance then
         local rainbowCoinType = MilkshakeVol1.API:GetRainbowPenny(rng)
         pickup:Morph(
             pickup.Type,
