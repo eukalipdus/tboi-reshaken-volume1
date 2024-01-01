@@ -7,7 +7,6 @@ local FF_PILL_BEGIN = 101
 local FF_PILL_END = 120
 local NON_P1_SCALE = Vector(0.5, 0.5)
 local SPAWN_DISTANCE = 40
-local COLLECTIBLE_NAME =  "Witch Doctor Mask"
 
 local movePillHudPerPlayer = {
     Vector(-12, -12),
