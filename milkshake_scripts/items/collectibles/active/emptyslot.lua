@@ -11,6 +11,11 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 
+local function UpdateCoinDMGBonus(player)
+    player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+    player:EvaluateItems()
+end
+
 
 ---@param rng RNG
 ---@param player EntityPlayer
@@ -40,8 +45,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player)
     emptySlotCoinsPerPlayer[tostring(playerIndex)] = playerCoins
 
     if utility:IsJudasBirthright(player) then
-        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-        player:EvaluateItems()
+        UpdateCoinDMGBonus(player)
     end
 
     if playerCoins > 10 and rng:RandomFloat() < 0.015 or playerCoins > 100 then
@@ -86,6 +90,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player)
         end
 
         emptySlotCoinsPerPlayer[tostring(playerIndex)] = 0
+        UpdateCoinDMGBonus(player)
         return {
             Discharge = false,
             Remove = true,
