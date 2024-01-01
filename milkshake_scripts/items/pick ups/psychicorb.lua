@@ -199,17 +199,24 @@ function SapphireOrb:OnPeffectUpdate(player)
     local currentFrame = Game():GetFrameCount()
     local orbDuration = currentFrame - playerUsedClairvoyanceFrame
 
-    if orbDuration >= CLAIRVOYANCE_ORB_DURATION then
-        player:TryRemoveNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
-        clairvoyanceOrbPlayerFrames[playerIndex] = nil
-        return
-    end
-
     local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "ClairvoyanceDoubleEffectPerPlayer"
     )
     local isDoubleEffect = doubleEffectPerPlayer[playerIndex]
+
+    local duration
+    if isDoubleEffect then
+        duration = CLAIRVOYANCE_ORB_DURATION * 2
+    else
+        duration = CLAIRVOYANCE_ORB_DURATION
+    end
+
+    if orbDuration >= duration then
+        player:TryRemoveNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
+        clairvoyanceOrbPlayerFrames[playerIndex] = nil
+        return
+    end
 
     local projectileReflectInterval = PROJECTILE_REFLECTION_INTERVAL
     if isDoubleEffect then
