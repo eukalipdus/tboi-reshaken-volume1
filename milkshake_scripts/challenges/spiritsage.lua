@@ -1,20 +1,14 @@
 local spiritSage = {}
 local enums = MilkshakeVol1.enums
 
-local inventory = {
-    enums.Collectibles.SHATTERED_ORB,
-    enums.Collectibles.LYRA
-}
-
 function spiritSage:PostPlayerInit(player)
     if Game().Challenge == enums.Challenges.SPIRIT_SAGE then
-        for _, collectible in ipairs(inventory) do
-            player:AddCollectible(collectible)
-        end
-        local shatteredOrbCharges = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.SHATTERED_ORB).MaxCharges
-        player:SetActiveCharge(shatteredOrbCharges)
+        player:AddCollectible(enums.Collectibles.LYRA)
         TSIL.Utils.Functions.RunInFrames(function ()
             player:RemoveCollectible(CollectibleType.COLLECTIBLE_LEMEGETON, true, ActiveSlot.SLOT_POCKET)
+            player:SetPocketActiveItem(enums.Collectibles.SHATTERED_ORB)
+            local shatteredOrbCharges = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.SHATTERED_ORB).MaxCharges
+            player:SetActiveCharge(shatteredOrbCharges)
         end, 1, {})
     end
 end
