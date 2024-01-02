@@ -126,7 +126,8 @@ include("milkshake_scripts.enemies.winehead")
 include("milkshake_scripts.challenges.isaacclicker")
 include("milkshake_scripts.challenges.spiritsage")
 include("milkshake_scripts.challenges.worldoflight")
---Room ecorations
+include("milkshake_scripts.challenges.greedtropies")
+--Room decorations
 include("milkshake_scripts.room_decorations.sacrilege")
 
 --Misc

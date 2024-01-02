@@ -3,6 +3,7 @@ local enums = MilkshakeVol1.enums
 
 function spiritSage:PostPlayerInit(player)
     if Game().Challenge == enums.Challenges.SPIRIT_SAGE then
+        player:AddCollectible(CollectibleType.COLLECTIBLE_POLYDACTYLY, 0, false)
         player:AddCollectible(enums.Collectibles.LYRA)
         TSIL.Utils.Functions.RunInFrames(function ()
             player:RemoveCollectible(CollectibleType.COLLECTIBLE_LEMEGETON, true, ActiveSlot.SLOT_POCKET)
