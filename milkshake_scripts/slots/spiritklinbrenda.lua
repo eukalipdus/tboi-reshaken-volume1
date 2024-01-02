@@ -206,23 +206,23 @@ end, function(slot, _, position, velocity)
 end)
 
 
---Smelt player trinkets
-MilkshakeVol1.API:AddSpiritKlinReward(function(player)
-    if player:GetTrinket(0) ~= 0 then
-        return 3
-    end
+-- --Smelt player trinkets
+-- MilkshakeVol1.API:AddSpiritKlinReward(function(player)
+--     if player:GetTrinket(0) ~= 0 then
+--         return 3
+--     end
 
-    return 0
-end, function(_, player)
-    player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
+--     return 0
+-- end, function(_, player)
+--     player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
 
-    TSIL.EntitySpecific.SpawnEffect(
-        EffectVariant.POOF01,
-        0,
-        player.Position
-    )
-    SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
-end)
+--     TSIL.EntitySpecific.SpawnEffect(
+--         EffectVariant.POOF01,
+--         0,
+--         player.Position
+--     )
+--     SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
+-- end)
 
 
 --Add random element wisp

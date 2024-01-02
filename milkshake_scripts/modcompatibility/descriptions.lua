@@ -112,7 +112,8 @@ descriptions.Collectibles = {
     [enums.Collectibles.FIRECRACKER_ROSE] = {
         en_us = {
             name = "Firecracker Flower",
-            description = "{{Burning}} Chance to shoot a seed tear that inflicts enemies with Kabloom #Kabloomed enemies will burst into exploding petal tears after 5 seconds",
+            description = "{{Burning}} Chance to shoot seed tears that stick to enemies" ..
+            "#Seed tears blossom and burst into exploding petal tears after 4 seconds, dealing 35 + 6xIsaac's Damage",
             abyss = "Green, burning locust that has a 10% chance to inflict {{Burning}} Kabloom"
         },
         spa = {
@@ -463,8 +464,9 @@ descriptions.Collectibles = {
     [enums.Collectibles.BATTERY_ACID] = {
         en_us = {
             name = "Battery Acid",
-            description = "{{Battery}} Doubles active item charge from clearing rooms" ..
-            "#\2 Drains 1 charge every 15 seconds",
+            description = "{{Battery}} Doubles active item charge rate" ..
+            "#\2 Drains 1 charge every 15 seconds" ..
+            "#Isaac leaves a sparse trail of acid creep"
         },
         spa = {
             name = "Ácido de Batería",
@@ -630,7 +632,9 @@ descriptions.Trinkets = {
     [enums.Trinkets.TUNGSTEN_CUBE] = {
         en_us = {
             name = "Tungsten Cube",
-            description = "{{ArrowDown}} -0.2 Speed. #Dropping it creates a huge damaging shockwave",
+            description = "{{ArrowDown}} -0.2 Speed #Dropping it creates a huge damaging shockwave",
+            double = "{{ArrowDown}} -0.2 Speed #Dropping it creates a huge damaging shockwave #{{ColorGold}}Deals double damage",
+            triple = "{{ArrowDown}} -0.2 Speed #Dropping it creates a huge damaging shockwave #{{ColorGold}}Deals triple damage",
         },
         spa = {
             name = "Cubo De Tungsteno",
@@ -687,6 +691,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Amethyst Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Clairvoyance when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Clairvoyance when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Clairvoyance when destroyed",
         },
         spa = {
             name = "Fragmento de Amatista",
@@ -701,6 +707,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Ruby Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Inferno when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Inferno when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Inferno when destroyed",
         },
         spa = {
             name = "Fragmento de Rubí",
@@ -715,6 +723,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Tourmaline Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Conductivity when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Conductivity when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Conductivity when destroyed",
         },
         spa = {
             name = "Fragmento de Turmalina",
@@ -729,6 +739,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Emerald Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Druidity when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Druidity when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Druidity when destroyed",
         },
         spa = {
             name = "Fragmento de Esmeralda",
@@ -743,6 +755,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Peridot Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Virulence when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Virulence when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Virulence when destroyed",
         },
         spa = {
             name = "Fragmento de Peridoto",
@@ -757,6 +771,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Garnet Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Sacrilege when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Sacrilege when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Sacrilege when destroyed",
         },
         spa = {
             name = "Fragmento de Granate",
@@ -771,6 +787,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Onyx Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Revenance when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Revenance when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Revenance when destroyed",
         },
         spa = {
             name = "Fragmento de Ónix",
@@ -785,6 +803,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Diamond Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Salvation when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Salvation when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Salvation when destroyed",
         },
         spa = {
             name = "Fragmento de Diamante",
@@ -799,6 +819,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Sapphire Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Deluge when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Deluge when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Deluge when destroyed",
         },
         spa = {
             name = "Fragmento de Zafiro",
@@ -813,6 +835,8 @@ descriptions.Trinkets = {
         en_us = {
             name = "Amber Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Terrastrium when destroyed",
+            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Terrastrium when destroyed",
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Terrastrium when destroyed",S
         },
         spa = {
             name = "Fragmento de Ámbar",
@@ -1021,6 +1045,21 @@ descriptions.Cards = {
             name = "Orbe Druidico",
             description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
         }
+    },
+    [enums.Cards.TATTERED_PAGE] = {
+        en_us = {
+            name = "Tattered Page",
+            description = "#Summons a random {{Collectible753}} Leviticus wisp"
+        },
+        spa = {
+            name = "Espíritu de Caos",
+            description = "#Usa un efecto de orbe espiritual aleatorio",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el efecto elegido"
+        },
+        ru = {
+            name = "Orbe Druidico",
+            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+        }
     }
 }
 
@@ -1030,8 +1069,12 @@ local BRENDA = EntityType.ENTITY_SLOT .. "." .. MilkshakeVol1.enums.Slots.SPIRIT
 descriptions.Entities = {
     [BRENDA] = {
         en_us = {
-            name = "Brenda the Spirit Klin",
-            description = "bitch"
+            name = "Spirit Klin",
+            description = "{{HalfSoulHeart}} Takes half a soul heart in exchange for various rewards:" ..
+            "#{{SpiritOrb}} A random Spirit Orb" ..
+            "#{{Burning}} A random elemental wisp" ..
+            "#A random glass or gem trinket" ..
+            "#{{Rune}} A random soul stone"
         },
         spa = {
             name = "Brenda la Forja Espiritual",
