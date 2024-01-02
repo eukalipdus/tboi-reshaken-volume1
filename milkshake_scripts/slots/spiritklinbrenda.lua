@@ -21,8 +21,8 @@ TSIL.SaveManager.AddPersistentVariable(
 
 local function CanUseBrenda(player)
     if (player:GetPlayerType() == PlayerType.PLAYER_THELOST or player:GetPlayerType() == PlayerType.PLAYER_THELOST_B)
-    and not player:HasCollectible(enums.Collectibles.LEVITICUS)
-    and not (player:HasCollectible(CollectibleType.COLLECTIBLE_ALABASTER_BOX) and player:GetActiveCharge() > 1) then
+    and not (player:HasCollectible(enums.Collectibles.LEVITICUS) and player:GetActiveCharge() + player:GetBatteryCharge() > 0)
+    and not (player:HasCollectible(CollectibleType.COLLECTIBLE_ALABASTER_BOX) and player:GetActiveCharge() + player:GetBatteryCharge() > 0) then
         return false
     else return true end
 end
@@ -400,10 +400,14 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
     local soulHearts = player:GetSoulHearts()
     if soulCharge < 1 and soulHearts < 1 then return end
 
-    if soulCharge >= 1 then
-        player:AddSoulCharge(-1)
+    if (player:GetPlayerType() == PlayerType.PLAYER_THELOST or player:GetPlayerType() == PlayerType.PLAYER_THELOST_B) then
+        player:SetActiveCharge(player:GetActiveCharge() + player:GetBatteryCharge() - 1)
     else
-        player:AddSoulHearts(-1)
+        if soulCharge >= 1 then
+            player:AddSoulCharge(-1)
+        else
+            player:AddSoulHearts(-1)
+        end
     end
 
     SFXManager():Play(enums.Sounds.BRENDA_ACTIVATE)
