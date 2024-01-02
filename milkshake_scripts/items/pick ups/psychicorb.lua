@@ -279,11 +279,24 @@ function SapphireOrb:OnClairvoyanceAuraUpdate(effect)
     local frameCount = Game():GetFrameCount()
     local flashMode = Utilities:GetData(effect, "ClairvoyanceFlashMode")
 
-    if (frameCount - playerUsedClairvoyanceFrame) >= BEGIN_FLASH
+    local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "ClairvoyanceDoubleEffectPerPlayer"
+    )
+    local isDoubleEffect = doubleEffectPerPlayer[playerIndex]
+
+    local duration
+    if isDoubleEffect then
+        duration = CLAIRVOYANCE_ORB_DURATION * 2
+    else
+        duration = CLAIRVOYANCE_ORB_DURATION
+    end
+
+    if (frameCount - playerUsedClairvoyanceFrame) >= duration - BEGIN_FLASH
     and not flashMode then
         Utilities:SetData(effect, "ClairvoyanceFlashMode", FLASH_VISIBLE)
     
-    elseif (frameCount - playerUsedClairvoyanceFrame) >= BEGIN_FLASH
+    elseif (frameCount - playerUsedClairvoyanceFrame) >= duration - BEGIN_FLASH
     and frameCount % FLASH_FRAMES == 0 then
         if flashMode == FLASH_HIDE then
             effect.Visible = true
