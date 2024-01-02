@@ -71,7 +71,7 @@ function MilkshakeVol1.API:AddCrackered(npc, player)
     CrackerSeedSprites[colliderPtr] = seedSprite
 
     crackeredEnemies[colliderPtr] = {
-        timer = 30 * 5,
+        timer = 30 * 4,
         source = TSIL.Players.GetPlayerIndex(player)
     }
 end
@@ -115,7 +115,7 @@ function FirecrackerRose:OnTearInit(tear)
 
     local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
     local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
-    local luckThershold = TSIL.Utils.Math.Clamp(0.03 + 0.03 * player.Luck, 0.05, 0.33)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.10 + 0.02 * player.Luck, 0.5, 0.30)
     if randomChance >= luckThershold then return end
 
     MakeTearFirecrackerSeed(tear)
@@ -312,7 +312,7 @@ function CheckForFirecrackerLaser(npc, source)
     local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
 
     local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
-    local luckThershold = TSIL.Utils.Math.Clamp(0.03 + 0.03 * player.Luck, 0.05, 0.33)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.10 + 0.02 * player.Luck, 0.5, 0.30)
 
     if randomChance >= luckThershold then return end
 
@@ -333,11 +333,11 @@ function CheckForFirecrackerKnife(npc, source)
     local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
 
     local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
-    local luckThershold = TSIL.Utils.Math.Clamp(0.02 + 0.02 * player.Luck, 0.01, 0.2)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.05 + 0.01 * player.Luck, 0.01, 0.2)
 
     if randomChance >= luckThershold then return end
 
-    MilkshakeVol1.API:AddCrackeredAddCrackered(npc, player)
+    MilkshakeVol1.API:AddCrackered(npc, player)
 end
 
 
@@ -371,7 +371,7 @@ function FirecrackerRose:OnBoneSwing(bone)
 
     local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
     local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
-    local luckThershold = TSIL.Utils.Math.Clamp(0.05 + 0.05 * player.Luck, 0.05, 0.5)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.15 + 0.025 * player.Luck, 0.05, 0.4)
     if randomChance >= luckThershold then return end
 
     local tearVelocity = TSIL.Direction.DirectionToVector(player:GetFireDirection())
