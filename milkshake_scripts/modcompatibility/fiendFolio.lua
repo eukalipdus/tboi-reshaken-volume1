@@ -656,11 +656,15 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         Actives = {
             {ID = MilkshakeVol1.enums.Collectibles.INNER_REFLECTION, Reference = "Celeste"},
         },
-    
+
         Passives = {
             {ID = MilkshakeVol1.enums.Collectibles.MILKSHAKE, Reference = "Team Milkshake"},
             {ID = MilkshakeVol1.enums.Collectibles.SHARP_CURSOR, Reference = "Cookie Clicker"},
         },
+
+        Trinkets = {
+
+        }
     }
 
     for i = 1, #referenceItems.Actives do
