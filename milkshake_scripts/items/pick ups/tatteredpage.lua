@@ -7,7 +7,7 @@ local TatteredPage = {}
 function TatteredPage:OnGetCard(rng, _, _, _, onlyRunes)
     if onlyRunes then return end
 
-    if rng:RandomFloat() < 0.03 then
+    if rng:RandomFloat() < 0.02 then
         return enums.Cards.TATTERED_PAGE
     end
 end
