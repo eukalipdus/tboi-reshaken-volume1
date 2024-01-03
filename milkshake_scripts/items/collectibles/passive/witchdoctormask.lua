@@ -115,25 +115,22 @@ local ffPillAnimFrames = {
     102,
     103,
     104,
-    109,
-    111,
-    113,
-    0,
-    115,
-    117,
-    0,
     105,
     106,
     107,
-    115,
+    108,
+    109,
     110,
+    111,
     112,
+    113,
     114,
-    0,
+    115,
     116,
+    117,
     118,
-    120,
     119,
+    120,
 }
 
 local function IsFiendFolioPill(id)
@@ -221,13 +218,10 @@ function witchDoctorMask:GetShaderParams()
                     local x, y = utility:HUDOffset(position.X, position.Y, playerAnchor[i])
                     position = Vector(x,y)
                     if isFiendFolio then
-                        print(heldPill)
-                        print(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
                         ffOrbPillHuds[i]:Render(position)
                         ffOrbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
                         ffOrbPillHuds[i]:Play("HUD")
                     else
-                        print("vanilla")
                         orbPillHuds[i]:Render(position)
                         orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:Play("HUD")

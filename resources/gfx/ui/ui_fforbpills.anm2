@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="1/1/2024 3:34:46 PM" Version="116" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="1/3/2024 2:30:19 AM" Version="117" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="..\items\pick ups\spirit pillsFF.png" Id="0"/>
+			<Spritesheet Path="spirit pillsFF.png" Id="0"/>
 			<Spritesheet Path="..\..\Effects\Effect_023_StarFlash.png" Id="1"/>
 		</Spritesheets>
 		<Layers>
