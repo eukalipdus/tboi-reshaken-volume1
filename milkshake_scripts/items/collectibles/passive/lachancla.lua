@@ -31,12 +31,12 @@ function laChancla:EntityTakeDmg(entity, _, flags, source)
             variant = effect.Variant
         end
 
-        if (flags & DamageFlag.DAMAGE_CRUSH == 0)
-        and not (effect and variant == EffectVariant.MOM_FOOT_STOMP
-                or TSIL.Utils.Tables.IsIn(stompers, source.Entity.Type))
-        then return end
-    
-        return false
+        if (TSIL.Utils.Flags.HasFlags(DamageFlag.DAMAGE_CRUSH, flags))
+        and (effect and variant == EffectVariant.MOM_FOOT_STOMP
+             or TSIL.Utils.Tables.IsIn(stompers, source.Entity.Type))
+        then
+            return false
+        end
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, laChancla.EntityTakeDmg, EntityType.ENTITY_PLAYER)
