@@ -1070,10 +1070,10 @@ descriptions.Entities = {
     [BRENDA] = {
         en_us = {
             name = "Spirit Klin",
-            description = "{{HalfSoulHeart}} Takes half a soul heart in exchange for various rewards:" ..
+            description = "{{HalfSoulHeart}}Takes half a soul heart in exchange for various rewards:" ..
             "#{{SpiritOrb}} A random Spirit Orb" ..
             "#{{Burning}} A random elemental wisp" ..
-            "#A random glass or gem trinket" ..
+            "#{{Trinket}} A random glass or gem trinket" ..
             "#{{Rune}} A random soul stone"
         },
         spa = {
