@@ -20,7 +20,11 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BLOODY_
 end, 0.45)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BURNT_PENNY, function (_, player)
-    player:AddBombs(1)
+    if player:GetPlayerType() ~= PlayerType.PLAYER_BLUEBABY_B then
+        player:AddBombs(1)
+    else
+        player:AddPoopMana(1)
+    end
     SFXManager():Play(SoundEffect.SOUND_FETUS_FEET)
 end, 0.45)
 
