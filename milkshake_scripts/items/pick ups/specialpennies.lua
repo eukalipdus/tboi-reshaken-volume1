@@ -3,6 +3,12 @@ local enums = MilkshakeVol1.enums
 local REPLACE_CHANCE = 2
 local KEEPERB_REPLACE_CHANCE = 1
 
+local function GetSpawnCount(player)
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE) then return 1 end
+    local rng = player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE)
+    return TSIL.Random.GetRandomInt(1, 2, rng)
+end
+
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
     local randomPill = Game():GetItemPool():GetPill(Random() + 1)
     player:AddPill(randomPill)
@@ -20,7 +26,11 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BLOODY_
 end, 0.45)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BURNT_PENNY, function (_, player)
-    player:AddBombs(1)
+    if player:GetPlayerType() ~= PlayerType.PLAYER_BLUEBABY_B then
+        player:AddBombs(GetSpawnCount(player))
+    else
+        player:AddPoopMana(1)
+    end
     SFXManager():Play(SoundEffect.SOUND_FETUS_FEET)
 end, 0.45)
 
@@ -29,6 +39,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BUTT_PE
 end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CHARGED_PENNY, function (_, player)
+    if not player:NeedsCharge(ActiveSlot.SLOT_PRIMARY) then return end
     TSIL.Charge.AddCharge(player)
 end, 0.25)
 
@@ -48,7 +59,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CURSED_
 end, 0.10)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.FLAT_PENNY, function (_, player)
-    player:AddKeys(1)
+    player:AddKeys(GetSpawnCount(player))
     SFXManager():Play(SoundEffect.SOUND_KEYPICKUP_GAUNTLET)
 end, 0.45)
 
