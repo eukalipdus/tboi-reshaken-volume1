@@ -39,6 +39,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BUTT_PE
 end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CHARGED_PENNY, function (_, player)
+    if not player:NeedsCharge(ActiveSlot.SLOT_PRIMARY) then return end
     TSIL.Charge.AddCharge(player)
 end, 0.25)
 
