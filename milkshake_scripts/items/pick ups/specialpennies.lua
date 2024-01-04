@@ -67,7 +67,8 @@ end)
 
 function MilkshakeVol1:PostPickupInit(pickup)
     if MilkshakeVol1.utility:DidEntityExist()
-    or (pickup.Variant ~= PickupVariant.PICKUP_COIN and pickup.SubType ~= CoinSubType.COIN_PENNY) then return end
+    or pickup.Variant ~= PickupVariant.PICKUP_COIN
+    or pickup.SubType ~= CoinSubType.COIN_PENNY then return end
     local chance
     if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B) then chance = KEEPERB_REPLACE_CHANCE else chance = REPLACE_CHANCE end
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
