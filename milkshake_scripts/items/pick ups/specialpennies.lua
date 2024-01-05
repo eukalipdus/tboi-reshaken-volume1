@@ -77,7 +77,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_RENDER, function (_, picku
 end)
 
 function MilkshakeVol1:PostPickupInit(pickup)
-    if MilkshakeVol1.utility:DidEntityExist()
+    if (Game().Difficulty == Difficulty.DIFFICULTY_GREED or Game().Difficulty == Difficulty.DIFFICULTY_GREEDIER)
+    or MilkshakeVol1.utility:DidEntityExist()
     or pickup.Variant ~= PickupVariant.PICKUP_COIN
     or pickup.SubType ~= CoinSubType.COIN_PENNY then return end
     local chance
