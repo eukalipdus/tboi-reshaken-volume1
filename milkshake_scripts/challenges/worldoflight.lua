@@ -30,7 +30,7 @@ end
 ---@param player EntityPlayer
 ---@param collectibleId integer
 local function AnimateCollectibleLoss(player, collectibleId)
-    local collectibleConfig = Isaac:GetItemConfig():GetCollectible(collectible)
+    local collectibleConfig = Isaac:GetItemConfig():GetCollectible(collectibleId)
     local sprite = Sprite()
     sprite:Load("gfx/wol_collectible.anm2", true)
     sprite:ReplaceSpritesheet(1, collectibleConfig.GfxFileName)
