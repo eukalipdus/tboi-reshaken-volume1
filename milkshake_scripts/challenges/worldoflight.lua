@@ -108,8 +108,12 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, worldOfLight.Post
 function worldOfLight:PostRender()
     if Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT then return end
     local timer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer")
-    Isaac.RenderScaledText(timer, RENDER_X, RENDER_Y, SCALE_X, SCALE_Y, 1, 0, 0 , 1)
-
+    --Isaac.RenderScaledText(timer, RENDER_X, RENDER_Y, SCALE_X, SCALE_Y, 1, 0, 0 , 1)
+    if Game():GetHUD():IsVisible() then
+        local font = Font()
+        font:Load("font/pftempestasevencondensed.fnt")
+        font:DrawString(timer, RENDER_X, RENDER_Y, KColor(1,0,0,1), 0, true)
+    end
     for idx, collectibleSprite in ipairs(renderItems) do
         if collectibleSprite.Sprite:IsFinished("Fade") then
             table.remove(renderItems, idx)
