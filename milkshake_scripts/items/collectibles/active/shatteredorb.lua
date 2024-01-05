@@ -480,6 +480,7 @@ function ShatteredOrb:OnPlayerUpdate(player)
     local sprite = player:GetSprite()
     if sprite:IsPlaying("Hit") then
         RemovePlayerUsingShatteredOrb(player)
+        player:AnimateCollectible(enums.Collectibles.SHATTERED_ORB, "HideItem", "PlayerPickup")
         return
     end
 
@@ -488,6 +489,11 @@ function ShatteredOrb:OnPlayerUpdate(player)
     if shootingDir == Direction.NO_DIRECTION then return end
 
     local activeSlot = GetShatteredOrbActiveSlotFromPlayer(player)
+    if player:GetActiveItem(activeSlot) ~= enums.Collectibles.SHATTERED_ORB then
+        RemovePlayerUsingShatteredOrb(player)
+        return
+    end
+
     local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
     local newCharge = math.max(0, charge - 4)
 
