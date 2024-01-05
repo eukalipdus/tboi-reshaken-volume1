@@ -131,6 +131,30 @@ local ffPillAnimFrames = {
     118,
     119,
     120,
+    99, -- PLACEHOLDER
+    999, -- PLACEHOLDER
+    101 | PillColor.PILL_GIANT_FLAG,
+    102 | PillColor.PILL_GIANT_FLAG,
+    103 | PillColor.PILL_GIANT_FLAG,
+    104 | PillColor.PILL_GIANT_FLAG,
+    105 | PillColor.PILL_GIANT_FLAG,
+    106 | PillColor.PILL_GIANT_FLAG,
+    107 | PillColor.PILL_GIANT_FLAG,
+    108 | PillColor.PILL_GIANT_FLAG,
+    109 | PillColor.PILL_GIANT_FLAG,
+    110 | PillColor.PILL_GIANT_FLAG,
+    111 | PillColor.PILL_GIANT_FLAG,
+    112 | PillColor.PILL_GIANT_FLAG,
+    113 | PillColor.PILL_GIANT_FLAG,
+    114 | PillColor.PILL_GIANT_FLAG,
+    115 | PillColor.PILL_GIANT_FLAG,
+    116 | PillColor.PILL_GIANT_FLAG,
+    117 | PillColor.PILL_GIANT_FLAG,
+    118 | PillColor.PILL_GIANT_FLAG,
+    119 | PillColor.PILL_GIANT_FLAG,
+    120 | PillColor.PILL_GIANT_FLAG,
+    9999, -- PLACEHOLDER
+    99999, -- PLACEHOLDER
 }
 
 local function IsFiendFolioPill(id)
@@ -223,6 +247,7 @@ function witchDoctorMask:GetShaderParams()
                         ffOrbPillHuds[i]:Play("HUD")
                     else
                         orbPillHuds[i]:Render(position)
+                        print(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:Play("HUD")
                     end
