@@ -490,7 +490,18 @@ function ShatteredOrb:OnPlayerUpdate(player)
     local activeSlot = GetShatteredOrbActiveSlotFromPlayer(player)
     local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
     local newCharge = math.max(0, charge - 4)
-    player:SetActiveCharge(newCharge, ActiveSlot.SLOT_PRIMARY)
+
+    if charge < 4 then
+        local chargeDiff = math.abs(charge - 4)
+
+        if player:GetPlayerType() == PlayerType.PLAYER_BETHANY then
+            player:AddSoulCharge(-chargeDiff)
+        elseif player:GetPlayerType() == PlayerType.PLAYER_BETHANY_B then
+            player:AddBloodCharge(-chargeDiff)
+        end
+    end
+
+    player:SetActiveCharge(newCharge, activeSlot)
     player:PlayExtraAnimation("HideItem")
     RemovePlayerUsingShatteredOrb(player)
 
