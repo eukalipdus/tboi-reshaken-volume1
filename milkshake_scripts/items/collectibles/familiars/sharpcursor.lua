@@ -183,6 +183,10 @@ MilkshakeVol1:AddCallback(
 local function ClickDamageEnemies(familiar, player)
     local damage = player.Damage * 0.1
 
+    if Game().Challenge == enums.Challenges.ISAAC_CLICKER then
+        damage = damage * 2.857
+    end
+
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
         damage = damage * 2
     end

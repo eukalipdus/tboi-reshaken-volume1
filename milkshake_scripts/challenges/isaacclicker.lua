@@ -2,12 +2,13 @@ local isaacClicker = {}
 local enums = MilkshakeVol1.enums
 
 local inventory = {
-    CollectibleType.COLLECTIBLE_BFFS,
+    CollectibleType.COLLECTIBLE_MARKED,
     enums.Collectibles.SHARP_CURSOR
 }
 
 function isaacClicker:PostPlayerInit(player)
     if Game().Challenge == enums.Challenges.ISAAC_CLICKER then
+        player:AddKeys(1)
         player:AddTrinket(TrinketType.TRINKET_ADOPTION_PAPERS)
         player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
         for _, collectible in ipairs(inventory) do
