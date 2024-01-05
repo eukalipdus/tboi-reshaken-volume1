@@ -36,6 +36,13 @@ TSIL.SaveManager.AddPersistentVariable(
 
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
+    "SharpCursorFollowMouse",
+    false,
+    TSIL.Enums.VariablePersistenceMode.NONE
+)
+
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
     "EnableGlassHeads",
     true,
     TSIL.Enums.VariablePersistenceMode.NONE
@@ -166,6 +173,7 @@ local exampledirectory = {
         },
         tooltip = dssmod.menuOpenToolTip
     },
+
     settings = {
         title = 'settings',
         buttons = {
@@ -231,6 +239,34 @@ local exampledirectory = {
                     )
                 end,
                 tooltip = { strset = { 'play click', 'sound with', 'sharp cursor' } }
+            },
+
+            -- SHARP CURSOR FOLLOW MOUSE
+            {
+                str = 'sharp cursor follow mouse',
+                fsize = 2,
+                choices = { 'enable', 'disable' },
+                setting = 1,
+                variable = 'SharpCursorFollowMouse',
+                load = function()
+                    local followMouse = TSIL.SaveManager.GetPersistentVariable(
+                        MilkshakeVol1,
+                        "SharpCursorFollowMouse"
+                    )
+                    if followMouse then
+                        return 1
+                    else
+                        return 2
+                    end
+                end,
+                store = function(var)
+                    TSIL.SaveManager.SetPersistentVariable(
+                        MilkshakeVol1,
+                        "SharpCursorFollowMouse",
+                        var == 1
+                    )
+                end,
+                tooltip = { strset = { 'sharp cursor', 'follow mouse'} }
             },
 
             -- LEVITICUS SPRITE

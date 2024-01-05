@@ -25,12 +25,7 @@ TSIL.SaveManager.AddPersistentVariable(
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
-TSIL.SaveManager.AddPersistentVariable(
-    MilkshakeVol1,
-    "SharpCursorFollowMouse",
-    false,
-    TSIL.Enums.VariablePersistenceMode.NONE
-)
+
 
 ---@class SharpCursorText
 ---@field text string
