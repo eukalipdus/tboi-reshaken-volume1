@@ -107,6 +107,14 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.FIRE,     type = 841, variant = 0, },              --Revenant
     { orb = enums.Orbs.FIRE,     type = 841, variant = 1, },              --Quad Revenant
     { orb = enums.Orbs.FIRE,     type = 825, variant = 0, },              --Fire Worm
+    { orb = enums.Orbs.FIRE,     type = 819, variant = 0, },              --Fly Bomb
+    { orb = enums.Orbs.FIRE,     type = 16,  variant = 2, },              --Mulliboom
+    { orb = enums.Orbs.FIRE,     type = 25,  variant = 0, },              --Boom Fly
+    { orb = enums.Orbs.FIRE,     type = 25,  variant = 6, },              --Tainted Boom Fly
+    { orb = enums.Orbs.FIRE,     type = 250, variant = 0, },              --Ticking Spider
+    { orb = enums.Orbs.FIRE,     type = 869, variant = 0, },              --Migraine
+    { orb = enums.Orbs.FIRE,     type = 277, variant = 0  },              --Black Bony
+    { orb = enums.Orbs.FIRE,     type = 844, variant = 0, },              --Bombgagger
     { orb = enums.Orbs.NATURE,   type = 300, variant = 0, },              --Mushroom
     { orb = enums.Orbs.NATURE,   type = 14,  variant = 0 },               --Pooter
     { orb = enums.Orbs.NATURE,   type = 14,  variant = 1 },               --Super Pooter
@@ -225,7 +233,6 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.UNDEAD,   type = 226, variant = 1 },               --Rotty
     { orb = enums.Orbs.UNDEAD,   type = 227, variant = 0 },               --–-Bony
     { orb = enums.Orbs.UNDEAD,   type = 227, variant = 1 },               --–-Holy Bony
-    { orb = enums.Orbs.UNDEAD,   type = 277, variant = 0 },               --–-Black Bony
     { orb = enums.Orbs.UNDEAD,   type = 890, variant = 0 },               --Maze Roamer
     { orb = enums.Orbs.UNDEAD,   type = 260, variant = 10 },              --–-Lil' Haunt
     { orb = enums.Orbs.UNDEAD,   type = 816, variant = 0 },               --Polty
@@ -275,6 +282,7 @@ local OrbsPerEnemy = {
     { orb = enums.Orbs.WATER,    type = 244, variant = 1 },               --Tube Worm
     { orb = enums.Orbs.WATER,    type = 244, variant = 3 },               --Tainted Tube Worm
     { orb = enums.Orbs.WATER,    type = 815, variant = 0 },               --Fissure
+    { orb = enums.Orbs.ROCK,     type = 820, variant = 0 },               --Danny
     { orb = enums.Orbs.ROCK,     type = 821, variant = 0 },               --Blaster
     { orb = enums.Orbs.ROCK,     type = 27,  variant = 3 },               --Hard Host
     { orb = enums.Orbs.ROCK,     type = 41,  variant = 0 },               --Knight
