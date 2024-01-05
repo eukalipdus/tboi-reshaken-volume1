@@ -16,4 +16,13 @@ function isaacClicker:PostPlayerInit(player)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, isaacClicker.PostPlayerInit)
+
+function isaacClicker:PreGetCollectible(poolType)
+    if Game().Challenge ~= enums.Challenges.ISAAC_CLICKER then return end
+    if poolType == ItemPoolType.POOL_GREED_TREASURE
+    or poolType == ItemPoolType.POOL_TREASURE then
+        return enums.Collectibles.SHARP_CURSOR
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, isaacClicker.PreGetCollectible)
 return isaacClicker
