@@ -9,8 +9,12 @@ local NON_P1_SCALE = Vector(0.5, 0.5)
 local SPAWN_DISTANCE = 40
 
 local movePillHudPerPlayer = {
-    Vector(-12, -12),
-    Vector(394, 147),
+    --Vector(394, 147),
+    Vector(-12, -12), --player 1 bottom right
+    Vector(-153, -270), --player 2 top right
+    Vector(-420, -12), --player 3 bottom left
+    Vector(-100, -12), --player 4 bottom right but slightly less
+
 }
 
 local function CreatePillOverlay()
@@ -44,6 +48,9 @@ local ffOrbPillHuds = {
 }
 
 local playerAnchor = {
+    "bottomright",
+    "bottomright",
+    "bottomright",
     "bottomright",
 }
 
@@ -115,25 +122,46 @@ local ffPillAnimFrames = {
     102,
     103,
     104,
-    109,
-    111,
-    113,
-    0,
-    115,
-    117,
-    0,
     105,
     106,
     107,
-    115,
+    108,
+    109,
     110,
+    111,
     112,
+    113,
     114,
-    0,
+    115,
     116,
+    117,
     118,
-    120,
     119,
+    120,
+    99, -- PLACEHOLDER
+    999, -- PLACEHOLDER
+    101 | PillColor.PILL_GIANT_FLAG,
+    102 | PillColor.PILL_GIANT_FLAG,
+    103 | PillColor.PILL_GIANT_FLAG,
+    104 | PillColor.PILL_GIANT_FLAG,
+    105 | PillColor.PILL_GIANT_FLAG,
+    106 | PillColor.PILL_GIANT_FLAG,
+    107 | PillColor.PILL_GIANT_FLAG,
+    108 | PillColor.PILL_GIANT_FLAG,
+    109 | PillColor.PILL_GIANT_FLAG,
+    110 | PillColor.PILL_GIANT_FLAG,
+    111 | PillColor.PILL_GIANT_FLAG,
+    112 | PillColor.PILL_GIANT_FLAG,
+    113 | PillColor.PILL_GIANT_FLAG,
+    114 | PillColor.PILL_GIANT_FLAG,
+    115 | PillColor.PILL_GIANT_FLAG,
+    116 | PillColor.PILL_GIANT_FLAG,
+    117 | PillColor.PILL_GIANT_FLAG,
+    118 | PillColor.PILL_GIANT_FLAG,
+    119 | PillColor.PILL_GIANT_FLAG,
+    120 | PillColor.PILL_GIANT_FLAG,
+    9999, -- PLACEHOLDER
+    99999, -- PLACEHOLDER
 }
 
 local function IsFiendFolioPill(id)
@@ -221,14 +249,12 @@ function witchDoctorMask:GetShaderParams()
                     local x, y = utility:HUDOffset(position.X, position.Y, playerAnchor[i])
                     position = Vector(x,y)
                     if isFiendFolio then
-                        print(heldPill)
-                        print(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
                         ffOrbPillHuds[i]:Render(position)
                         ffOrbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
                         ffOrbPillHuds[i]:Play("HUD")
                     else
-                        print("vanilla")
                         orbPillHuds[i]:Render(position)
+                        print(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:Play("HUD")
                     end

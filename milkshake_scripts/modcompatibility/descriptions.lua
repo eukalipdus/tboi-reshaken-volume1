@@ -836,7 +836,7 @@ descriptions.Trinkets = {
             name = "Amber Shard",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Terrastrium when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Terrastrium when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Terrastrium when destroyed",S
+            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Terrastrium when destroyed",
         },
         spa = {
             name = "Fragmento de Ámbar",
@@ -1070,10 +1070,10 @@ descriptions.Entities = {
     [BRENDA] = {
         en_us = {
             name = "Spirit Klin",
-            description = "{{HalfSoulHeart}} Takes half a soul heart in exchange for various rewards:" ..
+            description = "{{HalfSoulHeart}}Takes half a soul heart in exchange for various rewards:" ..
             "#{{SpiritOrb}} A random Spirit Orb" ..
             "#{{Burning}} A random elemental wisp" ..
-            "#A random glass or gem trinket" ..
+            "#{{Trinket}} A random glass or gem trinket" ..
             "#{{Rune}} A random soul stone"
         },
         spa = {
