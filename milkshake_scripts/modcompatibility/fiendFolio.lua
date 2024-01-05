@@ -142,6 +142,16 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 114, variant = 8,    subtype = 1, },   --Crucible (ignited)
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 170, variant = 110, },                 --Blastcore
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 450, variant = 40, },                  --Rufus
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 29,  variant = 1,    subtype = 5 },    --Bombmuncher
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 151, variant = 10 },                   --Flinty
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 227, variant = 961,},                  --Powderkeg
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 160, variant = 550,},                  --Mullikaboom
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 819, variant = 450,},                  --Golden Fly Bomb
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 819, variant = 450,  subtype = 1},     --Rose Golden Fly Bomb
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 25,  variant = 961,},                  --Golden Boom Fly
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 829, variant = 450,},                  --Blasted
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 23,  variant = 961,},                  --Splodum
+        { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 214, variant = 715, },                 --Ticking Fly
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 160, variant = 640, },                 --Zapbladder
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 160, variant = 641, },                 --Wire
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 170, variant = 30, },                  --Lightning Fly
@@ -320,6 +330,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.POISON,   type = 160, variant = 505 },                  --Really Tall Boi
         { orb = MilkshakeVol1.enums.Orbs.POISON,   type = 160, variant = 33 },                   --Haunch
         { orb = MilkshakeVol1.enums.Orbs.POISON,   type = 160, variant = 162 },                  --Mold
+        { orb = MilkshakeVol1.enums.Orbs.POISON,   type = 160, variant = 1717 },                 --Crudemate
         { orb = MilkshakeVol1.enums.Orbs.UNDEAD,   type = 160, variant = 231 },                  --Yawner
         { orb = MilkshakeVol1.enums.Orbs.UNDEAD,   type = 750, variant = 210 },                  --Spoop
         { orb = MilkshakeVol1.enums.Orbs.UNDEAD,   type = 450, variant = 13 },                   --Shirk
@@ -559,8 +570,6 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 151, variant = 10 },                   --Flinty
         { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 451, variant = 240 },                  --Pillar John
         { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 1200 },                 --Super Grimace
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 29,  variant = 1,    subtype = 5 },    --Bombmuncher
-        { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 151, variant = 10 },                   --Flinty
         { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 160, variant = 680 },                  --Fossilized Boom Fly
         { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 6 },                    --Frowny
         { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 114, variant = 31 },                   --Quaker
@@ -583,7 +592,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         [107] = MilkshakeVol1.enums.Orbs.NATURE,
         [108] = MilkshakeVol1.enums.Orbs.ELECTRIC,
         [109] = MilkshakeVol1.enums.Orbs.UNDEAD,
-        [110] = MilkshakeVol1.enums.Orbs.ROCK, --ROCK
+        [110] = MilkshakeVol1.enums.Orbs.ROCK,
         [111] = MilkshakeVol1.enums.Orbs.WATER,
         [112] = MilkshakeVol1.enums.Orbs.UNHOLY,
         [113] = MilkshakeVol1.enums.Orbs.PSYCHIC,
@@ -592,7 +601,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         [116] = MilkshakeVol1.enums.Orbs.HOLY,
         [117] = MilkshakeVol1.enums.Orbs.ELECTRIC,
         [118] = MilkshakeVol1.enums.Orbs.POISON,
-        [119] = MilkshakeVol1.enums.Orbs.ROCK, --ROCK
+        [119] = MilkshakeVol1.enums.Orbs.ROCK,
         [120] = MilkshakeVol1.enums.Orbs.NATURE,
     }
     for i, value in pairs(ffPills) do
