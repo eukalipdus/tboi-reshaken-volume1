@@ -25,12 +25,7 @@ TSIL.SaveManager.AddPersistentVariable(
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
-TSIL.SaveManager.AddPersistentVariable(
-    MilkshakeVol1,
-    "SharpCursorFollowMouse",
-    false,
-    TSIL.Enums.VariablePersistenceMode.NONE
-)
+
 
 ---@class SharpCursorText
 ---@field text string
@@ -182,6 +177,10 @@ MilkshakeVol1:AddCallback(
 ---@param player EntityPlayer
 local function ClickDamageEnemies(familiar, player)
     local damage = player.Damage * 0.1
+
+    if Game().Challenge == enums.Challenges.ISAAC_CLICKER then
+        damage = damage * 2.857
+    end
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
         damage = damage * 2
