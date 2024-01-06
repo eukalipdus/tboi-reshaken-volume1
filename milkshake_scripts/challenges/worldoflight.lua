@@ -6,8 +6,6 @@ local ONE_SECOND = 30
 
 local RENDER_X = 25
 local RENDER_Y = 230
-local SCALE_X = 1.3
-local SCALE_Y = 1.3
 local TIMES_CAN_FAIL = 100
 local PUSH_ABOVE_ISAAC = Vector(0, -25)
 
