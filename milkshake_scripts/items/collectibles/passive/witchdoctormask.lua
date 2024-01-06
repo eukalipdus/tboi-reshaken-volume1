@@ -219,14 +219,16 @@ function witchDoctorMask:PostPickupUpdate(pickup)
         if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
         and pickup.Variant == PickupVariant.PICKUP_PILL then
             if not utility:GetData(pickup, "SpiritPillSprite") then
+                local sprite = pickup:GetSprite()
                 if pickup.SubType < FF_PILL_BEGIN
                 or pickup.SubType > PillColor.PILL_GIANT_FLAG then
-                    pickup:GetSprite():ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pills ground.png")
+                    sprite:ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pills ground.png")
 
-                elseif pickup.SubType >= FF_PILL_BEGIN and pickup.SubType <= FF_PILL_END then
-                    pickup:GetSprite():ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pillsFF.png")
+                elseif (pickup.SubType >= FF_PILL_BEGIN and pickup.SubType <= FF_PILL_END)
+                or (pickup.SubType >= (FF_PILL_BEGIN | PillColor.PILL_GIANT_FLAG) and pickup.SubType <= (FF_PILL_END | PillColor.PILL_GIANT_FLAG)) then
+                    sprite:ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pillsFF.png")
                 end
-                pickup:GetSprite():LoadGraphics()
+                sprite:LoadGraphics()
                 utility:SetData(pickup, "SpiritPillSprite", true)
             end
         end
@@ -236,8 +238,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, witchDoctorMask.Po
 
 function witchDoctorMask:GetShaderParams()
     if Game():GetHUD():IsVisible() then
-        for i = 1, Game():GetNumPlayers() do
-            local player = Isaac.GetPlayer(i)
+        local players = TSIL.Players.GetPlayers()
+        for i, player in ipairs(players) do
             local heldPill = player:GetPill(0)
             if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
             and heldPill ~= 0 then
@@ -254,7 +256,6 @@ function witchDoctorMask:GetShaderParams()
                         ffOrbPillHuds[i]:Play("HUD")
                     else
                         orbPillHuds[i]:Render(position)
-                        print(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:Play("HUD")
                     end
