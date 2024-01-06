@@ -106,7 +106,8 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, worldOfLight.PostPEffectUpdate)
 
 function worldOfLight:PostRender()
-    if Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT then return end
+    if Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT
+    or not Game():GetHUD():IsVisible() then return end
     local timer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer")
     --Isaac.RenderScaledText(timer, RENDER_X, RENDER_Y, SCALE_X, SCALE_Y, 1, 0, 0 , 1)
     if Game():GetHUD():IsVisible() then
