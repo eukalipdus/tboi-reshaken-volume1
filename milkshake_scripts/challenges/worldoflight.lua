@@ -85,7 +85,7 @@ function worldOfLight:PostNewRoom()
         local newCollectibleID
         TSIL.Utils.Functions.RunInFrames(function ()
             currentCollectible:Remove()
-            MilkshakeVol1.API.SplitCollectible(Isaac.GetPlayer(), currentCollectible:ToPickup(), quality-1, newCollectibleID, quality)
+            MilkshakeVol1.API.SplitCollectible(Isaac.GetPlayer(), currentCollectible:ToPickup(), quality, newCollectibleID, quality)
             SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
         end, 1, {})
     end
