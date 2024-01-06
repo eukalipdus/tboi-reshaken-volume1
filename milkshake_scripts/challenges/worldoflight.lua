@@ -15,6 +15,7 @@ local itemBlacklist = {
     CollectibleType.COLLECTIBLE_KEY_PIECE_2,
     CollectibleType.COLLECTIBLE_POLAROID,
     CollectibleType.COLLECTIBLE_NEGATIVE,
+    enums.Collectibles.PRISMATIC_DICE,
 }
 
 local renderItems = {}
