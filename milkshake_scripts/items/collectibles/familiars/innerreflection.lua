@@ -66,7 +66,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, innerreflection.Evalua
 ---@param player EntityPlayer
 function innerreflection:EvaluateCacheDamage(player)
 	if HasFamiliar(player) then
-		if isMirrorDimension then
+		if isMirrorDimension or MilkshakeVol1.API:IsInMirrorRoom() then
 			--Capping max damage increase in percent to prevent it getting too stupid with Soy Milk and such.
 			local damageBonus = math.min(MIRROR_WORLD_DAMAGE_BONUS, player.Damage*MAX_DAMAGE_MULTIPLIER_INCREASE)
 			player.Damage = player.Damage + damageBonus

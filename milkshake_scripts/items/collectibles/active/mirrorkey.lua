@@ -96,6 +96,16 @@ TSIL.SaveManager.AddPersistentVariable(
 )
 
 
+---Helper function to check if the players are currently in the mirror key room.
+---@return boolean
+function MilkshakeVol1.API:IsInMirrorRoom()
+    return TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "IsInMirrorRoom"
+    )
+end
+
+
 ---@return integer
 local function GetCurrentRoomIndex()
     local level = Game():GetLevel()
