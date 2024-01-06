@@ -4,9 +4,11 @@ local enums = MilkshakeVol1.enums
 local INTERVAL_SECONDS = 60
 local ONE_SECOND = 30
 
-local RENDER_X = 25
-local RENDER_Y = 230
 local MIN_ITEMS = 3
+local ICON_RENDER_X = 54
+local ICON_RENDER_Y = 47
+local TEXT_RENDER_X = 73
+local TEXT_RENDER_Y = 49
 local TIMES_CAN_FAIL = 100
 local PUSH_ABOVE_ISAAC = Vector(0, -25)
 
@@ -19,6 +21,10 @@ local itemBlacklist = {
 }
 
 local renderItems = {}
+
+local timerSprite = Sprite()
+timerSprite:Load("gfx/ui/ui_woltimer.anm2", true)
+timerSprite:Play("Idle")
 
 --- If there is an item, such as a story one that SHOULD NOT be removed during this challenge
 ---@param collectibleId integer
@@ -111,18 +117,17 @@ function worldOfLight:PostRender()
     or not Game():GetHUD():IsVisible() then return end
     local timer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer")
     --Isaac.RenderScaledText(timer, RENDER_X, RENDER_Y, SCALE_X, SCALE_Y, 1, 0, 0 , 1)
-    if Game():GetHUD():IsVisible() then
-        local font = Font()
-        font:Load("font/pftempestasevencondensed.fnt")
-        font:DrawString(timer, RENDER_X, RENDER_Y, KColor(1,0,0,1), 0, true)
-    end
+    local font = Font()
+    font:Load("font/pftempestasevencondensed.fnt")
+    font:DrawString(timer, TEXT_RENDER_X, TEXT_RENDER_Y, KColor(1,0,0,1), 0, true)
     for idx, collectibleSprite in ipairs(renderItems) do
         if collectibleSprite.Sprite:IsFinished("Fade") then
             table.remove(renderItems, idx)
         end
-        collectibleSprite.Sprite:Render(Isaac.WorldToScreen((collectibleSprite.Player).Position) + PUSH_ABOVE_ISAAC)
+        collectibleSprite.Sprite:Render(Isaac.WorldToScreen((collectibleSprite.Player).Position + PUSH_ABOVE_ISAAC))
         collectibleSprite.Sprite:Update()
     end
+    timerSprite:Render(Vector(ICON_RENDER_X, ICON_RENDER_Y))
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, worldOfLight.PostRender)
 
