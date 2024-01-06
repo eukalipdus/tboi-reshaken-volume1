@@ -6,6 +6,7 @@ local ONE_SECOND = 30
 
 local RENDER_X = 25
 local RENDER_Y = 230
+local MIN_ITEMS = 3
 local TIMES_CAN_FAIL = 100
 local PUSH_ABOVE_ISAAC = Vector(0, -25)
 
@@ -43,7 +44,7 @@ end
 ---@return boolean - true if removed, false otherwise
 local function RemoveRandomCollectible(player)
     local inventory = TSIL.Players.GetPlayerInventory(player, TSIL.Enums.InventoryType.COLLECTIBLE)
-    if #inventory == 0 then return end
+    if #inventory == MIN_ITEMS then return false end
     local rng = player:GetDropRNG()
     local roll
     local itr = 0
@@ -84,9 +85,10 @@ function worldOfLight:PostNewRoom()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, worldOfLight.PostNewRoom)
 
-function worldOfLight:PostPEffectUpdate()
+function worldOfLight:PostPEffectUpdate(player)
     if Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT then return end
-    if Game():GetFrameCount() % ONE_SECOND == 0 and Game():GetFrameCount() > ONE_SECOND then
+    if Game():GetFrameCount() % ONE_SECOND == 0 and Game():GetFrameCount() > ONE_SECOND
+    and player:GetCollectibleCount() > MIN_ITEMS then
         local timer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer")
         if not timer then return end
 
