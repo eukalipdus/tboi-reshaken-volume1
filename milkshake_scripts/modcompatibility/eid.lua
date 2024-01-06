@@ -39,14 +39,23 @@ MilkshakeVol1:AddModCompatibility("EID", function()
             EID:addCollectible(collectible, description.description, description.name, language)
 
             if description.abyss then
+                if not EID.descriptions[language].abyssSynergies then
+                    EID.descriptions[language].abyssSynergies = {}
+                end
                 EID.descriptions[language].abyssSynergies[collectible] = description.abyss
             end
 
             if description.book_of_virtues then
+                if not EID.descriptions[language].bookOfVirtuesWisps then
+                    EID.descriptions[language].bookOfVirtuesWisps = {}
+                end
                 EID.descriptions[language].bookOfVirtuesWisps[collectible] = description.book_of_virtues
             end
 
             if description.book_of_belial then
+                if not EID.descriptions[language].bookOfBelialBuffs then
+                    EID.descriptions[language].bookOfBelialBuffs = {}
+                end
                 EID.descriptions[language].bookOfBelialBuffs[collectible] = description.book_of_belial
             end
         end
