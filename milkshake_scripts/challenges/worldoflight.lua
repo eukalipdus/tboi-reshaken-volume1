@@ -82,10 +82,9 @@ function worldOfLight:PostNewRoom()
     local collectibles = TSIL.PickupSpecific.GetCollectibles()
     for _, currentCollectible in ipairs(collectibles) do
         local quality = Isaac.GetItemConfig():GetCollectible(currentCollectible.SubType).Quality
-        local newCollectibleID
         TSIL.Utils.Functions.RunInFrames(function ()
             currentCollectible:Remove()
-            MilkshakeVol1.API.SplitCollectible(Isaac.GetPlayer(), currentCollectible:ToPickup(), quality, newCollectibleID, quality)
+            MilkshakeVol1.API:SplitCollectible(Isaac.GetPlayer(), currentCollectible:ToPickup(), quality, quality)
             SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
         end, 1, {})
     end
