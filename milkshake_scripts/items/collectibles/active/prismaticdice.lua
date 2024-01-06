@@ -48,7 +48,7 @@ local function PlaySplitAnimation(index, currentCollecible)
         currentCollecible:SetColor(SOLID_CYAN, SHATTERED_SOLID_FRAMES, 2, false, false)
         local lastCollectible = currentCollecible
 
-        TSIL.Utils.Functions.RunInFrames(function ()
+        TSIL.Utils.Functions.RunInFramesTemporary(function ()
         --CYAN:SetColorize(0, 2, 2, 3)
         lastCollectible:SetColor(CYAN, SHATTERED_COLOR_FRAMES, 2, true, false)
         end, SHATTERED_SOLID_FRAMES)
@@ -57,7 +57,7 @@ local function PlaySplitAnimation(index, currentCollecible)
         --SOLID_PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
         currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
 
-        TSIL.Utils.Functions.RunInFrames(function ()
+        TSIL.Utils.Functions.RunInFramesTemporary(function ()
         --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
         currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
         end, SHATTERED_SOLID_FRAMES)
@@ -65,7 +65,7 @@ local function PlaySplitAnimation(index, currentCollecible)
     elseif index == 2 then
         currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
 
-        TSIL.Utils.Functions.RunInFrames(function ()
+        TSIL.Utils.Functions.RunInFramesTemporary(function ()
         --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
         currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
         end, SHATTERED_SOLID_FRAMES)
@@ -78,7 +78,7 @@ end
 ---@param colorTwo Color
 local function SplitAnimationSingle(collectible, colorOne, colorTwo)
     collectible:SetColor(colorOne, SHATTERED_SOLID_FRAMES, 2, false, false)
-    TSIL.Utils.Functions.RunInFrames(function ()
+    TSIL.Utils.Functions.RunInFramesTemporary(function ()
     collectible:SetColor(colorTwo, SHATTERED_COLOR_FRAMES, 2, true, false)
     end, SHATTERED_SOLID_FRAMES)
 end
@@ -241,7 +241,7 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
             local posRight = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
 
 
-            TSIL.Utils.Functions.RunInFrames(function ()
+            TSIL.Utils.Functions.RunInFramesTemporary(function ()
                 
                 if collectible.SubType == CollectibleType.COLLECTIBLE_DADS_NOTE then
                     return
