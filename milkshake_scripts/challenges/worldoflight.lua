@@ -4,10 +4,11 @@ local enums = MilkshakeVol1.enums
 local INTERVAL_SECONDS = 60
 local ONE_SECOND = 30
 
-local RENDER_X = 25
-local RENDER_Y = 230
-local SCALE_X = 1.3
-local SCALE_Y = 1.3
+local MIN_ITEMS = 3
+local ICON_RENDER_X = 54
+local ICON_RENDER_Y = 47
+local TEXT_RENDER_X = 73
+local TEXT_RENDER_Y = 49
 local TIMES_CAN_FAIL = 100
 local PUSH_ABOVE_ISAAC = Vector(0, -25)
 
@@ -16,9 +17,14 @@ local itemBlacklist = {
     CollectibleType.COLLECTIBLE_KEY_PIECE_2,
     CollectibleType.COLLECTIBLE_POLAROID,
     CollectibleType.COLLECTIBLE_NEGATIVE,
+    enums.Collectibles.PRISMATIC_DICE,
 }
 
 local renderItems = {}
+
+local timerSprite = Sprite()
+timerSprite:Load("gfx/ui/ui_woltimer.anm2", true)
+timerSprite:Play("Idle")
 
 --- If there is an item, such as a story one that SHOULD NOT be removed during this challenge
 ---@param collectibleId integer
@@ -45,7 +51,7 @@ end
 ---@return boolean - true if removed, false otherwise
 local function RemoveRandomCollectible(player)
     local inventory = TSIL.Players.GetPlayerInventory(player, TSIL.Enums.InventoryType.COLLECTIBLE)
-    if #inventory == 0 then return end
+    if #inventory == MIN_ITEMS then return false end
     local rng = player:GetDropRNG()
     local roll
     local itr = 0
@@ -86,9 +92,10 @@ function worldOfLight:PostNewRoom()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, worldOfLight.PostNewRoom)
 
-function worldOfLight:PostPEffectUpdate()
+function worldOfLight:PostPEffectUpdate(player)
     if Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT then return end
-    if Game():GetFrameCount() % ONE_SECOND == 0 and Game():GetFrameCount() > ONE_SECOND then
+    if Game():GetFrameCount() % ONE_SECOND == 0 and Game():GetFrameCount() > ONE_SECOND
+    and player:GetCollectibleCount() > MIN_ITEMS then
         local timer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer")
         if not timer then return end
 
@@ -106,17 +113,21 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, worldOfLight.PostPEffectUpdate)
 
 function worldOfLight:PostRender()
-    if Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT then return end
+    if Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT
+    or not Game():GetHUD():IsVisible() then return end
     local timer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer")
-    Isaac.RenderScaledText(timer, RENDER_X, RENDER_Y, SCALE_X, SCALE_Y, 1, 0, 0 , 1)
-
+    --Isaac.RenderScaledText(timer, RENDER_X, RENDER_Y, SCALE_X, SCALE_Y, 1, 0, 0 , 1)
+    local font = Font()
+    font:Load("font/pftempestasevencondensed.fnt")
+    font:DrawString(timer, TEXT_RENDER_X, TEXT_RENDER_Y, KColor(1,0,0,1), 0, true)
     for idx, collectibleSprite in ipairs(renderItems) do
         if collectibleSprite.Sprite:IsFinished("Fade") then
             table.remove(renderItems, idx)
         end
-        collectibleSprite.Sprite:Render(Isaac.WorldToRenderPosition((collectibleSprite.Player).Position) + PUSH_ABOVE_ISAAC)
+        collectibleSprite.Sprite:Render(Isaac.WorldToScreen((collectibleSprite.Player).Position + PUSH_ABOVE_ISAAC))
         collectibleSprite.Sprite:Update()
     end
+    timerSprite:Render(Vector(ICON_RENDER_X, ICON_RENDER_Y))
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, worldOfLight.PostRender)
 
