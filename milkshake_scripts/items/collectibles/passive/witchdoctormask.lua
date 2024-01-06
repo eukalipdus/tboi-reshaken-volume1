@@ -221,7 +221,7 @@ function witchDoctorMask:PostPickupUpdate(pickup)
             if not utility:GetData(pickup, "SpiritPillSprite") then
                 local sprite = pickup:GetSprite()
                 if pickup.SubType < FF_PILL_BEGIN
-                or pickup.SubType > PillColor.PILL_GIANT_FLAG then
+                or (pickup.SubType > PillColor.PILL_GIANT_FLAG and not (pickup.SubType > (FF_PILL_BEGIN | PillColor.PILL_GIANT_FLAG))) then
                     sprite:ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pills ground.png")
 
                 elseif (pickup.SubType >= FF_PILL_BEGIN and pickup.SubType <= FF_PILL_END)
