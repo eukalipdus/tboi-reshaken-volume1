@@ -118,7 +118,7 @@ function worldOfLight:PostRender()
         if collectibleSprite.Sprite:IsFinished("Fade") then
             table.remove(renderItems, idx)
         end
-        collectibleSprite.Sprite:Render(Isaac.WorldToRenderPosition((collectibleSprite.Player).Position) + PUSH_ABOVE_ISAAC)
+        collectibleSprite.Sprite:Render(Isaac.WorldToScreen((collectibleSprite.Player).Position) + PUSH_ABOVE_ISAAC)
         collectibleSprite.Sprite:Update()
     end
 end
