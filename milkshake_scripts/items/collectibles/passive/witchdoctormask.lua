@@ -199,7 +199,7 @@ function witchDoctorMask:UsePill(_, player)
             spiritOrb = enums.Orbs.RANDOM
         end
         local flags = enums.UseOrbFlags.NO_SOUND
-        if TSIL.Pills.IsHorsePill(pillColor) then
+        if pillColor > PillColor.PILL_GIANT_FLAG then
             flags = flags | enums.UseOrbFlags.DOUBLE_POWER
         end
         MilkshakeVol1:UseSpiritOrb(spiritOrb, player, flags)
@@ -257,7 +257,6 @@ function witchDoctorMask:GetShaderParams()
                     else
                         orbPillHuds[i]:Render(position)
                         orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
-                        print(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:Play("HUD")
                     end
                 end
