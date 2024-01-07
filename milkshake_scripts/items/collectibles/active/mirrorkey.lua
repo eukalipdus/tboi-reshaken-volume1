@@ -110,7 +110,7 @@ end
 local function GetCurrentRoomIndex()
     local level = Game():GetLevel()
     local roomDesc = level:GetCurrentRoomDesc()
-    return roomDesc.ListIndex
+    return roomDesc.GridIndex
 end
 
 
@@ -119,6 +119,12 @@ local function CanUseMirrorKey()
     local roomIndex = level:GetCurrentRoomIndex()
     --If we use goto in a grid room, we'll end up in an infinite loop.
     if roomIndex < 0 then
+        return false
+    end
+
+    --Can only use on main dimension and mirror world
+    local room = Game():GetRoom()
+    if not TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.MAIN) and not room:IsMirrorWorld() then
         return false
     end
 
