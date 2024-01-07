@@ -28,6 +28,12 @@ local VECTOR_PER_SHOOT_ACTION = {
 	[ButtonAction.ACTION_SHOOTRIGHT] = Vector(1, 0),
 	[ButtonAction.ACTION_SHOOTUP] = Vector(0, -1)
 }
+local VECTOR_PER_SHOOT_ACTION_MIRRORED = {
+	[ButtonAction.ACTION_SHOOTDOWN] = Vector(0, 1),
+	[ButtonAction.ACTION_SHOOTLEFT] = Vector(1, 0),
+	[ButtonAction.ACTION_SHOOTRIGHT] = Vector(-1, 0),
+	[ButtonAction.ACTION_SHOOTUP] = Vector(0, -1)
+}
 
 ---@class RubyOrbInhalingInfo
 ---@field frame integer
@@ -211,11 +217,14 @@ function CheckInhaling(player)
 	local shootActions = TSIL.Input.GetShootActions()
 	for _, shootAction in ipairs(shootActions) do
 		local shootValue = Input.GetActionValue(shootAction, player.ControllerIndex)
-		aimDir = aimDir + VECTOR_PER_SHOOT_ACTION[shootAction] * shootValue
+		if Game():GetRoom():IsMirrorWorld() or MilkshakeVol1.API:IsInMirrorRoom() then
+			aimDir = aimDir + VECTOR_PER_SHOOT_ACTION_MIRRORED[shootAction] * shootValue
+		else
+			aimDir = aimDir + VECTOR_PER_SHOOT_ACTION[shootAction] * shootValue
+		end
 	end
 
 	local angle = aimDir:GetAngleDegrees()
-	local LastAngle = aimDir:GetAngleDegrees()
 
 	local data = player:GetData()
 	if not data.FireOrbLastDir then data.FireOrbLastDir = 90 end
@@ -350,6 +359,7 @@ local function OnPlayerRender(player)
 	local renderPos = Isaac.WorldToScreen(player.Position)
 
 	local newRotation = inhalingInfo.currentDirection - 90
+	ARROW_SPRITE.FlipX = Game():GetRoom():IsMirrorWorld()
 	ARROW_SPRITE.Rotation = LerpAngle(ARROW_SPRITE.Rotation, newRotation, 0.35)
 	ARROW_SPRITE:Render(renderPos)
 end
