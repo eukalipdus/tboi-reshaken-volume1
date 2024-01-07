@@ -125,7 +125,7 @@
             id="961" reroll="false"
             collisionMass="200" collisionRadius="12" friction="1" name="Terra Stalagmite"
             numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="1" shutdoors="false">
-            <gibs amount="4" blood="0" bone="1" eye="0" gut="0" large="0" />
+            <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
     </entity>
 	
     <entity anm2path="monster_glass_head.anm2" baseHP="20" boss="0" champion="0" collisionDamage="1"
