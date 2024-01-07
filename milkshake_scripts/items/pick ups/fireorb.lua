@@ -341,9 +341,10 @@ MilkshakeVol1:AddCallback(
 local function ShortAngleDis(from, to)
 	local maxAngle = 360
 	local disAngle = (to - from) % maxAngle
-	
+
 	return ((2 * disAngle) % maxAngle) - disAngle
 end
+
 
 -- Lerps the angle and returns the result
 local function LerpAngle(from, to, fraction)
@@ -373,6 +374,30 @@ end
 MilkshakeVol1:AddCallback(
 	ModCallbacks.MC_POST_RENDER,
 	RubyOrb.OnRender
+)
+
+
+---@param tear EntityTear
+function RubyOrb:OnTearUpdate(tear)
+	local isRubyOrbProjectile = TSIL.Entities.GetEntityData(
+		MilkshakeVol1,
+		tear,
+		"IsRubyOrbFireProjectile"
+	)
+	if not isRubyOrbProjectile then return end
+
+	local shopKeepers = Isaac.FindByType(EntityType.ENTITY_SHOPKEEPER)
+	local radius = tear.Size + 20
+	for _, shopKeeper in ipairs(shopKeepers) do
+		if shopKeeper.Position:DistanceSquared(tear.Position) < radius^2 then
+			shopKeeper:Kill()
+		end
+	end
+end
+MilkshakeVol1:AddCallback(
+	ModCallbacks.MC_POST_TEAR_UPDATE,
+	RubyOrb.OnTearUpdate,
+	TearVariant.FIRE
 )
 
 
