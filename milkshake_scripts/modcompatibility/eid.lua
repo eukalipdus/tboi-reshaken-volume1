@@ -65,6 +65,20 @@ MilkshakeVol1:AddModCompatibility("EID", function()
     for trinket, translations in pairs(descriptions.Trinkets) do
         for language, description in pairs(translations) do
             EID:addTrinket(trinket, description.description, description.name, language)
+
+            if description.double then
+                EID:addGoldenTrinketTable(trinket, {fullReplace = true})
+
+                if not EID.descriptions[language].goldenTrinketEffects then
+                    EID.descriptions[language].goldenTrinketEffects = {}
+                end
+
+                EID.descriptions[language].goldenTrinketEffects[trinket] = {
+                    description.description,
+                    description.double,
+                    description.triple or description.double
+                }
+            end
         end
     end
 
