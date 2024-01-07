@@ -43,6 +43,9 @@ enums.Collectibles = {
     SPECIAL_BRENDA_POISON_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM POISON WISP"),
     SPECIAL_BRENDA_HOLY_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM HOLY WISP"),
     SPECIAL_BRENDA_TERRA_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM TERRA WISP"),
+
+    LEVITICUS_ALADAR = Isaac.GetItemIdByName("Leviticus  "),
+    LEVITICUS_FANCY = Isaac.GetItemIdByName("Leviticus ")
 }
 
 enums.Trinkets = {

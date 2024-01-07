@@ -54,6 +54,9 @@
     <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
 
+    <active id="23" name="Leviticus " description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0"/>
+    <active id="23" name="Leviticus  " description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0"/>
+
     <!-- unused -->
     <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true"/> 
     <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true"/>

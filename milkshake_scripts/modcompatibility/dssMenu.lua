@@ -294,8 +294,8 @@ local exampledirectory = {
 
             { str = "", nosel = true },
 
-            -- ENEMY SETTINGS DEST
-            { str = 'enemy settings',    dest = 'enemy_settings' },
+            -- -- ENEMY SETTINGS DEST
+            -- { str = 'enemy settings',    dest = 'enemy_settings' },
 
             -- SPECIAL SETTINGS DEST
             { str = 'extra settings',    dest = 'special_settings' },
