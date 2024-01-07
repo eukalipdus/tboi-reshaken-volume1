@@ -110,7 +110,6 @@ function worldOfLight:PostRender()
     if Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT
     or not Game():GetHUD():IsVisible() then return end
     local timer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer")
-    --Isaac.RenderScaledText(timer, RENDER_X, RENDER_Y, SCALE_X, SCALE_Y, 1, 0, 0 , 1)
     local font = Font()
     font:Load("font/pftempestasevencondensed.fnt")
     font:DrawString(timer, TEXT_RENDER_X, TEXT_RENDER_Y, KColor(1,0,0,1), 0, true)
