@@ -807,6 +807,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Cubo De Tungsteno",
             description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            double = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño #{{ColorGold}}Hace el doble de daño",
+            triple = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño #{{ColorGold}}Hace el triple de daño",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -881,6 +883,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Amatista",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Premonición",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Premonición",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Premonición",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -903,6 +907,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Rubí",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Infernal",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus Infernales",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus Infernales",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -925,6 +931,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Turmalina",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Conductividad",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Conductividad",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Conductividad",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -947,6 +955,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Esmeralda",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Druídico",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus Druídicos",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus Druídicos",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -969,6 +979,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Peridoto",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Virulencia",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Virulencia",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Virulencia",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -991,6 +1003,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Granate",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Sacrilegio",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Sacrilegio",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Sacrilegio",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -1013,6 +1027,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Ónix",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Renacido",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus del Renacido",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus del Renacido",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -1035,6 +1051,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Diamante",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Salvación",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Salvación",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Salvación",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -1057,6 +1075,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Zafiro",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Diluvio",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus del Diluvio",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus del Diluvio",
         },
         ru = {
             name = "Cubo De Tungsteno",
@@ -1079,6 +1099,8 @@ descriptions.Trinkets = {
         spa = {
             name = "Fragmento de Ámbar",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Terrastrium",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Terrastrium",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Terrastrium",
         },
         ru = {
             name = "Cubo De Tungsteno",
