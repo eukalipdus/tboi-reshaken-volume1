@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="trtv" CreatedOn="26/12/2023 10:00:09" Version="12" Fps="45"/>
+	<Info CreatedBy="trtv" CreatedOn="07/01/2024 10:04:20" Version="14" Fps="45"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="door_mirror_challenge.png" Id="0"/>
@@ -13,7 +13,9 @@
 			<Layer Name="Flame" Id="5" SpritesheetId="0"/>
 		</Layers>
 		<Nulls/>
-		<Events/>
+		<Events>
+			<Event Name="Sound" Id="0"/>
+		</Events>
 	</Content>
 	<Animations DefaultAnimation="Opened">
 		<Animation Name="Opened" FrameNum="16" Loop="true">
@@ -101,7 +103,9 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="0" AtFrame="10"/>
+			</Triggers>
 		</Animation>
 		<Animation Name="Close" FrameNum="1" Loop="false">
 			<RootAnimation>

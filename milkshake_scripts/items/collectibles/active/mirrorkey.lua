@@ -110,7 +110,7 @@ end
 local function GetCurrentRoomIndex()
     local level = Game():GetLevel()
     local roomDesc = level:GetCurrentRoomDesc()
-    return roomDesc.ListIndex
+    return roomDesc.GridIndex
 end
 
 
@@ -119,6 +119,12 @@ local function CanUseMirrorKey()
     local roomIndex = level:GetCurrentRoomIndex()
     --If we use goto in a grid room, we'll end up in an infinite loop.
     if roomIndex < 0 then
+        return false
+    end
+
+    --Can only use on main dimension and mirror world
+    local room = Game():GetRoom()
+    if not TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.MAIN) and not room:IsMirrorWorld() then
         return false
     end
 
@@ -239,7 +245,12 @@ end
 ---@param doorSlot DoorSlot
 ---@param target integer
 ---@param targetDimension Dimension
-local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension)
+---@param canSpawnOtherDoor boolean?
+local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension, canSpawnOtherDoor)
+    if canSpawnOtherDoor == nil then
+        canSpawnOtherDoor = true
+    end
+
     local room = Game():GetRoom()
     local doorSlotPos = room:GetDoorSlotPosition(doorSlot)
 
@@ -272,6 +283,12 @@ local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension)
         fakeDoor,
         "MirrorDoorTargetDimension",
         targetDimension
+    )
+    TSIL.Entities.SetEntityData(
+        MilkshakeVol1,
+        fakeDoor,
+        "CanSpawnOtherDoor",
+        canSpawnOtherDoor
     )
 end
 
@@ -329,6 +346,8 @@ function MirrorKey:OnMirrorKeyUse(_, _, player)
 
     SpawnFakeMirrorDoor(closeDoorSlot, target, dimension)
     UpdateMirrorKeyChargeState()
+
+    SFXManager():Play(SoundEffect.SOUND_UNLOCK00)
 
     return {
         Discharge = true,
@@ -400,11 +419,11 @@ end
 
 
 local function AddLostCurse()
-    if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then return end
-
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         local effects = player:GetEffects()
-        effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
+        if not effects:HasNullEffect(NullItemID.ID_LOST_CURSE) then
+            effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
+        end
     end
 end
 
@@ -415,6 +434,15 @@ local function RemoveLostCurse()
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         local effects = player:GetEffects()
         effects:RemoveNullEffect(NullItemID.ID_LOST_CURSE)
+    end
+end
+
+
+local function UpdateInnerReflectionCache()
+    local players = TSIL.Players.GetPlayersByCollectible(MilkshakeVol1.enums.Collectibles.INNER_REFLECTION)
+    for _, player in ipairs(players) do
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+        player:EvaluateItems()
     end
 end
 
@@ -447,6 +475,7 @@ function MirrorKey:OnNewRoom()
         SetMirrorShaderActive(false)
         Game():GetHUD():SetVisible(true)
         RemoveLostCurse()
+        UpdateInnerReflectionCache()
 
         return
     end
@@ -466,6 +495,7 @@ function MirrorKey:OnNewRoom()
     SetMirrorShaderActive(true)
     PlacePlayersInDoorSlot(doorSlot)
     AddLostCurse()
+    UpdateInnerReflectionCache()
 
     if EID then
         EID.isMirrorRoom = true
@@ -595,6 +625,10 @@ local function UpdateOpenState(door)
         )
     end
 
+    if sprite:IsEventTriggered("Sound") then
+        SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
+    end
+
     if sprite:IsFinished("Close") then
         sprite:Play("Closed", true)
     elseif sprite:IsFinished("Open") then
@@ -635,6 +669,11 @@ local function CheckIfPlayerEnters(door)
             door,
             "MirrorDoorDoorSlot"
         )
+        local canSpawnDoor = TSIL.Entities.GetEntityData(
+            MilkshakeVol1,
+            door,
+            "CanSpawnOtherDoor"
+        )
 
         if target == MIRROR_DOOR_INDEX then
             local level = Game():GetLevel()
@@ -647,6 +686,7 @@ local function CheckIfPlayerEnters(door)
                     RemoveAllPickups()
                     RemoveTallLadder()
                     AddLostCurse()
+                    UpdateInnerReflectionCache()
                 end
             )
 
@@ -699,6 +739,7 @@ local function CheckIfPlayerEnters(door)
                         Game():GetHUD():SetVisible(true)
                         PlacePlayersInDoorSlot(doorSlot)
                         RemoveLostCurse()
+                        UpdateInnerReflectionCache()
                     end
                 )
             elseif dimension == TSIL.Enums.Dimension.MAIN then
@@ -707,6 +748,10 @@ local function CheckIfPlayerEnters(door)
                     ModCallbacks.MC_POST_NEW_ROOM,
                     function ()
                         RemoveLostCurse()
+                        PlacePlayersInDoorSlot(doorSlot)
+                        if canSpawnDoor then
+                            SpawnFakeMirrorDoor(doorSlot, target, TSIL.Enums.Dimension.SECONDARY, false)
+                        end
                     end
                 )
             elseif dimension == TSIL.Enums.Dimension.SECONDARY then
@@ -715,6 +760,10 @@ local function CheckIfPlayerEnters(door)
                     ModCallbacks.MC_POST_NEW_ROOM,
                     function ()
                         AddLostCurse()
+                        PlacePlayersInDoorSlot(doorSlot)
+                        if canSpawnDoor then
+                            SpawnFakeMirrorDoor(doorSlot, target, TSIL.Enums.Dimension.MAIN, false)
+                        end
                     end
                 )
             end
