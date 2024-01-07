@@ -2,7 +2,7 @@ local worldOfLight = {}
 local enums = MilkshakeVol1.enums
 
 local INTERVAL_SECONDS = 60
-local ONE_SECOND = 30
+local ONE_SECOND = 2
 
 local MIN_ITEMS = 3
 local ICON_RENDER_X = 54
@@ -46,24 +46,60 @@ local function AnimateCollectibleLoss(player, collectibleId)
     table.insert(renderItems, {Sprite = sprite, Player = player})
 end
 
+--- Get a player's inventory filtered by a specific quality
+---@param player EntityPlayer
+local function GetCollectiblesByQuality(player)
+    local qualityZero = {}
+    local qualityOne = {}
+    local qualityTwo = {}
+    local qualityThree  = {}
+    local qualityFour = {}
+    local inventory = TSIL.Players.GetPlayerInventory(player, TSIL.Enums.InventoryType.COLLECTIBLE)
+    for _, collectible in ipairs(inventory) do
+        local collectibleType = collectible.Id
+        local currentQuality = Isaac:GetItemConfig():GetCollectible(collectibleType).Quality
+        if currentQuality == 0 then
+            table.insert(qualityZero, collectibleType)
+        elseif currentQuality == 1 then
+            table.insert(qualityOne, collectibleType)
+        elseif currentQuality == 2 then
+            table.insert(qualityTwo, collectibleType)
+        elseif currentQuality == 3 then
+            table.insert(qualityThree, collectibleType)
+        elseif currentQuality == 4 then
+            table.insert(qualityFour, collectibleType)
+        end
+    end
+    return {qualityZero, qualityOne, qualityTwo, qualityThree, qualityFour}
+end
+
+local function GetRandomCollectibleOfQuality(player, qualityList)
+    local rng = player:GetDropRNG()
+    local itr = 0
+    local roll
+    repeat roll = TSIL.Random.GetRandomInt(1, #qualityList, rng)
+        itr = itr + 1
+        if itr == TIMES_CAN_FAIL then return nil end
+    until not TSIL.Utils.Tables.IsIn(itemBlacklist, qualityList[roll])
+    return qualityList[roll]
+end
 --- Removes a random collectible from a player that is not blacklisted
 ---@param player EntityPlayer
 ---@return boolean - true if removed, false otherwise
 local function RemoveRandomCollectible(player)
     local inventory = TSIL.Players.GetPlayerInventory(player, TSIL.Enums.InventoryType.COLLECTIBLE)
     if #inventory < MIN_ITEMS then return false end
-    local rng = player:GetDropRNG()
-    local roll
-    local itr = 0
-
-    repeat roll = TSIL.Random.GetRandomInt(1, #inventory, rng)
-        itr = itr + 1
-        if itr == TIMES_CAN_FAIL then return false end
-    until not TSIL.Utils.Tables.IsIn(itemBlacklist, inventory[roll].Id)
- 
-    AnimateCollectibleLoss(player, inventory[roll].Id)
-    player:RemoveCollectible(inventory[roll].Id)
-    return true
+    local collectibleByQuality = GetCollectiblesByQuality(player)
+    local toRemove
+    for _, qualityList in ipairs(collectibleByQuality) do
+        toRemove = GetRandomCollectibleOfQuality(player, qualityList)
+        if toRemove then break end
+    end
+    if toRemove then
+        AnimateCollectibleLoss(player, toRemove)
+        player:RemoveCollectible(toRemove)
+        return true
+    else return false end
 end
 
 function worldOfLight:PostPlayerInit(player)
@@ -96,9 +132,10 @@ function worldOfLight:PostPEffectUpdate(player)
         timer = timer - 1
         if timer <= 0 then
             TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer", INTERVAL_SECONDS)
-            for _, player in ipairs(TSIL.Players.GetPlayers()) do
-                RemoveRandomCollectible(player)
-            end
+            RemoveRandomCollectible(player)
+            --for _, curPlayer in ipairs(TSIL.Players.GetPlayers()) do
+            --    RemoveRandomCollectible(curPlayer)
+            --end
         else
             TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer", timer)
         end
