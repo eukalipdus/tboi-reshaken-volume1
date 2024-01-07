@@ -1,10 +1,14 @@
-MilkshakeVol1 = RegisterMod("Milkshake!", 1)
+MilkshakeVol1 = RegisterMod("Milkshake Vol1!", 1)
 
 require("loi_milkshake.TSIL").Init("loi_milkshake")
 
 include("milkshake_scripts.enums")
 include("milkshake_scripts.utility")
 MilkshakeVol1.API = {}
+
+if StageAPI then
+    StageAPI.UnregisterCallbacks(MilkshakeVol1.Name)
+end
 
 --include("milkshake_scripts.bumAPI.core")
 

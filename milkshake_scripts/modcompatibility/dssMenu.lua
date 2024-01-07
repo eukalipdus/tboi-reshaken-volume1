@@ -150,12 +150,26 @@ local dssmod = dssmenucore.init(DSSModName, MenuProvider)
 
 local sanchoSprite = Sprite()
 sanchoSprite:Load("gfx/ui/giantbook/sancho.anm2", true)
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, function ()
+sanchoSprite:Play("Celestial", true)
+sanchoSprite:SetLastFrame()
+
+local function RenderSancho()
     if sanchoSprite:IsFinished() then return end
 
     sanchoSprite:Render(TSIL.UI.GetScreenCenterPosition())
     sanchoSprite:Update()
-end)
+end
+
+if StageAPI then
+    StageAPI.AddCallback(
+        MilkshakeVol1.Name,
+        "POST_HUD_RENDER",
+        101,
+        RenderSancho
+    )
+else
+    MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, RenderSancho)
+end
 
 
 -- Adding a Menu
