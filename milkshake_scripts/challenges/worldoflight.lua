@@ -80,13 +80,8 @@ function worldOfLight:PostNewRoom()
     if not Game():GetRoom():IsFirstVisit()
     or Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT then return end
     local collectibles = TSIL.PickupSpecific.GetCollectibles()
-    for _, currentCollectible in ipairs(collectibles) do
-        local quality = Isaac.GetItemConfig():GetCollectible(currentCollectible.SubType).Quality
-        TSIL.Utils.Functions.RunInFrames(function ()
-            currentCollectible:Remove()
-            MilkshakeVol1.API:SplitCollectible(Isaac.GetPlayer(), currentCollectible:ToPickup(), quality, quality)
-            SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
-        end, 1, {})
+    if #collectibles > 0 then
+        Isaac.GetPlayer():UseActiveItem(enums.Collectibles.PRISMATIC_DICE)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, worldOfLight.PostNewRoom)
