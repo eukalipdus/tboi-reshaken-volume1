@@ -419,6 +419,15 @@ local function RemoveLostCurse()
 end
 
 
+local function UpdateInnerReflectionCache()
+    local players = TSIL.Players.GetPlayersByCollectible(MilkshakeVol1.enums.Collectibles.INNER_REFLECTION)
+    for _, player in ipairs(players) do
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+        player:EvaluateItems()
+    end
+end
+
+
 function MirrorKey:OnNewRoom()
     UpdateMirrorKeyChargeState()
 
@@ -447,6 +456,7 @@ function MirrorKey:OnNewRoom()
         SetMirrorShaderActive(false)
         Game():GetHUD():SetVisible(true)
         RemoveLostCurse()
+        UpdateInnerReflectionCache()
 
         return
     end
@@ -466,6 +476,7 @@ function MirrorKey:OnNewRoom()
     SetMirrorShaderActive(true)
     PlacePlayersInDoorSlot(doorSlot)
     AddLostCurse()
+    UpdateInnerReflectionCache()
 
     if EID then
         EID.isMirrorRoom = true
@@ -647,6 +658,7 @@ local function CheckIfPlayerEnters(door)
                     RemoveAllPickups()
                     RemoveTallLadder()
                     AddLostCurse()
+                    UpdateInnerReflectionCache()
                 end
             )
 
@@ -699,6 +711,7 @@ local function CheckIfPlayerEnters(door)
                         Game():GetHUD():SetVisible(true)
                         PlacePlayersInDoorSlot(doorSlot)
                         RemoveLostCurse()
+                        UpdateInnerReflectionCache()
                     end
                 )
             elseif dimension == TSIL.Enums.Dimension.MAIN then
