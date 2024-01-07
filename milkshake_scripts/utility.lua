@@ -33,10 +33,21 @@ function utility:RenderCrystalRockSprite(entity, animName)
     else
         renderPos = Isaac.WorldToScreen(entity.Position)
     end
-    local sprite = Sprite()
-    sprite:Load("gfx/grid/grid_crystalrock.anm2", true)
-    sprite:Play(animName, true)
+    local sprite
+    if utility:GetData(entity, "RockOverlay") then
+        sprite = utility:GetData(entity, "RockOverlay")
+    else
+        sprite = Sprite()
+        sprite:Load("gfx/grid/grid_crystalrock.anm2", true)
+    end
+    if not sprite:IsPlaying(animName) or sprite:IsFinished(animName) then
+        sprite:Play(animName, true)
+    end
+    if Game():GetFrameCount() % 6 == 0 then
+        sprite:Update()
+    end
     sprite:Render(renderPos)
+    utility:SetData(entity, "RockOverlay", sprite)
 end
 
 ---Returns the tears stat after adding some value

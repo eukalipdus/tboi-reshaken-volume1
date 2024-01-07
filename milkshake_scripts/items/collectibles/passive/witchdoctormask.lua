@@ -194,15 +194,15 @@ function witchDoctorMask:UsePill(_, player)
         --    colorToEffect[Game():GetItemPool():GetPillEffect(i, player)] = i
         --end
         local pillColor = playersCurrentPills[GetPtrHash(player)] --colorToEffect[pillEffect]
-        if TSIL.Pills.IsHorsePill(pillColor) then
-            utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
-        end
         local spiritOrb = matchingPills[pillColor]
         if not spiritOrb then
             spiritOrb = enums.Orbs.RANDOM
         end
-        player:UseCard(spiritOrb, UseFlag.USE_NOANIM)
-        --utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", false) seems like it should be done but could mess with lyra?
+        local flags = enums.UseOrbFlags.NO_SOUND
+        if TSIL.Pills.IsHorsePill(pillColor) then
+            flags = flags | enums.UseOrbFlags.DOUBLE_POWER
+        end
+        MilkshakeVol1:UseSpiritOrb(spiritOrb, player, flags)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_PILL, witchDoctorMask.UsePill)
@@ -221,7 +221,7 @@ function witchDoctorMask:PostPickupUpdate(pickup)
             if not utility:GetData(pickup, "SpiritPillSprite") then
                 local sprite = pickup:GetSprite()
                 if pickup.SubType < FF_PILL_BEGIN
-                or pickup.SubType > PillColor.PILL_GIANT_FLAG then
+                or (pickup.SubType > PillColor.PILL_GIANT_FLAG and not (pickup.SubType > (FF_PILL_BEGIN | PillColor.PILL_GIANT_FLAG))) then
                     sprite:ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pills ground.png")
 
                 elseif (pickup.SubType >= FF_PILL_BEGIN and pickup.SubType <= FF_PILL_END)
@@ -257,6 +257,7 @@ function witchDoctorMask:GetShaderParams()
                     else
                         orbPillHuds[i]:Render(position)
                         orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
+                        print(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:Play("HUD")
                     end
                 end

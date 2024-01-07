@@ -87,9 +87,9 @@ end
 ---@param player EntityPlayer
 ---@param collectible EntityPickup
 ---@param quality number
----@param newCollectibleID number
 ---@param originalQuality number | nil
-function MilkshakeVol1.API.SplitCollectible(player, collectible, quality, newCollectibleID, originalQuality)
+function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality)
+    local newCollectibleID
     local shatteredCollectible
     local willBreakfast = true
     local itemPool = Game():GetItemPool()
@@ -257,19 +257,18 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
                  else
                      collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
                      collectible:Remove()
-                     local newCollectibleID
                     if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
                         local roll = 4 + rng:RandomInt(2)
                         for _ = 1, roll do
-                            MilkshakeVol1.API.SplitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID, collectibleQuality)
+                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - roll, collectibleQuality)
                         end
 
                     elseif player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
                          for _ = 1, 2 do
-                            MilkshakeVol1.API.SplitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID, collectibleQuality)
+                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - 1, collectibleQuality)
                          end
                      else
-                        MilkshakeVol1.API.SplitCollectible(player, collectible, collectibleQuality, newCollectibleID, nil)
+                        MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality, nil)
                      end
                  end
     
