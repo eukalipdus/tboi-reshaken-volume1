@@ -103,7 +103,7 @@ MilkshakeVol1:AddModCompatibility("Retribution", function()
         "                    Combo"
     }
     local capsules = {
-        Config = { Count = 1, MinCount = 0 }
+        Config = { Count = 3, MinCount = 0 } -- in range (i = 0, rng(Count)+MinCount) -- if 0 at least spawn 1
     }
     for _, capsuleName in ipairs(capsuleTypes) do
         table.insert(capsules, {
