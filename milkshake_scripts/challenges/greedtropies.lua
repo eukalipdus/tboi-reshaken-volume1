@@ -1,5 +1,4 @@
 local greedtropies = {}
-local enums = MilkshakeVol1.enums
 
 local game = Game()
 

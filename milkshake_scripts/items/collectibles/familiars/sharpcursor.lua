@@ -41,7 +41,7 @@ local SharpCursorDamageTexts = {}
 ---@return boolean
 local function ShouldActivateMouseMode(player)
     if player.ControllerIndex ~= 0 then return false end
-    if not Options.MouseControl then return false end
+    if not Options.MouseControl and Game().Challenge ~= enums.Challenges.ISAAC_CLICKER then return false end
 
     return TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
