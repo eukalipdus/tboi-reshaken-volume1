@@ -2,7 +2,7 @@ local worldOfLight = {}
 local enums = MilkshakeVol1.enums
 
 local INTERVAL_SECONDS = 60
-local ONE_SECOND = 2
+local ONE_SECOND = 30
 
 local MIN_ITEMS = 3
 local ICON_RENDER_X = 35
