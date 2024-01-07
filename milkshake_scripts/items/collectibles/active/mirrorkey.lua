@@ -330,6 +330,8 @@ function MirrorKey:OnMirrorKeyUse(_, _, player)
     SpawnFakeMirrorDoor(closeDoorSlot, target, dimension)
     UpdateMirrorKeyChargeState()
 
+    SFXManager():Play(SoundEffect.SOUND_UNLOCK00)
+
     return {
         Discharge = true,
         ShowAnim = true,
@@ -604,6 +606,10 @@ local function UpdateOpenState(door)
             "IsClosed",
             true
         )
+    end
+
+    if sprite:IsEventTriggered("Sound") then
+        SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
     end
 
     if sprite:IsFinished("Close") then
