@@ -53,7 +53,8 @@ function MakeTearSickle(tear)
         tear:ChangeVariant(TearVariant.BLUE)
     end
 
-    if tear.Variant ~= TearVariant.BLUE then return end
+    if tear.Variant ~= TearVariant.BLUE
+    and tear.Variant ~= TearVariant.BLOOD then return end
 
     tear.Scale = tear.Scale * tearSizeMult
     tear.Scale = math.max(0.658, tear.Scale)
@@ -178,7 +179,7 @@ function SickleCell:OnEntityDamage(entity, _, flags, source)
     if not (entity:IsEnemy() and entity:IsVulnerableEnemy()) then return end
 
     if source.Type == EntityType.ENTITY_TEAR and IsSickleTear(source.Entity)  then
-        SFXManager():Play(SoundEffect.SOUND_MEATY_DEATHS)
+        SFXManager():Play(SoundEffect.SOUND_MEATY_DEATHS, 0.8)
     end
     if entity:HasEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS) or
         entity:HasEntityFlags(EntityFlag.FLAG_BLEED_OUT) then
