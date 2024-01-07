@@ -16,6 +16,7 @@ end
 include("milkshake_scripts.modcompatibility.modCompat")
 include("milkshake_scripts.modcompatibility.crabbyCretins")
 include("milkshake_scripts.modcompatibility.dssMenu")
+include("milkshake_scripts.modcompatibility.detailedRespawn")
 include("milkshake_scripts.modcompatibility.eclipsed")
 include("milkshake_scripts.modcompatibility.eid")
 include("milkshake_scripts.modcompatibility.epiphany")

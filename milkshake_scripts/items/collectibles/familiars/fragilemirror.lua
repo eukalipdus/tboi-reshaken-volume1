@@ -122,7 +122,7 @@ TSIL.SaveManager.AddPersistentVariable(
 ---Returns the unbroken mirror found
 ---@param player EntityPlayer
 ---@return EntityFamiliar?
-local function HasAnyUnbrokenMirror(player)
+function MilkshakeVol1.API:HasAnyUnbrokenMirror(player)
     local familiars = TSIL.Familiars.GetPlayerFamiliars(player)
     local fragileMirrors = TSIL.Utils.Tables.Filter(familiars, function(_, familiar)
         return familiar.Variant == enums.Familiars.FRAGILE_MIRROR
@@ -431,7 +431,7 @@ end
 
 ---@param player EntityPlayer
 function FragileMirror:PreCustomRevive(player)
-    local unbrokenMirror = HasAnyUnbrokenMirror(player)
+    local unbrokenMirror = MilkshakeVol1.API:HasAnyUnbrokenMirror(player)
 
     if not unbrokenMirror then return end
 
@@ -471,7 +471,7 @@ local function CheckIfPlayerWillDieFromItem(player, itemInfo)
     --The player has some health
     if TSIL.Players.GetPlayerNumHitsRemaining(player) > 0 then return end
 
-    local unbrokenMirror = HasAnyUnbrokenMirror(player)
+    local unbrokenMirror = MilkshakeVol1.API:HasAnyUnbrokenMirror(player)
 
     if not unbrokenMirror then return end
 
