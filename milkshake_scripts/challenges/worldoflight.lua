@@ -51,7 +51,7 @@ end
 ---@return boolean - true if removed, false otherwise
 local function RemoveRandomCollectible(player)
     local inventory = TSIL.Players.GetPlayerInventory(player, TSIL.Enums.InventoryType.COLLECTIBLE)
-    if #inventory == MIN_ITEMS then return false end
+    if #inventory < MIN_ITEMS then return false end
     local rng = player:GetDropRNG()
     local roll
     local itr = 0
