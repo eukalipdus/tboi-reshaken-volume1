@@ -792,6 +792,9 @@ descriptions.Collectibles = {
     
 }
 
+descriptions.Collectibles[enums.Collectibles.LEVITICUS_ALADAR] = descriptions.Collectibles[enums.Collectibles.LEVITICUS]
+descriptions.Collectibles[enums.Collectibles.LEVITICUS_FANCY] = descriptions.Collectibles[enums.Collectibles.LEVITICUS]
+
 --TRINKET DESCRIPTIONS
 descriptions.Trinkets = {
     [enums.Trinkets.TUNGSTEN_CUBE] = {
