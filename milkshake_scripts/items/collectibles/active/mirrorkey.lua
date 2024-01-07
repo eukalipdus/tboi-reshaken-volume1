@@ -402,11 +402,11 @@ end
 
 
 local function AddLostCurse()
-    if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then return end
-
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         local effects = player:GetEffects()
-        effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
+        if not effects:HasNullEffect(NullItemID.ID_LOST_CURSE) then
+            effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
+        end
     end
 end
 
@@ -734,6 +734,8 @@ local function CheckIfPlayerEnters(door)
                     ModCallbacks.MC_POST_NEW_ROOM,
                     function ()
                         AddLostCurse()
+                        PlacePlayersInDoorSlot(doorSlot)
+                        SpawnFakeMirrorDoor(doorSlot, target, TSIL.Enums.Dimension.MAIN)
                     end
                 )
             end
