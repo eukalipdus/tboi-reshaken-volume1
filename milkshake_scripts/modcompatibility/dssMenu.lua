@@ -478,7 +478,7 @@ local exampledirectory = {
                     local sfx = Isaac.GetSoundIdByName("Im sory")
                     SFXManager():Play(sfx, 4)
                 end,
-                tooltip = { strset = { 'dont' } }
+                tooltip = { strset = { 'prime minister' } }
             },
             { str = "", fsize = 1, nosel = true },
 
@@ -517,7 +517,12 @@ local exampledirectory = {
                     "skykittenpuppy"
                 },
                 tooltip = { strset = { 'this info', 'will be sent', 'to the devs' } }
-            }
+            },
+            { str = "", fsize = 1, nosel = true },
+
+            --BRENDA'S NAME
+            {str = "spirit's klin true name", fsize = 2, nosel = true},
+            {str = "is brenda", fsize = 2, nosel = true}
         }
     },
 }
