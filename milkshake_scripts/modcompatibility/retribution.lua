@@ -80,30 +80,30 @@ MilkshakeVol1:AddModCompatibility("Retribution", function()
 
     local capsuleTypes = { -- god bless Retribution capsules naming
         "Sword", "Heart", "Tear", "Bow", "Fling", "Boot", "Clover",
-        "Combo",
-        " Combo",
-        "  Combo",
-        "   Combo",
-        "    Combo",
-        "     Combo",
-        "      Combo",
-        "       Combo",
-        "        Combo",
-        "         Combo",
-        "          Combo",
-        "           Combo",
-        "            Combo",
-        "             Combo",
-        "              Combo",
-        "               Combo",
-        "                Combo",
-        "                 Combo",
-        "                  Combo",
-        "                   Combo",
-        "                    Combo"
+        --"Combo",
+        --" Combo",
+        --"  Combo",
+        --"   Combo",
+        --"    Combo",
+        --"     Combo",
+        --"      Combo",
+        --"       Combo",
+        --"        Combo",
+        --"         Combo",
+        --"          Combo",
+        --"           Combo",
+        --"            Combo",
+        --"             Combo",
+        --"              Combo",
+        --"               Combo",
+        --"                Combo",
+        --"                 Combo",
+        --"                  Combo",
+        --"                   Combo",
+        --"                    Combo"
     }
     local capsules = {
-        Config = { Count = 3, MinCount = 0 } -- in range (i = 0, rng(Count)+MinCount) -- if 0 at least spawn 1
+        Config = { Count = 2, MinCount = 2 } -- in range (i = 0, rng(Count)+MinCount) -- if 0 at least spawn 1
     }
     for _, capsuleName in ipairs(capsuleTypes) do
         table.insert(capsules, {
