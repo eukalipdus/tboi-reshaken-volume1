@@ -78,40 +78,45 @@ MilkshakeVol1:AddModCompatibility("Retribution", function()
     }
     --]]
 
-    local capsuleTypes = { -- god bless Retribution capsules naming
-        "Sword", "Heart", "Tear", "Bow", "Fling", "Boot", "Clover",
-        "Combo",
-        " Combo",
-        "  Combo",
-        "   Combo",
-        "    Combo",
-        "     Combo",
-        "      Combo",
-        "       Combo",
-        "        Combo",
-        "         Combo",
-        "          Combo",
-        "           Combo",
-        "            Combo",
-        "             Combo",
-        "              Combo",
-        "               Combo",
-        "                Combo",
-        "                 Combo",
-        "                  Combo",
-        "                   Combo",
-        "                    Combo"
-    }
+    --local capsuleTypes = { -- god bless Retribution capsules naming
+        --"Sword", "Heart", "Tear", "Bow", "Fling", "Boot", "Clover",
+        --"Combo",
+        --" Combo",
+        --"  Combo",
+        --"   Combo",
+        --"    Combo",
+        --"     Combo",
+        --"      Combo",
+        --"       Combo",
+        --"        Combo",
+        --"         Combo",
+        --"          Combo",
+        --"           Combo",
+        --"            Combo",
+        --"             Combo",
+        --"              Combo",
+        --"               Combo",
+        --"                Combo",
+        --"                 Combo",
+        --"                  Combo",
+        --"                   Combo",
+        --"                    Combo"
+    --}
     local capsules = {
-        Config = { Count = 3, MinCount = 0 } -- in range (i = 0, rng(Count)+MinCount) -- if 0 at least spawn 1
+        Config = { Count = 2, MinCount = 2 } -- in range (i = 0, rng(Count)+MinCount) -- if 0 at least spawn 1
     }
-    for _, capsuleName in ipairs(capsuleTypes) do
-        table.insert(capsules, {
-            Type = EntityType.ENTITY_PICKUP,
-            Variant = PickupVariant.PICKUP_TAROTCARD,
-            SubType = Isaac.GetCardIdByName(capsuleName .. " Capsule")
-        })
-    end
+
+    table.insert(capsules, {
+        Type = EntityType.ENTITY_PICKUP,
+        Variant = 1880,
+        SubType = 0,
+    })
+    table.insert(capsules, {
+        Type = EntityType.ENTITY_PICKUP,
+        Variant = 1882,
+        SubType = 0,
+    })
+
 
     MilkshakeVol1.API:AddUnholyOrbBeggar(Isaac.GetEntityVariantByName("Swine Beggar"), capsules)
     MilkshakeVol1.API:AddUnholyOrbBeggar(Isaac.GetEntityVariantByName("Angelic Swine Beggar"), capsules)
