@@ -46,10 +46,12 @@ function WineHead:WineHead_Update(enemy)
     local data = GetGlassHeadData(enemy)
     local target = enemy:GetPlayerTarget()
     local rng = enemy:GetDropRNG()
+    local room = Game():GetRoom()
 
     if not data.state then data.state = 1 end
     if not data.gridCountdown then data.gridCountdown = 0 end
     if not data.trigger then data.trigger = rng:RandomInt(100) + 50 end
+    if not data.targpos then data.targpos = enemy.Position end
 
     if data.init and data.state ~= 6 then
         data.init = data.init - 1
@@ -61,11 +63,15 @@ function WineHead:WineHead_Update(enemy)
         return
     end
 
+    if sprite:GetOverlayAnimation() == "" then 
+        sprite:PlayOverlay("HeadIdle") 
+    end
+
     if sprite:IsEventTriggered("Step") then
         sfx:Play(SoundEffect.SOUND_FETUS_LAND, .75, 0, false, 1.5, 0)
     end
 
-    if data.state == 1 then
+    if sprite:GetOverlayAnimation()=="HeadIdle" then
         sprite:PlayOverlay("HeadIdle")
 
         if sprite:GetOverlayFrame() == 6 then
@@ -77,15 +83,15 @@ function WineHead:WineHead_Update(enemy)
         end
         if data.trigger <= 0 then
             data.trigger = 100
-            data.state = 2
+            sprite:PlayOverlay("HeadSpinStart")
         end
-    elseif data.state == 2 then
+    elseif sprite:GetOverlayAnimation()=="HeadSpinStart" then
         sprite:PlayOverlay("HeadSpinStart")
 
         if sprite:IsOverlayFinished("HeadSpinStart") then
-            data.state = 3
+            sprite:PlayOverlay("Spin")
         end
-    elseif data.state == 3 then
+    elseif sprite:GetOverlayAnimation()=="Spin" then
         sprite:PlayOverlay("Spin")
 
         if enemy:IsFrame(10, 0) or rng:RandomInt(15) + 1 == 1 then
@@ -133,49 +139,19 @@ function WineHead:WineHead_Update(enemy)
         data.trigger = data.trigger - 1
         if data.trigger <= 0 then
             data.trigger = nil
-            data.state = 4
+            sprite:PlayOverlay("HeadSpinEnd")
         end
-    elseif data.state == 4 then
+    elseif sprite:GetOverlayAnimation()=="HeadSpinEnd" then
         sprite:PlayOverlay("HeadSpinEnd")
 
         if sprite:IsOverlayFinished("HeadSpinEnd") then
-            data.state = 1
+            sprite:PlayOverlay("HeadIdle")
         end
     end
 
 
-    if data.state ~= 6 then
-        if utility:IsEnemyScared(enemy) then
-            data.targpos = enemy.Position + (enemy.Position - target.Position)
-        elseif utility:IsEnemyConfused(enemy) then
-            if not data.targpos or enemy:IsFrame(25, 0) then
-                data.targpos = Game():GetRoom():GetRandomPosition(0)
-            end
-        else
-            if not data.targpos or enemy:IsFrame(20, 0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) or not enemy.Pathfinder:HasPathToPos(data.targpos, false) then
-                data.targpos = Game():GetRoom():GetClampedPosition(
-                target.Position + Vector(rng:RandomInt(50) - 25, rng:RandomInt(50) - 25), 0)
-                data.gridCountdown = 50 * (rng:RandomInt(2))
-            end
-        end
-        data.targpos = Game():GetRoom():GetClampedPosition(data.targpos + target.Velocity, 0)
-
-        if enemy.Pathfinder:HasPathToPos(data.targpos, false) or (utility:IsEnemyScared(enemy) or utility:IsEnemyConfused(enemy)) then
-            if (enemy:CollidesWithGrid() or data.gridCountdown > 0 or NearSpike(enemy)) and
-                (data.targpos:Distance(enemy.Position) > 100 or data.targpos:Distance(enemy.Position) < 100 and
-                    not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then
-                enemy.Pathfinder:FindGridPath(data.targpos, WINEHEAD_SPEED, 1, false)
-                if data.gridCountdown <= 0 then
-                    data.gridCountdown = 60
-                else
-                    data.gridCountdown = data.gridCountdown - 1
-                end
-            else
-                local targetvel = (data.targpos - enemy.Position):Resized(WINEHEAD_SPEED * 6)
-                ---@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
-                enemy.Velocity = TSIL.Utils.Math.Lerp(enemy.Velocity, targetvel, 0.25)
-            end
-
+    if data.state ~= 6 then 
+        if enemy.Velocity:Length() > .25 then
             if math.abs(enemy.Velocity.Y) > math.abs(enemy.Velocity.X) then
                 sprite:Play('WalkVert')
             else
@@ -187,9 +163,51 @@ function WineHead:WineHead_Update(enemy)
             end
         else
             sprite:SetFrame('WalkVert', 0)
-            enemy.Velocity = enemy.Velocity * .5
         end
-    else
+    end
+
+    if data.state == 1 then
+        if utility:IsEnemyScared(enemy) then
+            data.targpos = enemy.Position + (enemy.Position - target.Position)
+        elseif utility:IsEnemyConfused(enemy) then
+            if not data.targpos or enemy:IsFrame(25, 0) then
+                data.targpos = Game():GetRoom():GetRandomPosition(0)
+            end
+        elseif enemy.Pathfinder:HasPathToPos(target.Position, false) and 
+        not (enemy.Pathfinder:HasPathToPos(target.Position) and room:GetGridPathFromPos(target.Position) > 950) then
+            if enemy:IsFrame(30, 0) or (data.targpos and data.targpos:Distance(enemy.Position) < 100) then
+                data.targpos = Game():GetRoom():GetClampedPosition(
+                target.Position + Vector(rng:RandomInt(50) - 25, rng:RandomInt(50) - 25), 0)
+                data.gridCountdown = 50 * (rng:RandomInt(2))
+            end
+            data.targpos = Game():GetRoom():GetClampedPosition(data.targpos + target.Velocity, 0)
+        end
+
+        if (enemy:CollidesWithGrid() or data.gridCountdown >= 0 or NearSpike(enemy)) then
+            enemy.Pathfinder:FindGridPath(data.targpos, WINEHEAD_SPEED, 1, false)
+            if data.gridCountdown <= 0 then
+                data.gridCountdown = 60
+            else
+                data.gridCountdown = data.gridCountdown - 1
+            end
+
+            if enemy.Position:Distance(data.targpos) < 60 then 
+                data.state = 2 
+            end
+
+        else
+            local targetvel = (data.targpos - enemy.Position):Resized(WINEHEAD_SPEED * 6)
+            ---@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
+            enemy.Velocity = TSIL.Utils.Math.Lerp(enemy.Velocity, targetvel, 0.25)
+        end
+
+    elseif data.state == 2 then
+        enemy.Velocity = enemy.Velocity * .5
+        if enemy.Pathfinder:HasPathToPos(target.Position, false) and room:GetGridPathFromPos(target.Position) < 950 then
+            data.state = 1
+        end
+
+    elseif data.state == 6 then
         sprite:RemoveOverlay()
         sprite:Play('Death')
 
@@ -220,7 +238,7 @@ function WineHead:WineHead_Update(enemy)
             swirl.SpriteScale = Vector(1.5, 1.5)
             swirl:GetSprite().Color = WINE_COLOR
 
-            local bigCreep = TSIL.EntitySpecific.SpawnEffect(
+            --[[local bigCreep = TSIL.EntitySpecific.SpawnEffect(
                 EffectVariant.CREEP_RED,
                 0,
                 enemy.Position + Vector(
@@ -250,7 +268,7 @@ function WineHead:WineHead_Update(enemy)
                 creep.Timeout = 200
                 creep:GetSprite().Color = WINE_COLOR
                 creep:Update()
-            end
+            end]]
 
             local baseAngle = (target.Position - enemy.Position):Rotated(rng:RandomInt(50) - 25):GetAngleDegrees()
             local posOffset = Vector.FromAngle(baseAngle):Resized(rng:RandomInt(6) + 15)

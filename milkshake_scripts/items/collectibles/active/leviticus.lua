@@ -103,11 +103,90 @@ local CHARACTERS_CANT_PICKUP_SOUL_HEARTS = {
     [PlayerType.PLAYER_KEEPER_B] = true
 }
 
-function Leviticus:onLeviticusUse(_, _, player)
+
+local LEVITICUS_ITEM_PER_OPTIONS = {
+    [1] = enums.Collectibles.LEVITICUS,
+    [2] = enums.Collectibles.LEVITICUS_ALADAR,
+    [3] = enums.Collectibles.LEVITICUS_FANCY,
+}
+local LEVITICUS_ITEMS = {
+    [enums.Collectibles.LEVITICUS] = true,
+    [enums.Collectibles.LEVITICUS_ALADAR] = true,
+    [enums.Collectibles.LEVITICUS_FANCY] = true,
+}
+
+
+local function GetCurrentLeviticusItem()
+    local leviticusOptions = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "LeviticusSprite"
+    )
+
+    return LEVITICUS_ITEM_PER_OPTIONS[leviticusOptions]
+end
+
+
+---@param pickup EntityPickup
+function Leviticus:OnCollectibleUpdate(pickup)
+    if not LEVITICUS_ITEMS[pickup.SubType] then return end
+
+    local currentItem = GetCurrentLeviticusItem()
+    if pickup.SubType ~= currentItem then
+        pickup:Morph(
+            pickup.Type,
+            pickup.Variant,
+            currentItem,
+            true,
+            true,
+            true
+        )
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_PICKUP_UPDATE,
+    Leviticus.OnCollectibleUpdate,
+    PickupVariant.PICKUP_COLLECTIBLE
+)
+
+
+---@param player EntityPlayer
+function Leviticus:OnPlayerUpdate(player)
+    for activeSlot = ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_POCKET2, 1 do
+        local item = player:GetActiveItem(activeSlot)
+
+        if LEVITICUS_ITEMS[item] and item ~= GetCurrentLeviticusItem() then
+            player:AddCollectible(
+                GetCurrentLeviticusItem(),
+                TSIL.Charge.GetTotalCharge(player, activeSlot),
+                false,
+                activeSlot
+            )
+        end
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_PLAYER_UPDATE,
+    Leviticus.OnPlayerUpdate
+)
+
+
+---@param player EntityPlayer
+---@param useFlags UseFlag
+function Leviticus:onLeviticusUse(_, _, player, useFlags)
+    if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then
+        return
+    end
+
+    local carBattery = player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY)
+
     if ComplianceImmortal then
-        ComplianceImmortal.AddImmortalHearts(player, 2)
+        local amount = 2
+        if carBattery then amount = amount * 2 end
+        ComplianceImmortal.AddImmortalHearts(player, amount)
     else
-        player:AddEternalHearts(1)
+        local amount = 1
+        if carBattery then amount = amount * 2 end
+        player:AddEternalHearts(amount)
     end
 
     if LibraryExpanded then
@@ -132,18 +211,20 @@ function Leviticus:onLeviticusUse(_, _, player)
         ShowAnim = true
     }
 end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_USE_ITEM,
-    Leviticus.onLeviticusUse,
-    enums.Collectibles.LEVITICUS
-)
+for _, item in pairs(LEVITICUS_ITEM_PER_OPTIONS) do
+    MilkshakeVol1:AddCallback(
+        ModCallbacks.MC_USE_ITEM,
+        Leviticus.onLeviticusUse,
+        item
+    )
+end
 
 
 local function CheckLeviticusActiveSlot(player)
     local overcharge = 0
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) then overcharge = LEVITICUS_MAX_CHARGES end
     for i = 0, 4, 1 do
-        if player:GetActiveItem(i) == enums.Collectibles.LEVITICUS and
+        if player:GetActiveItem(i) == GetCurrentLeviticusItem() and
         player:GetActiveCharge(i) + player:GetBatteryCharge(i) < LEVITICUS_MAX_CHARGES + overcharge then
             return i
         end
@@ -200,7 +281,7 @@ function Leviticus:onPickupCollision(pickup, collider)
     local player = collider:ToPlayer()
     if not player then return end
 
-    if not player:HasCollectible(enums.Collectibles.LEVITICUS) then return end
+    if not player:HasCollectible(GetCurrentLeviticusItem()) then return end
 
     --Check if there is any slot with empty charges
     local leviticus_slot = CheckLeviticusActiveSlot(player)
@@ -290,7 +371,7 @@ if CustomHealthAPI then
             return
         end
 
-        if not player:HasCollectible(enums.Collectibles.LEVITICUS) then return end
+        if not player:HasCollectible(GetCurrentLeviticusItem()) then return end
 
         local leviticus_slot = CheckLeviticusActiveSlot(player)
         if leviticus_slot == nil then return end
@@ -336,7 +417,7 @@ else
     ---@param old integer
     ---@param new integer
     function Leviticus:OnHealthChanged(player, healthType, old, new)
-        if not player:HasCollectible(enums.Collectibles.LEVITICUS) then return end
+        if not player:HasCollectible(GetCurrentLeviticusItem()) then return end
 
         local leviticus_slot = CheckLeviticusActiveSlot(player)
         if leviticus_slot == nil then return end

@@ -96,11 +96,21 @@ TSIL.SaveManager.AddPersistentVariable(
 )
 
 
+---Helper function to check if the players are currently in the mirror key room.
+---@return boolean
+function MilkshakeVol1.API:IsInMirrorRoom()
+    return TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "IsInMirrorRoom"
+    )
+end
+
+
 ---@return integer
 local function GetCurrentRoomIndex()
     local level = Game():GetLevel()
     local roomDesc = level:GetCurrentRoomDesc()
-    return roomDesc.ListIndex
+    return roomDesc.GridIndex
 end
 
 
@@ -109,6 +119,12 @@ local function CanUseMirrorKey()
     local roomIndex = level:GetCurrentRoomIndex()
     --If we use goto in a grid room, we'll end up in an infinite loop.
     if roomIndex < 0 then
+        return false
+    end
+
+    --Can only use on main dimension and mirror world
+    local room = Game():GetRoom()
+    if not TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.MAIN) and not room:IsMirrorWorld() then
         return false
     end
 
@@ -228,7 +244,13 @@ end
 
 ---@param doorSlot DoorSlot
 ---@param target integer
-local function SpawnFakeMirrorDoor(doorSlot, target)
+---@param targetDimension Dimension
+---@param canSpawnOtherDoor boolean?
+local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension, canSpawnOtherDoor)
+    if canSpawnOtherDoor == nil then
+        canSpawnOtherDoor = true
+    end
+
     local room = Game():GetRoom()
     local doorSlotPos = room:GetDoorSlotPosition(doorSlot)
 
@@ -241,8 +263,8 @@ local function SpawnFakeMirrorDoor(doorSlot, target)
     local rotation = ROTATION_PER_DOOR_SLOT[doorSlot]
     sprite.Offset = Vector(0, 15):Rotated(rotation)
     sprite.Rotation = rotation
-    fakeDoor.Color = Color(1, 1, 1, 1, 0.2, 0.4, 0.7)
     fakeDoor.SortingLayer = SortingLayer.SORTING_DOOR
+    fakeDoor:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
 
     TSIL.Entities.SetEntityData(
         MilkshakeVol1,
@@ -255,6 +277,18 @@ local function SpawnFakeMirrorDoor(doorSlot, target)
         fakeDoor,
         "MirrorDoorTarget",
         target
+    )
+    TSIL.Entities.SetEntityData(
+        MilkshakeVol1,
+        fakeDoor,
+        "MirrorDoorTargetDimension",
+        targetDimension
+    )
+    TSIL.Entities.SetEntityData(
+        MilkshakeVol1,
+        fakeDoor,
+        "CanSpawnOtherDoor",
+        canSpawnOtherDoor
     )
 end
 
@@ -295,8 +329,25 @@ function MirrorKey:OnMirrorKeyUse(_, _, player)
     local roomIndex = GetCurrentRoomIndex()
     roomsMirrorKeyWasUsed[roomIndex] = true
 
-    SpawnFakeMirrorDoor(closeDoorSlot, MIRROR_DOOR_INDEX)
+    local dimension = TSIL.Enums.Dimension.CURRENT
+    local target = MIRROR_DOOR_INDEX
+
+    local level = Game():GetLevel()
+    if level:GetStage() == LevelStage.STAGE1_2
+    and TSIL.Stage.OnRepentanceStage() then
+        target = level:GetCurrentRoomIndex()
+
+        if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then
+            dimension = TSIL.Enums.Dimension.MAIN
+        else
+            dimension = TSIL.Enums.Dimension.SECONDARY
+        end
+    end
+
+    SpawnFakeMirrorDoor(closeDoorSlot, target, dimension)
     UpdateMirrorKeyChargeState()
+
+    SFXManager():Play(SoundEffect.SOUND_UNLOCK00)
 
     return {
         Discharge = true,
@@ -370,15 +421,28 @@ end
 local function AddLostCurse()
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         local effects = player:GetEffects()
-        effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
+        if not effects:HasNullEffect(NullItemID.ID_LOST_CURSE) then
+            effects:AddNullEffect(NullItemID.ID_LOST_CURSE)
+        end
     end
 end
 
 
 local function RemoveLostCurse()
+    if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then return end
+
     for _, player in ipairs(TSIL.Players.GetPlayers()) do
         local effects = player:GetEffects()
         effects:RemoveNullEffect(NullItemID.ID_LOST_CURSE)
+    end
+end
+
+
+local function UpdateInnerReflectionCache()
+    local players = TSIL.Players.GetPlayersByCollectible(MilkshakeVol1.enums.Collectibles.INNER_REFLECTION)
+    for _, player in ipairs(players) do
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+        player:EvaluateItems()
     end
 end
 
@@ -411,6 +475,7 @@ function MirrorKey:OnNewRoom()
         SetMirrorShaderActive(false)
         Game():GetHUD():SetVisible(true)
         RemoveLostCurse()
+        UpdateInnerReflectionCache()
 
         return
     end
@@ -425,11 +490,12 @@ function MirrorKey:OnNewRoom()
     )
 
     TSIL.Doors.RemoveDoors(TSIL.Doors.GetDoors())
-    SpawnFakeMirrorDoor(doorSlot, prevRoomIndex)
+    SpawnFakeMirrorDoor(doorSlot, prevRoomIndex, TSIL.Enums.Dimension.CURRENT)
 
     SetMirrorShaderActive(true)
     PlacePlayersInDoorSlot(doorSlot)
     AddLostCurse()
+    UpdateInnerReflectionCache()
 
     if EID then
         EID.isMirrorRoom = true
@@ -449,7 +515,8 @@ function MirrorKey:GetShaderParams(shaderName)
         )
 
         local enableShader = 0.0
-        if isInMirrorRoom and not MilkshakeVol1.utility:IsVersusScreenPlaying() then
+        if isInMirrorRoom and not MilkshakeVol1.utility:IsVersusScreenPlaying()
+        and not TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then
             enableShader = 1.0
 
             local hud = Game():GetHUD()
@@ -558,10 +625,14 @@ local function UpdateOpenState(door)
         )
     end
 
+    if sprite:IsEventTriggered("Sound") then
+        SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
+    end
+
     if sprite:IsFinished("Close") then
         sprite:Play("Closed", true)
-    elseif sprite:IsFinished("Opened") then
-        sprite:Play("Opened")
+    elseif sprite:IsFinished("Open") then
+        sprite:Play("Opened", true)
     end
 end
 
@@ -572,10 +643,10 @@ end
 local function IsPositionInEnterRange(doorDir, doorPos, playerPos)
     local posDiff = playerPos - doorPos
 
-    return (doorDir == Direction.DOWN and posDiff.Y < 0)
-    or (doorDir == Direction.LEFT and posDiff.X > 0)
-    or (doorDir == Direction.RIGHT and posDiff.X < 0)
-    or (doorDir == Direction.UP and posDiff.Y > 0)
+    return (doorDir == Direction.DOWN and posDiff.Y < 0 and math.abs(posDiff.X) < 50)
+    or (doorDir == Direction.LEFT and posDiff.X > 0 and math.abs(posDiff.Y) < 50)
+    or (doorDir == Direction.RIGHT and posDiff.X < 0 and math.abs(posDiff.Y) < 50)
+    or (doorDir == Direction.UP and posDiff.Y > 0 and math.abs(posDiff.X) < 50)
 end
 
 
@@ -598,6 +669,11 @@ local function CheckIfPlayerEnters(door)
             door,
             "MirrorDoorDoorSlot"
         )
+        local canSpawnDoor = TSIL.Entities.GetEntityData(
+            MilkshakeVol1,
+            door,
+            "CanSpawnOtherDoor"
+        )
 
         if target == MIRROR_DOOR_INDEX then
             local level = Game():GetLevel()
@@ -610,6 +686,7 @@ local function CheckIfPlayerEnters(door)
                     RemoveAllPickups()
                     RemoveTallLadder()
                     AddLostCurse()
+                    UpdateInnerReflectionCache()
                 end
             )
 
@@ -642,26 +719,61 @@ local function CheckIfPlayerEnters(door)
                 RoomTransitionAnim.FADE_MIRROR
             )
         else
-            TSIL.SaveManager.SetPersistentVariable(
+            local dimension = TSIL.Entities.GetEntityData(
                 MilkshakeVol1,
-                "IsInMirrorRoom",
-                false
+                door,
+                "MirrorDoorTargetDimension"
             )
-            TSIL.Utils.Functions.RunNextCallback(
-                MilkshakeVol1,
-                ModCallbacks.MC_POST_NEW_ROOM,
-                function ()
-                    SetMirrorShaderActive(false)
-                    Game():GetHUD():SetVisible(true)
-                    PlacePlayersInDoorSlot(doorSlot)
-                    RemoveLostCurse()
-                end
-            )
+
+            if dimension == TSIL.Enums.Dimension.CURRENT then
+                TSIL.SaveManager.SetPersistentVariable(
+                    MilkshakeVol1,
+                    "IsInMirrorRoom",
+                    false
+                )
+                TSIL.Utils.Functions.RunNextCallback(
+                    MilkshakeVol1,
+                    ModCallbacks.MC_POST_NEW_ROOM,
+                    function ()
+                        SetMirrorShaderActive(false)
+                        Game():GetHUD():SetVisible(true)
+                        PlacePlayersInDoorSlot(doorSlot)
+                        RemoveLostCurse()
+                        UpdateInnerReflectionCache()
+                    end
+                )
+            elseif dimension == TSIL.Enums.Dimension.MAIN then
+                TSIL.Utils.Functions.RunNextCallback(
+                    MilkshakeVol1,
+                    ModCallbacks.MC_POST_NEW_ROOM,
+                    function ()
+                        RemoveLostCurse()
+                        PlacePlayersInDoorSlot(doorSlot)
+                        if canSpawnDoor then
+                            SpawnFakeMirrorDoor(doorSlot, target, TSIL.Enums.Dimension.SECONDARY, false)
+                        end
+                    end
+                )
+            elseif dimension == TSIL.Enums.Dimension.SECONDARY then
+                TSIL.Utils.Functions.RunNextCallback(
+                    MilkshakeVol1,
+                    ModCallbacks.MC_POST_NEW_ROOM,
+                    function ()
+                        AddLostCurse()
+                        PlacePlayersInDoorSlot(doorSlot)
+                        if canSpawnDoor then
+                            SpawnFakeMirrorDoor(doorSlot, target, TSIL.Enums.Dimension.MAIN, false)
+                        end
+                    end
+                )
+            end
 
             Game():StartRoomTransition(
                 target,
                 Direction.LEFT,
-                RoomTransitionAnim.FADE_MIRROR
+                RoomTransitionAnim.FADE_MIRROR,
+                nil,
+                dimension
             )
         end
     end
@@ -772,10 +884,14 @@ local function TryPlayBossMusic()
     if musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER
     or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER2
     or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER3 then
+        musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS_OUTRO)
+        musicManager:Queue(Music.MUSIC_BOSS_OVER)
+
         return
     end
 
-    if musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS then
+    if musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS
+    and musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS_OUTRO then
         musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS)
     end
 end

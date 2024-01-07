@@ -19,6 +19,14 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 
+local function CanUseBrenda(player)
+    if (player:GetPlayerType() == PlayerType.PLAYER_THELOST or player:GetPlayerType() == PlayerType.PLAYER_THELOST_B)
+    and not (player:HasCollectible(enums.Collectibles.LEVITICUS) and player:GetActiveCharge() + player:GetBatteryCharge() > 0)
+    and not (player:HasCollectible(CollectibleType.COLLECTIBLE_ALABASTER_BOX) and player:GetActiveCharge() + player:GetBatteryCharge() > 0) then
+        return false
+    else return true end
+end
+
 
 local soulStones = {
     Card.CARD_SOUL_ISAAC,
@@ -198,23 +206,23 @@ end, function(slot, _, position, velocity)
 end)
 
 
---Smelt player trinkets
-MilkshakeVol1.API:AddSpiritKlinReward(function(player)
-    if player:GetTrinket(0) ~= 0 then
-        return 3
-    end
+-- --Smelt player trinkets
+-- MilkshakeVol1.API:AddSpiritKlinReward(function(player)
+--     if player:GetTrinket(0) ~= 0 then
+--         return 3
+--     end
 
-    return 0
-end, function(_, player)
-    player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
+--     return 0
+-- end, function(_, player)
+--     player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
 
-    TSIL.EntitySpecific.SpawnEffect(
-        EffectVariant.POOF01,
-        0,
-        player.Position
-    )
-    SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
-end)
+--     TSIL.EntitySpecific.SpawnEffect(
+--         EffectVariant.POOF01,
+--         0,
+--         player.Position
+--     )
+--     SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
+-- end)
 
 
 --Add random element wisp
@@ -269,6 +277,8 @@ local function OnSlotBroken(slot)
             newData[key] = value
         end
     end
+
+    SFXManager():Play(enums.Sounds.BRENDA_HURT)
 
     local oldSprite = slot:GetSprite()
     local newSprite = newSlot:GetSprite()
@@ -382,6 +392,7 @@ MilkshakeVol1:AddCallback(
 ---@param brenda Entity
 ---@param player EntityPlayer
 function SpiritKlin:OnBrendaCollision(brenda, player)
+    if not CanUseBrenda(player) then return end
     local sprite = brenda:GetSprite()
     if sprite:GetAnimation() ~= "Idle" then return end
 
@@ -389,11 +400,17 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
     local soulHearts = player:GetSoulHearts()
     if soulCharge < 1 and soulHearts < 1 then return end
 
-    if soulCharge >= 1 then
-        player:AddSoulCharge(-1)
+    if (player:GetPlayerType() == PlayerType.PLAYER_THELOST or player:GetPlayerType() == PlayerType.PLAYER_THELOST_B) then
+        player:SetActiveCharge(player:GetActiveCharge() + player:GetBatteryCharge() - 1)
     else
-        player:AddSoulHearts(-1)
+        if soulCharge >= 1 then
+            player:AddSoulCharge(-1)
+        else
+            player:AddSoulHearts(-1)
+        end
     end
+
+    SFXManager():Play(enums.Sounds.BRENDA_ACTIVATE)
 
     sprite:Play("Prize", true)
     TSIL.Entities.SetEntityData(

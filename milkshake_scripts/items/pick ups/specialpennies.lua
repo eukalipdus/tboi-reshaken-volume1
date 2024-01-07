@@ -1,5 +1,14 @@
 local enums = MilkshakeVol1.enums
 
+local REPLACE_CHANCE = 2
+local KEEPERB_REPLACE_CHANCE = 1
+
+local function GetSpawnCount(player)
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE) then return 1 end
+    local rng = player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE)
+    return TSIL.Random.GetRandomInt(1, 2, rng)
+end
+
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
     local randomPill = Game():GetItemPool():GetPill(Random() + 1)
     player:AddPill(randomPill)
@@ -17,7 +26,11 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BLOODY_
 end, 0.45)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BURNT_PENNY, function (_, player)
-    player:AddBombs(1)
+    if player:GetPlayerType() ~= PlayerType.PLAYER_BLUEBABY_B then
+        player:AddBombs(GetSpawnCount(player))
+    else
+        player:AddPoopMana(1)
+    end
     SFXManager():Play(SoundEffect.SOUND_FETUS_FEET)
 end, 0.45)
 
@@ -26,6 +39,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BUTT_PE
 end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CHARGED_PENNY, function (_, player)
+    if not player:NeedsCharge(ActiveSlot.SLOT_PRIMARY) then return end
     TSIL.Charge.AddCharge(player)
 end, 0.25)
 
@@ -45,7 +59,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CURSED_
 end, 0.10)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.FLAT_PENNY, function (_, player)
-    player:AddKeys(1)
+    player:AddKeys(GetSpawnCount(player))
     SFXManager():Play(SoundEffect.SOUND_KEYPICKUP_GAUNTLET)
 end, 0.45)
 
@@ -61,3 +75,25 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_RENDER, function (_, picku
         SFXManager():Play(SoundEffect.SOUND_PENNYDROP)
     end
 end)
+
+function MilkshakeVol1:PostPickupInit(pickup)
+    if (Game().Difficulty == Difficulty.DIFFICULTY_GREED or Game().Difficulty == Difficulty.DIFFICULTY_GREEDIER)
+    or MilkshakeVol1.utility:DidEntityExist()
+    or pickup.Variant ~= PickupVariant.PICKUP_COIN
+    or pickup.SubType ~= CoinSubType.COIN_PENNY then return end
+    local chance
+    if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B) then chance = KEEPERB_REPLACE_CHANCE else chance = REPLACE_CHANCE end
+    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+    local roll = TSIL.Random.GetRandomInt(1, 100, rng)
+    if roll <= chance then
+        local rainbowCoinType = MilkshakeVol1.API:GetRainbowPenny(rng)
+        pickup:Morph(
+            pickup.Type,
+            rainbowCoinType.variant,
+            rainbowCoinType.subtype,
+            true,
+            false
+        )
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, MilkshakeVol1.PostPickupInit)

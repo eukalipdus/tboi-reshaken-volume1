@@ -24,13 +24,30 @@ function utility:ShardTrinkets(trinketType, cardType, gridEntity, chance)
 end
 
 --- Used to render crystal overlays over rocks if a player has a shard trinket
----@param gridEntity GridEntity
+---@param entity Entity
 ---@param animName string
-function utility:RenderCrystalRockSprite(gridEntity, animName)
-    local sprite = Sprite()
-    sprite:Load("gfx/grid/grid_crystalrock.anm2", true)
-    sprite:Play(animName, true)
-    sprite:Render(Isaac.WorldToScreen(gridEntity.Position))
+function utility:RenderCrystalRockSprite(entity, animName)
+    local renderPos
+    if entity.Type == EntityType.ENTITY_PLAYER then
+        renderPos =  Isaac.WorldToScreen(entity.Position - Vector(0,45))
+    else
+        renderPos = Isaac.WorldToScreen(entity.Position)
+    end
+    local sprite
+    if utility:GetData(entity, "RockOverlay") then
+        sprite = utility:GetData(entity, "RockOverlay")
+    else
+        sprite = Sprite()
+        sprite:Load("gfx/grid/grid_crystalrock.anm2", true)
+    end
+    if not sprite:IsPlaying(animName) or sprite:IsFinished(animName) then
+        sprite:Play(animName, true)
+    end
+    if Game():GetFrameCount() % 6 == 0 then
+        sprite:Update()
+    end
+    sprite:Render(renderPos)
+    utility:SetData(entity, "RockOverlay", sprite)
 end
 
 ---Returns the tears stat after adding some value
@@ -370,16 +387,16 @@ function utility:SetBlindfold(player, enabled) -- true is blind, false for cry
 	---Blindfold
     local challenge = Isaac.GetChallenge()
     if enabled and player:CanShoot() then
-        game.Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
+        Game().Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
         player:UpdateCanShoot()
-        game.Challenge = challenge
+        Game().Challenge = challenge
         player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
 		utility:SetData(player, "SetBlind", true)
     elseif not enabled and utility:GetData(player, "SetBlind") then --if player:CanShoot() then
 		if not player:CanShoot() then
-			game.Challenge = Challenge.CHALLENGE_NULL
+			Game().Challenge = Challenge.CHALLENGE_NULL
 			player:UpdateCanShoot()
-			game.Challenge = challenge
+			Game().Challenge = challenge
 		end
 		utility:SetData(player, "SetBlind", nil)
     end
@@ -421,19 +438,6 @@ end
 ---@return boolean
 function utility:IsEnemyConfused(enemy)
     return enemy:HasEntityFlags(EntityFlag.FLAG_CONFUSION)
-end
-
---- Find out if at least one player has a given trinket, returns the first player found that has it
----@param trinketType integer
----@return EntityPlayer | nil
-function utility:DoesTrinketExist(trinketType)
-    for i = 0, Game():GetNumPlayers() - 1 do
-      local player = Isaac.GetPlayer(i)
-      if player:HasTrinket(trinketType) then
-        return player
-      end
-    end
-    return nil
 end
 
 --- Returns an x and y relative to the given x and y taking into account the HUD offset
@@ -480,6 +484,5 @@ function utility:IsVersusScreenPlaying()
         and room:GetType() == RoomType.ROOM_BOSS
         and not room:IsClear()
 end
-
 
 MilkshakeVol1.utility = utility

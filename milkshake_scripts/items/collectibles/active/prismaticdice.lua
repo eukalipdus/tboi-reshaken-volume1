@@ -48,7 +48,7 @@ local function PlaySplitAnimation(index, currentCollecible)
         currentCollecible:SetColor(SOLID_CYAN, SHATTERED_SOLID_FRAMES, 2, false, false)
         local lastCollectible = currentCollecible
 
-        TSIL.Utils.Functions.RunInFrames(function ()
+        TSIL.Utils.Functions.RunInFramesTemporary(function ()
         --CYAN:SetColorize(0, 2, 2, 3)
         lastCollectible:SetColor(CYAN, SHATTERED_COLOR_FRAMES, 2, true, false)
         end, SHATTERED_SOLID_FRAMES)
@@ -57,7 +57,7 @@ local function PlaySplitAnimation(index, currentCollecible)
         --SOLID_PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
         currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
 
-        TSIL.Utils.Functions.RunInFrames(function ()
+        TSIL.Utils.Functions.RunInFramesTemporary(function ()
         --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
         currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
         end, SHATTERED_SOLID_FRAMES)
@@ -65,7 +65,7 @@ local function PlaySplitAnimation(index, currentCollecible)
     elseif index == 2 then
         currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
 
-        TSIL.Utils.Functions.RunInFrames(function ()
+        TSIL.Utils.Functions.RunInFramesTemporary(function ()
         --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
         currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
         end, SHATTERED_SOLID_FRAMES)
@@ -78,7 +78,7 @@ end
 ---@param colorTwo Color
 local function SplitAnimationSingle(collectible, colorOne, colorTwo)
     collectible:SetColor(colorOne, SHATTERED_SOLID_FRAMES, 2, false, false)
-    TSIL.Utils.Functions.RunInFrames(function ()
+    TSIL.Utils.Functions.RunInFramesTemporary(function ()
     collectible:SetColor(colorTwo, SHATTERED_COLOR_FRAMES, 2, true, false)
     end, SHATTERED_SOLID_FRAMES)
 end
@@ -87,9 +87,9 @@ end
 ---@param player EntityPlayer
 ---@param collectible EntityPickup
 ---@param quality number
----@param newCollectibleID number
 ---@param originalQuality number | nil
-local function SplitCollectible(player, collectible, quality, newCollectibleID, originalQuality)
+function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality)
+    local newCollectibleID
     local shatteredCollectible
     local willBreakfast = true
     local itemPool = Game():GetItemPool()
@@ -147,6 +147,8 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
             PlaySplitAnimation(i, shatteredCollectible)
 
             if shatteredCollectible and collectible:IsShopItem() then
+                shatteredCollectible.AutoUpdatePrice = false
+
                 if collectible.Price == PickupPrice.PRICE_THREE_SOULHEARTS then
                     shatteredCollectible.Price = PickupPrice.PRICE_TWO_SOUL_HEARTS
 
@@ -161,7 +163,6 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
                     shatteredCollectible.Price = PickupPrice.PRICE_ONE_HEART
                 
                 else
-                    shatteredCollectible.AutoUpdatePrice = false
                     shatteredCollectible.Price = math.floor(collectible.Price / 2)
                 end
             end
@@ -198,6 +199,10 @@ local function SplitCollectible(player, collectible, quality, newCollectibleID, 
             elseif splitQuality == 3 then
                 ---@diagnostic disable-next-line: param-type-mismatch
                 shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
+            
+            elseif splitQuality == 4 then
+                ---@diagnostic disable-next-line: param-type-mismatch
+                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.GOLDEN_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
             end
 
             if i == 0 then
@@ -236,7 +241,7 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
             local posRight = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
 
 
-            TSIL.Utils.Functions.RunInFrames(function ()
+            TSIL.Utils.Functions.RunInFramesTemporary(function ()
                 
                 if collectible.SubType == CollectibleType.COLLECTIBLE_DADS_NOTE then
                     return
@@ -252,19 +257,18 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
                  else
                      collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
                      collectible:Remove()
-                     local newCollectibleID
                     if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
                         local roll = 4 + rng:RandomInt(2)
                         for _ = 1, roll do
-                            SplitCollectible(player, collectible, collectibleQuality - roll, newCollectibleID, collectibleQuality)
+                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - roll, collectibleQuality)
                         end
 
                     elseif player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
                          for _ = 1, 2 do
-                            SplitCollectible(player, collectible, collectibleQuality - 1, newCollectibleID, collectibleQuality)
+                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - 1, collectibleQuality)
                          end
                      else
-                         SplitCollectible(player, collectible, collectibleQuality, newCollectibleID, nil)
+                        MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality, nil)
                      end
                  end
     

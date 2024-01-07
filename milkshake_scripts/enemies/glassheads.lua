@@ -61,52 +61,23 @@ function GlassHeads:GlassHead_Update(enemy)
     local data = GetGlassHeadData(enemy)
     local target = enemy:GetPlayerTarget()
     local rng = enemy:GetDropRNG()
+    local room = Game():GetRoom()
 
     if not data.state then data.state = 1 end
     if not data.gridCountdown then data.gridCountdown = 0 end
 
-    if data.init and data.state ~= 6 then
-        data.init = data.init - 1
-        if data.init <= 0 then
-            data.init = nil
-        end
-        enemy.Velocity = enemy.Velocity * .5
-
-        return
-    end
-
-    if sprite:IsEventTriggered("Step") then
-        sfx:Play(SoundEffect.SOUND_FETUS_LAND, .5, 0, false, 1, 0)
-        sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, .25, 0, false, 1, 0)
-    end
- 
-    if data.state == 1 then
-        if utility:IsEnemyScared(enemy) then
-            data.targpos = enemy.Position + (enemy.Position - target.Position)
-        elseif utility:IsEnemyConfused(enemy) then
-            if not data.targpos or enemy:IsFrame(25, 0) then
-                data.targpos = Game():GetRoom():GetRandomPosition(0)
+    if data.state ~= 6 then
+        if data.init then
+            data.init = data.init - 1
+            if data.init <= 0 then
+                data.init = nil
             end
-        else
-            data.targpos = target.Position
+            enemy.Velocity = enemy.Velocity * .5
+    
+            return
         end
-        
-        if enemy.Pathfinder:HasPathToPos(data.targpos, false) or (utility:IsEnemyScared(enemy) or utility:IsEnemyConfused(enemy)) then
-            if (enemy:CollidesWithGrid() or data.gridCountdown > 0 or NearSpike(enemy)) and
-                (data.targpos:Distance(enemy.Position) > 100 or data.targpos:Distance(enemy.Position) < 100 and
-                    not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then
-                enemy.Pathfinder:FindGridPath(data.targpos, GLASSHEAD_SPEED, 1, false)
-                if data.gridCountdown <= 0 then
-                    data.gridCountdown = 60
-                else
-                    data.gridCountdown = data.gridCountdown - 1
-                end
-            else
-                local targetvel = (data.targpos - enemy.Position):Resized(GLASSHEAD_SPEED * 6)
-                ---@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
-                enemy.Velocity = TSIL.Utils.Math.Lerp(enemy.Velocity, targetvel, 0.25)
-            end
 
+        if enemy.Velocity:Length() > 1 then 
             if math.abs(enemy.Velocity.Y) > math.abs(enemy.Velocity.X) then
                 sprite:Play('WalkVert')
             else
@@ -118,8 +89,57 @@ function GlassHeads:GlassHead_Update(enemy)
             end
         else
             sprite:Play('Idle')
-            enemy.Velocity = enemy.Velocity * .5
         end
+    end
+
+    if sprite:IsEventTriggered("Step") then
+        sfx:Play(SoundEffect.SOUND_FETUS_LAND, .5, 0, false, 1, 0)
+        sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, .25, 0, false, 1, 0)
+    end
+
+    if data.state == 1 then
+        if utility:IsEnemyScared(enemy) then
+            data.targpos = enemy.Position + (enemy.Position - target.Position)
+        elseif utility:IsEnemyConfused(enemy) then
+            if not data.targpos or enemy:IsFrame(25, 0) then
+                data.targpos = Game():GetRoom():GetRandomPosition(0)
+            end
+        else
+            if (enemy.Pathfinder:HasPathToPos(target.Position, false) and 
+            not (enemy.Pathfinder:HasPathToPos(target.Position) and room:GetGridPathFromPos(target.Position) > 950)) -- over rocks next to enemy
+            or not data.targpos then
+                data.targpos = target.Position
+            end
+        end
+        
+        if (enemy:CollidesWithGrid() or data.gridCountdown > 0 or NearSpike(enemy)) and
+            (data.targpos:Distance(enemy.Position) > 100 or data.targpos:Distance(enemy.Position) < 100 
+            and not room:CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then
+
+            enemy.Pathfinder:FindGridPath(data.targpos, GLASSHEAD_SPEED, 1, false)
+            if data.gridCountdown <= 0 then
+                data.gridCountdown = 60
+            else
+                data.gridCountdown = data.gridCountdown - 1
+            end
+
+            if enemy.Position:Distance(data.targpos) < 50 then 
+                data.state = 2 
+            end
+
+        else
+            local targetvel = (data.targpos - enemy.Position):Resized(GLASSHEAD_SPEED * 6)
+            ---@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
+            enemy.Velocity = TSIL.Utils.Math.Lerp(enemy.Velocity, targetvel, 0.25)
+        end
+
+    elseif data.state==2 then 
+    
+        enemy.Velocity = enemy.Velocity * .5
+        if enemy.Pathfinder:HasPathToPos(target.Position, false) and room:GetGridPathFromPos(target.Position) < 950 then
+            data.state = 1
+        end
+  
     elseif data.state == 6 then
         sprite:Play('Death')
 
@@ -214,6 +234,7 @@ function GlassHeads:GlassHead_Update(enemy)
 
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
+
         elseif sprite:IsFinished("Death") then
             enemy.CanShutDoors = false
             enemy.DepthOffset = -10
@@ -249,7 +270,6 @@ MilkshakeVol1:AddCallback(
 function GlassHeads:GlassHeads_Dmg(enemy, amount, flags, source, cool)
 
     source = source.Entity
-    local shouldFreeze = (enemy:HasEntityFlags(EntityFlag.FLAG_ICE) or (source and source.Type==2 and source:ToTear():HasTearFlags(TearFlags.TEAR_ICE)))
 
     if amount > 0
         and (
@@ -262,8 +282,12 @@ function GlassHeads:GlassHeads_Dmg(enemy, amount, flags, source, cool)
     if GetGlassHeadData(enemy).state == 6 then
         return false
     end
+
+    local shouldntShatter = 
+    (enemy:HasEntityFlags(EntityFlag.FLAG_ICE) or (source and source.Type==2 and source:ToTear():HasTearFlags(TearFlags.TEAR_ICE))) or
+    (enemy:HasEntityFlags(EntityFlag.FLAG_NO_DEATH_TRIGGER)) or enemy:HasEntityFlags(EntityFlag.FLAG_FREEZE) or enemy:HasEntityFlags(EntityFlag.FLAG_MIDAS_FREEZE)
    
-    if not shouldFreeze and 0 >= enemy.HitPoints - amount  then
+    if not shouldntShatter and 0 >= enemy.HitPoints - amount  then
         GetGlassHeadData(enemy).state = 6
         enemy.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
         enemy.Velocity = -enemy.Velocity:Resized(5)
@@ -286,3 +310,41 @@ function GlassHeads:GlassHeads_Dmg(enemy, amount, flags, source, cool)
 end
 
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, GlassHeads.GlassHeads_Dmg, enums.Enemies.GLASS_HEAD)
+
+---@param enemy EntityNPC
+function GlassHeads:GlassHeads_Death(enemy)
+    local data = GetGlassHeadData(enemy)
+    local rng = TSIL.RNG.NewRNG(enemy.InitSeed)
+    
+    enemy.SplatColor = Color(0,0,0,0,0,0,0)
+
+    local spark = TSIL.EntitySpecific.SpawnEffect(
+        EffectVariant.IMPACT,
+        0,
+        enemy.Position,
+        Vector.Zero,
+        enemy
+    )
+    spark.DepthOffset = -5
+    
+    for _ = 1, 10 do
+        local pos = enemy.Position + Vector(
+            TSIL.Random.GetRandomInt(-20, 20, rng),
+            TSIL.Random.GetRandomInt(-20, 20, rng))
+
+        local eff = TSIL.EntitySpecific.SpawnEffect(
+            EffectVariant.DIAMOND_PARTICLE,
+            0,
+            pos,
+            (pos - enemy.Position):Resized(TSIL.Random.GetRandomInt(2, 5, rng)),
+            enemy
+        )
+        eff:GetSprite().Color = enemy:GetColor()
+    end
+end
+
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_NPC_DEATH,
+    GlassHeads.GlassHeads_Death,
+    enums.Enemies.GLASS_HEAD
+)

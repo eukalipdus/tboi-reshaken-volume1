@@ -49,6 +49,7 @@ function BeerHead:BeerHead_Update(enemy)
     local data = GetGlassHeadData(enemy)
     local target = enemy:GetPlayerTarget()
     local rng = enemy:GetDropRNG()
+    local room = Game():GetRoom()
 
     if not data.state then data.state = 1 end
     if not data.gridCountdown then data.gridCountdown = 0 end
@@ -64,6 +65,37 @@ function BeerHead:BeerHead_Update(enemy)
         return
     end
 
+    if data.state ~= 2 and data.state ~= 4 and data.state ~= 6 then
+        if data.state == 3 then
+            if math.abs(enemy.Velocity.Y) > math.abs(enemy.Velocity.X) then
+                if enemy.Velocity.Y > 0 then
+                    sprite:Play('WalkDown_Rush')
+                else
+                    sprite:Play('WalkUp_Rush')
+                end
+            else
+                if enemy.Velocity.X > 0 then
+                    sprite:Play('WalkRight_Rush')
+                else
+                    sprite:Play('WalkLeft_Rush')
+                end
+            end
+        else
+            if enemy.Velocity:Length() > .1 then
+                if math.abs(enemy.Velocity.Y) > math.abs(enemy.Velocity.X) then
+                    sprite:Play('WalkVert')
+                else
+                    if enemy.Velocity.X > 0 then
+                        sprite:Play('WalkRight')
+                    else
+                        sprite:Play('WalkLeft')
+                    end
+                end
+            else
+                sprite:SetFrame('WalkVert', 0)
+            end
+        end
+    end
 
     if data.state == 1 or data.state == 3 then
         if target.Position:Distance(enemy.Position) < 100 then
@@ -106,129 +138,114 @@ function BeerHead:BeerHead_Update(enemy)
                 data.targpos = Game():GetRoom():GetRandomPosition(0)
             end
         else
-            data.targpos = target.Position
+            if enemy.Pathfinder:HasPathToPos(target.Position, false) and not 
+            (enemy.Pathfinder:HasPathToPos(target.Position) and room:GetGridPathFromPos(target.Position) > 950) -- over rocks
+            or not data.targpos then
+                data.targpos = target.Position
+            end
         end
-
-
-        if enemy.Pathfinder:HasPathToPos(data.targpos, false) or (utility:IsEnemyScared(enemy) or utility:IsEnemyConfused(enemy)) then
-            if (enemy:CollidesWithGrid() or data.gridCountdown > 0 or NearSpike(enemy)) and
-                (data.targpos:Distance(enemy.Position) > 100 or data.targpos:Distance(enemy.Position) < 100 and
-                    not Game():GetRoom():CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then
-                enemy.Pathfinder:FindGridPath(data.targpos, Speed, 1, false)
-                if data.gridCountdown <= 0 then
-                    data.gridCountdown = 60
-                else
-                    data.gridCountdown = data.gridCountdown - 1
-                end
+    
+        if (enemy:CollidesWithGrid() or data.gridCountdown > 0 or NearSpike(enemy)) and
+            (data.targpos:Distance(enemy.Position) > 100 or data.targpos:Distance(enemy.Position) < 100 and
+                not room:CheckLine(enemy.Position, data.targpos, 0, 0, false, false)) then
+            enemy.Pathfinder:FindGridPath(data.targpos, Speed, 1, false)
+            if data.gridCountdown <= 0 then
+                data.gridCountdown = 60
             else
-                local targetvel = (data.targpos - enemy.Position):Resized(Speed * 6)
-                ---@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
-                enemy.Velocity = TSIL.Utils.Math.Lerp(enemy.Velocity, targetvel, 0.25)
+                data.gridCountdown = data.gridCountdown - 1
             end
 
-            if data.state == 1 then
-                if math.abs(enemy.Velocity.Y) > math.abs(enemy.Velocity.X) then
-                    sprite:Play('WalkVert')
-                else
-                    if enemy.Velocity.X > 0 then
-                        sprite:Play('WalkRight')
-                    else
-                        sprite:Play('WalkLeft')
-                    end
-                end
-            else
-                if math.abs(enemy.Velocity.Y) > math.abs(enemy.Velocity.X) then
-                    if enemy.Velocity.Y > 0 then
-                        sprite:Play('WalkDown_Rush')
-                    else
-                        sprite:Play('WalkUp_Rush')
-                    end
-                else
-                    if enemy.Velocity.X > 0 then
-                        sprite:Play('WalkRight_Rush')
-                    else
-                        sprite:Play('WalkLeft_Rush')
-                    end
-                end
+            if enemy.Position:Distance(data.targpos) < 50 then  
+                data.state = 5 
             end
 
-            if data.state == 3 then
-                local tab = {
-                    ["WalkDown_Rush"] = Vector(0, -1),
-                    ["WalkUp_Rush"] = Vector(0, 1),
-                    ["WalkRight_Rush"] = Vector(-1, 0),
-                    ["WalkLeft_Rush"] = Vector(1, 0)
-                }
-
-                if enemy:IsFrame(2, 0) then
-                    local creep = TSIL.EntitySpecific.SpawnEffect(
-                        EffectVariant.CREEP_SLIPPERY_BROWN,
-                        0,
-                        enemy.Position + Vector(
-                            TSIL.Random.GetRandomInt(-5, 5, rng),
-                            TSIL.Random.GetRandomInt(-5, 5, rng)
-                        ),
-                        Vector.Zero,
-                        enemy
-                    )
-                    local n = (rng:RandomInt(8) + 5) / 10
-                    GetGlassHeadData(creep).BeerHead = true
-                    creep.SpriteScale = Vector(n, n)
-                    creep.Timeout = 200
-                    creep:Update()
-                end
-
-                if enemy:IsFrame(4, 0) then
-                    local posOffset = Vector(
-                        TSIL.Random.GetRandomInt(-10, 10, rng),
-                        TSIL.Random.GetRandomInt(-10, 10, rng)
-                    )
-                    posOffset = posOffset + tab[sprite:GetAnimation()] * 30
-
-                    local beerExplosion = TSIL.EntitySpecific.SpawnEffect(
-                        EffectVariant.BLOOD_EXPLOSION,
-                        TSIL.Enums.BloodExplosionSubType.LARGE,
-                        enemy.Position + posOffset,
-                        enemy.Velocity * -.5,
-                        enemy
-                    )
-                    beerExplosion:GetSprite().Color = BEER_COLOR
-                    sfx:Play(SoundEffect.SOUND_ROTTEN_HEART, .25, 0, false, 1)
-                end
-
-                if enemy:IsFrame(10, 0) then
-                    sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, 1.5, 0)
-                end
-
-                if rng:RandomInt(5) + 1 == 1 then
-                    local posOffset = Vector(
-                        TSIL.Random.GetRandomInt(-10, 10, rng),
-                        TSIL.Random.GetRandomInt(-10, 10, rng)
-                    )
-                    posOffset = posOffset + tab[sprite:GetAnimation()] * 30
-                    local spawnPos = enemy.Position + posOffset
-                    local spawnVel = (spawnPos - enemy.Position):Resized(rng:RandomInt(5) + 4)
-
-                    local projectile = TSIL.EntitySpecific.SpawnProjectile(
-                        ProjectileVariant.PROJECTILE_NORMAL,
-                        0,
-                        spawnPos,
-                        spawnVel,
-                        enemy
-                    )
-
-                    projectile.Scale = (rng:RandomInt(15) + 5) / 12
-                    projectile.FallingSpeed = rng:RandomInt(5) - 15
-                    projectile.FallingAccel = rng:RandomInt(1) + 2
-                    projectile:GetSprite().Color = BEER_PROJECTILE_COLOR
-
-                    sfx:Play(SoundEffect.SOUND_BLOODSHOOT, 1, 0, false, 1)
-                end
-            end
         else
-            sprite:SetFrame('WalkVert', 0)
-            enemy.Velocity = enemy.Velocity * .5
+            local targetvel = (data.targpos - enemy.Position):Resized(Speed * 6)
+            ---@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
+            enemy.Velocity = TSIL.Utils.Math.Lerp(enemy.Velocity, targetvel, 0.25)
         end
+
+        if data.state == 3 then
+            local tab = {
+                ["WalkDown_Rush"] = Vector(0, -1),
+                ["WalkUp_Rush"] = Vector(0, 1),
+                ["WalkRight_Rush"] = Vector(-1, 0),
+                ["WalkLeft_Rush"] = Vector(1, 0)
+            }
+
+            if enemy:IsFrame(2, 0) then
+                local creep = TSIL.EntitySpecific.SpawnEffect(
+                    EffectVariant.CREEP_SLIPPERY_BROWN,
+                    0,
+                    enemy.Position + Vector(
+                        TSIL.Random.GetRandomInt(-5, 5, rng),
+                        TSIL.Random.GetRandomInt(-5, 5, rng)
+                    ),
+                    Vector.Zero,
+                    enemy
+                )
+                local n = (rng:RandomInt(8) + 5) / 10
+                GetGlassHeadData(creep).BeerHead = true
+                creep.SpriteScale = Vector(n, n)
+                creep.Timeout = 200
+                creep:Update()
+            end
+
+            if enemy:IsFrame(4, 0) then
+                local posOffset = Vector(
+                    TSIL.Random.GetRandomInt(-10, 10, rng),
+                    TSIL.Random.GetRandomInt(-10, 10, rng)
+                )
+                posOffset = posOffset + tab[sprite:GetAnimation()] * 30
+
+                local beerExplosion = TSIL.EntitySpecific.SpawnEffect(
+                    EffectVariant.BLOOD_EXPLOSION,
+                    TSIL.Enums.BloodExplosionSubType.LARGE,
+                    enemy.Position + posOffset,
+                    enemy.Velocity * -.5,
+                    enemy
+                )
+                beerExplosion:GetSprite().Color = BEER_COLOR
+                sfx:Play(SoundEffect.SOUND_ROTTEN_HEART, .25, 0, false, 1)
+            end
+
+            if enemy:IsFrame(10, 0) then
+                sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, 1.5, 0)
+            end
+
+            if rng:RandomInt(5) + 1 == 1 then
+                local posOffset = Vector(
+                    TSIL.Random.GetRandomInt(-10, 10, rng),
+                    TSIL.Random.GetRandomInt(-10, 10, rng)
+                )
+                posOffset = posOffset + tab[sprite:GetAnimation()] * 30
+                local spawnPos = enemy.Position + posOffset
+                local spawnVel = (spawnPos - enemy.Position):Resized(rng:RandomInt(5) + 4)
+
+                local projectile = TSIL.EntitySpecific.SpawnProjectile(
+                    ProjectileVariant.PROJECTILE_NORMAL,
+                    0,
+                    spawnPos,
+                    spawnVel,
+                    enemy
+                )
+
+                projectile.Scale = (rng:RandomInt(15) + 5) / 12
+                projectile.FallingSpeed = rng:RandomInt(5) - 15
+                projectile.FallingAccel = rng:RandomInt(1) + 2
+                projectile:GetSprite().Color = BEER_PROJECTILE_COLOR
+
+                sfx:Play(SoundEffect.SOUND_BLOODSHOOT, 1, 0, false, 1)
+            end
+        end
+
+    elseif data.state==5 then 
+
+        enemy.Velocity = enemy.Velocity * .75
+        if enemy.Pathfinder:HasPathToPos(target.Position, false) and room:GetGridPathFromPos(target.Position) < 950 then
+            data.state = 1
+        end
+
     elseif data.state == 2 then
         sprite:Play("Activate")
 
@@ -346,6 +363,7 @@ function BeerHead:BeerHead_Update(enemy)
 
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 1, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
+
         elseif sprite:IsFinished("Death") then
             enemy.CanShutDoors = false
             enemy.DepthOffset = -10
@@ -376,7 +394,9 @@ function BeerHead:BeerHead_Creep(effect)
     if not GetGlassHeadData(effect).BeerHead then return end
     local sprite = effect:GetSprite()
     sprite:SetFrame(0)
-    sprite.Color = BEER_COLOR
+    if effect.Timeout > 0 then
+        sprite.Color = BEER_COLOR
+    end
 end
 
 MilkshakeVol1:AddCallback(

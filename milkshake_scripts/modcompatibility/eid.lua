@@ -39,14 +39,23 @@ MilkshakeVol1:AddModCompatibility("EID", function()
             EID:addCollectible(collectible, description.description, description.name, language)
 
             if description.abyss then
+                if not EID.descriptions[language].abyssSynergies then
+                    EID.descriptions[language].abyssSynergies = {}
+                end
                 EID.descriptions[language].abyssSynergies[collectible] = description.abyss
             end
 
             if description.book_of_virtues then
+                if not EID.descriptions[language].bookOfVirtuesWisps then
+                    EID.descriptions[language].bookOfVirtuesWisps = {}
+                end
                 EID.descriptions[language].bookOfVirtuesWisps[collectible] = description.book_of_virtues
             end
 
             if description.book_of_belial then
+                if not EID.descriptions[language].bookOfBelialBuffs then
+                    EID.descriptions[language].bookOfBelialBuffs = {}
+                end
                 EID.descriptions[language].bookOfBelialBuffs[collectible] = description.book_of_belial
             end
         end
@@ -56,6 +65,20 @@ MilkshakeVol1:AddModCompatibility("EID", function()
     for trinket, translations in pairs(descriptions.Trinkets) do
         for language, description in pairs(translations) do
             EID:addTrinket(trinket, description.description, description.name, language)
+
+            if description.double then
+                EID:addGoldenTrinketTable(trinket, {fullReplace = true})
+
+                if not EID.descriptions[language].goldenTrinketEffects then
+                    EID.descriptions[language].goldenTrinketEffects = {}
+                end
+
+                EID.descriptions[language].goldenTrinketEffects[trinket] = {
+                    description.description,
+                    description.double,
+                    description.triple or description.double
+                }
+            end
         end
     end
 

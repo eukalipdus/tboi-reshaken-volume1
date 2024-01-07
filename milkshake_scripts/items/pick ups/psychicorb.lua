@@ -4,9 +4,13 @@ local Utilities = MilkshakeVol1.utility
 
 
 local CLAIRVOYANCE_ORB_DURATION = 30 * 100
+local BEGIN_FLASH = 30 * 5
 local PROJECTILE_REFLECTION_RADIUS = 135
 local PROJECTILE_REFLECTION_INTERVAL = 10
 local FAKE_CENSER_RADIUS = 70
+local FLASH_VISIBLE = 1
+local FLASH_HIDE = 2
+local FLASH_FRAMES = 5
 
 
 TSIL.SaveManager.AddPersistentVariable(
@@ -44,7 +48,9 @@ function SapphireOrb:OnAmethystOrbUse(_, player, flags)
     )
     doubleEffectPerPlayer[playerIndex] = TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER)
 
-    if wasUsingOrb then return end
+    if wasUsingOrb then
+        (Utilities:GetData(player, "CurrentPsychicOrbAura")):Remove()
+    end
     local aura = TSIL.EntitySpecific.SpawnEffect(
         enums.Effects.CLAIRVOYANCE_AURA,
         0,
@@ -56,6 +62,7 @@ function SapphireOrb:OnAmethystOrbUse(_, player, flags)
     if TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER) then
         aura.SpriteScale = aura.SpriteScale * 1.5
     end
+    Utilities:SetData(player, "CurrentPsychicOrbAura", aura)
 end
 MilkshakeVol1:AddCallback(
     enums.Callbacks.ON_ORB_USE,
@@ -199,17 +206,24 @@ function SapphireOrb:OnPeffectUpdate(player)
     local currentFrame = Game():GetFrameCount()
     local orbDuration = currentFrame - playerUsedClairvoyanceFrame
 
-    if orbDuration >= CLAIRVOYANCE_ORB_DURATION then
-        player:TryRemoveNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
-        clairvoyanceOrbPlayerFrames[playerIndex] = nil
-        return
-    end
-
     local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "ClairvoyanceDoubleEffectPerPlayer"
     )
     local isDoubleEffect = doubleEffectPerPlayer[playerIndex]
+
+    local duration
+    if isDoubleEffect then
+        duration = CLAIRVOYANCE_ORB_DURATION * 2
+    else
+        duration = CLAIRVOYANCE_ORB_DURATION
+    end
+
+    if orbDuration >= duration then
+        player:TryRemoveNullCostume(enums.Costumes.CLAIRVOYANCE_ORB)
+        clairvoyanceOrbPlayerFrames[playerIndex] = nil
+        return
+    end
 
     local projectileReflectInterval = PROJECTILE_REFLECTION_INTERVAL
     if isDoubleEffect then
@@ -260,6 +274,37 @@ function SapphireOrb:OnClairvoyanceAuraUpdate(effect)
     if not playerUsedClairvoyanceFrame then
         effect:Remove()
         return
+    end
+
+    local frameCount = Game():GetFrameCount()
+    local flashMode = Utilities:GetData(effect, "ClairvoyanceFlashMode")
+
+    local doubleEffectPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "ClairvoyanceDoubleEffectPerPlayer"
+    )
+    local isDoubleEffect = doubleEffectPerPlayer[playerIndex]
+
+    local duration
+    if isDoubleEffect then
+        duration = CLAIRVOYANCE_ORB_DURATION * 2
+    else
+        duration = CLAIRVOYANCE_ORB_DURATION
+    end
+
+    if (frameCount - playerUsedClairvoyanceFrame) >= duration - BEGIN_FLASH
+    and not flashMode then
+        Utilities:SetData(effect, "ClairvoyanceFlashMode", FLASH_VISIBLE)
+    
+    elseif (frameCount - playerUsedClairvoyanceFrame) >= duration - BEGIN_FLASH
+    and frameCount % FLASH_FRAMES == 0 then
+        if flashMode == FLASH_HIDE then
+            effect.Visible = true
+            Utilities:SetData(effect, "ClairvoyanceFlashMode", FLASH_VISIBLE)
+        else
+            effect.Visible = false
+            Utilities:SetData(effect, "ClairvoyanceFlashMode", FLASH_HIDE)
+        end
     end
 
     effect:FollowParent(effect.Parent)

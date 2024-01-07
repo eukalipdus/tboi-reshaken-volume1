@@ -1,6 +1,8 @@
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 local EmptySlot = {}
 
+local DMG_BONUS = 0.066
 
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
@@ -9,10 +11,19 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 
+local function UpdateCoinDMGBonus(player)
+    player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+    player:EvaluateItems()
+end
+
 
 ---@param rng RNG
 ---@param player EntityPlayer
-function EmptySlot:OnEmptySlotUse(_, rng, player)
+function EmptySlot:OnEmptySlotUse(_, rng, player, useFlags)
+    if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then
+        return
+    end
+
     if player:GetNumCoins() < 1 then
         return {
             Discharge = false,
@@ -28,14 +39,23 @@ function EmptySlot:OnEmptySlotUse(_, rng, player)
         MilkshakeVol1,
         "EmptySlotCoinsPerPlayer"
     )
-    local playerCoins = emptySlotCoinsPerPlayer[tostring(playerIndex)]
+    local playerCoins = emptySlotCoinsPerPlayer[playerIndex]
     if not playerCoins then
-        emptySlotCoinsPerPlayer[tostring(playerIndex)] = 0
+        emptySlotCoinsPerPlayer[playerIndex] = 0
         playerCoins = 0
     end
 
     playerCoins = playerCoins + 1
-    emptySlotCoinsPerPlayer[tostring(playerIndex)] = playerCoins
+    emptySlotCoinsPerPlayer[playerIndex] = playerCoins
+
+    if utility:IsJudasBirthright(player) then
+        UpdateCoinDMGBonus(player)
+    end
+
+    local chance = 0.015
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+        chance = chance * 2
+    end
 
     if playerCoins > 10 and rng:RandomFloat() < 0.015 or playerCoins > 100 then
         local crater = TSIL.EntitySpecific.SpawnEffect(
@@ -78,7 +98,8 @@ function EmptySlot:OnEmptySlotUse(_, rng, player)
             )
         end
 
-        emptySlotCoinsPerPlayer[tostring(playerIndex)] = 0
+        emptySlotCoinsPerPlayer[playerIndex] = 0
+        UpdateCoinDMGBonus(player)
         return {
             Discharge = false,
             Remove = true,
@@ -98,3 +119,17 @@ MilkshakeVol1:AddCallback(
     EmptySlot.OnEmptySlotUse,
     enums.Collectibles.EMPTY_SLOT
 )
+
+function EmptySlot:EvaluateCache(player, cacheFlag)
+    if cacheFlag == CacheFlag.CACHE_DAMAGE
+    and utility:IsJudasBirthright(player)
+    and player:HasCollectible(enums.Collectibles.EMPTY_SLOT) then
+        local emptySlotCoinsPerPlayer = TSIL.SaveManager.GetPersistentVariable(
+            MilkshakeVol1,
+            "EmptySlotCoinsPerPlayer"
+        )
+        local playerCoins = emptySlotCoinsPerPlayer[TSIL.Players.GetPlayerIndex(player)]
+        player.Damage = player.Damage + (DMG_BONUS * playerCoins)
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, EmptySlot.EvaluateCache)

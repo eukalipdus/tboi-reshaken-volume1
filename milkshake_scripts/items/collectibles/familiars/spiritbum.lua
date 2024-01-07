@@ -190,6 +190,10 @@ local spiritBumPickups = {
 		variant = PickupVariant.PICKUP_TAROTCARD,
 		subtype = Card.CARD_DEATH
 	}},
+	{reward = 1, value = {
+		variant = PickupVariant.PICKUP_COIN,
+		subtype = enums.Coins.BLESSED_PENNY
+	}}
 }
 
 if FiendFolio then

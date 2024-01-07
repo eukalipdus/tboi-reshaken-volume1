@@ -16,14 +16,30 @@ local LERP_STANDING_MULTIPLIER = 10
 local TEARS_MULTIPLIER_BONUS = 0.10
 local SHOTSPEED_REDUCTION = 0.2
 
+local KNIFE_VARIANT_BONE = 1
 local A_COMICALLY_SMALL_NUMBER = 0.01
 local DEADZONE_RANGE = math.cos(math.rad(DEADZONE_ANGLE/2))
 
+--I really hope there's a better way to handle this
+local TEAR_COPYING_FAMILIARS = TSIL.Utils.Tables.ConstructDictionaryFromTable({
+    FamiliarVariant.INCUBUS,
+    FamiliarVariant.CAINS_OTHER_EYE,
+    FamiliarVariant.FATES_REWARD,
+    FamiliarVariant.TWISTED_BABY,
+})
+
 ---@param projectile Entity
 local function DadsMittOwner(projectile)
-    if not projectile.SpawnerEntity then
+    local spawner = projectile.SpawnerEntity
+    if not spawner then
         return end
-    local player = projectile.SpawnerEntity:ToPlayer()
+    local player = spawner:ToPlayer()
+    if not player
+    and spawner.Type == EntityType.ENTITY_FAMILIAR
+    and TEAR_COPYING_FAMILIARS[spawner.Variant]
+    and projectile.SpawnerEntity.SpawnerEntity then
+        player = projectile.SpawnerEntity.SpawnerEntity:ToPlayer()
+    end
     if not (player and player:HasCollectible(enums.Collectibles.DADS_MITT)) then
         return end
     return player
@@ -124,13 +140,11 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, dadsMitt.PostKnifeUpdate)
 
 function dadsMitt:ReplaceBoneClub(entity)
-    if entity.Variant ~= 1 then return end -- Bone club
+    if entity.Variant ~= KNIFE_VARIANT_BONE then return end
     local sprite = entity:GetSprite()
     local data = entity:GetData()
     if data.DadsMittDidReplaceSpriteSheet ~= true then
-        if entity.Parent
-        and entity.Parent:ToPlayer()
-        and entity.Parent:ToPlayer():HasCollectible(enums.Collectibles.DADS_MITT) then
+        if DadsMittOwner(entity) then
             sprite:ReplaceSpritesheet(0, "gfx/effects/effect_boneclub_dadsmitt.png")
             sprite:LoadGraphics()
             data.DadsMittDidReplaceSpriteSheet = true

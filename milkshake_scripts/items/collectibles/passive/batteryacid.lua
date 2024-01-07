@@ -4,7 +4,8 @@ local enums = MilkshakeVol1.enums
 local itemConfig = Isaac.GetItemConfig()
 local game = Game()
 
-local CREEP_SCALE = 0.5
+local CREEP_SCALE_TIMER_MULTIPLIER = 0.002
+local CREEP_SCALE_BASE = 0.16
 local CREEP_DAMAGE = 1.5
 local CREEP_COLOR = Color(0, 0, 0, 1, 0.5, 0.5, 0.1)
 
@@ -19,7 +20,16 @@ local DOUBLE_CHARGE_DELAY = 10
 local DRAIN_TIME_SECONDS = 15
 local DRAIN_STACK_TIMER_DECREASE_SECONDS = 3
 local MIN_DRAIN_TIME_SECONDS = 5
+
 local DRAIN_INCREASE_SECONDS = 5
+local DRAIN_PER_ROOM_DECREASE_SECONDS = 2
+local MIN_DRAIN_INCREASE_SECONDS = 1
+
+local AFFECTED_SLOTS = {
+    ActiveSlot.SLOT_PRIMARY,
+    ActiveSlot.SLOT_SECONDARY,
+    ActiveSlot.SLOT_POCKET
+}
 
 local ONE_SECOND = 30
 
@@ -40,14 +50,34 @@ local CREEP_DURATION = math.floor(CREEP_DURATION_SECONDS * ONE_SECOND)
 local DRAIN_TIME = math.floor(DRAIN_TIME_SECONDS * ONE_SECOND)
 local DRAIN_STACK_TIMER_DECREASE = math.floor(DRAIN_STACK_TIMER_DECREASE_SECONDS * ONE_SECOND)
 local MIN_DRAIN_TIME = math.floor(MIN_DRAIN_TIME_SECONDS * ONE_SECOND)
+
 local DRAIN_INCREASE = math.floor(DRAIN_INCREASE_SECONDS * ONE_SECOND)
+local DRAIN_PER_ROOM_DECREASE = math.floor(DRAIN_PER_ROOM_DECREASE_SECONDS * ONE_SECOND)
+local MIN_DRAIN_INCREASE = math.floor(MIN_DRAIN_INCREASE_SECONDS * ONE_SECOND)
+
 local CHARGETYPE_NORMAL = 0
+local CHARGETYPE_TIMED = 1
+local CHARGETYPE_SPECIAL = 2
 
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
     "BatteryAcidData",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_RUN)
+
+---@param player EntityPlayer
+---@param slot ActiveSlot
+---@return boolean
+local function CanBeDischarged(player, slot)
+    local item = player:GetActiveItem(slot)
+    if item == 0 then
+        return false end
+    if player:GetActiveCharge(slot) <= 0 then
+        return false end
+    if itemConfig:GetCollectible(item).ChargeType == CHARGETYPE_SPECIAL then
+        return false end
+    return true
+end
 
 ---@param player EntityPlayer
 ---@return number
@@ -74,17 +104,25 @@ local function BatteryAcidData(player)
     local key = player:GetCollectibleRNG(1):GetSeed()
 
     if not data[key] then
-        data[key] = {DrainTimer = DrainTime(player), CreepTimer = CreepCooldown(player)}
+        data[key] = {DrainTimer = DrainTime(player), CreepTimer = CreepCooldown(player), RoomsClearedSinceDrain = 0}
     end
     return data[key]
 end
 
 ---@param player EntityPlayer
+local function IncreaseDrainTimer(player)
+    local data = BatteryAcidData(player)
+    local increase = DRAIN_INCREASE - data.RoomsClearedSinceDrain*DRAIN_PER_ROOM_DECREASE
+    increase = math.max(increase, MIN_DRAIN_INCREASE)
+    data.DrainTimer = math.max(data.DrainTimer + increase, increase)
+    data.RoomsClearedSinceDrain = data.RoomsClearedSinceDrain + 1
+end
+
+---@param player EntityPlayer
 ---@param chargeToAdd integer
 local function AddBatteryAcidCharge(player, chargeToAdd)
-    local data = BatteryAcidData(player)
-    data.DrainTimer = data.DrainTimer + DRAIN_INCREASE
-    for _, slot in ipairs({ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_SECONDARY}) do
+    IncreaseDrainTimer(player)
+    for _, slot in ipairs(AFFECTED_SLOTS) do
         local activeItem = player:GetActiveItem(slot)
 
         if activeItem ~= 0
@@ -95,8 +133,16 @@ local function AddBatteryAcidCharge(player, chargeToAdd)
                 DOUBLE_CHARGE_DELAY,
                 player, slot, chargeToAdd
             )
-            return
         end
+    end
+end
+
+local function TryChargeTimedActive(player, slot)
+    local activeItem = player:GetActiveItem(slot)
+    if activeItem ~= 0
+    and itemConfig:GetCollectible(activeItem).ChargeType == CHARGETYPE_TIMED
+    and TSIL.Charge.GetChargesAwayFromMax(player, slot) > 0 then
+        TSIL.Charge.AddCharge(player, slot, player:GetCollectibleNum(enums.Collectibles.BATTERY_ACID), false)
     end
 end
 
@@ -133,6 +179,7 @@ function batteryAcid:PrePickupCollision(battery, collider)
     local data = BatteryAcidData(player)
     data.DrainTimer = DrainTime(player)
 end
+---@diagnostic disable-next-line: param-type-mismatch
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, batteryAcid.PrePickupCollision, PickupVariant.PICKUP_LIL_BATTERY)
 
 
@@ -141,32 +188,36 @@ function batteryAcid:PostPeffectUpdate(player)
     if not player:HasCollectible(enums.Collectibles.BATTERY_ACID) then
         return end
 
-    local primaryActiveItem = player:GetActiveItem(ActiveSlot.SLOT_PRIMARY)
-    local secondaryActiveItem = player:GetActiveItem(ActiveSlot.SLOT_SECONDARY)
-    local primaryNotSpecial
-    local secondaryNotSpecial
-    if primaryActiveItem ~= 0 then
-        primaryNotSpecial = itemConfig:GetCollectible(primaryActiveItem).ChargeType == CHARGETYPE_NORMAL
-    end
-    if secondaryActiveItem ~= 0 then
-        secondaryNotSpecial = itemConfig:GetCollectible(secondaryActiveItem).ChargeType == CHARGETYPE_NORMAL
-    end
+    local data = BatteryAcidData(player)
+    data.DrainTimer = data.DrainTimer-1
 
-    if
-    not ((primaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_PRIMARY) > 0)
-    or secondaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_SECONDARY) > 0) then
+    local hasDischargableItems = false
+    for _, slot in ipairs(AFFECTED_SLOTS) do
+        TryChargeTimedActive(player, slot)
+        if CanBeDischarged(player, slot) then
+            hasDischargableItems = true
+        end
+    end
+    if not hasDischargableItems then
         return end
 
-    local data = BatteryAcidData(player)
-
-    data.DrainTimer = data.DrainTimer-1
     if data.DrainTimer <= 0 then
-        if primaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_PRIMARY) > 0 then
-            TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_PRIMARY, -1)
-        elseif secondaryNotSpecial and player:GetActiveCharge(ActiveSlot.SLOT_SECONDARY) > 0 then
-            TSIL.Charge.AddCharge(player, ActiveSlot.SLOT_SECONDARY, -1)
+        local dischargedSomething = false
+        for _, slot in ipairs(AFFECTED_SLOTS) do
+            if CanBeDischarged(player, slot) then
+                local config = itemConfig:GetCollectible(player:GetActiveItem(slot))
+                if config.ChargeType == CHARGETYPE_TIMED then
+                    TSIL.Charge.AddCharge(player, slot, -config.MaxCharges)
+                else
+                    TSIL.Charge.AddCharge(player, slot, -1)
+                end
+                dischargedSomething = true
+            end
         end
-        data.DrainTimer = DrainTime(player)
+        if dischargedSomething then
+            data.DrainTimer = DrainTime(player)
+            data.RoomsClearedSinceDrain = 0
+        end
     end
     data.CreepTimer = data.CreepTimer-1
     if data.CreepTimer <= 0 then
@@ -174,7 +225,7 @@ function batteryAcid:PostPeffectUpdate(player)
         creep:ToEffect():SetTimeout(CREEP_DURATION)
         creep.Color = CREEP_COLOR
         creep.CollisionDamage = CREEP_DAMAGE
-        creep.Scale = CREEP_SCALE
+        creep.Scale = CREEP_SCALE_BASE + math.max(0, data.DrainTimer)*CREEP_SCALE_TIMER_MULTIPLIER
         creep:Update()
         data.CreepTimer = CreepCooldown(player)
     end

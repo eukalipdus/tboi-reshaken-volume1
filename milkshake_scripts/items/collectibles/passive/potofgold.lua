@@ -12,6 +12,11 @@ local PENNY_CONVERT_CHANCE = 0.5
 ---@type RainbowPenny[]
 local rainbowPennies = {}
 
+local coinBlacklist = {
+    CoinSubType.COIN_LUCKYPENNY,
+    CoinSubType.COIN_GOLDEN
+}
+
 local weightedRainbowPennies = { -- Workaround to the other table making items added first being more common
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.ROTTEN_PENNY, weight = 0.25},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.FLAT_PENNY, weight = 0.45},
@@ -90,7 +95,7 @@ local function CanPickupBeReplaced(pickup)
     local roll = rng:RandomFloat()
     if pickup.Variant == PickupVariant.PICKUP_KEY
     or pickup.Variant == PickupVariant.PICKUP_BOMB
-    or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= PENNY_CONVERT_CHANCE) then
+    or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= PENNY_CONVERT_CHANCE and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType)) then
         return true
     end
     return false
@@ -102,7 +107,8 @@ local function TryReplacePickupWithRainbowPenny(pickup)
     if not CanPickupBeReplaced(pickup) then return end
     if not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD) then return end
 
-    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+    --local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+    local rng = pickup:GetDropRNG()
     local chosenCoin = MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
 
     pickup:Morph(

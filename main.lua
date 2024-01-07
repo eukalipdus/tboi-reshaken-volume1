@@ -1,10 +1,14 @@
-MilkshakeVol1 = RegisterMod("Milkshake!", 1)
+MilkshakeVol1 = RegisterMod("Milkshake Vol1!", 1)
 
 require("loi_milkshake.TSIL").Init("loi_milkshake")
 
 include("milkshake_scripts.enums")
 include("milkshake_scripts.utility")
 MilkshakeVol1.API = {}
+
+if StageAPI then
+    StageAPI.UnregisterCallbacks(MilkshakeVol1.Name)
+end
 
 --include("milkshake_scripts.bumAPI.core")
 
@@ -113,8 +117,8 @@ include("milkshake_scripts.wisps.prismaticdice")
 --Locusts
 include("milkshake_scripts.locusts.prismaticdice")
 include("milkshake_scripts.locusts.dadsmitt")
-include("milkshake_scripts.locusts.celestialmirror")
 include("milkshake_scripts.locusts.sicklecell")
+include("milkshake_scripts.locusts.firecrackerrose")
 
 --Enemies
 include("milkshake_scripts.enemies.beerhead")
@@ -122,7 +126,12 @@ include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
 
---Room ecorations
+--Challenges
+include("milkshake_scripts.challenges.isaacclicker")
+include("milkshake_scripts.challenges.spiritsage")
+include("milkshake_scripts.challenges.worldoflight")
+include("milkshake_scripts.challenges.greedtropies")
+--Room decorations
 include("milkshake_scripts.room_decorations.sacrilege")
 
 --Misc
