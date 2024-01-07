@@ -84,6 +84,7 @@ local function BeggarRewards(collider)
 			--:GetCard(Seed, Playing, Rune, OnlyRunes)
 			rewardSubype = Game():GetItemPool():GetCard(rng:GetSeed(), data.Config.Playing, data.Config.IncludeRune, data.Config.OnlyRune)
 		end
+		print(rewardType, rewardVariant, rewardSubype)
 		Isaac.Spawn(rewardType, rewardVariant, rewardSubype, collider.Position, RandomVector()*3, nil)
 	end
 end
