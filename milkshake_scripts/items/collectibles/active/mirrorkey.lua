@@ -245,7 +245,12 @@ end
 ---@param doorSlot DoorSlot
 ---@param target integer
 ---@param targetDimension Dimension
-local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension)
+---@param canSpawnOtherDoor boolean?
+local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension, canSpawnOtherDoor)
+    if canSpawnOtherDoor == nil then
+        canSpawnOtherDoor = true
+    end
+
     local room = Game():GetRoom()
     local doorSlotPos = room:GetDoorSlotPosition(doorSlot)
 
@@ -278,6 +283,12 @@ local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension)
         fakeDoor,
         "MirrorDoorTargetDimension",
         targetDimension
+    )
+    TSIL.Entities.SetEntityData(
+        MilkshakeVol1,
+        fakeDoor,
+        "CanSpawnOtherDoor",
+        canSpawnOtherDoor
     )
 end
 
@@ -658,6 +669,11 @@ local function CheckIfPlayerEnters(door)
             door,
             "MirrorDoorDoorSlot"
         )
+        local canSpawnDoor = TSIL.Entities.GetEntityData(
+            MilkshakeVol1,
+            door,
+            "CanSpawnOtherDoor"
+        )
 
         if target == MIRROR_DOOR_INDEX then
             local level = Game():GetLevel()
@@ -732,6 +748,10 @@ local function CheckIfPlayerEnters(door)
                     ModCallbacks.MC_POST_NEW_ROOM,
                     function ()
                         RemoveLostCurse()
+                        PlacePlayersInDoorSlot(doorSlot)
+                        if canSpawnDoor then
+                            SpawnFakeMirrorDoor(doorSlot, target, TSIL.Enums.Dimension.SECONDARY, false)
+                        end
                     end
                 )
             elseif dimension == TSIL.Enums.Dimension.SECONDARY then
@@ -741,7 +761,9 @@ local function CheckIfPlayerEnters(door)
                     function ()
                         AddLostCurse()
                         PlacePlayersInDoorSlot(doorSlot)
-                        SpawnFakeMirrorDoor(doorSlot, target, TSIL.Enums.Dimension.MAIN)
+                        if canSpawnDoor then
+                            SpawnFakeMirrorDoor(doorSlot, target, TSIL.Enums.Dimension.MAIN, false)
+                        end
                     end
                 )
             end
