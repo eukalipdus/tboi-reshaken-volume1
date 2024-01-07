@@ -5,10 +5,10 @@ local INTERVAL_SECONDS = 60
 local ONE_SECOND = 30
 
 local MIN_ITEMS = 3
-local ICON_RENDER_X = 54
-local ICON_RENDER_Y = 47
-local TEXT_RENDER_X = 73
-local TEXT_RENDER_Y = 49
+local ICON_RENDER_X = 35
+local ICON_RENDER_Y = 34
+local TEXT_RENDER_X = 51
+local TEXT_RENDER_Y = 35
 local TIMES_CAN_FAIL = 100
 local PUSH_ABOVE_ISAAC = Vector(0, -25)
 
@@ -118,7 +118,7 @@ function worldOfLight:PostRender()
     --Isaac.RenderScaledText(timer, RENDER_X, RENDER_Y, SCALE_X, SCALE_Y, 1, 0, 0 , 1)
     local font = Font()
     font:Load("font/pftempestasevencondensed.fnt")
-    font:DrawString(timer, TEXT_RENDER_X, TEXT_RENDER_Y, KColor(1,0,0,1), 0, true)
+    font:DrawString(timer, TEXT_RENDER_X, TEXT_RENDER_Y, KColor(1,1,1,1), 0, true)
     for idx, collectibleSprite in ipairs(renderItems) do
         if collectibleSprite.Sprite:IsFinished("Fade") then
             table.remove(renderItems, idx)
