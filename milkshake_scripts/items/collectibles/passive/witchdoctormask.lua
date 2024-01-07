@@ -257,6 +257,7 @@ function witchDoctorMask:GetShaderParams()
                     else
                         orbPillHuds[i]:Render(position)
                         orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
+                        print(GetFrameFromId(heldPill, pillAnimFrames) - 1)
                         orbPillHuds[i]:Play("HUD")
                     end
                 end
