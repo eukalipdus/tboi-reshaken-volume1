@@ -117,6 +117,13 @@ local pillAnimFrames = {
     PillColor.PILL_WHITE_YELLOW | PillColor.PILL_GIANT_FLAG,
 }
 
+local ffCyanideIds = {
+    NORMAL = 960,
+    GOLD = 961,
+    HORSE = 3008,
+    GOLD_HORSE = 3009
+}
+
 local ffPillAnimFrames = {
     101,
     102,
@@ -138,8 +145,8 @@ local ffPillAnimFrames = {
     118,
     119,
     120,
-    99, -- PLACEHOLDER
-    999, -- PLACEHOLDER
+    ffCyanideIds.NORMAL,
+    ffCyanideIds.GOLD,
     101 | PillColor.PILL_GIANT_FLAG,
     102 | PillColor.PILL_GIANT_FLAG,
     103 | PillColor.PILL_GIANT_FLAG,
@@ -160,13 +167,14 @@ local ffPillAnimFrames = {
     118 | PillColor.PILL_GIANT_FLAG,
     119 | PillColor.PILL_GIANT_FLAG,
     120 | PillColor.PILL_GIANT_FLAG,
-    9999, -- PLACEHOLDER
-    99999, -- PLACEHOLDER
+    ffCyanideIds.HORSE,
+    ffCyanideIds.GOLD_HORSE,
 }
 
 local function IsFiendFolioPill(id)
     for _, ffPillId in ipairs(ffPillAnimFrames) do
-        if id == ffPillId then return true end
+        if id == ffPillId
+        or TSIL.Utils.Tables.IsIn(ffCyanideIds, id) then return true end
     end
     return false
 end
