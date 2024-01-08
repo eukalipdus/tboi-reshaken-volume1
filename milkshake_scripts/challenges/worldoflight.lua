@@ -3,7 +3,7 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local INTERVAL_SECONDS = 60
-local ONE_SECOND = 2
+local ONE_SECOND = 30
 
 local MIN_ITEMS = 3
 local ICON_RENDER_X = 35
@@ -11,7 +11,7 @@ local ICON_RENDER_Y = 34
 local TEXT_RENDER_X = 51
 local TEXT_RENDER_Y = 35
 local TIMES_CAN_FAIL = 100
-local PUSH_ABOVE_ISAAC = Vector(0, -25)
+local PUSH_ABOVE_ISAAC = Vector(15, -25)
 
 local itemBlacklist = {
     CollectibleType.COLLECTIBLE_KEY_PIECE_1,
