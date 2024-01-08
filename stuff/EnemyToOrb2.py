@@ -15,7 +15,7 @@
 # but you need to put an empty line between different enemies.
 
 input_files = [
-    "./stuff/retribution.txt"
+    "./stuff/revelations.txt"
 ]
 
 def clean_line(line, preffix):
