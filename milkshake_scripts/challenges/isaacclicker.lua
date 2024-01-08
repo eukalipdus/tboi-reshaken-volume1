@@ -29,7 +29,7 @@ function isaacClicker:PostGameStartedReordered(isContinued)
             "SharpCursorFollowMouse",
             true
         )
-    else
+    elseif TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting") ~= nil then
         Options.MouseControl = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting")
         local toSet
         if TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting") then
