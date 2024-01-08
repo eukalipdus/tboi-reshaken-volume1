@@ -24,8 +24,22 @@ function isaacClicker:PostGameStartedReordered(isContinued)
         local prevOption = Options.MouseControl
         TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "PreviousMouseSetting", prevOption, TSIL.Enums.VariablePersistenceMode.NONE)
         Options.MouseControl = true
+        TSIL.SaveManager.SetPersistentVariable(
+            MilkshakeVol1,
+            "SharpCursorFollowMouse",
+            true
+        )
     else
         Options.MouseControl = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting")
+        local toSet
+        if TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting") then
+            toSet = true
+        else toSet = false end
+        TSIL.SaveManager.SetPersistentVariable(
+            MilkshakeVol1,
+            "SharpCursorFollowMouse",
+            toSet
+        )
         TSIL.SaveManager.RemovePersistentVariable(MilkshakeVol1, "PreviousMouseSetting")
     end
 end
