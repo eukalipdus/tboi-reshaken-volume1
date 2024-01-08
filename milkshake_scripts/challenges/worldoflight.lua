@@ -1,8 +1,9 @@
 local worldOfLight = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local INTERVAL_SECONDS = 60
-local ONE_SECOND = 30
+local ONE_SECOND = 2
 
 local MIN_ITEMS = 3
 local ICON_RENDER_X = 35
@@ -149,7 +150,8 @@ function worldOfLight:PostRender()
     local timer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer")
     local font = Font()
     font:Load("font/pftempestasevencondensed.fnt")
-    font:DrawString(timer, TEXT_RENDER_X, TEXT_RENDER_Y, KColor(1,1,1,1), 0, true)
+    local txtX, txtY = utility:HUDOffset(TEXT_RENDER_X, TEXT_RENDER_Y, 'topleft')
+    font:DrawString(timer, txtX, txtY, KColor(1,1,1,1), 0, true)
     for idx, collectibleSprite in ipairs(renderItems) do
         if collectibleSprite.Sprite:IsFinished("Fade") then
             table.remove(renderItems, idx)
@@ -157,7 +159,8 @@ function worldOfLight:PostRender()
         collectibleSprite.Sprite:Render(Isaac.WorldToScreen((collectibleSprite.Player).Position + PUSH_ABOVE_ISAAC))
         collectibleSprite.Sprite:Update()
     end
-    timerSprite:Render(Vector(ICON_RENDER_X, ICON_RENDER_Y))
+    local icoX,icoY = utility:HUDOffset(ICON_RENDER_X, ICON_RENDER_Y, 'topleft')
+    timerSprite:Render(Vector(icoX, icoY))
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, worldOfLight.PostRender)
 
