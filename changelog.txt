@@ -1,0 +1,9 @@
+================================================
+    v1.0.1 - January 8th, 2024
+================================================
+Fixes
+	-Crash sometimes caused by Lil' Bishop
+	-Mouse controls being disabled upon starting a run
+
+Additions
+	-Implement Revelations compatibility
