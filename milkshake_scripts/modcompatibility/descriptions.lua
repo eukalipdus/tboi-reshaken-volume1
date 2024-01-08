@@ -1378,7 +1378,7 @@ descriptions.Cards = {
     [enums.Cards.TATTERED_PAGE] = {
         en_us = {
             name = "Tattered Page",
-            description = "#Summons a random {{Collectible753}} Leviticus wisp"
+            description = "#Summons a random {{Collectible712}} Lemegeton wisp"
         },
         spa = {
             name = "Espíritu de Caos",
@@ -1391,7 +1391,7 @@ descriptions.Cards = {
         },
         pl = {
             name = "Porwana Strona",
-            description = "#Przywołuje losowego ognika z {{Collectible753}} Lemegetonu"
+            description = "#Przywołuje losowego ognika z {{Collectible712}} Lemegetonu"
         },
     }
 }
