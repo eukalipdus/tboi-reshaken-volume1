@@ -1,7 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<name>TBOI Reshaken! Shattered Souls</name>
-	<directory>tboi-milkshake</directory>
-	<description/>
-	<version>1.0</version>
-	<visibility/>
+    <name>The Binding of Isaac Reshaken - Vol 1: Shattered Souls!</name>
+    <directory>tboi-reshaken-vol1</directory>
+    <id>3134600246</id>
+    <description>Over a year in the making, Team Milkshake presents to you Volume 1 of Isaac Reshaken!
+
+Isaac Reshaken is a content pack MOD that adds over 40 new high quality items, trinkets, consumables, and foes! Including:
+
+[h1] Features! [/h1]
+[list]
+[*] 20+ shiny new items
+[*] 10+ fancy new spirit orb consumables :0
+[*] 10+ tasty new trinkets
+[*] 4 lustrous new foes
+[*] 3 creative challenges
+[/list]
+
+and loads more surprises!
+
+[h1] Compatibility! [/h1]
+Alongside all this, we also feature full compatibility with Fiend Folio and several other MODs, creating exciting interactions with them:
+[list]
+[*] External Item Descriptions (Full support for all items and pickups)
+[*] Fiend Folio (Full shattered orb enemy elemental support, exclusive FF based rainbow pennies, custom beggar and slot machine interactions with spirit orbs, a full slew of spirit pills matching FF pill colors, and FF items available in custom item pools)
+[*] Epiphany (Support for epiphany beggar and slot machine interactions)
+[*] Detailed Respawn (Glass idol support)
+[*] Eclipsed (Spirit orb beggar interactions)
+[*] Retribution (Full shattered orb enemy element support, spirit orb beggar interactions)
+[*] Crabby's Cretins (Full shattered orb enemy element support)
+[*] Immortal Hearts (Custom interaction with leviticus)
+[*] Library Expanded (Leviticus support)
+[/list]
+
+
+[h2] Incompatibilities [/h2]
+Isaac Reshaken is INCOMPATIBLE with the following mods for one reason or another:
+Double Spiked Rocks (Crashes in some rooms for unknown reasons...)
+
+[h1] Only Volume 1?[/h1]
+Yes! This is only the first volume of several volumes to come! (hopefully) As of now, this expansion does not require Repentogon to run, but future ones will in order to enable many cool possibilities. We hope you look forward to seeing whats in store! Follow Team Milkshake on [url=https://twitter.com/TBOI_Milkshake]Twitter[/url] to keep up to date on future developments!
+
+[h1] Credits [/h1]
+This mod wouldn't be possible without the incredible members of Team Milkshake!
+Kattack - Team Lead
+Eucalyptus - Lead Programmer
+Thicco Catto - Lead Programmer 1
+nineline - Programmer
+Monwil - Programmer
+DecrioDen - Lead Artist
+BrendenPerson - Artist, Programmer, Animator, and Thumbnail Art
+Kerkel - Artist and Animator
+Esty - Spriter, Sprite Polishing, and Concept Art
+Bardia - Lead Visual Designer and Animator
+MuffinTae - Spriter, Concept Art, and Trombone
+bagman64 - Spriter
+xxlucia07xx- Spriter and Moral Support
+chupeta - Spriter
+dpower12 - Gameplay Designer and Code Assistance
+IzzyIsakoi - Gameplay Designer and Idea Generator
+Visi - Gameplay Designer and Sound Design
+steve2552 - Lead Room Designer
+We Strvn - Assisting Room Designer
+Nelly - Lead Musician
+Nihil - Sound Design
+ShanePatSmith - Voice Acting
+foiled again - Concepts
+Notespooky - Concepts, Coding, and Room Support
+susukethereal - Concepts and Concept Art
+catinsurance - Code Support and Video Editing
+skykittenpuppy - Logo Design and Emotional Support
+
+And a special thanks to 
+punchyufo, clownylun, toyrapple, neibusha, Luna, mysterykar, scooperman, ZRWilson, siphernil, Bagley, Split, spoop, zer0pointtime, Stlkngne, bazus, Harvester, Erfly, wofsauge, and TheTurtleMelon for their various helpful contributions!
+
+
+Find any bugs? Send them in the Bugs discussion thread below along with a snippet of your log or screenshot of the error. And as always, stay shakey!</description>
+    <version>1.1</version>
+    <visibility>Friends Only</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+    <tag id="Active Items"/>
+    <tag id="Trinkets"/>
+    <tag id="Pills"/>
+    <tag id="Cards"/>
+    <tag id="Pickups"/>
+    <tag id="Familiars"/>
+    <tag id="Rooms"/>
+    <tag id="Challenges"/>
+    <tag id="Music"/>
 </metadata>
