@@ -1131,8 +1131,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Duplica los corazones frutales generados"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Друидизма",
+            description = "Захватывает всех врагов в комнате лозами на 12 секунд. Попавшие в ловушку враги после смерти оставляют фруктовое сердце" ..
+            "#{{BlendedHeart}} Фруктовые сердца исцеляют половину красного сердца или половину сердца души, если сердца заполнены",
+            lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Удваивает количество фруктовых сердец"
         },
         pl = {
             name = "Widmo Przyrody",
@@ -1154,9 +1156,11 @@ descriptions.Cards = {
             "#{{ArcadeRoom}} Cortocircuita todas las máquinas cercanas, causando que paguen algunas veces y exploten",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración y el rango de las ondas"
         },
-        ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+         en_us = {
+            name = "Дух Электропотока", -- я не буду переводить это как Дух Электропроводки XD
+            description = "Выпускает волну электричества во всех направлениях, нанося урон ближайшим врагам" ..
+            "#{{ArcadeRoom}} Замыкает все автоматы в радиусе, в результате чего они выбрасывают награды несколько раз и взрываются",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает продолжительность и дальность действия электричества"
         },
         pl = {
             name = "Widmo Elektryczności",
@@ -1179,8 +1183,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica las llamas disparadas"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Инферно",
+            description = "{{Burning}} Выпускает поток пламени с высоким уроном в выбранном направлении" ..
+            "#{{BossRoom}} Пронзает броню босса",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает выстрел пламенем"
         },
         pl = {
             name = "Widmo Pożogi",
@@ -1201,8 +1207,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración y refleja más rapido"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Ясновидения",
+            description = "{{Timer}} Дает ауру на 100 секунд, которая замедляет врагов и отражает снаряды",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает продолжительность и ускоряет отражание снарядов"
         },
         pl = {
             name = "Widmo Jasnowidzenia",
@@ -1224,8 +1231,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la cantidad de tumbas"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Возврата",
+            description = "Призывает 4-6 надгробии по комнате, при уничтожении которых появляются дружелюбные скелеты или призраки" ..
+            "#Заполняет все ямы в комнате костями",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает число надгробий"
         },
         pl = {
             name = "Widmo Zaświatów",
@@ -1252,8 +1261,12 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el tamaño de la nube"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Ядовитости",
+            description = "{{Throwable}} Бросает токсичный шар, который взрывается, образуя разрушительное ядовитое облако" ..
+            "#{{Slow}} Враги внутри будут замедляться и получать урон" ..
+            "#Облако увеличивается в размерах пропорционально нанесенному урону" ..
+            "#{{RottenHeart}} Превращает сердца и попрашаек в их гнилые варианты {{RottenBeggar}}",
+            lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Удваивает размер облака"
         },
         pl = {
             name = "Widmo Skażenia",
@@ -1278,8 +1291,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Dispara 16 rayos"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Спасения",
+            description = "#Выпускает 8 разрушительных лучей света во всех направлениях" ..
+            "#Лучи могут разрушать камни и открывать секретные комнаты",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Выпускает 16 лучей"
         },
         pl = {
             name = "Widmo Zbawienia",
@@ -1302,8 +1317,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Atraviesa a todos los enemigos dos veces"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Святотатство",
+            description = "#{{BleedingOut}} Прорезает всех врагов и попрашаек в комнате, накладывая на них кровотечение и проклятие серы"..
+            "#Убитые попрашайки бросают дополнительные расходники",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Slashes through enemies a second time"
         },
         pl = {
             name = "Widmo Świętokradztwa",
@@ -1324,8 +1341,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Потопа",
+            description = "#{{Timer}} На 8 секунд заменяет слезы Айзека управляемым водопадом-циклоном, засасывающим врагов и предметы",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает продолжительность"
         },
         pl = {
             name = "Widmo Potopu",
@@ -1345,8 +1363,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Crea el doble de estalagmitas"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Террастриума",
+            description = "#Призывает 4-5 каменных сталагмитов которые пронзают врагов и пробивают металлические блоки",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Призывает 8-10 сталагмитов"
         },
         pl = {
             name = "Widmo Podziemi",
@@ -1366,8 +1385,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el efecto elegido"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Хаоса",
+            description = "#Исползует случайную сферу духов",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает выбранный эффект"
         },
         pl = {
             name = "Widmo Chaosu",
@@ -1386,8 +1406,8 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el efecto elegido"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Рваная Страница",
+            description = "#{{Collectible712}}Призывает случайный предметный огонёк"
         },
         pl = {
             name = "Porwana Strona",
@@ -1402,7 +1422,7 @@ local BRENDA = EntityType.ENTITY_SLOT .. "." .. MilkshakeVol1.enums.Slots.SPIRIT
 descriptions.Entities = {
     [BRENDA] = {
         en_us = {
-            name = "Spirit Klin",
+            name = "Spirit Klin", -- Kiln
             description = "{{HalfSoulHeart}}Takes half a soul heart in exchange for various rewards:" ..
             "#{{SpiritOrb}} A random Spirit Orb" ..
             "#{{Burning}} A random elemental wisp" ..
@@ -1420,6 +1440,14 @@ descriptions.Entities = {
             "#{{Burning}} Ognik o losowym żywiole" ..
             "#{{Trinket}} Losowy szklany lub kryształowy trynkiet" ..
             "#{{Rune}} Dusza losowej postaci"
+        },
+        ru = {
+            name = "Духовка", -- joke real translation is Духовая печька Бренда
+            description = "{{HalfSoulHeart}}Отнимает половинку сердца души взамен различным наградам:" ..
+            "#{{SpiritOrb}} Случайная сфера духов" ..
+            "#{{Burning}} Случайный элементальный огонёк" ..
+            "#{{Trinket}} Случайная стеклянная или драгоценная безделушка" ..
+            "#{{Rune}} Случайный камень души"
         },
     }
 }
