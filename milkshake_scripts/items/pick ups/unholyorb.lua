@@ -202,7 +202,7 @@ function UnholyOrb:onPEffectUpdate(player)
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MaxSpeed)
 		end
 	elseif #TargetPositions > 0 then
-		if TargetPositions[1]:Exists() or TargetPositions[1]:ToNPC():HasMortalDamage() then
+		if TargetPositions[1]:Exists() or (TargetPositions[1]:ToNPC() and TargetPositions[1]:ToNPC():HasMortalDamage()) then
 			if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
 				player.Velocity = Vector.Zero
 				Game():ShakeScreen(2)
