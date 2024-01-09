@@ -63,6 +63,8 @@ local function SpawnPoop(bag)
     else
         poop = TSIL.GridSpecific.SpawnPoop(safePoops[poopType], Isaac.GetFreeNearPosition(bag.Position, POOP_STEP), false)
     end
+    SFXManager():Play(SoundEffect.SOUND_POOPITEM_THROW)
+    
     utility:SetData(bag, "PoopType", nil)
     utility:SetData(bag, "PlayerHit", true)
     utility:SetData(poop, "DoggyBagPoop", true)
