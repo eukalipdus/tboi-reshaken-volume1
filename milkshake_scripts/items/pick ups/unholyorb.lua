@@ -85,7 +85,6 @@ local function BeggarRewards(collider)
 			--:GetCard(Seed, Playing, Rune, OnlyRunes)
 			rewardSubype = Game():GetItemPool():GetCard(rng:GetSeed(), data.Config.Playing, data.Config.IncludeRune, data.Config.OnlyRune)
 		end
-		--print(rewardType, rewardVariant, rewardSubype)
 		Isaac.Spawn(rewardType, rewardVariant, rewardSubype, collider.Position, RandomVector()*3, nil)
 	end
 end
@@ -203,7 +202,7 @@ function UnholyOrb:onPEffectUpdate(player)
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MaxSpeed)
 		end
 	elseif #TargetPositions > 0 then
-		if TargetPositions[1]:Exists() then
+		if TargetPositions[1]:Exists() or TargetPositions[1]:ToNPC():HasMortalDamage() then
 			if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
 				player.Velocity = Vector.Zero
 				Game():ShakeScreen(2)
