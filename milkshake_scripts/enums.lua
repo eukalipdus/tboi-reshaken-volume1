@@ -49,20 +49,20 @@ enums.Collectibles = {
 }
 
 enums.Trinkets = {
-    AMETHYST_SHARD = Isaac.GetTrinketIdByName("Amethyst Shard"),
-    RUBY_SHARD = Isaac.GetTrinketIdByName("Ruby Shard"),
-    TOURMALINE_SHARD = Isaac.GetTrinketIdByName("Tourmaline Shard"),
-    EMERALD_SHARD = Isaac.GetTrinketIdByName("Emerald Shard"),
+    AMETHYST_SHARD = Isaac.GetTrinketIdByName("Clairvoyant Amethyst"),
+    RUBY_SHARD = Isaac.GetTrinketIdByName("Infernal Ruby"),
+    TOURMALINE_SHARD = Isaac.GetTrinketIdByName("Conductive Tourmaline"),
+    EMERALD_SHARD = Isaac.GetTrinketIdByName("Druidic Emerald"),
     TUNGSTEN_CUBE = Isaac.GetTrinketIdByName("Tungsten Cube"),
     ACID_PENNY = Isaac.GetTrinketIdByName("Acid Penny"),
     CRYSTAL_PENNY = Isaac.GetTrinketIdByName("Crystal Penny"),
     ROCK_WHEEL = Isaac.GetTrinketIdByName("Rock Wheel"),
-    PERIDOT_SHARD = Isaac.GetTrinketIdByName("Peridot Shard"),
-    GARNET_SHARD = Isaac.GetTrinketIdByName("Garnet Shard"),
-    ONYX_SHARD = Isaac.GetTrinketIdByName("Onyx Shard"),
-    DIAMOND_SHARD = Isaac.GetTrinketIdByName("Diamond Shard"),
-    SAPPHIRE_SHARD = Isaac.GetTrinketIdByName("Sapphire Shard"),
-    AMBER_SHARD = Isaac.GetTrinketIdByName("Amber Shard"),
+    PERIDOT_SHARD = Isaac.GetTrinketIdByName("Virulent Peridot"),
+    GARNET_SHARD = Isaac.GetTrinketIdByName("Sacrilegious Garnet"),
+    ONYX_SHARD = Isaac.GetTrinketIdByName("Revenant Onyx"),
+    DIAMOND_SHARD = Isaac.GetTrinketIdByName("Sacred Jacinth"),
+    SAPPHIRE_SHARD = Isaac.GetTrinketIdByName("Torrential Sapphire"),
+    AMBER_SHARD = Isaac.GetTrinketIdByName("Terrestrial Amber"),
 }
 
 enums.Cards = {
