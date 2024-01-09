@@ -7,3 +7,5 @@ Fixes
 
 Additions
 	-Implement Revelations compatibility
+	-Implemented several sheol and scarred womb rooms
+	-Added sound for picking up poop with doggy bag

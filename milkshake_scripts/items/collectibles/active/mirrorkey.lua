@@ -626,7 +626,7 @@ local function UpdateOpenState(door)
     end
 
     if sprite:IsEventTriggered("Sound") then
-        SFXManager():Play(SoundEffect.SOUND_BEAST_FIRE_RING)
+        SFXManager():Play(SoundEffect.SOUND_CANDLE_LIGHT)
     end
 
     if sprite:IsFinished("Close") then

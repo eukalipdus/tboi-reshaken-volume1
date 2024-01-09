@@ -137,6 +137,7 @@ function doggyBag:PostPEffectUpdate(player)
                 player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
             elseif canHold then
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
+                SFXManager():Play(SoundEffect.SOUND_POOPITEM_HOLD)
             end
         end
     end
@@ -151,6 +152,7 @@ function doggyBag:PostPEffectUpdate(player)
                 player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
             elseif canHold then
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
+                SFXManager():Play(SoundEffect.SOUND_POOPITEM_HOLD)
             end
         end
     end
