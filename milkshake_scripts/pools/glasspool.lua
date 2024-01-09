@@ -69,6 +69,7 @@ end
 local function DefaultIsUnlocked(collectible)
     local itemConfig = Isaac.GetItemConfig()
     local itemInfo = itemConfig:GetCollectible(collectible)
+    if not itemInfo then return false end
 
     return itemInfo:IsAvailable()
 end
