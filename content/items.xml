@@ -29,20 +29,20 @@
     <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" tags="noeden" />
 
     <!-- Trinkets -->
-    <trinket name="Amethyst Shard" description="Hidden clairvoyant power..." gfx="trinkets_amethystcluster.png" tags="nogreed"/>
-    <trinket name="Ruby Shard" description="Hidden infernal power..." gfx="trinkets_rubycluster.png" tags="nogreed"/>
-    <trinket name="Tourmaline Shard" description="Hidden conductive power..." gfx="trinkets_tourmalinecluster.png" tags="nogreed"/>
-    <trinket name="Emerald Shard" description="Hidden verdant power..." gfx="trinkets_emeraldcluster.png" tags="nogreed"/>
-    <trinket name="Sapphire Shard" description="Hidden torrential power..." gfx="trinkets_sapphiregem.png" tags="nogreed"/>
-    <trinket name="Onyx Shard" description="Hidden revenant power..." gfx="trinkets_onyxgem.png" tags="nogreed"/>
-    <trinket name="Peridot Shard" description="Hidden virulent power..." gfx="trinkets_peridotsgem.png" tags="nogreed"/>
-    <trinket name="Diamond Shard" description="Hidden sacred power..." gfx="trinkets_goldgem.png" tags="nogreed"/>
-    <trinket name="Garnet Shard" description="Hidden sacrilegious power..." gfx="trinkets_garnetgem.png" tags="nogreed"/>
+    <trinket name="Clairvoyant Amethyst" description="Hidden clairvoyant power..." gfx="trinkets_clairvoyantamethyst.png" tags="nogreed"/>
+    <trinket name="Infernal Ruby" description="Hidden infernal power..." gfx="trinkets_infernalruby.png" tags="nogreed"/>
+    <trinket name="Conductive Tourmaline" description="Hidden conductive power..." gfx="trinkets_conductive_tourmaline.png" tags="nogreed"/>
+    <trinket name="Druidic Emerald" description="Hidden druidic power..." gfx="trinkets_druidicemerald.png" tags="nogreed"/>
+    <trinket name="Torrential Sapphire" description="Hidden torrential power..." gfx="trinkets_torrentialsapphire.png" tags="nogreed"/>
+    <trinket name="Revenant Onyx" description="Hidden revenant power..." gfx="trinkets_revenantonyx.png" tags="nogreed"/>
+    <trinket name="Virulent Peridot" description="Hidden virulent power..." gfx="trinkets_peridotsgem.png" tags="nogreed"/>
+    <trinket name="Sacred Jacinth" description="Hidden sacred power..." gfx="trinkets_sacredjacinth.png" tags="nogreed"/>
+    <trinket name="Sacrilegious Garnet" description="Hidden sacrilegious power..." gfx="trinkets_sacrilegiousgarnet.png" tags="nogreed"/>
     <trinket name="Tungsten Cube" description="It's heavy" gfx="trinkets_tungstencube.png" cache="speed" />
     <trinket name="Acid Penny"    description="Wealth of Sickness" gfx="trinkets_acidpenny.png" />
     <trinket name="Crystal Penny" description="Wealth of Knowledge"  gfx="trinkets_crystalpenny.png" />
     <trinket name="Rock Wheel"    description="Stone Aged Allies"    gfx="rock_wheel.png" cache="speed" tags="nogreed"/>
-    <trinket name="Amber Shard" description="Hidden placeholder power..." gfx="trinkets_ambergem.png" tags="nogreed"/>
+    <trinket name="Terrestrial Amber" description="Hidden placeholder power..." gfx="trinkets_terrestrialamber.png" tags="nogreed"/>
 
     <!-- Hidden items -->
     <passive id="500" name="BRENDA CUSTOM FIRE WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
