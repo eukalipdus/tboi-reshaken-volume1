@@ -4,6 +4,7 @@
 Fixes
 	-Crash sometimes caused by Lil' Bishop
 	-Mouse controls being disabled upon starting a run
+	-Changed gem trinket names
 
 Additions
 	-Implement Revelations compatibility
