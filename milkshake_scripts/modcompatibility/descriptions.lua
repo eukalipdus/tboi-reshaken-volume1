@@ -1447,9 +1447,8 @@ descriptions.Cards = {
             description = "#Summons a random {{Collectible712}} Lemegeton wisp"
         },
         spa = {
-            name = "Espíritu de Caos",
-            description = "#Usa un efecto de orbe espiritual aleatorio",
-            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el efecto elegido"
+            name = "Tattered Page",
+            description = "#Summons a random {{Collectible712}} Lemegeton wisp"
         },
         ru = {
             name = "Рваная Страница",
@@ -1468,7 +1467,7 @@ local BRENDA = EntityType.ENTITY_SLOT .. "." .. MilkshakeVol1.enums.Slots.SPIRIT
 descriptions.Entities = {
     [BRENDA] = {
         en_us = {
-            name = "Spirit Klin", -- Kiln
+            name = "Spirit Kiln", -- Kiln
             description = "{{HalfSoulHeart}}Takes half a soul heart in exchange for various rewards:" ..
             "#{{SpiritOrb}} A random Spirit Orb" ..
             "#{{Burning}} A random elemental wisp" ..

@@ -163,7 +163,7 @@ MilkshakeVol1.API:AddItemsToGlassPool(table items)
 MilkshakeVol1.API:AddSoulStone(Card card, fun(): boolean isUnlocked)
 * Defined in line 85 of milkshake_scripts/slots/spiritklinbrenda.lua
 
-    Allows for adding a character's soul stone to the Spirit Klin reward pool.
+    Allows for adding a character's soul stone to the Spirit Kiln reward pool.
 
     Card card - The character's soul stone
     fun(): boolean isUnlocked - Function that returns if the character is unlocked
@@ -173,7 +173,7 @@ MilkshakeVol1.API:AddSoulStone(Card card, fun(): boolean isUnlocked)
 MilkshakeVol1.API:AddGlassTrinkets(trinket TrinketType, isUnlocked? fun(): boolean)
 * Defined in line 95 of milkshake_scripts/slots/spiritklinbrenda.lua
 
-    Allows for adding a trinket to the Spirit Klin glass trinket reward pool.
+    Allows for adding a trinket to the Spirit Kiln glass trinket reward pool.
 
     trinket TrinketType - The trinket ID to be added
     fun(): boolean isUnlocked - Function that returns if the character is unlocked
@@ -183,7 +183,7 @@ MilkshakeVol1.API:AddGlassTrinkets(trinket TrinketType, isUnlocked? fun(): boole
 MilkshakeVol1.API:AddSpiritKlinReward(number weight | fun(player: EntityPlayer): number, rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector))
 * Defined in line 105 of milkshake_scripts/slots/spiritklinbrenda.lua
 
-    Allows for adding custom rewards of any type to Spirit Klin's reward pool.
+    Allows for adding custom rewards of any type to Spirit Kiln's reward pool.
 
     number weight | fun(player: EntityPlayer): number - The chance the reward is selected
     rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector) - The function to spawn the reward

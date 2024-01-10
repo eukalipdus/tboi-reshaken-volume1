@@ -465,8 +465,7 @@ local exampledirectory = {
                     'hello', 'everynyan',
                     'how', 'are', 'you?',
                     'fine', 'sank', 'you',
-                    'oh', 'my', 'gah!',
-                    'i', 'wish', 'i', 'were', 'a', 'bird'
+                    'oh', 'my', 'gah!'
                 },
             },
             { str = "", fsize = 1, nosel = true },
@@ -521,8 +520,8 @@ local exampledirectory = {
             { str = "", fsize = 1, nosel = true },
 
             --BRENDA'S NAME
-            {str = "spirit's klin true name", fsize = 2, nosel = true},
-            {str = "is brenda", fsize = 2, nosel = true}
+            {str = "brenda the spirit", fsize = 2, nosel = true},
+            {str = "kiln was here", fsize = 2, nosel = true}
         }
     },
 }
