@@ -129,6 +129,7 @@ end
 ---@param pickup EntityPickup
 function Leviticus:OnCollectibleUpdate(pickup)
     if not LEVITICUS_ITEMS[pickup.SubType] then return end
+    if LibraryExpanded and LibraryExpanded:IsLibraryCertificateRoom() then return end
 
     local currentItem = GetCurrentLeviticusItem()
     if pickup.SubType ~= currentItem then
@@ -191,7 +192,10 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
 
     if LibraryExpanded then
         if LibraryExpanded:GetTBOATB(player) > 0 then
-            for _ = 1, LibraryExpanded:GetTBOATB(player) + 2 do
+            player:UseCard(Card.CARD_HOLY, UseFlag.USE_NOANIM | UseFlag.USE_MIMIC | UseFlag.USE_NOANNOUNCER)
+        end
+        if LibraryExpanded:GetTBOATB(player) > 1 then
+            for _ = 1, LibraryExpanded:GetTBOATB(player) - 1 do
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_CRACK_THE_SKY, UseFlag.USE_NOANIM | UseFlag.USE_MIMIC)
             end
         end
