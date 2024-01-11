@@ -83,7 +83,7 @@ descriptions.Collectibles = {
             "#{{Warning}} Pulsa dos veces Ctrl para alternar el modo de control de ratón",
         },
         ru = {
-            name = "Острый курсор",
+            name = "Острый Курсор",
             description = "#Нацеливается на самого дальнего врага в комнате" ..
             "#{{Damage}} При нажатии клавиш стрельбы, она щелкает, нанося 10% урона Исаака" ..
             "#{{Warning}} Дважды нажмите Ctrl, чтобы переключить режим управления на мышку",
@@ -105,7 +105,7 @@ descriptions.Collectibles = {
             description = "{{Blank}}{{ArrowUp}} +0.7 lagrimas y empuje solo para el ojo derecho #De momento sin usar y sin programar, puede que aparezca despues (Probablemente no)"
         },
         ru = {
-            name = "Черный глаз",
+            name = "Черный Глаз",
             description = "{{Blank}}{{ArrowUp}} +0,7 скорострельности и отбрасывания только для правого глаза #В настоящее время не используется и не закодировано, возможно, появится позже (вероятно, не появится)",
         },
     },
@@ -164,7 +164,7 @@ descriptions.Collectibles = {
             book_of_virtues = "Anillo medio#50% de posibilida de regenerarse al morir"
         },
         ru = {
-            name = "Глобин в ведре",
+            name = "Глобин в Ведре",
             description = "Создает дружелюбного глобина, который сражается на вашей стороне" ..
             "#Шанс создать разные варианты глобина в зависимости от этажа" ..
             "#Одновременно может быть создано максимум 4 глобина",
@@ -190,7 +190,7 @@ descriptions.Collectibles = {
             book_of_virtues = "Anillo medio con mucha vida#10% de probabilidad de disparar lágrimas de {{Collectible202}} Toque de Midas"
         },
         ru = {
-            name = "Золотая лопата",
+            name = "Золотая Зопата",
             description = "Выкапывает 1-2 золотых сундука и случайный золотой предмет" ..
             "#{{LadderRoom}} Создаёт люк к магазину членской карты, если использовано на клетке пола с декорацией (трава, маленькие камешки, бумажки, и т.д.)",
             book_of_virtues = "Огонёк среднего кольца#Огонёк с высоким здоровьем#10% шанс выстрелить слезы с эффектом {{Collectible202}} Прикосновения Мидаса"
@@ -271,7 +271,7 @@ descriptions.Collectibles = {
             book_of_belial = "↑ {{Damage}} +0.066 Daño por moneda insertada"
         },
         ru = {
-            name = "Пустой слот",
+            name = "Пустая Ячейка",
             description = "{{Coin}} Вставляете монету" ..
             "#После 10 монет с вероятностью 1% взорвется и появится вдвое больше вложенных монет" ..
             "#Гарантированно взорвется при 100-ой монете",
@@ -301,7 +301,7 @@ descriptions.Collectibles = {
             book_of_belial = "50% de probabilidad de reemplazar {{SpiritOrb}} Espíritu del Caos con Espíritu de Sacrilegio",
         },
         ru = {
-            name = "Расколотая сфера",
+            name = "Расколотая Сфера",
             description = "Можно бросить во врагов, чтобы захватить их душу" ..
             "#{{SpiritOrb}} Захваченные враги превращаются в сферы духов с соответствующим им элементом души",
             book_of_virtues = "При разрушении создает 3 случайных элементальных огонька с различными эффектами",
@@ -329,7 +329,7 @@ descriptions.Collectibles = {
             book_of_belial = "30% de posibilidad de reemplazar los pedestales divididos por {{DevilRoom}} objetos del demonio"
         },
         ru = {
-            name = "Призматический кубик",
+            name = "Призматический Кубик",
             description = "Разделяет предметы в комнате на два пьедестала с качеством меньше на 1" ..
             "#Предметы с качеством {{Quality0}} разделяются на случайные расходники",
             book_of_virtues = "Огоньки среднего кольца#Не может стрелять#Разделяет слезы Исаака на 4 слезы {{Collectible528}} ангельской призмы",
@@ -378,7 +378,7 @@ descriptions.Collectibles = {
         },
         ru = {
             name = "Небесное Зеркало",
-            description = "Зеркально повторяет движение Исаака" ..
+            description = "Отражает движения Исаака" ..
             "#Наносит 75 урона в секунду" ..
             "#\1  {{MirrorRoom}} +2,5 Урона в зеркальном мире",
         },
@@ -403,9 +403,9 @@ descriptions.Collectibles = {
             abyss = "Langosta roja que inflige {{BleedingOut}} Sangrado"
         },
         ru = {
-            name = "Серповидная клетка",
+            name = "Серповидная Клетка",
             description = "Слезы пронзают врагов насквозь" ..
-            "#{{BleedingOut}} Слезы вызывают кровотечение, которое заставляет врагов оставлять кровавй след и получать урон при движении",
+            "#{{BleedingOut}} Слезы вызывают кровотечение, которое заставляет врагов оставлять кровавый след и получать урон при движении",
             abyss = "Красная саранча, вызывающая {{BleedingOut}} кровотечение"
         },
         pl = {
@@ -427,7 +427,7 @@ descriptions.Collectibles = {
             "#{{EmptyHeart}} Quita medio corazón",
         },
         ru = {
-            name = "Испорченный завтрак",
+            name = "Испорченный Завтрак",
             description = "\1 +1 Здоровье" ..
             "#{{EmptyHeart}} Удаляет половину сердца",
         },
@@ -453,7 +453,7 @@ descriptions.Collectibles = {
             "#{{Heart}} Restaura 1 corazón",
         },
         ru = {
-            name = "Сбалансированный завтрак",
+            name = "Сбалансированный Завтрак",
             description = "\1 +1 Здоровье" ..
             "#\1 +1 Удача" ..
             "#{{SoulHeart}} +1 Сердце души" ..
@@ -485,7 +485,7 @@ descriptions.Collectibles = {
             "#{{Heart}} Restaura completamente la salud",
         },
         ru = {
-            name = "Сытный завтрак",
+            name = "Сытный Завтрак",
             description = "\1 +1 Здоровье" ..
             "#\1 +0.5 Урон" ..
             "#\1 +0.3 Скорострельность" ..
@@ -513,7 +513,7 @@ descriptions.Collectibles = {
             "#{{Trinket52}} Las monedas arcoíris activan el efecto de sus respectivas baratijas al recogerlos",
         },
         ru = {
-            name = "Горшок золота",
+            name = "Горшок Золота",
             description = "Преобразует все бомбы, ключи и большинство монет в радужные монеты" ..
             "#{{Trinket52}} Радужные монеты активируют эффект соответствующих им безделушек",
         },
@@ -541,7 +541,7 @@ descriptions.Collectibles = {
             "#\2 -1 Suerte mientras está roto",
         },
         ru = {
-            name = "Стеклянный идол",
+            name = "Стеклянный Идол",
             description = "\1 +1 доп.жизни, пока не повреждена" ..
             "#{{SoulHeart}} Исаак возрождается с +1 сердцем души и 10 секундами неуязвимости после смерти" ..
             "#Может оживить Исаака один раз за этаж" ..
@@ -609,7 +609,7 @@ descriptions.Collectibles = {
             "#Isaac deja un rastro de creep ácido"
         },
         ru = {
-            name = "Батарейная кислота",
+            name = "Батарейная Кислота",
             description = "{{Battery}} Удваивает скорость зарядки активного предмета" ..
             "#\2 Снимает 1 заряд каждые 15 секунд" ..
             "#Исаак оставляет разреженный кислотный след"
@@ -633,7 +633,7 @@ descriptions.Collectibles = {
             "#Isaac puede coger cacas al andar hacia ellas",
         },
         ru = {
-            name = "Собачья сумка",
+            name = "Собачья Сумка",
             description = "При получении урона появляется случайная какашка" ..
             "#Исаак может подбирать какашки, проходя по ним",
         },
@@ -659,7 +659,7 @@ descriptions.Collectibles = {
             abyss = "Langosta bola de béisbol afectada por el movimiento de Isaac"
         },
         ru = {
-            name = "Папина бейсбольная перчатка",
+            name = "Папина Бейсбольная Перчатка",
             description = "\1 +10% Скорострельность" ..
             "#\2 -0.2 Скорость выстрела" ..
             "#Движение Исаака влияет на слезы",
@@ -709,7 +709,7 @@ descriptions.Collectibles = {
             "#{{Trinket52}} Las monedas arcoíris activan el efecto de sus baratijas correspondientes al recogerlas",
         },
         ru = {
-            name = "Радужный фрагмент",
+            name = "Радужный Фрагмент",
             description = "\1 +1 Удача" ..
             "#Создает 4 радужных монеты" ..
             "#{{Trinket52}} Радужные монеты активируют эффект соответствующих им безделушек",
@@ -735,7 +735,7 @@ descriptions.Collectibles = {
             "#{{SpiritOrb}} Las píldoras espirituales activan un efecto de orbe espiritual además de su efecto de píldora",
         },
         ru = {
-            name = "Маска знахаря",
+            name = "Маска Знахаря",
             description = "{{Pill}} Создает 1 пилюлю" ..
             "#Превращает все пилюли в пилюли духов" ..
             "#{{SpiritOrb}} Пилюли духов активируют эффекты сферы духов вместо эффекта пилюли",
@@ -765,7 +765,7 @@ descriptions.Collectibles = {
             book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
         },
         ru = {
-            name = "Зеркальный ключ",
+            name = "Зеркальный Ключ",
             description = "{{MirrorRoom}} Один раз за комнату, можно создать зеркальную дверь на стене, обозначенную контуром двери" ..
             "#Зеркальные комнаты воссоздают все предметы, препятствия и врагов" ..
             "#{{Warning}} Пьедесталы предметов не воссоздаются" ..
@@ -799,7 +799,7 @@ descriptions.Collectibles = {
             book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
         },
         ru = {
-            name = "Зеркальный ключ (Незаряженный)",
+            name = "Зеркальный Ключ (Незаряженный)",
             description = "{{MirrorRoom}} Один раз за комнату, можно создать зеркальную дверь на стене, обозначенную контуром двери" ..
             "#Зеркальные комнаты воссоздают все предметы, препятствия и врагов" ..
             "#{{Warning}} Пьедесталы предметов не воссоздаются" ..
@@ -837,7 +837,7 @@ descriptions.Trinkets = {
             triple = "{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño #{{ColorGold}}Hace el triple de daño",
         },
         ru = {
-            name = "Вольфрамовый куб",
+            name = "Вольфрамовый Куб",
             description = "{{ArrowDown}} -0.2 Скорости #При падение создаст огромную разрушительную ударную волну",
             double = "{{ArrowDown}} -0.2 Скорости #При падение создаст огромную разрушительную ударную волну #{{ColorGold}}Наносит двойной урон",
             triple = "{{ArrowDown}} -0.2 Скорости #При падение создаст огромную разрушительную ударную волну #{{ColorGold}}Наносит тройной урон",
@@ -857,7 +857,7 @@ descriptions.Trinkets = {
             description = "{{Pill11}} Recoger una moneda tiene un 8% de probabilidad de crear una píldora",
         },
         ru = {
-            name = "Кислотная монетка",
+            name = "Кислотная Монета",
             description = "{{Blank}}{{ArrowDown}} При подборе монет с вероятностью 8% появится пилюля",
         },
         pl = {
@@ -875,7 +875,7 @@ descriptions.Trinkets = {
             description = "{{Pill11}} Recoger una moneda tiene un 8% de probabilidad de crear una carta",
         },
         ru = {
-            name = "Хрустальный монетка",
+            name = "Хрустальная Монета",
             description = "{{Card}} При подборе монет с вероятностью 8% появится карта",
         },
         pl = {
@@ -1493,7 +1493,7 @@ descriptions.Entities = {
             "#{{Rune}} Dusza losowej postaci"
         },
         ru = {
-            name = "Духовка", -- joke real translation is Духовая печька Бренда
+            name = "Духовка", -- joke, real translation is Духовая печька Бренда
             description = "{{HalfSoulHeart}}Отнимает половинку сердца души взамен различным наградам:" ..
             "#{{SpiritOrb}} Случайная сфера духов" ..
             "#{{Burning}} Случайный элементальный огонёк" ..
