@@ -1202,7 +1202,7 @@ descriptions.Cards = {
             "#{{ArcadeRoom}} Cortocircuita todas las máquinas cercanas, causando que paguen algunas veces y exploten",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración y el rango de las ondas"
         },
-         en_us = {
+        ru = {
             name = "Дух Электропотока", -- я не буду переводить это как Дух Электропроводки XD
             description = "Выпускает волну электричества во всех направлениях, нанося урон ближайшим врагам" ..
             "#{{ArcadeRoom}} Замыкает все автоматы в радиусе, в результате чего они выбрасывают награды несколько раз и взрываются",
