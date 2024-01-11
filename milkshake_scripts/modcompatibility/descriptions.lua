@@ -132,7 +132,8 @@ descriptions.Collectibles = {
         },
         spa = {
             name = "Flor Petardo",
-            description = "{{Burning}} Posibilidad de disparar una semilla que inflige a los enemigos con Kabloom #Los enemigos con Kabloom explotarán en lágrimas de pétalos explosivos después de 5 segundos",
+            description = "{{Burning}} Posibilidad de disparar semillas que se pegan a los enemigos" ..
+            "#Después de 4 segundos, las semillas florecen y explotan, disparando lágrimas pétalo, haciendo 35 + 6 x el daño de Isaac",
             abyss = "Langosta verde que tiene un 10% de posibilidad de inflingir {{Burning}} Kabloom"
         },
         ru = {
@@ -603,8 +604,9 @@ descriptions.Collectibles = {
         },
         spa = {
             name = "Ácido de Batería",
-            description = "{{Battery}} Duplica la carga del objeto activo al limpiar habitaciones" ..
-            "#\2 Agota 1 carga cada 15 segundos",
+            description = "{{Battery}} Duplica la velocidad de carga de los activos" ..
+            "#\2 Agota una carga cada 15 segundos" ..
+            "#Isaac deja un rastro de creep ácido"
         },
         ru = {
             name = "Батарейная кислота",
@@ -830,9 +832,9 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
-            double = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño #{{ColorGold}}Hace el doble de daño",
-            triple = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño #{{ColorGold}}Hace el triple de daño",
+            description = "{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            double = "{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño #{{ColorGold}}Hace el doble de daño",
+            triple = "{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño #{{ColorGold}}Hace el triple de daño",
         },
         ru = {
             name = "Вольфрамовый куб",
@@ -1447,9 +1449,8 @@ descriptions.Cards = {
             description = "#Summons a random {{Collectible712}} Lemegeton wisp"
         },
         spa = {
-            name = "Espíritu de Caos",
-            description = "#Usa un efecto de orbe espiritual aleatorio",
-            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el efecto elegido"
+            name = "Página Rota",
+            description = "#Genera un fuego fatuo de {{Collectible712}} Lemegeton aleatorio",
         },
         ru = {
             name = "Рваная Страница",
@@ -1477,7 +1478,11 @@ descriptions.Entities = {
         },
         spa = {
             name = "Brenda la Forja Espiritual",
-            description = "zorra"
+            description = "{{HalfSoulHeart}}Paga medio corazón de alma para conseguir recompensas:" ..
+            "#{{SpiritOrb}} Un orbe espiritual aleatorio" ..
+            "#{{Burning}} Un fuego fatuo elemental aleatorio" ..
+            "#{{Trinket}} Una baratija de cristal o de gema aleatoria" ..
+            "#{{Rune}} Una piedra de alma aleatoria"
         },
         pl = {
             name = "Kuźnia Dusz",
