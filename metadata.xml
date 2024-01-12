@@ -13,9 +13,10 @@ Isaac Reshaken is a content pack MOD that adds over 40 new high quality items, t
 [*] 10+ fancy new spirit orb consumables :0
 [*] 10+ tasty new trinkets
 [*] 4 lustrous new foes
+[*] 1 mystical new machine type
 [*] 1000+ new rooms to explore
 [*] 1 banger new music track
-[*] and 3 creative new challenges!
+[*] 3 creative new challenges
 [/list]
 
 and loads more surprises!
@@ -24,6 +25,7 @@ and loads more surprises!
 Alongside all this, we also feature full compatibility with Fiend Folio and several other MODs, creating exciting interactions with them:
 [list]
 [*] External Item Descriptions in English, Spanish, Russian, and Polish
+[*] DSS setting menu accessible by pressing C
 [*] Fiend Folio (Full shattered orb enemy elemental support, exclusive FF based rainbow pennies, custom beggar and slot machine interactions with spirit orbs, a full slew of spirit pills matching FF pill colors, and FF items available in custom item pools)
 [*] Epiphany (Support for epiphany beggar and slot machine interactions)
 [*] Revelations (Full shattered orb enemy element support)
@@ -36,7 +38,7 @@ Alongside all this, we also feature full compatibility with Fiend Folio and seve
 [/list]
 
 
-[h2] Incompatibilities [/h2]
+[h1] Incompatibilities [/h1]
 Isaac Reshaken is INCOMPATIBLE with the following mods for one reason or another:
 Double Spiked Rocks (Crashes in some rooms for unknown reasons...)
 
@@ -79,7 +81,7 @@ punchyufo, clownylun, toyrapple, neibusha, Luna, mysterykar, scooperman, ZRWilso
 
 Find any bugs? Send them in the Bugs discussion thread below along with a snippet of your log or screenshot of the error. And as always, stay shakey!</description>
     <version>1.1</version>
-    <visibility>Friends Only</visibility>
+    <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>
     <tag id="Active Items"/>

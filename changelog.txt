@@ -25,3 +25,12 @@ Additions
 
 Changes
 	-Changed leviticus' Library Expanded TBOAB effect to give holy card instead of crack the sky, activates crack the sky on duplicate copies instead
+
+================================================
+    v1.0.3 - January 12th, 2024
+================================================
+Fixes
+	-Fixed spirit of conductivity EID being in russian
+
+Additions
+	-Added missing Spanish EIDs
