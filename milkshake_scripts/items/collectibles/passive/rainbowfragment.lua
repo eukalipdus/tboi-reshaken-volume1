@@ -12,7 +12,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, rainbowFragment.Evalua
 
 ---@param player EntityPlayer
 function rainbowFragment:PostItemAdded(player, _, firstTime)
-    if player:GetPlayerType() == PlayerType.PLAYER_ISAAC_B and firstTime == false then
+    if (player:GetPlayerType() == PlayerType.PLAYER_ISAAC_B and firstTime == false) or player.Variant == 1 then
         return  --(T)Isaac we (don't) love you!
     end
     local rng = player:GetCollectibleRNG(MilkshakeVol1.enums.Collectibles.RAINBOW_FRAGMENT)

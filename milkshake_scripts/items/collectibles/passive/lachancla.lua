@@ -22,7 +22,6 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, laChancla.EvaluateCach
 function laChancla:EntityTakeDmg(entity, _, flags, source)
     local effect, variant
     local player = entity:ToPlayer()
-    if not player then return end
 
     if player:HasCollectible(enums.Collectibles.LA_CHANCLA) then
         if not source or not source.Entity then return end
@@ -39,5 +38,10 @@ function laChancla:EntityTakeDmg(entity, _, flags, source)
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, laChancla.EntityTakeDmg, EntityType.ENTITY_PLAYER)
+if REPENTOGON then
+    MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PLAYER_TAKE_DMG, laChancla.EntityTakeDmg)
+else
+    MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, laChancla.EntityTakeDmg, EntityType.ENTITY_PLAYER)
+end
+
 return laChancla

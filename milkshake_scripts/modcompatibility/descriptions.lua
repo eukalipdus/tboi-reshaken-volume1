@@ -58,9 +58,10 @@ descriptions.Collectibles = {
             abyss = "Langosta grande, rápida y rosa que hace 2 veces el daño de Isaac"
         },
         ru = {
-            name = "Milkshake",
-            description = "{{Heart}} +1 Soul Heart, Black Heart, or Health up randomly" ..
-            "#{{ArrowUp}} {{ArrowUp}} 1.1x to 1.5x multiplier to all stats!"
+            name = "Милкшейк", --Молочный коктейль
+            description = "{{Heart}} +1 Сердце Души, Черное Сердце или Здоровье случайным образом" ..
+            "#{{ArrowUp}} {{ArrowUp}} Множитель всех характеристик от 1,1x до 1,5x!",
+            abyss = "Большая, быстрая розовая саранча, наносящая двойной урон Исаака"
         },
         pl = {
             name = "Milkshake",
@@ -82,8 +83,10 @@ descriptions.Collectibles = {
             "#{{Warning}} Pulsa dos veces Ctrl para alternar el modo de control de ratón",
         },
         ru = {
-            name = "Sharp Cursor",
-            description = "#Targets the furthest enemy in the room #{{Damage}} Pressing a shooting key makes it click, dealing 10% of Isaac's damage #{{Warning}} Double press ctrl to toggle mouse control mode.",
+            name = "Острый Курсор",
+            description = "#Нацеливается на самого дальнего врага в комнате" ..
+            "#{{Damage}} При нажатии клавиш стрельбы, она щелкает, нанося 10% урона Исаака" ..
+            "#{{Warning}} Дважды нажмите Ctrl, чтобы переключить режим управления на мышку",
         },
         pl = {
             name = "Ostry Kursor",
@@ -102,8 +105,8 @@ descriptions.Collectibles = {
             description = "{{Blank}}{{ArrowUp}} +0.7 lagrimas y empuje solo para el ojo derecho #De momento sin usar y sin programar, puede que aparezca despues (Probablemente no)"
         },
         ru = {
-            name = "Black Eye",
-            description = "{{Blank}}{{ArrowUp}} +0.7 tears up and knockback up for the right eye only #Currently unused and uncoded, maybe it will show up later (It probably wont)",
+            name = "Черный Глаз",
+            description = "{{Blank}}{{ArrowUp}} +0,7 скорострельности и отбрасывания только для правого глаза #В настоящее время не используется и не закодировано, возможно, появится позже (вероятно, не появится)",
         },
     },
     [enums.Collectibles.DICE_DICE] = {
@@ -116,8 +119,8 @@ descriptions.Collectibles = {
             description = "Activa un efecto de la habitacion de dado aleatorio #De momento sin usar y sin programar, puede que aparezca despues"
         },
         ru = {
-            name = "Dice Dice",
-            description = "Activates a random dice room effect #Currently unused and uncoded, maybe it will show up later",
+            name = "Кубик-кость",
+            description = "Активирует случайный эффект комнаты костей #В настоящее время не используется и не закодирован, возможно, он появится позже",
         },
     },
     [enums.Collectibles.FIRECRACKER_ROSE] = {
@@ -129,12 +132,15 @@ descriptions.Collectibles = {
         },
         spa = {
             name = "Flor Petardo",
-            description = "{{Burning}} Posibilidad de disparar una semilla que inflige a los enemigos con Kabloom #Los enemigos con Kabloom explotarán en lágrimas de pétalos explosivos después de 5 segundos",
+            description = "{{Burning}} Posibilidad de disparar semillas que se pegan a los enemigos" ..
+            "#Después de 4 segundos, las semillas florecen y explotan, disparando lágrimas pétalo, haciendo 35 + 6 x el daño de Isaac",
             abyss = "Langosta verde que tiene un 10% de posibilidad de inflingir {{Burning}} Kabloom"
         },
         ru = {
-            name = "Firecracker Flower",
-            description = "{{Burning}} Chance to shoot a seed tear that inflicts enemies with Kabloom #Kabloomed enemies will burst into exploding petal tears after 5 seconds",
+            name = "Цветок-петарда",
+            description = "{{Burning}} Шанс выстрелить семенными слезами, которые прилипают к врагам" ..
+            "#Семенные слезы распускаются и через 4 секунды превращаются в взрывающиеся лепестковые слезы, нанося 35 + 6x урона Исаака",
+            abyss = "Зеленая, пылающая саранча, с вероятностью 10% может наложить {{Горящий}} Каблум."
         },
         pl = {
             name = "Petunia Petarda",
@@ -158,9 +164,11 @@ descriptions.Collectibles = {
             book_of_virtues = "Anillo medio#50% de posibilida de regenerarse al morir"
         },
         ru = {
-            name = "Globin In A Bucket",
-            description = "Spawns a friendly globin that fights by your side" ..
-            "#Chance to spawn different globin variants depending on the floor",
+            name = "Глобин в Ведре",
+            description = "Создает дружелюбного глобина, который сражается на вашей стороне" ..
+            "#Шанс создать разные варианты глобина в зависимости от этажа" ..
+            "#Одновременно может быть создано максимум 4 глобина",
+            book_of_virtues = "Огонёк среднего кольца#50% шанс восстановиться после смерти"
         },
         pl = {
             name = "Wiadro Pełne Globiny",
@@ -182,8 +190,10 @@ descriptions.Collectibles = {
             book_of_virtues = "Anillo medio con mucha vida#10% de probabilidad de disparar lágrimas de {{Collectible202}} Toque de Midas"
         },
         ru = {
-            name = "Golden Shovel",
-            description = "Digs up 1-2 golden chests and a random golden pickup. #{{LadderRoom}} Opens up a member card trapdoor if used on a decorative floor tile.",
+            name = "Золотая Зопата",
+            description = "Выкапывает 1-2 золотых сундука и случайный золотой предмет" ..
+            "#{{LadderRoom}} Создаёт люк к магазину членской карты, если использовано на клетке пола с декорацией (трава, маленькие камешки, бумажки, и т.д.)",
+            book_of_virtues = "Огонёк среднего кольца#Огонёк с высоким здоровьем#10% шанс выстрелить слезы с эффектом {{Collectible202}} Прикосновения Мидаса"
         },
         pl = {
             name = "Złota Łopata",
@@ -204,7 +214,8 @@ descriptions.Collectibles = {
         },
         ru = {
             name = "La Chancla",
-            description = "\1 0.3 Speed up #Immune to {{MomBossSmall}} stomping attacks",
+            description = "\1 +0.3 Скорости" ..
+            "#{{MomBossSmall}} Иммунитет к топающим атакам",
         },
         pl = {
             name = "Laczek",
@@ -228,11 +239,11 @@ descriptions.Collectibles = {
             "#{{Blank}} Completarlo con éxito activa el orbe espiritual con efecto doble",
         },
         ru = {
-            name = "Lyra",
-            description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
-            "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destoryed machines" .. 
-            "#\1 Using a spirit orb starts a short rhythm mini game." ..
-            "#{{Blank}} Successful completion activates the spirit orb with double effect",
+            name = "Лира",
+            description = "{{SpiritOrb}} 15% шанс, что наградой за зачистку комнаты будет случайная сфера духа" ..
+            "#{{SpiritOrb}} Шанс получить бонусную сферу духа из сундуков, отмеченных камней и разрушенных автоматов" ..
+            "#\1 Использование сферы духа запускает короткую ритм мини-игру" ..
+            "#{{Blank}} Успешное завершение активирует сферу духа с двойным эффектом",
         },
         pl = {
             name = "Lutnia",
@@ -260,10 +271,12 @@ descriptions.Collectibles = {
             book_of_belial = "↑ {{Damage}} +0.066 Daño por moneda insertada"
         },
         ru = {
-            name = "Empty Slot",
-            description = "{{Coin}} Inserts a coin" ..
-            "#After 10 coins, has a 1% chance to explode and spawn double the coins inserted" ..
-            "#Guranteed to explode at 100 coins inserted",
+            name = "Пустая Ячейка",
+            description = "{{Coin}} Вставляете монету" ..
+            "#После 10 монет с вероятностью 1% взорвется и появится вдвое больше вложенных монет" ..
+            "#Гарантированно взорвется при 100-ой монете",
+            book_of_virtues = "Огонёк внутреннего кольца#Огонёк с низким здоровьем",
+            book_of_belial = "↑ {{Damage}} +0,066 Урона за каждую вложенную монету"
         },
         pl = {
             name = "Puste Pudło",
@@ -288,9 +301,11 @@ descriptions.Collectibles = {
             book_of_belial = "50% de probabilidad de reemplazar {{SpiritOrb}} Espíritu del Caos con Espíritu de Sacrilegio",
         },
         ru = {
-            name = "Shattered Orb",
-            description = "Can be thrown at enemies to capture their soul" ..
-            "#{{SpiritOrb}} Captured enemies are turned into spirit orbs corresponding to their soul's element",
+            name = "Расколотая Сфера",
+            description = "Можно бросить во врагов, чтобы захватить их душу" ..
+            "#{{SpiritOrb}} Захваченные враги превращаются в сферы духов с соответствующим им элементом души",
+            book_of_virtues = "При разрушении создает 3 случайных элементальных огонька с различными эффектами",
+            book_of_belial = "50% шанс заменить сферы {{SpiritOrb}} Духа Хаоса на Духа Святотатства"
         },
         pl = {
             name = "Strzaskana Kula",
@@ -314,9 +329,11 @@ descriptions.Collectibles = {
             book_of_belial = "30% de posibilidad de reemplazar los pedestales divididos por {{DevilRoom}} objetos del demonio"
         },
         ru = {
-            name = "Prismatic Dice",
-            description = "Splits pedestal items in the room into two pedestals of 1 less quality" ..
-            "#Quality {{Quality0}} items are split into random pickups",
+            name = "Призматический Кубик",
+            description = "Разделяет предметы в комнате на два пьедестала с качеством меньше на 1" ..
+            "#Предметы с качеством {{Quality0}} разделяются на случайные расходники",
+            book_of_virtues = "Огоньки среднего кольца#Не может стрелять#Разделяет слезы Исаака на 4 слезы {{Collectible528}} ангельской призмы",
+            book_of_belial = "С вероятностью 30% разделенные предметы будут предметами {{DevilRoom}} дьявола"
         },
         pl = {
             name = "Pryzmatyczna Kostka",
@@ -336,9 +353,9 @@ descriptions.Collectibles = {
             "#{{SpiritOrb}} Genera orbes espirituales aleatorios a cambio",
         },
         ru = {
-            name = "Spirit Bum",
-            description = "{{SoulHeart}} Picks up nearby soul hearts" ..
-            "#{{SpiritOrb}} Spawns random spirit orbs in return",
+            name = "Дух-бездельник",
+            description = "{{SoulHeart}} Подбирает ближайшие сердца душ" ..
+            "#{{SpiritOrb}} Взамен создает случайные сферы духа",
         },
         pl = {
             name = "Widmowy Przybłęda",
@@ -360,10 +377,10 @@ descriptions.Collectibles = {
             "#\1  {{MirrorRoom}} +2.5 de daño en la dimensión espejo",
         },
         ru = {
-            name = "Celestial Mirror",
-            description = "Mirrors Isaac's movement" ..
-            "#Deals 75 damage a second" ..
-            "#\1  {{MirrorRoom}} +2.5 Damage in the mirror world",
+            name = "Небесное Зеркало",
+            description = "Отражает движения Исаака" ..
+            "#Наносит 75 урона в секунду" ..
+            "#\1  {{MirrorRoom}} +2,5 Урона в зеркальном мире",
         },
         pl = {
             name = "Gwieździste Lustro",
@@ -386,9 +403,10 @@ descriptions.Collectibles = {
             abyss = "Langosta roja que inflige {{BleedingOut}} Sangrado"
         },
         ru = {
-            name = "Sickle Cell",
-            description = "Piercing tears" ..
-            "#{{BleedingOut}} Tears cause bleeding, which makes enemies leave creep and take damage when they move",
+            name = "Серповидная Клетка",
+            description = "Слезы пронзают врагов насквозь" ..
+            "#{{BleedingOut}} Слезы вызывают кровотечение, которое заставляет врагов оставлять кровавый след и получать урон при движении",
+            abyss = "Красная саранча, вызывающая {{BleedingOut}} кровотечение"
         },
         pl = {
             name = "Sierpowata Krwinka",
@@ -409,9 +427,9 @@ descriptions.Collectibles = {
             "#{{EmptyHeart}} Quita medio corazón",
         },
         ru = {
-            name = "Spoiled Breakfast",
-            description = "\1 +1 Health" ..
-            "#{{EmptyHeart}} Removes half a heart",
+            name = "Испорченный Завтрак",
+            description = "\1 +1 Здоровье" ..
+            "#{{EmptyHeart}} Удаляет половину сердца",
         },
         pl = {
             name = "Przegniłe Śniadanie",
@@ -435,11 +453,11 @@ descriptions.Collectibles = {
             "#{{Heart}} Restaura 1 corazón",
         },
         ru = {
-            name = "Balanced Breakfast",
-            description = "\1 +1 Health" ..
-            "#\1 +1 Luck" ..
-            "#{{SoulHeart}} +1 Soul Heart" ..
-            "#{{Heart}} Heals 1 heart",
+            name = "Сбалансированный Завтрак",
+            description = "\1 +1 Здоровье" ..
+            "#\1 +1 Удача" ..
+            "#{{SoulHeart}} +1 Сердце души" ..
+            "#{{Heart}} Лечит 1 сердце",
         },
         pl = {
             name = "Porządne Śniadanie",
@@ -467,12 +485,12 @@ descriptions.Collectibles = {
             "#{{Heart}} Restaura completamente la salud",
         },
         ru = {
-            name = "Hearty Breakfast",
-            description = "\1 +1 Health" ..
-            "#\1 +0.5 Damage" ..
-            "#\1 +0.3 Fire rate" ..
-            "#\1 +1 Luck" ..
-            "#{{Heart}} Full heal",
+            name = "Сытный Завтрак",
+            description = "\1 +1 Здоровье" ..
+            "#\1 +0.5 Урон" ..
+            "#\1 +0.3 Скорострельность" ..
+            "#\1 +1 Удача" ..
+            "#{{Heart}} Полное исцеление",
         },
         pl = {
             name = "Obfite Śniadanie",
@@ -495,9 +513,9 @@ descriptions.Collectibles = {
             "#{{Trinket52}} Las monedas arcoíris activan el efecto de sus respectivas baratijas al recogerlos",
         },
         ru = {
-            name = "Pot of Gold",
-            description = "Converts all bomb, key, and most coin pickups into rainbow pennies" ..
-            "#{{Trinket52}} Rainbow pennies activate the effect of their corresponding penny trinkets on pickup",
+            name = "Горшок Золота",
+            description = "Преобразует все бомбы, ключи и большинство монет в радужные монеты" ..
+            "#{{Trinket52}} Радужные монеты активируют эффект соответствующих им безделушек",
         },
         pl = {
             name = "Kociołek Złota",
@@ -523,12 +541,12 @@ descriptions.Collectibles = {
             "#\2 -1 Suerte mientras está roto",
         },
         ru = {
-            name = "Glass Idol",
-            description = "\1 +1 Life while intact" ..
-            "#{{SoulHeart}} Isaac respawns with +1 Soul heart and 10 seconds of invinicibility on death" ..
-            "#Can revive Isaac once per floor" ..
-            "#Blocks 3 projectiles before shattering" ..
-            "#\2 -1 Luck while shattered",
+            name = "Стеклянный Идол",
+            description = "\1 +1 доп.жизни, пока не повреждена" ..
+            "#{{SoulHeart}} Исаак возрождается с +1 сердцем души и 10 секундами неуязвимости после смерти" ..
+            "#Может оживить Исаака один раз за этаж" ..
+            "#Блокирует 3 снаряда, прежде чем разбиться" ..
+            "#\2 -1 Удача, пока разбита",
         },
         pl = {
             name = "Szklana Statua",
@@ -559,11 +577,13 @@ descriptions.Collectibles = {
             abyss = "Langosta azul y brillante que puede generar rayos de luz que hace 3x el daño de Isaac"
         },
         ru = {
-            name = "Leviticus",
-            description = "{{SoulHeart}} Must be charged by picking up soul hearts" ..
-            "#{{EternalHeart}} +1 Eternal Heart" ..
-            "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item" ..
-            "#{{DevilRoom}} The angel item will cost money if a devil deal was taken previously",
+            name = "Книга Левит",
+            description = "{{SoulHeart}} Заряжается при подборе сердец души" ..
+            "#{{EternalHeart}} +1 Вечное сердце" ..
+            "#{{AngelRoom}} Использование перед битвой с боссом заставляет его наградить предметом ангела" ..
+            "#{{DevilRoom}} Предмет ангела будет стоить денег, если ранее была заключена сделка с дьяволом",
+            book_of_virtues = "Огонёк внутренного кольца#Огонёк с высоким здоровьем#+10% {{AngelRoom}} шанс на ангела за каждый огонёк",
+            abyss = "Синяя светящаяся саранча, которая может бить лучами света, наносящие тройной урон Исаака",
         },
         pl = {
             name = "Księga Kapłańska",
@@ -584,13 +604,15 @@ descriptions.Collectibles = {
         },
         spa = {
             name = "Ácido de Batería",
-            description = "{{Battery}} Duplica la carga del objeto activo al limpiar habitaciones" ..
-            "#\2 Agota 1 carga cada 15 segundos",
+            description = "{{Battery}} Duplica la velocidad de carga de los activos" ..
+            "#\2 Agota una carga cada 15 segundos" ..
+            "#Isaac deja un rastro de creep ácido"
         },
         ru = {
-            name = "Battery Acid",
-            description = "{{Battery}} Doubles active item charge from clearing rooms" ..
-            "#\2 Drains 1 charge every 15 seconds",
+            name = "Батарейная Кислота",
+            description = "{{Battery}} Удваивает скорость зарядки активного предмета" ..
+            "#\2 Снимает 1 заряд каждые 15 секунд" ..
+            "#Исаак оставляет разреженный кислотный след"
         },
         pl = {
             name = "Kwas z Baterii",
@@ -611,8 +633,9 @@ descriptions.Collectibles = {
             "#Isaac puede coger cacas al andar hacia ellas",
         },
         ru = {
-            name = "Doggy Bag",
-            description = "Poop",
+            name = "Собачья Сумка",
+            description = "При получении урона появляется случайная какашка" ..
+            "#Исаак может подбирать какашки, проходя по ним",
         },
         pl = {
             name = "Psi Worek",
@@ -636,10 +659,11 @@ descriptions.Collectibles = {
             abyss = "Langosta bola de béisbol afectada por el movimiento de Isaac"
         },
         ru = {
-            name = "Dad's Mitt",
-            description = "\1 +10% Fire rate" ..
-            "#\2 -0.2 Shot speed" ..
-            "#Tears become influenced by Isaac's movement",
+            name = "Папина Бейсбольная Перчатка",
+            description = "\1 +10% Скорострельность" ..
+            "#\2 -0.2 Скорость выстрела" ..
+            "#Движение Исаака влияет на слезы",
+            abyss = "Бейсбольная саранча, которая следует за импульсом движения Исаака.",
         },
         pl = {
             name = "Rękawica Ojca",
@@ -661,9 +685,9 @@ descriptions.Collectibles = {
             "#Cuando recibe un golpe, 20% de probabilidad de proteger a Isaac durante 5 segundos",
         },
         ru = {
-            name = "Lil Bishop",
-            description = "Blocks projectiles" ..
-            "#When hit, 20% chance to shield Isaac for 5 seconds",
+            name = "Малютка Епископ",
+            description = "Блокирует вражеские снаряды" ..
+            "#При попадании вражеского снаряда, есть 20% шанс защитить Исаака щитом на 5 секунд",
         },
         pl = {
             name = "Tyci Biskup",
@@ -685,10 +709,10 @@ descriptions.Collectibles = {
             "#{{Trinket52}} Las monedas arcoíris activan el efecto de sus baratijas correspondientes al recogerlas",
         },
         ru = {
-            name = "Rainbow Fragment",
-            description = "\1 +1 Luck up" ..
-            "#Spawns 4 rainbow pennies" ..
-            "#{{Trinket52}} Rainbow pennies activate the effect of their corresponding penny trinkets on pickup",
+            name = "Радужный Фрагмент",
+            description = "\1 +1 Удача" ..
+            "#Создает 4 радужных монеты" ..
+            "#{{Trinket52}} Радужные монеты активируют эффект соответствующих им безделушек",
         },
         pl = {
             name = "Kawałek Tęczy",
@@ -711,10 +735,10 @@ descriptions.Collectibles = {
             "#{{SpiritOrb}} Las píldoras espirituales activan un efecto de orbe espiritual además de su efecto de píldora",
         },
         ru = {
-            name = "Witch Doctor Mask",
-            description = "{{Pill}} Spawns 1 pill" ..
-            "#Converts all pills into spirit pills" ..
-            "#{{SpiritOrb}} Spirit pills activate a spirit orb effect on top of their pill effect",
+            name = "Маска Знахаря",
+            description = "{{Pill}} Создает 1 пилюлю" ..
+            "#Превращает все пилюли в пилюли духов" ..
+            "#{{SpiritOrb}} Пилюли духов активируют эффекты сферы духов вместо эффекта пилюли",
         },
         pl = {
             name = "Maska Znachora",
@@ -741,11 +765,12 @@ descriptions.Collectibles = {
             book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
         },
         ru = {
-            name = "Mirror Key",
-            description = "{{MirrorRoom}} Creates a mirror dimension door on the wall, indicated by a door outline" ..
-            "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
-            "#{{Warning}} Item pedestals are not regenerated" ..
-            "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
+            name = "Зеркальный Ключ",
+            description = "{{MirrorRoom}} Один раз за комнату, можно создать зеркальную дверь на стене, обозначенную контуром двери" ..
+            "#Зеркальные комнаты воссоздают все предметы, препятствия и врагов" ..
+            "#{{Warning}} Пьедесталы предметов не воссоздаются" ..
+            "#{{BossRoom}} Позволяет сразиться с боссом этажа и получить дополнительную награду",
+            book_of_belial = "↑ {{Damage}} +2.5 урона в зеркальном мире",
         },
         pl = {
             name = "Lustrzany Klucz",
@@ -774,11 +799,12 @@ descriptions.Collectibles = {
             book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
         },
         ru = {
-            name = "Mirror Key (Uncharged)",
-            description = "{{MirrorRoom}} Creates a mirror dimension door on the wall, indicated by a door outline" ..
-            "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
-            "#{{Warning}} Item pedestals are not regenerated" ..
-            "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
+            name = "Зеркальный Ключ (Незаряженный)",
+            description = "{{MirrorRoom}} Один раз за комнату, можно создать зеркальную дверь на стене, обозначенную контуром двери" ..
+            "#Зеркальные комнаты воссоздают все предметы, препятствия и врагов" ..
+            "#{{Warning}} Пьедесталы предметов не воссоздаются" ..
+            "#{{BossRoom}} Позволяет сразиться с боссом этажа и получить дополнительную награду",
+            book_of_belial = "↑ {{Damage}} +2.5 урона в зеркальном мире",
         },
         pl = {
             name = "Lusztrzany Klucz (Rozładowany)",
@@ -792,6 +818,9 @@ descriptions.Collectibles = {
     
 }
 
+descriptions.Collectibles[enums.Collectibles.LEVITICUS_ALADAR] = descriptions.Collectibles[enums.Collectibles.LEVITICUS]
+descriptions.Collectibles[enums.Collectibles.LEVITICUS_FANCY] = descriptions.Collectibles[enums.Collectibles.LEVITICUS]
+
 --TRINKET DESCRIPTIONS
 descriptions.Trinkets = {
     [enums.Trinkets.TUNGSTEN_CUBE] = {
@@ -803,11 +832,15 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            description = "{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            double = "{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño #{{ColorGold}}Hace el doble de daño",
+            triple = "{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño #{{ColorGold}}Hace el triple de daño",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Вольфрамовый Куб",
+            description = "{{ArrowDown}} -0.2 Скорости #При падение создаст огромную разрушительную ударную волну",
+            double = "{{ArrowDown}} -0.2 Скорости #При падение создаст огромную разрушительную ударную волну #{{ColorGold}}Наносит двойной урон",
+            triple = "{{ArrowDown}} -0.2 Скорости #При падение создаст огромную разрушительную ударную волну #{{ColorGold}}Наносит тройной урон",
         },
         pl = {
             name = "Wolframowy Kloc",
@@ -824,8 +857,8 @@ descriptions.Trinkets = {
             description = "{{Pill11}} Recoger una moneda tiene un 8% de probabilidad de crear una píldora",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Кислотная Монета",
+            description = "{{Blank}}{{ArrowDown}} При подборе монет с вероятностью 8% появится пилюля",
         },
         pl = {
             name = "Kwaśny Pieniążek",
@@ -842,8 +875,8 @@ descriptions.Trinkets = {
             description = "{{Pill11}} Recoger una moneda tiene un 8% de probabilidad de crear una carta",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Хрустальная Монета",
+            description = "{{Card}} При подборе монет с вероятностью 8% появится карта",
         },
         pl = {
             name = "Kryształowy Pieniążek",
@@ -860,8 +893,8 @@ descriptions.Trinkets = {
             description = "Los enemigos rocosos atacan a otros enemigos",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Каменное колесо",
+            description = "Каменюки и гримассы атакуют врагов",
         },
         pl = {
             name = "Skalne Koło",
@@ -870,18 +903,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.AMETHYST_SHARD] = {
         en_us = {
-            name = "Amethyst Shard",
+            name = "Clairvoyant Amethyst",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Clairvoyance when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Clairvoyance when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Clairvoyance when destroyed",
         },
         spa = {
-            name = "Fragmento de Amatista",
+            name = "Amatista Premonitoria",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Premonición",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Premonición",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Premonición",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Аметиста",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Ясновидения",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Ясновидения",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Ясновидения",
         },
         pl = {
             name = "Odłamek Ametystu",
@@ -892,18 +929,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.RUBY_SHARD] = {
         en_us = {
-            name = "Ruby Shard",
+            name = "Infernal Ruby",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Inferno when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Inferno when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Inferno when destroyed",
         },
         spa = {
-            name = "Fragmento de Rubí",
+            name = "Rubí Infernal",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Infernal",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus Infernales",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus Infernales",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Рубина",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Инферно",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Инферно",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Инферно",
         },
         pl = {
             name = "Odłamek Rubinu",
@@ -914,18 +955,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.TOURMALINE_SHARD] = {
         en_us = {
-            name = "Tourmaline Shard",
+            name = "Conductive Tourmaline",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Conductivity when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Conductivity when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Conductivity when destroyed",
         },
         spa = {
-            name = "Fragmento de Turmalina",
+            name = "Turmalina Conductora",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Conductividad",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Conductividad",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Conductividad",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Турмалина",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Электропотока",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Электропотока",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Электропотока",
         },
         pl = {
             name = "Odłamek Turmalinu",
@@ -936,18 +981,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.EMERALD_SHARD] = {
         en_us = {
-            name = "Emerald Shard",
+            name = "Druidic Emerald",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Druidity when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Druidity when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Druidity when destroyed",
         },
         spa = {
-            name = "Fragmento de Esmeralda",
+            name = "Esmeralda Druídica",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Druídico",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus Druídicos",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus Druídicos",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Изумруда",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Друидизма",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Друидизма",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Друидизма",
         },
         pl = {
             name = "Odłamek Szmaragdu",
@@ -958,18 +1007,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.PERIDOT_SHARD] = {
         en_us = {
-            name = "Peridot Shard",
+            name = "Virulent Peridot",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Virulence when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Virulence when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Virulence when destroyed",
         },
         spa = {
-            name = "Fragmento de Peridoto",
+            name = "Peridoto Virulento",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Virulencia",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Virulencia",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Virulencia",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Перидота",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Ядовитости",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Ядовитости",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Ядовитости",
         },
         pl = {
             name = "Odłamek Perydotu",
@@ -980,18 +1033,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.GARNET_SHARD] = {
         en_us = {
-            name = "Garnet Shard",
+            name = "Sacrilegious Garnet",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Sacrilege when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Sacrilege when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Sacrilege when destroyed",
         },
         spa = {
-            name = "Fragmento de Granate",
+            name = "Granate Sacrílego",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Sacrilegio",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Sacrilegio",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Sacrilegio",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Граната",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Святотатства",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Святотатства",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Святотатства",
         },
         pl = {
             name = "Odłamek Granatu",
@@ -1002,18 +1059,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.ONYX_SHARD] = {
         en_us = {
-            name = "Onyx Shard",
+            name = "Revenant Onyx",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Revenance when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Revenance when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Revenance when destroyed",
         },
         spa = {
-            name = "Fragmento de Ónix",
+            name = "Ónix Renacido",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Renacido",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus del Renacido",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus del Renacido",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Оникса",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Возврата",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Возврата",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Возврата",
         },
         pl = {
             name = "Odłamek Onyksu",
@@ -1024,18 +1085,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.DIAMOND_SHARD] = {
         en_us = {
-            name = "Diamond Shard",
+            name = "Sacred Jacinth",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Salvation when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Salvation when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Salvation when destroyed",
         },
         spa = {
-            name = "Fragmento de Diamante",
+            name = "Jacinto Sagrado",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Salvación",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Salvación",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Salvación",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Алмаза",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Спасения",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Спасения",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Спасения",
         },
         pl = {
             name = "Odłamek Diamentu",
@@ -1046,18 +1111,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.SAPPHIRE_SHARD] = {
         en_us = {
-            name = "Sapphire Shard",
+            name = "Torrential Sapphire",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Deluge when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Deluge when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Deluge when destroyed",
         },
         spa = {
-            name = "Fragmento de Zafiro",
+            name = "Zafiro Torrencial",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Diluvio",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus del Diluvio",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus del Diluvio",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Сапфира",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Потопа",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Потопа",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Потопа",
         },
         pl = {
             name = "Odłamek Szafiru",
@@ -1068,18 +1137,22 @@ descriptions.Trinkets = {
     },
     [enums.Trinkets.AMBER_SHARD] = {
         en_us = {
-            name = "Amber Shard",
+            name = "Terrestrial Amber",
             description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Terrastrium when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Terrastrium when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Terrastrium when destroyed",
         },
         spa = {
-            name = "Fragmento de Ámbar",
+            name = "Ámbar Terrestre",
             description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Terrastrium",
+            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Terrastrium",
+            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Terrastrium",
         },
         ru = {
-            name = "Cubo De Tungsteno",
-            description = "{{Blank}}{{ArrowDown}} Otorga -0.2 de velocidad #Soltarlo crea una gran onda de choque que hace un gran daño",
+            name = "Осколок Янтаря",
+            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Террастриума",
+            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духа Террастриума",
+            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духа Террастриума",
         },
         pl = {
             name = "Odłamek Bursztynu",
@@ -1106,8 +1179,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Duplica los corazones frutales generados"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Друидизма",
+            description = "Захватывает всех врагов в комнате лозами на 12 секунд. Попавшие в ловушку враги после смерти оставляют фруктовое сердце" ..
+            "#{{BlendedHeart}} Фруктовые сердца исцеляют половину красного сердца или половину сердца души, если сердца заполнены",
+            lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Удваивает количество фруктовых сердец"
         },
         pl = {
             name = "Widmo Przyrody",
@@ -1130,8 +1205,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración y el rango de las ondas"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Электропотока", -- я не буду переводить это как Дух Электропроводки XD
+            description = "Выпускает волну электричества во всех направлениях, нанося урон ближайшим врагам" ..
+            "#{{ArcadeRoom}} Замыкает все автоматы в радиусе, в результате чего они выбрасывают награды несколько раз и взрываются",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает продолжительность и дальность действия электричества"
         },
         pl = {
             name = "Widmo Elektryczności",
@@ -1154,8 +1231,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica las llamas disparadas"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Инферно",
+            description = "{{Burning}} Выпускает поток пламени с высоким уроном в выбранном направлении" ..
+            "#{{BossRoom}} Пронзает броню босса",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает выстрел пламенем"
         },
         pl = {
             name = "Widmo Pożogi",
@@ -1176,8 +1255,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración y refleja más rapido"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Ясновидения",
+            description = "{{Timer}} Дает ауру на 100 секунд, которая замедляет врагов и отражает снаряды",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает продолжительность и ускоряет отражание снарядов"
         },
         pl = {
             name = "Widmo Jasnowidzenia",
@@ -1199,8 +1279,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la cantidad de tumbas"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Возврата",
+            description = "Призывает 4-6 надгробии по комнате, при уничтожении которых появляются дружелюбные скелеты или призраки" ..
+            "#Заполняет все ямы в комнате костями",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает число надгробий"
         },
         pl = {
             name = "Widmo Zaświatów",
@@ -1227,8 +1309,12 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el tamaño de la nube"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Ядовитости",
+            description = "{{Throwable}} Бросает токсичный шар, который взрывается, образуя разрушительное ядовитое облако" ..
+            "#{{Slow}} Враги внутри будут замедляться и получать урон" ..
+            "#Облако увеличивается в размерах пропорционально нанесенному урону" ..
+            "#{{RottenHeart}} Превращает сердца и попрашаек в их гнилые варианты {{RottenBeggar}}",
+            lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Удваивает размер облака"
         },
         pl = {
             name = "Widmo Skażenia",
@@ -1253,8 +1339,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Dispara 16 rayos"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Спасения",
+            description = "#Выпускает 8 разрушительных лучей света во всех направлениях" ..
+            "#Лучи могут разрушать камни и открывать секретные комнаты",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Выпускает 16 лучей"
         },
         pl = {
             name = "Widmo Zbawienia",
@@ -1277,8 +1365,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Atraviesa a todos los enemigos dos veces"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Святотатства",
+            description = "#{{BleedingOut}} Прорезает всех врагов и попрашаек в комнате, накладывая на них кровотечение и проклятие серы"..
+            "#Убитые попрашайки бросают дополнительные расходники",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Slashes through enemies a second time"
         },
         pl = {
             name = "Widmo Świętokradztwa",
@@ -1299,8 +1389,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica la duración"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Потопа",
+            description = "#{{Timer}} На 8 секунд заменяет слезы Исаака управляемым водопадом-циклоном, засасывающим врагов и предметы",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает продолжительность"
         },
         pl = {
             name = "Widmo Potopu",
@@ -1320,8 +1411,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Crea el doble de estalagmitas"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Террастриума",
+            description = "#Призывает 4-5 каменных сталагмитов которые пронзают врагов и пробивают металлические блоки",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Призывает 8-10 сталагмитов"
         },
         pl = {
             name = "Widmo Podziemi",
@@ -1341,8 +1433,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el efecto elegido"
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Дух Хаоса",
+            description = "#Исползует случайную сферу духов",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Удваивает выбранный эффект"
         },
         pl = {
             name = "Widmo Chaosu",
@@ -1353,20 +1446,19 @@ descriptions.Cards = {
     [enums.Cards.TATTERED_PAGE] = {
         en_us = {
             name = "Tattered Page",
-            description = "#Summons a random {{Collectible753}} Leviticus wisp"
+            description = "#Summons a random {{Collectible712}} Lemegeton wisp"
         },
         spa = {
-            name = "Espíritu de Caos",
-            description = "#Usa un efecto de orbe espiritual aleatorio",
-            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el efecto elegido"
+            name = "Página Rota",
+            description = "#Genera un fuego fatuo de {{Collectible712}} Lemegeton aleatorio",
         },
         ru = {
-            name = "Orbe Druidico",
-            description = "#Enreda a todos los enemigos en enredaderas durante 20 segundos, parandolos #Matar a un enemigo enredado genera un corazon frutal"
+            name = "Рваная Страница",
+            description = "#{{Collectible712}}Призывает случайный предметный огонёк"
         },
         pl = {
             name = "Porwana Strona",
-            description = "#Przywołuje losowego ognika z {{Collectible753}} Lemegetonu"
+            description = "#Przywołuje losowego ognika z {{Collectible712}} Lemegetonu"
         },
     }
 }
@@ -1377,7 +1469,7 @@ local BRENDA = EntityType.ENTITY_SLOT .. "." .. MilkshakeVol1.enums.Slots.SPIRIT
 descriptions.Entities = {
     [BRENDA] = {
         en_us = {
-            name = "Spirit Klin",
+            name = "Spirit Kiln", -- Kiln
             description = "{{HalfSoulHeart}}Takes half a soul heart in exchange for various rewards:" ..
             "#{{SpiritOrb}} A random Spirit Orb" ..
             "#{{Burning}} A random elemental wisp" ..
@@ -1386,7 +1478,11 @@ descriptions.Entities = {
         },
         spa = {
             name = "Brenda la Forja Espiritual",
-            description = "zorra"
+            description = "{{HalfSoulHeart}}Paga medio corazón de alma para conseguir recompensas:" ..
+            "#{{SpiritOrb}} Un orbe espiritual aleatorio" ..
+            "#{{Burning}} Un fuego fatuo elemental aleatorio" ..
+            "#{{Trinket}} Una baratija de cristal o de gema aleatoria" ..
+            "#{{Rune}} Una piedra de alma aleatoria"
         },
         pl = {
             name = "Kuźnia Dusz",
@@ -1395,6 +1491,14 @@ descriptions.Entities = {
             "#{{Burning}} Ognik o losowym żywiole" ..
             "#{{Trinket}} Losowy szklany lub kryształowy trynkiet" ..
             "#{{Rune}} Dusza losowej postaci"
+        },
+        ru = {
+            name = "Духовка", -- joke, real translation is Духовая печька Бренда
+            description = "{{HalfSoulHeart}}Отнимает половинку сердца души взамен различным наградам:" ..
+            "#{{SpiritOrb}} Случайная сфера духов" ..
+            "#{{Burning}} Случайный элементальный огонёк" ..
+            "#{{Trinket}} Случайная стеклянная или драгоценная безделушка" ..
+            "#{{Rune}} Случайный камень души"
         },
     }
 }

@@ -117,6 +117,13 @@ local pillAnimFrames = {
     PillColor.PILL_WHITE_YELLOW | PillColor.PILL_GIANT_FLAG,
 }
 
+local ffCyanideIds = {
+    NORMAL = 960,
+    GOLD = 961,
+    HORSE = 3008,
+    GOLD_HORSE = 3009
+}
+
 local ffPillAnimFrames = {
     101,
     102,
@@ -138,8 +145,8 @@ local ffPillAnimFrames = {
     118,
     119,
     120,
-    99, -- PLACEHOLDER
-    999, -- PLACEHOLDER
+    ffCyanideIds.NORMAL,
+    ffCyanideIds.GOLD,
     101 | PillColor.PILL_GIANT_FLAG,
     102 | PillColor.PILL_GIANT_FLAG,
     103 | PillColor.PILL_GIANT_FLAG,
@@ -160,13 +167,14 @@ local ffPillAnimFrames = {
     118 | PillColor.PILL_GIANT_FLAG,
     119 | PillColor.PILL_GIANT_FLAG,
     120 | PillColor.PILL_GIANT_FLAG,
-    9999, -- PLACEHOLDER
-    99999, -- PLACEHOLDER
+    ffCyanideIds.HORSE,
+    ffCyanideIds.GOLD_HORSE,
 }
 
 local function IsFiendFolioPill(id)
     for _, ffPillId in ipairs(ffPillAnimFrames) do
-        if id == ffPillId then return true end
+        if id == ffPillId
+        or TSIL.Utils.Tables.IsIn(ffCyanideIds, id) then return true end
     end
     return false
 end
@@ -194,15 +202,15 @@ function witchDoctorMask:UsePill(_, player)
         --    colorToEffect[Game():GetItemPool():GetPillEffect(i, player)] = i
         --end
         local pillColor = playersCurrentPills[GetPtrHash(player)] --colorToEffect[pillEffect]
-        if TSIL.Pills.IsHorsePill(pillColor) then
-            utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", true)
-        end
         local spiritOrb = matchingPills[pillColor]
         if not spiritOrb then
             spiritOrb = enums.Orbs.RANDOM
         end
-        player:UseCard(spiritOrb, UseFlag.USE_NOANIM)
-        --utility:SetTemporaryPlayerData(player, "IsUsingDoublePowerOrb", false) seems like it should be done but could mess with lyra?
+        local flags = enums.UseOrbFlags.NO_SOUND
+        if pillColor > PillColor.PILL_GIANT_FLAG then
+            flags = flags | enums.UseOrbFlags.DOUBLE_POWER
+        end
+        MilkshakeVol1:UseSpiritOrb(spiritOrb, player, flags)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_PILL, witchDoctorMask.UsePill)
@@ -219,14 +227,16 @@ function witchDoctorMask:PostPickupUpdate(pickup)
         if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
         and pickup.Variant == PickupVariant.PICKUP_PILL then
             if not utility:GetData(pickup, "SpiritPillSprite") then
+                local sprite = pickup:GetSprite()
                 if pickup.SubType < FF_PILL_BEGIN
-                or pickup.SubType > PillColor.PILL_GIANT_FLAG then
-                    pickup:GetSprite():ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pills ground.png")
+                or (pickup.SubType > PillColor.PILL_GIANT_FLAG and not (pickup.SubType > (FF_PILL_BEGIN | PillColor.PILL_GIANT_FLAG))) then
+                    sprite:ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pills ground.png")
 
-                elseif pickup.SubType >= FF_PILL_BEGIN and pickup.SubType <= FF_PILL_END then
-                    pickup:GetSprite():ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pillsFF.png")
+                elseif (pickup.SubType >= FF_PILL_BEGIN and pickup.SubType <= FF_PILL_END)
+                or (pickup.SubType >= (FF_PILL_BEGIN | PillColor.PILL_GIANT_FLAG) and pickup.SubType <= (FF_PILL_END | PillColor.PILL_GIANT_FLAG)) then
+                    sprite:ReplaceSpritesheet(0, "gfx/items/pick ups/spirit pillsFF.png")
                 end
-                pickup:GetSprite():LoadGraphics()
+                sprite:LoadGraphics()
                 utility:SetData(pickup, "SpiritPillSprite", true)
             end
         end
@@ -236,8 +246,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, witchDoctorMask.Po
 
 function witchDoctorMask:GetShaderParams()
     if Game():GetHUD():IsVisible() then
-        for i = 1, Game():GetNumPlayers() do
-            local player = Isaac.GetPlayer(i)
+        local players = TSIL.Players.GetPlayers()
+        for i, player in ipairs(players) do
             local heldPill = player:GetPill(0)
             if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
             and heldPill ~= 0 then
@@ -253,10 +263,12 @@ function witchDoctorMask:GetShaderParams()
                         ffOrbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
                         ffOrbPillHuds[i]:Play("HUD")
                     else
-                        orbPillHuds[i]:Render(position)
-                        print(GetFrameFromId(heldPill, pillAnimFrames) - 1)
-                        orbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, pillAnimFrames) - 1)
-                        orbPillHuds[i]:Play("HUD")
+                        local frame = GetFrameFromId(heldPill, pillAnimFrames) - 1
+                        if frame then
+                            orbPillHuds[i]:Render(position)
+                            orbPillHuds[i]:SetFrame(frame)
+                            orbPillHuds[i]:Play("HUD")
+                        end
                     end
                 end
 
@@ -275,7 +287,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.Get
 
 function witchDoctorMask:PostPlayerCollectibleAdded(player, collectible, firstTime)
     if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK
-    or ((firstTime == false) and #(TSIL.Players.GetPlayersOfType(PlayerType.PLAYER_ISAAC_B)) > 0) then return end
+    or ((firstTime == false) and #(TSIL.Players.GetPlayersOfType(PlayerType.PLAYER_ISAAC_B)) > 0)
+    or player.Variant == 1 then return end
     local roll = TSIL.Random.GetRandomInt(1, PillColor.NUM_PILLS)
     local spawnPos = Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE)
     TSIL.PickupSpecific.SpawnPill(roll, spawnPos)

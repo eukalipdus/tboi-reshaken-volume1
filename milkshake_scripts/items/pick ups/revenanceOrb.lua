@@ -55,6 +55,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_NPC_UPDATE, RevenanceOrb.Graveston
 
 function RevenanceOrb:GravestonDMG(entity, amount, damageFlags, source, DamageCountdown) -- no way to change amount, blame someone
 	--- do damage effects
+	if entity.Variant ~= enums.GravestoneType.NORMAL then return end
 	local grbData = entity:GetData()
 	if damageFlags & DamageFlag.DAMAGE_EXPLOSION > 0 then
 		SoundParticle(entity.Position)

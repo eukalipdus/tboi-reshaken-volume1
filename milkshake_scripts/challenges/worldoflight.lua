@@ -1,16 +1,17 @@
 local worldOfLight = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local INTERVAL_SECONDS = 60
 local ONE_SECOND = 30
 
 local MIN_ITEMS = 3
-local ICON_RENDER_X = 54
-local ICON_RENDER_Y = 47
-local TEXT_RENDER_X = 73
-local TEXT_RENDER_Y = 49
+local ICON_RENDER_X = 35
+local ICON_RENDER_Y = 34
+local TEXT_RENDER_X = 51
+local TEXT_RENDER_Y = 35
 local TIMES_CAN_FAIL = 100
-local PUSH_ABOVE_ISAAC = Vector(0, -25)
+local PUSH_ABOVE_ISAAC = Vector(15, -25)
 
 local itemBlacklist = {
     CollectibleType.COLLECTIBLE_KEY_PIECE_1,
@@ -46,24 +47,60 @@ local function AnimateCollectibleLoss(player, collectibleId)
     table.insert(renderItems, {Sprite = sprite, Player = player})
 end
 
+--- Get a player's inventory filtered by a specific quality
+---@param player EntityPlayer
+local function GetCollectiblesByQuality(player)
+    local qualityZero = {}
+    local qualityOne = {}
+    local qualityTwo = {}
+    local qualityThree  = {}
+    local qualityFour = {}
+    local inventory = TSIL.Players.GetPlayerInventory(player, TSIL.Enums.InventoryType.COLLECTIBLE)
+    for _, collectible in ipairs(inventory) do
+        local collectibleType = collectible.Id
+        local currentQuality = Isaac:GetItemConfig():GetCollectible(collectibleType).Quality
+        if currentQuality == 0 then
+            table.insert(qualityZero, collectibleType)
+        elseif currentQuality == 1 then
+            table.insert(qualityOne, collectibleType)
+        elseif currentQuality == 2 then
+            table.insert(qualityTwo, collectibleType)
+        elseif currentQuality == 3 then
+            table.insert(qualityThree, collectibleType)
+        elseif currentQuality == 4 then
+            table.insert(qualityFour, collectibleType)
+        end
+    end
+    return {qualityZero, qualityOne, qualityTwo, qualityThree, qualityFour}
+end
+
+local function GetRandomCollectibleOfQuality(player, qualityList)
+    local rng = player:GetDropRNG()
+    local itr = 0
+    local roll
+    repeat roll = TSIL.Random.GetRandomInt(1, #qualityList, rng)
+        itr = itr + 1
+        if itr == TIMES_CAN_FAIL then return nil end
+    until not TSIL.Utils.Tables.IsIn(itemBlacklist, qualityList[roll])
+    return qualityList[roll]
+end
 --- Removes a random collectible from a player that is not blacklisted
 ---@param player EntityPlayer
 ---@return boolean - true if removed, false otherwise
 local function RemoveRandomCollectible(player)
     local inventory = TSIL.Players.GetPlayerInventory(player, TSIL.Enums.InventoryType.COLLECTIBLE)
-    if #inventory == MIN_ITEMS then return false end
-    local rng = player:GetDropRNG()
-    local roll
-    local itr = 0
-
-    repeat roll = TSIL.Random.GetRandomInt(1, #inventory, rng)
-        itr = itr + 1
-        if itr == TIMES_CAN_FAIL then return false end
-    until not TSIL.Utils.Tables.IsIn(itemBlacklist, inventory[roll].Id)
- 
-    AnimateCollectibleLoss(player, inventory[roll].Id)
-    player:RemoveCollectible(inventory[roll].Id)
-    return true
+    if #inventory < MIN_ITEMS then return false end
+    local collectibleByQuality = GetCollectiblesByQuality(player)
+    local toRemove
+    for _, qualityList in ipairs(collectibleByQuality) do
+        toRemove = GetRandomCollectibleOfQuality(player, qualityList)
+        if toRemove then break end
+    end
+    if toRemove then
+        AnimateCollectibleLoss(player, toRemove)
+        player:RemoveCollectible(toRemove)
+        return true
+    else return false end
 end
 
 function worldOfLight:PostPlayerInit(player)
@@ -80,14 +117,8 @@ function worldOfLight:PostNewRoom()
     if not Game():GetRoom():IsFirstVisit()
     or Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT then return end
     local collectibles = TSIL.PickupSpecific.GetCollectibles()
-    for _, currentCollectible in ipairs(collectibles) do
-        local quality = Isaac.GetItemConfig():GetCollectible(currentCollectible.SubType).Quality
-        local newCollectibleID
-        TSIL.Utils.Functions.RunInFrames(function ()
-            currentCollectible:Remove()
-            MilkshakeVol1.API.SplitCollectible(Isaac.GetPlayer(), currentCollectible:ToPickup(), quality, newCollectibleID, quality)
-            SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
-        end, 1, {})
+    if #collectibles > 0 then
+        Isaac.GetPlayer():UseActiveItem(enums.Collectibles.PRISMATIC_DICE)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, worldOfLight.PostNewRoom)
@@ -102,9 +133,10 @@ function worldOfLight:PostPEffectUpdate(player)
         timer = timer - 1
         if timer <= 0 then
             TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer", INTERVAL_SECONDS)
-            for _, player in ipairs(TSIL.Players.GetPlayers()) do
-                RemoveRandomCollectible(player)
-            end
+            RemoveRandomCollectible(player)
+            --for _, curPlayer in ipairs(TSIL.Players.GetPlayers()) do
+            --    RemoveRandomCollectible(curPlayer)
+            --end
         else
             TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer", timer)
         end
@@ -116,10 +148,10 @@ function worldOfLight:PostRender()
     if Game().Challenge ~= enums.Challenges.WORLD_OF_LIGHT
     or not Game():GetHUD():IsVisible() then return end
     local timer = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer")
-    --Isaac.RenderScaledText(timer, RENDER_X, RENDER_Y, SCALE_X, SCALE_Y, 1, 0, 0 , 1)
     local font = Font()
     font:Load("font/pftempestasevencondensed.fnt")
-    font:DrawString(timer, TEXT_RENDER_X, TEXT_RENDER_Y, KColor(1,0,0,1), 0, true)
+    local txtX, txtY = utility:HUDOffset(TEXT_RENDER_X, TEXT_RENDER_Y, 'topleft')
+    font:DrawString(timer, txtX, txtY, KColor(1,1,1,1), 0, true)
     for idx, collectibleSprite in ipairs(renderItems) do
         if collectibleSprite.Sprite:IsFinished("Fade") then
             table.remove(renderItems, idx)
@@ -127,7 +159,8 @@ function worldOfLight:PostRender()
         collectibleSprite.Sprite:Render(Isaac.WorldToScreen((collectibleSprite.Player).Position + PUSH_ABOVE_ISAAC))
         collectibleSprite.Sprite:Update()
     end
-    timerSprite:Render(Vector(ICON_RENDER_X, ICON_RENDER_Y))
+    local icoX,icoY = utility:HUDOffset(ICON_RENDER_X, ICON_RENDER_Y, 'topleft')
+    timerSprite:Render(Vector(icoX, icoY))
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, worldOfLight.PostRender)
 

@@ -90,6 +90,7 @@ MilkshakeVol1:AddCallback(ModCallbacks. MC_POST_LASER_UPDATE, lilBishop.onLaserU
 
 function lilBishop:onEffectUpdate(effect)
 	local player = effect.Parent
+	if not player then return end --Somewhat hacky, but (if it interpreted the code correctly) doing nothing is better than causing stack trace errors
 	effect:FollowParent(player)
 	effect.SpriteOffset = lilBishop.ShieldOffset * player.SpriteScale.X
 	if effect.Timeout <= 0 then

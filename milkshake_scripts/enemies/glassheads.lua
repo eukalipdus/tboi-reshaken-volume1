@@ -279,15 +279,11 @@ function GlassHeads:GlassHeads_Dmg(enemy, amount, flags, source, cool)
         return false
     end
 
-    if GetGlassHeadData(enemy).state == 6 then
-        return false
-    end
-
     local shouldntShatter = 
     (enemy:HasEntityFlags(EntityFlag.FLAG_ICE) or (source and source.Type==2 and source:ToTear():HasTearFlags(TearFlags.TEAR_ICE))) or
     (enemy:HasEntityFlags(EntityFlag.FLAG_NO_DEATH_TRIGGER)) or enemy:HasEntityFlags(EntityFlag.FLAG_FREEZE) or enemy:HasEntityFlags(EntityFlag.FLAG_MIDAS_FREEZE)
    
-    if not shouldntShatter and 0 >= enemy.HitPoints - amount  then
+    if not shouldntShatter and 0 >= enemy.HitPoints - amount and GetGlassHeadData(enemy).state ~= 6 then
         GetGlassHeadData(enemy).state = 6
         enemy.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
         enemy.Velocity = -enemy.Velocity:Resized(5)
@@ -306,7 +302,12 @@ function GlassHeads:GlassHeads_Dmg(enemy, amount, flags, source, cool)
         end
 
         return false
+
+    elseif GetGlassHeadData(enemy).state == 6 then
+        return false
     end
+
+
 end
 
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, GlassHeads.GlassHeads_Dmg, enums.Enemies.GLASS_HEAD)

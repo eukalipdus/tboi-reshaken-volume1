@@ -19,6 +19,7 @@ function MilkshakeVol1.API:AddUnholyOrbBeggar(beggarType, datatable)
 	datatable = {
 		-- Count - how many rewards
 		-- MinCount - minimal reward --
+		-- in range (i = 0, rng(Count)+MinCount) --
 		Config = {Count = 1, MinCount = 0, CardRune = nil, IncludeRune = nil, OnlyRune = nil, PlayingCard = nil},
 		{Type = EntityType , Variant = EntityVariant, SubType = EntitySubType},
 		...
@@ -87,110 +88,6 @@ local function BeggarRewards(collider)
 		Isaac.Spawn(rewardType, rewardVariant, rewardSubype, collider.Position, RandomVector()*3, nil)
 	end
 end
-
-
---[[
-local function BeggarRewards(collider)
-	local rng = collider:GetDropRNG()
-	if collider.Variant == 4 then -- beggar
-		for _ = 0, rng:RandomInt(3) do
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collider.Position, RandomVector()*3, nil)
-		end
-		return
-	elseif collider.Variant == 5 then -- devil
-		if rng:RandomFloat() < 0.5 then
-			local card = Game():GetItemPool():GetCard(collider.InitSeed, true, false, false)
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, card, collider.Position, RandomVector()*3, nil)
-		else
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collider.Position, RandomVector()*3, nil)
-		end
-		return
-	elseif collider.Variant == 6 then -- shell
-		for _ = 0, rng:RandomInt(2)+2 do
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, 0, 0, collider.Position, RandomVector()*3, nil)
-		end
-		return
-	elseif collider.Variant == 7 then -- key
-		for _ = 0, rng:RandomInt(2) do
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, 0, collider.Position, RandomVector()*3, nil)
-		end
-		return
-	elseif collider.Variant == 9 then -- bomb
-		for _ = 0, rng:RandomInt(2)+2 do
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_BOMB, 0, collider.Position, RandomVector()*3, nil)
-		end
-		return
-	elseif collider.Variant == 13 then -- battery
-		for _ = 0, rng:RandomInt(2) do
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, 0, collider.Position, RandomVector()*3, nil)
-		end
-		return
-	elseif collider.Variant == 15 then -- hell
-		if rng:RandomFloat() < 0.5 then
-			for _ = 0, 1 do
-				local card = Game():GetItemPool():GetCard(collider.InitSeed, true, false, false)
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, card, collider.Position, RandomVector()*3, nil)
-			end
-		else
-			for _ = 0, 1 do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collider.Position, RandomVector()*3, nil)
-			end
-		end
-		return
-	elseif collider.Variant == 18 then -- rotten
-		for _ = 0, rng:RandomInt(2) do
-			local randHeart = rng:RandomInt(2)+11 -- bone or rotten
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, randHeart, collider.Position, RandomVector()*3, nil)
-		end
-		return
-	end
-	if UnholyOrb.FiendFolio then
-		if collider.Variant == FiendFolio.FF.HugBeggar.Var then
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 0, collider.Position, RandomVector()*3, nil)
-			return
-		elseif collider.Variant == FiendFolio.FF.EvilBeggar.Var then
-			for _ = 0, rng:RandomInt(2)+1 do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_BLACK, collider.Position, RandomVector()*3, nil)
-			end
-			--idk where is half black and immortal harts
-			return
-		elseif collider.Variant == FiendFolio.FF.ZodiacBeggar.Var then
-			for _ = 0, rng:RandomInt(2) do
-				local rune = Game():GetItemPool():GetCard(rng:GetSeed(), false, false, true)
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, collider.Position, RandomVector()*3, nil)
-			end
-			return
-		elseif collider.Variant == FiendFolio.FF.CellGame.Var then
-			for _ = 0, rng:RandomInt(2)+2 do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, 0, collider.Position, RandomVector()*3, nil)
-			end
-			return
-		elseif collider.Variant == FiendFolio.FF.FakeBeggar.Var then
-			Isaac.Spawn(EntityType.ENTITY_BOMB, BombVariant.BOMB_TROLL, 0, collider.Position, RandomVector()*3, nil)
-			return
-		end
-	end
-	if UnholyOrb.Epiphany then
-		if collider.Variant == UnholyOrb.Epiphany.ConvertBegga then
-			for _ = 0, rng:RandomInt(2)+1 do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 0, collider.Position, RandomVector()*3, nil)
-			end
-			return
-		end
-	end
-	if UnholyOrb.Eclipsed then
-		if collider.Variant == EclipsedMod.enums.Slots.MongoBeggar then
-			for _ = 0, rng:RandomInt(2)+2 do
-				Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.MINISAAC, 0, collider.Position, RandomVector()*5, nil)
-			end
-			return
-		elseif collider.Variant == EclipsedMod.enums.Slots.DeliriumBeggar then
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, UnholyOrb.Eclipsed.DeliVariants[collider:GetDropRNG():RandomInt(#UnholyOrb.Eclipsed.DeliVariants)+1], collider.Position, RandomVector()*5, nil)
-			return
-		end
-	end
-end
---]]
 
 
 local function GetTargets(player)
@@ -305,7 +202,7 @@ function UnholyOrb:onPEffectUpdate(player)
 			player.Velocity = (playerStartPos - player.Position):Resized(UnholyOrb.MaxSpeed)
 		end
 	elseif #TargetPositions > 0 then
-		if TargetPositions[1]:Exists() then
+		if TargetPositions[1]:Exists() or (TargetPositions[1]:ToNPC() and TargetPositions[1]:ToNPC():HasMortalDamage()) then
 			if player.Position:Distance(TargetPositions[1].Position) < UnholyOrb.MinDistance then
 				player.Velocity = Vector.Zero
 				Game():ShakeScreen(2)

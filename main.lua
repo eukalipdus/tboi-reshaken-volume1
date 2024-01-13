@@ -1,4 +1,4 @@
-MilkshakeVol1 = RegisterMod("Milkshake!", 1)
+MilkshakeVol1 = RegisterMod("Milkshake Vol1!", 1)
 
 require("loi_milkshake.TSIL").Init("loi_milkshake")
 
@@ -6,12 +6,17 @@ include("milkshake_scripts.enums")
 include("milkshake_scripts.utility")
 MilkshakeVol1.API = {}
 
+if StageAPI then
+    StageAPI.UnregisterCallbacks(MilkshakeVol1.Name)
+end
+
 --include("milkshake_scripts.bumAPI.core")
 
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
 include("milkshake_scripts.modcompatibility.crabbyCretins")
 include("milkshake_scripts.modcompatibility.dssMenu")
+include("milkshake_scripts.modcompatibility.detailedRespawn")
 include("milkshake_scripts.modcompatibility.eclipsed")
 include("milkshake_scripts.modcompatibility.eid")
 include("milkshake_scripts.modcompatibility.epiphany")
@@ -19,6 +24,7 @@ include("milkshake_scripts.modcompatibility.fiendFolio")
 include("milkshake_scripts.modcompatibility.immortalHearts")
 include("milkshake_scripts.modcompatibility.minimapi")
 include("milkshake_scripts.modcompatibility.retribution")
+include("milkshake_scripts.modcompatibility.revelations")
 
 -- Custom callbacks
 include("milkshake_scripts.custom_callbacks.chest_opened")

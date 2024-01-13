@@ -42,38 +42,82 @@ MilkshakeVol1:AddModCompatibility("Retribution", function()
     MilkshakeVol1.API:AddToxicOrbBeggar(Isaac.GetEntityVariantByName("Swine Beggar"))
     MilkshakeVol1.API:AddToxicOrbBeggar(Isaac.GetEntityVariantByName("Angelic Swine Beggar"))
     MilkshakeVol1.API:AddToxicOrbBeggar(Isaac.GetEntityVariantByName("Demonic Swine Beggar"))
+
     ---Unholy orb
+    --[[
     local capsules = {
         Config = { Count = 1, MinCount = 0 },
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Damage Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Health Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Luck Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Range Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Shotspeed Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Speed Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("Tears Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HD Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LD Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("RD Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("SD Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("MD Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("TD Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HL Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HR Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HS Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HM Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("HT Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LR Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LS Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LM Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("LT Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("RS Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("RM Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("RT Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("SM Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("ST Capsule"), SubType = 0},
-        {Type = EntityType.ENTITY_PICKUP, Variant = Isaac.GetEntityVariantByName("MT Capsule"), SubType = 0},
+        DAMAGE_CAPSULE				= Isaac.GetCardIdByName("Sword Capsule"),
+        HEALTH_CAPSULE				= Isaac.GetCardIdByName("Heart Capsule"),
+        FIREDELAY_CAPSULE			= Isaac.GetCardIdByName("Tear Capsule"),
+        RANGE_CAPSULE				= Isaac.GetCardIdByName("Bow Capsule"),
+        SHOTSPEED_CAPSULE			= Isaac.GetCardIdByName("Fling Capsule"),
+        SPEED_CAPSULE				= Isaac.GetCardIdByName("Boot Capsule"),
+        LUCK_CAPSULE				= Isaac.GetCardIdByName("Clover Capsule"),
+        HEALTH_DAMAGE_CAPSULE		= Isaac.GetCardIdByName("Combo Capsule"),
+        LUCK_DAMAGE_CAPSULE			= Isaac.GetCardIdByName(" Combo Capsule"),
+        RANGE_DAMAGE_CAPSULE		= Isaac.GetCardIdByName("  Combo Capsule"),
+        SHOTSPEED_DAMAGE_CAPSULE	= Isaac.GetCardIdByName("   Combo Capsule"),
+        SPEED_DAMAGE_CAPSULE		= Isaac.GetCardIdByName("    Combo Capsule"),
+        FIREDELAY_DAMAGE_CAPSULE	= Isaac.GetCardIdByName("     Combo Capsule"),
+        HEALTH_LUCK_CAPSULE			= Isaac.GetCardIdByName("      Combo Capsule"),
+        HEALTH_RANGE_CAPSULE		= Isaac.GetCardIdByName("       Combo Capsule"),
+        HEALTH_SHOTSPEED_CAPSULE	= Isaac.GetCardIdByName("        Combo Capsule"),
+        HEALTH_SPEED_CAPSULE		= Isaac.GetCardIdByName("         Combo Capsule"),
+        HEALTH_FIREDELAY_CAPSULE	= Isaac.GetCardIdByName("          Combo Capsule"),
+        LUCK_RANGE_CAPSULE			= Isaac.GetCardIdByName("           Combo Capsule"),
+        LUCK_SHOTSPEED_CAPSULE		= Isaac.GetCardIdByName("            Combo Capsule"),
+        LUCK_SPEED_CAPSULE			= Isaac.GetCardIdByName("             Combo Capsule"),
+        LUCK_FIREDELAY_CAPSULE		= Isaac.GetCardIdByName("              Combo Capsule"),
+        RANGE_SHOTSPEED_CAPSULE		= Isaac.GetCardIdByName("               Combo Capsule"),
+        RANGE_SPEED_CAPSULE			= Isaac.GetCardIdByName("                Combo Capsule"),
+        RANGE_FIREDELAY_CAPSULE		= Isaac.GetCardIdByName("                 Combo Capsule"),
+        SHOTSPEED_SPEED_CAPSULE		= Isaac.GetCardIdByName("                  Combo Capsule"),
+        SHOTSPEED_FIREDELAY_CAPSULE	= Isaac.GetCardIdByName("                   Combo Capsule"),
+        SPEED_FIREDELAY_CAPSULE		= Isaac.GetCardIdByName("                    Combo Capsule"),
     }
+    --]]
+
+    --local capsuleTypes = { -- god bless Retribution capsules naming
+        --"Sword", "Heart", "Tear", "Bow", "Fling", "Boot", "Clover",
+        --"Combo",
+        --" Combo",
+        --"  Combo",
+        --"   Combo",
+        --"    Combo",
+        --"     Combo",
+        --"      Combo",
+        --"       Combo",
+        --"        Combo",
+        --"         Combo",
+        --"          Combo",
+        --"           Combo",
+        --"            Combo",
+        --"             Combo",
+        --"              Combo",
+        --"               Combo",
+        --"                Combo",
+        --"                 Combo",
+        --"                  Combo",
+        --"                   Combo",
+        --"                    Combo"
+    --}
+    local capsules = {
+        Config = { Count = 2, MinCount = 2 } -- in range (i = 0, rng(Count)+MinCount) -- if 0 at least spawn 1
+    }
+
+    table.insert(capsules, {
+        Type = EntityType.ENTITY_PICKUP,
+        Variant = 1880,
+        SubType = 0,
+    })
+    table.insert(capsules, {
+        Type = EntityType.ENTITY_PICKUP,
+        Variant = 1882,
+        SubType = 0,
+    })
+
+
     MilkshakeVol1.API:AddUnholyOrbBeggar(Isaac.GetEntityVariantByName("Swine Beggar"), capsules)
     MilkshakeVol1.API:AddUnholyOrbBeggar(Isaac.GetEntityVariantByName("Angelic Swine Beggar"), capsules)
     MilkshakeVol1.API:AddUnholyOrbBeggar(Isaac.GetEntityVariantByName("Demonic Swine Beggar"), capsules)

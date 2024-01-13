@@ -150,12 +150,26 @@ local dssmod = dssmenucore.init(DSSModName, MenuProvider)
 
 local sanchoSprite = Sprite()
 sanchoSprite:Load("gfx/ui/giantbook/sancho.anm2", true)
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, function ()
+sanchoSprite:Play("Celestial", true)
+sanchoSprite:SetLastFrame()
+
+local function RenderSancho()
     if sanchoSprite:IsFinished() then return end
 
     sanchoSprite:Render(TSIL.UI.GetScreenCenterPosition())
     sanchoSprite:Update()
-end)
+end
+
+if StageAPI then
+    StageAPI.AddCallback(
+        MilkshakeVol1.Name,
+        "POST_HUD_RENDER",
+        101,
+        RenderSancho
+    )
+else
+    MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, RenderSancho)
+end
 
 
 -- Adding a Menu
@@ -188,7 +202,7 @@ local exampledirectory = {
             {
                 str = 'mirror world boss music',
                 fsize = 2,
-                choices = { 'enable', 'disable' },
+                choices = { 'enabled', 'disabled' },
                 setting = 1,
                 variable = 'CustomMirrorWorldBossMusic',
                 load = function()
@@ -209,7 +223,7 @@ local exampledirectory = {
                         var == 1
                     )
                 end,
-                tooltip = { strset = { 'play custom', 'boss music', 'in mirror world' } }
+                tooltip = { strset = { 'play custom', 'boss music in', 'mirror world' } }
             },
             { str = "", fsize = 1, nosel = true },
 
@@ -217,7 +231,7 @@ local exampledirectory = {
             {
                 str = 'sharp cursor click sound',
                 fsize = 2,
-                choices = { 'enable', 'disable' },
+                choices = { 'enabled', 'muted' },
                 setting = 1,
                 variable = 'SharpCursorClickSound',
                 load = function()
@@ -238,14 +252,14 @@ local exampledirectory = {
                         var == 1
                     )
                 end,
-                tooltip = { strset = { 'play click', 'sound with', 'sharp cursor' } }
+                tooltip = { strset = { 'disable sharp', 'cursor\'s click', 'sound effect' } }
             },
 
             -- SHARP CURSOR FOLLOW MOUSE
             {
-                str = 'sharp cursor follow mouse',
+                str = 'sharp cursor mode',
                 fsize = 2,
-                choices = { 'enable', 'disable' },
+                choices = { 'follow mouse', 'auto target' },
                 setting = 1,
                 variable = 'SharpCursorFollowMouse',
                 load = function()
@@ -266,12 +280,12 @@ local exampledirectory = {
                         var == 1
                     )
                 end,
-                tooltip = { strset = { 'sharp cursor', 'follow mouse'} }
+                tooltip = { strset = { 'follow mouse', 'only applies if', 'mouse control', 'is enabled', 'in options.ini'} }
             },
 
             -- LEVITICUS SPRITE
             {
-                str = 'leviticus sprite',
+                str = 'leviticus sprite style',
                 fsize = 2,
                 choices = { 'vanilla', 'aladar', 'fancy' },
                 setting = 1,
@@ -294,8 +308,8 @@ local exampledirectory = {
 
             { str = "", nosel = true },
 
-            -- ENEMY SETTINGS DEST
-            { str = 'enemy settings',    dest = 'enemy_settings' },
+            -- -- ENEMY SETTINGS DEST
+            -- { str = 'enemy settings',    dest = 'enemy_settings' },
 
             -- SPECIAL SETTINGS DEST
             { str = 'extra settings',    dest = 'special_settings' },
@@ -451,8 +465,7 @@ local exampledirectory = {
                     'hello', 'everynyan',
                     'how', 'are', 'you?',
                     'fine', 'sank', 'you',
-                    'oh', 'my', 'gah!',
-                    'i', 'wish', 'i', 'were', 'a', 'bird'
+                    'oh', 'my', 'gah!'
                 },
             },
             { str = "", fsize = 1, nosel = true },
@@ -464,7 +477,7 @@ local exampledirectory = {
                     local sfx = Isaac.GetSoundIdByName("Im sory")
                     SFXManager():Play(sfx, 4)
                 end,
-                tooltip = { strset = { 'dont' } }
+                tooltip = { strset = { 'prime minister' } }
             },
             { str = "", fsize = 1, nosel = true },
 
@@ -474,10 +487,41 @@ local exampledirectory = {
                 setting = 1,
                 variable = 'BestDeveloper',
                 choices = {
+                    "kattack",
+                    "eucalyptus",
                     "thicco catto",
+                    "nineline",
+                    "monwil",
+                    "decrioden",
+                    "brenden person",
+                    "kerkel",
+                    "esty",
+                    "bardia",
+                    "muffintae",
+                    "bagman64",
+                    "xxlucia07xx",
+                    "chupeta",
+                    "dpower12",
+                    "izzysakoi",
+                    "visi",
+                    "steve2552",
+                    "westrvn",
+                    "nelly",
+                    "nihil",
+                    "shanepatsmith",
+                    "foiled again",
+                    "notspooky",
+                    "susukethereal",
+                    "catinsurance",
+                    "skykittenpuppy"
                 },
                 tooltip = { strset = { 'this info', 'will be sent', 'to the devs' } }
-            }
+            },
+            { str = "", fsize = 1, nosel = true },
+
+            --BRENDA'S NAME
+            {str = "brenda the spirit", fsize = 2, nosel = true},
+            {str = "kiln was here", fsize = 2, nosel = true}
         }
     },
 }

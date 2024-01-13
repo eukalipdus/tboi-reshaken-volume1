@@ -63,6 +63,8 @@ local function SpawnPoop(bag)
     else
         poop = TSIL.GridSpecific.SpawnPoop(safePoops[poopType], Isaac.GetFreeNearPosition(bag.Position, POOP_STEP), false)
     end
+    SFXManager():Play(SoundEffect.SOUND_POOPITEM_THROW)
+    
     utility:SetData(bag, "PoopType", nil)
     utility:SetData(bag, "PlayerHit", true)
     utility:SetData(poop, "DoggyBagPoop", true)
@@ -137,6 +139,7 @@ function doggyBag:PostPEffectUpdate(player)
                 player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
             elseif canHold then
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
+                SFXManager():Play(SoundEffect.SOUND_POOPITEM_HOLD)
             end
         end
     end
@@ -151,6 +154,7 @@ function doggyBag:PostPEffectUpdate(player)
                 player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
             elseif canHold then
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
+                SFXManager():Play(SoundEffect.SOUND_POOPITEM_HOLD)
             end
         end
     end

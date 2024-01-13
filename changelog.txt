@@ -1,0 +1,36 @@
+================================================
+    v1.0.1 - January 8th, 2024
+================================================
+Fixes
+	-Crash sometimes caused by Lil' Bishop
+	-Mouse controls being disabled upon starting a run
+	-Changed gem trinket names
+
+Additions
+	-Implement Revelations compatibility
+	-Implemented several sheol and scarred womb rooms
+	-Added sound for picking up poop with doggy bag
+
+================================================
+    v1.0.2 - January 9th, 2024
+================================================
+Fixes
+	-Fixed leviticus appearing 3 times in death cert and messing up in library expanded library certificate room
+	-Fixed brenda typo
+	-Fixed error appearing regarding glass item pool
+
+Additions
+	-Added Russian translations!
+	-Changed Leviticus
+
+Changes
+	-Changed leviticus' Library Expanded TBOAB effect to give holy card instead of crack the sky, activates crack the sky on duplicate copies instead
+
+================================================
+    v1.0.3 - January 12th, 2024
+================================================
+Fixes
+	-Fixed spirit of conductivity EID being in russian
+
+Additions
+	-Added missing Spanish EIDs
