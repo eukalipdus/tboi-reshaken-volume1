@@ -4,11 +4,19 @@ local utility = MilkshakeVol1.utility
 
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
+local SHIFT_DOWN = Vector(0, 20)
 local TIMES_CAN_FAIL = 1000
 local INITIAL_BREAKFAST_CHECK = 10
 local WHITE = Color(1, 1, 1, 1, 255, 255, 255)
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220/255, 1, 0, 0, 0)
+
+local RED = Color(141 / 255, 2 / 255, 0, 1, 141 / 255, 2 / 255, 0)
+local YELLOW = Color(135 / 255, 140 / 255, 20 / 255, 1, 135 / 255, 140 / 255, 20 / 255)
+local BLUE = Color(4 / 255, 99 / 255, 147 / 255, 1, 4 / 255, 99 / 255, 147 / 255)
+local SOLID_RED = Color(1, 0, 0, 1, 1, 0, 0)
+local SOLID_YELLOW = Color(1, 1, 0, 1, 1, 1, 0)
+local SOLID_BLUE = Color(0, 0, 1, 1, 0, 0, 1)
 local SOLID_CYAN = Color(0, 1, 1, 1, 0, 255, 255)
 local SOLID_PINK = Color(1, 192/255, 203/255, 1, 255, 192/255, 203/255)
 local SPLIT_COLOR_FRAMES = 2
@@ -16,6 +24,7 @@ local SHATTERED_SOLID_FRAMES = 7
 local SHATTERED_COLOR_FRAMES = 20
 local SCHEDULE_FRAMES = 2
 local JUDAS_REROLL_CHANCE = 30
+
 
 --- Gets a spawn position for a split collectible
 ---@param index number
@@ -25,7 +34,7 @@ local JUDAS_REROLL_CHANCE = 30
 ---@return Vector
 local function GetSplitPosition(index, first, second, collectible)
     local spawnPosition
-    
+  
     if index == first then
         spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
     elseif index == second then
@@ -42,7 +51,7 @@ end
 --- Plays the color flash animations on the newly spawned collectibles
 ---@param index number
 ---@param currentCollecible EntityPickup
-local function PlaySplitAnimation(index, currentCollecible)
+local function PlaySplitAnimation(index, currentCollecible, colors)
     if index == 0 then
         --SOLID_CYAN:SetColorize(0, 2, 2, 3)
         currentCollecible:SetColor(SOLID_CYAN, SHATTERED_SOLID_FRAMES, 2, false, false)
@@ -237,8 +246,8 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
             local collectibleType = collectible.SubType
             local collectibleQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality
 
-            local posLeft = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
-            local posRight = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
+            --local posLeft = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
+            --local posRight = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
 
 
             TSIL.Utils.Functions.RunInFramesTemporary(function ()
@@ -250,9 +259,12 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
                 collectible:Remove()
 
                 if collectibleType == CollectibleType.COLLECTIBLE_GODHEAD then
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MIND, posLeft, player), SOLID_CYAN, CYAN)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BODY, posRight, player), SOLID_PINK, PINK)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SOUL, Isaac.GetFreeNearPosition(posRight, SHIFT_RIGHT), player), SOLID_PINK, PINK) -- Yellow
+                    local topPosition = Vector((collectible.Position).X, (collectible.Position).Y) + SHIFT_DOWN
+                    local leftPosition = Vector((collectible.Position).X, (collectible.Position).Y) + Vector(SHIFT_LEFT, 0)
+                    local rightPosition = Vector((collectible.Position).X, (collectible.Position).Y) + Vector(SHIFT_RIGHT, 0)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MIND, leftPosition, player), SOLID_YELLOW, YELLOW)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SOUL, rightPosition, player), SOLID_BLUE, BLUE)
+                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BODY, topPosition, player), SOLID_RED, RED)
 
                  else
                      collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
