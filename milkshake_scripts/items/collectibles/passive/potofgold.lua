@@ -1,7 +1,7 @@
 local potOfGold = {}
 
 local enums = MilkshakeVol1.enums
-local PENNY_CONVERT_CHANCE = 0.5
+local PENNY_CONVERT_CHANCE = 0.40
 
 ---@class RainbowPenny
 ---@field variant PickupVariant
@@ -27,17 +27,17 @@ local weightedRainbowPennies = { -- Workaround to the other table making items a
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BLOODY_PENNY, weight = 0.45},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BLESSED_PENNY, weight = 0.15},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.COUNTERFEIT_PENNY, weight = 0.25},
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.ACID_PENNY, weight = 0.15},
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CRYSTAL_PENNY, weight = 0.15},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.ACID_PENNY, weight = 0.10},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CRYSTAL_PENNY, weight = 0.10},
 }
 
 if FiendFolio then
     table.insert(weightedRainbowPennies,
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.SHARP_PENNY, weight = 0.10}
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.SHARP_PENNY, weight = 0.15}
     )
 
     table.insert(weightedRainbowPennies,
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.EGG_PENNY, weight = 0.15}
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.EGG_PENNY, weight = 0.10}
     )
 
     table.insert(weightedRainbowPennies,
