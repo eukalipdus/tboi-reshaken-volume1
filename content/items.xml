@@ -35,7 +35,7 @@
     <trinket name="Druidic Emerald" description="Hidden druidic power..." gfx="trinkets_druidicemerald.png" tags="nogreed"/>
     <trinket name="Torrential Sapphire" description="Hidden torrential power..." gfx="trinkets_torrentialsapphire.png" tags="nogreed"/>
     <trinket name="Revenant Onyx" description="Hidden revenant power..." gfx="trinkets_revenantonyx.png" tags="nogreed"/>
-    <trinket name="Virulent Peridot" description="Hidden virulent power..." gfx="trinkets_peridotsgem.png" tags="nogreed"/>
+    <trinket name="Virulent Peridot" description="Hidden virulent power..." gfx="trinkets_virulentperidot.png" tags="nogreed"/>
     <trinket name="Sacred Jacinth" description="Hidden sacred power..." gfx="trinkets_sacredjacinth.png" tags="nogreed"/>
     <trinket name="Sacrilegious Garnet" description="Hidden sacrilegious power..." gfx="trinkets_sacrilegiousgarnet.png" tags="nogreed"/>
     <trinket name="Tungsten Cube" description="It's heavy" gfx="trinkets_tungstencube.png" cache="speed" />

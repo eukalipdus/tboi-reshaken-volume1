@@ -59,6 +59,8 @@ end
 function innerreflection:EvaluateCacheFamiliars(player)
 	if HasFamiliar(player) then
 		player:CheckFamiliar(enums.Familiars.INNER_REFLECTION, 1, TSIL.RNG.NewRNG(), InnerReflectionConfig)
+	else
+		player:CheckFamiliar(enums.Familiars.INNER_REFLECTION, 0, TSIL.RNG.NewRNG(), InnerReflectionConfig)
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, innerreflection.EvaluateCacheFamiliars, CacheFlag.CACHE_FAMILIARS)
@@ -102,8 +104,7 @@ function innerreflection:PostFamiliarUpdate(familiar)
 
 	familiar.SpriteScale = player.SpriteScale
 	familiar.SizeMulti = player.SpriteScale
-	local sizeDamageMultiplier = familiar.SizeMulti.Y
-	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier --* sizeDamageMultiplier
+	familiar.CollisionDamage = BASE_CONTACT_DAMAGE * familiarMultiplier
 
 	local pSprite = player:GetSprite()
 	local fSprite = familiar:GetSprite()
