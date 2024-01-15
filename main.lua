@@ -1,9 +1,9 @@
 MilkshakeVol1 = RegisterMod("Milkshake Vol1!", 1)
 
-require("loi_milkshake.TSIL").Init("loi_milkshake")
-
 include("milkshake_scripts.enums")
 include("milkshake_scripts.utility")
+
+require("loi_milkshake.TSIL").Init("loi_milkshake")
 MilkshakeVol1.API = {}
 
 if StageAPI then
