@@ -49,8 +49,8 @@ local ffOrbPillHuds = {
 
 local playerAnchor = {
     "bottomright",
-    "bottomright",
-    "bottomright",
+    "topright",
+    "bottomleft",
     "bottomright",
 }
 
