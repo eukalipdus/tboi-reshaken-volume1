@@ -183,7 +183,8 @@ function WineHead:WineHead_Update(enemy)
             data.targpos = Game():GetRoom():GetClampedPosition(data.targpos + target.Velocity, 0)
         end
 
-        if (enemy:CollidesWithGrid() or data.gridCountdown >= 0 or NearSpike(enemy)) then
+        if ( enemy.Position:Distance(data.targpos) > 60 or enemy.Position:Distance(data.targpos) < 60 and enemy:CollidesWithGrid()) and ( enemy:CollidesWithGrid()
+        or data.gridCountdown >= 0 or NearSpike(enemy)) then
             enemy.Pathfinder:FindGridPath(data.targpos, WINEHEAD_SPEED, 1, false)
             if data.gridCountdown <= 0 then
                 data.gridCountdown = 60
