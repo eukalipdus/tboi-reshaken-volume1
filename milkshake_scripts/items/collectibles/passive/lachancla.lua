@@ -6,7 +6,8 @@ local SPEED_UP = 0.3
 local stompers = {
     EntityType.ENTITY_MOM,
     EntityType.ENTITY_SATAN,
-    EntityType.ENTITY_DADDYLONGLEGS
+    EntityType.ENTITY_DADDYLONGLEGS,
+    EntityType.ENTITY_DELIRIUM
 }
 
 function laChancla:EvaluateCache(player, cacheFlag)
