@@ -34,3 +34,19 @@ Fixes
 
 Additions
 	-Added missing Spanish EIDs
+
+================================================
+    v1.0.4 - January 14th, 2024
+================================================
+Fixes
+	-Fixed brenda dropping pickups when bombed
+	-Fixed celestial mirror familiar being bugged when spawned by monster manual
+	-Fixed virulent peridot being invisible
+	-Readded glass head death portraits
+
+Additions
+	-Made godhead prismatic dice easter egg look cooler
+
+Changes
+	-Reduced pot of gold coin replacement rate to 40% fromm 50%
+	-Reduced egg, crystal, and acid penny spawn chance by 5%
