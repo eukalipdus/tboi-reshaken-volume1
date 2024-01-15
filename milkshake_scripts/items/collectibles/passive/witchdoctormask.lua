@@ -274,9 +274,9 @@ function witchDoctorMask:GetShaderParams()
 
                 if i > 1 then
                     if isFiendFolio then
-                        orbPillHuds[i].Scale = NON_P1_SCALE
-                    else
                         ffOrbPillHuds[i].Scale = NON_P1_SCALE
+                    else
+                        orbPillHuds[i].Scale = NON_P1_SCALE
                     end
                 end
             end
