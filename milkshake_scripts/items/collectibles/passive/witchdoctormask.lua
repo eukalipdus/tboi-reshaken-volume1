@@ -11,9 +11,9 @@ local SPAWN_DISTANCE = 40
 local movePillHudPerPlayer = {
     --Vector(394, 147),
     Vector(-12, -12), --player 1 bottom right
-    Vector(-153, -270), --player 2 top right
-    Vector(-420, -12), --player 3 bottom left
-    Vector(-100, -12), --player 4 bottom right but slightly less
+    Vector(-151, -318), --player 2 top right
+    Vector(-616, 12), --player 3 bottom left
+    Vector(-155, 5), --player 4 bottom right but slightly less
 
 }
 
