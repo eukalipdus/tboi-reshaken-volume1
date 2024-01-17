@@ -50,3 +50,11 @@ Additions
 Changes
 	-Reduced pot of gold coin replacement rate to 40% fromm 50%
 	-Reduced egg, crystal, and acid penny spawn chance by 5%
+	
+================================================
+    v1.0.4 - January 15th, 2024
+================================================
+	-Fixed EID not working when you had Epiphany installed
+	-La chancla now prevents damage from delirium mom stomp
+	-Witch doctor mask hud pills display in co-op now
+	-Wine heads can walk into the player now
