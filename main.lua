@@ -140,6 +140,10 @@ include("milkshake_scripts.room_decorations.sacrilege")
 include("milkshake_scripts.shardrockoverlay")
 include("milkshake_scripts.nonreplaceabletnt")
 
+-- Check if Spirit Sage can be played
+MilkshakeVol1.AchievementChecker = include("milkshake_scripts.achievementchecker")
+MilkshakeVol1.AchievementChecker:AddTrackerTrinket(MilkshakeVol1.enums.Trinkets.TRACK_ALT_PATH_UNLOCK)
+
 --- Shader crash fix
 --- Credits to Cucco
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function()

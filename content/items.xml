@@ -54,6 +54,8 @@
     <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
 
+    <trinket name="TRACK ALT PATH UNLOCK" description="Report this to the Milkshake devs" achievement="407" tags="nogreed"/>
+
     <active id="23" name="Leviticus " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0"/>
     <active id="23" name="Leviticus  " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0"/>
 
