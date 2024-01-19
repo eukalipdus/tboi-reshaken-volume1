@@ -1,7 +1,7 @@
 local enums = MilkshakeVol1.enums
 
-local REPLACE_CHANCE = 2
-local KEEPERB_REPLACE_CHANCE = 1
+local REPLACE_CHANCE = 1
+local KEEPERB_REPLACE_CHANCE = 0
 
 local function GetSpawnCount(player)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE) then return 1 end
@@ -76,17 +76,24 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_RENDER, function (_, picku
     end
 end)
 
+local coinBlacklist = {
+    CoinSubType.COIN_LUCKYPENNY,
+    CoinSubType.COIN_GOLDEN
+}
+
 function MilkshakeVol1:PostPickupInit(pickup)
     if (Game().Difficulty == Difficulty.DIFFICULTY_GREED or Game().Difficulty == Difficulty.DIFFICULTY_GREEDIER)
     or MilkshakeVol1.utility:DidEntityExist()
     or pickup.Variant ~= PickupVariant.PICKUP_COIN
-    or pickup.SubType ~= CoinSubType.COIN_PENNY then return end
+    or TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType) then return end
     local chance
+    if Epiphany and MilkshakeVol1.utility:AnyPlayerIsCharacter(Epiphany.PlayerType.KEEPER) then return end
     if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B) then chance = KEEPERB_REPLACE_CHANCE else chance = REPLACE_CHANCE end
+
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local roll = TSIL.Random.GetRandomInt(1, 100, rng)
     if roll <= chance then
-        local rainbowCoinType = MilkshakeVol1.API:GetRainbowPenny(rng)
+        local rainbowCoinType = MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
         pickup:Morph(
             pickup.Type,
             rainbowCoinType.variant,
