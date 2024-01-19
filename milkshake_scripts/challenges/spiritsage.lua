@@ -24,7 +24,8 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, spiritSage.PostPlayerInit)
 
 function spiritSage:PostRender()
-    if not MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ALT_PATH_ACHIEVEMENT) then
+    if Game().Challenge == enums.Challenges.SPIRIT_SAGE
+    and not MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ALT_PATH_ACHIEVEMENT) then
         popupSprite:ReplaceSpritesheet(ACHIEVEMENT_LAYER, "gfx/ui/spiritsage_warning.png")
         popupSprite:LoadGraphics()
         popupSprite:Render(Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) / 2)
