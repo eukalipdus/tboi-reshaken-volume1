@@ -11,6 +11,7 @@ local LyraIcon = "{{Collectible"..enums.Collectibles.LYRA .."}}"
         -Polish: "pl"
         -Bulgarian: "bul"
         -Turkish: "turkish"
+        -Korean: "ko_kr"
 
     How to add more descriptions:
         1- Add a new entry in the corresponding list, like this:
@@ -19,7 +20,7 @@ local LyraIcon = "{{Collectible"..enums.Collectibles.LYRA .."}}"
             },
         2- Inside those curly braces { } add an entry for each language description, like this:
             [enums.X.X] = {
-                language_code = 
+                language_code =
                     {
                         name = "name",
                         description = "description",
@@ -36,7 +37,7 @@ local LyraIcon = "{{Collectible"..enums.Collectibles.LYRA .."}}"
                         description = "description 2",
                 },
             },
-    
+
     The language_code is the thing between quotes in the language list.
     To check what enum value correspond to the item, check the enums.lua file.
     Don't forget to add all the commas!
@@ -68,31 +69,48 @@ descriptions.Collectibles = {
             description = "{{Heart}} +1 serce dusz, czarne serce, lub czerwone serce, losowo" ..
             "#{{ArrowUp}} {{ArrowUp}} Daje losowe mnożniki od 1.1x do 1.5x dla wszystkich statystyk!"
         },
+        ko_kr = {
+            name = "밀크쉐이크",
+            description = "{{UnknownHeart}} 최대 체력, 소울하트, 블랙하트 중 하나 +1" ..
+            "#{{ArrowUp}} {{SpeedSmall}}이동속도 배율 x1.1~1.5" ..
+            "#{{ArrowUp}} {{TearsSmall}}공격 딜레이 ÷1.1~1.5" ..
+            "#{{ArrowUp}} {{DamageSmall}}공격력 배율 x1.1~1.5" ..
+            "#{{ArrowUp}} {{RangeSmall}}사거리 배율 x1.1~1.5" ..
+            "#{{ArrowUp}} {{ShotspeedSmall}}탄속 배율 x1.1~1.5" ..
+            "#{{ArrowUp}} {{LuckSmall}}행운 배율 x1.1~1.5",
+            abyss = "공격력 x2의 피해를 주며 빠르게 돌진합니다."
+        },
     },
     [enums.Collectibles.SHARP_CURSOR] = {
         en_us = {
             name = "Sharp Cursor",
             description = "#Targets the furthest enemy in the room" ..
             "#{{Damage}} Pressing a shooting key makes it click, dealing 10% of Isaac's damage" ..
-            "#{{Warning}} Double press ctrl to toggle mouse control mode",
+            "#{{Warning}} {{ButtonRT}}Double press ctrl to toggle mouse control mode",
         },
         spa = {
             name = "Cursor Afilado",
             description = "#Apunta al enemigo más lejano en la habitación" ..
             "#{{Damage}} Presionar una tecla de disparo lo hace hacer clic, causando un 10% del daño de Isaac" ..
-            "#{{Warning}} Pulsa dos veces Ctrl para alternar el modo de control de ratón",
+            "#{{Warning}} {{ButtonRT}} dos veces Ctrl para alternar el modo de control de ratón",
         },
         ru = {
             name = "Острый Курсор",
             description = "#Нацеливается на самого дальнего врага в комнате" ..
             "#{{Damage}} При нажатии клавиш стрельбы, она щелкает, нанося 10% урона Исаака" ..
-            "#{{Warning}} Дважды нажмите Ctrl, чтобы переключить режим управления на мышку",
+            "#{{Warning}} {{ButtonRT}}Дважды нажмите Ctrl, чтобы переключить режим управления на мышку",
         },
         pl = {
             name = "Ostry Kursor",
             description = "#Atakuje najbardziej oddalonego przeciwnika w pokoju" ..
             "#{{Damage}} Klika po wciśnięciu dowolnego przycisku ataku, zadając 10% twoich obrażeń" ..
-            "#{{Warning}} Wciśnij dwukrotnie przycisk upuszczania, aby przełączyć tryb kontroli myszką",
+            "#{{Warning}} {{ButtonRT}}Wciśnij dwukrotnie przycisk upuszczania, aby przełączyć tryb kontroli myszką",
+        },
+        ko_kr = {
+            name = "뾰족한 커서",
+            description = "#캐릭터에서 가장 먼 적을 타겟팅하며;" ..
+            "#{{Damage}} 공격키(자동) 혹은 클릭(수동) 시 그 적에게 공격력 x0.1의 피해를 줍니다." ..
+            "#{{Warning}} {{ButtonRT}}교체 버튼을 2번 눌러 자동/수동(마우스) 모드 전환",
         },
     },
     [enums.Collectibles.BLACK_EYE] = {
@@ -108,6 +126,10 @@ descriptions.Collectibles = {
             name = "Черный Глаз",
             description = "{{Blank}}{{ArrowUp}} +0,7 скорострельности и отбрасывания только для правого глаза #В настоящее время не используется и не закодировано, возможно, появится позже (вероятно, не появится)",
         },
+        ko_kr = {
+            name = "검은 눈",
+            description = "!!! 오른쪽 눈에만 적용:#{{ArrowUp}} {{TearsSmall}}연사 +0.7#공격이 적을 더 강하게 밀쳐냅니다.",
+        },
     },
     [enums.Collectibles.DICE_DICE] = {
         en_us = {
@@ -121,6 +143,10 @@ descriptions.Collectibles = {
         ru = {
             name = "Кубик-кость",
             description = "Активирует случайный эффект комнаты костей #В настоящее время не используется и не закодирован, возможно, он появится позже",
+        },
+        ko_kr = {
+            name = "주사위 주사위",
+            description = "사용 시 랜덤한 주사위방 효과를 발동합니다.",
         },
     },
     [enums.Collectibles.FIRECRACKER_ROSE] = {
@@ -148,12 +174,19 @@ descriptions.Collectibles = {
             "#Nasiona rozkwitają w wybuchowe płatki po 4 sekundach, zadając 35 + 6 x obrażenia Izaaka",
             abyss = "Zielona, płonąca szarańcza, która ma 10% szans na wywołanie {{Burning}} Rozsadzenia"
         },
+        ko_kr = {
+            name = "폭탄 플라워",
+            description = "{{Burning}} 30%의 확률로 적에게 달라붙는 씨앗 공격이 나갑니다." ..
+            "#{{LuckSmall}} 행운 20+ 이상일 때 50% 확률" ..
+            "#적에게 달라붙은 씨앗은 4초 후 공격력 x6 +35의 폭발 피해를 줍니다. (자해 없음)",
+            abyss = "공격한 적에게 10%의 확률로 {{Burning}}폭발성 씨앗을 심습니다."
+        },
     },
     [enums.Collectibles.GLOBIN_IN_A_BUCKET] = {
         en_us = {
             name = "Globin In A Bucket",
             description = "Spawns a friendly globin that fights by your side" ..
-            "#Chance to spawn different globin variants depending on the floor" .. 
+            "#Chance to spawn different globin variants depending on the floor" ..
             "#A maximum of 4 globins can be spawned at once",
             book_of_virtues = "Middle ring wisp#50% chance to reform on death"
         },
@@ -174,6 +207,13 @@ descriptions.Collectibles = {
             name = "Wiadro Pełne Globiny",
             description = "Wypuszcza przyjaznego Globina, który walczy po twojej stronie" ..
             "#Może stworzyć inne wariantly Globinów zależnie od piętra",
+        },
+        ko_kr = {
+            name = "글로빈 양동이",
+            description = "사용 시 아군 Globin을 소환합니다." ..
+            "#스테이지에 따라서 확률적으로 소환되는 Globin의 종류가 달라집니다." ..
+            "#{{Blank}} (최대 4마리)",
+            book_of_virtues = "{{ColorYellow}}중앙 x1{{CR}}/{{Heart}}:3#일반 눈물을 발사합니다. ({{DamageSmall}}:3)#불꽃이 꺼지면 50%의 확률로 다시 켜집니다."
         },
     },
     [enums.Collectibles.GOLDEN_SHOVEL] = {
@@ -200,6 +240,12 @@ descriptions.Collectibles = {
             description = "Wykopuje 1-2 złote skrzynie oraz losowy złoty pickup" ..
             "#{{LadderRoom}} Po użyciu nad dekoracją podłogi otwiera sklep Karty Członkowskiej",
         },
+        ko_kr = {
+            name = "황금 삽",
+            description = "사용 시 {{GoldenChest}}황금상자 1~2개와 랜덤 황금 픽업을 파냅니다." ..
+            "#{{Collectible602}} 치장성 타일(풀, 돌 조각 등) 위에 사용 시 비밀 상점으로 가는 다락문을 생성합니다.",
+            book_of_virtues = "{{ColorYellow}}중앙 x1{{CR}}/{{Heart}}:4#{{Collectible202}}10%의 확률로 황금화 눈물을 발사합니다. ({{DamageSmall}}:3)"
+        },
     },
     [enums.Collectibles.LA_CHANCLA] = {
         en_us = {
@@ -222,12 +268,17 @@ descriptions.Collectibles = {
             description = "\1 +0.3 do Prędkości" ..
             "#Odpornośc na {{MomBossSmall}} ataki przygniatające",
         },
+        ko_kr = {
+            name = "라 찬클라",
+            description = "↑ {{SpeedSmall}}이동속도 +0.3" ..
+            "#{{MomBossSmall}} 발 공격에 피해를 받지 않습니다.",
+        },
     },
     [enums.Collectibles.LYRA] = {
         en_us = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
-            "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destoryed machines" .. 
+            "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destoryed machines" ..
             "#\1 Using a spirit orb starts a short rhythm mini game." ..
             "#{{Blank}} Successful completion activates the spirit orb with double effect",
         },
@@ -248,9 +299,15 @@ descriptions.Collectibles = {
         pl = {
             name = "Lutnia",
             description = "{{SpiritOrb}} 15% na zastąpienie nagrody za ukończenie pokoju widmową kulą" ..
-            "#{{SpiritOrb}} Daje szansę na dostanie widmowej kuli z skrzyń, skał z X'em i zniszczonych maszyn" .. 
+            "#{{SpiritOrb}} Daje szansę na dostanie widmowej kuli z skrzyń, skał z X'em i zniszczonych maszyn" ..
             "#\1 Użycie widmowej kuli zaczyna krótką minigrę rytmiczną" ..
             "#{{Blank}} Wygranie minigry podwaja efekt użytej kuli",
+        },
+        ko_kr = {
+            name = "거문고자리",
+            description = "{{SpiritOrb}} 방 클리어 시 15%의 확률로 스피릿을 드랍합니다." ..
+            "#{{SpiritOrb}} 상자, 색돌, 슬롯머신 파괴 시 확률적으로 스피릿을 추가로 드랍합니다." ..
+            "#{{SpiritOrb}} 스피릿 사용 시 미니 리듬게임을 진행하며 성공 시 스피릿 효과를 2배로 발동합니다.",
         },
     },
     [enums.Collectibles.EMPTY_SLOT] = {
@@ -284,6 +341,14 @@ descriptions.Collectibles = {
             "#Po 10 monetach, z każdą kolejną monetą ma 1% szansy na wybuchnięcie i wyrzucenie 2 razy więcej monet niż włożono" ..
             "#Zawsze wybucha po włożeniu 100 monet",
         },
+        ko_kr = {
+            name = "빈 슬롯머신",
+            description = "{{Coin}} 사용 시 동전 1개를 소모합니다." ..
+            "#10{{Coin}} 소모 후, 사용할 때마다 1%의 확률로 아이템이 사라지며 소모한 {{Coin}}의 2배만큼의 동전을 드랍합니다." ..
+            "#{{Blank}} (100{{Coin}}에서 확정)",
+            book_of_virtues = "{{ColorLime}}내부 x1{{CR}}/{{Heart}}:1#(눈물 발사 불가)",
+            book_of_belial = "↑ 소지 중일 때 소모한 {{Coin}}만큼 {{Damage}}공격력 +0.066"
+        },
     },
     [enums.Collectibles.SHATTERED_ORB] = {
         en_us = {
@@ -311,6 +376,13 @@ descriptions.Collectibles = {
             name = "Strzaskana Kula",
             description = "Rzuć nią w przeciwników, żeby skraść im dusze" ..
             "#{{SpiritOrb}} Złapani przeciwnicy są zamieniani w widmowe kule zależnie od żywiołu ich duszy",
+        },
+        ko_kr = {
+            name = "연약한 오브",
+            description = "사용 시 공격하는 방향으로 오브를 던집니다." ..
+            "#{{SpiritOrb}} 오브에 맞은 적은 포획되며 스피릿 오브로 변합니다.",
+            book_of_virtues = "포획 실패 시 랜덤 전용 불꽃을 3개 소환합니다.",
+            book_of_belial = "{{SpiritOrb}} Spirit of Chaos를 50%의 확률로 Spirit of Sacrilege로 교체합니다."
         },
     },
     [enums.Collectibles.PRISMATIC_DICE] = {
@@ -340,6 +412,13 @@ descriptions.Collectibles = {
             description = "Rozdziela każdy przedmiot w pokoju na 2 przedmioty o jakości o 1 mniejszej" ..
             "#Przedmioty o jakości {{Quality0}} zamiast tego są rozdzielane na pickupy",
         },
+        ko_kr = {
+            name = "프리즘 주사위",
+            description = "사용 시 그 방의 아이템을 등급이 낮은 아이템 2개로 바꿉니다." ..
+            "#{{Quality0}}등급 아이템의 경우 픽업으로 분해됩니다.",
+            book_of_virtues = "{{ColorYellow}}중앙 x1{{CR}}/{{Heart}}:2#(눈물 발사 불가)#{{Collectible528}}공격이 통과하면 4갈래로 갈라져 나갑니다.",
+            book_of_belial = "분해된 아이템이 30%의 확률로 {{DevilRoom}}악마방 아이템으로 바뀝니다."
+        },
     },
     [enums.Collectibles.SPIRIT_BUM] = {
         en_us = {
@@ -361,6 +440,11 @@ descriptions.Collectibles = {
             name = "Widmowy Przybłęda",
             description = "{{SoulHeart}} Zabieria pobliskie serca dusz" ..
             "#{{SpiritOrb}} Odpłaca się widmowymi kulami",
+        },
+        ko_kr = {
+            name = "영혼 거지",
+            description = "{{SoulHeart}} 주변의 소울하트를 먹으며" ..
+            "#{{SpiritOrb}} 2개의 소울하트를 먹으면 스피릿을 드랍합니다.",
         },
     },
     [enums.Collectibles.INNER_REFLECTION] = {
@@ -388,6 +472,11 @@ descriptions.Collectibles = {
             "#Zadaje 75 obrażeń na sekunde" ..
             "#\1 {{MirrorRoom}} Daje +2.5 Obrażeń w lustrzanym wymiarze",
         },
+        ko_kr = {
+            name = "천계의 거울",
+            description = "캐릭터의 반대편에 있으며 접촉한 적에게 초당 75의 피해를 줍니다." ..
+            "#↑ {{MirrorRoom}}거울세계에서 {{DamageSmall}}공격력 +2.5",
+        },
     },
     [enums.Collectibles.SICKLE_CELL] = {
         en_us = {
@@ -414,6 +503,12 @@ descriptions.Collectibles = {
             "#{{BleedingOut}} Łzy wywołują krwawienie. Krwawiący przeciwnicy zostawiaja za sobą plamy krwi i otrzymują obrażenia przy poruszaniu się",
             abyss = "Czerwona szarańcza, która wywołuje {{BleedingOut}} krwotok"
         },
+        ko_kr = {
+            name = "낫 적혈구",
+            description = "{{BleedingOut}} 공격이 적을 관통하며 출혈 상태로 만듭니다." ..
+            "#{{BleedingOut}} 출혈 상태의 적 밑에 장판이 깔리며 다른 적도 장판에 피해를 받습니다.",
+            abyss = "공격한 적을 {{BleedingOut}}출혈 상태로 만듭니다."
+        },
     },
     [enums.Collectibles.SPOILED_BREAKFAST] = {
         en_us = {
@@ -435,6 +530,11 @@ descriptions.Collectibles = {
             name = "Przegniłe Śniadanie",
             description = "\1 +1 do Maksymalnego Zdrowia" ..
             "#{{EmptyHeart}} Usuwa pół serduszka",
+        },
+        ko_kr = {
+            name = "엎질러진 아침밥",
+            --description = "↑ {{HalfHeart}}빈 최대 체력 {{ColorOrange}}+0.5{{CR}}",
+            description = "↑ {{HalfHeart}}반칸 채워진 최대 체력 +1",
         },
     },
     [enums.Collectibles.BALANCED_BREAKFAST] = {
@@ -465,6 +565,13 @@ descriptions.Collectibles = {
             "#\1 +1 Szczęścia" ..
             "#{{SoulHeart}} +1 serce dusz" ..
             "#{{Heart}} Leczy jedno czerwone serduszko",
+        },
+        ko_kr = {
+            name = "평범한 아침밥",
+            description = "↑ {{HalfHeart}}최대 체력 +1"..
+            --"#↑ {{HalfHeart}}빨간하트 +1" .. --Commented this as I'm not sure about for extra red heart heal like vanilla items
+            "#↑ {{SoulHeart}}소울하트 +1" ..
+            "#↑ {{LuckSmall}}행운 +1",
         },
     },
     [enums.Collectibles.HEARTY_BREAKFAST] = {
@@ -500,6 +607,14 @@ descriptions.Collectibles = {
             "#\1 +1 Szczęścia" ..
             "#{{Heart}} Pełne leczenie",
         },
+        ko_kr = {
+            name = "풍부한 아침밥",
+            description = "↑ {{HalfHeart}}최대 체력 +1"..
+            "#{{Heart}} 체력을 모두 회복합니다." ..
+            "#↑ {{TearsSmall}}연사 +0.3" ..
+            "#↑ {{DamageSmall}}공격력 +0.5" ..
+            "#↑ {{LuckSmall}}행운 +1",
+        },
     },
     [enums.Collectibles.POT_OF_GOLD] = {
         en_us = {
@@ -521,6 +636,11 @@ descriptions.Collectibles = {
             name = "Kociołek Złota",
             description = "Zamienia bomby, klucze i większość monet w tęczowe monety" ..
             "#{{Trinket52}} Tęczowe monety aktywują efekt wybranego trynkieta Pieniążka po podniesieniu",
+        },
+        ko_kr = {
+            name = "황금의 항아리",
+            description = "!!! 모든 {{Bomb}}/{{Key}}/{{Coin}} 픽업을 레인보우 코인으로 바꿉니다." ..
+            "#{{Trinket52}} 레인보우 코인을 주으면 각 색상별 페니류 장신구 효과를 발동합니다.",
         },
     },
     [enums.Collectibles.FRAGILE_MIRROR] = {
@@ -555,6 +675,13 @@ descriptions.Collectibles = {
             "#Może wskrzesić Izaaka raz na piętro" ..
             "#Blokuje 3 pociski po czym rozpada się" ..
             "#\2 -1 Szczęścia gdy roztrzaskana",
+        },
+        ko_kr = {
+            name = "유리 트로피",
+            description = "↑ 트로피가 있을 때 목숨 +1" ..
+            "#사망 시 트로피를 소모하여 그 방에서 보호막과 함께 부활합니다. (1{{SoulHeart}}, {{Collectible58}})" ..
+            "#탄환을 3회 막으면 트로피가 깨지며;" ..
+            "#↓ 깨진 경우 {{LuckSmall}}행운 -1, 스테이지 진입 시 복원됩니다.",
         },
     },
     [enums.Collectibles.LEVITICUS] = {
@@ -594,6 +721,15 @@ descriptions.Collectibles = {
             book_of_virtues = "Ogniki w wewnętrznym kręgu#Duże zdrowie ognika#+10% szansy na {{AngelRoom}} Anielski Pokój za każdego ognika Księgi Kapłańskiej",
             abyss = "Niebieska, świecąca szarańcza, która czasami przywołuje promień światła, zadający obrażenia Izaaka x 3",
         },
+        ko_kr = {
+            name = "레위기",
+            description = "!!! 방 클리어로 충전 불가, {{SoulHeart}}로만 충전 가능" ..
+            "#{{EternalHeart}} 사용 시 이터널하트 +1" ..
+            "#{{AngelRoom}} {{BossRoom}}보스방 클리어 이전에 사용 시 보스방의 아이템이 천사방 아이템으로 바뀝니다." ..
+            "#!!! 악마방 거래 시 동전 구매 필요",
+            book_of_virtues = "{{ColorLime}}내부 x1{{CR}}/{{Heart}}:8#일반 눈물을 발사합니다. ({{DamageSmall}}:3/{{TearsSmall}}:↓)#불꽃 당 {{AngelChanceSmall}}천사방 확률 +10%",
+            abyss = "적과 접촉 시 공격력 3배의 빛줄기를 떨어뜨립니다.",
+        },
     },
     [enums.Collectibles.BATTERY_ACID] = {
         en_us = {
@@ -620,6 +756,12 @@ descriptions.Collectibles = {
             "#\2 Odbiera jeden ładunek co 15 sekund" ..
             "#Izaac zostawia za sobą smugę z kwasu"
         },
+        ko_kr = {
+            name = "배터리 누수액",
+            description = "{{Battery}} 액티브 아이템의 충전량 2배" ..
+            "#↓ 15초마다 액티브 아이템의 충전량이 1칸씩 깎입니다." ..
+            "#캐릭터가 지나간 자리에 주기적으로 노란 장판이 생기며 닿은 적은 초당 15의 피해를 입습니다."
+        },
     },
     [enums.Collectibles.DOGGY_BAG] = {
         en_us = {
@@ -641,6 +783,11 @@ descriptions.Collectibles = {
             name = "Psi Worek",
             description = "Otrzymywanie obrażeń tworzy losową kupę" ..
             "#Izaak możę podnosić kup podchodząc do nich",
+        },
+        ko_kr = {
+            name = "강아지 똥",
+            description = "{{PoopPickup}} 피격 시 봉투에 든 똥을 싸며 캐릭터가 싼 똥을 집어 던질 수 있습니다. " ..
+            "#봉투의 똥은 방 입장 시 리필됩니다.",
         },
     },
     [enums.Collectibles.DADS_MITT] = {
@@ -672,6 +819,13 @@ descriptions.Collectibles = {
             "#Tor lotu łez zmienia się wraz z ruchem Isaaka",
             abyss = "Bejsbolowa szarańcza, które naśladuje ruchy Izaaka",
         },
+        ko_kr = {
+            name = "아빠의 야구글러브",
+            description = "↑ {{TearsSmall}}연사 배율 x1.1" ..
+            "#↓ {{ShotspeedSmall}}탄속 -0.2" ..
+            "#눈물의 방향이 캐릭터의 이동방향의 영향을 받습니다.",
+            abyss = "파리가 날아갈 때 캐릭터의 이동방향의 영향을 받습니다.",
+        },
     },
     [enums.Collectibles.LIL_BISHOP] = {
         en_us = {
@@ -693,6 +847,11 @@ descriptions.Collectibles = {
             name = "Tyci Biskup",
             description = "Blokuje pociski" ..
             "#Po trafieniu ma 20% szansy na osłonienie Isaaka na 5 sekund",
+        },
+        ko_kr = {
+            name = "리틀 비숍",
+            description = "적의 탄환을 막아주며;" ..
+            "#20%의 확률로 5초동안 캐릭터의 피격을 막아줍니다.",
         },
     },
     [enums.Collectibles.RAINBOW_FRAGMENT] = {
@@ -720,6 +879,12 @@ descriptions.Collectibles = {
             "#Tworzy 4 tęczowe monety" ..
             "#{{Trinket52}} Tęczowe monety aktywują efekt wybranego trynkieta Pieniążka po podniesieniu",
         },
+        ko_kr = {
+            name = "무지개 조각",
+            description = "↑ {{LuckSmall}}행운 +1" ..
+            "#레인보우 코인 4개를 드랍합니다." ..
+            "#{{Trinket52}} 레인보우 코인을 주으면 각 색상별 페니류 장신구 효과를 발동합니다.",
+        },
     },
     [enums.Collectibles.WITCH_DOCTOR_MASK] = {
         en_us = {
@@ -745,6 +910,12 @@ descriptions.Collectibles = {
             description = "{{Pill}} Tworzy 1 pigułkę" ..
             "#Zamienia wszystkie pigułki w widmowe pigułki" ..
             "#{{SpiritOrb}} Widmowe pigułki poza swoimi normalnymi efektami aktywują efekt wybranej kuli dusz",
+        },
+        ko_kr = {
+            name = "사제 마스크",
+            description = "{{Pill}} 알약을 1개 드랍합니다." ..
+            "#모든 알약이 스피릿 알약으로 바뀝니다." ..
+            "#{{SpiritOrb}} 스피릿 알약 사용 시 기존 알약 효과에 색상에 따른 스피릿을 추가로 발동합니다.",
         },
     },
     [enums.Collectibles.MIRROR_KEY] = {
@@ -780,6 +951,13 @@ descriptions.Collectibles = {
             "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot.",
             book_of_belial = "↑ {{Damage}} +2.5 Obrażen w lustrzanym wymiarze",
         },
+        ko_kr = {
+            name = "거울 열쇠",
+            description = "{{MirrorRoom}} 문 테두리 근처에서 사용 시 사용한 방과 같은 구조를 가진 거울방이 생성됩니다.(방 당 1회)" ..
+            "#{{Warning}} 아이템은 생성되지 않습니다." ..
+            "#{{BossRoom}} 보스방의 경우 다시 클리어할 수 있으며 보상을 추가로 드랍합니다.",
+            book_of_belial = "↑ 거울방 안에서 {{DamageSmall}}공격력 +2.5",
+        },
     },
     [enums.Collectibles.UNCHARGED_MIRROR_KEY] = {
         en_us = {
@@ -814,8 +992,15 @@ descriptions.Collectibles = {
             "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot.",
             book_of_belial = "↑ {{Damage}} +2.5 Obrażen w lustrzanym wymiarze",
         },
+        ko_kr = {
+            name = "거울 열쇠",
+            description = "{{MirrorRoom}} 문 테두리 근처에서 사용 시 사용한 방과 같은 구조를 가진 거울방이 생성됩니다.(이 방에서 이미 사용됨)" ..
+            "#{{Warning}} 아이템은 생성되지 않습니다." ..
+            "#{{BossRoom}} 보스방의 경우 다시 클리어할 수 있으며 보상을 추가로 드랍합니다.",
+            book_of_belial = "↑ 거울방 안에서 {{DamageSmall}}공격력 +2.5",
+        },
     },
-    
+
 }
 
 descriptions.Collectibles[enums.Collectibles.LEVITICUS_ALADAR] = descriptions.Collectibles[enums.Collectibles.LEVITICUS]
@@ -846,6 +1031,12 @@ descriptions.Trinkets = {
             name = "Wolframowy Kloc",
             description = "{{ArrowDown}} -0.2 Prędkości. #Tworzy falę uderzeniową po upuszczeniu",
         },
+        ko_kr = {
+            name = "텅스텐 큐브",
+            description = "{{ArrowDown}} {{SpeedSmall}}이동속도 -0.2 #버리기 및 교체 시 주변의 적에게 피해를 주는 원형 지진파를 발산합니다.",
+            double = "{{ArrowDown}} {{SpeedSmall}}이동속도 -0.2 #버리기 및 교체 시 주변의 적에게 피해를 주는 원형 지진파를 발산합니다.#{{ColorGold}}피해량 2배",
+            triple = "{{ArrowDown}} {{SpeedSmall}}이동속도 -0.2 #버리기 및 교체 시 주변의 적에게 피해를 주는 원형 지진파를 발산합니다.#{{ColorGold}}피해량 3배",
+        },
     },
     [enums.Trinkets.ACID_PENNY] = {
         en_us = {
@@ -863,6 +1054,10 @@ descriptions.Trinkets = {
         pl = {
             name = "Kwaśny Pieniążek",
             description = "{{Pill11}} Podnoszenie monety ma 8% szans na stworzenie pigułki",
+        },
+        ko_kr = {
+            name = "산성 동전",
+            description = "{{Pill11}} 동전 획득 시 8%의 확률로 알약을 드랍합니다.",
         },
     },
     [enums.Trinkets.CRYSTAL_PENNY] = {
@@ -882,6 +1077,10 @@ descriptions.Trinkets = {
             name = "Kryształowy Pieniążek",
             description = "{{Pill11}} Podnoszenie monety ma 8% szans na stworzenie karty",
         },
+        ko_kr = {
+            name = "크리스탈 동전",
+            description = "{{Card}} 동전 획득 시 8%의 확률로 카드를 드랍합니다.",
+        },
     },
     [enums.Trinkets.ROCK_WHEEL] = {
         en_us = {
@@ -899,6 +1098,10 @@ descriptions.Trinkets = {
         pl = {
             name = "Skalne Koło",
             description = "Grymasy stają się przyjazne i atakują innych przeciwników",
+        },
+        ko_kr = {
+            name = "굴레바퀴",
+            description = "Stoney 및 grimace류 적이 다른 적을 공격합니다.",
         },
     },
     [enums.Trinkets.AMETHYST_SHARD] = {
@@ -926,6 +1129,12 @@ descriptions.Trinkets = {
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Jasnowidzenia po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Jasnowidzenia po zniszczeniu",
         },
+        ko_kr = {
+            name = "예지의 자수정",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Clairvoyance를 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Clairvoyance를 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Clairvoyance를 추가로 드랍합니다.",
+        },
     },
     [enums.Trinkets.RUBY_SHARD] = {
         en_us = {
@@ -951,6 +1160,12 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Pożogi po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Pożogi po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Pożogi po zniszczeniu",
+        },
+        ko_kr = {
+            name = "지옥의 루비",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Inferno를 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Inferno를 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Inferno를 추가로 드랍합니다.",
         },
     },
     [enums.Trinkets.TOURMALINE_SHARD] = {
@@ -978,6 +1193,12 @@ descriptions.Trinkets = {
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Elektryczności po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Elektryczności po zniszczeniu",
         },
+        ko_kr = {
+            name = "전도의 전기석",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Conductivity를 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Conductivity를 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Conductivity를 추가로 드랍합니다.",
+        },
     },
     [enums.Trinkets.EMERALD_SHARD] = {
         en_us = {
@@ -1003,6 +1224,12 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Przyrody po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Przyrody po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Przyrody po zniszczeniu",
+        },
+        ko_kr = {
+            name = "드루이드 에메랄드",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Druidity를 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Druidity를 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Druidity를 추가로 드랍합니다.",
         },
     },
     [enums.Trinkets.PERIDOT_SHARD] = {
@@ -1030,6 +1257,12 @@ descriptions.Trinkets = {
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Skażenia po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Skażenia po zniszczeniu",
         },
+        ko_kr = {
+            name = "맹독의 페리도트",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Virulence를 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Virulence를 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Virulence를 추가로 드랍합니다.",
+        },
     },
     [enums.Trinkets.GARNET_SHARD] = {
         en_us = {
@@ -1055,6 +1288,12 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Świętokradztwa po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Świętokradztwa po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Świętokradztwa po zniszczeniu",
+        },
+        ko_kr = {
+            name = "천벌의 가넷",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Sacrilege를 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Sacrilege를 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Sacrilege를 추가로 드랍합니다.",
         },
     },
     [enums.Trinkets.ONYX_SHARD] = {
@@ -1082,6 +1321,12 @@ descriptions.Trinkets = {
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Zaświatów po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Zaświatów po zniszczeniu",
         },
+        ko_kr = {
+            name = "망령의 오닉스",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Revenance를 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Revenance를 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Revenance를 추가로 드랍합니다.",
+        },
     },
     [enums.Trinkets.DIAMOND_SHARD] = {
         en_us = {
@@ -1107,6 +1352,12 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Zbawienia po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Zbawienia po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Zbawienia po zniszczeniu",
+        },
+        ko_kr = {
+            name = "신성의 금강석",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Salvation을 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Salvation을 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Salvation을 추가로 드랍합니다.",
         },
     },
     [enums.Trinkets.SAPPHIRE_SHARD] = {
@@ -1134,6 +1385,12 @@ descriptions.Trinkets = {
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Potopu po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Potopu po zniszczeniu",
         },
+        ko_kr = {
+            name = "흐름의 사파이어",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Deluge를 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Deluge를 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Deluge를 추가로 드랍합니다.",
+        },
     },
     [enums.Trinkets.AMBER_SHARD] = {
         en_us = {
@@ -1159,6 +1416,12 @@ descriptions.Trinkets = {
             description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Podziemi po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Podziemi po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Podziemi po zniszczeniu",
+        },
+        ko_kr = {
+            name = "땅의 호박",
+            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Terrastrium을 추가로 드랍합니다.",
+            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Terrastrium을 추가로 드랍합니다.",
+            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Terrastrium을 추가로 드랍합니다.",
         },
     },
 }
@@ -1190,6 +1453,12 @@ descriptions.Cards = {
             "#{{BlendedHeart}} Owocowe serduszka leczą pół czerwonego serca albo pół serca dusz jeżeli czerwone zdrowie jest już pełne",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Podwaja ilość upuszczanych owocowych serduszek"
         },
+        ko_kr = {
+            name = "드루이드의 스피릿",
+            description = "그 방의 적을 12초동안 속박하며 속박한 적 처치 시 0.5초 뒤 사라지는 과일을 드랍합니다." ..
+            "#{{BlendedHeart}} 과일 획득 시 빨간하트 및 소울하트 반칸을 회복합니다.",
+            lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 과일 드랍량 2배"
+        },
     },
     [enums.Orbs.ELECTRIC] = {
         en_us = {
@@ -1215,6 +1484,12 @@ descriptions.Cards = {
             description = "Wypuszcza fale elektryczności we wszystkie strony, raniąc pobliskich przeciwników" ..
             "#{{ArcadeRoom}} Wywołuje zwarcie w trafionych maszynach, co uruchamia je kilkakrotnie a następnie niszczy je",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Podwaja zasięg i czas trwania elektryczności"
+        },
+        ko_kr = {
+            name = "전도의 스피릿",
+            description = "캐릭터 주변의 적에게 3의 지속 피해를 주는 전류 발산합니다." ..
+            "#{{ArcadeRoom}} 주변의 슬롯머신 보상을 여러번 드랍하며 폭파시킵니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 전류 발산 지속시간 및 거리 2배"
         },
     },
     [enums.Orbs.FIRE] = {
@@ -1242,6 +1517,11 @@ descriptions.Cards = {
             "#{{BossRoom}} Ignoruję redukcję obrażeń bossów",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Sztrzela dwa razy więcej płomieni"
         },
+        ko_kr = {
+            name = "지옥의 스피릿",
+            description = "{{Burning}} 공격방향으로 적에게 5의 방어 무시 피해를 주는 불꽃을 여러 발 발사합니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 불꽃 발사 수 2배"
+        },
     },
     [enums.Orbs.PSYCHIC] = {
         en_us = {
@@ -1263,6 +1543,11 @@ descriptions.Cards = {
             name = "Widmo Jasnowidzenia",
             description = "{{Timer}} Tworzy aurę, która spowalnia przeciwników i odbija pociski przez 100 sekund",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Podwaja czas trwania i przyspiesza odbijanie"
+        },
+        ko_kr = {
+            name = "예지의 스피릿",
+            description = "{{Timer}} 그 방에서 100초동안 주변의 적을 느리게 하거나 동시에 1개의 탄환을 반사하는 오라를 발동합니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 오라 지속시간 2배 + 탄환 반사 속도 증가"
         },
     },
     [enums.Orbs.UNDEAD] = {
@@ -1289,6 +1574,12 @@ descriptions.Cards = {
             description = "Przywołuje 4-6 nagrobków w pokoju, które tworzą przyjazne szkielety i duchy po zniszczeniu" ..
             "#Zapełnia dziury w pokoju kościami",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Podwaja ilość przywołanych nagrobków"
+        },
+        ko_kr = {
+            name = "망령의 스피릿",
+            description = "파괴 시 아군 Bony 및 유령을 소환하는 묘비를 4~6개 생성합니다." ..
+            "#그 방의 구덩이를 전부 메웁니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 묘비 생성 수 2배"
         },
     },
     [enums.Orbs.POISON] = {
@@ -1324,6 +1615,14 @@ descriptions.Cards = {
             "#{{RottenHeart}} Zamienia upuszczone serca i żebraków w ich zgniłe wersje {{RottenBeggar}}",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Podwaja rozmiar chmury"
         },
+        ko_kr = {
+            name = "맹독의 스피릿",
+            description = "{{Throwable}} 공격방향으로 독가스를 남기는 독성 구체를 던집니다." ..
+            "#{{Slow}} 독가스 주변의 적은 지속 둔화 피해를 받으며;" ..
+            "#독가스가 피해를 준만큼 범위가 더 커집니다." ..
+            "#{{RottenHeart}} 독가스에 있는 빨간하트 및 거지를 썩게 만듭니다. {{RottenBeggar}}",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 독가스 범위 2배"
+        },
     },
     [enums.Orbs.HOLY] = {
         en_us = {
@@ -1349,6 +1648,12 @@ descriptions.Cards = {
             description = "#Wystrzeliwuje 8 promieni światła we wszystkie kierunki" ..
             "#Promienie niszczą kamienie i otwierają przejścia do sekretnych pokoji",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Wystrzeliwuje 16 promieni"
+        },
+        ko_kr = {
+            name = "신성의 스피릿",
+            description = "#8방향으로 적에게 최대 87의 피해를 주는 빔을 발사합니다." ..
+            "#빔이 장애물 파괴 및 비밀방 문을 열수 있습니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 빔을 16방향으로 발사"
         },
     },
     [enums.Orbs.UNHOLY] = {
@@ -1376,6 +1681,12 @@ descriptions.Cards = {
             "#Zabici żebracy upuszczają więcej pickupów",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. "Ścina przeciwników drugi raz"
         },
+        ko_kr = {
+            name = "천벌의 스피릿",
+            description = "#{{BleedingOut}} 그 방의 적에게 5의 출혈+유황 피해를 주며;" ..
+            "#그 방의 거지를 즉사, 더 많은 픽업을 드랍합니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 적에게 주는 피해량 2배"
+        },
     },
     [enums.Orbs.WATER] = {
         en_us = {
@@ -1397,6 +1708,11 @@ descriptions.Cards = {
             name = "Widmo Potopu",
             description = "#{{Timer}} Przez 8 sekund, łzy Izaaka są zastąpione kontrolowanym strumieniem wody, który przyciąga przeciwników i pickupy",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Podwaja czas trwania"
+        },
+        ko_kr = {
+            name = "흐름의 스피릿",
+            description = "#{{Timer}} 8초동안 적 및 픽업을 끌어들이는 물의 레이저를 발동 및 조종합니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 레이저 발동 시간 2배"
         },
     },
     [enums.Orbs.ROCK] = {
@@ -1420,6 +1736,11 @@ descriptions.Cards = {
             description = "#Przywołuje 4-5 kammiennych stalagmitów, które przebijają przeciwników i niszczą metalowe blocki",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Przywołuje 8-10 stalagmitów"
         },
+        ko_kr = {
+            name = "땅의 스피릿",
+            description = "#그 방에서 적을 즉사 및 강철 블록을 파괴하는 종유석을 4~5개 소환합니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 소환 종유석이 8~10개로 증가"
+        },
     },
     [enums.Orbs.RANDOM] = {
         en_us = {
@@ -1442,6 +1763,11 @@ descriptions.Cards = {
             description = "#Wywołuje efekt losowej kuli dusz",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Podwaja wywołany efekt"
         },
+        ko_kr = {
+            name = "혼돈의 스피릿",
+            description = "#사용 시 랜덤 스피릿 효과를 발동합니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 발동 효과 2배"
+        },
     },
     [enums.Cards.TATTERED_PAGE] = {
         en_us = {
@@ -1459,6 +1785,10 @@ descriptions.Cards = {
         pl = {
             name = "Porwana Strona",
             description = "#Przywołuje losowego ognika z {{Collectible712}} Lemegetonu"
+        },
+        ko_kr = {
+            name = "낡은 페이지",
+            description = "{{Collectible712}} 사용 시 랜덤 Lemegeton 아이템 불꽃을 소환합니다."
         },
     }
 }
@@ -1499,6 +1829,14 @@ descriptions.Entities = {
             "#{{Burning}} Случайный элементальный огонёк" ..
             "#{{Trinket}} Случайная стеклянная или драгоценная безделушка" ..
             "#{{Rune}} Случайный камень души"
+        },
+        ko_kr = {
+            name = "영혼 가마", -- Kiln
+            description = "{{HalfSoulHeart}} 소울하트 반칸을 소모하여 아래 중 하나를 드랍:" ..
+            "#{{SpiritOrb}} 스피릿" ..
+            "#{{Burning}} 원소 불꽃" ..
+            "#{{Trinket}} 보석류 장신구" ..
+            "#{{Rune}} 영혼석"
         },
     }
 }
