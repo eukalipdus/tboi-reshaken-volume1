@@ -1,0 +1,786 @@
+<?xml version="1.0" ?>
+<rooms>
+	<room variant="0" name="[REC] - nilo - christmas! just 11 months away!" type="1" subtype="0" shape="6" width="26" height="7" difficulty="10" weight="0.5">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="19" y="-1"/>
+		<door exists="True" x="19" y="7"/>
+		<door exists="True" x="26" y="3"/>
+		<spawn x="8" y="1">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="1">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="1">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="1">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="1">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="13" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="17" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="5">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="13" y="5">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="5">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="17" y="5">
+			<entity type="1490" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="1" name="[REC] - nilo - just 1 of them" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="6" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="2" name="[REC] - nilo - just the 2 of us" type="1" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="4" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="3" name="[REC] - nilo - CHAD loves glasshead juice" type="1" subtype="0" shape="10" width="26" height="14" difficulty="5" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="13" y="3"/>
+		<door exists="False" x="19" y="6"/>
+		<door exists="True" x="19" y="14"/>
+		<door exists="True" x="26" y="10"/>
+		<spawn x="9" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="10">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="10">
+			<entity type="28" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="10">
+			<entity type="28" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="10">
+			<entity type="28" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="10">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="12">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="4" name="[REC] - nilo - evil satan" type="1" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="False" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="13" y="3"/>
+		<door exists="True" x="13" y="10"/>
+		<spawn x="5" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="5">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="8">
+			<entity type="411" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="5" name="[REC] - nilo - star boy" type="1" subtype="0" shape="6" width="26" height="7" difficulty="10" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="19" y="-1"/>
+		<door exists="True" x="19" y="7"/>
+		<door exists="True" x="26" y="3"/>
+		<spawn x="1" y="1">
+			<entity type="46" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="24" y="1">
+			<entity type="46" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="3">
+			<entity type="46" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="6" name="[REC] - nilo - undertale" type="1" subtype="0" shape="1" width="13" height="7" difficulty="15" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="False" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="2" y="1">
+			<entity type="100" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="1">
+			<entity type="100" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="5" variant="20" subtype="3411" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="7" name="[REC] - nilo - hexagonicles" type="1" subtype="0" shape="10" width="26" height="14" difficulty="5" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="13" y="3"/>
+		<door exists="True" x="19" y="6"/>
+		<door exists="True" x="19" y="14"/>
+		<door exists="True" x="26" y="10"/>
+		<spawn x="1" y="1">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="1">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="72" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="6">
+			<entity type="72" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="6">
+			<entity type="72" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="7">
+			<entity type="71" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="8">
+			<entity type="72" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="8">
+			<entity type="72" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="24" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="10">
+			<entity type="72" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="12">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="24" y="12">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="8" name="[REC] - nilo - irony" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="0" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="0" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="5">
+			<entity type="47" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="6">
+			<entity type="47" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="9" name="[REC] - nilo - trolling ensues" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="6" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="52" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="52" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="10" name="[REC] - nilo - chicago" type="1" subtype="0" shape="6" width="26" height="7" difficulty="10" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="19" y="-1"/>
+		<door exists="True" x="19" y="7"/>
+		<door exists="True" x="26" y="3"/>
+		<spawn x="9" y="0">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="0">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="0">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="1">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="1">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="2">
+			<entity type="49" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="4">
+			<entity type="46" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="17" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="17" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="11" name="[REC] - nilo - wrong chess" type="1" subtype="0" shape="8" width="26" height="14" difficulty="5" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="19" y="-1"/>
+		<door exists="True" x="19" y="14"/>
+		<door exists="True" x="26" y="3"/>
+		<door exists="True" x="26" y="10"/>
+		<spawn x="7" y="3">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="3">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="17" y="3">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="4">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="13" y="4">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="18" y="4">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="6">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="6">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="7">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="7">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="8">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="8">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="9">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="13" y="9">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="18" y="9">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="10">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="10">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="10">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="10">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="17" y="10">
+			<entity type="51" variant="30" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="12" name="[REC] - nilo - right chess" type="1" subtype="0" shape="8" width="26" height="14" difficulty="10" weight="0.5">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="19" y="-1"/>
+		<door exists="True" x="19" y="14"/>
+		<door exists="True" x="26" y="3"/>
+		<door exists="True" x="26" y="10"/>
+		<spawn x="9" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="13" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="17" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="17" y="4">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="11">
+			<entity type="43" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="14" y="11">
+			<entity type="43" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="13" name="[REC] - nilo - barbecue" type="1" subtype="0" shape="4" width="13" height="14" difficulty="5" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="13" y="3"/>
+		<door exists="True" x="13" y="10"/>
+		<spawn x="0" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="7">
+			<entity type="263" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="14" name="[REC] - nilo - old room" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="2" y="0">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="2">
+			<entity type="85" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="2">
+			<entity type="85" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="3">
+			<entity type="85" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="85" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="100" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="3">
+			<entity type="85" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="85" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="4">
+			<entity type="85" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="4">
+			<entity type="85" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="15" name="[REC] - nilo - binded to milkshake" type="1" subtype="0" shape="4" width="13" height="14" difficulty="15" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="13" y="3"/>
+		<door exists="True" x="13" y="10"/>
+		<spawn x="4" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="5">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="5">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="5">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="5">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="5">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="7">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="7">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="7">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="4" y="9">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="9">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="10">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="10">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="10">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="16" name="[REC] - nilo - oh deer" type="1" subtype="0" shape="1" width="13" height="7" difficulty="10" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="5" y="2">
+			<entity type="237" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="2">
+			<entity type="237" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="4">
+			<entity type="237" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="7" y="4">
+			<entity type="237" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="17" name="[REC] - nilo - shakin' obituary" type="1" subtype="0" shape="6" width="26" height="7" difficulty="10" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="19" y="-1"/>
+		<door exists="True" x="19" y="7"/>
+		<door exists="True" x="26" y="3"/>
+		<spawn x="10" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="3">
+			<entity type="403" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="13" y="3">
+			<entity type="227" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="3">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="15" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="18" name="[REC] - nilo - deleterious drinkmen" type="1" subtype="0" shape="10" width="26" height="14" difficulty="10" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="13" y="3"/>
+		<door exists="True" x="19" y="6"/>
+		<door exists="True" x="19" y="14"/>
+		<door exists="True" x="26" y="10"/>
+		<spawn x="2" y="1">
+			<entity type="265" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="8" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="16" y="7">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="21" y="9">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="5" y="10">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="10">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="23" y="12">
+			<entity type="265" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="19" name="[REC] - nilo - drinkmean" type="1" subtype="0" shape="1" width="13" height="7" difficulty="5" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="2" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="0">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="1">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="0" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="12" y="6">
+			<entity type="962" variant="1" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="20" name="[REC] - nilo - fin" type="1" subtype="0" shape="4" width="13" height="14" difficulty="15" weight="1.0">
+		<door exists="False" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="False" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="False" x="13" y="3"/>
+		<door exists="True" x="13" y="10"/>
+		<spawn x="1" y="1">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="1">
+			<entity type="69" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="1">
+			<entity type="69" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="1">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="2">
+			<entity type="69" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="2">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="3">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="5">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="5">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="6">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="1" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="11" y="8">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+</rooms>
