@@ -92,6 +92,43 @@ local function SplitAnimationSingle(collectible, colorOne, colorTwo)
     end, SHATTERED_SOLID_FRAMES)
 end
 
+local function HandleBreakfast(collectible, shatteredCollectible, quality)
+    for i = 0, 1 do
+        local splitQuality = quality - 1
+        local spawnPosition = GetSplitPosition(i, 1, 2, collectible)
+
+        if splitQuality == 0 then
+            ---@diagnostic disable-next-line: param-type-mismatch
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
+            
+        elseif splitQuality == 1 then
+             ---@diagnostic disable-next-line: param-type-mismatch
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
+            
+        elseif splitQuality == 2 then
+            ---@diagnostic disable-next-line: param-type-mismatch
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
+            
+        elseif splitQuality == 3 then
+            ---@diagnostic disable-next-line: param-type-mismatch
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
+            
+        elseif splitQuality == 4 then
+            ---@diagnostic disable-next-line: param-type-mismatch
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.GOLDEN_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
+        end
+
+        if i == 0 then
+            shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
+        elseif i == 1 then
+            if collectible.OptionsPickupIndex > 0 then
+                shatteredCollectible.OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
+            end
+        end
+        PlaySplitAnimation(i, shatteredCollectible)
+    end
+end
+
 ---Actives the prismatic dice effect of giving you two items for one, of lower quality
 ---@param player EntityPlayer
 ---@param collectible EntityPickup
@@ -100,7 +137,6 @@ end
 function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality)
     local newCollectibleID
     local shatteredCollectible
-    local willBreakfast = true
     local itemPool = Game():GetItemPool()
     if quality - 1 >= 0 then
         for i = 0, 1 do
@@ -129,12 +165,12 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
                 or newCollectibleID == CollectibleType.COLLECTIBLE_NULL
                 or (newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST
                     and (itemPool ~= ItemPoolType.POOL_BOSS and itemPool ~= ItemPoolType.POOL_GREED_BOSS))
-                or counter == TIMES_CAN_FAIL then goto failsafe
+                or counter == TIMES_CAN_FAIL then
+                    HandleBreakfast(collectible, shatteredCollectible, quality)
+                    break
                 end
 
             until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == quality - 1
-
-            willBreakfast = false
 
             local spawnPosition = GetSplitPosition(i, 0, 1, collectible)
 
@@ -177,7 +213,6 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
             end
         end
     else
-        willBreakfast = false
         local rng = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE)
         local seed = rng:GetSeed()
         local roomType = Game():GetRoom():GetType()
@@ -186,45 +221,6 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
             pickupAmount = originalQuality - (quality - 1)
         end
         utility:RecycleCollectible(collectible.Position, player, roomType, itemPool, seed, rng, false, pickupAmount)
-    end
-    ::failsafe::
-    if willBreakfast == true then
-        for i = 0, 1 do
-            local splitQuality = quality - 1
-            local spawnPosition = GetSplitPosition(i, 1, 2, collectible)
-
-            if splitQuality == 0 then
-                ---@diagnostic disable-next-line: param-type-mismatch
-                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-            elseif splitQuality == 1 then
-                ---@diagnostic disable-next-line: param-type-mismatch
-                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-            elseif splitQuality == 2 then
-                ---@diagnostic disable-next-line: param-type-mismatch
-                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-            elseif splitQuality == 3 then
-                ---@diagnostic disable-next-line: param-type-mismatch
-                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-            elseif splitQuality == 4 then
-                ---@diagnostic disable-next-line: param-type-mismatch
-                shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.GOLDEN_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            end
-
-            if i == 0 then
-                shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
-            elseif i == 1 then
-                if collectible.OptionsPickupIndex > 0 then
-                    shatteredCollectible.OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
-                end
-            end
-
-            PlaySplitAnimation(i, shatteredCollectible)
-
-        end
     end
 end
 
