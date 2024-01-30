@@ -49,6 +49,8 @@ if FiendFolio then
     )
 end
 
+--- Returns the proper chance to convert a penny
+---@return number
 local function GetConversionChance()
     if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B)
     or (Epiphany and MilkshakeVol1.utility:AnyPlayerIsCharacter(Epiphany.PlayerType.KEEPER))
