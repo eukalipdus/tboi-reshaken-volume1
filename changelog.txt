@@ -58,3 +58,16 @@ Changes
 	-La chancla now prevents damage from delirium mom stomp
 	-Witch doctor mask hud pills display in co-op now
 	-Wine heads can walk into the player now
+
+================================================
+    v1.0.5 - TBD
+================================================
+Changes
+	-Reduce Pot of Gold's penny conversion chance to 35% (originally was 40%)
+	-Rework the Crystal and Acid Rainbow Pennies to activate on pickup instead of giving you a card or pill
+
+Fixes
+	-Remove debug print
+
+Misc
+	-Add API function, MilkshakeVol1.API:TryReplacePickupWithRainbowPenny
