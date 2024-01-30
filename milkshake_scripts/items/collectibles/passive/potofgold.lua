@@ -49,6 +49,16 @@ if FiendFolio then
     )
 end
 
+local function GetConversionChance()
+    if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B)
+    or (Epiphany and MilkshakeVol1.utility:AnyPlayerIsCharacter(Epiphany.PlayerType.KEEPER))
+    then
+        return (PENNY_CONVERT_CHANCE / 2)
+    else
+        return PENNY_CONVERT_CHANCE
+    end
+end
+
 ---Adds a special penny to the pool of pennies spawnable by Pot Of Gold
 ---@param variant PickupVariant
 ---@param subtype integer
@@ -127,7 +137,7 @@ end
 
 ---@param pickup EntityPickup
 function potOfGold:OnPickupUpdate(pickup)
-    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, PENNY_CONVERT_CHANCE)
+    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, GetConversionChance())
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_UPDATE,
@@ -136,7 +146,7 @@ MilkshakeVol1:AddCallback(
 
 
 function potOfGold:PostPickupInit(pickup)
-    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, PENNY_CONVERT_CHANCE)
+    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, GetConversionChance())
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_INIT,
