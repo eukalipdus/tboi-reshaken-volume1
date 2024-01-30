@@ -1,7 +1,7 @@
 local potOfGold = {}
 
 local enums = MilkshakeVol1.enums
-local PENNY_CONVERT_CHANCE = 0.40
+local PENNY_CONVERT_CHANCE = 0.35
 
 ---@class RainbowPenny
 ---@field variant PickupVariant
