@@ -105,10 +105,9 @@ end
 local function CanPickupBeReplaced(pickup, convertChance, isNatural)
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local roll = rng:RandomFloat()
-    if pickup.Variant == PickupVariant.PICKUP_KEY
-    or pickup.Variant == PickupVariant.PICKUP_BOMB
+    if (not isNatural and (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB))
     or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType))
-    or not isNatural and (pickup.Variant == PickupVariant.PICKUP_COIN and (pickup.SubType == CoinSubType.COIN_NICKEL or pickup.SubType == CoinSubType.COIN_DIME)) then
+    or (not isNatural and (pickup.Variant == PickupVariant.PICKUP_COIN and (pickup.SubType == CoinSubType.COIN_NICKEL or pickup.SubType == CoinSubType.COIN_DIME))) then
         return true
     end
     return false
