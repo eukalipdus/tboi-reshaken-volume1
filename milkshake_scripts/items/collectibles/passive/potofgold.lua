@@ -90,12 +90,13 @@ function MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
 end
 
 ---@param pickup EntityPickup
-local function CanPickupBeReplaced(pickup, convertChance)
+local function CanPickupBeReplaced(pickup, convertChance, isNatural)
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local roll = rng:RandomFloat()
     if pickup.Variant == PickupVariant.PICKUP_KEY
     or pickup.Variant == PickupVariant.PICKUP_BOMB
-    or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType)) then
+    or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType))
+    or not isNatural and (pickup.Variant == PickupVariant.PICKUP_COIN and (pickup.SubType == CoinSubType.COIN_NICKEL or pickup.SubType == CoinSubType.COIN_DIME)) then
         return true
     end
     return false
@@ -104,7 +105,7 @@ end
 
 ---@param pickup EntityPickup
 function MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, isNatural)
-    if not CanPickupBeReplaced(pickup, chance)
+    if not CanPickupBeReplaced(pickup, chance, isNatural)
     or (not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD)
         and not isNatural)
     then return end
