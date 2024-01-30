@@ -3,6 +3,12 @@ local enums = MilkshakeVol1.enums
 local REPLACE_CHANCE = 0.01
 local KEEPERB_REPLACE_CHANCE = 0
 
+local positivePillCollectibles = {
+    CollectibleType.COLLECTIBLE_PHD,
+    CollectibleType.COLLECTIBLE_LUCKY_FOOT,
+    CollectibleType.COLLECTIBLE_VIRGO
+}
+
 local function GetSpawnCount(player)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE) then return 1 end
     local rng = player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE)
@@ -10,9 +16,28 @@ local function GetSpawnCount(player)
 end
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
-    local randomPill = Game():GetItemPool():GetPill(Random() + 1)
-    player:AddPill(randomPill)
-    SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
+    local randomPill = PillEffect.PILLEFFECT_BAD_GAS
+    repeat
+        randomPill = Game():GetItemPool():GetPill(Random() + 1)
+    until randomPill ~= PillEffect.PILLEFFECT_TELEPILLS
+
+    local realPhd = false
+    local falsePhd = player:HasCollectible(CollectibleType.COLLECTIBLE_FALSE_PHD)
+
+    for _, collectible in ipairs(positivePillCollectibles) do
+        if player:HasCollectible(collectible) then
+            realPhd = true
+        end
+    end
+
+    if falsePhd and not realPhd then
+        randomPill = TSIL.Pills.GetFalsePHDPillEffect(randomPill)
+    elseif realPhd and not falsePhd then
+        randomPill = TSIL.Pills.GetPHDPillEffect(randomPill)
+    end
+    player:UsePill(randomPill, PillColor.PILL_NULL)
+    --player:AddPill(randomPill)
+    --SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 end, 0.15)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BLESSED_PENNY, function (_, player)
