@@ -93,7 +93,6 @@ end
 local function CanPickupBeReplaced(pickup, convertChance)
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local roll = rng:RandomFloat()
-    print(roll)
     if pickup.Variant == PickupVariant.PICKUP_KEY
     or pickup.Variant == PickupVariant.PICKUP_BOMB
     or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType)) then
