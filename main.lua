@@ -1,9 +1,9 @@
 MilkshakeVol1 = RegisterMod("Milkshake Vol1!", 1)
 
-require("loi_milkshake.TSIL").Init("loi_milkshake")
-
 include("milkshake_scripts.enums")
 include("milkshake_scripts.utility")
+
+require("loi_milkshake.TSIL").Init("loi_milkshake")
 MilkshakeVol1.API = {}
 
 if StageAPI then
@@ -139,6 +139,10 @@ include("milkshake_scripts.room_decorations.sacrilege")
 --Misc
 include("milkshake_scripts.shardrockoverlay")
 include("milkshake_scripts.nonreplaceabletnt")
+
+-- Check if Spirit Sage can be played
+MilkshakeVol1.AchievementChecker = include("milkshake_scripts.achievementchecker")
+MilkshakeVol1.AchievementChecker:AddTrackerTrinket(MilkshakeVol1.enums.Trinkets.TRACK_ALT_PATH_UNLOCK)
 
 --- Shader crash fix
 --- Credits to Cucco

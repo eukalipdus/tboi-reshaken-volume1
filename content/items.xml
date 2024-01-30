@@ -13,14 +13,14 @@
     <familiar id="14" name="Spirit Bum" description="He wants your soul." gfx="collectibles_spiritbum.png" tags="offensive summonable" quality="0" />
     <familiar id="16" name="Celestial Mirror" description="It's impossible to outrun your own reflection." cache="damage" gfx="InnerReflection.png" tags="monstermanual offensive summonable" quality="1" />
     <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" devilprice="2" tags="offensive summonable" quality="3" />
-    <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="1" gfx="spoiled_breakfast.png" tags="food nocantrip noeden" quality="0" />
-    <passive id="19" name="Balanced Breakfast" description="HP + luck up" maxhearts="1" hearts="2" cache="luck" soulhearts="1" gfx="balanced_breakfast.png" tags="food nocantrip noeden" quality="2" />
-    <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="1" hearts="24" cache="damage luck firedelay" soulhearts="2" gfx="tasty_breakfast.png" tags="food nocantrip noeden" quality="3" />
+    <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="2" gfx="spoiled_breakfast.png" tags="food nocantrip noeden" quality="0" />
+    <passive id="19" name="Balanced Breakfast" description="HP + luck up" maxhearts="2" hearts="2" cache="luck" soulhearts="2" gfx="balanced_breakfast.png" tags="food nocantrip noeden" quality="2" />
+    <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="2" hearts="24" cache="damage luck firedelay" soulhearts="2" gfx="tasty_breakfast.png" tags="food nocantrip noeden" quality="3" />
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" tags="lazarussharedglobal nocantrip offensive summonable" quality="3" gfx="potofgold.png"/>
     <familiar id="22" name="Glass Idol" description="Shattering Resurgance" tags="summonable" quality="2" gfx="glass_idol.png"/>
-    <active id="23" name="Leviticus" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
+    <active id="23" name="Leviticus" description="Purify your Soul" tags="book offensive nogreed" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
     <passive id="24" name="Battery Acid" description="PH down" tags="battery nocantrip offensive summonable" quality="3" gfx="collectibles_batteryacid.png"/>
-    <familiar id="25" name="Doggy Bag" description="Clean up after yourself" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive poop summonable" quality="1"/>
+    <familiar id="25" name="Doggy Bag" description="Clean up after yourself" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive nolostbr poop summonable" quality="1"/>
     <passive id="26" name="Dad's Mitt" description="Curve Ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2"/>
     <familiar id="27" name="Lil Bishop" description="Shielding friend" gfx="collectibles_lilbishop.png" tags="monstermanual summonable" quality="2"/>
     <passive id="28" name="Rainbow Fragment" description="Taste the rainbow" cache="luck" gfx="collectibles_rainbowfragment.png" tags="offensive summonable" quality="1"/>
@@ -35,7 +35,7 @@
     <trinket name="Druidic Emerald" description="Hidden druidic power..." gfx="trinkets_druidicemerald.png" tags="nogreed"/>
     <trinket name="Torrential Sapphire" description="Hidden torrential power..." gfx="trinkets_torrentialsapphire.png" tags="nogreed"/>
     <trinket name="Revenant Onyx" description="Hidden revenant power..." gfx="trinkets_revenantonyx.png" tags="nogreed"/>
-    <trinket name="Virulent Peridot" description="Hidden virulent power..." gfx="trinkets_peridotsgem.png" tags="nogreed"/>
+    <trinket name="Virulent Peridot" description="Hidden virulent power..." gfx="trinkets_virulentperidot.png" tags="nogreed"/>
     <trinket name="Sacred Jacinth" description="Hidden sacred power..." gfx="trinkets_sacredjacinth.png" tags="nogreed"/>
     <trinket name="Sacrilegious Garnet" description="Hidden sacrilegious power..." gfx="trinkets_sacrilegiousgarnet.png" tags="nogreed"/>
     <trinket name="Tungsten Cube" description="It's heavy" gfx="trinkets_tungstencube.png" cache="speed" />
@@ -53,6 +53,8 @@
     <passive id="505" name="BRENDA CUSTOM POISON WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
+
+    <trinket name="TRACK ALT PATH UNLOCK" description="Report this to the Milkshake devs" achievement="407" tags="nogreed"/>
 
     <active id="23" name="Leviticus " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0"/>
     <active id="23" name="Leviticus  " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0"/>

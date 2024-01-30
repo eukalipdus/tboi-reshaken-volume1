@@ -1,7 +1,7 @@
 local potOfGold = {}
 
 local enums = MilkshakeVol1.enums
-local PENNY_CONVERT_CHANCE = 0.5
+local PENNY_CONVERT_CHANCE = 0.35
 
 ---@class RainbowPenny
 ---@field variant PickupVariant
@@ -27,17 +27,17 @@ local weightedRainbowPennies = { -- Workaround to the other table making items a
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BLOODY_PENNY, weight = 0.45},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BLESSED_PENNY, weight = 0.15},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.COUNTERFEIT_PENNY, weight = 0.25},
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.ACID_PENNY, weight = 0.15},
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CRYSTAL_PENNY, weight = 0.15},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.ACID_PENNY, weight = 0.10},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CRYSTAL_PENNY, weight = 0.10},
 }
 
 if FiendFolio then
     table.insert(weightedRainbowPennies,
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.SHARP_PENNY, weight = 0.10}
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.SHARP_PENNY, weight = 0.15}
     )
 
     table.insert(weightedRainbowPennies,
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.EGG_PENNY, weight = 0.15}
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.EGG_PENNY, weight = 0.10}
     )
 
     table.insert(weightedRainbowPennies,
@@ -47,6 +47,18 @@ if FiendFolio then
         table.insert(weightedRainbowPennies,
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.MOLTEN_PENNY, weight = 0.05}
     )
+end
+
+--- Returns the proper chance to convert a penny
+---@return number
+local function GetConversionChance()
+    if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B)
+    or (Epiphany and MilkshakeVol1.utility:AnyPlayerIsCharacter(Epiphany.PlayerType.KEEPER))
+    then
+        return (PENNY_CONVERT_CHANCE / 2)
+    else
+        return PENNY_CONVERT_CHANCE
+    end
 end
 
 ---Adds a special penny to the pool of pennies spawnable by Pot Of Gold
@@ -90,12 +102,12 @@ function MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
 end
 
 ---@param pickup EntityPickup
-local function CanPickupBeReplaced(pickup)
+local function CanPickupBeReplaced(pickup, convertChance, isNatural)
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local roll = rng:RandomFloat()
-    if pickup.Variant == PickupVariant.PICKUP_KEY
-    or pickup.Variant == PickupVariant.PICKUP_BOMB
-    or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= PENNY_CONVERT_CHANCE and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType)) then
+    if (not isNatural and (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB))
+    or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType))
+    or (not isNatural and (pickup.Variant == PickupVariant.PICKUP_COIN and (pickup.SubType == CoinSubType.COIN_NICKEL or pickup.SubType == CoinSubType.COIN_DIME))) then
         return true
     end
     return false
@@ -103,9 +115,11 @@ end
 
 
 ---@param pickup EntityPickup
-local function TryReplacePickupWithRainbowPenny(pickup)
-    if not CanPickupBeReplaced(pickup) then return end
-    if not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD) then return end
+function MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, isNatural)
+    if not CanPickupBeReplaced(pickup, chance, isNatural)
+    or (not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD)
+        and not isNatural)
+    then return end
 
     --local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local rng = pickup:GetDropRNG()
@@ -124,7 +138,7 @@ end
 
 ---@param pickup EntityPickup
 function potOfGold:OnPickupUpdate(pickup)
-    TryReplacePickupWithRainbowPenny(pickup)
+    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, GetConversionChance())
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_UPDATE,
@@ -133,7 +147,7 @@ MilkshakeVol1:AddCallback(
 
 
 function potOfGold:PostPickupInit(pickup)
-    TryReplacePickupWithRainbowPenny(pickup)
+    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, GetConversionChance())
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_INIT,

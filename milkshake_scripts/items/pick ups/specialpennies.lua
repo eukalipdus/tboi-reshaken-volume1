@@ -1,7 +1,21 @@
 local enums = MilkshakeVol1.enums
 
-local REPLACE_CHANCE = 2
-local KEEPERB_REPLACE_CHANCE = 1
+local REPLACE_CHANCE = 0.01
+local KEEPERB_REPLACE_CHANCE = 0
+
+local positivePillCollectibles = {
+    CollectibleType.COLLECTIBLE_PHD,
+    CollectibleType.COLLECTIBLE_LUCKY_FOOT,
+    CollectibleType.COLLECTIBLE_VIRGO
+}
+
+local NUMBER_TAROT_CARDS = 22
+local cardList = {}
+for itr = 0, NUMBER_TAROT_CARDS do
+    if itr ~= Card.CARD_EMPEROR then
+        table.insert(cardList, itr)
+    end
+end
 
 local function GetSpawnCount(player)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE) then return 1 end
@@ -10,9 +24,28 @@ local function GetSpawnCount(player)
 end
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
-    local randomPill = Game():GetItemPool():GetPill(Random() + 1)
-    player:AddPill(randomPill)
-    SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
+    local randomPill = PillEffect.PILLEFFECT_BAD_GAS
+    repeat
+        randomPill = Game():GetItemPool():GetPill(Random() + 1)
+    until randomPill ~= PillEffect.PILLEFFECT_TELEPILLS
+
+    local realPhd = false
+    local falsePhd = player:HasCollectible(CollectibleType.COLLECTIBLE_FALSE_PHD)
+
+    for _, collectible in ipairs(positivePillCollectibles) do
+        if player:HasCollectible(collectible) then
+            realPhd = true
+        end
+    end
+
+    if falsePhd and not realPhd then
+        randomPill = TSIL.Pills.GetFalsePHDPillEffect(randomPill)
+    elseif realPhd and not falsePhd then
+        randomPill = TSIL.Pills.GetPHDPillEffect(randomPill)
+    end
+    player:UsePill(randomPill, PillColor.PILL_NULL)
+    --player:AddPill(randomPill)
+    --SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 end, 0.15)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BLESSED_PENNY, function (_, player)
@@ -49,9 +82,13 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.COUNTER
 end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CRYSTAL_PENNY, function (_, player)
-    local randomCard = Game():GetItemPool():GetCard(Random() + 1, true, true, false)
-    player:AddCard(randomCard)
-    SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
+    local rng = TSIL.RNG.NewRNG()
+    local randomCard = TSIL.Random.GetRandomElementsFromTable(cardList, 1, rng)
+    player:UseCard(randomCard[1])
+    --local cardName = Isaac.GetItemConfig():GetCard(randomCard).Name
+    --Game():GetHUD():ShowItemText(cardName, "")
+    --player:AddCard(randomCard)
+    --SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
 end, 0.15)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CURSED_PENNY, function (_, player)
@@ -79,21 +116,13 @@ end)
 function MilkshakeVol1:PostPickupInit(pickup)
     if (Game().Difficulty == Difficulty.DIFFICULTY_GREED or Game().Difficulty == Difficulty.DIFFICULTY_GREEDIER)
     or MilkshakeVol1.utility:DidEntityExist()
-    or pickup.Variant ~= PickupVariant.PICKUP_COIN
-    or pickup.SubType ~= CoinSubType.COIN_PENNY then return end
+    or (Epiphany and MilkshakeVol1.utility:AnyPlayerIsCharacter(Epiphany.PlayerType.KEEPER)) then return end
     local chance
-    if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B) then chance = KEEPERB_REPLACE_CHANCE else chance = REPLACE_CHANCE end
-    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
-    local roll = TSIL.Random.GetRandomInt(1, 100, rng)
-    if roll <= chance then
-        local rainbowCoinType = MilkshakeVol1.API:GetRainbowPenny(rng)
-        pickup:Morph(
-            pickup.Type,
-            rainbowCoinType.variant,
-            rainbowCoinType.subtype,
-            true,
-            false
-        )
+    if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B) then
+        chance = KEEPERB_REPLACE_CHANCE
+    else
+        chance = REPLACE_CHANCE
     end
+    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, true)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, MilkshakeVol1.PostPickupInit)

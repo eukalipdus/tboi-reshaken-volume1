@@ -203,3 +203,14 @@ MilkshakeVol1.API:HasAnyUnbrokenMirror(EntityPlayer player)
     Tells if a player has an unbroken mirror, and returns it.
 
 --------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(EntityPickup pickup, number chance, boolean isNatural)
+* Defined in line 119 of milkshake_scripts/items/collectibles/familiars/potofgold.lua
+
+    Tells if a given pickup can be converted to a Rainbow Penny.
+
+    EntityPickup pickup - The pickup to check
+    number chance - The odds out of 100
+    boolean isNatural - false if conversion is due to Pot of Gold, true if not
+
+--------------------------------------------------------------------------------------------------------------------------------------

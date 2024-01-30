@@ -155,7 +155,7 @@ local function DelayedStalagmiteDamage(stalagmite)
             if enemy.Type ~= enums.Enemies.STALAGMITE
             and (enemy.Position):Distance(stalagmite.Position) <= KILL_RADIUS then
                 if enemy:IsBoss() then
-                    enemy:TakeDamage(BASE_BOSS_DAMAGE + (BASE_BOSS_DAMAGE * utility:GetCurrentChapter()), 0, EntityRef(stalagmite), 0)
+                    enemy:TakeDamage(BASE_BOSS_DAMAGE + (BASE_BOSS_DAMAGE * utility:GetCurrentChapter()), DamageFlag.DAMAGE_CRUSH, EntityRef(stalagmite), 0)
                 else
                     enemy:Kill()
                     TSIL.Utils.Functions.RunInFramesTemporary(function () -- For globins, gapers, etc

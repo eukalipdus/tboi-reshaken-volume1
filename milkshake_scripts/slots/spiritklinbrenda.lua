@@ -245,9 +245,27 @@ end, function(slot, player, position)
 end)
 
 
+local function RemoveRecentRewards(pos)
+    for _, pickup in ipairs(Isaac.FindByType(EntityType.ENTITY_PICKUP)) do
+        if pickup.FrameCount <= 1 and pickup.SpawnerType == EntityType.ENTITY_NULL
+        and pickup.Position:DistanceSquared(pos) <= 400 then
+            pickup:Remove()
+        end
+    end
+    for _, trollbomb in ipairs(Isaac.FindByType(EntityType.ENTITY_BOMB)) do
+        if (trollbomb.Variant == BombVariant.BOMB_TROLL or trollbomb.Variant == BombVariant.BOMB_SUPERTROLL)
+        and trollbomb.FrameCount <= 1 and trollbomb.SpawnerType == EntityType.ENTITY_NULL
+        and trollbomb.Position:DistanceSquared(pos) <= 400 then
+            trollbomb:Remove()
+        end
+    end
+end
+
+
 ---@param slot Entity
 local function OnSlotBroken(slot)
-    local pickups = TSIL.EntitySpecific.GetPickups()
+    RemoveRecentRewards(slot.Position)
+    --[[local pickups = TSIL.EntitySpecific.GetPickups()
     local slotPosLastFrame = slot.Position - slot.Velocity
     local rewardPickups = TSIL.Utils.Tables.Filter(pickups, function(_, pickup)
         local pickupPosLastFrame = pickup.Position - pickup.Velocity
@@ -257,6 +275,7 @@ local function OnSlotBroken(slot)
     for _, pickup in ipairs(rewardPickups) do
         pickup:Remove()
     end
+    --]]
 
     local newSlot = TSIL.EntitySpecific.SpawnSlot(
         enums.Slots.SPIRIT_KLIN_BRENDA,
@@ -282,17 +301,15 @@ local function OnSlotBroken(slot)
 
     local oldSprite = slot:GetSprite()
     local newSprite = newSlot:GetSprite()
-
-    if oldSprite:IsPlaying("Angry") then
-        newSprite:Play("Angry")
+    if oldSprite:IsPlaying("Inactive") then
+        newSprite:Play("Death")
     else
         newSprite:Play("Death")
-
         if oldSprite:IsPlaying("Death") then
-            newSprite:SetFrame(oldSprite:GetFrame())
+            newSprite:Play("Inactive")
+            --newSprite:SetFrame(oldSprite:GetFrame())
         end
     end
-
     slot:Remove()
 end
 
@@ -378,7 +395,7 @@ function SpiritKlin:OnBrendaUpdate(brenda)
     end
 
     if sprite:IsFinished("Death") then
-        sprite:Play("Angry")
+        sprite:Play("Inactive")
     end
 end
 
