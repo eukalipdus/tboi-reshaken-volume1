@@ -26,6 +26,7 @@ local TEAR_COPYING_FAMILIARS = TSIL.Utils.Tables.ConstructDictionaryFromTable({
     FamiliarVariant.CAINS_OTHER_EYE,
     FamiliarVariant.FATES_REWARD,
     FamiliarVariant.TWISTED_BABY,
+    FamiliarVariant.BLOOD_BABY
 })
 
 ---@param projectile Entity
