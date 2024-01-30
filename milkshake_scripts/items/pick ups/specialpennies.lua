@@ -9,6 +9,14 @@ local positivePillCollectibles = {
     CollectibleType.COLLECTIBLE_VIRGO
 }
 
+local NUMBER_TAROT_CARDS = 22
+local cardList = {}
+for itr = 0, NUMBER_TAROT_CARDS do
+    if itr ~= Card.CARD_EMPEROR then
+        table.insert(cardList, itr)
+    end
+end
+
 local function GetSpawnCount(player)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE) then return 1 end
     local rng = player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE)
@@ -74,13 +82,11 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.COUNTER
 end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CRYSTAL_PENNY, function (_, player)
-    local randomCard = Card.CARD_FOOL
-    repeat
-        randomCard = Game():GetItemPool():GetCard(Random() + 1, true, true, false)
-    until randomCard ~= Card.CARD_EMPEROR
+    local rng = TSIL.RNG.NewRNG()
+    local randomCard = TSIL.Random.GetRandomElementsFromTable(cardList, 1, rng)
+    player:UseCard(randomCard[1])
     --local cardName = Isaac.GetItemConfig():GetCard(randomCard).Name
     --Game():GetHUD():ShowItemText(cardName, "")
-    player:UseCard(randomCard)
     --player:AddCard(randomCard)
     --SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
 end, 0.15)
