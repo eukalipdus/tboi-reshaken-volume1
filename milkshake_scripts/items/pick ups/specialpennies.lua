@@ -49,9 +49,15 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.COUNTER
 end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CRYSTAL_PENNY, function (_, player)
-    local randomCard = Game():GetItemPool():GetCard(Random() + 1, true, true, false)
-    player:AddCard(randomCard)
-    SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
+    local randomCard = Card.CARD_FOOL
+    repeat
+        randomCard = Game():GetItemPool():GetCard(Random() + 1, true, true, false)
+    until randomCard ~= Card.CARD_EMPEROR
+    --local cardName = Isaac.GetItemConfig():GetCard(randomCard).Name
+    --Game():GetHUD():ShowItemText(cardName, "")
+    player:UseCard(randomCard)
+    --player:AddCard(randomCard)
+    --SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
 end, 0.15)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CURSED_PENNY, function (_, player)
