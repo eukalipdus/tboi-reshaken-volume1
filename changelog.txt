@@ -60,20 +60,19 @@ Changes
 	-Wine heads can walk into the player now
 
 ================================================
-    v1.0.5 - TBD
+    v1.0.5 - January 30th, 2024
 ================================================
 Changes
 	-Reduce Pot of Gold's penny conversion chance to 35% (originally was 40%)
+	-Reduced passive rainbow penny spawn rate to 1% (originally was 2%)
 	-Pot o gold rainbow pennies will always replace nickels and dimes
-	-Reworked Crystal and Acid Rainbow Pennies to activate the card or pill effect instantly on pickup instead of giving you them 
+	-Reworked Crystal and Acid Rainbow Pennies to activate the card or pill effect instantly on pickup instead of giving them to you 
 	-Passive rainbow pennies can replace any coin type besides lucky and golden now, instead of only 1 cent pennies
 	-tKeeper and trKeeper can no longer find passive rainbow Pennies
-	-tKeeper and trKeeper turn pennies into rainbow pennies half as often when they have pot o gold
+	-tKeeper and trKeeper turn coins into rainbow pennies half as often when they have pot o gold
 	-Made a couple of special room layouts less overpowered
 	-Updated golden shovel and pot o gold sprites
 	-Spirit of Terra can now break through the shell's armor
-
-
 
 Fixes
 	-Removed debug print
@@ -85,3 +84,9 @@ Additions
 	-Add API function, MilkshakeVol1.API:TryReplacePickupWithRainbowPenny
 	-Added Korean translations
 	-Added a lot of community made rooms!
+
+================================================
+    v1.0.6 - January 31st, 2024
+================================================
+Additions
+	-Added Chinese translations!

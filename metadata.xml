@@ -24,7 +24,7 @@ and loads more surprises!
 [h1] Compatibility! [/h1]
 Alongside all this, we also feature full compatibility with Fiend Folio and several other MODs, creating exciting interactions with them:
 [list]
-[*] External Item Descriptions in English, Spanish, Russian, Polish, and Korean!
+[*] External Item Descriptions in English, Spanish, Chinese, Russian, Polish, and Korean!
 [*] DSS setting menu accessible by pressing C
 [*] Fiend Folio (Full shattered orb enemy elemental support, exclusive FF based rainbow pennies, custom beggar and slot machine interactions with spirit orbs, a full slew of spirit pills matching FF pill colors, and FF items available in custom item pools)
 [*] Epiphany (Support for epiphany beggar and slot machine interactions)
@@ -76,11 +76,11 @@ catinsurance - Code Support and Video Editing
 skykittenpuppy - Logo Design and Emotional Support
 
 And a special thanks to
-punchyufo, clownylun, toyrapple, neibusha, Luna, mysterykar, scooperman, ZRWilson, siphernil, Bagley, Split, spoop, zer0pointtime, Stlkngne, bazus, Harvester, Erfly, wofsauge, TheTurtleMelon, and kohashiwakaba for their various helpful contributions!
+punchyufo, clownylun, toyrapple, neibusha, Luna, mysterykar, scooperman, ZRWilson, siphernil, Bagley, Split, spoop, zer0pointtime, Stlkngne, bazus, Harvester, Erfly, wofsauge, TheTurtleMelon, youduckboom, and kohashiwakaba for their various helpful contributions!
 
 
 Find any bugs? Send them in the Bugs discussion thread below along with a snippet of your log or screenshot of the error. And as always, stay shakey!</description>
-    <version>1.1</version>
+    <version>1.2</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>
