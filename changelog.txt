@@ -52,7 +52,7 @@ Changes
 	-Reduced egg, crystal, and acid penny spawn chance by 5%
 	
 ================================================
-    v1.0.4 - January 15th, 2024
+    v1.0.5 - January 15th, 2024
 ================================================
 	-Fixed EID not working when you had Epiphany installed
 	-La chancla now prevents damage from delirium mom stomp
@@ -60,7 +60,7 @@ Changes
 	-Wine heads can walk into the player now
 
 ================================================
-    v1.0.5 - January 30th, 2024
+    v1.0.6 - January 30th, 2024
 ================================================
 Changes
 	-Reduce Pot of Gold's penny conversion chance to 35% (originally was 40%)
@@ -86,7 +86,7 @@ Additions
 	-Added a lot of community made rooms!
 
 ================================================
-    v1.0.6 - January 31st, 2024
+    v1.0.7 - January 31st, 2024
 ================================================
 Additions
 	-Added Chinese translations!
