@@ -108,6 +108,7 @@ function worldOfLight:PostPlayerInit(player)
         player:AddCollectible(enums.Collectibles.PRISMATIC_DICE)
         local prismaticDiceCharges = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.PRISMATIC_DICE).MaxCharges
         player:SetActiveCharge(prismaticDiceCharges)
+        player:AddTrinket(TrinketType.TRINKET_PAY_TO_WIN)
         TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer", INTERVAL_SECONDS, TSIL.Enums.VariablePersistenceMode.RESET_RUN)
     end
 end
@@ -132,8 +133,11 @@ function worldOfLight:PostPEffectUpdate(player)
 
         timer = timer - 1
         if timer <= 0 then
-            TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer", INTERVAL_SECONDS)
             RemoveRandomCollectible(player)
+            local inventory = TSIL.Players.GetPlayerInventory(player, TSIL.Enums.InventoryType.COLLECTIBLE)
+
+            local adjustedTimer = math.floor(math.max(INTERVAL_SECONDS - (#inventory - 4)*2, 1))
+            TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "WoLItemRemovalTimer", adjustedTimer)
             --for _, curPlayer in ipairs(TSIL.Players.GetPlayers()) do
             --    RemoveRandomCollectible(curPlayer)
             --end
