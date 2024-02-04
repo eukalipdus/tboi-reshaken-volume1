@@ -90,3 +90,13 @@ Additions
 ================================================
 Additions
 	-Added Chinese translations!
+
+================================================
+    v1.0.8 - February 3rd, 2024
+================================================
+Changes
+	-Revamped World of Light challenge, now you start with pay to win, but lose items faster the more you have
+	
+Fixes
+	-Tweaked some unfair community rooms
+	-Fixed some spirit orb special rooms not spawning
