@@ -137,6 +137,7 @@ end
 function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality)
     local newCollectibleID
     local shatteredCollectible
+    local didBreakfast = false
     local itemPool = Game():GetItemPool()
     if quality - 1 >= 0 then
         for i = 0, 1 do
@@ -167,7 +168,7 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
                     and (itemPool ~= ItemPoolType.POOL_BOSS and itemPool ~= ItemPoolType.POOL_GREED_BOSS))
                 or counter == TIMES_CAN_FAIL then
                     HandleBreakfast(collectible, shatteredCollectible, quality)
-                    break
+                    return
                 end
 
             until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == quality - 1
