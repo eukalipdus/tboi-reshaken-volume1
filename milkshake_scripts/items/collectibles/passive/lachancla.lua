@@ -11,8 +11,15 @@ local stompers = {
 }
 
 local function IsStomper(entity)
+    local effect, variant
+    if entity.Entity:ToEffect() then
+        effect = entity.Entity:ToEffect()
+        variant = effect.Variant
+    end
+
     if (entity.Type == EntityType.ENTITY_MOM and entity.Variant == MOM_FOOT_VARIANT)
-    or TSIL.Utils.Tables.IsIn(stompers, entity.Type) then
+    or TSIL.Utils.Tables.IsIn(stompers, entity.Type)
+    or (effect and variant == EffectVariant.MOM_FOOT_STOMP) then
         return true
     else
         return false
@@ -30,19 +37,13 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, laChancla.EvaluateCache)
 
 function laChancla:EntityTakeDmg(entity, _, flags, source)
-    local effect, variant
     local player = entity:ToPlayer()
 
     if player:HasCollectible(enums.Collectibles.LA_CHANCLA) then
         if not source or not source.Entity then return end
-        if source.Entity:ToEffect() then -- High priestess card
-            effect = source.Entity:ToEffect()
-            variant = effect.Variant
-        end
 
         if (TSIL.Utils.Flags.HasFlags(DamageFlag.DAMAGE_CRUSH, flags))
-        and (effect and variant == EffectVariant.MOM_FOOT_STOMP
-            or IsStomper(source))
+        and IsStomper(source)
         then
             return false
         end
