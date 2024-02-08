@@ -51,7 +51,27 @@
 			<entity type="214" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="3" name="[RE] - steve2552 - H" type="11" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0">
+	<room variant="3" name="[RE] - steve2552 - stop hating on key bum and the wiz or i make more rooms like this" type="11" subtype="0" shape="4" width="13" height="14" difficulty="5" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="-1" y="10"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="14"/>
+		<door exists="True" x="13" y="3"/>
+		<door exists="True" x="13" y="10"/>
+		<spawn x="10" y="1">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="3">
+			<entity type="302" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="10">
+			<entity type="302" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="12">
+			<entity type="962" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
+	<room variant="4" name="[RE] - steve2552 - H" type="11" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="-1" y="10"/>
 		<door exists="True" x="6" y="-1"/>
@@ -71,7 +91,7 @@
 			<entity type="220" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="4" name="[RE] - steve2552 - HH" type="11" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0">
+	<room variant="5" name="[RE] - steve2552 - HH" type="11" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="-1" y="10"/>
 		<door exists="True" x="6" y="-1"/>
@@ -91,7 +111,7 @@
 			<entity type="208" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="5" name="[RE] - steve2552 - HHH" type="11" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0">
+	<room variant="6" name="[RE] - steve2552 - HHH" type="11" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="-1" y="10"/>
 		<door exists="True" x="6" y="-1"/>
@@ -117,7 +137,7 @@
 			<entity type="18" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="6" name="[RE] - steve2552 - bossH" type="5" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0">
+	<room variant="7" name="[RE] - steve2552 - bossH" type="5" subtype="0" shape="4" width="13" height="14" difficulty="10" weight="1.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="-1" y="10"/>
 		<door exists="True" x="6" y="-1"/>
