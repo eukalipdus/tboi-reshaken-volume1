@@ -115,7 +115,7 @@ function FirecrackerRose:OnTearInit(tear)
 
     local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
     local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
-    local luckThershold = TSIL.Utils.Math.Clamp(0.10 + 0.02 * player.Luck, 0.5, 0.30)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.10 + 0.02 * player.Luck, 0.05, 0.3)
     if randomChance >= luckThershold then return end
 
     MakeTearFirecrackerSeed(tear)
@@ -312,7 +312,7 @@ function CheckForFirecrackerLaser(npc, source)
     local rng = player:GetCollectibleRNG(enums.Collectibles.FIRECRACKER_ROSE)
 
     local randomChance = TSIL.Random.GetRandomFloat(0, 1, rng)
-    local luckThershold = TSIL.Utils.Math.Clamp(0.10 + 0.02 * player.Luck, 0.5, 0.30)
+    local luckThershold = TSIL.Utils.Math.Clamp(0.10 + 0.02 * player.Luck, 0.05, 0.3)
 
     if randomChance >= luckThershold then return end
 
