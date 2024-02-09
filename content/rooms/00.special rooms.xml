@@ -2113,6 +2113,9 @@
 		<spawn x="1" y="0">
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
+		<spawn x="2" y="0">
+			<entity type="618" variant="127" subtype="0" weight="1.0"/>
+		</spawn>
 		<spawn x="11" y="0">
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>

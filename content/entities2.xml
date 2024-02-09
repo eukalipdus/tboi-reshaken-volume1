@@ -321,4 +321,10 @@
     <entity name="Sacrilege Pentagram Overlay" id="1000" anm2path="backdrop/spirit rooms/unholy/sacrilege_pentagram.anm2">
     </entity>
 
+    <entity name="Fire Screen Overlay" id="1000" anm2path="backdrop/spirit rooms/fire/fire_overlay.anm2">
+    </entity>
+
+    <entity name="Fire Particle Overlay" id="1000" anm2path="backdrop/spirit rooms/fire/fire_particle.anm2">
+    </entity>
+
 </entities>
