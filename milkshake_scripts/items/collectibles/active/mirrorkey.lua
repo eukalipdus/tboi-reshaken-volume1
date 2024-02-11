@@ -908,7 +908,14 @@ MilkshakeVol1:AddCallback(
 
 
 if EID then
-    EID:AddPriorityCallback(ModCallbacks.MC_GET_SHADER_PARAMS, math.mininteger, function (_, shaderParams)
+    local renderCallback = ModCallbacks.MC_POST_RENDER
+    if REPENTOGON then
+        -- with repentogon they use the hud render callback to render on top of the vanilla hud
+        renderCallback = ModCallbacks.MC_HUD_RENDER
+    end
+    EID:RemoveCallback(renderCallback, EID.OnRender)
+
+    EID:AddPriorityCallback(ModCallbacks.MC_GET_SHADER_PARAMS, -100, function (_, shaderParams)
         if shaderParams == "Milkshake Mirror Room" then
             local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
                 MilkshakeVol1,
@@ -921,7 +928,7 @@ if EID then
         end
     end)
 
-    EID:AddCallback(ModCallbacks.MC_POST_RENDER, function()
+    EID:AddCallback(renderCallback, function()
         local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
             MilkshakeVol1,
             "EnableMirrorShader"
@@ -931,6 +938,4 @@ if EID then
             EID.OnRender()
         end
     end)
-
-    EID:RemoveCallback(ModCallbacks.MC_POST_RENDER, EID.OnRender) -- remove original render function
 end

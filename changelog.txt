@@ -100,3 +100,23 @@ Changes
 Fixes
 	-Tweaked some unfair community rooms
 	-Fixed some spirit orb special rooms not spawning
+
+================================================
+	v1.0.9 - February 8th, 2024
+================================================
+Fixes
+	-Fixed La Chancla preventing damage from Mom's eyes and hands
+	-Fixed Prismatic Dice spawning extra items when used on a choice pedestal if the player had breakfasted
+
+Additions
+	-Added some more rooms
+
+================================================
+	v1.0.10 - February 11th, 2024
+================================================
+Fixes
+	-Fixed EID toggle not working
+	-Fixed Firecracker Flower seed shootingchance being incorrect
+
+Additions
+	-Added custom backdrops for Infenro and Sacrilege themed special rooms

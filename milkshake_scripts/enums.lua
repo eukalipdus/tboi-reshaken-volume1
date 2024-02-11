@@ -102,7 +102,10 @@ enums.Effects = {
     SACRILEGE_WALL = Isaac.GetEntityVariantByName("Sacrilege Wall Overlay"),
     SACRILEGE_FLOOR = Isaac.GetEntityVariantByName("Sacrilege Floor Overlay"),
     SACRILEGE_OVERLAY = Isaac.GetEntityVariantByName("Sacrilege Screen Overlay"),
-    SACRILEGE_PENTAGRAM = Isaac.GetEntityVariantByName("Sacrilege Pentagram Overlay")
+    SACRILEGE_PENTAGRAM = Isaac.GetEntityVariantByName("Sacrilege Pentagram Overlay"),
+
+    FIRE_OVERLAY = Isaac.GetEntityVariantByName("Fire Screen Overlay"),
+    FIRE_PARTICLE = Isaac.GetEntityVariantByName("Fire Particle Overlay")
 }
 
 enums.Enemies = {
