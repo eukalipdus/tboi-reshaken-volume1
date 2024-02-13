@@ -120,3 +120,10 @@ Fixes
 
 Additions
 	-Added custom backdrops for Infenro and Sacrilege themed special rooms
+
+================================================
+	v1.0.11 - February 13th, 2024
+================================================
+Removals
+	-Removed Milkshake from boss pool
+	-Removed food tag from spoiled, balanced, and hearty breakfasts, meaning they can't appear with binge eater anymore

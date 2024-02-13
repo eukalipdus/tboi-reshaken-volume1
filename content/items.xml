@@ -13,9 +13,9 @@
     <familiar id="14" name="Spirit Bum" description="He wants your soul." gfx="collectibles_spiritbum.png" tags="offensive summonable" quality="0" />
     <familiar id="16" name="Celestial Mirror" description="It's impossible to outrun your own reflection." cache="damage" gfx="InnerReflection.png" tags="monstermanual offensive summonable" quality="1" />
     <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" devilprice="2" tags="offensive summonable" quality="3" />
-    <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="2" gfx="spoiled_breakfast.png" tags="food nocantrip noeden" quality="0" />
-    <passive id="19" name="Balanced Breakfast" description="HP + luck up" maxhearts="2" hearts="2" cache="luck" soulhearts="2" gfx="balanced_breakfast.png" tags="food nocantrip noeden" quality="2" />
-    <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="2" hearts="24" cache="damage luck firedelay" soulhearts="2" gfx="tasty_breakfast.png" tags="food nocantrip noeden" quality="3" />
+    <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="2" gfx="spoiled_breakfast.png" tags="nocantrip noeden" quality="0" />
+    <passive id="19" name="Balanced Breakfast" description="HP + luck up" maxhearts="2" hearts="2" cache="luck" soulhearts="2" gfx="balanced_breakfast.png" tags="nocantrip noeden" quality="2" />
+    <passive id="20" name="Hearty Breakfast" description="HP + DMG + luck up!" maxhearts="2" hearts="24" cache="damage luck firedelay" soulhearts="2" gfx="tasty_breakfast.png" tags="nocantrip noeden" quality="3" />
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" tags="lazarussharedglobal nocantrip offensive summonable" quality="3" gfx="potofgold.png"/>
     <familiar id="22" name="Glass Idol" description="Shattering Resurgance" tags="summonable" quality="2" gfx="glass_idol.png"/>
     <active id="23" name="Leviticus" description="Purify your Soul" tags="book offensive nogreed" quality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
