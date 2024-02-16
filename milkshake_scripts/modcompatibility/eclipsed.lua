@@ -19,7 +19,6 @@ MilkshakeVol1:AddModCompatibility("EclipsedMod", function ()
         },
         [Isaac.GetEntityVariantByName("Delirious Bum")] = {
             Config = {Count = 1, MinCount = 0},
-            --idk where is half black and immoral harts
             {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Object"),},
             {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Bomb"),},
             {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = Isaac.GetCardIdByName("Dell_Key"),},
