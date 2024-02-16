@@ -424,7 +424,12 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
         if soulCharge >= 1 then
             player:AddSoulCharge(-1)
         else
-            player:AddSoulHearts(-1)
+            local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
+            if allotherhearts > 0 and soulHearts == 1 then
+                player:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE|DamageFlag.DAMAGE_NO_MODIFIERS|DamageFlag.DAMAGE_NO_PENALTIES, nil, 1)
+            else
+                player:AddSoulHearts(-1)
+            end
         end
     end
 
