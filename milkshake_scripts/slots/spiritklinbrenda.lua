@@ -415,16 +415,16 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
 
     local soulCharge = player:GetSoulCharge()
     local soulHearts = player:GetSoulHearts()
+    local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
     local isGhost = player:GetEffects():HasNullEffect(NullItemID.ID_LOST_CURSE)
     if soulCharge < 1 and soulHearts < 1 then return end
-    if isGhost and soulHearts == 1 and soulCharge < 1 then return end --ghost chars checking
+    if isGhost and soulHearts == 1 and soulCharge < 1 and allotherhearts == 0 then return end --ghost chars checking
     if (player:GetPlayerType() == PlayerType.PLAYER_THELOST or player:GetPlayerType() == PlayerType.PLAYER_THELOST_B) then
         player:SetActiveCharge(player:GetActiveCharge() + player:GetBatteryCharge() - 1)
     else
         if soulCharge >= 1 then
             player:AddSoulCharge(-1)
         else
-            local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
             if allotherhearts > 0 and soulHearts == 1 then
                 player:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE|DamageFlag.DAMAGE_NO_MODIFIERS|DamageFlag.DAMAGE_NO_PENALTIES, nil, 1)
             else
