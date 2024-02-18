@@ -140,6 +140,7 @@ include("milkshake_scripts.room_decorations.fire")
 
 --Misc
 include("milkshake_scripts.shardrockoverlay")
+include("milkshake_scripts.brgascloud")
 include("milkshake_scripts.nonreplaceabletnt")
 
 -- Check if Spirit Sage can be played
