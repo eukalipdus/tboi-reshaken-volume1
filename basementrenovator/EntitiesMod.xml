@@ -39,7 +39,7 @@
     <entity Name="Beer Head"                ID="962" Variant="2"  Subtype="0"   Group="Enemies"     Image="MilkshakeSprites/BeerHead.png"     Kind="Milkshake!" />
     <entity Name="Wine Head"                ID="962" Variant="3"  Subtype="0"   Group="Enemies"     Image="MilkshakeSprites/WineHead.png"     Kind="Milkshake!" />
 
-    <entity Name="Gas Cloud"                ID="618" Variant="123" Subtype="0"  Group="Effects"     Image="MilkshakeSprites/TNT.png" Kind="Milkshake!" Metadata="1"/>
+    <entity Name="Gas Cloud"                ID="618" Variant="123" Subtype="0"  Group="Effects"     Image="MilkshakeSprites/poisoncloud.png" Kind="Milkshake!" Metadata="1"/>
     <entity Name="Non Replaceable TNT"      ID="618" Variant="125" Subtype="0"  Group="Grid"        Image="MilkshakeSprites/TNT.png" Kind="Milkshake!" Metadata="1"/>
 
     <entity Name="Sacrilege Backdrop"       ID="618" Variant="126"  Subtype="0" Group="Backdrop"    Image="MilkshakeSprites/Sacrilege_BG.png"       Kind="Milkshake!" Metadata="1" />
