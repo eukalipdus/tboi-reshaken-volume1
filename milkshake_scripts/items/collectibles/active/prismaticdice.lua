@@ -115,6 +115,10 @@ local function HandleBreakfast(collectible, shatteredCollectible, quality)
             
         elseif splitQuality == 4 then
             ---@diagnostic disable-next-line: param-type-mismatch
+            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BINGE_EATER, spawnPosition, Vector(0,0), nil):ToPickup()
+
+        elseif splitQuality == 5 then
+            ---@diagnostic disable-next-line: param-type-mismatch
             shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.GOLDEN_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
         end
 

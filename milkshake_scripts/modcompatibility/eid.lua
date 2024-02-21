@@ -6,6 +6,11 @@ local descriptions = include("milkshake_scripts.modcompatibility.descriptions")
 EID:setModIndicatorName("Isaac Reshaken! ")
 EID:setModIndicatorIcon("Collectible" .. enums.Collectibles.MILKSHAKE)
 
+local sprite = Sprite()
+sprite:Load("gfx/ui/qualityIcons.anm2", true)
+EID:addIcon("Quality5", "quality5", 1, 9, 9, 1, 5, sprite)
+EID:addIcon("Quality6", "quality6", 1, 9, 9, 1, 5, sprite)
+
 local ICON_ANM2_PER_CARD = {
     [enums.Orbs.ELECTRIC] = "gfx/spirit_conductivity.anm2",
     [enums.Orbs.FIRE] = "gfx/spirit_inferno.anm2",
