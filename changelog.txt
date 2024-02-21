@@ -122,8 +122,16 @@ Additions
 	-Added custom backdrops for Infenro and Sacrilege themed special rooms
 
 ================================================
-	v1.0.11 - February 13th, 2024
+	v1.0.11 - February 20th, 2024
 ================================================
+Fixes
+	-Fixed crash that would happen when entering certain Corpse rooms
+	-Fixed Spirit Kiln being infinitely playable by tainted unbidden from Eclipsed and other lost-like characters
+
+Additions
+	-Added new curse rooms
+
 Removals
 	-Removed Milkshake from boss pool
 	-Removed food tag from spoiled, balanced, and hearty breakfasts, meaning they can't appear with binge eater anymore
+	-Nerfed fire and electric super secret rooms + lowered fire angel super secret room weight
