@@ -94,7 +94,6 @@ end
 
 local function HandleBreakfast(collectible, shatteredCollectible, quality, count)
     for i = 0, count do
-        print(count)
         local splitQuality = quality - 1
         local spawnPosition = GetSplitPosition(i, 1, 2, collectible)
 
