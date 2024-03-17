@@ -1714,6 +1714,32 @@ descriptions.Trinkets = {
             "{{SpiritOrb}}隐藏石头在被摧毁时有75%的几率掉落 {{ColorGold}}2-3 {{CR}}巨岩之灵",
         },
     },
+    [enums.Trinkets.TRACK_ALT_PATH_UNLOCK] = {
+        en_us = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+        spa = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+        ru = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+        pl = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+        ko_kr = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+        zh_cn = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+    },
 }
 
 --CARD DESCRIPTIONS
