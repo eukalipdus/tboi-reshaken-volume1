@@ -64,7 +64,7 @@ enums.Trinkets = {
     SAPPHIRE_SHARD = Isaac.GetTrinketIdByName("Torrential Sapphire"),
     AMBER_SHARD = Isaac.GetTrinketIdByName("Terrestrial Amber"),
 
-    TRACK_ALT_PATH_UNLOCK = Isaac.GetTrinketIdByName("TRACK ALT PATH UNLOCK")
+    TRACK_ALT_PATH_UNLOCK = Isaac.GetTrinketIdByName("Alt Path Unlock Tracker")
 }
 
 enums.Cards = {

@@ -1,5 +1,5 @@
 <challenges version="1">
-    <challenge name="[Reshaken] Spirit Sage" endstage="8" secretpath="true" playertype="36" roomfilter="4" />
+    <challenge name="[Reshaken] Spirit Sage" endstage="8" secretpath="true" playertype="36" roomfilter="4" achievements="407,489"/>
     <challenge name="[Reshaken] Isaac Clicker" endstage="8" playertype="0" canshoot="false" roomfilter="4" difficulty="2" />
     <challenge name="[Reshaken] World of Light" endstage="11" altpath="true" megasatan="true" playertype="0" />
 </challenges>
