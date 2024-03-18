@@ -1732,8 +1732,8 @@ descriptions.Trinkets = {
             description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
         },
         ko_kr = {
-            name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+            name = "알트 루트 해금 여부 추적기",
+            description = "보스 처치 시 알트 루트로 향하는 문을 엽니다.",
         },
         zh_cn = {
             name = "Alt Path Unlock Tracker",
