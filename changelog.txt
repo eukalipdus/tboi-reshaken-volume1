@@ -11,6 +11,7 @@ Additions
 	-Implemented several sheol and scarred womb rooms
 	-Added sound for picking up poop with doggy bag
 
+
 ================================================
     v1.0.2 - January 9th, 2024
 ================================================
@@ -26,6 +27,7 @@ Additions
 Changes
 	-Changed leviticus' Library Expanded TBOAB effect to give holy card instead of crack the sky, activates crack the sky on duplicate copies instead
 
+
 ================================================
     v1.0.3 - January 12th, 2024
 ================================================
@@ -34,6 +36,7 @@ Fixes
 
 Additions
 	-Added missing Spanish EIDs
+
 
 ================================================
     v1.0.4 - January 14th, 2024
@@ -51,6 +54,7 @@ Changes
 	-Reduced pot of gold coin replacement rate to 40% fromm 50%
 	-Reduced egg, crystal, and acid penny spawn chance by 5%
 	
+
 ================================================
     v1.0.5 - January 15th, 2024
 ================================================
@@ -58,6 +62,7 @@ Changes
 	-La chancla now prevents damage from delirium mom stomp
 	-Witch doctor mask hud pills display in co-op now
 	-Wine heads can walk into the player now
+
 
 ================================================
     v1.0.6 - January 30th, 2024
@@ -85,11 +90,13 @@ Additions
 	-Added Korean translations
 	-Added a lot of community made rooms!
 
+
 ================================================
     v1.0.7 - January 31st, 2024
 ================================================
 Additions
 	-Added Chinese translations!
+
 
 ================================================
     v1.0.8 - February 3rd, 2024
@@ -101,6 +108,7 @@ Fixes
 	-Tweaked some unfair community rooms
 	-Fixed some spirit orb special rooms not spawning
 
+
 ================================================
 	v1.0.9 - February 8th, 2024
 ================================================
@@ -111,6 +119,7 @@ Fixes
 Additions
 	-Added some more rooms
 
+
 ================================================
 	v1.0.10 - February 11th, 2024
 ================================================
@@ -120,6 +129,7 @@ Fixes
 
 Additions
 	-Added custom backdrops for Infenro and Sacrilege themed special rooms
+
 
 ================================================
 	v1.0.11 - February 20th, 2024
@@ -135,3 +145,18 @@ Removals
 	-Removed Milkshake from boss pool
 	-Removed food tag from spoiled, balanced, and hearty breakfasts, meaning they can't appear with binge eater anymore
 	-Nerfed fire and electric super secret rooms + lowered fire angel super secret room weight
+
+
+================================================
+	v1.0.12 - March ?, 2024
+================================================
+Fixes
+	-Fixed prismatic dice not properly splitting quality 5 and quality 6 items
+	-Fixed prismatic dice spawning an extra breakfast when breakfasting
+	-Fixed new breakfast items not stacking
+	-Fixed Alt Path Unlock Tracker trinket showing up
+	-Fixed Spirit kiln not killing you at half a soul heart
+
+Additions
+	-Added quality 5 and 6 icons
+	-Added Alt Path Unlock Tracker trinket: Automatically opens the alt path door upon defeating the floor boss
