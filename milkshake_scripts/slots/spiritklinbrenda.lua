@@ -437,9 +437,8 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
     local soulHearts = player:GetSoulHearts()
     local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
 
-    if isLostForm(player) and not hasChargedSoulChargeItem(player) and soulCharge < 1 then return end
-    if soulCharge + soulHearts == 0 then return end
-
+    if isLostForm(player) and (not hasChargedSoulChargeItem(player)) and soulCharge < 1 then return end
+    if soulCharge + soulHearts == 0 and (not hasChargedSoulChargeItem(player)) then return end
     if isLostForm(player) then
         if soulCharge >= 1 then player:AddSoulCharge(-1)
         elseif hasChargedSoulChargeItem(player) then
