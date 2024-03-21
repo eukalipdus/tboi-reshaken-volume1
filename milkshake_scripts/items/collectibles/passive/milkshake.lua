@@ -2,7 +2,7 @@ local milkshake = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local PINK_TEAR_COLOR = Color(1, 0, 1, 1, 0.196, 0, 0)
+local PINK_TEAR_COLOR = Color(0.9725, 0.7137, 0.9921, 1, 0.4, 0.1, 0.2)
 local STAT_COUNTER_DURATION = 150
 local STAT_COUNTER_MOVEMENT_DURATION = 10
 local STAT_COUNTER_FADING_DURATION = 40
