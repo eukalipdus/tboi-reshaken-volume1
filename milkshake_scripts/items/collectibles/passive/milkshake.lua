@@ -20,12 +20,11 @@ TSIL.SaveManager.AddPersistentVariable(
 ---@param rng RNG
 ---@param itemNum integer
 local function GetStatMultiplier(rng, itemNum)
-    local baseMultiplier = TSIL.Random.GetRandomFloat(1.1, 1.5, rng)
+    local baseMultiplier = TSIL.Random.GetRandomInt(1, 5, rng)
+    baseMultiplier = baseMultiplier/10
     local totalMultiplier = 1
 
-    for _ = 1, itemNum, 1 do
-        totalMultiplier = totalMultiplier * baseMultiplier
-    end
+    totalMultiplier = totalMultiplier + itemNum * baseMultiplier
 
     return totalMultiplier
 end
