@@ -31,7 +31,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PE
         counter = counter + 1
         if counter == TIMES_CAN_FAIL then break end -- For the unluckiest person in the world
         randomPill = Game():GetItemPool():GetPill(Random() + 1)
-    until randomPill ~= PillEffect.PILLEFFECT_TELEPILLS
+    until randomPill ~= PillEffect.PILLEFFECT_TELEPILLS and randomPill < 2048
 
     local realPhd = false
     local falsePhd = player:HasCollectible(CollectibleType.COLLECTIBLE_FALSE_PHD)
@@ -47,6 +47,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PE
     elseif realPhd and not falsePhd then
         randomPill = TSIL.Pills.GetPHDPillEffect(randomPill)
     end
+
     player:UsePill(randomPill, PillColor.PILL_NULL)
     --player:AddPill(randomPill)
     --SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
