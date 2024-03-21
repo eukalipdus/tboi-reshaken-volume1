@@ -2,7 +2,7 @@ local milkshake = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local PINK_TEAR_COLOR = Color(1, 0, 1, 1, 0.196, 0, 0)
+local PINK_TEAR_COLOR = Color(0.9725, 0.7137, 0.9921, 1, 0.4, 0.1, 0.2)
 local STAT_COUNTER_DURATION = 150
 local STAT_COUNTER_MOVEMENT_DURATION = 10
 local STAT_COUNTER_FADING_DURATION = 40
@@ -22,12 +22,11 @@ TSIL.SaveManager.AddPersistentVariable(
 ---@param rng RNG
 ---@param itemNum integer
 function MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max)
-    local baseMultiplier = TSIL.Random.GetRandomFloat(min, max, rng)
+    local baseMultiplier = TSIL.Random.GetRandomInt(min, max, rng)
+    baseMultiplier = baseMultiplier/10
     local totalMultiplier = 1
 
-    for _ = 1, itemNum, 1 do
-        totalMultiplier = totalMultiplier * baseMultiplier
-    end
+    totalMultiplier = totalMultiplier + itemNum * baseMultiplier
 
     return totalMultiplier
 end
