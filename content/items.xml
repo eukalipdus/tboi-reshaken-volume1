@@ -27,6 +27,7 @@
     <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" tags="offensive summonable lazarussharedglobal" quality="2" />
     <active id="30" name="Mirror Key" description="Otherside" quality="3" gfx="mirror_key.png" maxcharges="4" tags="lazarussharedglobal nocantrip nogreed offensive"/>
     <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" tags="noeden" />
+    <passive id="31" name="Water With Food Coloring" description="Wish granted" cache="all" quality="5" gfx="collectibles_waterwithfoodcoloring.png" hidden="true" tags="noeden" />
 
     <!-- Trinkets -->
     <trinket name="Clairvoyant Amethyst" description="Hidden clairvoyant power..." gfx="trinkets_clairvoyantamethyst.png" tags="nogreed"/>

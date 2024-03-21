@@ -6,6 +6,8 @@ local PINK_TEAR_COLOR = Color(0.9725, 0.7137, 0.9921, 1, 0.4, 0.1, 0.2)
 local STAT_COUNTER_DURATION = 150
 local STAT_COUNTER_MOVEMENT_DURATION = 10
 local STAT_COUNTER_FADING_DURATION = 40
+local MIN_MULTI = 1.1
+local MAX_MULTI = 1.5
 local StatsFont = Font() -- init font object
 StatsFont:Load("font/luaminioutlined.fnt") -- load a font into the font object
 
@@ -19,9 +21,9 @@ TSIL.SaveManager.AddPersistentVariable(
 
 ---@param rng RNG
 ---@param itemNum integer
-local function GetStatMultiplier(rng, itemNum)
-    local baseMultiplier = TSIL.Random.GetRandomInt(2, 10, rng)
-    baseMultiplier = baseMultiplier*0.05
+function MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max)
+    local baseMultiplier = TSIL.Random.GetRandomInt(min, max, rng)
+    baseMultiplier = baseMultiplier/10
     local totalMultiplier = 1
 
     totalMultiplier = totalMultiplier + itemNum * baseMultiplier
@@ -38,12 +40,12 @@ function milkshake:onCache(player, cacheFlag)
     local rng = TSIL.RNG.CopyRNG(player:GetCollectibleRNG(enums.Collectibles.MILKSHAKE))
     local itemNum = player:GetCollectibleNum(enums.Collectibles.MILKSHAKE)
 
-    local MilkShakeSpeed = GetStatMultiplier(rng, itemNum)
-    local MilkShakeTears = GetStatMultiplier(rng, itemNum)
-    local MilkShakeDamage = GetStatMultiplier(rng, itemNum)
-    local MilkShakeRange = GetStatMultiplier(rng, itemNum)
-    local MilkShakeShotSpeed = GetStatMultiplier(rng, itemNum)
-    local MilkShakeLuck = GetStatMultiplier(rng, itemNum)
+    local MilkShakeSpeed = MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI)
+    local MilkShakeTears = MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI)
+    local MilkShakeDamage = MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI)
+    local MilkShakeRange = MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI)
+    local MilkShakeShotSpeed = MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI)
+    local MilkShakeLuck = MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI)
 
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then
         player.MaxFireDelay = ((player.MaxFireDelay + 1) / MilkShakeTears) - 1
@@ -82,7 +84,9 @@ MilkshakeVol1:AddPriorityCallback(
 
 ---@param player EntityPlayer
 ---@param firstTime boolean
-function milkshake:OnMilkshakeAdded(player, _, firstTime)
+function milkshake:OnMilkshakeAdded(player, collectibleType, firstTime)
+    if collectibleType ~= enums.Collectibles.MILKSHAKE
+    and collectibleType ~= enums.Collectibles.WATER_WITH_FOOD_COLORING then return end
     if utility:IsPlayerShowingStatsUI(player) then
         local playerIndex = TSIL.Players.GetPlayerIndex(player)
         local multiplierCounterFramesPerPlayer = TSIL.SaveManager.GetPersistentVariable(
@@ -101,15 +105,17 @@ function milkshake:OnMilkshakeAdded(player, _, firstTime)
         rng:Next()
     end
 
-    local chosenHeart = rng:RandomInt(3)
+    if collectibleType == enums.Collectibles.MILKSHAKE then
+        local chosenHeart = rng:RandomInt(3)
 
-    if chosenHeart == 0 then
-        player:AddMaxHearts(2)
-        player:AddHearts(2)
-    elseif chosenHeart == 1 then
-        player:AddSoulHearts(2)
-    elseif chosenHeart == 2 then
-        player:AddBlackHearts(2)
+        if chosenHeart == 0 then
+            player:AddMaxHearts(2)
+            player:AddHearts(2)
+        elseif chosenHeart == 1 then
+            player:AddSoulHearts(2)
+        elseif chosenHeart == 2 then
+            player:AddBlackHearts(2)
+        end
     end
 end
 MilkshakeVol1:AddCallback(
@@ -118,7 +124,7 @@ MilkshakeVol1:AddCallback(
     {
         nil,
         nil,
-        enums.Collectibles.MILKSHAKE
+        nil
     }
 )
 
@@ -163,12 +169,12 @@ local function RenderMultiplier(player, startingFrame)
     local itemNum = player:GetCollectibleNum(enums.Collectibles.MILKSHAKE)
 
     local statMultipliers = {
-        GetStatMultiplier(rng, itemNum),
-        GetStatMultiplier(rng, itemNum),
-        GetStatMultiplier(rng, itemNum),
-        GetStatMultiplier(rng, itemNum),
-        GetStatMultiplier(rng, itemNum),
-        GetStatMultiplier(rng, itemNum)
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI)
     }
 
     local baseXPos = 75

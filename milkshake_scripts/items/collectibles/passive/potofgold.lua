@@ -14,6 +14,7 @@ local rainbowPennies = {}
 
 local coinBlacklist = {
     CoinSubType.COIN_LUCKYPENNY,
+    CoinSubType.COIN_STICKYNICKEL,
     CoinSubType.COIN_GOLDEN
 }
 
