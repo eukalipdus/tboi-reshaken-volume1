@@ -2,6 +2,7 @@ local enums = MilkshakeVol1.enums
 
 local REPLACE_CHANCE = 0.01
 local KEEPERB_REPLACE_CHANCE = 0
+local TIMES_CAN_FAIL = 5000
 
 local positivePillCollectibles = {
     CollectibleType.COLLECTIBLE_PHD,
@@ -25,7 +26,10 @@ end
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
     local randomPill = PillEffect.PILLEFFECT_BAD_GAS
+    local counter = 0
     repeat
+        counter = counter + 1
+        if counter == TIMES_CAN_FAIL then break end -- For the unluckiest person in the world
         randomPill = Game():GetItemPool():GetPill(Random() + 1)
     until randomPill ~= PillEffect.PILLEFFECT_TELEPILLS
 
