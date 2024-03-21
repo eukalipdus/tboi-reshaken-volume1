@@ -1736,8 +1736,8 @@ descriptions.Trinkets = {
             description = "보스 처치 시 알트 루트로 향하는 문을 엽니다.",
         },
         zh_cn = {
-            name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+            name = "支线解锁追踪器",
+            description = "在击败头目后自动打开通往下水道、矿洞和陵墓的门。",
         },
     },
 }

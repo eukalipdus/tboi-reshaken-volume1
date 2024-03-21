@@ -148,25 +148,25 @@ Removals
 
 
 ================================================
-	v1.0.12 - March 21, 2024
+    v1.0.12 - March 21, 2024
 ================================================
 Fixes
-	-Fixed prismatic dice not properly splitting quality 5 and quality 6 items
-	-Fixed prismatic dice spawning an extra breakfast when breakfasting
-	-Fixed new breakfast items stats not stacking
-	-Fixed Alt Path Unlock Tracker trinket showing up
-	-Fixed Spirit kiln not killing you at half a soul heart
-	-Fixed crash caused by Acid Penny trying to activate a horse pill
-	
+    -Fixed prismatic dice not properly splitting quality 5 and quality 6 items
+    -Fixed prismatic dice spawning an extra breakfast when breakfasting
+    -Fixed new breakfast items stats not stacking
+    -Fixed Alt Path Unlock Tracker trinket showing up
+    -Fixed Spirit kiln not killing you at half a soul heart
+    -Fixed crash caused by Acid Penny trying to activate a horse pill
+
 Changes
-	-Changed Milkshake's Tear color to a nicer shade of picking
-	-Changed Milkshake's stat ups to be only in increments of 0.05
-	-Made Milkshake's stat boosts stack additively instead of exponentially so you're less likely to get unusable shotspeed if you ever get 20 milkshake's for some reason
-	(for example now if you got a 1.4 damage multiplier from milkshake getting a second one will give you a 1.8 damage multiplier total)
-	-Sticky Nickels can no longer be converted to rainbow pennies
+    -Changed Milkshake's Tear color to a nicer shade of pink
+    -Changed Milkshake's stat ups to be only in increments of 0.1
+    -Made Milkshake's stat boosts stack additively instead of exponentially so you're less likely to get unusable shotspeed if you ever get 20 milkshake's for some reason
+    (for example now if you got a 1.4 damage multiplier from milkshake getting a second one will give you a 1.8 damage multiplier total)
+    -Sticky Nickels will now always be converted to rainbow pennies
 
 Additions
-	-Added quality 5 and 6 icons
-	-Added Alt Path Unlock Tracker trinket: Automatically opens the alt path door upon defeating the floor boss
-	-Spirit Sage challenge will now be locked until you unlock the alt path and Tainted Bethany
-	-Add 1 new item
+    -Added quality 5 and 6 icons
+    -Added Alt Path Unlock Tracker trinket: Automatically opens the alt path door upon defeating the floor boss
+    -Spirit Sage challenge will now be locked until you unlock the alt path and Tainted Bethany (RGON only)
+    -Add 1 new item (For players who find base Reshaken too easy)
