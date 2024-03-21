@@ -12,8 +12,8 @@ local cursesToAdd = {
 }
 
 local UPDATE_CHANCE = 35
-local MIN_MULTI = 0.5
-local MAX_MULTI = 0.9
+local MIN_MULTI = -1
+local MAX_MULTI = -5
 local PINK_TEAR_COLOR = Color(1, 1, 1, 1, 0.196, 0, 0)
 PINK_TEAR_COLOR:SetColorize(1, 0, 1, .05)
 

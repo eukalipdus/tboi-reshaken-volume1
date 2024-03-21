@@ -6,8 +6,10 @@ local PINK_TEAR_COLOR = Color(0.9725, 0.7137, 0.9921, 1, 0.4, 0.1, 0.2)
 local STAT_COUNTER_DURATION = 150
 local STAT_COUNTER_MOVEMENT_DURATION = 10
 local STAT_COUNTER_FADING_DURATION = 40
-local MIN_MULTI = 1.1
-local MAX_MULTI = 1.5
+local MIN_MULTI = 1
+local MAX_MULTI = 5
+local FC_MIN_MULTI = -1
+local FC_MAX_MULTI = -5
 local StatsFont = Font() -- init font object
 StatsFont:Load("font/luaminioutlined.fnt") -- load a font into the font object
 
@@ -88,6 +90,7 @@ function milkshake:OnMilkshakeAdded(player, collectibleType, firstTime)
     if collectibleType ~= enums.Collectibles.MILKSHAKE
     and collectibleType ~= enums.Collectibles.WATER_WITH_FOOD_COLORING then return end
     if utility:IsPlayerShowingStatsUI(player) then
+        utility:SetData(player, "MilkshakeHUDType", collectibleType)
         local playerIndex = TSIL.Players.GetPlayerIndex(player)
         local multiplierCounterFramesPerPlayer = TSIL.SaveManager.GetPersistentVariable(
             MilkshakeVol1,
@@ -98,8 +101,8 @@ function milkshake:OnMilkshakeAdded(player, collectibleType, firstTime)
 
     if player:GetPlayerType() == PlayerType.PLAYER_ISAAC_B and not firstTime then return end
 
-    local rng = TSIL.RNG.CopyRNG(player:GetCollectibleRNG(enums.Collectibles.MILKSHAKE))
-    local itemNum = player:GetCollectibleNum(enums.Collectibles.MILKSHAKE)
+    local rng = TSIL.RNG.CopyRNG(player:GetCollectibleRNG(collectibleType))
+    local itemNum = player:GetCollectibleNum(collectibleType)
 
     for _ = 1, itemNum, 1 do
         rng:Next()
@@ -155,7 +158,7 @@ end
 ---@param player EntityPlayer
 ---@param startingFrame integer
 ---@return boolean
-local function RenderMultiplier(player, startingFrame)
+local function RenderMultiplier(player, startingFrame, collectibleType)
     local currentFrame = Game():GetFrameCount()
     local duration = currentFrame - startingFrame
 
@@ -163,18 +166,28 @@ local function RenderMultiplier(player, startingFrame)
 
     if not Options.FoundHUD then return false end
 
-    if not player:HasCollectible(enums.Collectibles.MILKSHAKE) then return true end
+    if not player:HasCollectible(collectibleType) then return true end
 
-    local rng = TSIL.RNG.CopyRNG(player:GetCollectibleRNG(enums.Collectibles.MILKSHAKE))
-    local itemNum = player:GetCollectibleNum(enums.Collectibles.MILKSHAKE)
+    local rng = TSIL.RNG.CopyRNG(player:GetCollectibleRNG(collectibleType))
+    local itemNum = player:GetCollectibleNum(collectibleType)
+    local min
+    local max
+
+    if collectibleType == enums.Collectibles.MILKSHAKE then
+        min = MIN_MULTI
+        max = MAX_MULTI
+    elseif collectibleType == enums.Collectibles.WATER_WITH_FOOD_COLORING then
+        min = FC_MIN_MULTI
+        max = FC_MAX_MULTI
+    end
 
     local statMultipliers = {
-        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
-        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
-        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
-        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
-        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI),
-        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, MIN_MULTI, MAX_MULTI)
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max),
+        MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max),
     }
 
     local baseXPos = 75
@@ -265,7 +278,8 @@ function milkshake:OnRender()
         if not player then
             multiplierCounterFramesPerPlayer[playerIndex] = nil
         else
-            if RenderMultiplier(player, startingFrame) then
+            local collectibleType = utility:GetData(player, "MilkshakeHUDType")
+            if RenderMultiplier(player, startingFrame, collectibleType) then
                 multiplierCounterFramesPerPlayer[playerIndex] = nil
             end
         end
