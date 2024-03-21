@@ -14,7 +14,6 @@ local rainbowPennies = {}
 
 local coinBlacklist = {
     CoinSubType.COIN_LUCKYPENNY,
-    CoinSubType.COIN_STICKYNICKEL,
     CoinSubType.COIN_GOLDEN
 }
 
@@ -108,7 +107,7 @@ local function CanPickupBeReplaced(pickup, convertChance, isNatural)
     local roll = rng:RandomFloat()
     if (not isNatural and (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB))
     or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType))
-    or (not isNatural and (pickup.Variant == PickupVariant.PICKUP_COIN and (pickup.SubType == CoinSubType.COIN_NICKEL or pickup.SubType == CoinSubType.COIN_DIME))) then
+    or (not isNatural and (pickup.Variant == PickupVariant.PICKUP_COIN and (pickup.SubType == CoinSubType.COIN_NICKEL or pickup.SubType == CoinSubType.COIN_DIME or pickup.SubType == CoinSubType.COIN_STICKYNICKEL))) then
         return true
     end
     return false
