@@ -34,6 +34,7 @@ enums.Collectibles = {
     UNCHARGED_MIRROR_KEY = Isaac.GetItemIdByName("Mirror Key "),
     SATA_ANDAGI = Isaac.GetItemIdByName("Saataa Andagii"),
     GOLDEN_BREAKFAST = Isaac.GetItemIdByName("Golden Breakfast"),
+    WATER_WITH_FOOD_COLORING = Isaac.GetItemIdByName("Water With Food Coloring"),
 
     SPECIAL_BRENDA_FIRE_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM FIRE WISP"),
     SPECIAL_BRENDA_PSYCHIC_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM PSYCHIC WISP"),
