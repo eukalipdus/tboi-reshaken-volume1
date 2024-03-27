@@ -49,6 +49,18 @@ if FiendFolio then
     )
 end
 
+--- Returns if a penny is any kind of rainbow penny
+---@param pickup EntityPickup
+---@return boolean
+local function IsRainbowPenny(pickup)
+    for _, pennyType in pairs(weightedRainbowPennies) do
+        if pickup.SubType == pennyType.subtype then
+            return true
+        end
+    end
+    return false
+end
+
 --- Returns the proper chance to convert a penny
 ---@return number
 local function GetConversionChance()
@@ -176,7 +188,8 @@ MilkshakeVol1:AddCallback(
 ---@param pickup EntityPickup
 ---@param collider Entity
 function potOfGold:PrePickupCollision(pickup, collider)
-    if not pickup:IsShopItem()
+    if IsRainbowPenny(pickup)
+    and not pickup:IsShopItem()
     and (collider.Type == EntityType.ENTITY_ULTRA_GREED
     or (collider.Type == EntityType.ENTITY_FAMILIAR
         and collider.Variant == FamiliarVariant.BUMBO or collider.Variant == FamiliarVariant.BUM_FRIEND)) then
