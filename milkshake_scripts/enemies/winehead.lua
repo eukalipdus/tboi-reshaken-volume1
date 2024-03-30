@@ -329,6 +329,8 @@ function WineHead:WineHead_Update(enemy)
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, .5, 0, false, 1, 0)
 
+            TSIL.EntitySpecific.SpawnEffect(Isaac.GetEntityVariantByName("Wine Head Corpse"), 0, enemy.Position)
+            enemy:Remove()
         elseif sprite:IsFinished("Death") then
             enemy.CanShutDoors = false
             enemy.DepthOffset = -10

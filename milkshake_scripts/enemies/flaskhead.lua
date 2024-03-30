@@ -154,6 +154,9 @@ function FlaskHead:FlaskHeadUpdate(enemy)
             data.head = head
             sfx:Play(SoundEffect.SOUND_SHELLGAME, .5, 0, false, 1, 0)
             sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, 2, 0)
+
+            TSIL.EntitySpecific.SpawnEffect(Isaac.GetEntityVariantByName("Flask Head Corpse"), 0, enemy.Position)
+            enemy:Remove()
         elseif sprite:IsFinished("Throw") then
             enemy.CanShutDoors = false
             
