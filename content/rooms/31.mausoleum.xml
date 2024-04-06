@@ -7787,7 +7787,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29000" name="[RE] - steve2552 - Use your brain, not your legs" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.8">
+	<room variant="29000" name="[RE] - steve2552 - Use your brain, not your legs" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -7859,7 +7859,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29001" name="[RE] - steve2552 - man im    d" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.8">
+	<room variant="29001" name="[RE] - steve2552 - man im    d" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -7946,7 +7946,7 @@
 			<entity type="3000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29000" name="[RE] - steve2552 - not my first room i've called shrimple" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+	<room variant="29000" name="[RE] - steve2552 - not my first room i've called shrimple" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -7997,7 +7997,7 @@
 			<entity type="1901" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29001" name="[RE] - steve2552 - bulbsayswhat" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+	<room variant="29001" name="[RE] - steve2552 - bulbsayswhat" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -8078,7 +8078,7 @@
 			<entity type="3000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29002" name="[RE] - steve2552 - PSY FLY!?!?!??!!?!?" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+	<room variant="29002" name="[RE] - steve2552 - PSY FLY!?!?!??!!?!?" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>

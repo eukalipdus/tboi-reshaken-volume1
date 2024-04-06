@@ -5658,7 +5658,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29000" name="[RE] - steve2552 - Rotten heart and a rotten ball" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.8">
+	<room variant="29000" name="[RE] - steve2552 - Rotten heart and a rotten ball" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -5676,7 +5676,7 @@
 			<entity type="618" variant="124" subtype="8" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29001" name="[RE] - steve2552 - ahhh, poop bridges" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.8">
+	<room variant="29001" name="[RE] - steve2552 - ahhh, poop bridges" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
