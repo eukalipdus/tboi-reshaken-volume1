@@ -81,6 +81,18 @@
         <sample weight="1" path="brenda_activate.wav"/>
     </sound>
 
+    <sound name="Spirit Orb Drop">
+        <sample weight="1" path="orb_sfx_milkshake_drop.wav"/>
+    </sound>
+
+    <sound name="Spirit Orb Pickup">
+        <sample weight="1" path="pickup_orb.wav"/>
+    </sound>
+
+    <sound name="Spirit Orb Capture">
+        <sample weight="1" path="orb_capture.wav"/>
+    </sound>
+
     <sound name="deadseascrolls_pop">
         <sample weight="1" path="deadseascrolls/pop.wav" />
     </sound>

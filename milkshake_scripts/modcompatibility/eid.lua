@@ -23,6 +23,7 @@ local ICON_ANM2_PER_CARD = {
     [enums.Orbs.UNDEAD] = "gfx/spirit_undead.anm2",
     [enums.Orbs.UNHOLY] = "gfx/spirit_demonic.anm2",
     [enums.Orbs.WATER] = "gfx/spirit_water.anm2",
+    [enums.Orbs.ORDER] = "gfx/spirit_order.anm2",
     [enums.Cards.TATTERED_PAGE] = "gfx/tattered_page.anm2"
 }
 for orb, anm2 in pairs(ICON_ANM2_PER_CARD) do

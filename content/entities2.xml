@@ -99,6 +99,10 @@
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
+    <entity name="Spirit of Order" anm2path="spirit_order.anm2" id="5" variant="300" subtype="485" 
+    collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
+    </entity>
+
     <entity name="Deluge Laser" anm2path="deluge_laser.anm2" id="1000"
     collisionMass="3" collisionRadius="30" friction="1" >
     </entity>

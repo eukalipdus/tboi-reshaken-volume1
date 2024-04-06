@@ -13,7 +13,7 @@ local SoundPerOrb = {
     [enums.Orbs.UNDEAD] = enums.Sounds.SPIRIT_REVENANCE,
     [enums.Orbs.UNHOLY] = enums.Sounds.SPIRIT_SACRILEGE,
     [enums.Orbs.WATER] = enums.Sounds.SPIRIT_DELUGE,
-
+    [enums.Orbs.ORDER] = 0,
 }
 
 ---@param orb Card
@@ -51,9 +51,18 @@ function SpiritOrbs:OnCardUpdate(card)
     if not MilkshakeVol1.utility:IsSpiritOrb(card.SubType) then return end
 
     local sprite = card:GetSprite()
+    local triggeredDrop = sprite:IsEventTriggered("DropSound")
 
-    if sprite:IsEventTriggered("DropSound") then
+    if triggeredDrop then
         SFXManager():Stop(SoundEffect.SOUND_SCAMPER)
+    end
+
+    if card.SubType == enums.Orbs.ORDER
+    and sprite:IsPlaying("Appear") then
+        if sprite:GetFrame() == 23 then
+            SFXManager():Play(enums.Sounds.ORB_DROP)
+        end
+    elseif triggeredDrop then
         SFXManager():Play(SoundEffect.SOUND_GOLD_HEART_DROP)
     end
 end
@@ -73,7 +82,11 @@ function SpiritOrbs:OnCardRender(card)
     if sprite:IsPlaying("Collect") and sprite:GetFrame() == 0 and
     SFXManager():IsPlaying(SoundEffect.SOUND_BOOK_PAGE_TURN_12) then
         SFXManager():Stop(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
-        SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
+        if card.SubType == enums.Orbs.ORDER then
+            SFXManager():Play(enums.Sounds.ORB_PICKUP)
+        else
+            SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
+        end
     end
 end
 MilkshakeVol1:AddCallback(

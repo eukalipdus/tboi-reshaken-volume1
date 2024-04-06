@@ -2177,7 +2177,15 @@ descriptions.Cards = {
             name = "破烂书页",
             description = "#生成一个随机{{Collectible712}}道具灵火"
         },
-    }
+    },
+    -- [enums.Orbs.ORDER] = {
+    --     en_us = {
+    --         name = "Spirit Of Order",
+    --         description =
+    --             "#{{ButtonRT}} Tap DROP to cycle between Spirit Orbs" ..
+    --             "#Use to activate the chosen Spirit Orb"
+    --     },
+    -- },
 }
 
 --ENTITY DESCRIPTIONS

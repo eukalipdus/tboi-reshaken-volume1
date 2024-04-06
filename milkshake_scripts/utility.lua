@@ -485,4 +485,14 @@ function utility:IsVersusScreenPlaying()
         and not room:IsClear()
 end
 
+---@param noRandom boolean | nil
+---@return table
+function utility:GetOrbs(noRandom)
+    if noRandom then
+        return SPIRIT_ORBS_NO_RANDOM
+    else
+        return SPIRIT_ORBS
+    end
+end
+
 MilkshakeVol1.utility = utility

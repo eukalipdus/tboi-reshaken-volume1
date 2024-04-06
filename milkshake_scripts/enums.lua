@@ -158,7 +158,11 @@ enums.Sounds = {
     SPIRIT_SACRILEGE = Isaac.GetSoundIdByName("Spirit Of Sacrilege"),
     SPIRIT_SALVATION = Isaac.GetSoundIdByName("Spirit Of Salvation"),
     SPIRIT_TERRASTRIUM = Isaac.GetSoundIdByName("Spirit Of Terrastrium"),
-    SPIRIT_VIRULENCE = Isaac.GetSoundIdByName("Spirit Of Virulence")
+    SPIRIT_VIRULENCE = Isaac.GetSoundIdByName("Spirit Of Virulence"),
+
+    ORB_DROP = Isaac.GetSoundIdByName("Spirit Orb Drop"),
+    ORB_PICKUP = Isaac.GetSoundIdByName("Spirit Orb Pickup"),
+    ORB_CAPTURE = Isaac.GetSoundIdByName("Spirit Orb Capture"),
 }
 
 enums.Costumes = {
@@ -206,6 +210,7 @@ enums.Orbs = {
     UNDEAD = Isaac.GetCardIdByName("Spirit Of Revenance"),
     WATER = Isaac.GetCardIdByName("Spirit Of Deluge"),
     ROCK = Isaac.GetCardIdByName("Spirit Of Terrastrium"),
+    ORDER = Isaac.GetCardIdByName("Spirit Of Order"),
 }
 
 
