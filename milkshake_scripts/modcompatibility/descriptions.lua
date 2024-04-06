@@ -534,37 +534,37 @@ descriptions.Collectibles = {
         en_us = {
             name = "Celestial Mirror",
             description = "Mirrors Isaac's movement" ..
-            "#Deals 75 damage a second" ..
+            "#Deals 50 contact damage a second" ..
             "#\1  {{MirrorRoom}} +2.5 Damage in the mirror world",
         },
         spa = {
             name = "Espejo Celestial",
             description = "Refleja el movimiento de Isaac" ..
-            "#Inflige 75 puntos de daño por segundo" ..
+            "#Inflige 50 puntos de daño por segundo" ..
             "#\1  {{MirrorRoom}} +2.5 de daño en la dimensión espejo",
         },
         ru = {
             name = "Небесное Зеркало",
             description = "Отражает движения Исаака" ..
-            "#Наносит 75 урона в секунду" ..
+            "#Наносит 50 урона в секунду" ..
             "#\1  {{MirrorRoom}} +2,5 Урона в зеркальном мире",
         },
         pl = {
             name = "Gwieździste Lustro",
             description = "Odzwierciedla twoje ruchy" ..
-            "#Zadaje 75 obrażeń na sekunde" ..
+            "#Zadaje 50 obrażeń na sekunde" ..
             "#\1 {{MirrorRoom}} Daje +2.5 Obrażeń w lustrzanym wymiarze",
         },
         ko_kr = {
             name = "천계의 거울",
-            description = "캐릭터의 반대편에 있으며 접촉한 적에게 초당 75의 피해를 줍니다." ..
+            description = "캐릭터의 반대편에 있으며 접촉한 적에게 초당 50의 피해를 줍니다." ..
             "#↑ {{MirrorRoom}}거울세계에서 {{DamageSmall}}공격력 +2.5",
         },
         zh_cn = {
             name = "仙镜",
             description = "镜像玩家动作(类似亚伯宝)" ..
                 "#接触造成每秒75点伤害" ..
-                "#\1 {{MirrorRoom}} 镜世界增加2.5伤害",
+                "#\1 {{MirrorRoom}} 镜世界增加1.7伤害",
         },
     },
     [enums.Collectibles.SICKLE_CELL] = {
