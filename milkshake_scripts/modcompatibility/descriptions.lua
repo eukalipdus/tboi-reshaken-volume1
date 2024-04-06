@@ -326,7 +326,7 @@ descriptions.Collectibles = {
         en_us = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
-            "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destoryed machines" ..
+            "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destroyed machines" ..
             "#\1 Using a spirit orb starts a short rhythm mini game." ..
             "#{{Blank}} Successful completion activates the spirit orb with double effect",
         },
