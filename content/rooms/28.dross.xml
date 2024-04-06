@@ -7198,7 +7198,7 @@
 			<entity type="1002" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29000" name="[RE] - steve2552 - yeah... its not symetrical..." type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29000" name="[RE] - steve2552 - yeah... its not symetrical..." type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -7246,7 +7246,7 @@
 			<entity type="1500" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29001" name="[RE] - steve2552 - sliiiide to the right!" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29001" name="[RE] - steve2552 - sliiiide to the right!" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -7321,7 +7321,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29002" name="[RE] - steve2552 - Bulb drink" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29002" name="[RE] - steve2552 - Bulb drink" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -7366,7 +7366,7 @@
 			<entity type="1002" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29003" name="[RE] - steve2552 - thats so gwoss o.o" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29003" name="[RE] - steve2552 - thats so gwoss o.o" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -7423,7 +7423,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29004" name="[RE] - steve2552 - these are some shitty items" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29004" name="[RE] - steve2552 - these are some shitty items" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -7516,7 +7516,7 @@
 			<entity type="4000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29005" name="[RE] - steve2552 - stinky bulbas" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29005" name="[RE] - steve2552 - stinky bulbas" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>

@@ -1965,7 +1965,7 @@
 			<entity type="33" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29000" name="[RE] - steve2552 - so THATS how they charged the key!" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29000" name="[RE] - steve2552 - so THATS how they charged the key!" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -2004,7 +2004,7 @@
 			<entity type="5" variant="30" subtype="4" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29001" name="[RE] - steve2552 - im wet" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29001" name="[RE] - steve2552 - im wet" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -2100,7 +2100,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29002" name="[RE] - steve2552 - NO CHARGES?" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29002" name="[RE] - steve2552 - NO CHARGES?" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -2157,7 +2157,7 @@
 			<entity type="33" variant="2" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29003" name="[RE] - steve2552 - bulbs if they drank water instead of juice" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1">
+	<room variant="29003" name="[RE] - steve2552 - bulbs if they drank water instead of juice" type="4" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.2">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
