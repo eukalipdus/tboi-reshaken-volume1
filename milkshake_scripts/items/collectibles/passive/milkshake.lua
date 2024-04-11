@@ -279,6 +279,9 @@ function milkshake:OnRender()
             multiplierCounterFramesPerPlayer[playerIndex] = nil
         else
             local collectibleType = utility:GetData(player, "MilkshakeHUDType")
+            if not collectibleType then
+                return
+            end
             if RenderMultiplier(player, startingFrame, collectibleType) then
                 multiplierCounterFramesPerPlayer[playerIndex] = nil
             end
