@@ -48,9 +48,17 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PE
         randomPill = TSIL.Pills.GetPHDPillEffect(randomPill)
     end
 
+    local effectToColor = {}
+    for i = 1, PillColor.NUM_STANDARD_PILLS do
+        effectToColor[Game():GetItemPool():GetPillEffect(i, player)] = i
+    end
+
+    if effectToColor[randomPill] then
+        print(effectToColor[randomPill])
+        Game():GetItemPool():IdentifyPill(effectToColor[randomPill])
+    end
+
     player:UsePill(randomPill, PillColor.PILL_NULL)
-    --player:AddPill(randomPill)
-    --SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 end, 0.15)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BLESSED_PENNY, function (_, player)
