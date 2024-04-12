@@ -170,3 +170,12 @@ Additions
     -Added Alt Path Unlock Tracker trinket: Automatically opens the alt path door upon defeating the floor boss
     -Spirit Sage challenge will now be locked until you unlock the alt path and Tainted Bethany (RGON only)
     -Add 1 new item (For players who find base Reshaken too easy)
+
+================================================
+    v1.0.13 - April - ??, 2024
+================================================
+Fixes
+	-Fixed Milkshake/Water With Food Coloring multiplier stats attempting to render when they shouldn't
+
+Changes
+	-Acid Pennies will now reveal pills upon use if it uses a pill that's in the current pool
