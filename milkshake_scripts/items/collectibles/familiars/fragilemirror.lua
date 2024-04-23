@@ -27,6 +27,7 @@ local FRAGILE_MIRROR_SPRITES = {
     "fall_from_grace",
     "fiend",
     "flowey",
+    "flowey2",
     "fused_souls",
     "gate",
     "glizzy_chin",

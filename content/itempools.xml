@@ -35,6 +35,7 @@
 	<Pool Name="angel">
 		<Item Name="Lil Bishop" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Glass Idol" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Leviticus" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	
 	<Pool Name="secret">
