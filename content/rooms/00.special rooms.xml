@@ -2536,7 +2536,7 @@
 			<entity type="4000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29006" name="[RE] - NotSpooky - Sprit of Salvation" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1" lastTestTime="2023-11-29T04:43+00:00">
+	<room variant="29006" name="[RE] - NotSpooky - Sprit of Salvation" type="7" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.1" lastTestTime="2024-04-28T00:55+00:00">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -2564,7 +2564,7 @@
 			<entity type="17" variant="1" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="1">
-			<entity type="1498" variant="0" subtype="0" weight="1.0"/>
+			<entity type="1500" variant="0" subtype="1" weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="1">
 			<entity type="17" variant="0" subtype="0" weight="1.0"/>
@@ -2577,22 +2577,22 @@
 			<entity type="1498" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="2">
-			<entity type="1498" variant="0" subtype="0" weight="1.0"/>
+			<entity type="1500" variant="0" subtype="1" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="2">
 			<entity type="618" variant="124" subtype="6" weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="2">
-			<entity type="1498" variant="0" subtype="0" weight="1.0"/>
+			<entity type="1500" variant="0" subtype="1" weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="2">
 			<entity type="1498" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="1498" variant="0" subtype="0" weight="1.0"/>
+			<entity type="1500" variant="0" subtype="1" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="4">
-			<entity type="1498" variant="0" subtype="0" weight="1.0"/>
+			<entity type="1500" variant="0" subtype="1" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="5">
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
