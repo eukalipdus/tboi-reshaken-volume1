@@ -321,7 +321,7 @@ MilkshakeVol1:AddCallback(
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, function (_, entity)
     sfx:Stop(SoundEffect.SOUND_DEATH_BURST_SMALL)
 
-    entity:Remove()
+    entity.Visible = false
 
     local newEntity = TSIL.EntitySpecific.SpawnNPC(
         enums.Enemies.GLASS_HEAD,
