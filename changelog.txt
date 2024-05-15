@@ -172,10 +172,26 @@ Additions
     -Add 1 new item (For players who find base Reshaken too easy)
 
 ================================================
-    v1.0.13 - April - ??, 2024
+    v1.0.13 - May - ??, 2024
 ================================================
 Fixes
 	-Fixed Milkshake/Water With Food Coloring multiplier stats attempting to render when they shouldn't
+	-Fixed bum friend, bumbo, and ultra greed treating all coins as being worth only 1 cent.
+	-Fixed glassheads sommetimes not activating their death effects.
+	-Fixed glassheads not dropping coins when killed as tKeeper
+	-Fixed some rooms
+	-Fixed EID typos
+	-Fixed Eclipse Compat
+	-Fixed Milkshake error
 
 Changes
 	-Acid Pennies will now reveal pills upon use if it uses a pill that's in the current pool
+	-Lowered spirit orb room special room weight across the board to not be so common over vanilla rooms
+	-Lowered Celestial Mirror contact damage from 75 to 50 per second
+
+Additions
+	-Actually added beerhead mines rooms which should've been there the whole time but weren't (oops)
+	-Actually added Leviticus to the angel pool (it was supposed to be how did we miss that)
+	-Added Spirit of Order, a rare spirit orb that can activate any spirit orb effect you chose
+	-Added more rooms to utero and gehenna and stuff
+	-Added new flowey glass idol sprite (feel free to submit more if you want)
