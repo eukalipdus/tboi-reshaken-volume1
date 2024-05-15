@@ -47,7 +47,7 @@ MilkshakeVol1:AddModCompatibility("Eclipsed", function ()
         },
         [Isaac.GetEntityVariantByName("Warlock Beggar")] = {
             Config = {Count = 2, MinCount = 1},
-            {Type = EntityType.ENTITY_FAMILIAR, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = 0},
+            {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_TAROTCARD, SubType = MilkshakeVol1.enums.Cards.TATTERED_PAGE},
         },
     }
     for key, datatable in pairs(EclipsedBeggars) do
