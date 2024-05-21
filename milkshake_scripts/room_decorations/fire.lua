@@ -108,7 +108,7 @@ function Fire:OnFireParticleUpdate(particle)
     particle.Position = particle.Position + velocity
 end
 MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_PRE_EFFECT_RENDER,
+    ModCallbacks.MC_POST_EFFECT_RENDER,
     Fire.OnFireParticleUpdate,
     MilkshakeVol1.enums.Effects.FIRE_PARTICLE
 )

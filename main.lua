@@ -105,7 +105,6 @@ include("milkshake_scripts.pools.glasspool")
 --Slots
 include("milkshake_scripts.slots.spiritklinbrenda")
 
-
 --Wisps
 include("milkshake_scripts.wisps.brendaelectricwisp")
 include("milkshake_scripts.wisps.brendafirewisp")
