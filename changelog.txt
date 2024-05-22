@@ -172,7 +172,7 @@ Additions
     -Add 1 new item (For players who find base Reshaken too easy)
 
 ================================================
-    v1.0.13 - May - ??, 2024
+    v1.0.13 - May 22, 2024
 ================================================
 Fixes
 	-Fixed crash in rooms with entity 618.125 when you didn't have Repentogon installed
