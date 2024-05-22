@@ -175,6 +175,8 @@ Additions
     v1.0.13 - May - ??, 2024
 ================================================
 Fixes
+	-Fixed crash in rooms with entity 618.125 when you didn't have Repentogon installed
+	-Fixed error that would appear on load when you didn't have Repentogon installed
 	-Fixed Milkshake/Water With Food Coloring multiplier stats attempting to render when they shouldn't
 	-Fixed bum friend, bumbo, and ultra greed treating all coins as being worth only 1 cent.
 	-Fixed glassheads sommetimes not activating their death effects.
@@ -182,11 +184,12 @@ Fixes
 	-Fixed some rooms
 	-Fixed EID typos
 	-Fixed Eclipse Compat
-	-Fixed Milkshake error
+	-Fixed error with Milkshake
+	-Fixed TNT in some glasshead rooms being able to become pushable tnts
 
 Changes
 	-Acid Pennies will now reveal pills upon use if it uses a pill that's in the current pool
-	-Lowered spirit orb room special room weight across the board to not be so common over vanilla rooms
+	-Lowered spirit orb room special room weight across the board to not be so common over vanilla rooms, you'll now find 1-4 per run on average.
 	-Lowered Celestial Mirror contact damage from 75 to 50 per second
 
 Additions
@@ -195,3 +198,5 @@ Additions
 	-Added Spirit of Order, a rare spirit orb that can activate any spirit orb effect you chose
 	-Added more rooms to utero and gehenna and stuff
 	-Added new flowey glass idol sprite (feel free to submit more if you want)
+	-Added new art to art folder
+	-Updated Mirror Key EID to mention that it turns you into the lost while inside the mirror dimension

@@ -1094,6 +1094,7 @@ descriptions.Collectibles = {
         en_us = {
             name = "Mirror Key",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
+            "#{{Player10}} Isaac becomes the Lost while inside" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
