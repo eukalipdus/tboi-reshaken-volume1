@@ -326,7 +326,7 @@ descriptions.Collectibles = {
         en_us = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
-            "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destoryed machines" ..
+            "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destroyed machines" ..
             "#\1 Using a spirit orb starts a short rhythm mini game." ..
             "#{{Blank}} Successful completion activates the spirit orb with double effect",
         },
@@ -534,37 +534,37 @@ descriptions.Collectibles = {
         en_us = {
             name = "Celestial Mirror",
             description = "Mirrors Isaac's movement" ..
-            "#Deals 75 damage a second" ..
+            "#Deals 50 contact damage a second" ..
             "#\1  {{MirrorRoom}} +2.5 Damage in the mirror world",
         },
         spa = {
             name = "Espejo Celestial",
             description = "Refleja el movimiento de Isaac" ..
-            "#Inflige 75 puntos de daño por segundo" ..
+            "#Inflige 50 puntos de daño por segundo" ..
             "#\1  {{MirrorRoom}} +2.5 de daño en la dimensión espejo",
         },
         ru = {
             name = "Небесное Зеркало",
             description = "Отражает движения Исаака" ..
-            "#Наносит 75 урона в секунду" ..
+            "#Наносит 50 урона в секунду" ..
             "#\1  {{MirrorRoom}} +2,5 Урона в зеркальном мире",
         },
         pl = {
             name = "Gwieździste Lustro",
             description = "Odzwierciedla twoje ruchy" ..
-            "#Zadaje 75 obrażeń na sekunde" ..
+            "#Zadaje 50 obrażeń na sekunde" ..
             "#\1 {{MirrorRoom}} Daje +2.5 Obrażeń w lustrzanym wymiarze",
         },
         ko_kr = {
             name = "천계의 거울",
-            description = "캐릭터의 반대편에 있으며 접촉한 적에게 초당 75의 피해를 줍니다." ..
+            description = "캐릭터의 반대편에 있으며 접촉한 적에게 초당 50의 피해를 줍니다." ..
             "#↑ {{MirrorRoom}}거울세계에서 {{DamageSmall}}공격력 +2.5",
         },
         zh_cn = {
             name = "仙镜",
             description = "镜像玩家动作(类似亚伯宝)" ..
                 "#接触造成每秒75点伤害" ..
-                "#\1 {{MirrorRoom}} 镜世界增加2.5伤害",
+                "#\1 {{MirrorRoom}} 镜世界增加1.7伤害",
         },
     },
     [enums.Collectibles.SICKLE_CELL] = {
@@ -1094,6 +1094,7 @@ descriptions.Collectibles = {
         en_us = {
             name = "Mirror Key",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
+            "#{{Player10}} Isaac becomes the Lost while inside" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
@@ -1714,6 +1715,32 @@ descriptions.Trinkets = {
             "{{SpiritOrb}}隐藏石头在被摧毁时有75%的几率掉落 {{ColorGold}}2-3 {{CR}}巨岩之灵",
         },
     },
+    [enums.Trinkets.TRACK_ALT_PATH_UNLOCK] = {
+        en_us = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+        spa = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+        ru = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+        pl = {
+            name = "Alt Path Unlock Tracker",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+        },
+        ko_kr = {
+            name = "알트 루트 해금 여부 추적기",
+            description = "보스 처치 시 알트 루트로 향하는 문을 엽니다.",
+        },
+        zh_cn = {
+            name = "支线解锁追踪器",
+            description = "在击败头目后自动打开通往下水道、矿洞和陵墓的门。",
+        },
+    },
 }
 
 --CARD DESCRIPTIONS
@@ -2151,7 +2178,15 @@ descriptions.Cards = {
             name = "破烂书页",
             description = "#生成一个随机{{Collectible712}}道具灵火"
         },
-    }
+    },
+    -- [enums.Orbs.ORDER] = {
+    --     en_us = {
+    --         name = "Spirit Of Order",
+    --         description =
+    --             "#{{ButtonRT}} Tap DROP to cycle between Spirit Orbs" ..
+    --             "#Use to activate the chosen Spirit Orb"
+    --     },
+    -- },
 }
 
 --ENTITY DESCRIPTIONS

@@ -485,4 +485,40 @@ function utility:IsVersusScreenPlaying()
         and not room:IsClear()
 end
 
+---@param noRandom boolean | nil
+---@return table
+function utility:GetOrbs(noRandom)
+    if noRandom then
+        return SPIRIT_ORBS_NO_RANDOM
+    else
+        return SPIRIT_ORBS
+    end
+end
+
+local variantToDeathEffect = {
+    [enums.GlassHeadVariant.GLASS_HEAD] = enums.GlassHeadDeathEffectVariant.SPHERE,
+    [enums.GlassHeadVariant.FLASK_HEAD] = enums.GlassHeadDeathEffectVariant.FLASK,
+    [enums.GlassHeadVariant.BEER_HEAD] = enums.GlassHeadDeathEffectVariant.BEER,
+    [enums.GlassHeadVariant.WINE_HEAD] = enums.GlassHeadDeathEffectVariant.WINE,
+}
+
+---@param entity Entity
+function utility:SpawnGlassHeadDeathEffect(entity)
+    local variant = enums.GlassHeadDeathEffectVariant.FLASK_PROJECTILE
+
+    if entity.SubType == 0 then
+        variant = variantToDeathEffect[entity.Variant]
+    end
+
+    local effect = TSIL.EntitySpecific.SpawnEffect(
+        variant,
+        0,
+        entity.Position
+    )
+
+    effect.FlipX = entity.FlipX
+
+    return effect
+end
+
 MilkshakeVol1.utility = utility

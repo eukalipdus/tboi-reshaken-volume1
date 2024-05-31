@@ -92,8 +92,8 @@ local function SplitAnimationSingle(collectible, colorOne, colorTwo)
     end, SHATTERED_SOLID_FRAMES)
 end
 
-local function HandleBreakfast(collectible, shatteredCollectible, quality)
-    for i = 0, 1 do
+local function HandleBreakfast(collectible, shatteredCollectible, quality, count)
+    for i = 0, count do
         local splitQuality = quality - 1
         local spawnPosition = GetSplitPosition(i, 1, 2, collectible)
 
@@ -171,7 +171,13 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
                 or (newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST
                     and (itemPool ~= ItemPoolType.POOL_BOSS and itemPool ~= ItemPoolType.POOL_GREED_BOSS))
                 or counter == TIMES_CAN_FAIL then
-                    HandleBreakfast(collectible, shatteredCollectible, quality)
+                    local count = 0
+                    if i == 1 then
+                        count = 0
+                    else
+                        count = 1
+                    end
+                    HandleBreakfast(collectible, shatteredCollectible, quality, count)
                     return
                 end
 

@@ -55,7 +55,7 @@
     <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
 
-    <trinket name="TRACK ALT PATH UNLOCK" description="Report this to the Milkshake devs" achievement="407" tags="nogreed"/>
+    <trinket name="Alt Path Unlock Tracker" description="Please stop reporting this to the Milkshake devs" gfx="trinkets_alt_path_unlock_tracker.png" achievement="407" tags="nogreed"/>
 
     <active id="23" name="Leviticus " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0"/>
     <active id="23" name="Leviticus  " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0"/>
@@ -65,6 +65,7 @@
     <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true"/>
     <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip nolostbr summonable noeden" quality="2" gfx="collectibles_glassheart.png" hidden="true"/>
     <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" tags="noeden" quality="1" hidden="true"/>
-    <passive id="31" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" hidden="true" tags="nocantrip noeden" quality="5" />
+    <passive id="32" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" hidden="true" tags="nocantrip noeden" quality="5" />
     <passive id="50" name="Saataa Andagii" description="Saataa Andagii" tags="nocantrip nolostbr noeden" quality="6" maxhearts="1" hearts="4" gfx="sata_andagi.png" hidden="true"/>
+    <passive id="31" name="Water With Food Coloring" description="Wish granted" cache="all" quality="6" gfx="collectibles_waterwithfoodcoloring.png" hidden="true" tags="noeden" />
 </items>

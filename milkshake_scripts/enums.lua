@@ -35,6 +35,7 @@ enums.Collectibles = {
     SATA_ANDAGI = Isaac.GetItemIdByName("Saataa Andagii"),
     GOLDEN_BREAKFAST = Isaac.GetItemIdByName("Golden Breakfast"),
     PRISMATIC_GOGGLES = Isaac.GetItemIdByName("Prismatic Goggles"),
+    WATER_WITH_FOOD_COLORING = Isaac.GetItemIdByName("Water With Food Coloring"),
 
     SPECIAL_BRENDA_FIRE_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM FIRE WISP"),
     SPECIAL_BRENDA_PSYCHIC_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM PSYCHIC WISP"),
@@ -65,7 +66,7 @@ enums.Trinkets = {
     SAPPHIRE_SHARD = Isaac.GetTrinketIdByName("Torrential Sapphire"),
     AMBER_SHARD = Isaac.GetTrinketIdByName("Terrestrial Amber"),
 
-    TRACK_ALT_PATH_UNLOCK = Isaac.GetTrinketIdByName("TRACK ALT PATH UNLOCK")
+    TRACK_ALT_PATH_UNLOCK = Isaac.GetTrinketIdByName("Alt Path Unlock Tracker")
 }
 
 enums.Cards = {
@@ -158,7 +159,11 @@ enums.Sounds = {
     SPIRIT_SACRILEGE = Isaac.GetSoundIdByName("Spirit Of Sacrilege"),
     SPIRIT_SALVATION = Isaac.GetSoundIdByName("Spirit Of Salvation"),
     SPIRIT_TERRASTRIUM = Isaac.GetSoundIdByName("Spirit Of Terrastrium"),
-    SPIRIT_VIRULENCE = Isaac.GetSoundIdByName("Spirit Of Virulence")
+    SPIRIT_VIRULENCE = Isaac.GetSoundIdByName("Spirit Of Virulence"),
+
+    ORB_DROP = Isaac.GetSoundIdByName("Spirit Orb Drop"),
+    ORB_PICKUP = Isaac.GetSoundIdByName("Spirit Orb Pickup"),
+    ORB_CAPTURE = Isaac.GetSoundIdByName("Spirit Orb Capture"),
 }
 
 enums.Costumes = {
@@ -206,6 +211,7 @@ enums.Orbs = {
     UNDEAD = Isaac.GetCardIdByName("Spirit Of Revenance"),
     WATER = Isaac.GetCardIdByName("Spirit Of Deluge"),
     ROCK = Isaac.GetCardIdByName("Spirit Of Terrastrium"),
+    ORDER = Isaac.GetCardIdByName("Spirit Of Order"),
 }
 
 
@@ -276,4 +282,13 @@ enums.Challenges = {
     ISAAC_CLICKER = Isaac.GetChallengeIdByName("[Reshaken] Isaac Clicker"),
     WORLD_OF_LIGHT = Isaac.GetChallengeIdByName("[Reshaken] World of Light")
 }
+
+enums.GlassHeadDeathEffectVariant = {
+    SPHERE = Isaac.GetEntityVariantByName("Glass Head Corpse"),
+    FLASK = Isaac.GetEntityVariantByName("Flask Head Corpse"),
+    FLASK_PROJECTILE = Isaac.GetEntityVariantByName("Flask Head Projectile Corpse"),
+    BEER = Isaac.GetEntityVariantByName("Beer Head Corpse"),
+    WINE = Isaac.GetEntityVariantByName("Wine Head Corpse"),
+}
+
 MilkshakeVol1.enums = enums

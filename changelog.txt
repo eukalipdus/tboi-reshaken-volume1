@@ -11,6 +11,7 @@ Additions
 	-Implemented several sheol and scarred womb rooms
 	-Added sound for picking up poop with doggy bag
 
+
 ================================================
     v1.0.2 - January 9th, 2024
 ================================================
@@ -26,6 +27,7 @@ Additions
 Changes
 	-Changed leviticus' Library Expanded TBOAB effect to give holy card instead of crack the sky, activates crack the sky on duplicate copies instead
 
+
 ================================================
     v1.0.3 - January 12th, 2024
 ================================================
@@ -34,6 +36,7 @@ Fixes
 
 Additions
 	-Added missing Spanish EIDs
+
 
 ================================================
     v1.0.4 - January 14th, 2024
@@ -51,6 +54,7 @@ Changes
 	-Reduced pot of gold coin replacement rate to 40% fromm 50%
 	-Reduced egg, crystal, and acid penny spawn chance by 5%
 	
+
 ================================================
     v1.0.5 - January 15th, 2024
 ================================================
@@ -58,6 +62,7 @@ Changes
 	-La chancla now prevents damage from delirium mom stomp
 	-Witch doctor mask hud pills display in co-op now
 	-Wine heads can walk into the player now
+
 
 ================================================
     v1.0.6 - January 30th, 2024
@@ -85,11 +90,13 @@ Additions
 	-Added Korean translations
 	-Added a lot of community made rooms!
 
+
 ================================================
     v1.0.7 - January 31st, 2024
 ================================================
 Additions
 	-Added Chinese translations!
+
 
 ================================================
     v1.0.8 - February 3rd, 2024
@@ -101,6 +108,7 @@ Fixes
 	-Tweaked some unfair community rooms
 	-Fixed some spirit orb special rooms not spawning
 
+
 ================================================
 	v1.0.9 - February 8th, 2024
 ================================================
@@ -111,6 +119,7 @@ Fixes
 Additions
 	-Added some more rooms
 
+
 ================================================
 	v1.0.10 - February 11th, 2024
 ================================================
@@ -120,6 +129,7 @@ Fixes
 
 Additions
 	-Added custom backdrops for Infenro and Sacrilege themed special rooms
+
 
 ================================================
 	v1.0.11 - February 20th, 2024
@@ -135,3 +145,58 @@ Removals
 	-Removed Milkshake from boss pool
 	-Removed food tag from spoiled, balanced, and hearty breakfasts, meaning they can't appear with binge eater anymore
 	-Nerfed fire and electric super secret rooms + lowered fire angel super secret room weight
+
+
+================================================
+    v1.0.12 - March 21, 2024
+================================================
+Fixes
+    -Fixed prismatic dice not properly splitting quality 5 and quality 6 items
+    -Fixed prismatic dice spawning an extra breakfast when breakfasting
+    -Fixed new breakfast items stats not stacking
+    -Fixed Alt Path Unlock Tracker trinket showing up
+    -Fixed Spirit kiln not killing you at half a soul heart
+    -Fixed crash caused by Acid Penny trying to activate a horse pill
+
+Changes
+    -Changed Milkshake's Tear color to a nicer shade of pink
+    -Changed Milkshake's stat ups to be only in increments of 0.1
+    -Made Milkshake's stat boosts stack additively instead of exponentially so you're less likely to get unusable shotspeed if you ever get 20 milkshake's for some reason
+    (for example now if you got a 1.4 damage multiplier from milkshake getting a second one will give you a 1.8 damage multiplier total)
+    -Sticky Nickels will now always be converted to rainbow pennies
+
+Additions
+    -Added quality 5 and 6 icons
+    -Added Alt Path Unlock Tracker trinket: Automatically opens the alt path door upon defeating the floor boss
+    -Spirit Sage challenge will now be locked until you unlock the alt path and Tainted Bethany (RGON only)
+    -Add 1 new item (For players who find base Reshaken too easy)
+
+================================================
+    v1.0.13 - May 22, 2024
+================================================
+Fixes
+	-Fixed crash in rooms with entity 618.125 when you didn't have Repentogon installed
+	-Fixed error that would appear on load when you didn't have Repentogon installed
+	-Fixed Milkshake/Water With Food Coloring multiplier stats attempting to render when they shouldn't
+	-Fixed bum friend, bumbo, and ultra greed treating all coins as being worth only 1 cent.
+	-Fixed glassheads sommetimes not activating their death effects.
+	-Fixed glassheads not dropping coins when killed as tKeeper
+	-Fixed some rooms
+	-Fixed EID typos
+	-Fixed Eclipse Compat
+	-Fixed error with Milkshake
+	-Fixed TNT in some glasshead rooms being able to become pushable tnts
+
+Changes
+	-Acid Pennies will now reveal pills upon use if it uses a pill that's in the current pool
+	-Lowered spirit orb room special room weight across the board to not be so common over vanilla rooms, you'll now find 1-4 per run on average.
+	-Lowered Celestial Mirror contact damage from 75 to 50 per second
+
+Additions
+	-Actually added beerhead mines rooms which should've been there the whole time but weren't (oops)
+	-Actually added Leviticus to the angel pool (it was supposed to be how did we miss that)
+	-Added Spirit of Order, a rare spirit orb that can activate any spirit orb effect you chose
+	-Added more rooms to utero and gehenna and stuff
+	-Added new flowey glass idol sprite (feel free to submit more if you want)
+	-Added new art to art folder
+	-Updated Mirror Key EID to mention that it turns you into the lost while inside the mirror dimension

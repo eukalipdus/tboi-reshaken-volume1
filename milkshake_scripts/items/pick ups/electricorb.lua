@@ -690,7 +690,6 @@ function SapphireOrb:OnSlotCollision(slot)
         return true
     end
 end
-
 MilkshakeVol1:AddPriorityCallback(
     TSIL.Enums.CustomCallback.PRE_SLOT_COLLISION,
     CallbackPriority.IMPORTANT,

@@ -67,7 +67,7 @@ MilkshakeVol1:AddCallback(
 )
 
 function ChaosOrb:PostRender()
-    frame = frame + 0.15
+    frame = frame + 0.3
     if frame > 60 then frame = 1 end
     if Game():GetHUD():IsVisible() then
         for i = 1, Game():GetNumPlayers() do
@@ -90,4 +90,8 @@ function ChaosOrb:PostRender()
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, ChaosOrb.PostRender)
+if REPENTOGON then
+    MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_HUD_RENDER, ChaosOrb.PostRender)
+else
+    MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, ChaosOrb.PostRender)
+end

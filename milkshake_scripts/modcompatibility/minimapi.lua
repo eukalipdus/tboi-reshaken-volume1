@@ -15,6 +15,7 @@ MilkshakeVol1:AddModCompatibility("MinimapAPI", function ()
         [enums.Orbs.WATER] = "spiritWater",
         --RIP tattered page
         --[enums.Cards.TATTERED_PAGE] = "gfx/tattered_page.anm2"
+        [enums.Orbs.ORDER] = "spiritOrder",
     }
     local anm2 = "gfx/ui/orb_mapicons.anm2"
 

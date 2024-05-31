@@ -2,6 +2,7 @@ local enums = MilkshakeVol1.enums
 
 local REPLACE_CHANCE = 0.01
 local KEEPERB_REPLACE_CHANCE = 0
+local TIMES_CAN_FAIL = 5000
 
 local positivePillCollectibles = {
     CollectibleType.COLLECTIBLE_PHD,
@@ -25,9 +26,12 @@ end
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
     local randomPill = PillEffect.PILLEFFECT_BAD_GAS
+    local counter = 0
     repeat
+        counter = counter + 1
+        if counter == TIMES_CAN_FAIL then break end -- For the unluckiest person in the world
         randomPill = Game():GetItemPool():GetPill(Random() + 1)
-    until randomPill ~= PillEffect.PILLEFFECT_TELEPILLS
+    until randomPill ~= PillEffect.PILLEFFECT_TELEPILLS and randomPill < 2048
 
     local realPhd = false
     local falsePhd = player:HasCollectible(CollectibleType.COLLECTIBLE_FALSE_PHD)
@@ -43,9 +47,18 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PE
     elseif realPhd and not falsePhd then
         randomPill = TSIL.Pills.GetPHDPillEffect(randomPill)
     end
+
+    local effectToColor = {}
+    for i = 1, PillColor.NUM_STANDARD_PILLS do
+        effectToColor[Game():GetItemPool():GetPillEffect(i, player)] = i
+    end
+
+    if effectToColor[randomPill] then
+        print(effectToColor[randomPill])
+        Game():GetItemPool():IdentifyPill(effectToColor[randomPill])
+    end
+
     player:UsePill(randomPill, PillColor.PILL_NULL)
-    --player:AddPill(randomPill)
-    --SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 end, 0.15)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BLESSED_PENNY, function (_, player)

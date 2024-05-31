@@ -62,6 +62,7 @@ include("milkshake_scripts.items.collectibles.passive.rainbowfragment")
 include("milkshake_scripts.items.collectibles.active.mirrorkey")
 include("milkshake_scripts.items.collectibles.passive.sataandagi")
 include("milkshake_scripts.items.collectibles.passive.prismatic_goggles")
+include("milkshake_scripts.items.collectibles.passive.waterwithfoodcoloring")
 
 -- Trinkets
 include("milkshake_scripts.items.trinkets.amethystshard")
@@ -96,6 +97,7 @@ include("milkshake_scripts.items.pick ups.revenanceOrb")
 include("milkshake_scripts.items.pick ups.toxicorb")
 include("milkshake_scripts.items.pick ups.unholyorb")
 include("milkshake_scripts.items.pick ups.rockorb")
+include("milkshake_scripts.items.pick ups.orbder")
 
 
 --Pools
@@ -103,7 +105,6 @@ include("milkshake_scripts.pools.glasspool")
 
 --Slots
 include("milkshake_scripts.slots.spiritklinbrenda")
-
 
 --Wisps
 include("milkshake_scripts.wisps.brendaelectricwisp")
@@ -128,6 +129,7 @@ include("milkshake_scripts.enemies.beerhead")
 include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
+include("milkshake_scripts.enemies.glassheaddeatheffects")
 
 --Challenges
 include("milkshake_scripts.challenges.isaacclicker")

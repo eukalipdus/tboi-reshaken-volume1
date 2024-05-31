@@ -214,3 +214,15 @@ MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(EntityPickup pickup, number c
     boolean isNatural - false if conversion is due to Pot of Gold, true if not
 
 --------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max)
+* Defined in line 24 of milkshake_scripts/items/collectibles/familiars/milkshake.lua
+
+    Gets a set of stat multipliers. Used for Milkshake and Water With Food Coloring
+
+    RNG rng
+    itemNum integer - How many of the item granting the multiplier the player has
+    min float - The minimum for the multipliers
+    max float - The maximum for the multipliers
+
+--------------------------------------------------------------------------------------------------------------------------------------

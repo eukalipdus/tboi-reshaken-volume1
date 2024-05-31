@@ -19,12 +19,30 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 
-local function CanUseBrenda(player)
-    if (player:GetPlayerType() == PlayerType.PLAYER_THELOST or player:GetPlayerType() == PlayerType.PLAYER_THELOST_B)
-    and not (player:HasCollectible(enums.Collectibles.LEVITICUS) and player:GetActiveCharge() + player:GetBatteryCharge() > 0)
-    and not (player:HasCollectible(CollectibleType.COLLECTIBLE_ALABASTER_BOX) and player:GetActiveCharge() + player:GetBatteryCharge() > 0) then
-        return false
-    else return true end
+local function hasChargedSoulChargeItem(player)
+   if (player:HasCollectible(enums.Collectibles.LEVITICUS)
+   or player:HasCollectible(enums.Collectibles.LEVITICUS_ALADAR)
+   or player:HasCollectible(enums.Collectibles.LEVITICUS_FANCY)
+   or player:HasCollectible(CollectibleType.COLLECTIBLE_ALABASTER_BOX))
+   and player:GetActiveCharge() + player:GetBatteryCharge() > 0 then return true end
+
+   return false
+end
+
+local function isLostForm(player)
+    local playerType = player:GetPlayerType()
+    local soulHearts = player:GetSoulHearts()
+    local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
+    local isGhost = player:GetEffects():HasNullEffect(NullItemID.ID_LOST_CURSE)
+
+    if (playerType == PlayerType.PLAYER_THELOST
+    or playerType == PlayerType.PLAYER_THELOST_B
+    or (EclipsedMod and playerType == EclipsedMod.enums.Characters.UnbiddenB)) then return true end
+
+
+    if isGhost and soulHearts == 1 and allotherhearts == 0 then return true end --lost curse checking
+
+    return false
 end
 
 
@@ -405,31 +423,36 @@ MilkshakeVol1:AddCallback(
     enums.Slots.SPIRIT_KLIN_BRENDA
 )
 
+local function spiritKilnPayout()
+    
+end
 
 ---@param brenda Entity
 ---@param player EntityPlayer
 function SpiritKlin:OnBrendaCollision(brenda, player)
-    if not CanUseBrenda(player) then return end
     local sprite = brenda:GetSprite()
     if sprite:GetAnimation() ~= "Idle" then return end
 
     local soulCharge = player:GetSoulCharge()
     local soulHearts = player:GetSoulHearts()
     local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
-    local isGhost = player:GetEffects():HasNullEffect(NullItemID.ID_LOST_CURSE)
-    if soulCharge < 1 and soulHearts < 1 then return end
-    if isGhost and soulHearts == 1 and soulCharge < 1 and allotherhearts == 0 then return end --ghost chars checking
-    if (player:GetPlayerType() == PlayerType.PLAYER_THELOST or player:GetPlayerType() == PlayerType.PLAYER_THELOST_B) then
-        player:SetActiveCharge(player:GetActiveCharge() + player:GetBatteryCharge() - 1)
+
+    if isLostForm(player) and (not hasChargedSoulChargeItem(player)) and soulCharge < 1 then return end
+    if soulCharge + soulHearts == 0 and (not hasChargedSoulChargeItem(player)) then return end
+    if isLostForm(player) then
+        if soulCharge >= 1 then player:AddSoulCharge(-1)
+        elseif hasChargedSoulChargeItem(player) then
+            player:SetActiveCharge(player:GetActiveCharge() + player:GetBatteryCharge() - 1)
+        end
     else
         if soulCharge >= 1 then
             player:AddSoulCharge(-1)
+        elseif hasChargedSoulChargeItem(player) then
+            player:SetActiveCharge(player:GetActiveCharge() + player:GetBatteryCharge() - 1)
+        elseif allotherhearts == 0 and soulHearts == 1 then
+                player:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE|DamageFlag.DAMAGE_NO_MODIFIERS|DamageFlag.DAMAGE_NO_PENALTIES, EntityRef(player), 1)
         else
-            if allotherhearts > 0 and soulHearts == 1 then
-                player:TakeDamage(1, DamageFlag.DAMAGE_INVINCIBLE|DamageFlag.DAMAGE_NO_MODIFIERS|DamageFlag.DAMAGE_NO_PENALTIES, nil, 1)
-            else
                 player:AddSoulHearts(-1)
-            end
         end
     end
 
