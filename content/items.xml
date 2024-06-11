@@ -61,11 +61,11 @@
     <active id="23" name="Leviticus  " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0"/>
 
     <!-- unused -->
-    <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true"/> 
-    <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true"/>
-    <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip nolostbr summonable noeden" quality="2" gfx="collectibles_glassheart.png" hidden="true"/>
-    <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" tags="noeden" quality="1" hidden="true"/>
-    <passive id="32" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" hidden="true" tags="nocantrip noeden" quality="5" />
-    <passive id="50" name="Saataa Andagii" description="Saataa Andagii" tags="nocantrip nolostbr noeden" quality="6" maxhearts="1" hearts="4" gfx="sata_andagi.png" hidden="true"/>
-    <passive id="31" name="Water With Food Coloring" description="Wish granted" cache="all" quality="6" gfx="collectibles_waterwithfoodcoloring.png" hidden="true" tags="noeden" />
+    <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true" craftquality="-1"/> 
+    <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true" craftquality="-1"/>
+    <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip nolostbr summonable noeden" quality="2" gfx="collectibles_glassheart.png" hidden="true" craftquality="-1"/>
+    <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" tags="noeden" quality="1" hidden="true" craftquality="-1"/>
+    <passive id="32" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" hidden="true" tags="nocantrip noeden" quality="5" craftquality="-1"/>
+    <passive id="50" name="Saataa Andagii" description="Saataa Andagii" tags="nocantrip nolostbr noeden" quality="6" maxhearts="1" hearts="4" gfx="sata_andagi.png" hidden="true" craftquality="-1"/>
+    <passive id="31" name="Water With Food Coloring" description="Wish granted" cache="all" quality="6" gfx="collectibles_waterwithfoodcoloring.png" hidden="true" tags="noeden" craftquality="-1"/>
 </items>
