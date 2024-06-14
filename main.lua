@@ -10,7 +10,7 @@ if StageAPI then
     StageAPI.UnregisterCallbacks(MilkshakeVol1.Name)
 end
 
---include("milkshake_scripts.bumAPI.core")
+--include("milkshake_scripts.bumAPI.core") test
 
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
