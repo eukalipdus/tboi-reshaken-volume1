@@ -11,6 +11,10 @@ if StageAPI then
 end
 
 --include("milkshake_scripts.bumAPI.core") test
+-- Unlock Manager
+MilkshakeVol1.UnlockManager = {}
+include("milkshake_scripts.unlockmanager")
+include("milkshake_scripts.achievementpopup")
 
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")

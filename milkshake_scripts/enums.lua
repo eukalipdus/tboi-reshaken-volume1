@@ -291,4 +291,11 @@ enums.GlassHeadDeathEffectVariant = {
     WINE = Isaac.GetEntityVariantByName("Wine Head Corpse"),
 }
 
+enums.Achievements = {
+    PRISMATIC_GOGGLES = 1,
+    RAINBOW_PENNIES = 2,
+    SPIRIT_OF_ORDER = 3,
+    GLASS_GOD = 4,
+}
+
 MilkshakeVol1.enums = enums
