@@ -54,7 +54,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PE
     end
 
     if effectToColor[randomPill] then
-        print(effectToColor[randomPill])
+        --print(effectToColor[randomPill])
         Game():GetItemPool():IdentifyPill(effectToColor[randomPill])
     end
 
