@@ -2,33 +2,68 @@ local unlockableManager = {}
 local enums = MilkshakeVol1.enums
 local collectibles = enums.Collectibles
 
-local requiredItems = {
-    collectibles.GLOBIN_IN_A_BUCKET,
-    collectibles.GOLDEN_SHOVEL,
-    collectibles.MILKSHAKE,
-    collectibles.FIRECRACKER_ROSE,
-    collectibles.SHARP_CURSOR,
-    collectibles.LA_CHANCLA,
-    collectibles.LYRA,
-    collectibles.EMPTY_SLOT,
-    collectibles.SHATTERED_ORB,
-    collectibles.PRISMATIC_DICE,
-    collectibles.SPIRIT_BUM,
-    collectibles.MILKSHAKE,
-    collectibles.INNER_REFLECTION,
-    collectibles.SICKLE_CELL,
-    collectibles.POT_OF_GOLD,
-    collectibles.FRAGILE_MIRROR,
-    collectibles.LEVITICUS,
-    collectibles.BATTERY_ACID,
-    collectibles.DOGGY_BAG,
-    collectibles.DADS_MITT,
-    collectibles.LIL_BISHOP,
-    collectibles.RAINBOW_FRAGMENT,
-    collectibles.WITCH_DOCTOR_MASK,
-    collectibles.MIRROR_KEY,
-    collectibles.PRISMATIC_GOGGLES,
+local idToName = {
+    [collectibles.GLOBIN_IN_A_BUCKET] = "globin_in_a_bucket",
+    [collectibles.GOLDEN_SHOVEL] = "golden_shovel",
+    [collectibles.MILKSHAKE] = "milkshake",
+    [collectibles.FIRECRACKER_ROSE] = "firecracker_flower",
+    [collectibles.SHARP_CURSOR] = "sharp_cursor",
+    [collectibles.LA_CHANCLA] = "la_chancla",
+    [collectibles.LYRA] = "lyra",
+    [collectibles.EMPTY_SLOT] = "empty_slot",
+    [collectibles.SHATTERED_ORB] = "shattered_orb",
+    [collectibles.PRISMATIC_DICE] = "prismatic_dice",
+    [collectibles.SPIRIT_BUM] = "spirit_bum",
+    [collectibles.INNER_REFLECTION] = "celestial_mirror",
+    [collectibles.SICKLE_CELL] = "sickle_cell",
+    [collectibles.POT_OF_GOLD] = "pot_of_gold",
+    [collectibles.FRAGILE_MIRROR] = "glass_idol",
+    [collectibles.LEVITICUS] = "leviticus",
+    [collectibles.BATTERY_ACID] = "battery_acid",
+    [collectibles.DOGGY_BAG] = "doggy_bag",
+    [collectibles.DADS_MITT] = "dads_mitt",
+    [collectibles.LIL_BISHOP] = "lil_bishop",
+    [collectibles.RAINBOW_FRAGMENT] = "rainbow_fragment",
+    [collectibles.WITCH_DOCTOR_MASK] = "witch_doctor_mask",
+    [collectibles.MIRROR_KEY] = "mirror_key",
+    [collectibles.PRISMATIC_GOGGLES] = "prismatic_goggles",
 }
+
+---Creates saved table to track taken items
+local function InitializeCollection()
+    TSIL.SaveManager.AddPersistentVariable(
+        MilkshakeVol1,
+        "Milkshake1Collection",
+        {
+            [idToName[collectibles.GLOBIN_IN_A_BUCKET]] = false,
+            [idToName[collectibles.GOLDEN_SHOVEL]] = false,
+            [idToName[collectibles.MILKSHAKE]] = false,
+            [idToName[collectibles.FIRECRACKER_ROSE]] = false,
+            [idToName[collectibles.SHARP_CURSOR]] = false,
+            [idToName[collectibles.LA_CHANCLA]] = false,
+            [idToName[collectibles.LYRA]] = false,
+            [idToName[collectibles.EMPTY_SLOT]] = false,
+            [idToName[collectibles.SHATTERED_ORB]] = false,
+            [idToName[collectibles.PRISMATIC_DICE]] = false,
+            [idToName[collectibles.SPIRIT_BUM]] = false,
+            [idToName[collectibles.INNER_REFLECTION]] = false,
+            [idToName[collectibles.SICKLE_CELL]] = false,
+            [idToName[collectibles.POT_OF_GOLD]] = false,
+            [idToName[collectibles.FRAGILE_MIRROR]] = false,
+            [idToName[collectibles.LEVITICUS]] = false,
+            [idToName[collectibles.BATTERY_ACID]] = false,
+            [idToName[collectibles.DOGGY_BAG]] = false,
+            [idToName[collectibles.DADS_MITT]] = false,
+            [idToName[collectibles.LIL_BISHOP]] = false,
+            [idToName[collectibles.RAINBOW_FRAGMENT]] = false,
+            [idToName[collectibles.WITCH_DOCTOR_MASK]] = false,
+            [idToName[collectibles.MIRROR_KEY]] = false,
+            [idToName[collectibles.PRISMATIC_GOGGLES]] = false,
+        },
+        TSIL.Enums.VariablePersistenceMode.NONE,
+        true
+    )
+end
 
 ---Creates saved table to track unlock data
 local function InitializeUnlockData()
@@ -105,4 +140,28 @@ end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NPC_DEATH,
     unlockableManager.PostNpcDeath
+)
+
+---@param player EntityPlayer
+function unlockableManager:PostItemAdded(_, collectibleType)
+    if not TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "Milkshake1Collection") then
+        InitializeCollection()
+    end
+
+    local collection = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "Milkshake1Collection")
+
+    if collectibleType == enums.Collectibles.LEVITICUS_ALADAR
+    or collectibleType == enums.Collectibles.LEVITICUS_FANCY then
+        collectibleType = enums.Collectibles.LEVITICUS
+    end
+
+    local collectibleName = idToName[collectibleType]
+
+    if collection[collectibleName] == false then
+        collection[collectibleName] = true
+    end
+end
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
+    unlockableManager.PostItemAdded
 )
