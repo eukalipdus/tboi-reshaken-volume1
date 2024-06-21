@@ -72,7 +72,7 @@ local function InitializeUnlockData()
         "UnlockData",
         {
             [enums.Achievements.PRISMATIC_GOGGLES] = false,
-            [enums.Achievements.RAINBOW_PENNIES] = false,
+            [enums.Achievements.GOLDEN_COOKIE] = false,
             [enums.Achievements.SPIRIT_OF_ORDER] = false,
             [enums.Achievements.GLASS_GOD] = false,
         },
