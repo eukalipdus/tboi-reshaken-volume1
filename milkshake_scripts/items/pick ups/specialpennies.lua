@@ -1,8 +1,8 @@
 local enums = MilkshakeVol1.enums
 
 local REPLACE_CHANCE = 0.01
-local RAINBOW_COOKIE_CHANCE_INCREASE = 0.03
-local KEEPERB_REPLACE_CHANCE = 0
+local RAINBOW_COOKIE_CHANCE = 0.1
+local RAINBOW_COOKIE_CHANCE_INCREASE = 0.05
 local TIMES_CAN_FAIL = 5000
 local BASE_DELAY_NEXT_CARDPILL = 30
 local CARDPILL_USE_DELAY = 15
@@ -26,6 +26,30 @@ local function GetSpawnCount(player)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE) then return 1 end
     local rng = player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE)
     return TSIL.Random.GetRandomInt(1, 2, rng)
+end
+
+---Returns the sum of the trinket multiplier for all players for Rainbow Cookie
+---@return number
+local function GetTotalTrinketMultiplier()
+    local multiplier = 0
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        multiplier = multiplier + player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE)
+    end
+    return multiplier - 1
+end
+
+---Calculates and returns the chance for a Rainbow Penny to spawn
+---@return number
+local function GetRainbowPennySpawnChance()
+    local spawnChance = REPLACE_CHANCE
+    if TSIL.Players.DoesAnyPlayerHasTrinket(enums.Trinkets.RAINBOW_COOKIE) then
+        local trinketMultiplierIncrease = RAINBOW_COOKIE_CHANCE_INCREASE * GetTotalTrinketMultiplier()
+        spawnChance = RAINBOW_COOKIE_CHANCE + trinketMultiplierIncrease
+    elseif MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B) then
+        spawnChance = 0
+    end
+    return spawnChance
 end
 
 ---Returns how many of a given pickup a rainbow penny should give
@@ -189,18 +213,14 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_RENDER, function (_, picku
 end)
 
 function MilkshakeVol1:PostPickupInit(pickup)
-    if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.RAINBOW_PENNIES)
-    or (Game().Difficulty == Difficulty.DIFFICULTY_GREED or Game().Difficulty == Difficulty.DIFFICULTY_GREEDIER)
+    --if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.RAINBOW_PENNIES)
+    if (Game().Difficulty == Difficulty.DIFFICULTY_GREED or Game().Difficulty == Difficulty.DIFFICULTY_GREEDIER)
     or MilkshakeVol1.utility:DidEntityExist()
     or (Epiphany and MilkshakeVol1.utility:AnyPlayerIsCharacter(Epiphany.PlayerType.KEEPER)) then
         return
     end
-    local chance
-    if MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B) then
-        chance = KEEPERB_REPLACE_CHANCE
-    else
-        chance = REPLACE_CHANCE
-    end
+    local chance = GetRainbowPennySpawnChance()
+    print("chance is " .. chance)
     MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, true)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, MilkshakeVol1.PostPickupInit)
