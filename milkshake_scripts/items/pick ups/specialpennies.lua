@@ -28,6 +28,16 @@ local function GetSpawnCount(player)
     return TSIL.Random.GetRandomInt(1, 2, rng)
 end
 
+---Returns how many of a given pickup a rainbow penny should give
+---@param player EntityPlayer
+---@return integer
+local function GetActivationCount(player)
+    if player:HasTrinket(enums.Trinkets.RAINBOW_COOKIE) then
+        return 2
+    end
+    return 1
+end
+
 ---Activate per Acid Penny activation
 local function AcidPennyPickupEffect(player, rng)
     local randomPill = PillEffect.PILLEFFECT_BAD_GAS
@@ -87,10 +97,13 @@ local function CrystalPennyPickupEffect(player, rng)
 end
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
-    local timesToActivate = player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE)
+    local timesToActivate = 1
+    if player:HasTrinket(enums.Trinkets.RAINBOW_COOKIE) then
+        timesToActivate = 2
+    end
     local delay = BASE_DELAY_NEXT_CARDPILL
-    for i = 0, timesToActivate do
-        if i > 0 then
+    for i = 1, timesToActivate do
+        if i > 1 then
             TSIL.Utils.Functions.RunInFrames(AcidPennyPickupEffect, delay, player, player:GetDropRNG())
             delay = delay + BASE_DELAY_NEXT_CARDPILL
         else
@@ -100,20 +113,20 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PE
 end, 0.15)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BLESSED_PENNY, function (_, player)
-    player:AddSoulHearts(1 + player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE))
+    player:AddSoulHearts(GetActivationCount(player))
     SFXManager():Play(SoundEffect.SOUND_HOLY)
 end, 0.15)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BLOODY_PENNY, function (_, player)
-    player:AddHearts(1 + player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE))
+    player:AddHearts(GetActivationCount(player))
     SFXManager():Play(SoundEffect.SOUND_BOSS2_BUBBLES)
 end, 0.45)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.BURNT_PENNY, function (_, player)
     if player:GetPlayerType() ~= PlayerType.PLAYER_BLUEBABY_B then
-        player:AddBombs(GetSpawnCount(player) + player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE))
+        player:AddBombs(GetSpawnCount(player) + GetActivationCount(player))
     else
-        player:AddPoopMana(1 + player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE))
+        player:AddPoopMana(GetActivationCount(player))
     end
     SFXManager():Play(SoundEffect.SOUND_FETUS_FEET)
 end, 0.45)
@@ -124,21 +137,23 @@ end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CHARGED_PENNY, function (_, player)
     if not player:NeedsCharge(ActiveSlot.SLOT_PRIMARY) then return end
-    local numCharges = 1 + player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE)
-    TSIL.Charge.AddCharge(player, nil, numCharges)
+    TSIL.Charge.AddCharge(player, nil, GetActivationCount(player))
 end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.COUNTERFEIT_PENNY, function (_, player)
-    player:AddCoins(1 + player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE))
+    player:AddCoins(GetActivationCount(player))
     SFXManager():Play(SoundEffect.SOUND_CASH_REGISTER)
 end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CRYSTAL_PENNY, function (_, player)
     local rng = TSIL.RNG.NewRNG()
-    local timesToActivate = player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE)
+    local timesToActivate = 1
+    if player:HasTrinket(enums.Trinkets.RAINBOW_COOKIE) then
+        timesToActivate = 2
+    end
     local delay = BASE_DELAY_NEXT_CARDPILL
-    for i = 0, timesToActivate do
-        if i > 0 then
+    for i = 1, timesToActivate do
+        if i > 1 then
             TSIL.Utils.Functions.RunInFrames(CrystalPennyPickupEffect, delay, player, rng)
             delay = delay + BASE_DELAY_NEXT_CARDPILL
         else
@@ -156,13 +171,12 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CURSED_
 end, 0.10)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.FLAT_PENNY, function (_, player)
-    player:AddKeys(GetSpawnCount(player) + player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE))
+    player:AddKeys(GetSpawnCount(player) + GetActivationCount(player))
     SFXManager():Play(SoundEffect.SOUND_KEYPICKUP_GAUNTLET)
 end, 0.45)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, function (pickup, player)
-    local count = 1 + player:GetTrinketMultiplier(enums.Trinkets.RAINBOW_COOKIE)
-    player:AddBlueFlies(count, pickup.Position, player)
+    player:AddBlueFlies(GetActivationCount(player), pickup.Position, player)
 end, 0.25)
 
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_RENDER, function (_, pickup)
