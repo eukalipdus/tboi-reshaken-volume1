@@ -220,7 +220,6 @@ function MilkshakeVol1:PostPickupInit(pickup)
         return
     end
     local chance = GetRainbowPennySpawnChance()
-    print("chance is " .. chance)
     MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, true)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, MilkshakeVol1.PostPickupInit)
