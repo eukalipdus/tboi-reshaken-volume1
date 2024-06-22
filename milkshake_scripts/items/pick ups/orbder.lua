@@ -1,96 +1,81 @@
 local mod = MilkshakeVol1
-local utils = mod.utility
-local enums = mod.enums
-local orbs = utils:GetOrbs()
 
-local ORB_ID = enums.Orbs.ORDER
-
-local game = Game()
-local sfx = SFXManager()
-
-local frameToOrb = {
-    enums.Orbs.FIRE,
-    enums.Orbs.ELECTRIC,
-    enums.Orbs.NATURE,
-    enums.Orbs.PSYCHIC,
-    enums.Orbs.RANDOM,
-    enums.Orbs.HOLY,
-    enums.Orbs.UNHOLY,
-    enums.Orbs.POISON,
-    enums.Orbs.UNDEAD,
-    enums.Orbs.WATER,
-    enums.Orbs.ROCK,
-}
-
----@return Sprite
-local function createSprite()
-    local sprite = Sprite()
-
-    sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true)
-    sprite:Play(sprite:GetDefaultAnimation(), true)
-
-    return sprite
+local TrueTrueOrbs = {}; for k, v in pairs(mod.enums.Orbs) do
+    if v ~= mod.enums.Orbs.RANDOM then
+        TrueTrueOrbs[k] = v
+    end
 end
 
----@type Sprite[]
-local sprites = {
-    createSprite(),
-    createSprite(),
-    createSprite(),
-    createSprite(),
+local ORBS = {}
+local idx = 1
+for _, v in pairs(TrueTrueOrbs) do
+    ORBS[idx] = v
+    idx = idx + 1
+end
+
+local NUM_ORBS = #ORBS - 1
+
+local SELECTION_TO_FRAME = {
+    0,
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
 }
 
-local orbsPerPlayer = {}
+local FRAME_TO_ORB = {
+    mod.enums.Orbs.FIRE,
+    mod.enums.Orbs.ELECTRIC,
+    mod.enums.Orbs.NATURE,
+    mod.enums.Orbs.PSYCHIC,
+    mod.enums.Orbs.RANDOM,
+    mod.enums.Orbs.HOLY,
+    mod.enums.Orbs.UNHOLY,
+    mod.enums.Orbs.POISON,
+    mod.enums.Orbs.UNDEAD,
+    mod.enums.Orbs.WATER,
+    mod.enums.Orbs.ROCK,
+}
 
----@param player EntityPlayer
-mod:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player)
-    local playerIndex = TSIL.Players.GetPlayerIndex(player)
-    MilkshakeVol1:UseSpiritOrb(frameToOrb[orbsPerPlayer[playerIndex]], player, 0)
-    sfx:Play(enums.Sounds.ORB_CAPTURE)
-end, ORB_ID)
+local sprite = Sprite(); sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true); sprite:Play(sprite:GetDefaultAnimation(), true)
 
 ---@param player EntityPlayer
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
-    if player:GetCard(0) == ORB_ID then
-        local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    if player:GetCard(0) ~= mod.enums.Orbs.ORDER then return end
+    local data = mod:GetData(player, "SpiritOfOrder"); data.Selected = data.Selected or 1
+    if not Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex) then return end
 
-        if orbsPerPlayer[playerIndex] and Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex) then
-            orbsPerPlayer[playerIndex] = orbsPerPlayer[playerIndex] + 1
-
-            if orbsPerPlayer[playerIndex] > #orbs - 1 then
-                orbsPerPlayer[playerIndex] = 1
-            end
-
-            sfx:Play(SoundEffect.SOUND_GOLD_HEART_DROP, 1, 2, false, 1 + orbsPerPlayer[playerIndex] * 0.1)
-        end
-    end
+    data.Selected = data.Selected + 1; if data.Selected > NUM_ORBS then data.Selected = 1 end
+    mod.SFX:Play(SoundEffect.SOUND_GOLD_HEART_DROP, 1, 2, false, 1 + data.Selected * 0.1)
 end)
 
-local function onRender()
-    for i = 0, game:GetNumPlayers() do
-        local player = Isaac.GetPlayer(i)
-
-        if player:GetCard(0) == ORB_ID then
-            local controllerIndex = player.ControllerIndex + 1
-            local playerIndex = TSIL.Players.GetPlayerIndex(player)
-
-            if not orbsPerPlayer[playerIndex] then
-                orbsPerPlayer[playerIndex] = 1
-            end
-
-            local sprite = sprites[controllerIndex]
-
-            local renderPos = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight())
-            + Vector(-16, -12)
-            + Vector(-16, -6) * Options.HUDOffset
-
-            sprite:Render(renderPos)
-            sprite:SetFrame(orbsPerPlayer[playerIndex] - 1)
-        end
+local function GetCallback()
+    if REPENTOGON then
+        return ModCallbacks.MC_POST_HUD_RENDER
     end
+    return ModCallbacks.MC_GET_SHADER_PARAMS
 end
-if REPENTOGON then
-    mod:AddCallback(ModCallbacks.MC_POST_HUD_RENDER, onRender)
-else
-    mod:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, onRender)
-end
+
+mod:AddCallback(GetCallback(), function ()
+    if REPENTOGON and RoomTransition.IsRenderingBossIntro() then return end
+    local player = Isaac.GetPlayer() if player:GetCard(0) ~= mod.enums.Orbs.ORDER then return end
+
+    local renderPos = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight())
+    + Vector(-16, -12)
+    + Vector(-16, -6) * Options.HUDOffset
+
+    sprite:Render(renderPos)
+    sprite:SetFrame(SELECTION_TO_FRAME[mod:GetData(player, "SpiritOfOrder").Selected or 1])
+end)
+
+---@param player EntityPlayer
+---@param flags UseFlag
+mod:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player, flags)
+    MilkshakeVol1:UseSpiritOrb(FRAME_TO_ORB[SELECTION_TO_FRAME[mod:GetData(player, "SpiritOfOrder").Selected] + 1], player, 0)
+    mod.SFX:Play(mod.enums.Sounds.ORB_CAPTURE)
+end, mod.enums.Orbs.ORDER)

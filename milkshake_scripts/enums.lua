@@ -221,7 +221,6 @@ enums.TrueOrbs = {} for k, v in pairs(enums.Orbs) do
     end
 end
 
-
 enums.CardSpawnerSubtypePerCard = {
     [0] = enums.Cards.TATTERED_PAGE,
     [1] = enums.Orbs.ELECTRIC,
