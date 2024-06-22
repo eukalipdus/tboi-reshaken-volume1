@@ -324,10 +324,7 @@ function GlassHeads:GlassHeads_Death(enemy)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
     entity:AddEntityFlags(EntityFlag.FLAG_NO_BLOOD_SPLASH)
-=======
->>>>>>> parent of 1d6f45b (Glass Head + variants remove blood splash)
     entity.Visible = false
 =======
     entity:Remove()
@@ -385,7 +382,6 @@ end
 --     GlassHeads.GlassHeads_Death,
 --     enums.Enemies.GLASS_HEAD
 -- )
-<<<<<<< HEAD
 =======
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NPC_DEATH,
@@ -393,10 +389,3 @@ MilkshakeVol1:AddCallback(
     enums.Enemies.GLASS_HEAD
 )
 >>>>>>> parent of 90bf7f5 (Glass Head + variants fixes)
-=======
-
-
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function ()
-    
-end)
->>>>>>> parent of 1d6f45b (Glass Head + variants remove blood splash)
