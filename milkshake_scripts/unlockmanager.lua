@@ -198,6 +198,7 @@ MilkshakeVol1:AddCallback(
     unlockableManager.PostPickupInit
 )
 
+---@param isContinued boolean
 function unlockableManager:PostGameStarted(isContinued)
     if isContinued then
         return
