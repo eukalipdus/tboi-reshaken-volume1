@@ -165,3 +165,55 @@ MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
     unlockableManager.PostItemAdded
 )
+
+---@param pickup EntityPickup
+function unlockableManager:PostPickupInit(pickup)
+    local itemPool = Game():GetItemPool()
+
+    if MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.GLASS_GOD) then
+        return
+    end
+
+    if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.PRISMATIC_GOGGLES)
+    and pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE
+    and pickup.SubType == enums.Collectibles.PRISMATIC_GOGGLES then
+        itemPool:RemoveCollectible(pickup.SubType)
+        local newCollectible = itemPool:GetCollectible(itemPool:GetLastPool(), true)
+        pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectible, true)
+
+    elseif not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.GOLDEN_COOKIE)
+    and pickup.Variant == PickupVariant.PICKUP_TRINKET
+    and pickup.SubType == enums.Trinkets.RAINBOW_COOKIE then
+        local newTrinket = Game():GetItemPool():GetTrinket()
+        pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET, newTrinket, true)
+ 
+    elseif not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.SPIRIT_OF_ORDER)
+    and pickup.Variant == PickupVariant.PICKUP_TAROTCARD
+    and pickup.SubType == enums.Orbs.ORDER then
+
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_PICKUP_INIT,
+    unlockableManager.PostPickupInit
+)
+
+function unlockableManager:PostGameStarted(isContinued)
+    if isContinued then
+        return
+    end
+
+    local itemPool = Game():GetItemPool()
+
+    if not MilkshakeVol1.UnlockManager.IsAchievementUnlocked(enums.Achievements.PRISMATIC_GOGGLES) then
+        itemPool:RemoveCollectible(enums.Collectibles.PRISMATIC_GOGGLES)
+    end
+
+    if not MilkshakeVol1.UnlockManager.IsAchievementUnlocked(enums.Achievements.GOLDEN_COOKIE) then
+        itemPool:RemoveTrinket(enums.Trinkets.RAINBOW_COOKIE)
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_GAME_STARTED,
+    unlockableManager.PostGameStarted
+)

@@ -352,6 +352,27 @@ function utility:IsSpiritOrb(card)
     return SPIRIT_ORBS_MAP[card] ~= nil
 end
 
+---When a random spirit orb is needed, checks if Spirit of Order should be removed or added from the list based on unlock status
+---@param orbList table
+local function UpdateSpiritOfOrderUnlocked(orbList)
+    local orderOrbKey = -1
+    for key, orbType in pairs(orbList) do
+        if orbType == enums.Orbs.ORDER then
+            orderOrbKey = key
+            break
+        end
+    end
+
+    if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.SPIRIT_OF_ORDER) then
+        if orbList[orderOrbKey] then
+            table.remove(orbList, orderOrbKey)
+        end
+
+    elseif orderOrbKey == -1 then
+        table.insert(orbList, enums.Orbs.ORDER)
+    end
+end
+
 ---Helper function to get a random orb
 ---@param includeChaos? boolean @Default: true
 ---@param seedOrRNG? integer | RNG
@@ -363,6 +384,8 @@ function utility:GetRandomSpiritOrb(includeChaos, seedOrRNG)
     if not includeChaos then
         orbs = SPIRIT_ORBS_NO_RANDOM
     end
+
+    UpdateSpiritOfOrderUnlocked(orbs)
 
     return TSIL.Random.GetRandomElementsFromTable(orbs, 1, seedOrRNG)[1]
 end
