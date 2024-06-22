@@ -338,7 +338,7 @@ end
 local SPIRIT_ORBS = {}
 local SPIRIT_ORBS_NO_RANDOM = {}
 local SPIRIT_ORBS_MAP = {}
-for _, orb in pairs(enums.Orbs) do
+for _, orb in pairs(enums.TrueOrbs) do
     SPIRIT_ORBS_MAP[orb] = true
     SPIRIT_ORBS[#SPIRIT_ORBS+1] = orb
     if orb ~= enums.Orbs.RANDOM then

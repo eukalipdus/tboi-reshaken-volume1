@@ -215,6 +215,12 @@ enums.Orbs = {
     ORDER = Isaac.GetCardIdByName("Spirit Of Order"),
 }
 
+enums.TrueOrbs = {} for k, v in pairs(enums.Orbs) do
+    if v ~= enums.Orbs.ORDER then
+        enums.TrueOrbs[k] = v
+    end
+end
+
 
 enums.CardSpawnerSubtypePerCard = {
     [0] = enums.Cards.TATTERED_PAGE,
