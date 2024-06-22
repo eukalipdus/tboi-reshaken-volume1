@@ -101,12 +101,12 @@ function greedtropies:spawnTrophy(idxOrPos)
   end
 
   if Isaac.GetChallenge() == MilkshakeVol1.enums.Challenges.ISAAC_CLICKER
-  and not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(MilkshakeVol1.enums.Achievements.RAINBOW_PENNIES) then
+  and not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(MilkshakeVol1.enums.Achievements.GOLDEN_COOKIE) then
     MilkshakeVol1.UnlockManager:AddToAchievementQueue(
-      MilkshakeVol1.UnlockManager:GetAchievementFilePath(MilkshakeVol1.enums.Achievements.RAINBOW_PENNIES)
+      MilkshakeVol1.UnlockManager:GetAchievementFilePath(MilkshakeVol1.enums.Achievements.GOLDEN_COOKIE)
     )
     MilkshakeVol1.UnlockManager:UpdateAchievement(
-     MilkshakeVol1.enums.Achievements.RAINBOW_PENNIES,
+     MilkshakeVol1.enums.Achievements.GOLDEN_COOKIE,
      true
     )
   end

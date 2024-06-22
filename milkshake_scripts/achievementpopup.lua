@@ -17,7 +17,7 @@ local achievementQueue = {}
 
 local achievementFilePaths = {
     [enums.Achievements.PRISMATIC_GOGGLES] = "gfx/ui/achievement/achievement_prismaticgoggles.png",
-    [enums.Achievements.RAINBOW_PENNIES] = "gfx/ui/achievement/achievement_rainbowpennies.png",
+    [enums.Achievements.GOLDEN_COOKIE] = "gfx/ui/achievement/achievement_rainbowpennies.png",
     [enums.Achievements.SPIRIT_OF_ORDER] = "gfx/ui/achievement/achievement_spiritoforder.png",
     [enums.Achievements.GLASS_GOD] = "gfx/ui/achievement/achievement_glassgod.png",
 }
