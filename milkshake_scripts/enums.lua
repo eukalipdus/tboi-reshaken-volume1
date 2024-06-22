@@ -290,4 +290,11 @@ enums.Challenges = {
     WORLD_OF_LIGHT = Isaac.GetChallengeIdByName("[Reshaken] World of Light")
 }
 
+enums.Achievements = {
+    PRISMATIC_GOGGLES = 1,
+    GOLDEN_COOKIE = 2,
+    SPIRIT_OF_ORDER = 3,
+    GLASS_GOD = 4,
+}
+
 MilkshakeVol1.enums = enums
