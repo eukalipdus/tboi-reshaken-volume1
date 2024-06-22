@@ -155,7 +155,7 @@ function FlaskHead:FlaskHeadUpdate(enemy)
             sfx:Play(SoundEffect.SOUND_SHELLGAME, .5, 0, false, 1, 0)
             sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, 2, 0)
 
-            utility:SpawnGlassHeadDeathEffect(enemy)
+            TSIL.EntitySpecific.SpawnEffect(Isaac.GetEntityVariantByName("Flask Head Corpse"), 0, enemy.Position)
             enemy:Remove()
         elseif sprite:IsFinished("Throw") then
             enemy.CanShutDoors = false
@@ -351,9 +351,7 @@ function FlaskHead:FlaskHeadProjectile_Update(enemy)
         end
         enemy.Velocity = enemy.Velocity * .95
     else
-        utility:SpawnGlassHeadDeathEffect(enemy)
-        enemy:Remove()
-        -- sprite:Play("Death")
+        sprite:Play("Death")
         enemy.Velocity = Vector.Zero
 
         if not data.creep or not data.creep:Exists() then

@@ -172,11 +172,10 @@
     <entity name="Flask Head Puff" anm2path="monster_flask_head.anm2" id="1000" friction="1">
 	</entity>
 
-    <entity name="Glass Head Corpse" anm2path="monster_glass_head.anm2" id="1000" friction="1" shutdoors="true"/>
-    <entity name="Flask Head Corpse" anm2path="monster_flask_head.anm2" id="1000" friction="1" shutdoors="true"/>
-    <entity name="Flask Head Projectile Corpse" anm2path="monster_flask_head.anm2" id="1000" friction="1" shutdoors="true"/>
-    <entity name="Beer Head Corpse" anm2path="monster_beer_head.anm2" id="1000" friction="1" shutdoors="true"/>
-    <entity name="Wine Head Corpse" anm2path="monster_wine_head.anm2" id="1000" friction="1" shutdoors="true"/>
+    <entity name="Glass Head Corpse" anm2path="monster_glass_head.anm2" id="1000" friction="1"> </entity>
+    <entity name="Flask Head Corpse" anm2path="monster_flask_head.anm2" id="1000" friction="1"> </entity>
+    <entity name="Beer Head Corpse" anm2path="monster_beer_head.anm2" id="1000" friction="1"> </entity>
+    <entity name="Wine Head Corpse" anm2path="monster_wine_head.anm2" id="1000" friction="1"> </entity>
 
 
     <entity name="Vine" anm2path="vines.anm2" id="1000">

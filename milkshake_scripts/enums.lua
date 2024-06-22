@@ -283,6 +283,7 @@ enums.Challenges = {
     ISAAC_CLICKER = Isaac.GetChallengeIdByName("[Reshaken] Isaac Clicker"),
     WORLD_OF_LIGHT = Isaac.GetChallengeIdByName("[Reshaken] World of Light")
 }
+<<<<<<< HEAD
 
 enums.GlassHeadDeathEffectVariant = {
     SPHERE = Isaac.GetEntityVariantByName("Glass Head Corpse"),
@@ -299,4 +300,6 @@ enums.Achievements = {
     GLASS_GOD = 4,
 }
 
+=======
+>>>>>>> parent of 90bf7f5 (Glass Head + variants fixes)
 MilkshakeVol1.enums = enums
