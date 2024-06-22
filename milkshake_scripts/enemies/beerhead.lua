@@ -364,7 +364,7 @@ function BeerHead:BeerHead_Update(enemy)
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 1, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
 
-            utility:SpawnGlassHeadDeathEffect(enemy)
+            TSIL.EntitySpecific.SpawnEffect(Isaac.GetEntityVariantByName("Glass Head Corpse"), 0, enemy.Position)
             enemy:Remove()
         elseif sprite:IsFinished("Death") then
             enemy.CanShutDoors = false

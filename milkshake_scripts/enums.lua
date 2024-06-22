@@ -284,19 +284,4 @@ enums.Challenges = {
     WORLD_OF_LIGHT = Isaac.GetChallengeIdByName("[Reshaken] World of Light")
 }
 
-enums.GlassHeadDeathEffectVariant = {
-    SPHERE = Isaac.GetEntityVariantByName("Glass Head Corpse"),
-    FLASK = Isaac.GetEntityVariantByName("Flask Head Corpse"),
-    FLASK_PROJECTILE = Isaac.GetEntityVariantByName("Flask Head Projectile Corpse"),
-    BEER = Isaac.GetEntityVariantByName("Beer Head Corpse"),
-    WINE = Isaac.GetEntityVariantByName("Wine Head Corpse"),
-}
-
-enums.Achievements = {
-    PRISMATIC_GOGGLES = 1,
-    GOLDEN_COOKIE = 2,
-    SPIRIT_OF_ORDER = 3,
-    GLASS_GOD = 4,
-}
-
 MilkshakeVol1.enums = enums
