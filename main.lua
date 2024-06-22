@@ -133,7 +133,6 @@ include("milkshake_scripts.enemies.beerhead")
 include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
-include("milkshake_scripts.enemies.glassheaddeatheffects")
 
 --Challenges
 include("milkshake_scripts.challenges.isaacclicker")
