@@ -109,6 +109,8 @@ function greedtropies:spawnTrophy(idxOrPos)
      MilkshakeVol1.enums.Achievements.GOLDEN_COOKIE,
      true
     )
+    local collection = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "Milkshake1Collection")
+    MilkshakeVol1.UnlockManager:ShouldUnlockGlassGod(collection)
   end
 end
 

@@ -81,6 +81,30 @@ local function InitializeUnlockData()
     )
 end
 
+---Checks if 100% completion has been met, if so displays the popup
+---@param collection table
+---@return boolean
+function MilkshakeVol1.UnlockManager:ShouldUnlockGlassGod(collection)
+    if MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.GLASS_GOD)
+    or not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.PRISMATIC_GOGGLES)
+    or not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.GOLDEN_COOKIE)
+    or not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.SPIRIT_OF_ORDER) then
+        return false
+    end
+
+    for _, hasBeenTaken in pairs(collection) do
+        if hasBeenTaken == false then
+            return false
+        end
+    end
+
+    local glassGodUnlockSprite = MilkshakeVol1.UnlockManager:GetAchievementFilePath(enums.Achievements.GLASS_GOD)
+    MilkshakeVol1.UnlockManager:UpdateAchievement(enums.Achievements.GLASS_GOD, true)
+    MilkshakeVol1.UnlockManager:AddToAchievementQueue(glassGodUnlockSprite)
+
+    return true
+end
+
 ---Returns if an achievement is unlocked
 ---@param achievementId integer
 ---@return boolean | nil
@@ -115,7 +139,7 @@ function unlockableManager:PostNpcDeath(npc)
     and npc.Type == EntityType.ENTITY_MEGA_SATAN_2  then
         if challenge == enums.Challenges.WORLD_OF_LIGHT
         and not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.PRISMATIC_GOGGLES) then
-            local filePath = MilkshakeVol1.UnlockManager.GetAchievementFilePath(enums.Achievements.PRISMATIC_GOGGLES)
+            local filePath = MilkshakeVol1.UnlockManager:GetAchievementFilePath(enums.Achievements.PRISMATIC_GOGGLES)
             MilkshakeVol1.UnlockManager:AddToAchievementQueue(filePath)
             MilkshakeVol1.UnlockManager:UpdateAchievement(
                 enums.Achievements.PRISMATIC_GOGGLES,
@@ -128,12 +152,14 @@ function unlockableManager:PostNpcDeath(npc)
     and npc.Type == EntityType.ENTITY_MOTHER then
         if challenge == enums.Challenges.SPIRIT_SAGE
         and not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.SPIRIT_OF_ORDER) then
-            local filePath = MilkshakeVol1.UnlockManager.GetAchievementFilePath(enums.Achievements.SPIRIT_OF_ORDER)
+            local filePath = MilkshakeVol1.UnlockManager:GetAchievementFilePath(enums.Achievements.SPIRIT_OF_ORDER)
             MilkshakeVol1.UnlockManager:AddToAchievementQueue(filePath)
             MilkshakeVol1.UnlockManager:UpdateAchievement(
                 enums.Achievements.SPIRIT_OF_ORDER,
                 true
             )
+            local collection = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "Milkshake1Collection")
+            MilkshakeVol1.UnlockManager:ShouldUnlockGlassGod(collection)
         end
     end
 end
@@ -160,6 +186,8 @@ function unlockableManager:PostItemAdded(_, collectibleType)
     if collection[collectibleName] == false then
         collection[collectibleName] = true
     end
+
+    MilkshakeVol1.UnlockManager:ShouldUnlockGlassGod(collection)
 end
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_PLAYER_COLLECTIBLE_ADDED,
