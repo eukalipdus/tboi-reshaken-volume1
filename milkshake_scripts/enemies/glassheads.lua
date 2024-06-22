@@ -323,8 +323,12 @@ function GlassHeads:GlassHeads_Death(enemy)
     enemy.SplatColor = Color(0,0,0,0,0,0,0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     entity:AddEntityFlags(EntityFlag.FLAG_NO_BLOOD_SPLASH)
     entity.Visible = false
+=======
+    entity:Remove()
+>>>>>>> parent of 52bec76 (Glass Head T. Keeper fix)
 
     local newEntity = TSIL.EntitySpecific.SpawnNPC(
         enums.Enemies.GLASS_HEAD,
