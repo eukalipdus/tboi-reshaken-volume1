@@ -27,7 +27,7 @@
     <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" tags="offensive summonable lazarussharedglobal" quality="2" craftquality="2" />
     <active id="30" name="Mirror Key" description="Otherside" quality="3" gfx="mirror_key.png" maxcharges="4" tags="lazarussharedglobal nocantrip nogreed offensive" craftquality="3"/>
     <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" tags="noeden" />
-    <passive id="31" name="Prismatic Goggles" description="Diffracted Enemies" quality="2" gfx="collectibles_rainbowgoggles.png" tags="summonable offensive" craftquality="2" />
+    <passive id="31" name="Prismatic Triangle" description="Diffracted Enemies" quality="2" gfx="collectibles_prismatic_triangle.png" tags="summonable offensive" craftquality="2" />
 
     <!-- Trinkets -->
     <trinket name="Clairvoyant Amethyst" description="Hidden clairvoyant power..." gfx="trinkets_clairvoyantamethyst.png" tags="nogreed"/>
