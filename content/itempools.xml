@@ -36,6 +36,7 @@
 		<Item Name="Lil Bishop" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Glass Idol" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Leviticus" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Chromatic Prism" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	
 	<Pool Name="secret">
@@ -129,7 +130,7 @@
 	<Pool Name="greedAngel">
 		<Item Name="Lil Bishop" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Glass Idol" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Leviticus" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Chromatic Prism" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 
 	<Pool Name="greedSecret">
@@ -186,7 +187,7 @@
 	<Pool Name="glass">
 		<Item Name="Milkshake!" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-
+		<Item Name="Chromatic Prism" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Shattered Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Celestial Mirror" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
