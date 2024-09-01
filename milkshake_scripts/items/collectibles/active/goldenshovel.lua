@@ -1,5 +1,8 @@
 local goldenShovel = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
+
+local MEGA_CHEST_ACHIEVEMENT_ID = 601
 
 local goldenShovelData = {
     FREEZE_DURATION = 180,
@@ -13,36 +16,59 @@ local goldenShovelData = {
 local skipNextShovelUse = false
 
 ---@param position Vector
-local function SpawnGoldEffects(position)
+---@param shouldBelialSynergy boolean
+local function SpawnGoldEffects(position, shouldBelialSynergy)
     local goldColor = Color(0.9, 0.8, 0, 1, 0.8, 0.7, 0)
+    local redColor = Color(0.1, 0, 0, 0.5, 0.1, 0, 0)
+    local blackColor = Color(0.1, 0, 0, 0.2, 0.1, 0, 0)
+    local particle_speed = 4
 
     local crater = TSIL.EntitySpecific.SpawnEffect(
         EffectVariant.BOMB_CRATER,
         0,
         position
     )
-    crater:SetColor(goldColor, 150, 1, false, false)
     local craterSprite = crater:GetSprite()
     craterSprite.Scale = (Vector.One * 1.5)
 
-    SFXManager():Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY)
     SFXManager():Play(SoundEffect.SOUND_SHOVEL_DIG)
 
-    local particle_speed = 4
-    Game():SpawnParticles(position, EffectVariant.COIN_PARTICLE, 20, particle_speed)
-    Game():SpawnParticles(position, EffectVariant.GOLD_PARTICLE, 40, particle_speed)
+    if shouldBelialSynergy then
+        local smallCrater = TSIL.EntitySpecific.SpawnEffect(
+            EffectVariant.BOMB_CRATER,
+            0,
+            position
+        )
+        local smallCraterSprite = smallCrater:GetSprite()
+        smallCraterSprite.Scale = (Vector.One * 0.6)
+
+        crater:SetColor(blackColor, 150, 1, false, false)
+        smallCrater:SetColor(redColor, 150, 1, false, false)
+        SFXManager():Play(SoundEffect.SOUND_BLACK_POOF)
+        Game():SpawnParticles(position, EffectVariant.DARK_BALL_SMOKE_PARTICLE, 20, particle_speed)
+    else
+        crater:SetColor(goldColor, 150, 1, false, false)
+        SFXManager():Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY)
+        Game():SpawnParticles(position, EffectVariant.COIN_PARTICLE, 20, particle_speed)
+        Game():SpawnParticles(position, EffectVariant.GOLD_PARTICLE, 40, particle_speed)
+    end
 end
 
 
 ---@param position Vector
-local function SpawnDirtPile(position)
+---@param shouldBelialSynergy boolean
+local function SpawnDirtPile(position, shouldBelialSynergy)
     local pit = TSIL.EntitySpecific.SpawnEffect(
         EffectVariant.DIRT_PILE,
         1,
         position
     )
     pit:SetTimeout(1000)
-    pit:GetSprite().Color = Color(0.7, 0.6, 0, 1, 0, 0, 0)
+    if shouldBelialSynergy then
+        pit:GetSprite().Color = Color(0.7, 0, 0.1, 1, 0, 0, 0)
+    else
+        pit:GetSprite().Color = Color(0.7, 0.6, 0, 1, 0, 0, 0)
+    end
 end
 
 
@@ -75,21 +101,48 @@ local function SpawnGoldenPickup(rng, position)
     )
 end
 
-
----@param rng RNG
+---@param player EntityPlayer
 ---@param position Vector
-local function SpawnGoldenChests(rng, position)
+---@param shouldBelialSynergy boolean
+local function SpawnChest(player, position, shouldBelialSynergy)
     local room = Game():GetRoom()
-    local roll = TSIL.Random.GetRandomInt(0, 1, rng)
+    local megaChestUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(MEGA_CHEST_ACHIEVEMENT_ID)
 
-    for _ = 1, roll + 1, 1 do
+    if shouldBelialSynergy then
+        for _ = 1, 3 do
+            local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
+            local chest = TSIL.EntitySpecific.SpawnPickup(
+                PickupVariant.PICKUP_REDCHEST,
+                ChestSubType.CHEST_CLOSED,
+                spawnPos
+            ):ToPickup()
+            --chest:TryOpenChest()
+        end
         local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
-
-        TSIL.EntitySpecific.SpawnPickup(
-            PickupVariant.PICKUP_LOCKEDCHEST,
-            ChestSubType.CHEST_CLOSED,
-            spawnPos
+        TSIL.PickupSpecific.SpawnHeart(
+            HeartSubType.HEART_BLACK,
+            spawnPos,
+            RandomVector()
         )
+    else
+        if megaChestUnlocked then
+            local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
+            TSIL.EntitySpecific.SpawnPickup(
+                PickupVariant.PICKUP_MEGACHEST,
+                ChestSubType.CHEST_CLOSED,
+                spawnPos
+            )
+        else
+            for _ = 1, 2 do
+                local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
+                local chest = TSIL.EntitySpecific.SpawnPickup(
+                    PickupVariant.PICKUP_LOCKEDCHEST,
+                    ChestSubType.CHEST_CLOSED,
+                    spawnPos
+                ):ToPickup()
+                --chest:TryOpenChest()
+            end
+        end
     end
 end
 
@@ -126,12 +179,12 @@ function goldenShovel:onUse(_, rng, player)
 
     if not player then return end
 
-    SpawnGoldEffects(player.Position)
+    local shouldBelialSynergy = utility:IsJudasBirthright(player)
+    SpawnGoldEffects(player.Position, shouldBelialSynergy)
 
     if not TrySpawnSecretMemberShop(player.Position) then
-        SpawnDirtPile(player.Position)
-        SpawnGoldenPickup(rng, player.Position)
-        SpawnGoldenChests(rng, player.Position)
+        SpawnDirtPile(player.Position, shouldBelialSynergy)
+        SpawnChest(player, player.Position, shouldBelialSynergy)
     end
 
     return true
