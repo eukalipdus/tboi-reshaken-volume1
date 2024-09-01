@@ -3,6 +3,7 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local MEGA_CHEST_ACHIEVEMENT_ID = 601
+local CHEST_VELOCITY_MULTIPLIER = 15
 
 local goldenShovelData = {
     FREEZE_DURATION = 180,
@@ -107,18 +108,19 @@ end
 local function SpawnChest(player, position, shouldBelialSynergy)
     local room = Game():GetRoom()
     local megaChestUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(MEGA_CHEST_ACHIEVEMENT_ID)
+    local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
 
     if shouldBelialSynergy then
         for _ = 1, 3 do
-            local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
-            local chest = TSIL.EntitySpecific.SpawnPickup(
+            TSIL.EntitySpecific.SpawnPickup(
                 PickupVariant.PICKUP_REDCHEST,
                 ChestSubType.CHEST_CLOSED,
-                spawnPos
+                spawnPos,
+                RandomVector() * CHEST_VELOCITY_MULTIPLIER
             ):ToPickup()
             --chest:TryOpenChest()
         end
-        local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
+
         TSIL.PickupSpecific.SpawnHeart(
             HeartSubType.HEART_BLACK,
             spawnPos,
@@ -126,16 +128,15 @@ local function SpawnChest(player, position, shouldBelialSynergy)
         )
     else
         if megaChestUnlocked then
-            local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
             TSIL.EntitySpecific.SpawnPickup(
                 PickupVariant.PICKUP_MEGACHEST,
                 ChestSubType.CHEST_CLOSED,
-                spawnPos
+                spawnPos,
+                RandomVector() * CHEST_VELOCITY_MULTIPLIER
             )
         else
             for _ = 1, 2 do
-                local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
-                local chest = TSIL.EntitySpecific.SpawnPickup(
+                TSIL.EntitySpecific.SpawnPickup(
                     PickupVariant.PICKUP_LOCKEDCHEST,
                     ChestSubType.CHEST_CLOSED,
                     spawnPos
