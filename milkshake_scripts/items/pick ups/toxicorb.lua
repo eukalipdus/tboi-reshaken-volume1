@@ -21,6 +21,9 @@ ToxicOrb.Hearts = {
 ToxicOrb.BeggarVariants = {
 	[4] = true,
 }
+-- ToxicOrb.Coins = {
+--
+-- }
 
 function MilkshakeVol1.API:AddToxicOrbBeggar(beggarType)
 	ToxicOrb.BeggarVariants[beggarType] = true
@@ -37,11 +40,20 @@ end
 
 local function Rotten(pos, area)
 	for _, pickup in pairs(Isaac.FindInRadius(pos, area, EntityPartition.PICKUP)) do
-		if pickup:ToPickup() and pickup.Variant == PickupVariant.PICKUP_HEART and ToxicOrb.Hearts[pickup.SubType] then
-			pickup:Remove()
-			pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
-			for _ = 1, ToxicOrb.Hearts[pickup.SubType] do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, Isaac.GetFreeNearPosition(pickup.Position, 10), pickup.Velocity, nil)
+		if pickup:ToPickup() then
+			if pickup.Variant == PickupVariant.PICKUP_HEART and ToxicOrb.Hearts[pickup.SubType] then
+				pickup:Remove()
+				pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
+				for _ = 1, ToxicOrb.Hearts[pickup.SubType] do
+					Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, Isaac.GetFreeNearPosition(pickup.Position, 10), pickup.Velocity, nil)
+				end
+			elseif pickup.Variant == PickupVariant.PICKUP_COIN then-- and ToxicOrb.Coins[pickup.SubType] then
+				pickup:Remove()
+				pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
+				local num = pickup.SubType == CoinSubType.COIN_DOUBLEPACK and 2 or 1
+				for _ = 1, num do
+					Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, Isaac.GetFreeNearPosition(pickup.Position, 10), pickup.Velocity, nil)
+				end
 			end
 		elseif pickup.Type == EntityType.ENTITY_SLOT and ToxicOrb.BeggarVariants[pickup.Variant] then
 			pickup:Remove()

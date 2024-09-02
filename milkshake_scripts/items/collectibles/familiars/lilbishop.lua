@@ -44,7 +44,7 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 					ignore = true -- to play animation for all active lil bishops
 					local sprite = lilBishopFam:GetSprite()
 					if sprite:GetAnimation() == "Active" or sprite:GetAnimation() == "Sleep" then
-						sfx:Play(SoundEffect.SOUND_BISHOP_HIT)
+						sfx:Play(SoundEffect.SOUND_BISHOP_HIT, 10)
 						if sprite:GetAnimation() == "Active" then
 							sprite:Play("Block")
 						end
