@@ -127,6 +127,7 @@ function lilBishop:onFamiliarUpdate(familiar)
 	end
 
 	if famData.Active then
+		sfx:Play(SoundEffect.SOUND_DOGMA_BLACKHOLE_LOOP, 1, 2, false, 10)
 		famData.Active = famData.Active - 1
 		if famData.Active < 0 and sprite:IsFinished("Sleep") then
 			famData.Active = nil
@@ -143,8 +144,10 @@ function lilBishop:onFamiliarUpdate(familiar)
     if sprite:IsFinished("Block") then
     	if famData.Active then
     	    sprite:Play("Active")
+    	    sfx:Play(SoundEffect.SOUND_LIGHTBOLT_CHARGE, 10)
     	else
     	    sprite:Play("Sleep")
+    	    sfx:Stop(SoundEffect.SOUND_DOGMA_BLACKHOLE_LOOP)
     	end
     end
 	--print(famData.Active, sprite:GetAnimation(), sprite:IsFinished("Sleep"))
