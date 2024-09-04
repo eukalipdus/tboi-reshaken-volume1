@@ -59,8 +59,8 @@ local function Rotten(pos, area)
 					--pickup:Remove()
 					pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
 					local num = ToxicOrb.Coins[pickup.SubType]
-					local pickupMorphed = pickup:Morph(pickup.Type, pickup.Variant, enums.Coins.ROTTEN_PENNY, false, true)
-					pickupMorphed:GetData().ToxicMorph = true
+					pickup:Morph(pickup.Type, pickup.Variant, enums.Coins.ROTTEN_PENNY)
+					pickup:GetData().ToxicMorph = true
 					--Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, Vector.Zero, nil)
 					if num > 1 then
 						for _ = 2, num do
