@@ -43,6 +43,7 @@ local function Rotten(pos, area)
 	for _, pickup in pairs(Isaac.FindInRadius(pos, area, EntityPartition.PICKUP)) do
 		if pickup:ToPickup() then
 			pickup = pickup:ToPickup()
+			--if not pickup.GetData().ToxicMorph then
 			if pickup.Variant == PickupVariant.PICKUP_HEART and ToxicOrb.Hearts[pickup.SubType] then
 				--pickup:Remove()
 				pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
@@ -54,17 +55,21 @@ local function Rotten(pos, area)
 					end
 				end
 			elseif pickup.Variant == PickupVariant.PICKUP_COIN and ToxicOrb.Coins[pickup.SubType] and pickup.SubType ~= enums.Coins.ROTTEN_PENNY then -- eh?
-				pickup:Remove()
+				print("coin subtype: ", pickup.SubType, enums.Coins.ROTTEN_PENNY) -- for debug
+				--pickup:Remove()
 				pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
 				local num = ToxicOrb.Coins[pickup.SubType]
-				--pickup:Morph(pickup.Type, pickup.Variant, enums.Coins.ROTTEN_PENNY)
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, Vector.Zero, nil)
--- 				if num > 1 then
--- 					for _ = 2, num do
--- 						Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, pickup.Velocity+(RandomVector()*4), nil)
--- 					end
--- 				end
+				local pickupMorphed = pickup:Morph(pickup.Type, pickup.Variant, enums.Coins.ROTTEN_PENNY, false, true)
+				--pickupMorphed.GetData().ToxicMorph = true
+				--Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, Vector.Zero, nil)
+				if num > 1 then
+					for _ = 2, num do
+						local pickupMorphed = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, pickup.Velocity+(RandomVector()*4), nil)
+						--pickupMorphed.GetData().ToxicMorph = true
+					end
+				end
 			end
+			--end
 		elseif pickup.Type == EntityType.ENTITY_SLOT and ToxicOrb.BeggarVariants[pickup.Variant] then
 			pickup:Remove()
 			Isaac.Spawn(EntityType.ENTITY_SLOT, 18, 0, pickup.Position, Vector.Zero, nil)
