@@ -59,11 +59,11 @@ local function Rotten(pos, area)
 				local num = ToxicOrb.Coins[pickup.SubType]
 				--pickup:Morph(pickup.Type, pickup.Variant, enums.Coins.ROTTEN_PENNY)
 				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, Vector.Zero, nil)
-				if num > 1 then
-					for _ = 2, num do
-						Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, pickup.Velocity+(RandomVector()*4), nil)
-					end
-				end
+-- 				if num > 1 then
+-- 					for _ = 2, num do
+-- 						Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, pickup.Velocity+(RandomVector()*4), nil)
+-- 					end
+-- 				end
 			end
 		elseif pickup.Type == EntityType.ENTITY_SLOT and ToxicOrb.BeggarVariants[pickup.Variant] then
 			pickup:Remove()
