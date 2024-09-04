@@ -53,7 +53,7 @@ local function Rotten(pos, area)
 						Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_ROTTEN, pickup.Position, pickup.Velocity+(RandomVector()*4), nil)
 					end
 				end
-			elseif pickup.Variant == PickupVariant.PICKUP_COIN and ToxicOrb.Coins[pickup.SubType] then
+			elseif pickup.Variant == PickupVariant.PICKUP_COIN and ToxicOrb.Coins[pickup.SubType] and pickup.SubType ~= enums.Coins.ROTTEN_PENNY then -- eh?
 				--pickup:Remove()
 				pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
 				local num = ToxicOrb.Coins[pickup.SubType]

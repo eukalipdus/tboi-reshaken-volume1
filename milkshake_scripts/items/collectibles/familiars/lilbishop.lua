@@ -170,7 +170,7 @@ function lilBishop:onFamiliarCollision(familiar, collider)
 			end
 			sprite:Play("Block")
 			sfx:Play(SoundEffect.SOUND_LIGHTBOLT_CHARGE, 10)
-    	    sfx:Play(SoundEffect.SOUND_DOGMA_BLACKHOLE_LOOP, 1, 2, true, 10) -- idk?
+    	    sfx:Play(SoundEffect.SOUND_DOGMA_BLACKHOLE_LOOP, 10, 2, true, 10) -- idk?
 		end
 	end
 end
