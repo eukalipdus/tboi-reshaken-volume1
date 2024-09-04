@@ -144,7 +144,6 @@ function lilBishop:onFamiliarUpdate(familiar)
     if sprite:IsFinished("Block") then
     	if famData.Active then
     	    sprite:Play("Active")
-
     	else
     	    sprite:Play("Sleep")
     	    sfx:Stop(SoundEffect.SOUND_DOGMA_BLACKHOLE_LOOP)
@@ -176,6 +175,18 @@ function lilBishop:onFamiliarCollision(familiar, collider)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, lilBishop.onFamiliarCollision, enums.Familiars.LIL_BISHOP)
 
+if REPENTOGON then
+	function lilBishop:loopSound(ID, Volume, FrameDelay, Loop, Pitch, Pan)
+		local lilBishops = Isaac.FindByType(EntityType.ENTITY_FAMILIAR, enums.Familiars.LIL_BISHOP)
+		if #lilBishops == 0 then return end
+		for _, lilBishopFam in pairs(lilBishops) do
+			if lilBishopFam:GetData().Active then
+				return {ID, Volume, FrameDelay, true, Pitch, Pan}
+			end
+		end
+	end
+	MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_SFX_PLAY, lilBishop.loopSound, SoundEffect.SOUND_DOGMA_BLACKHOLE_LOOP)
+end
 
 --[[
 ---TEST
