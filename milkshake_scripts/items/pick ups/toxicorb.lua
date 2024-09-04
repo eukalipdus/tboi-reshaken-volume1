@@ -42,6 +42,7 @@ end
 local function Rotten(pos, area)
 	for _, pickup in pairs(Isaac.FindInRadius(pos, area, EntityPartition.PICKUP)) do
 		if pickup:ToPickup() then
+			pickup = pickup:ToPickup()
 			if pickup.Variant == PickupVariant.PICKUP_HEART and ToxicOrb.Hearts[pickup.SubType] then
 				--pickup:Remove()
 				pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
