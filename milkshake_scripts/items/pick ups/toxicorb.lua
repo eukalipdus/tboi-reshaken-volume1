@@ -43,7 +43,7 @@ local function Rotten(pos, area)
 	for _, pickup in pairs(Isaac.FindInRadius(pos, area, EntityPartition.PICKUP)) do
 		if pickup:ToPickup() then
 			pickup = pickup:ToPickup()
-			if not pickup.GetData().ToxicMorph then
+			if not pickup:GetData().ToxicMorph then
 				if pickup.Variant == PickupVariant.PICKUP_HEART and ToxicOrb.Hearts[pickup.SubType] then
 					--pickup:Remove()
 					pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
@@ -60,12 +60,12 @@ local function Rotten(pos, area)
 					pooffy(pickup.Position, Color(1,1,1, 1, 0.5,0.5,0))
 					local num = ToxicOrb.Coins[pickup.SubType]
 					local pickupMorphed = pickup:Morph(pickup.Type, pickup.Variant, enums.Coins.ROTTEN_PENNY, false, true)
-					pickupMorphed.GetData().ToxicMorph = true
+					pickupMorphed:GetData().ToxicMorph = true
 					--Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, Vector.Zero, nil)
 					if num > 1 then
 						for _ = 2, num do
 							local pickupMorphed = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, enums.Coins.ROTTEN_PENNY, pickup.Position, pickup.Velocity+(RandomVector()*4), nil)
-							pickupMorphed.GetData().ToxicMorph = true
+							pickupMorphed:GetData().ToxicMorph = true
 						end
 					end
 				end
