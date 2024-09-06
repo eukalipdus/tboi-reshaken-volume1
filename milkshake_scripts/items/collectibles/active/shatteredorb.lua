@@ -500,6 +500,7 @@ function ShatteredOrb:OnPlayerUpdate(player)
 
     local activeSlot = GetShatteredOrbActiveSlotFromPlayer(player)
     if player:GetActiveItem(activeSlot) ~= enums.Collectibles.SHATTERED_ORB then
+        player:AnimateCollectible(enums.Collectibles.SHATTERED_ORB, "HideItem", "PlayerPickup")
         RemovePlayerUsingShatteredOrb(player)
         return
     end
