@@ -231,4 +231,5 @@ Fixes
 -Fixed Isaac being unable to shoot if Shattered Orb was lost while being used or activated through means other than the item itself
 -Fixed Mirror Key being useable in the boss room containing Dad's Note, which caused a crash
 -Fixed a crash caused by using Mirror Key on Downpour 2 during the Ascent
+-Fixed a softlock caused by teleporting to a Devil or Angel room while in a Mirror Key room
 -Fixed Shattered Orb + Belial synergy not having a proper visual effect
