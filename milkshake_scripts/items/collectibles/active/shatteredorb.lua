@@ -7,6 +7,9 @@ local SHATTERED_ORB_FALL_ACCEL = 0.025
 local SHATTERED_ORB_TIME_UNTIL_FALL = 5
 local SHATTERED_ORB_RADIUS = 20
 local JUDAS_CONVERT_CHANCE = 50
+local BELIAL_PARTICLE_COUNT = 15
+local BELIAL_PARTICLE_SPEED = 8
+local BELIAL_PARTICLE_COLOR = Color(1,0,0,1)
 
 --TODO: Find a better place to put this in so it's not repeated
 local PossibleWisps = {
@@ -661,6 +664,16 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
             npc:Remove()
 
             local orbToSpawn = GetEntityOrb(npc)
+            local belialConversion = false
+
+            local player = shatteredOrb.SpawnerEntity:ToPlayer()
+            if utility:IsJudasBirthright(player) then
+                local roll = TSIL.Random.GetRandomInt(1, 100, player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB))
+                if roll <= JUDAS_CONVERT_CHANCE then
+                    orbToSpawn = enums.Orbs.UNHOLY
+                    belialConversion = true
+                end
+            end
 
             local orb = TSIL.EntitySpecific.SpawnPickup(
                 PickupVariant.PICKUP_TAROTCARD,
@@ -668,12 +681,9 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
                 npc.Position
             )
 
-            local player = shatteredOrb.SpawnerEntity:ToPlayer()
-            if utility:IsJudasBirthright(player) then
-                local roll = TSIL.Random.GetRandomInt(1, 100, player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB))
-                if roll <= JUDAS_CONVERT_CHANCE then
-                    utility:SetData(orb, "BelialConversion", true)
-                end
+            if belialConversion then
+                SFXManager():Play(SoundEffect.SOUND_UNHOLY)
+                Game():SpawnParticles(orb.Position, EffectVariant.DARK_BALL_SMOKE_PARTICLE, BELIAL_PARTICLE_COUNT, BELIAL_PARTICLE_SPEED, BELIAL_PARTICLE_COLOR)
             end
 
             sprite:Load("/gfx/shattered_orb_effects.anm2", true)
@@ -688,22 +698,5 @@ MilkshakeVol1:AddCallback(
     ShatteredOrb.OnShatteredOrbUpdate,
     enums.Effects.SHATTERED_ORB
 )
-
-function ShatteredOrb:PostPickupUpdate(pickup)
-    if utility:GetData(pickup, "BelialConversion") then
-        utility:SetData(pickup, "BelialConversion", false)
-
-        TSIL.Utils.Functions.RunInFrames(function()
-            pickup:Morph(EntityType.ENTITY_PICKUP,
-                PickupVariant.PICKUP_TAROTCARD,
-                enums.Orbs.UNHOLY,
-                true
-            )
-        end, 30) -- CHANGE THIS TO TEMP ONCE FIXED!!!!!!!!!!!!!!
-    end
-end
-
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, ShatteredOrb.PostPickupUpdate)
-
 
 return ShatteredOrb
