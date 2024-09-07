@@ -1,5 +1,6 @@
 local MirrorKey = {}
 
+local BELIAL_DMG_BONUS = 2.5
 --- Max distance the player has to be from a door slot to be able to use the key
 local DOOR_TRIGGER_DISTANCE = 120
 local ROTATION_PER_DOOR_SLOT = {
@@ -443,9 +444,15 @@ local function RemoveLostCurse()
 end
 
 
-local function UpdateInnerReflectionCache()
-    local players = TSIL.Players.GetPlayersByCollectible(MilkshakeVol1.enums.Collectibles.INNER_REFLECTION)
-    for _, player in ipairs(players) do
+local function UpdateDamageBonusCache()
+    local innerReflectionPlayers = TSIL.Players.GetPlayersByCollectible(MilkshakeVol1.enums.Collectibles.INNER_REFLECTION)
+    for _, player in ipairs(innerReflectionPlayers) do
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+        player:EvaluateItems()
+    end
+
+    local belialPlayers = TSIL.Players.GetPlayersByCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE)
+    for _, player in ipairs(belialPlayers) do
         player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
         player:EvaluateItems()
     end
@@ -527,7 +534,7 @@ function MirrorKey:OnNewRoom()
         SetMirrorShaderActive(false)
         Game():GetHUD():SetVisible(true)
         RemoveLostCurse()
-        UpdateInnerReflectionCache()
+        UpdateDamageBonusCache()
 
         return
     end
@@ -547,7 +554,7 @@ function MirrorKey:OnNewRoom()
     SetMirrorShaderActive(true)
     PlacePlayersInDoorSlot(doorSlot)
     AddLostCurse()
-    UpdateInnerReflectionCache()
+    UpdateDamageBonusCache()
     RespawnSavedPickups()
     SavePickupData()
 
@@ -748,7 +755,7 @@ local function CheckIfPlayerEnters(door)
                     RemoveAllPickups()
                     RemoveTallLadder()
                     AddLostCurse()
-                    UpdateInnerReflectionCache()
+                    UpdateDamageBonusCache()
                 end
             )
 
@@ -801,7 +808,7 @@ local function CheckIfPlayerEnters(door)
                         Game():GetHUD():SetVisible(true)
                         PlacePlayersInDoorSlot(doorSlot)
                         RemoveLostCurse()
-                        UpdateInnerReflectionCache()
+                        UpdateDamageBonusCache()
                     end
                 )
             elseif dimension == TSIL.Enums.Dimension.MAIN then
@@ -1001,3 +1008,14 @@ if EID then
         end
     end)
 end
+
+function MirrorKey:EvaluateCache(player)
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) and MilkshakeVol1.API:IsInMirrorRoom() then
+        player.Damage = player.Damage + BELIAL_DMG_BONUS
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_EVALUATE_CACHE,
+    MirrorKey.EvaluateCache,
+    CacheFlag.CACHE_DAMAGE
+)
