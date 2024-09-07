@@ -94,7 +94,12 @@ TSIL.SaveManager.AddPersistentVariable(
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
-
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "MirrorRoomPickupData",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_NONE
+)
 
 ---Helper function to check if the players are currently in the mirror key room.
 ---@return boolean
@@ -446,6 +451,53 @@ local function UpdateInnerReflectionCache()
     end
 end
 
+local function SavePickupData()
+    local pickups = TSIL.EntitySpecific.GetPickups()
+    local pickupData = {}
+
+    pickups = TSIL.Utils.Tables.Filter(pickups, function (_, pickup)
+        return pickup.SubType ~= 0
+    end)
+
+    for _, currentPickup in pairs(pickups) do
+        local info = {
+            VARIANT = currentPickup.Variant,
+            SUBTYPE = currentPickup.SubType,
+            POSITION = currentPickup.Position
+        }
+        table.insert(pickupData, info)
+    end
+
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "MirrorRoomPickupData",
+        pickupData
+    )
+end
+
+local function RespawnSavedPickups()
+    local savedPickupData = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "MirrorRoomPickupData"
+    )
+
+    for _, pickupInfo in pairs(savedPickupData) do
+        Isaac.Spawn(
+            EntityType.ENTITY_PICKUP,
+            pickupInfo.VARIANT,
+            pickupInfo.SUBTYPE,
+            pickupInfo.POSITION,
+            Vector.Zero,
+            nil
+        )
+    end
+
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "MirrorRoomPickupData",
+        {}
+    )
+end
 
 function MirrorKey:OnNewRoom()
     UpdateMirrorKeyChargeState()
@@ -496,6 +548,8 @@ function MirrorKey:OnNewRoom()
     PlacePlayersInDoorSlot(doorSlot)
     AddLostCurse()
     UpdateInnerReflectionCache()
+    RespawnSavedPickups()
+    SavePickupData()
 
     if EID then
         EID.isMirrorRoom = true
@@ -504,6 +558,14 @@ end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     MirrorKey.OnNewRoom
+)
+
+function MirrorKey:PostUpdate()
+    SavePickupData()
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_UPDATE,
+    MirrorKey.PostUpdate
 )
 
 
