@@ -348,7 +348,8 @@ function MirrorKey:OnMirrorKeyUse(_, _, player)
 
     local level = Game():GetLevel()
     if level:GetStage() == LevelStage.STAGE1_2
-    and TSIL.Stage.OnRepentanceStage() then
+    and TSIL.Stage.OnRepentanceStage()
+    and not level:IsAscent() then
         target = level:GetCurrentRoomIndex()
 
         if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then
