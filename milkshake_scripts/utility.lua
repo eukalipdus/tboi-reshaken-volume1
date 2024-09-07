@@ -518,4 +518,34 @@ function utility:GetOrbs(noRandom)
     end
 end
 
+local playerTearFamiliars = {
+    FamiliarVariant.INCUBUS,
+    FamiliarVariant.TWISTED_BABY,
+    FamiliarVariant.FATES_REWARD
+
+}
+
+---Gets the player from a tear, including familiars who mimic player shots
+---@param tear EntityTear
+---@return EntityPlayer | nil
+function utility:GetPlayerFromTear(tear)
+    if not tear.Parent then
+        return
+    end
+
+    local tearParent = tear.Parent
+
+    if tearParent.Type == EntityType.ENTITY_PLAYER then
+        return tearParent:ToPlayer()
+
+    elseif tearParent:ToFamiliar()
+    and TSIL.Utils.Table.IsIn(playerTearFamiliars, tearParent.Variant) then
+        local player = tearParent:ToFamiliar().Player
+
+        if player then
+            return player
+        end
+    end
+end
+
 MilkshakeVol1.utility = utility

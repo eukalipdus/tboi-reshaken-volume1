@@ -1,5 +1,6 @@
 local unlockableManager = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 local collectibles = enums.Collectibles
 
 local idToName = {
@@ -130,6 +131,19 @@ function MilkshakeVol1.UnlockManager:UpdateAchievement(achievementId, value)
     TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "UnlockData", unlockData)
 end
 
+local collectibleToAchievement = {
+    [enums.Collectibles.PRISMATIC_GOGGLES] = enums.Achievements.PRISMATIC_GOGGLES
+}
+
+---Gets the acheivement ID associated with a given collectible
+---@param collectibleType number
+---@return integer | nil
+function MilkshakeVol1.UnlockManager:GetCollectibleAssociatedAchievement(collectibleType)
+    if collectibleToAchievement[collectibleType] then
+        return collectibleToAchievement[collectibleType]
+    end
+end
+
 ---@param npc EntityNPC
 function unlockableManager:PostNpcDeath(npc)
     local stage = Game():GetLevel():GetStage()
@@ -197,6 +211,7 @@ MilkshakeVol1:AddCallback(
 ---@param pickup EntityPickup
 function unlockableManager:PostPickupInit(pickup)
     local itemPool = Game():GetItemPool()
+    local willSpindown = utility:GetData(pickup, "WillSpindown")
 
     if MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.GLASS_GOD) then
         return
@@ -206,8 +221,11 @@ function unlockableManager:PostPickupInit(pickup)
     and pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE
     and pickup.SubType == enums.Collectibles.PRISMATIC_GOGGLES then
         itemPool:RemoveCollectible(pickup.SubType)
-        local newCollectible = itemPool:GetCollectible(itemPool:GetLastPool(), true)
-        pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectible, true)
+
+        if not willSpindown then
+            local newCollectible = itemPool:GetCollectible(itemPool:GetLastPool(), true)
+            pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectible, true)
+        end
 
     elseif not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.GOLDEN_COOKIE)
     and pickup.Variant == PickupVariant.PICKUP_TRINKET

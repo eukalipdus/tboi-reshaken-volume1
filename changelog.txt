@@ -225,3 +225,6 @@ Fixes
 -Fixed error resulting from Witch Doctor Mask being activated by a NULL pill color
 -Fixed error from Globin In A Bucket not checking if the spawner of the Globin exists first
 -Fixed pickups being removed when exiting the game while in a Mirror Key room
+-Fixed Spindown Dice spinning down into hidden Reshaken items
+-Fixed Spirit of Conductivity console error caused by player tear mimicking familiars
+-Fixed Isaac being unable to shoot if Shattered Orb was lost while being used or activated through means other than the item itself

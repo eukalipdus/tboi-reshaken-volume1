@@ -149,6 +149,7 @@ include("milkshake_scripts.room_decorations.fire")
 include("milkshake_scripts.shardrockoverlay")
 include("milkshake_scripts.brgascloud")
 include("milkshake_scripts.nonreplaceabletnt")
+include("milkshake_scripts.spindowndicehiddenitems")
 
 -- Check if Spirit Sage can be played
 MilkshakeVol1.AchievementChecker = include("milkshake_scripts.achievementchecker")

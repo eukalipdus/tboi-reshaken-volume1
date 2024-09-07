@@ -130,7 +130,7 @@ local function SpawnChest(player, position, shouldBelialSynergy)
         if megaChestUnlocked then
             TSIL.EntitySpecific.SpawnPickup(
                 PickupVariant.PICKUP_MEGACHEST,
-                ChestSubType.CHEST_CLOSED,
+                0,
                 spawnPos,
                 RandomVector() * CHEST_VELOCITY_MULTIPLIER
             )
