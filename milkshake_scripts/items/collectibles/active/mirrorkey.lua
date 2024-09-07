@@ -134,6 +134,14 @@ local function CanUseMirrorKey()
         return false
     end
 
+    local roomDesc = level:GetCurrentRoomDesc()
+    local roomData = roomDesc.Data
+
+    if roomData.Variant == 1
+    and room:GetType() == RoomType.ROOM_BOSS then
+        return false
+    end
+
     local roomsMirrorKeyWasUsed = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "RoomsMirrorKeyWasUsed"
