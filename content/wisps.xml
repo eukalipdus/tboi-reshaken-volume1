@@ -137,4 +137,8 @@
 	<!-- Empty Slot -->
 	<wisp id="10" hp="1" layer="0" canShoot="false"
 	flameColor="flame_yellow" coreColor="core_gold" coreGfx="coin.png" tearColor="tear_gold"/>
+
+	<!-- Mirror Key -->
+	<wisp id="30" hp="3" layer="1" damage="4.5" tearFlags="8"
+	flameColor="flame_purple" coreColor="cpre_pink" tearColor="tear_pink"/>
 </wisps>
