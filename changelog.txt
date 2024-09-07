@@ -220,6 +220,7 @@ Additions
 -Added three new items, a collectible, a trinket, and a spirit orb
 -Added crafting qualities
 -Added Belial (Judas' Birthright) synergies for Golden Shovel and Mirror Key
+-Added Book of Virtues synergy for Mirror Key
 
 Fixes
 -Fixed error resulting from Witch Doctor Mask being activated by a NULL pill color
@@ -228,3 +229,5 @@ Fixes
 -Fixed Spindown Dice spinning down into hidden Reshaken items
 -Fixed Spirit of Conductivity console error caused by player tear mimicking familiars
 -Fixed Isaac being unable to shoot if Shattered Orb was lost while being used or activated through means other than the item itself
+-Fixed Mirror Key being useable in the boss room containing Dad's Note, which caused a crash
+-Fixed Shattered Orb + Belial synergy not having a proper visual effect
