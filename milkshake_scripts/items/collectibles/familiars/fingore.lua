@@ -8,6 +8,90 @@ local exitSpeed = 0.01
 
 local isNewRoom = false;
 
+local fingoreCollectiblesInRoom = {}
+
+---Gets the location of a stored ptrHash in the table fingoreCollectiblesInRoom
+---@param ptrHash integer
+---@return unknown
+local function FindFingoreKey(ptrHash)
+	for key, storedPtrHash in pairs(fingoreCollectiblesInRoom) do
+		if ptrHash == storedPtrHash then
+			return key
+		end
+	end
+	return -1
+end
+
+---Displays an easter egg message using a random player's name
+---@param rng RNG
+local function FingoreHiddenMessage(rng)
+	local players = TSIL.Players.GetPlayers()
+	local randomPlayer = TSIL.Random.GetRandomElementsFromTable(players, 1, rng)
+	local chosenName = randomPlayer[1]:GetName()
+	Game():GetHUD():ShowFortuneText(
+		"You cannot",
+		"ignore me",
+		"forever, " .. chosenName
+	)
+end
+
+local function GetRandomFingoreTarget(fingoreData, familiar, rng)
+	local entities = TSIL.Utils.Tables.Filter(Isaac.GetRoomEntities(), function (_, npc)
+		return npc:IsVulnerableEnemy()
+	end)
+	local target = entities[rng:RandomInt(#entities)]
+	local escape = Vector.FromAngle(rng:RandomInt(360))*1000
+
+	if isNewRoom then
+		familiar.Position = familiar.SpawnerEntity.Position +  Vector.FromAngle(rng:RandomInt(360))*1000
+	end
+
+	fingoreData.sprite:Play("Point", true)
+
+	if target then
+		target:AddEntityFlags(EntityFlag.FLAG_BAITED)
+	end
+
+	fingoreData.target = target
+	fingoreData.escape = target and escape or familiar.Position
+	fingoreData.cleared = not target
+	fingoreData.emoted = false
+	fingoreData.leftSide = target and target.Position.X > familiar.Position.X
+end
+
+---@param pickup EntityPickup
+function fingore:PostPickupInit(pickup)
+	local ptrHash = GetPtrHash(pickup)--TSIL.Collectibles.GetCollectibleIndex(pickup)
+	if pickup.SubType == enums.Collectibles.FINGORE then
+		table.insert(fingoreCollectiblesInRoom, ptrHash)
+
+	elseif TSIL.Utils.Tables.IsIn(fingoreCollectiblesInRoom, ptrHash) then
+		local tableKey = FindFingoreKey(ptrHash)
+		if tableKey ~= -1 then
+			table.remove(fingoreCollectiblesInRoom, tableKey)
+		end
+		FingoreHiddenMessage(pickup:GetDropRNG())
+	end
+end
+MilkshakeVol1:AddCallback(
+	ModCallbacks.MC_POST_PICKUP_INIT,
+	fingore.PostPickupInit,
+	PickupVariant.PICKUP_COLLECTIBLE
+)
+
+---@param pickup Entity
+function fingore:PostEntityRemove(pickup)
+	if pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE
+	and pickup.SubType == enums.Collectibles.FINGORE then
+		FingoreHiddenMessage(pickup:GetDropRNG())
+	end
+end
+MilkshakeVol1:AddCallback(
+	ModCallbacks.MC_POST_ENTITY_REMOVE,
+	fingore.PostEntityRemove,
+	EntityType.ENTITY_PICKUP
+)
+
 ---@param player EntityPlayer
 function fingore:EvaluateCache(player)
     TSIL.Familiars.CheckFamiliarFromCollectibles(
