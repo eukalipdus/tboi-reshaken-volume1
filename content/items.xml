@@ -11,6 +11,7 @@
     <active id="11" name="Shattered Orb" description="Fragile Vessel" tags="offensive" quality="3" gfx="collectibles_shatteredorb.png" maxcharges="4" craftquality="3" />
     <active id="13" name="Prismatic Dice" description="Quantity over quality" tags="nocantrip offensive" quality="4" gfx="collectibles_prismaticdice.png" maxcharges="6" craftquality="4" />
     <familiar id="14" name="Spirit Bum" description="He wants your soul." gfx="collectibles_spiritbum.png" tags="offensive summonable" quality="0" craftquality="0" />
+    <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="collectibles_fingore.png" quality="1" craftquality="1"/>
     <familiar id="16" name="Celestial Mirror" description="It's impossible to outrun your own reflection." cache="damage" gfx="InnerReflection.png" tags="monstermanual offensive summonable" quality="1" craftquality="1" />
     <passive id="17" name="Sickle Cell" description="Piercing + Bloody Tears"  cache="all" gfx="sickle_cell.png" devilprice="2" tags="offensive summonable" quality="3" craftquality="3" />
     <passive id="18" name="Spoiled Breakfast" description="HP up?" maxhearts="2" gfx="spoiled_breakfast.png" tags="nocantrip noeden" quality="0" craftquality="-1" />
@@ -66,7 +67,6 @@
     <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true" craftquality="-1"/> 
     <passive id="2" name="Black Eye" description="Owchie + Tears Up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true" craftquality="-1"/>
     <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip noeden" quality="2" gfx="collectibles_glassheart.png" hidden="true" craftquality="-1"/>
-    <familiar id="15" name="Scripulous Fingore" description="Nuh-uh-uh!" gfx="Fingore.png" tags="noeden" quality="1" hidden="true" craftquality="-1"/>
     <passive id="32" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" hidden="true" tags="nocantrip noeden" quality="5" craftquality="-1"/>
     <passive id="50" name="Saataa Andagii" description="Saataa Andagii" tags="nocantrip nolostbr noeden" quality="6" maxhearts="1" hearts="4" gfx="sata_andagi.png" hidden="true" craftquality="-1"/>
     <passive id="31" name="Water With Food Coloring" description="Wish granted" cache="all" quality="6" gfx="collectibles_waterwithfoodcoloring.png" hidden="true" tags="noeden" craftquality="-1"/>
