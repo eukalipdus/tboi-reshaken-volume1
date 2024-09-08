@@ -125,14 +125,18 @@ function fingore:FamiliarUpdate(familiar)
     familiar.DepthOffset = 90
 	---@type {sprite : Sprite, target : Entity, escape : Vector, cleared : boolean, emoted : boolean, leftSide : boolean}
 	local fingoreData = utility:GetData(familiar, "Fingore")
-	if isNewRoom and not fingoreData.target then
+	if not fingoreData.target or not fingoreData.target:Exists() then
 		local rng = familiar:GetDropRNG()
 		local entities = TSIL.Utils.Tables.Filter(Isaac.GetRoomEntities(), function (_, npc)
 			return npc:IsVulnerableEnemy()
 		end)
 		local target = entities[rng:RandomInt(#entities)]
+
 		local escape = Vector.FromAngle(rng:RandomInt(360))*1000
-		familiar.Position = familiar.SpawnerEntity.Position +  Vector.FromAngle(rng:RandomInt(360))*1000
+		
+		if isNewRoom then
+			familiar.Position = familiar.SpawnerEntity.Position +  Vector.FromAngle(rng:RandomInt(360))*1000
+		end
 
 		fingoreData.sprite:Play("Point", true)
 
@@ -146,7 +150,7 @@ function fingore:FamiliarUpdate(familiar)
 		fingoreData.emoted = false
 		fingoreData.leftSide = target and target.Position.X > familiar.Position.X
 	end
-	if fingoreData.target and not fingoreData.target:Exists() then fingoreData.target = nil end
+	--if fingoreData.target and not fingoreData.target:Exists() then fingoreData.target = nil end
 
 	if fingoreData.sprite:IsFinished("Nuh") or fingoreData.sprite:IsFinished("Thumbs") then
 		fingoreData.sprite:Play("Point", true)
