@@ -105,20 +105,18 @@ end
 ---@param player EntityPlayer
 ---@param position Vector
 ---@param shouldBelialSynergy boolean
-local function SpawnChest(player, position, shouldBelialSynergy)
+local function SpawnChest(position, shouldBelialSynergy)
     local room = Game():GetRoom()
-    local megaChestUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(MEGA_CHEST_ACHIEVEMENT_ID)
-    local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
+    local spawnPos = room:FindFreePickupSpawnPosition(position, 10, true, false)
 
     if shouldBelialSynergy then
-        for _ = 1, 3 do
+        for idx = 1, 3 do
             TSIL.EntitySpecific.SpawnPickup(
                 PickupVariant.PICKUP_REDCHEST,
                 ChestSubType.CHEST_CLOSED,
                 spawnPos,
-                RandomVector() * CHEST_VELOCITY_MULTIPLIER
+                (RandomVector() * CHEST_VELOCITY_MULTIPLIER):Rotated(45 * idx)
             ):ToPickup()
-            --chest:TryOpenChest()
         end
 
         TSIL.PickupSpecific.SpawnHeart(
@@ -127,22 +125,19 @@ local function SpawnChest(player, position, shouldBelialSynergy)
             RandomVector()
         )
     else
-        if megaChestUnlocked then
+        for idx = 1, 2 do
             TSIL.EntitySpecific.SpawnPickup(
-                PickupVariant.PICKUP_MEGACHEST,
-                0,
+                PickupVariant.PICKUP_LOCKEDCHEST,
+                ChestSubType.CHEST_CLOSED,
                 spawnPos,
-                RandomVector() * CHEST_VELOCITY_MULTIPLIER
+                (RandomVector() * CHEST_VELOCITY_MULTIPLIER):Rotated(45 * idx)
             )
-        else
-            for _ = 1, 2 do
-                TSIL.EntitySpecific.SpawnPickup(
-                    PickupVariant.PICKUP_LOCKEDCHEST,
-                    ChestSubType.CHEST_CLOSED,
-                    spawnPos
-                ):ToPickup()
-                --chest:TryOpenChest()
-            end
+
+            TSIL.PickupSpecific.SpawnCoin(
+                CoinSubType.COIN_PENNY,
+                spawnPos,
+                (RandomVector() * 2):Rotated(45 * idx)
+            )
         end
     end
 end
@@ -172,7 +167,7 @@ end
 
 ---@param rng RNG
 ---@param player EntityPlayer
-function goldenShovel:onUse(_, rng, player)
+function goldenShovel:onUse(_, _, player)
     if skipNextShovelUse then
         skipNextShovelUse = false
         return
@@ -185,7 +180,7 @@ function goldenShovel:onUse(_, rng, player)
 
     if not TrySpawnSecretMemberShop(player.Position) then
         SpawnDirtPile(player.Position, shouldBelialSynergy)
-        SpawnChest(player, player.Position, shouldBelialSynergy)
+        SpawnChest(player.Position, shouldBelialSynergy)
     end
 
     return true
