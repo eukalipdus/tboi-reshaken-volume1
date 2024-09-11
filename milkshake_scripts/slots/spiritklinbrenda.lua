@@ -408,6 +408,8 @@ function SpiritKlin:OnBrendaUpdate(brenda)
         return
     end
 
+    brenda.SizeMulti = Vector(2.2, 1)
+
     if sprite:IsFinished("Prize") then
         sprite:Play("Idle")
     end
@@ -457,6 +459,7 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
     end
 
     SFXManager():Play(enums.Sounds.BRENDA_ACTIVATE)
+    SFXManager():Play(enums.Sounds.SOULHEART_LOSE, 0.7)
 
     sprite:Play("Prize", true)
     TSIL.Entities.SetEntityData(

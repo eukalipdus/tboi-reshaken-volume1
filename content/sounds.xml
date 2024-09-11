@@ -21,6 +21,10 @@
         <sample weight="1" path="electrocute_machine.wav"/>
     </sound>
 
+    <sound name="lose soul heart">
+        <sample weight="1" path="soulheart_lose.wav"/>
+    </sound>
+
     <sound name="Spirit Of Chaos">
         <sample weight="1" path="Spirit Of Chaos.wav"/>
     </sound>
