@@ -2,8 +2,8 @@ local lilBishop = {}
 local enums = MilkshakeVol1.enums
 local sfx = SFXManager()
 
-lilBishop.BlockCooldown = 150 -- 5*30
-lilBishop.BlockChance = 0.2
+lilBishop.BlockCooldown = 180 -- 6*30
+lilBishop.BlockChance = 0.1
 --lilBishop.ShieldTimeout = 120
 lilBishop.LaserFade = 10
 lilBishop.FadeCounter = 15
