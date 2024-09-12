@@ -6,7 +6,7 @@ local CHEST_VELOCITY_MULTIPLIER = 15
 local GOLD_PRICE_INCREASE = 7
 local skipNextShovelUse = false
 
-local pickupToGoldVariant = {
+local pickupToGoldSubType = {
     [PickupVariant.PICKUP_HEART] = HeartSubType.HEART_GOLDEN,
     [PickupVariant.PICKUP_KEY] = HeartSubType.HEART_GOLDEN,
     [PickupVariant.PICKUP_BOMB] = HeartSubType.HEART_GOLDEN,
@@ -187,7 +187,7 @@ function goldenShovel:PostPickupUpdate(pickup)
         return
     end
 
-    local goldSubType = pickupToGoldVariant[pickup.Variant]
+    local goldSubType = pickupToGoldSubType[pickup.Variant]
 
     if pickup.Variant == PickupVariant.PICKUP_HEART
     and not TSIL.Utils.Tables.IsIn(allowedHeartsToTransform, pickup.SubType) then
@@ -199,7 +199,7 @@ function goldenShovel:PostPickupUpdate(pickup)
         pickup:Morph(
             EntityType.ENTITY_PICKUP,
             pickup.Variant,
-            pickupToGoldVariant[pickup.Variant],
+            pickupToGoldSubType[pickup.Variant],
             true
         )
 
