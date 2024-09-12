@@ -2,19 +2,27 @@ local goldenShovel = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local MEGA_CHEST_ACHIEVEMENT_ID = 601
 local CHEST_VELOCITY_MULTIPLIER = 15
-
-local goldenShovelData = {
-    FREEZE_DURATION = 180,
-    GOLD_PICKUP_CHANCE = 10,
-    DOUBLE_CHEST_CHANCE = 50,
-    PICKUP_VELOCITY = Vector(2,2),
-    PIT_STEP = 20,
-    PICKUP_STEP = 30,
-    DOUBLE_CHEST_STEP = 10
-}
+local GOLD_PRICE_INCREASE = 7
 local skipNextShovelUse = false
+
+local pickupToGoldVariant = {
+    [PickupVariant.PICKUP_HEART] = HeartSubType.HEART_GOLDEN,
+    [PickupVariant.PICKUP_KEY] = HeartSubType.HEART_GOLDEN,
+    [PickupVariant.PICKUP_BOMB] = HeartSubType.HEART_GOLDEN,
+}
+
+local allowedHeartsToTransform = {
+    HeartSubType.HEART_FULL,
+    HeartSubType.HEART_HALF
+}
+
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "GoldenShovelSecretShopCreated",
+    false,
+    TSIL.Enums.VariablePersistenceMode.RESET_FLOOR
+)
 
 ---@param position Vector
 ---@param shouldBelialSynergy boolean
@@ -55,7 +63,6 @@ local function SpawnGoldEffects(position, shouldBelialSynergy)
     end
 end
 
-
 ---@param position Vector
 ---@param shouldBelialSynergy boolean
 local function SpawnDirtPile(position, shouldBelialSynergy)
@@ -70,36 +77,6 @@ local function SpawnDirtPile(position, shouldBelialSynergy)
     else
         pit:GetSprite().Color = Color(0.7, 0.6, 0, 1, 0, 0, 0)
     end
-end
-
-
----@param rng RNG
----@param position Vector
-local function SpawnGoldenPickup(rng, position)
-    local room = Game():GetRoom()
-    local spawnPos = room:FindFreePickupSpawnPosition(position, 1, true, false)
-    local roll = TSIL.Random.GetRandomInt(0, 3, rng)
-
-    local variant = PickupVariant.PICKUP_BOMB
-    local subtype = BombSubType.BOMB_GOLDEN
-
-    if roll == 1 then
-        variant = PickupVariant.PICKUP_KEY
-        subtype = KeySubType.KEY_GOLDEN
-    elseif roll == 2 then
-        variant = PickupVariant.PICKUP_HEART
-        subtype = HeartSubType.HEART_GOLDEN
-    elseif roll == 3 then
-        variant = PickupVariant.PICKUP_COIN
-        subtype = CoinSubType.COIN_GOLDEN
-    end
-    
-    TSIL.EntitySpecific.SpawnPickup(
-        variant,
-        subtype,
-        spawnPos,
-        goldenShovelData.PICKUP_VELOCITY:Rotated(TSIL.Random.GetRandomInt(0, 360, rng))
-    )
 end
 
 ---@param player EntityPlayer
@@ -142,7 +119,6 @@ local function SpawnChest(position, shouldBelialSynergy)
     end
 end
 
-
 ---@param position Vector
 ---@return boolean
 local function TrySpawnSecretMemberShop(position)
@@ -161,9 +137,88 @@ local function TrySpawnSecretMemberShop(position)
         true
     )
 
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "GoldenShovelSecretShopCreated",
+        true
+    )
+
     return true
 end
 
+---Replaces the cheapest pickup for sale with a Golden Key
+local function ReplaceCheapestWithGoldenKey()
+    local pickups = TSIL.EntitySpecific.GetPickups()
+    local cheapestPickup
+
+    pickups = TSIL.Utils.Tables.Filter(pickups, function (_, currentPickup)
+        return currentPickup:IsShopItem()
+    end)
+
+    for _, currentPickup in pairs(pickups) do
+        if not cheapestPickup then
+            cheapestPickup = currentPickup
+        elseif currentPickup.Price < cheapestPickup.Price then
+            cheapestPickup = currentPickup
+        end
+    end
+
+    if cheapestPickup then
+        cheapestPickup:Morph(
+            EntityType.ENTITY_PICKUP,
+            PickupVariant.PICKUP_KEY,
+            KeySubType.KEY_GOLDEN,
+            true
+        )
+    end
+end
+
+---Checks if the current room is a secret shop, and Golden Shovel has been used
+local function IsGoldenShovelShop()
+    local goldenShovelShopCreated = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "GoldenShovelSecretShopCreated")
+    local room = Game():GetRoom()
+    local isSecretShop = room:GetType() == RoomType.ROOM_SHOP and room:GetBackdropType() == BackdropType.SECRET
+    return goldenShovelShopCreated and isSecretShop
+end
+
+---@param pickup EntityPickup
+function goldenShovel:PostPickupUpdate(pickup)
+    if not IsGoldenShovelShop() then
+        return
+    end
+
+    local goldSubType = pickupToGoldVariant[pickup.Variant]
+
+    if pickup.Variant == PickupVariant.PICKUP_HEART
+    and not TSIL.Utils.Tables.IsIn(allowedHeartsToTransform, pickup.SubType) then
+        return
+    end
+
+    if goldSubType
+    and pickup.SubType ~= goldSubType then
+        pickup:Morph(
+            EntityType.ENTITY_PICKUP,
+            pickup.Variant,
+            pickupToGoldVariant[pickup.Variant],
+            true
+        )
+
+    elseif pickup.Variant == PickupVariant.PICKUP_TRINKET
+    and not TSIL.Trinkets.IsGoldenTrinket(pickup.SubType) then
+        pickup:Morph(
+            EntityType.ENTITY_PICKUP,
+            PickupVariant.PICKUP_TRINKET,
+            TSIL.Trinkets.GetGoldenTrinketType(pickup.SubType),
+            true
+        )
+    else
+        return
+    end
+
+    pickup.AutoUpdatePrice = false
+    pickup.Price = pickup.Price + GOLD_PRICE_INCREASE
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, goldenShovel.PostPickupUpdate)
 
 ---@param rng RNG
 ---@param player EntityPlayer
@@ -187,5 +242,20 @@ function goldenShovel:onUse(_, _, player)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, goldenShovel.onUse, enums.Collectibles.GOLDEN_SHOVEL)
 
+function goldenShovel:PostNewRoom()
+    local room = Game():GetRoom()
+    if IsGoldenShovelShop()
+    and room:IsFirstVisit() then
+        local restockMachines = Isaac.FindByType(
+            EntityType.ENTITY_SLOT,
+            TSIL.Enums.SlotVariant.RESTOCK_MACHINE
+        )
+
+        if #restockMachines == 0 then
+            ReplaceCheapestWithGoldenKey()
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, goldenShovel.PostNewRoom)
 
 return goldenShovel
