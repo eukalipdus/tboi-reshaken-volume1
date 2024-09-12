@@ -4,6 +4,8 @@ local utility = MilkshakeVol1.utility
 
 local CHEST_VELOCITY_MULTIPLIER = 15
 local GOLD_PRICE_INCREASE = 7
+local MIN_COIN_SPAWN_COUNT = 2
+local MAX_COIN_SPAWN_COUNT = 4
 local skipNextShovelUse = false
 
 local pickupToGoldSubType = {
@@ -79,10 +81,10 @@ local function SpawnDirtPile(position, shouldBelialSynergy)
     end
 end
 
----@param player EntityPlayer
+---@param rng RNG
 ---@param position Vector
 ---@param shouldBelialSynergy boolean
-local function SpawnChest(position, shouldBelialSynergy)
+local function SpawnChest(rng, position, shouldBelialSynergy)
     local room = Game():GetRoom()
     local spawnPos = room:FindFreePickupSpawnPosition(position, 10, true, false)
 
@@ -109,7 +111,11 @@ local function SpawnChest(position, shouldBelialSynergy)
                 spawnPos,
                 (RandomVector() * CHEST_VELOCITY_MULTIPLIER):Rotated(45 * idx)
             )
+        end
 
+        local coinSpawnCount = TSIL.Random.GetRandomInt(MIN_COIN_SPAWN_COUNT, MAX_COIN_SPAWN_COUNT, rng)
+
+        for idx = 1, coinSpawnCount do
             TSIL.PickupSpecific.SpawnCoin(
                 CoinSubType.COIN_PENNY,
                 spawnPos,
@@ -222,7 +228,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, goldenShovel.PostP
 
 ---@param rng RNG
 ---@param player EntityPlayer
-function goldenShovel:onUse(_, _, player)
+function goldenShovel:onUse(_, rng, player)
     if skipNextShovelUse then
         skipNextShovelUse = false
         return
@@ -235,7 +241,11 @@ function goldenShovel:onUse(_, _, player)
 
     if not TrySpawnSecretMemberShop(player.Position) then
         SpawnDirtPile(player.Position, shouldBelialSynergy)
-        SpawnChest(player.Position, shouldBelialSynergy)
+        SpawnChest(
+            rng,
+            player.Position,
+            shouldBelialSynergy
+        )
     end
 
     return true
