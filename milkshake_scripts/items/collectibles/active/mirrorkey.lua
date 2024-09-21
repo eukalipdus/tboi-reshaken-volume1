@@ -136,9 +136,11 @@ local function CanUseMirrorKey()
 
     local roomDesc = level:GetCurrentRoomDesc()
     local roomData = roomDesc.Data
+    local roomType = room:GetType()
 
-    if roomData.Variant == 1
-    and room:GetType() == RoomType.ROOM_BOSS then
+    if (roomData.Variant == 1
+    and roomType == RoomType.ROOM_BOSS)
+    or roomType == RoomType.ROOM_ERROR then
         return false
     end
 
