@@ -105,14 +105,14 @@ local function SpawnChest(rng, position, shouldBelialSynergy)
             RandomVector()
         )
     else
-        for idx = 1, 2 do
-            TSIL.EntitySpecific.SpawnPickup(
-                PickupVariant.PICKUP_LOCKEDCHEST,
-                ChestSubType.CHEST_CLOSED,
-                spawnPos,
-                (RandomVector() * CHEST_VELOCITY_MULTIPLIER):Rotated(45 * idx)
+        --for idx = 1, 2 do
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_LOCKEDCHEST,
+            ChestSubType.CHEST_CLOSED,
+            spawnPos,
+            (RandomVector() * CHEST_VELOCITY_MULTIPLIER)
             )
-        end
+        --end
 
         local coinSpawnCount = TSIL.Random.GetRandomInt(MIN_COIN_SPAWN_COUNT, MAX_COIN_SPAWN_COUNT, rng)
 
