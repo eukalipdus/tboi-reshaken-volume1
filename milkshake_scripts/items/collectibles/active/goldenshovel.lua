@@ -190,7 +190,8 @@ end
 ---@param pickup EntityPickup
 function goldenShovel:PostPickupUpdate(pickup)
     if not IsGoldenShovelShop()
-    or not pickup:IsShopItem() then
+    or not pickup:IsShopItem()
+    or pickup.Variant == PickupVariant.PICKUP_KEY then
         return
     end
 
