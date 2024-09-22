@@ -3,6 +3,7 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local CHEST_VELOCITY_MULTIPLIER = 15
+local GOLD_KEY_PRICE = 15
 local GOLD_PRICE_INCREASE = 7
 local MIN_COIN_SPAWN_COUNT = 2
 local MAX_COIN_SPAWN_COUNT = 4
@@ -173,9 +174,10 @@ local function ReplaceCheapestWithGoldenKey()
         cheapestPickup:Morph(
             EntityType.ENTITY_PICKUP,
             PickupVariant.PICKUP_KEY,
-            KeySubType.KEY_GOLDEN,
-            true
+            KeySubType.KEY_GOLDEN
         )
+        cheapestPickup.AutoUpdatePrice = false
+        cheapestPickup.Price = GOLD_KEY_PRICE
     end
 end
 
