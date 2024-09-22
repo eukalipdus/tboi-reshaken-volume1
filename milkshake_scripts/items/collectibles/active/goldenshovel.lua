@@ -240,7 +240,7 @@ function goldenShovel:onUse(_, rng, player)
 
     if not player then return end
 
-    local shouldBelialSynergy = utility:IsJudasBirthright(player)
+    local shouldBelialSynergy = player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE)
     SpawnGoldEffects(player.Position, shouldBelialSynergy)
 
     if not TrySpawnSecretMemberShop(player.Position) then

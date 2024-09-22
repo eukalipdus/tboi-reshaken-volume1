@@ -50,6 +50,12 @@ local MIRRORED_INPUTS = {
     [ButtonAction.ACTION_SHOOTLEFT] = ButtonAction.ACTION_SHOOTRIGHT,
     [ButtonAction.ACTION_SHOOTRIGHT] = ButtonAction.ACTION_SHOOTLEFT,
 }
+--[[
+local roomTypeToSprite = {
+    [RoomType.ROOM_DEVIL] = "gfx/grid/door_mirror_challenge_devil",
+    [RoomType.ROOM_ANGEL] = ""
+}
+]]
 --- A mirror door with this index as target will travel to the mirror version of the room
 local MIRROR_DOOR_INDEX = 9999
 
@@ -262,6 +268,7 @@ end
 ---@param target integer
 ---@param targetDimension Dimension
 ---@param canSpawnOtherDoor boolean?
+-----@param roomType RoomType? | The mirror door will use the door sprite of the given RoomType
 local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension, canSpawnOtherDoor)
     if canSpawnOtherDoor == nil then
         canSpawnOtherDoor = true
@@ -276,6 +283,14 @@ local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension, canSpawnOt
         doorSlotPos
     )
     local sprite = fakeDoor:GetSprite()
+
+    --[[if roomType then
+        for idx = 0, 5 do
+            sprite:ReplaceSpritesheet(idx, roomTypeToSprite[roomType])
+        end
+        sprite:LoadGraphics()
+    end]]
+
     local rotation = ROTATION_PER_DOOR_SLOT[doorSlot]
     sprite.Offset = Vector(0, 15):Rotated(rotation)
     sprite.Rotation = rotation
@@ -551,7 +566,7 @@ function MirrorKey:OnNewRoom()
                 "PreviousRoomIndex"
             )
             TSIL.Doors.RemoveDoors(doors)
-            SpawnFakeMirrorDoor(doors[1].Slot, prevRoomIndex, TSIL.Enums.Dimension.CURRENT)
+            SpawnFakeMirrorDoor(doors[1].Slot, prevRoomIndex, TSIL.Enums.Dimension.CURRENT, false)
         end
 
         SetMirrorShaderActive(false)

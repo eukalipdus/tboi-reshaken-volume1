@@ -152,7 +152,7 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
                 local seed = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE):GetSeed()
                 local roomPool = itemPool:GetPoolForRoom(roomType, seed)
 
-                if utility:IsJudasBirthright(player) then
+                if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) then
                     local roll = TSIL.Random.GetRandomInt(1, 100)
                     if roll <= JUDAS_REROLL_CHANCE then
                         roomPool = ItemPoolType.POOL_DEVIL

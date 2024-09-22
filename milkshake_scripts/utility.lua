@@ -490,14 +490,6 @@ function utility:HUDOffset(x, y, anchor)
     return math.floor(xoffset + 0.5), math.floor(yoffset + 0.5)
 end
 
---- Returns if the player is Judas or Dark Judas and if they have birthright
----@param player EntityPlayer
----@return boolean
-function utility:IsJudasBirthright(player)
-    return (player:GetPlayerType() == PlayerType.PLAYER_JUDAS or player:GetPlayerType() == PlayerType.PLAYER_BLACKJUDAS) and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
-end
-
-
 ---Checks if the boss versus screen is currently playing.
 ---@return boolean
 function utility:IsVersusScreenPlaying()
