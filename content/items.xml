@@ -20,6 +20,8 @@
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" tags="lazarussharedglobal nocantrip offensive summonable" quality="3" gfx="potofgold.png" craftquality="3"/>
     <familiar id="22" name="Glass Idol" description="Shattering Resurgance" tags="summonable" quality="2" gfx="glass_idol.png" />
     <active id="23" name="Leviticus" description="Purify your Soul" tags="book offensive nogreed" quality="4" craftquality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0"/>
+    <active id="23" name="Leviticus " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0"/>
+    <active id="23" name="Leviticus  " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0"/>
     <passive id="24" name="Battery Acid" description="PH down" tags="battery nocantrip offensive summonable" quality="3" gfx="collectibles_batteryacid.png" craftquality="3"/>
     <familiar id="25" name="Doggy Bag" description="Clean up after yourself" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive nolostbr poop summonable" quality="1" craftquality="1"/>
     <passive id="26" name="Dad's Mitt" description="Curve Ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2" craftquality="2"/>
@@ -59,9 +61,6 @@
 
     <trinket name="Alt Path Unlock Tracker" description="Please stop reporting this to the Milkshake devs" gfx="trinkets_alt_path_unlock_tracker.png" achievement="407" tags="nogreed"/>
     <trinket name="MEGA CHEST UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs" achievement="601" tags="nogreed" />
-
-    <active id="23" name="Leviticus " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0"/>
-    <active id="23" name="Leviticus  " hidden="true" description="Purify your Soul" tags="book offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0"/>
 
     <!-- unused -->
     <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true" craftquality="-1"/> 
