@@ -597,6 +597,7 @@ function MirrorKey:OnNewRoom()
     PlacePlayersInDoorSlot(doorSlot)
     AddLostCurse()
     UpdateDamageBonusCache()
+    RemoveTallLadder()
     RespawnSavedPickups()
     SavePickupData()
 
