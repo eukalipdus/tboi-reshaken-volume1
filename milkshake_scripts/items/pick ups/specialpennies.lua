@@ -54,22 +54,25 @@ local function GetRainbowCookieBonus(player)
     return 0
 end
 
----Activate per Acid Penny activation
-local function AcidPennyPickupEffect(player, rng)
-    local randomPill = PillEffect.PILLEFFECT_BAD_GAS
-
-    for _ = 1, TIMES_CAN_FAIL do
-        local roll = rng:RandomInt(VANILLA_PILLCOLOR_COUNT) + 1
-        randomPill = Game():GetItemPool():GetPill(roll)
-
-        if randomPill ~= PillEffect.PILLEFFECT_TELEPILLS
-        and randomPill < 2048 then
-            break
+local function PillEffectToPillColor(pillEffect)
+    for colorId = 1, PillColor.NUM_STANDARD_PILLS do
+        local currentPillEffect = itemPool:GetPillEffect(colorId, player)
+        if currentPillEffect == pillEffect then
+            return colorId
         end
     end
+    return -1
+end
 
+---Activate per Acid Penny activation
+local function AcidPennyPickupEffect(player, rng)
+    local itemPool = Game():GetItemPool()
+    local pillColor = rng:RandomInt(VANILLA_PILLCOLOR_COUNT) + 1
+    local pillEffect = itemPool:GetPillEffect(pillColor, player)
     local realPhd = false
     local falsePhd = player:HasCollectible(CollectibleType.COLLECTIBLE_FALSE_PHD)
+
+    itemPool:IdentifyPill(pillColor)
 
     for _, collectible in ipairs(positivePillCollectibles) do
         if player:HasCollectible(collectible) then
@@ -78,27 +81,18 @@ local function AcidPennyPickupEffect(player, rng)
     end
 
     if falsePhd and not realPhd then
-        randomPill = TSIL.Pills.GetFalsePHDPillEffect(randomPill)
+        pillEffect = TSIL.Pills.GetFalsePHDPillEffect(pillColor)
+        pillColor = PillEffectToPillColor(pillEffect)
     elseif realPhd and not falsePhd then
-        randomPill = TSIL.Pills.GetPHDPillEffect(randomPill)
+        pillEffect = TSIL.Pills.GetPHDPillEffect(pillColor)
+        pillColor = PillEffectToPillColor(pillEffect)
     end
 
-    local effectToColor = {}
-    for i = 1, PillColor.NUM_STANDARD_PILLS do
-        effectToColor[Game():GetItemPool():GetPillEffect(i, player)] = i
-    end
-
-    if effectToColor[randomPill] then
-        Game():GetItemPool():IdentifyPill(effectToColor[randomPill])
-    end
-
-    local randomPillColor = effectToColor[randomPill]
-
-    player:AnimatePill(randomPillColor, "Pickup")
+    player:AnimatePill(pillColor, "Pickup")
     SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 
     TSIL.Utils.Functions.RunInFrames(function ()
-        player:UsePill(randomPill, PillColor.PILL_NULL, UseFlag.USE_NOANNOUNCER)
+        player:UsePill(pillEffect, pillColor, UseFlag.USE_NOANNOUNCER)
     end, CARDPILL_USE_DELAY, {})
 end
 
