@@ -65,12 +65,16 @@ end
 ---Activate per Acid Penny activation
 local function AcidPennyPickupEffect(player, rng)
     local randomPill = PillEffect.PILLEFFECT_BAD_GAS
-    local counter = 0
-    repeat
-        counter = counter + 1
-        if counter == TIMES_CAN_FAIL then break end -- For the unluckiest person in the world
-        randomPill = Game():GetItemPool():GetPill(Random() + 1)
-    until randomPill ~= PillEffect.PILLEFFECT_TELEPILLS and randomPill < 2048
+
+    for _ = 1, TIMES_CAN_FAIL do
+        local roll = rng:RandomInt(VANILLA_PILLCOLOR_COUNT) + 1
+        randomPill = Game():GetItemPool():GetPill(roll)
+
+        if randomPill ~= PillEffect.PILLEFFECT_TELEPILLS
+        and randomPill < 2048 then
+            break
+        end
+    end
 
     local realPhd = false
     local falsePhd = player:HasCollectible(CollectibleType.COLLECTIBLE_FALSE_PHD)
