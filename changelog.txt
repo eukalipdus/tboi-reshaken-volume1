@@ -222,6 +222,11 @@ Additions
 -Added Belial (Judas' Birthright) synergies for Golden Shovel and Mirror Key
 -Added Book of Virtues synergy for Mirror Key
 
+Changes
+-Acid Penny now shows the assigned pill color when activating a pill instead of a random one
+-Mirror Key can no longer be used in Error Rooms
+-Modified some room layouts
+
 Fixes
 -Fixed error resulting from Witch Doctor Mask being activated by a NULL pill color
 -Fixed error from Globin In A Bucket not checking if the spawner of the Globin exists first
@@ -232,4 +237,10 @@ Fixes
 -Fixed Mirror Key being useable in the boss room containing Dad's Note, which caused a crash
 -Fixed a crash caused by using Mirror Key on Downpour 2 during the Ascent
 -Fixed a softlock caused by teleporting to a Devil or Angel room while in a Mirror Key room
+-Fixed ladders spawning in shops created by Mirror Key when exiting and continuing a run within one
 -Fixed Shattered Orb + Belial synergy not having a proper visual effect
+-Fixed cards from Crystal Penny not being seeded
+-Fixed pills from Acid Penny not being seeded
+-Fixed pills from Acid Penny coming from outside of the current pill rotation
+-Fixed Spindown Dice loop caused when spinning down Leviticus on the alternate sprites
+-Fixed error caused by Pot of Gold in rare cases using a seed of 0
