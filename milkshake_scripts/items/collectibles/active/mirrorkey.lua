@@ -485,6 +485,10 @@ local function UpdateDamageBonusCache()
 end
 
 local function SavePickupData()
+    if Game():GetRoom():GetType() == RoomType.ROOM_SHOP then
+        return
+    end
+
     local pickups = TSIL.EntitySpecific.GetPickups()
     local pickupData = {}
 
