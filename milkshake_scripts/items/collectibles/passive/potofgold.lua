@@ -115,7 +115,13 @@ end
 
 ---@param pickup EntityPickup
 local function CanPickupBeReplaced(pickup, convertChance, isNatural)
-    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+    local pickupSeed = pickup.InitSeed
+
+    if pickupSeed == 0 then
+        pickupSeed = 1
+    end
+
+    local rng = TSIL.RNG.NewRNG(pickupSeed)
     local roll = rng:RandomFloat()
     if (not isNatural and (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB))
     or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType))
