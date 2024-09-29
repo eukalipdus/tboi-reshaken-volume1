@@ -667,7 +667,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
             local belialConversion = false
 
             local player = shatteredOrb.SpawnerEntity:ToPlayer()
-            if orbToSpawn == enums.Orbs.CHAOS
+            if orbToSpawn == enums.Orbs.RANDOM
             and player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) then
                 local roll = TSIL.Random.GetRandomInt(1, 100, player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB))
                 if roll <= JUDAS_CONVERT_CHANCE then
