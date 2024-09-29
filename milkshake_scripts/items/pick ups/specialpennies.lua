@@ -97,11 +97,10 @@ local function AcidPennyPickupEffect(player, rng)
     end
 
     if effectToColor[randomPill] then
-        --print(effectToColor[randomPill])
         Game():GetItemPool():IdentifyPill(effectToColor[randomPill])
     end
 
-    local randomPillColor = rng:RandomInt(VANILLA_PILLCOLOR_COUNT) + 1
+    local randomPillColor = effectToColor[randomPill]
 
     player:AnimatePill(randomPillColor, "Pickup")
     SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
