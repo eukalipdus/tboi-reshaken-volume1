@@ -50,14 +50,14 @@
     <trinket name="Golden Cookie" description="Golden rainbow pennies!" gfx="trinkets_rainbowcookie.png" tags="nogreed"/>
 
     <!-- Hidden items -->
-    <passive id="500" name="BRENDA CUSTOM FIRE WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="501" name="BRENDA CUSTOM PSYCHIC WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="502" name="BRENDA CUSTOM NATURE WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="503" name="BRENDA CUSTOM ELECTRIC WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="504" name="BRENDA CUSTOM WATER WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="505" name="BRENDA CUSTOM POISON WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="500" name="BRENDA CUSTOM FIRE WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="501" name="BRENDA CUSTOM PSYCHIC WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="502" name="BRENDA CUSTOM NATURE WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="503" name="BRENDA CUSTOM ELECTRIC WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="504" name="BRENDA CUSTOM WATER WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="505" name="BRENDA CUSTOM POISON WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
 
     <trinket name="Alt Path Unlock Tracker" description="Please stop reporting this to the Milkshake devs" gfx="trinkets_alt_path_unlock_tracker.png" achievement="407" tags="nogreed"/>
     <trinket name="MEGA CHEST UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs" achievement="601" tags="nogreed" />
