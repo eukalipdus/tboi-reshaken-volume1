@@ -2,6 +2,8 @@ local ItemHider = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
+local ITEM_BEFORE_LEVITICUS = enums.Collectibles.LEVITICUS - 1
+
 local spindownForbiddenItems = {
     enums.Collectibles.UNCHARGED_MIRROR_KEY,
     enums.Collectibles.SPECIAL_BRENDA_FIRE_WISP,
@@ -12,6 +14,12 @@ local spindownForbiddenItems = {
     enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
     enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
     enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP
+}
+
+local leviticusVariants = {
+    enums.Collectibles.LEVITICUS,
+    enums.Collectibles.LEVITICUS_ALADAR,
+    enums.Collectibles.LEVITICUS_FANCY
 }
 
 local unlockableItems = {
@@ -30,6 +38,14 @@ function ItemHider:UseItem()
             "WillSpindown",
             true
         )
+
+        if TSIL.Utils.Tables.IsIn(leviticusVariants, currentCollectible.SubType) then
+            utility:SetData(
+                currentCollectible,
+                "ForceSpindown",
+                ITEM_BEFORE_LEVITICUS
+            )
+        end
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, ItemHider.UseItem, CollectibleType.COLLECTIBLE_SPINDOWN_DICE)
@@ -43,13 +59,22 @@ function ItemHider:PostPickupInit(pickup)
 
     local isForbidden = TSIL.Utils.Tables.IsIn(spindownForbiddenItems, pickup.SubType)
     local isUnlockable = TSIL.Utils.Tables.IsIn(unlockableItems, pickup.SubType)
+    local forcedItemId = utility:GetData(pickup, "ForceSpindown")
+
+    utility:SetData(pickup, "ForceSpindown", nil)
 
     if not pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE
-    or not (isForbidden or isUnlockable) then
+    or not (isForbidden or isUnlockable or forcedItemId) then
         return
     end
 
-    local newCollectibleType = pickup.SubType - 1
+    local newCollectibleType = CollectibleType.COLLECTIBLE_SAD_ONION
+
+    if forcedItemId then
+        newCollectibleType = forcedItemId
+    else
+        newCollectibleType = pickup.SubType - 1
+    end
 
     if isUnlockable then
         local achievementToCheck = MilkshakeVol1.UnlockManager:GetCollectibleAssociatedAchievement(pickup.SubType)
