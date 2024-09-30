@@ -180,8 +180,6 @@
     </entity>
 
     <entity id="1000" name="Wine Head Death Effect" anm2path="monster_wine_head.anm2" />
-    
-    <entity id="963" name="Glass Head Helper" reroll="false" />
 
     <entity name="Flask Head Head Puff" anm2path="monster_flask_head.anm2" id="1000" friction="1">
 	</entity>

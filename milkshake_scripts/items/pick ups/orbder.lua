@@ -56,7 +56,7 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
     if not Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex) then return end
 
     data.Selected = data.Selected + 1; if data.Selected > NUM_ORBS then data.Selected = 1 end
-    mod.SFX:Play(SoundEffect.SOUND_GOLD_HEART_DROP, 1, 2, false, 1 + data.Selected * 0.1)
+    SFXManager():Play(SoundEffect.SOUND_GOLD_HEART_DROP, 1, 2, false, 1 + data.Selected * 0.1)
 end)
 
 local function GetCallback()
@@ -81,8 +81,8 @@ end)
 ---@param player EntityPlayer
 ---@param flags UseFlag
 mod:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player, flags)
-    mod.SFX:Play(mod.enums.Sounds.ORB_CAPTURE)
-    mod.SFX:Play(mod.enums.Sounds.SPIRIT_ORDER)
+    SFXManager():Play(mod.enums.Sounds.ORB_CAPTURE)
+    SFXManager():Play(mod.enums.Sounds.SPIRIT_ORDER)
 
     if not player:HasCollectible(mod.enums.Collectibles.LYRA) then
         MilkshakeVol1:UseSpiritOrb(MilkshakeVol1:GetSelectedOrderOrb(player), player, mod.enums.UseOrbFlags.NO_SOUND)

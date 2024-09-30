@@ -122,7 +122,6 @@ enums.Enemies = {
     GRAVESTONE = Isaac.GetEntityTypeByName("Gravestone"),
     GLASS_HEAD = Isaac.GetEntityTypeByName("Glass Head"),
     STALAGMITE = Isaac.GetEntityTypeByName("Terra Stalagmite"),
-    GLASS_HEAD_HELPER = Isaac.GetEntityTypeByName("Glass Head Helper"),
 }
 
 enums.GravestoneType = {
