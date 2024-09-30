@@ -170,6 +170,7 @@ enums.Sounds = {
     SPIRIT_SALVATION = Isaac.GetSoundIdByName("Spirit Of Salvation"),
     SPIRIT_TERRASTRIUM = Isaac.GetSoundIdByName("Spirit Of Terrastrium"),
     SPIRIT_VIRULENCE = Isaac.GetSoundIdByName("Spirit Of Virulence"),
+    SPIRIT_ORDER = Isaac.GetSoundIdByName("Spirit Of Order"),
 
     ORB_DROP = Isaac.GetSoundIdByName("Spirit Orb Drop"),
     ORB_PICKUP = Isaac.GetSoundIdByName("Spirit Orb Pickup"),

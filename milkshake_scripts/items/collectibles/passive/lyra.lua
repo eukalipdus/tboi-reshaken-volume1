@@ -163,6 +163,10 @@ function Lyra:OnOrbUse(orb, player, flags)
         }
     end)
 
+    if orb == enums.Orbs.ORDER then
+        orb = MilkshakeVol1:GetSelectedOrderOrb(player)
+    end
+
     ---@type UsingLyraData
     local playerUsingLyraData = {
         orb = orb,

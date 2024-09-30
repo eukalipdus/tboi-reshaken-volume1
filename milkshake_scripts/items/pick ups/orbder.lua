@@ -45,6 +45,11 @@ local FRAME_TO_ORB = {
 local sprite = Sprite(); sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true); sprite:Play(sprite:GetDefaultAnimation(), true)
 
 ---@param player EntityPlayer
+function MilkshakeVol1:GetSelectedOrderOrb(player)
+    return FRAME_TO_ORB[SELECTION_TO_FRAME[mod:GetData(player, "SpiritOfOrder").Selected] + 1]
+end
+
+---@param player EntityPlayer
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
     if player:GetCard(0) ~= mod.enums.Orbs.ORDER then return end
     local data = mod:GetData(player, "SpiritOfOrder"); data.Selected = data.Selected or 1
@@ -76,6 +81,10 @@ end)
 ---@param player EntityPlayer
 ---@param flags UseFlag
 mod:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player, flags)
-    MilkshakeVol1:UseSpiritOrb(FRAME_TO_ORB[SELECTION_TO_FRAME[mod:GetData(player, "SpiritOfOrder").Selected] + 1], player, 0)
     mod.SFX:Play(mod.enums.Sounds.ORB_CAPTURE)
+    mod.SFX:Play(mod.enums.Sounds.SPIRIT_ORDER)
+
+    if not player:HasCollectible(mod.enums.Collectibles.LYRA) then
+        MilkshakeVol1:UseSpiritOrb(MilkshakeVol1:GetSelectedOrderOrb(player), player, mod.enums.UseOrbFlags.NO_SOUND)
+    end
 end, mod.enums.Orbs.ORDER)
