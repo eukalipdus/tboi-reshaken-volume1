@@ -445,14 +445,6 @@ function GlassHeads:GlassHead_EffectInit(effect)
         sprite:Play("Throw", true)
         sprite:SetFrame(19)
     end
-
-    if not data.creep or not data.creep:Exists() then
-        sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
-
-        if sprite.Color.A < .1 then
-            effect:Remove()
-        end
-    end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, GlassHeads.GlassHead_EffectInit)
 
