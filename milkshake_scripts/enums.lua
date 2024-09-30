@@ -109,13 +109,20 @@ enums.Effects = {
     SACRILEGE_PENTAGRAM = Isaac.GetEntityVariantByName("Sacrilege Pentagram Overlay"),
 
     FIRE_OVERLAY = Isaac.GetEntityVariantByName("Fire Screen Overlay"),
-    FIRE_PARTICLE = Isaac.GetEntityVariantByName("Fire Particle Overlay")
+    FIRE_PARTICLE = Isaac.GetEntityVariantByName("Fire Particle Overlay"),
+
+    GLASS_HEAD = Isaac.GetEntityVariantByName("Glass Head Death Effect"),
+    BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head Death Effect"),
+    FLASK_HEAD_BODY = Isaac.GetEntityVariantByName("Flask Head Death Effect 1"),
+    FLASK_HEAD_HEAD = Isaac.GetEntityVariantByName("Flask Head Death Effect 2"),
+    WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head Death Effect"),
 }
 
 enums.Enemies = {
     GRAVESTONE = Isaac.GetEntityTypeByName("Gravestone"),
     GLASS_HEAD = Isaac.GetEntityTypeByName("Glass Head"),
     STALAGMITE = Isaac.GetEntityTypeByName("Terra Stalagmite"),
+    GLASS_HEAD_HELPER = Isaac.GetEntityTypeByName("Glass Head Helper"),
 }
 
 enums.GravestoneType = {
