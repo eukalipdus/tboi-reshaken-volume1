@@ -349,7 +349,7 @@ end
 ---Checks if a given card is a spirit orb
 ---@param card Card
 function utility:IsSpiritOrb(card)
-    return SPIRIT_ORBS_MAP[card] ~= nil
+    return TSIL.Utils.Tables.IsIn(MilkshakeVol1.enums.Orbs, card)
 end
 
 ---When a random spirit orb is needed, checks if Spirit of Order should be removed or added from the list based on unlock status

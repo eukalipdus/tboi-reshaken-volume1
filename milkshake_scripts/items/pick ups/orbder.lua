@@ -1,5 +1,7 @@
 local mod = MilkshakeVol1
 
+local ORB_CHANCE = 1
+
 local TrueTrueOrbs = {}; for k, v in pairs(mod.enums.Orbs) do
     if v ~= mod.enums.Orbs.RANDOM then
         TrueTrueOrbs[k] = v
@@ -88,3 +90,26 @@ mod:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player, flags)
         MilkshakeVol1:UseSpiritOrb(MilkshakeVol1:GetSelectedOrderOrb(player), player, mod.enums.UseOrbFlags.NO_SOUND)
     end
 end, mod.enums.Orbs.ORDER)
+
+local orbRNG = RNG()
+
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function ()
+    orbRNG:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
+end)
+
+---@param variant PickupVariant
+---@param subtype integer
+mod:AddCallback(ModCallbacks.MC_POST_PICKUP_SELECTION, function (_, _, variant, subtype)
+    if not (Game():GetRoom():IsFirstVisit() and Game():GetRoom():GetFrameCount() < 4) then return end
+    if variant == PickupVariant.PICKUP_TAROTCARD and MilkshakeVol1.utility:IsSpiritOrb(subtype) then
+        if MilkshakeVol1.UnlockManager:IsAchievementUnlocked(MilkshakeVol1.enums.Achievements.SPIRIT_OF_ORDER) then
+            if orbRNG:RandomFloat() <= ORB_CHANCE then
+                return {PickupVariant.PICKUP_TAROTCARD, MilkshakeVol1.enums.Orbs.ORDER}
+            end
+
+            if subtype == MilkshakeVol1.enums.Orbs.ORDER then
+                return {PickupVariant.PICKUP_TAROTCARD, MilkshakeVol1.utility:GetRandomSpiritOrb(true)}
+            end
+        end
+    end
+end)
