@@ -93,7 +93,7 @@ local function TryApplyDiffraction(targetNpc, sourcePlayer)
     local rng = sourcePlayer:GetCollectibleRNG(PRISMATIC_GOGGLES)
     local diffractionChance = (BASE_DIFFRACTION_CHANCE*sourcePlayer:GetCollectibleNum(PRISMATIC_GOGGLES)) + (DIFFRACTION_LUCK_INCREASE * sourcePlayer.Luck)
     if not (targetNpc:IsVulnerableEnemy() and targetNpc:IsActiveEnemy())
-        or (targetNpc:IsBoss() and targetNpc.MaxHitPoints > MAX_DIFFRACTED_BOSS_HEALTH)
+        or (targetNpc:IsBoss() and targetNpc.MaxHitPoints >= MAX_DIFFRACTED_BOSS_HEALTH)
         or rng:RandomFloat() > diffractionChance
     then
         return
