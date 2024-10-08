@@ -29,6 +29,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, fingore.EvaluateCache, CacheFlag
 
 function fingore:FamiliarInit(familiar)
 	-- spawn finger?
+
 end
 mod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, fingore.FamiliarInit, fingore.head)
 
