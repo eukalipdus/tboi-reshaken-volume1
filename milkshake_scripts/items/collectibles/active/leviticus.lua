@@ -227,7 +227,7 @@ end
 local function CheckLeviticusActiveSlot(player)
     local overcharge = 0
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) then overcharge = LEVITICUS_MAX_CHARGES end
-    for i = 0, 4, 1 do
+    for i = 0, 3, 1 do
         if player:GetActiveItem(i) == GetCurrentLeviticusItem() and
         player:GetActiveCharge(i) + player:GetBatteryCharge(i) < LEVITICUS_MAX_CHARGES + overcharge then
             return i

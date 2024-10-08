@@ -129,7 +129,6 @@ function GlassHeads:GlassHead_Update(enemy)
 
         else
             local targetvel = (data.targpos - enemy.Position):Resized(GLASSHEAD_SPEED * 6)
-            ---@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
             enemy.Velocity = TSIL.Utils.Math.Lerp(enemy.Velocity, targetvel, 0.25)
         end
 
@@ -178,10 +177,22 @@ function GlassHeads:GlassHead_Update(enemy)
                 Vector.Zero,
                 enemy
             )
+
             creep.SpriteScale = Vector(4, 4)
             creep.Timeout = 300
             creep:Update()
-            data.creep = creep
+
+            local deathEffect = TSIL.EntitySpecific.SpawnEffect(
+                enums.Effects.GLASS_HEAD,
+                0,
+                enemy.Position,
+                nil,
+                enemy
+            )
+
+            local effectData = GetGlassHeadData(deathEffect)
+
+            effectData.creep = creep
 
             for _ = 1, 3 do
                 local dist = rng:RandomInt(40) + 20
@@ -235,17 +246,21 @@ function GlassHeads:GlassHead_Update(enemy)
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
 
-        elseif sprite:IsFinished("Death") then
-            enemy.CanShutDoors = false
-            enemy.DepthOffset = -10
-            
-            if not data.creep or not data.creep:Exists() then
-                sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+            enemy.Visible = false
+            enemy.SplatColor = Color(0, 0, 0, 0)
+            enemy:Kill()
 
-                if sprite.Color.A < .1 then
-                    enemy:Remove()
-                end
-            end
+        -- elseif sprite:IsFinished("Death") then
+        --     enemy.CanShutDoors = false
+        --     enemy.DepthOffset = -10
+            
+        --     if not data.creep or not data.creep:Exists() then
+        --         sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+
+        --         if sprite.Color.A < .1 then
+        --             enemy:Remove()
+        --         end
+        --     end
         end
 
         enemy.Velocity = enemy.Velocity * .85
@@ -263,6 +278,12 @@ MilkshakeVol1:AddCallback(
     }
 )
 
+---@param enemy EntityNPC
+function GlassHeads:GlassHeads_GlobalUpdate(enemy)
+    GetGlassHeadData(enemy).StoredDamage = 0
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, GlassHeads.GlassHeads_GlobalUpdate, enums.Enemies.GLASS_HEAD)
+
 
 ---@param enemy Entity
 ---@param amount number
@@ -279,11 +300,15 @@ function GlassHeads:GlassHeads_Dmg(enemy, amount, flags, source, cool)
         return false
     end
 
+    local data = GetGlassHeadData(enemy)
+
+    data.StoredDamage = data.StoredDamage or 0
+
     local shouldntShatter = 
     (enemy:HasEntityFlags(EntityFlag.FLAG_ICE) or (source and source.Type==2 and source:ToTear():HasTearFlags(TearFlags.TEAR_ICE))) or
     (enemy:HasEntityFlags(EntityFlag.FLAG_NO_DEATH_TRIGGER)) or enemy:HasEntityFlags(EntityFlag.FLAG_FREEZE) or enemy:HasEntityFlags(EntityFlag.FLAG_MIDAS_FREEZE)
-   
-    if not shouldntShatter and 0 >= enemy.HitPoints - amount and GetGlassHeadData(enemy).state ~= 6 then
+
+    if not shouldntShatter and 0 >= (enemy.HitPoints - amount - data.StoredDamage) and GetGlassHeadData(enemy).state ~= 6 then
         GetGlassHeadData(enemy).state = 6
         enemy.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
         enemy.Velocity = -enemy.Velocity:Resized(5)
@@ -303,8 +328,10 @@ function GlassHeads:GlassHeads_Dmg(enemy, amount, flags, source, cool)
 
         return false
 
-    elseif GetGlassHeadData(enemy).state == 6 then
+    elseif data.state == 6 then
         return false
+    else
+        data.StoredDamage = data.StoredDamage + amount
     end
 
 
@@ -312,40 +339,129 @@ end
 
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, GlassHeads.GlassHeads_Dmg, enums.Enemies.GLASS_HEAD)
 
----@param enemy EntityNPC
-function GlassHeads:GlassHeads_Death(enemy)
-    local data = GetGlassHeadData(enemy)
-    local rng = TSIL.RNG.NewRNG(enemy.InitSeed)
+-- ---@param enemy EntityNPC
+-- function GlassHeads:GlassHeads_Death(enemy)
+    -- local data = GetGlassHeadData(enemy)
+    -- local rng = TSIL.RNG.NewRNG(enemy.InitSeed)
     
-    enemy.SplatColor = Color(0,0,0,0,0,0,0)
+    -- enemy.SplatColor = Color(0,0,0,0,0,0,0)
 
-    local spark = TSIL.EntitySpecific.SpawnEffect(
-        EffectVariant.IMPACT,
-        0,
-        enemy.Position,
-        Vector.Zero,
-        enemy
-    )
-    spark.DepthOffset = -5
+    -- local spark = TSIL.EntitySpecific.SpawnEffect(
+    --     EffectVariant.IMPACT,
+    --     0,
+    --     enemy.Position,
+    --     Vector.Zero,
+    --     enemy
+    -- )
+    -- spark.DepthOffset = -5
     
-    for _ = 1, 10 do
-        local pos = enemy.Position + Vector(
-            TSIL.Random.GetRandomInt(-20, 20, rng),
-            TSIL.Random.GetRandomInt(-20, 20, rng))
+    -- for _ = 1, 10 do
+    --     local pos = enemy.Position + Vector(
+    --         TSIL.Random.GetRandomInt(-20, 20, rng),
+    --         TSIL.Random.GetRandomInt(-20, 20, rng))
 
-        local eff = TSIL.EntitySpecific.SpawnEffect(
-            EffectVariant.DIAMOND_PARTICLE,
-            0,
-            pos,
-            (pos - enemy.Position):Resized(TSIL.Random.GetRandomInt(2, 5, rng)),
-            enemy
-        )
-        eff:GetSprite().Color = enemy:GetColor()
+    --     local eff = TSIL.EntitySpecific.SpawnEffect(
+    --         EffectVariant.DIAMOND_PARTICLE,
+    --         0,
+    --         pos,
+    --         (pos - enemy.Position):Resized(TSIL.Random.GetRandomInt(2, 5, rng)),
+    --         enemy
+    --     )
+    --     eff:GetSprite().Color = enemy:GetColor()
+    -- end
+-- end
+
+-- MilkshakeVol1:AddCallback(
+--     ModCallbacks.MC_POST_NPC_DEATH,
+--     GlassHeads.GlassHeads_Death,
+--     enums.Enemies.GLASS_HEAD
+-- )
+
+-- ---@param helper EntityNPC
+-- function GlassHeads:GlassHead_HelperInit(helper)
+--     helper:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+-- end
+-- MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_INIT, GlassHeads.GlassHead_HelperInit, enums.Enemies.GLASS_HEAD_HELPER)
+
+-- ---@param helper EntityNPC
+-- function GlassHeads:GlassHead_HelperUpdate(helper)
+--     helper.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+--     helper.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE
+--     helper.Visible = false
+
+--     if helper.FrameCount > 18 then
+--         helper:Remove()
+--     end
+-- end
+-- MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, GlassHeads.GlassHead_HelperUpdate, enums.Enemies.GLASS_HEAD_HELPER)
+
+local EFFECTS = {
+    [enums.Effects.GLASS_HEAD] = true,
+    [enums.Effects.BEER_HEAD] = true,
+    [enums.Effects.FLASK_HEAD_HEAD] = true,
+    [enums.Effects.FLASK_HEAD_BODY] = true,
+    [enums.Effects.WINE_HEAD] = true,
+}
+
+---@param effect EntityEffect
+function GlassHeads:GlassHead_EffectInit(effect)
+    if not EFFECTS[effect.Variant] then return end
+
+    local sprite = effect:GetSprite()
+
+    if effect.SpawnerEntity then
+        effect.Color = effect.SpawnerEntity.Color
+        effect.SpriteScale = effect.SpawnerEntity.SpriteScale
+        effect.SpriteRotation = effect.SpawnerEntity.SpriteRotation
+        effect.SpriteOffset = effect.SpawnerEntity.SpriteOffset
+        effect.DepthOffset = effect.SpawnerEntity.DepthOffset
+        effect.PositionOffset = effect.SpawnerEntity.PositionOffset
+        effect.FlipX = effect.SpawnerEntity.FlipX
+
+        local spawnerSprite = effect.SpawnerEntity:GetSprite()
+
+        sprite.FlipX = spawnerSprite.FlipX
+        sprite.FlipY = spawnerSprite.FlipY
+        sprite.Rotation = spawnerSprite.Rotation
+        sprite.PlaybackSpeed = spawnerSprite.PlaybackSpeed
+        sprite.Offset = spawnerSprite.Offset
+        sprite.Scale = spawnerSprite.Scale
+        sprite.Color = spawnerSprite.Color
+    end
+
+    local data = GetGlassHeadData(effect)
+
+    if effect.Variant ~= enums.Effects.FLASK_HEAD_BODY then
+        sprite:Play("Death", true)
+
+        if effect.Variant == enums.Effects.GLASS_HEAD then
+            sprite:SetFrame(20)
+        elseif effect.Variant == enums.Effects.BEER_HEAD then
+            sprite:SetFrame(28)
+        elseif effect.Variant == enums.Effects.WINE_HEAD then
+            sprite:SetFrame(16)
+        end
+    else
+        sprite:Play("Throw", true)
+        sprite:SetFrame(19)
     end
 end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, GlassHeads.GlassHead_EffectInit)
 
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_NPC_DEATH,
-    GlassHeads.GlassHeads_Death,
-    enums.Enemies.GLASS_HEAD
-)
+---@param effect EntityEffect
+function GlassHeads:GlassHead_EffectUpdate(effect)
+    if not EFFECTS[effect.Variant] then return end
+
+    local data = GetGlassHeadData(effect)
+
+    if not data.creep or not data.creep:Exists() then
+        local sprite = effect:GetSprite()
+
+        sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+
+        if sprite.Color.A < .01 then
+            effect:Remove()
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlassHeads.GlassHead_EffectUpdate)

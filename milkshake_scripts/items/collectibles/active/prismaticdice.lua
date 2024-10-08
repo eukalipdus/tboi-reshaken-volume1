@@ -141,7 +141,6 @@ end
 function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality)
     local newCollectibleID
     local shatteredCollectible
-    local didBreakfast = false
     local itemPool = Game():GetItemPool()
     if quality - 1 >= 0 then
         for i = 0, 1 do

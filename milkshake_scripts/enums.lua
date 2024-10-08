@@ -111,7 +111,13 @@ enums.Effects = {
     SACRILEGE_PENTAGRAM = Isaac.GetEntityVariantByName("Sacrilege Pentagram Overlay"),
 
     FIRE_OVERLAY = Isaac.GetEntityVariantByName("Fire Screen Overlay"),
-    FIRE_PARTICLE = Isaac.GetEntityVariantByName("Fire Particle Overlay")
+    FIRE_PARTICLE = Isaac.GetEntityVariantByName("Fire Particle Overlay"),
+
+    GLASS_HEAD = Isaac.GetEntityVariantByName("Glass Head Death Effect"),
+    BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head Death Effect"),
+    FLASK_HEAD_BODY = Isaac.GetEntityVariantByName("Flask Head Death Effect 1"),
+    FLASK_HEAD_HEAD = Isaac.GetEntityVariantByName("Flask Head Death Effect 2"),
+    WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head Death Effect"),
 }
 
 enums.Enemies = {
@@ -165,6 +171,7 @@ enums.Sounds = {
     SPIRIT_SALVATION = Isaac.GetSoundIdByName("Spirit Of Salvation"),
     SPIRIT_TERRASTRIUM = Isaac.GetSoundIdByName("Spirit Of Terrastrium"),
     SPIRIT_VIRULENCE = Isaac.GetSoundIdByName("Spirit Of Virulence"),
+    SPIRIT_ORDER = Isaac.GetSoundIdByName("Spirit Of Order"),
 
     ORB_DROP = Isaac.GetSoundIdByName("Spirit Orb Drop"),
     ORB_PICKUP = Isaac.GetSoundIdByName("Spirit Orb Pickup"),

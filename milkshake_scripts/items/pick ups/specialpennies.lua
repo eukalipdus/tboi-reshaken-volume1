@@ -14,14 +14,6 @@ local positivePillCollectibles = {
     CollectibleType.COLLECTIBLE_VIRGO
 }
 
-local NUMBER_TAROT_CARDS = 22
-local cardList = {}
-for itr = 0, NUMBER_TAROT_CARDS do
-    if itr ~= Card.CARD_EMPEROR then
-        table.insert(cardList, itr)
-    end
-end
-
 local function GetSpawnCount(player)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE) then return 1 end
     local rng = player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE)
@@ -62,18 +54,25 @@ local function GetRainbowCookieBonus(player)
     return 0
 end
 
+local function PillEffectToPillColor(pillEffect)
+    for colorId = 1, PillColor.NUM_STANDARD_PILLS do
+        local currentPillEffect = itemPool:GetPillEffect(colorId, player)
+        if currentPillEffect == pillEffect then
+            return colorId
+        end
+    end
+    return -1
+end
+
 ---Activate per Acid Penny activation
 local function AcidPennyPickupEffect(player, rng)
-    local randomPill = PillEffect.PILLEFFECT_BAD_GAS
-    local counter = 0
-    repeat
-        counter = counter + 1
-        if counter == TIMES_CAN_FAIL then break end -- For the unluckiest person in the world
-        randomPill = Game():GetItemPool():GetPill(Random() + 1)
-    until randomPill ~= PillEffect.PILLEFFECT_TELEPILLS and randomPill < 2048
-
+    local itemPool = Game():GetItemPool()
+    local pillColor = rng:RandomInt(VANILLA_PILLCOLOR_COUNT) + 1
+    local pillEffect = itemPool:GetPillEffect(pillColor, player)
     local realPhd = false
     local falsePhd = player:HasCollectible(CollectibleType.COLLECTIBLE_FALSE_PHD)
+
+    itemPool:IdentifyPill(pillColor)
 
     for _, collectible in ipairs(positivePillCollectibles) do
         if player:HasCollectible(collectible) then
@@ -82,28 +81,18 @@ local function AcidPennyPickupEffect(player, rng)
     end
 
     if falsePhd and not realPhd then
-        randomPill = TSIL.Pills.GetFalsePHDPillEffect(randomPill)
+        pillEffect = TSIL.Pills.GetFalsePHDPillEffect(pillColor)
+        pillColor = PillEffectToPillColor(pillEffect)
     elseif realPhd and not falsePhd then
-        randomPill = TSIL.Pills.GetPHDPillEffect(randomPill)
+        pillEffect = TSIL.Pills.GetPHDPillEffect(pillColor)
+        pillColor = PillEffectToPillColor(pillEffect)
     end
 
-    local effectToColor = {}
-    for i = 1, PillColor.NUM_STANDARD_PILLS do
-        effectToColor[Game():GetItemPool():GetPillEffect(i, player)] = i
-    end
-
-    if effectToColor[randomPill] then
-        --print(effectToColor[randomPill])
-        Game():GetItemPool():IdentifyPill(effectToColor[randomPill])
-    end
-
-    local randomPillColor = rng:RandomInt(VANILLA_PILLCOLOR_COUNT) + 1
-
-    player:AnimatePill(randomPillColor, "Pickup")
+    player:AnimatePill(pillColor, "Pickup")
     SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
 
     TSIL.Utils.Functions.RunInFrames(function ()
-        player:UsePill(randomPill, PillColor.PILL_NULL, UseFlag.USE_NOANNOUNCER)
+        player:UsePill(pillEffect, pillColor, UseFlag.USE_NOANNOUNCER)
     end, CARDPILL_USE_DELAY, {})
 end
 
@@ -111,12 +100,12 @@ end
 ---@param player EntityPlayer
 ---@param rng Rng
 local function CrystalPennyPickupEffect(player, rng)
-    local randomCard = TSIL.Random.GetRandomElementsFromTable(cardList, 1, rng)
-    player:AnimateCard(randomCard[1], "Pickup")
+    local roll = rng:RandomInt(Card.CARD_WORLD) + 1
+    player:AnimateCard(roll, "Pickup")
     SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
 
     TSIL.Utils.Functions.RunInFrames(function ()
-        player:UseCard(randomCard[1], UseFlag.USE_NOANNOUNCER)
+        player:UseCard(roll, UseFlag.USE_NOANNOUNCER)
     end, CARDPILL_USE_DELAY, {})
 end
 
@@ -170,7 +159,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.COUNTER
 end, 0.25)
 
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CRYSTAL_PENNY, function (_, player)
-    local rng = TSIL.RNG.NewRNG()
+    local rng = player:GetDropRNG()
     local timesToActivate = 1
     if player:HasTrinket(enums.Trinkets.RAINBOW_COOKIE) then
         timesToActivate = 2

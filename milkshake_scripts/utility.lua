@@ -349,7 +349,7 @@ end
 ---Checks if a given card is a spirit orb
 ---@param card Card
 function utility:IsSpiritOrb(card)
-    return SPIRIT_ORBS_MAP[card] ~= nil
+    return TSIL.Utils.Tables.IsIn(MilkshakeVol1.enums.Orbs, card)
 end
 
 ---When a random spirit orb is needed, checks if Spirit of Order should be removed or added from the list based on unlock status
@@ -538,6 +538,29 @@ function utility:GetPlayerFromTear(tear)
             return player
         end
     end
+end
+
+---@param entity Entity
+---@param identifier string | nil
+---@return any
+function MilkshakeVol1:GetData(entity, identifier)
+    local data = TSIL.Entities.GetEntityData(
+        MilkshakeVol1,
+        entity,
+        identifier or ""
+    )
+
+    if not data then
+        data = {}
+        TSIL.Entities.SetEntityData(
+            MilkshakeVol1,
+            entity,
+            identifier or "",
+            data
+        )
+    end
+
+    return data
 end
 
 MilkshakeVol1.utility = utility

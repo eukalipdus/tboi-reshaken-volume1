@@ -2,7 +2,7 @@ MilkshakeVol1:AddModCompatibility("CrabbyCertins", function()
     local OrbsPerCrabbyEntities = {
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 25,  variant = 20,}, -- ?.fly
         { orb = MilkshakeVol1.enums.Orbs.FIRE,     type = 25,  variant = 22,}, -- coal fly
-        { orb = MilkshakeVol1.enums.Orbs.CHAOS,    type = 25,  variant = 21,}, -- i.fly
+        { orb = MilkshakeVol1.enums.Orbs.RANDOM,    type = 25,  variant = 21,}, -- i.fly
         { orb = MilkshakeVol1.enums.Orbs.UNDEAD,   type = 834, variant = 20 },          -- enraged bones
         { orb = MilkshakeVol1.enums.Orbs.PSYCHIC,  type = 833, variant = 20 },          -- zealot
         { orb = MilkshakeVol1.enums.Orbs.WATER,    type = 300, variant = 999 },         -- flood cap
@@ -33,10 +33,10 @@ MilkshakeVol1:AddModCompatibility("CrabbyCertins", function()
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 109, variant = 10 },          -- camillo
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 109, variant = 11 },          -- mini camillo
         { orb = MilkshakeVol1.enums.Orbs.UNHOLY,   type = 284, variant = 50 },          -- waddoo
-        { orb = MilkshakeVol1.enums.Orbs.CHAOS,    type = 881, variant = 5 },           -- seam
+        { orb = MilkshakeVol1.enums.Orbs.RANDOM,    type = 881, variant = 5 },           -- seam
         { orb = MilkshakeVol1.enums.Orbs.ELECTRIC, type = 109, variant = 13 },          -- maiden
         { orb = MilkshakeVol1.enums.Orbs.ROCK,     type = 109, variant = 14 },          -- pharaoh's tomb
-        { orb = MilkshakeVol1.enums.Orbs.CHAOS,    type = 109, variant = 12 },          -- globlobber
+        { orb = MilkshakeVol1.enums.Orbs.RANDOM,    type = 109, variant = 12 },          -- globlobber
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 109, variant = 7 },           -- shroomy
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 109, variant = 8 },           -- ramble gag
         { orb = MilkshakeVol1.enums.Orbs.NATURE,   type = 109, variant = 9 },           -- tainted mushroom
