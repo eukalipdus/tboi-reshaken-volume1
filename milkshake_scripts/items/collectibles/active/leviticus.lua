@@ -450,40 +450,47 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
     if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then return end
 
     local light = TSIL.EntitySpecific.SpawnEffect(MilkshakeVol1.enums.Effects.LEVITICUS_LIGHT, 0, player.Position)
-    local players = Isaac.FindByType(EntityType.ENTITY_PLAYER)
 
-    ---@param a Entity
-    ---@param b Entity
-    table.sort(players, function (a, b)
-        return a.Position:Distance(light.Position) < b.Position:Distance(light.Position)
-    end)
+    TSIL.Utils.Functions.RunInFrames(function ()
+        local players = Isaac.FindByType(EntityType.ENTITY_PLAYER)
 
-    ---@type EntityPlayer[]
-    local filtered = {}
+        ---@param a Entity
+        ---@param b Entity
+        table.sort(players, function (a, b)
+            return a.Position:Distance(light.Position) < b.Position:Distance(light.Position)
+        end)
 
-    for _, v in ipairs(players) do
-        ---@diagnostic disable-next-line: cast-local-type
-        v = v:ToPlayer() ---@cast v EntityPlayer
+        ---@type EntityPlayer[]
+        local filtered = {}
 
-        if v:IsExtraAnimationFinished() and not v:IsDead() then
-            table.insert(filtered, v)
+        for _, v in ipairs(players) do
+            ---@diagnostic disable-next-line: cast-local-type
+            v = v:ToPlayer() ---@cast v EntityPlayer
+
+            if not v:IsDead() then
+                table.insert(filtered, v)
+            end
         end
-    end
 
-    for i, v in ipairs(filtered) do
-        local data = MilkshakeVol1:GetData(v, "LeviticusBeam")
+        for i, v in ipairs(filtered) do
+            local data = MilkshakeVol1:GetData(v, "LeviticusBeam")
 
-        data.Queued = true
+            data.Queued = true
 
-        TSIL.Utils.Functions.RunInFramesTemporary(function ()
-            data.LightTravelPos = light.Position
-            data.DisableDamage = true
+            TSIL.Utils.Functions.RunInFramesTemporary(function ()
+                data.LightTravelPos = light.Position
+                data.DisableDamage = true
 
-            v:AnimateLightTravel()
-            v:AddCacheFlags(CacheFlag.CACHE_FLYING)
-            v:EvaluateItems()
-        end, (i - 1) * 5 + 1)
-    end
+                v:AnimateLightTravel()
+                v:AddCacheFlags(CacheFlag.CACHE_FLYING)
+                v:EvaluateItems()
+            end, (i - 1) * 5 + 1)
+        end
+    end, 12)
+
+    SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
+
+    return true
 end
 for _, item in pairs(LEVITICUS_ITEM_PER_OPTIONS) do
     MilkshakeVol1:AddCallback(
