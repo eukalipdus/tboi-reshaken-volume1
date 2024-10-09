@@ -3,14 +3,15 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local CHEST_VELOCITY_MULTIPLIER = 15
-local goldPickupAveragePrice = {
-    [PickupVariant.PICKUP_BOMB] = 15,
-    [PickupVariant.PICKUP_KEY] = 13,
-    [PickupVariant.PICKUP_PILL] = 20,
-    [PickupVariant.PICKUP_LIL_BATTERY] = 25,
-    [PickupVariant.PICKUP_HEART] = 5,
+
+local goldPickupPriceIncrease = {
+    [PickupVariant.PICKUP_BOMB] = 8,
+    [PickupVariant.PICKUP_KEY] = 7,
+    [PickupVariant.PICKUP_PILL] = 15,
+    [PickupVariant.PICKUP_LIL_BATTERY] = 20,
+    [PickupVariant.PICKUP_HEART] = 0,
 }
-local GOLD_PRICE_INCREASE = 7
+
 local MIN_COIN_SPAWN_COUNT = 2
 local MAX_COIN_SPAWN_COUNT = 4
 local skipNextShovelUse = false
@@ -149,6 +150,21 @@ local function TrySpawnSecretMemberShop(position)
     return true
 end
 
+-- ---@param pickup EntityPickup
+local function SetGoldenPrice(pickup)
+    local newPickupPrice = goldPickupPriceIncrease[pickup.Variant]
+    if newPickupPrice then
+        pickup.AutoUpdatePrice = false
+        local steamSaleCount = 1
+        for i = 0, Game():GetNumPlayers() - 1 do
+            if Isaac.GetPlayer(i) then
+                steamSaleCount = steamSaleCount + Isaac.GetPlayer(i):GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE)
+            end
+        end
+        pickup.Price = math.floor(pickup.Price + (newPickupPrice/steamSaleCount))
+    end
+end
+
 ---Replaces the cheapest pickup for sale with a Golden Key
 local function ReplaceCheapestWithGoldenKey()
     local pickups = TSIL.EntitySpecific.GetPickups()
@@ -172,8 +188,7 @@ local function ReplaceCheapestWithGoldenKey()
             PickupVariant.PICKUP_KEY,
             KeySubType.KEY_GOLDEN
         )
-        cheapestPickup.AutoUpdatePrice = false
-        cheapestPickup.Price = goldPickupAveragePrice[PickupVariant.PICKUP_KEY]
+        SetGoldenPrice(cheapestPickup)
     end
 end
 
@@ -243,16 +258,7 @@ function goldenShovel:PostPickupUpdate(pickup)
         return
     end
 
-    local newPickupPrice = goldPickupAveragePrice[pickup.Variant]
-    if newPickupPrice then
-        pickup.AutoUpdatePrice = false
-        local steamSaleMult = TSIL.Players.DoesAnyPlayerHasItem(CollectibleType.COLLECTIBLE_STEAM_SALE) and 0.5 or 1
-        print(steamSaleMult)
-        local priceMult = 1 --TSIL.RNG.NewRNG(pickup.InitSeed):RandomInt(8, 12)/10
-        print(priceMult)
-
-        pickup.Price = math.floor(newPickupPrice*priceMult*steamSaleMult)
-    end
+    SetGoldenPrice(pickup)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPickupUpdate)
 
