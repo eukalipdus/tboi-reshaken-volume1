@@ -118,6 +118,8 @@ enums.Effects = {
     FLASK_HEAD_BODY = Isaac.GetEntityVariantByName("Flask Head Death Effect 1"),
     FLASK_HEAD_HEAD = Isaac.GetEntityVariantByName("Flask Head Death Effect 2"),
     WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head Death Effect"),
+
+    LEVITICUS_LIGHT = Isaac.GetEntityVariantByName("Leviticus Light")
 }
 
 enums.Enemies = {

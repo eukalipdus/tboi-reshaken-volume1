@@ -349,4 +349,6 @@
     <entity name="Fire Particle Overlay" id="1000" anm2path="backdrop/spirit rooms/fire/fire_particle.anm2">
     </entity>
 
+    <entity name="Leviticus Light" anm2path="1000.039_Heaven Door.anm2" id="1000"/>
+
 </entities>
