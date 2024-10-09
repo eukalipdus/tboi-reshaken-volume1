@@ -11,6 +11,15 @@
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
     </entity>
 
+    <entity anm2path="familiar_fingore_v2.anm2" name="Scripulous Fingore Head" id="3" tags="cansacrifice"
+            baseHP="0" collisionDamage="0"
+    collisionMass="0" collisionRadius="13" friction="1" numGridCollisionPoints="0" shadowSize="11">
+    </entity>
+    <entity anm2path="familiar_fingore_v2.anm2" name="Scripulous Fingore Finger" id="3" tags="cansacrifice"
+            baseHP="0" collisionDamage="0"
+    collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
+
     <entity anm2path="glass_idol.anm2" name="Fragile Mirror" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
     </entity>
