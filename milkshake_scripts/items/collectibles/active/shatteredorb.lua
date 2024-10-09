@@ -591,7 +591,7 @@ local function SpawnWisps(shatteredOrb)
 
     local wisps = TSIL.Random.GetRandomElementsFromTable(
         PossibleWisps,
-        3,
+        1,
         player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB)
     )
     for _, wisp in ipairs(wisps) do

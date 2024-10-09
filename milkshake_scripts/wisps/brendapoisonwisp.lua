@@ -5,6 +5,24 @@ local CREEP_FREQUENCY = 10
 local CREEP_DURATION = 3
 local CREEP_SCALE = 0.6
 
+---@param entity Entity
+function BrendaPoisonWisp:BrendaPoisonWispRemove(entity)
+    if entity.Variant ~= FamiliarVariant.WISP
+    or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_POISON_WISP then
+        return
+    end
+
+    TSIL.EntitySpecific.SpawnPickup(
+        PickupVariant.PICKUP_TAROTCARD,
+        MilkshakeVol1.enums.Orbs.POISON,
+        entity.Position
+    )
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_ENTITY_REMOVE,
+    BrendaPoisonWisp.BrendaPoisonWispRemove,
+    EntityType.ENTITY_FAMILIAR
+)
 
 ---@param wisp EntityFamiliar
 function BrendaPoisonWisp:OnWispUpdate(wisp)

@@ -1,21 +1,21 @@
-local BrendaNatureWisp = {}
+local BrendaTerraWisp = {}
 
 
 ---@param entity Entity
-function BrendaNatureWisp:OnBrendaNatureWispRemove(entity)
+function BrendaTerraWisp:OnBrendaTerraWispRemove(entity)
     if entity.Variant ~= FamiliarVariant.WISP
-    or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_NATURE_WISP then
+    or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP then
         return
     end
 
     TSIL.EntitySpecific.SpawnPickup(
         PickupVariant.PICKUP_TAROTCARD,
-        MilkshakeVol1.enums.Orbs.NATURE,
+        MilkshakeVol1.enums.Orbs.ROCK,
         entity.Position
     )
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_ENTITY_REMOVE,
-    BrendaNatureWisp.OnBrendaNatureWispRemove,
+    BrendaTerraWisp.OnBrendaTerraWispRemove,
     EntityType.ENTITY_FAMILIAR
 )
