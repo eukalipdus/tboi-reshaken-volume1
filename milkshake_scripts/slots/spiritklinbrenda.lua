@@ -29,6 +29,7 @@ local function hasChargedSoulChargeItem(player)
    return false
 end
 
+---@param player EntityPlayer
 local function isLostForm(player)
     local playerType = player:GetPlayerType()
     local soulHearts = player:GetSoulHearts()
@@ -37,7 +38,8 @@ local function isLostForm(player)
 
     if (playerType == PlayerType.PLAYER_THELOST
     or playerType == PlayerType.PLAYER_THELOST_B
-    or (EclipsedMod and playerType == EclipsedMod.enums.Characters.UnbiddenB)) then return true end
+    or (EclipsedMod and playerType == EclipsedMod.enums.Characters.UnbiddenB))
+    or (REPENTOGON and (player:GetHealthType() == HealthType.LOST)) then return true end
 
 
     if isGhost and soulHearts == 1 and allotherhearts == 0 then return true end --lost curse checking
