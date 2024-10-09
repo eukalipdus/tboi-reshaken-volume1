@@ -449,9 +449,24 @@ local LEVITICUS_ANGEL_ROOMS = {
 function Leviticus:onLeviticusUse(_, _, player, useFlags)
     if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then return end
 
-    local light = TSIL.EntitySpecific.SpawnEffect(MilkshakeVol1.enums.Effects.LEVITICUS_LIGHT, 0, player.Position)
+    -- light:FollowParent(player)
+
+    local data = MilkshakeVol1:GetData(player, "LeviticusBeam")
+
+    data.Used = true
+
+    local light
 
     TSIL.Utils.Functions.RunInFrames(function ()
+        light = TSIL.EntitySpecific.SpawnEffect(MilkshakeVol1.enums.Effects.LEVITICUS_LIGHT, 0, player.Position)
+        light:FollowParent(player)
+    end, 3)
+
+    TSIL.Utils.Functions.RunInFramesTemporary(function ()
+        data.Used = false
+
+        if not light or not light:Exists() then return end
+
         local players = Isaac.FindByType(EntityType.ENTITY_PLAYER)
 
         ---@param a Entity
@@ -486,7 +501,7 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
                 v:EvaluateItems()
             end, (i - 1) * 5 + 1)
         end
-    end, 12)
+    end, 15)
 
     SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
 
@@ -569,7 +584,8 @@ end)
 ---@param entity Entity
 ---@param hook InputHook
 MilkshakeVol1:AddCallback(ModCallbacks.MC_INPUT_ACTION, function (_, entity, hook)
-    if not entity or not MilkshakeVol1:GetData(entity, "LeviticusBeam").LightTravelPos then return end
+    if not entity then return end
+    local data = MilkshakeVol1:GetData(entity, "LeviticusBeam") if not (data.Used or data.LightTravelPos) then return end
 
     if hook ~= InputHook.GET_ACTION_VALUE then
         return false
@@ -600,7 +616,11 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function ()
     for _, v in ipairs(Isaac.FindByType(EntityType.ENTITY_PLAYER)) do
         local player = v:ToPlayer() ---@cast player EntityPlayer
 
-        local data = MilkshakeVol1:GetData(player, "LeviticusBeam") if data.LightTravelPos then
+        local data = MilkshakeVol1:GetData(player, "LeviticusBeam")
+        
+        data.Used = false
+
+        if data.LightTravelPos then
             player:StopExtraAnimation()
             Cancel(player)
         end
