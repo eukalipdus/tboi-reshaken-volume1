@@ -194,6 +194,7 @@ local function ReplaceCheapestWithGoldenKey()
         goldenKey.AutoUpdatePrice = false
         goldenKey.Price = cheapestPickup.Price
         SetGoldenPrice(goldenKey)
+        goldenKey.Price = math.min(goldenKey.Price, 14)
     end
 end
 
