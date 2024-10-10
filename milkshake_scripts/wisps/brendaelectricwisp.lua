@@ -1,7 +1,7 @@
 local BrendaElectricWisp = {}
 
 ---@param entity Entity
-function BrendaElectricWisp:OnBrendaElectricWispRemove(entity)
+function BrendaElectricWisp:OnBrendaElectricWispDeath(entity)
     if entity.Variant ~= FamiliarVariant.WISP
     or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_ELECTRIC_WISP then
         return
@@ -14,8 +14,8 @@ function BrendaElectricWisp:OnBrendaElectricWispRemove(entity)
     )
 end
 MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_ENTITY_REMOVE,
-    BrendaElectricWisp.OnBrendaElectricWispRemove,
+    ModCallbacks.MC_POST_ENTITY_KILL,
+    BrendaElectricWisp.OnBrendaElectricWispDeath,
     EntityType.ENTITY_FAMILIAR
 )
 

@@ -2,7 +2,7 @@ local BrendaTerraWisp = {}
 
 
 ---@param entity Entity
-function BrendaTerraWisp:OnBrendaTerraWispRemove(entity)
+function BrendaTerraWisp:OnBrendaTerraWispDeath(entity)
     if entity.Variant ~= FamiliarVariant.WISP
     or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP then
         return
@@ -15,7 +15,7 @@ function BrendaTerraWisp:OnBrendaTerraWispRemove(entity)
     )
 end
 MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_ENTITY_REMOVE,
-    BrendaTerraWisp.OnBrendaTerraWispRemove,
+    ModCallbacks.MC_POST_ENTITY_KILL,
+    BrendaTerraWisp.OnBrendaTerraWispDeath,
     EntityType.ENTITY_FAMILIAR
 )

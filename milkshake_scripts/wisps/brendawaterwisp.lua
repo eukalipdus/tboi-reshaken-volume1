@@ -4,7 +4,7 @@ local LASER_DURATION = 30
 
 
 ---@param entity Entity
-function BrendaWaterWisp:OnBrendaWaterWispRemove(entity)
+function BrendaWaterWisp:OnBrendaWaterWispDeath(entity)
     if entity.Variant ~= FamiliarVariant.WISP
     or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_WATER_WISP then
         return
@@ -17,8 +17,8 @@ function BrendaWaterWisp:OnBrendaWaterWispRemove(entity)
     )
 end
 MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_ENTITY_REMOVE,
-    BrendaWaterWisp.OnBrendaWaterWispRemove,
+    ModCallbacks.MC_POST_ENTITY_KILL,
+    BrendaWaterWisp.OnBrendaWaterWispDeath,
     EntityType.ENTITY_FAMILIAR
 )
 

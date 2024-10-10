@@ -4,7 +4,7 @@ local BrendaHolyWisp = {}
 local HOLY_LIGHT_CHANCE = 0.2
 
 ---@param entity Entity
-function BrendaHolyWisp:OnBrendaHolyWispRemove(entity)
+function BrendaHolyWisp:OnBrendaHolyWispDeath(entity)
     if entity.Variant ~= FamiliarVariant.WISP
     or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP then
         return
@@ -17,8 +17,8 @@ function BrendaHolyWisp:OnBrendaHolyWispRemove(entity)
     )
 end
 MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_ENTITY_REMOVE,
-    BrendaHolyWisp.OnBrendaHolyWispRemove,
+    ModCallbacks.MC_POST_ENTITY_KILL,
+    BrendaHolyWisp.OnBrendaHolyWispDeath,
     EntityType.ENTITY_FAMILIAR
 )
 

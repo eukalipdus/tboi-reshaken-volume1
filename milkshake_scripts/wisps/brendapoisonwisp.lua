@@ -6,7 +6,7 @@ local CREEP_DURATION = 3
 local CREEP_SCALE = 0.6
 
 ---@param entity Entity
-function BrendaPoisonWisp:BrendaPoisonWispRemove(entity)
+function BrendaPoisonWisp:BrendaPoisonWispDeath(entity)
     if entity.Variant ~= FamiliarVariant.WISP
     or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_POISON_WISP then
         return
@@ -19,8 +19,8 @@ function BrendaPoisonWisp:BrendaPoisonWispRemove(entity)
     )
 end
 MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_ENTITY_REMOVE,
-    BrendaPoisonWisp.BrendaPoisonWispRemove,
+    ModCallbacks.MC_POST_ENTITY_KILL,
+    BrendaPoisonWisp.BrendaPoisonWispDeath,
     EntityType.ENTITY_FAMILIAR
 )
 
