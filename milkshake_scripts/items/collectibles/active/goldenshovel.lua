@@ -183,12 +183,17 @@ local function ReplaceCheapestWithGoldenKey()
     end
 
     if cheapestPickup then
-        cheapestPickup:Morph(
-            EntityType.ENTITY_PICKUP,
-            PickupVariant.PICKUP_KEY,
-            KeySubType.KEY_GOLDEN
+        cheapestPickup:Remove()
+
+        local goldenKey = TSIL.PickupSpecific.SpawnKey(
+            KeySubType.KEY_GOLDEN,
+            cheapestPickup.Position,
+            Vector.Zero
         )
-        SetGoldenPrice(cheapestPickup)
+
+        goldenKey.AutoUpdatePrice = false
+        goldenKey.Price = cheapestPickup.Price
+        SetGoldenPrice(goldenKey)
     end
 end
 
