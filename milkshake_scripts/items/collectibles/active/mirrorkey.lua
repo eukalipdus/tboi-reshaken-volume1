@@ -485,10 +485,6 @@ local function UpdateDamageBonusCache()
 end
 
 local function SavePickupData()
-    if Game():GetRoom():GetType() == RoomType.ROOM_SHOP then
-        return
-    end
-
     local pickups = TSIL.EntitySpecific.GetPickups()
     local pickupData = {}
 
@@ -611,6 +607,15 @@ MilkshakeVol1:AddCallback(
 )
 
 function MirrorKey:PostUpdate()
+    local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "IsInMirrorRoom"
+    )
+
+    if not isInMirrorRoom then
+        return
+    end
+
     SavePickupData()
 end
 MilkshakeVol1:AddCallback(
