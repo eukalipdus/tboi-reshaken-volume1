@@ -24,3 +24,8 @@ end
 ---@param filter any
 function MilkshakeVol1:AddPriorityCallback(callback, priority, funct, filter)
 end
+
+CustomHealthAPI = {}
+FiendFolio = {}
+EID = {}
+LibraryExpanded = {}

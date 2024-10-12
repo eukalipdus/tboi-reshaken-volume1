@@ -171,59 +171,6 @@ MilkshakeVol1:AddCallback(
 )
 
 
----@param player EntityPlayer
----@param useFlags UseFlag
-function Leviticus:onLeviticusUse(_, _, player, useFlags)
-    if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then
-        return
-    end
-
-    local carBattery = player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY)
-
-    if ComplianceImmortal then
-        local amount = 2
-        if carBattery then amount = amount * 2 end
-        ComplianceImmortal.AddImmortalHearts(player, amount)
-    else
-        local amount = 1
-        if carBattery then amount = amount * 2 end
-        player:AddEternalHearts(amount)
-    end
-
-    if LibraryExpanded then
-        if LibraryExpanded:GetTBOATB(player) > 0 then
-            player:UseCard(Card.CARD_HOLY, UseFlag.USE_NOANIM | UseFlag.USE_MIMIC | UseFlag.USE_NOANNOUNCER)
-        end
-        if LibraryExpanded:GetTBOATB(player) > 1 then
-            for _ = 1, LibraryExpanded:GetTBOATB(player) - 1 do
-                player:UseActiveItem(CollectibleType.COLLECTIBLE_CRACK_THE_SKY, UseFlag.USE_NOANIM | UseFlag.USE_MIMIC)
-            end
-        end
-    end
-
-    SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
-
-    TSIL.SaveManager.SetPersistentVariable(
-        MilkshakeVol1,
-        "UsedLeviticus",
-        true
-    )
-
-    return {
-        Discharge = true,
-        Remove = false,
-        ShowAnim = true
-    }
-end
-for _, item in pairs(LEVITICUS_ITEM_PER_OPTIONS) do
-    MilkshakeVol1:AddCallback(
-        ModCallbacks.MC_USE_ITEM,
-        Leviticus.onLeviticusUse,
-        item
-    )
-end
-
-
 local function CheckLeviticusActiveSlot(player)
     local overcharge = 0
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) then overcharge = LEVITICUS_MAX_CHARGES end
@@ -267,7 +214,6 @@ local function AddSoulHeartCharges(player, soulHeartInfo)
         slot = CheckLeviticusActiveSlot(player)
     end
 end
-
 
 local function RemovePickup(pickup)
     pickup = pickup:ToPickup()
@@ -425,12 +371,12 @@ else
 
         local leviticus_slot = CheckLeviticusActiveSlot(player)
         if leviticus_slot == nil then return end
-    
+
         local heartsAdded = new - old
         if heartsAdded < 0 then
             return
         end
-    
+
         if healthType == TSIL.Enums.HealthType.SOUL then
             player:AddSoulHearts(-heartsAdded)
             AddSoulHeartCharges(player, {
@@ -489,56 +435,194 @@ MilkshakeVol1:AddCallback(
     Leviticus.OnItemAdded
 )
 
+-- This is probably bad to do
+local LEVITICUS_ANGEL_ROOMS = {
+    29004,
+    29005,
+    29006,
+    29007,
+    29008,
+}
 
-function Leviticus:onItemSpawn(itemPoolType, _, seed)
-    local roomType = Game():GetRoom():GetType()
-    if roomType ~= RoomType.ROOM_BOSS then return end
-    if itemPoolType ~= ItemPoolType.POOL_BOSS then return end
+---@param player EntityPlayer
+---@param useFlags UseFlag
+function Leviticus:onLeviticusUse(_, _, player, useFlags)
+    if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then return end
 
-    local usedLeviticus = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "UsedLeviticus"
-    )
+    -- light:FollowParent(player)
 
-    if not usedLeviticus then return end
+    local data = MilkshakeVol1:GetData(player, "LeviticusBeam")
 
-    local ItemPool = Game():GetItemPool()
+    data.Used = true
 
-    local randomAngelItemID = ItemPool:GetCollectible(ItemPoolType.POOL_ANGEL, true, seed)
+    local light
 
-    return randomAngelItemID
+    TSIL.Utils.Functions.RunInFrames(function ()
+        light = TSIL.EntitySpecific.SpawnEffect(MilkshakeVol1.enums.Effects.LEVITICUS_LIGHT, 0, player.Position)
+        light:FollowParent(player)
+    end, 3)
+
+    TSIL.Utils.Functions.RunInFramesTemporary(function ()
+        data.Used = false
+
+        if not light or not light:Exists() then return end
+
+        local players = Isaac.FindByType(EntityType.ENTITY_PLAYER)
+
+        ---@param a Entity
+        ---@param b Entity
+        table.sort(players, function (a, b)
+            return a.Position:Distance(light.Position) < b.Position:Distance(light.Position)
+        end)
+
+        ---@type EntityPlayer[]
+        local filtered = {}
+
+        for _, v in ipairs(players) do
+            ---@diagnostic disable-next-line: cast-local-type
+            v = v:ToPlayer() ---@cast v EntityPlayer
+
+            if not v:IsDead() then
+                table.insert(filtered, v)
+            end
+        end
+
+        for i, v in ipairs(filtered) do
+            local data = MilkshakeVol1:GetData(v, "LeviticusBeam")
+
+            data.Queued = true
+
+            TSIL.Utils.Functions.RunInFramesTemporary(function ()
+                data.LightTravelPos = light.Position
+                data.DisableDamage = true
+
+                v:AnimateLightTravel()
+                v:AddCacheFlags(CacheFlag.CACHE_FLYING)
+                v:EvaluateItems()
+            end, (i - 1) * 5 + 1)
+        end
+    end, 15)
+
+    SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
+
+    return true
 end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_PRE_GET_COLLECTIBLE,
-    Leviticus.onItemSpawn
-)
-
-
-function Leviticus:onAngelBossItemSpawn(pickup)
-    if TSIL.Players.DoesAnyPlayerHasItem(CollectibleType.COLLECTIBLE_ACT_OF_CONTRITION) then return end
-
-    if pickup.Variant ~= PickupVariant.PICKUP_COLLECTIBLE then return end
-    if pickup.SubType == CollectibleType.COLLECTIBLE_NULL then return end
-    local roomType = Game():GetRoom():GetType()
-    if roomType ~= RoomType.ROOM_BOSS then return end
-    local usedLeviticus = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "UsedLeviticus"
+for _, item in pairs(LEVITICUS_ITEM_PER_OPTIONS) do
+    MilkshakeVol1:AddCallback(
+        ModCallbacks.MC_USE_ITEM,
+        Leviticus.onLeviticusUse,
+        item
     )
+end
 
-    if not usedLeviticus then return end
-    if Game():GetItemPool():GetLastPool() ~= ItemPoolType.POOL_ANGEL then return end
-    if Game():GetDevilRoomDeals() < 1 then return end
-    if pickup:IsShopItem() then return end
+---@param player EntityPlayer
+local function Cancel(player)
+    local data = MilkshakeVol1:GetData(player, "LeviticusBeam")
 
-    pickup.AutoUpdatePrice = false
-    pickup.Price = 15
-    if Isaac.GetItemConfig():GetCollectible(pickup.SubType).Quality > 3 then
-        pickup.Price = 30
+    data.State = nil
+    data.LightTravelPos = nil
+    data.Queued = nil
+
+    player:AddCacheFlags(CacheFlag.CACHE_FLYING)
+    player:EvaluateItems()
+
+    TSIL.Utils.Functions.RunInFrames(function ()
+        data.DisableDamage = false
+    end, 2)
+end
+
+---@param player EntityPlayer
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function (_, player)
+    local data = MilkshakeVol1:GetData(player, "LeviticusBeam") if not data.LightTravelPos then return end
+
+    if player:IsDead() then
+        Cancel(player)
+        return
     end
-    pickup.ShopItemId = -1
-end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_PICKUP_INIT,
-    Leviticus.onAngelBossItemSpawn
-)
+
+    local sprite = player:GetSprite()
+    local animation = sprite:GetAnimation()
+    ---@type Vector
+    local diff = data.LightTravelPos - player.Position
+
+    player.Velocity = diff:Resized(math.min(diff:Length() * 0.1, 17.5))
+
+    if data.State == 2 then
+        local players = Isaac.FindByType(EntityType.ENTITY_PLAYER)
+
+        for i, v in ipairs(players) do
+            local vData = MilkshakeVol1:GetData(v, "LeviticusBeam") if vData.Queued then
+                ---@diagnostic disable-next-line: cast-local-type
+                v = v:ToPlayer() ---@cast v EntityPlayer
+
+                if vData.State ~= 2 then
+                    break
+                end
+
+                if i == #players then
+                    for _, _v in ipairs(players) do
+                        ---@diagnostic disable-next-line: cast-local-type
+                        _v = _v:ToPlayer() ---@cast _v EntityPlayer
+                        Cancel(_v)
+                    end
+
+                    if not player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) then
+                        Isaac.ExecuteCommand("goto s.angel." .. LEVITICUS_ANGEL_ROOMS[v:GetCollectibleRNG(MilkshakeVol1.enums.Collectibles.LEVITICUS):RandomInt(#LEVITICUS_ANGEL_ROOMS) + 1])
+                    else
+                        -- Devil room
+                    end
+                end
+            end
+        end
+
+        player:SetColor(Color(1, 1, 1, 0), 2, 100, false, false)
+    elseif (animation == "LightTravel" and sprite:GetFrame() >= 34 and data.State ~= 2) or player:IsExtraAnimationFinished() then
+        data.State = 2
+    end
+end)
+
+---@param entity Entity
+---@param hook InputHook
+MilkshakeVol1:AddCallback(ModCallbacks.MC_INPUT_ACTION, function (_, entity, hook)
+    if not entity then return end
+    local data = MilkshakeVol1:GetData(entity, "LeviticusBeam") if not (data.Used or data.LightTravelPos) then return end
+
+    if hook ~= InputHook.GET_ACTION_VALUE then
+        return false
+    end
+
+    return 0
+end)
+
+---@param entity Entity
+MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, function (_, entity)
+    if not MilkshakeVol1:GetData(entity, "LeviticusBeam").DisableDamage then return end
+    return false
+end)
+
+---@param player EntityPlayer
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, function (_, player)
+    if not MilkshakeVol1:GetData(player, "LeviticusBeam").DisableDamage then return end
+    return true
+end)
+
+---@param player EntityPlayer
+MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function (_, player)
+    if not MilkshakeVol1:GetData(player, "LeviticusBeam").LightTravelPos then return end
+    player.CanFly = true
+end, CacheFlag.CACHE_FLYING)
+
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function ()
+    for _, v in ipairs(Isaac.FindByType(EntityType.ENTITY_PLAYER)) do
+        local player = v:ToPlayer() ---@cast player EntityPlayer
+
+        local data = MilkshakeVol1:GetData(player, "LeviticusBeam")
+        
+        data.Used = false
+
+        if data.LightTravelPos then
+            player:StopExtraAnimation()
+            Cancel(player)
+        end
+    end
+end)

@@ -30,6 +30,12 @@ local idToName = {
     [collectibles.PRISMATIC_GOGGLES] = "prismatic_goggles",
 }
 
+local challengeToAchievement = {
+    [enums.Challenges.ISAAC_CLICKER] = enums.Achievements.GOLDEN_COOKIE,
+    [enums.Challenges.SPIRIT_SAGE] = enums.Achievements.SPIRIT_OF_ORDER,
+    [enums.Challenges.WORLD_OF_LIGHT] = enums.Achievements.PRISMATIC_GOGGLES
+}
+
 ---Creates saved table to track taken items
 local function InitializeCollection()
     TSIL.SaveManager.AddPersistentVariable(
@@ -264,3 +270,24 @@ MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_GAME_STARTED,
     unlockableManager.PostGameStarted
 )
+
+-- function unlockableManager:PostNewLevel()
+--     if not REPENTOGON then
+--         return
+--     end
+
+--     for challengeId, achievementId in pairs(challengeToAchievement) do
+--         if Isaac.IsChallengeDone(challengeId)
+--         and not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(achievementId) then
+--             Isaac.CreateTimer(function ()
+--                 local spriteFilePath  = MilkshakeVol1.UnlockManager:GetAchievementFilePath(achievementId)
+--                 MilkshakeVol1.UnlockManager:UpdateAchievement(achievementId, true)
+--                 MilkshakeVol1.UnlockManager:AddToAchievementQueue(spriteFilePath)
+--             end, 1, 1, true)
+--         end
+--     end
+-- end
+-- MilkshakeVol1:AddCallback(
+--     ModCallbacks.MC_POST_NEW_LEVEL,
+--     unlockableManager.PostNewLevel
+-- )

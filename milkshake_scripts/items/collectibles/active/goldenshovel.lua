@@ -3,22 +3,19 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local CHEST_VELOCITY_MULTIPLIER = 15
-local GOLD_KEY_PRICE = 15
-local GOLD_PRICE_INCREASE = 7
+
+local goldPickupPriceIncrease = {
+    [PickupVariant.PICKUP_BOMB] = 8,
+    [PickupVariant.PICKUP_KEY] = 7,
+    [PickupVariant.PICKUP_PILL] = 15,
+    [PickupVariant.PICKUP_LIL_BATTERY] = 20,
+    [PickupVariant.PICKUP_HEART] = 0,
+}
+
 local MIN_COIN_SPAWN_COUNT = 2
 local MAX_COIN_SPAWN_COUNT = 4
 local skipNextShovelUse = false
 
-local pickupToGoldSubType = {
-    [PickupVariant.PICKUP_HEART] = HeartSubType.HEART_GOLDEN,
-    [PickupVariant.PICKUP_KEY] = HeartSubType.HEART_GOLDEN,
-    [PickupVariant.PICKUP_BOMB] = HeartSubType.HEART_GOLDEN,
-}
-
-local allowedHeartsToTransform = {
-    HeartSubType.HEART_FULL,
-    HeartSubType.HEART_HALF
-}
 
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
@@ -90,7 +87,7 @@ local function SpawnChest(rng, position, shouldBelialSynergy)
     local spawnPos = room:FindFreePickupSpawnPosition(position, 10, true, false)
 
     if shouldBelialSynergy then
-        for idx = 1, 3 do
+        for idx = 1, 2 do
             TSIL.EntitySpecific.SpawnPickup(
                 PickupVariant.PICKUP_REDCHEST,
                 ChestSubType.CHEST_CLOSED,
@@ -153,6 +150,21 @@ local function TrySpawnSecretMemberShop(position)
     return true
 end
 
+-- ---@param pickup EntityPickup
+local function SetGoldenPrice(pickup)
+    local newPickupPrice = goldPickupPriceIncrease[pickup.Variant]
+    if newPickupPrice then
+        pickup.AutoUpdatePrice = false
+        local steamSaleCount = 1
+        for i = 0, Game():GetNumPlayers() - 1 do
+            if Isaac.GetPlayer(i) then
+                steamSaleCount = steamSaleCount + Isaac.GetPlayer(i):GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE)
+            end
+        end
+        pickup.Price = math.floor(pickup.Price + (newPickupPrice/steamSaleCount))
+    end
+end
+
 ---Replaces the cheapest pickup for sale with a Golden Key
 local function ReplaceCheapestWithGoldenKey()
     local pickups = TSIL.EntitySpecific.GetPickups()
@@ -171,13 +183,18 @@ local function ReplaceCheapestWithGoldenKey()
     end
 
     if cheapestPickup then
-        cheapestPickup:Morph(
-            EntityType.ENTITY_PICKUP,
-            PickupVariant.PICKUP_KEY,
-            KeySubType.KEY_GOLDEN
+        cheapestPickup:Remove()
+
+        local goldenKey = TSIL.PickupSpecific.SpawnKey(
+            KeySubType.KEY_GOLDEN,
+            cheapestPickup.Position,
+            Vector.Zero
         )
-        cheapestPickup.AutoUpdatePrice = false
-        cheapestPickup.Price = GOLD_KEY_PRICE
+
+        goldenKey.AutoUpdatePrice = false
+        goldenKey.Price = cheapestPickup.Price
+        SetGoldenPrice(goldenKey)
+        goldenKey.Price = math.min(goldenKey.Price, 14)
     end
 end
 
@@ -189,27 +206,49 @@ local function IsGoldenShovelShop()
     return goldenShovelShopCreated and isSecretShop
 end
 
----@param pickup EntityPickup
+-- ---@param pickup EntityPickup
 function goldenShovel:PostPickupUpdate(pickup)
     if not IsGoldenShovelShop()
-    or not pickup:IsShopItem()
-    or pickup.Variant == PickupVariant.PICKUP_KEY then
+    or not pickup:IsShopItem() then
         return
     end
+    local newPickup
 
-    local goldSubType = pickupToGoldSubType[pickup.Variant]
+    if pickup.Variant == PickupVariant.PICKUP_HEART then
+        if pickup.SubType == HeartSubType.HEART_BLACK then
+            newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN}
 
-    if pickup.Variant == PickupVariant.PICKUP_HEART
-    and not TSIL.Utils.Tables.IsIn(allowedHeartsToTransform, pickup.SubType) then
-        return
+        elseif pickup.SubType == HeartSubType.HEART_ETERNAL then
+            newPickup = {PickupVariant.PICKUP_PILL, PillColor.PILL_GOLD}
+
+        elseif pickup.SubType == HeartSubType.HEART_ROTTEN then
+            newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN}
+
+        elseif pickup.SubType == HeartSubType.HEART_BONE then
+            newPickup = {PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_GOLDEN}
+        end
+
+    elseif pickup.Variant == PickupVariant.PICKUP_TAROTCARD then
+        if pickup.SubType <= 31 or (pickup.SubType >= 40 and pickup.SubType <= 77) then --Is a Card
+            newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
+
+        elseif (pickup.SubType >= 32 and pickup.SubType <= 41) then --Is a Rune
+            newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN}
+
+        elseif (pickup.SubType >= 81 and pickup.SubType <= 97) then --Is a Soulstone
+            newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN}
+
+        else
+            newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
+
+        end
     end
 
-    if goldSubType
-    and pickup.SubType ~= goldSubType then
+    if newPickup then
         pickup:Morph(
             EntityType.ENTITY_PICKUP,
-            pickup.Variant,
-            pickupToGoldSubType[pickup.Variant],
+            newPickup[1],
+            newPickup[2],
             true
         )
 
@@ -225,10 +264,10 @@ function goldenShovel:PostPickupUpdate(pickup)
         return
     end
 
-    pickup.AutoUpdatePrice = false
-    pickup.Price = pickup.Price + GOLD_PRICE_INCREASE
+    SetGoldenPrice(pickup)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, goldenShovel.PostPickupUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPickupUpdate)
+
 
 ---@param rng RNG
 ---@param player EntityPlayer
@@ -264,8 +303,14 @@ function goldenShovel:PostNewRoom()
             EntityType.ENTITY_SLOT,
             TSIL.Enums.SlotVariant.RESTOCK_MACHINE
         )
+        local goldenKeys = Isaac.FindByType(
+            EntityType.ENTITY_PICKUP,
+            PickupVariant.PICKUP_KEY,
+            KeySubType.KEY_GOLDEN
+        )
 
-        if #restockMachines == 0 then
+
+        if #restockMachines + #goldenKeys == 0 then
             ReplaceCheapestWithGoldenKey()
         end
     end

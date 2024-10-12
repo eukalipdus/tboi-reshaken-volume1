@@ -78,6 +78,8 @@ enums.Cards = {
 enums.Familiars = {
     SPIRIT_BUM = Isaac.GetEntityVariantByName("Spirit Bum Familiar"),
     FINGORE = Isaac.GetEntityVariantByName("Scripulous Fingore"),
+    FINGORE_HEAD = Isaac.GetEntityVariantByName("Scripulous Fingore Head"),
+    FINGORE_FINGER = Isaac.GetEntityVariantByName("Scripulous Fingore Finger"),
     SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor"),
     FRAGILE_MIRROR = Isaac.GetEntityVariantByName("Fragile Mirror"),
     INNER_REFLECTION = Isaac.GetEntityVariantByName("Inner Reflection"),
@@ -116,6 +118,8 @@ enums.Effects = {
     FLASK_HEAD_BODY = Isaac.GetEntityVariantByName("Flask Head Death Effect 1"),
     FLASK_HEAD_HEAD = Isaac.GetEntityVariantByName("Flask Head Death Effect 2"),
     WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head Death Effect"),
+
+    LEVITICUS_LIGHT = Isaac.GetEntityVariantByName("Leviticus Light")
 }
 
 enums.Enemies = {
