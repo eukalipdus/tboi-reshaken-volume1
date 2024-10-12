@@ -5,7 +5,7 @@ local utility = MilkshakeVol1.utility
 
 local PRISMATIC_GOGGLES = MilkshakeVol1.enums.Collectibles.PRISMATIC_GOGGLES
 
-local BASE_DIFFRACTION_CHANCE = 1.15
+local BASE_DIFFRACTION_CHANCE = 0.15
 local DIFFRACTION_LUCK_INCREASE = 0.015
 
 local MAX_DIFFRACTED_BOSS_HEALTH = 200
@@ -110,7 +110,7 @@ function prismaticGoggles:DiffractionRender(npc)
     for index, tint in ipairs(TINTS) do
         -- I REALLY REALLY wanted to use table.unpack here, but for some reason it wasn't working correctly.
         sprite.Color = Color(tint[1], tint[2], tint[3], REFLECTION_ALPHA, tint[4], tint[5], tint[6])
-        local drawPos = Isaac.WorldToScreen(npc.Position + offsetVector:Rotated(120*index))
+        local drawPos = Isaac.WorldToScreen(npc.Position + npc.PositionOffset + offsetVector:Rotated(120*index))
         sprite:Render(drawPos)
     end
 
