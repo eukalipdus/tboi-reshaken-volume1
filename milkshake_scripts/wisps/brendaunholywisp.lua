@@ -1,5 +1,7 @@
 local BrendaUnholyWisp = {}
 
+local SFX_VOLUME = 0.8
+
 ---@param entity Entity
 function BrendaUnholyWisp:PostEntityKill(entity)
     if entity.Variant ~= FamiliarVariant.WISP
@@ -33,6 +35,7 @@ function BrendaUnholyWisp:PreTearCollision(tear, collider)
         return
     end
 
+    SFXManager():Play(SoundEffect.SOUND_MEATY_DEATHS, SFX_VOLUME)
     collider:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT)
 end
 MilkshakeVol1:AddCallback(
