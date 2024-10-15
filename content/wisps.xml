@@ -122,9 +122,9 @@
 	<wisp id="508" hp="6" layer="1" damage="3" fireDelay="30" coreGfx="cross_inverted.png"
 	flameColor="flame_black" coreColor="core_red" tearVariant="1" />
 
-	<!-- Special Brenda Dead Wisp -->
+	<!-- Special Brenda Undead Wisp -->
 	<wisp id="509" hp="6" layer="1" damage="3" fireDelay="30" tearFlags="51" coreGfx="skull.png"
-	flameColor="flame_black" coreColor="core_red" tearVariant="29" />
+	flameColor="flame_black" coreColor="core_white" tearVariant="29" />
 
 	<!-- Prismatic Dice -->
 	<wisp id="13" hp="4" layer="2" canShoot="false"
