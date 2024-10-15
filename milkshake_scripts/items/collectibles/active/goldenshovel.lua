@@ -18,7 +18,7 @@ local goldPickupPriceIncrease = {
 
 local MIN_COIN_SPAWN_COUNT = 2
 local MAX_COIN_SPAWN_COUNT = 4
-local skipNextShovelUse = false
+--local skipNextShovelUse = false
 
 
 TSIL.SaveManager.AddPersistentVariable(
@@ -137,7 +137,7 @@ local function TrySpawnSecretMemberShop(position)
 
     --Because we update the room, the Use Item callback will trigger again
     --We need to use a flag to keep track of this
-    skipNextShovelUse = true
+    --skipNextShovelUse = true
     TSIL.GridEntities.SpawnGridEntity(
         GridEntityType.GRID_STAIRS,
         TSIL.Enums.CrawlSpaceVariant.SECRET_SHOP,
@@ -207,6 +207,7 @@ local function IsGoldenShovelShop()
     local goldenShovelShopCreated = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "GoldenShovelSecretShopCreated")
     local room = Game():GetRoom()
     local isSecretShop = room:GetType() == RoomType.ROOM_SHOP and room:GetBackdropType() == BackdropType.SECRET
+    print(room:GetBackdropType())
     return goldenShovelShopCreated and isSecretShop
 end
 
@@ -293,10 +294,10 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPic
 ---@param rng RNG
 ---@param player EntityPlayer
 function goldenShovel:onUse(_, rng, player)
-    if skipNextShovelUse then
+    --[[if skipNextShovelUse then
         skipNextShovelUse = false
         return
-    end
+    end]]
 
     if not player then return end
 
