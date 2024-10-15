@@ -3,7 +3,7 @@ local BrendaDeadWisp = {}
 ---@param entity Entity
 function BrendaDeadWisp:PostEntityKill(entity)
     if entity.Variant ~= FamiliarVariant.WISP
-    or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_DEAD_WISP then
+    or entity.SubType ~= MilkshakeVol1.enums.Collectibles.SPECIAL_BRENDA_UNDEAD_WISP then
         return
     end
 

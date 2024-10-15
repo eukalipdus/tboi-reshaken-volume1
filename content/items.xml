@@ -59,7 +59,7 @@
     <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="508" name="BRENDA CUSTOM UNHOLY WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="509" name="BRENDA CUSTOM DEAD WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="509" name="BRENDA CUSTOM UNDEAD WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
 
     <trinket name="Alt Path Unlock Tracker" description="Please stop reporting this to the Milkshake devs" gfx="trinkets_alt_path_unlock_tracker.png" achievement="407" tags="nogreed"/>
     <trinket name="MEGA CHEST UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs, IF NO REPORTS EXIST" achievement="601" tags="nogreed" />

@@ -95,7 +95,7 @@ local possibleWisps = {
     enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
     enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
     enums.Collectibles.SPECIAL_BRENDA_UNHOLY_WISP,
-    enums.Collectibles.SPECIAL_BRENDA_DEAD_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_UNDEAD_WISP,
     enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP,
 }
 
