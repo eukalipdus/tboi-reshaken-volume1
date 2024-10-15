@@ -104,7 +104,6 @@ include("milkshake_scripts.items.pick ups.unholyorb")
 include("milkshake_scripts.items.pick ups.rockorb")
 include("milkshake_scripts.items.pick ups.orbder")
 
-
 --Pools
 include("milkshake_scripts.pools.glasspool")
 
@@ -120,6 +119,7 @@ include("milkshake_scripts.wisps.brendaholywisp")
 include("milkshake_scripts.wisps.brendanaturewisp")
 include("milkshake_scripts.wisps.brendapoisonwisp")
 include("milkshake_scripts.wisps.brendawaterwisp")
+include("milkshake_scripts.wisps.brendaunholywisp")
 include("milkshake_scripts.wisps.globininabucket")
 include("milkshake_scripts.wisps.goldenshovel")
 include("milkshake_scripts.wisps.leviticus")
