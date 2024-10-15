@@ -232,10 +232,8 @@ function goldenShovel:PostPickupUpdate(pickup)
         if pickup.SubType <= 31 or (pickup.SubType >= 40 and pickup.SubType <= 77) then --Is a Card
             newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
 
-        elseif (pickup.SubType >= 32 and pickup.SubType <= 41) then --Is a Rune
-            newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN}
-
-        elseif (pickup.SubType >= 81 and pickup.SubType <= 97) then --Is a Soulstone
+        elseif (pickup.SubType >= 32 and pickup.SubType <= 41) --Is a rune
+        or (pickup.SubType >= 81 and pickup.SubType <= 97) then -- Is a soulstone
             newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN}
 
         else
