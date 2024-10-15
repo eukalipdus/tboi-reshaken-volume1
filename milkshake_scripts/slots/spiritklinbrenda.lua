@@ -94,8 +94,8 @@ local possibleWisps = {
     enums.Collectibles.SPECIAL_BRENDA_WATER_WISP,
     enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
     enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
-    CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
-    CollectibleType.COLLECTIBLE_SATANIC_BIBLE,
+    enums.Collectibles.SPECIAL_BRENDA_UNHOLY_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_DEAD_WISP,
     enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP,
 }
 
