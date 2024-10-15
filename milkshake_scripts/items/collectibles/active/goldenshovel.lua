@@ -3,6 +3,10 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local CHEST_VELOCITY_MULTIPLIER = 15
+local ACHIEVEMENT_GOLDEN_HEART = 224
+local ACHIEVEMENT_GOLD_PILL = 603
+local ACHIEVEMENT_GOLDEN_BATTERY = 615
+local ACHIEVEMENT_GOLD_BOMB = 226
 
 local goldPickupPriceIncrease = {
     [PickupVariant.PICKUP_BOMB] = 8,
@@ -213,27 +217,33 @@ function goldenShovel:PostPickupUpdate(pickup)
         return
     end
     local newPickup
+    local goldenHeartUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_HEART)
 
     if pickup.Variant == PickupVariant.PICKUP_HEART then
-        if pickup.SubType == HeartSubType.HEART_BLACK then
+        if pickup.SubType == HeartSubType.HEART_BLACK
+        and goldenHeartUnlocked then
             newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN}
 
-        elseif pickup.SubType == HeartSubType.HEART_ETERNAL then
+        elseif pickup.SubType == HeartSubType.HEART_ETERNAL
+        and MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_PILL) then
             newPickup = {PickupVariant.PICKUP_PILL, PillColor.PILL_GOLD}
 
-        elseif pickup.SubType == HeartSubType.HEART_ROTTEN then
+        elseif pickup.SubType == HeartSubType.HEART_ROTTEN
+        and goldenHeartUnlocked then
             newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN}
 
-        elseif pickup.SubType == HeartSubType.HEART_BONE then
+        elseif pickup.SubType == HeartSubType.HEART_BONE
+        and MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_BATTERY) then
             newPickup = {PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_GOLDEN}
         end
 
     elseif pickup.Variant == PickupVariant.PICKUP_TAROTCARD then
-        if pickup.SubType <= 31 or (pickup.SubType >= 40 and pickup.SubType <= 77) then --Is a Card
+        if pickup.SubType <= 31 or (pickup.SubType >= 40 and pickup.SubType <= 77) then--Is a card
             newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
 
-        elseif (pickup.SubType >= 32 and pickup.SubType <= 41) --Is a rune
-        or (pickup.SubType >= 81 and pickup.SubType <= 97) then -- Is a soulstone
+        elseif ((pickup.SubType >= 32 and pickup.SubType <= 41) --Is a rune
+        or (pickup.SubType >= 81 and pickup.SubType <= 97)) -- Is a soulstone
+        and MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_BOMB) then
             newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN}
 
         else

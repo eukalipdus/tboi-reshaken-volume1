@@ -68,7 +68,12 @@ enums.Trinkets = {
     RAINBOW_COOKIE = Isaac.GetTrinketIdByName("Golden Cookie"),
 
     TRACK_ALT_PATH_UNLOCK = Isaac.GetTrinketIdByName("Alt Path Unlock Tracker"),
-    TRACK_MEGA_CHEST_UNLOCK = Isaac.GetTrinketIdByName("MEGA CHEST UNLOCK TRACKER")
+    TRACK_MEGA_CHEST_UNLOCK = Isaac.GetTrinketIdByName("MEGA CHEST UNLOCK TRACKER"),
+    TRACK_GOLD_BOMB_UNLOCK = Isaac.GetTrinketIdByName("GOLD BOMB UNLOCK TRACKER"),
+    TRACK_GOLDEN_BATTERY_UNLOCK = Isaac.GetTrinketIdByName("GOLDEN BATTERY UNLOCK TRACKER"),
+    TRACK_GOLDEN_HEART_UNLOCK = Isaac.GetTrinketIdByName("GOLDEN HEART UNLOCK TRACKER"),
+    TRACK_GOLD_PILL_UNLOCK = Isaac.GetTrinketIdByName("GOLD PILL UNLOCK TRACKER"),
+    TRACK_GOLDEN_TRINKET_UNLOCK = Isaac.GetTrinketIdByName("GOLDEN TRINKET UNLOCK TRACKER"),
 }
 
 enums.Cards = {

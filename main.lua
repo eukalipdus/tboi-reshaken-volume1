@@ -152,11 +152,7 @@ include("milkshake_scripts.shardrockoverlay")
 include("milkshake_scripts.brgascloud")
 include("milkshake_scripts.nonreplaceabletnt")
 include("milkshake_scripts.spindowndicehiddenitems")
-
--- Check if Spirit Sage can be played
-MilkshakeVol1.AchievementChecker = include("milkshake_scripts.achievementchecker")
-MilkshakeVol1.AchievementChecker:AddTrackerTrinket(MilkshakeVol1.enums.Trinkets.TRACK_ALT_PATH_UNLOCK)
-MilkshakeVol1.AchievementChecker:AddTrackerTrinket(MilkshakeVol1.enums.Trinkets.TRACK_MEGA_CHEST_UNLOCK)
+include("milkshake_scripts.setachievementtrackers")
 
 --- Shader crash fix
 --- Credits to Cucco
