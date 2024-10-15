@@ -150,7 +150,7 @@ local function TrySpawnSecretMemberShop(position)
     return true
 end
 
--- ---@param pickup EntityPickup
+---@param pickup EntityPickup
 local function SetGoldenPrice(pickup)
     local newPickupPrice = goldPickupPriceIncrease[pickup.Variant]
     if newPickupPrice then
