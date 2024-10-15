@@ -3,6 +3,10 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local CHEST_VELOCITY_MULTIPLIER = 15
+local ACHIEVEMENT_GOLDEN_HEART = 224
+local ACHIEVEMENT_GOLD_PILL = 603
+local ACHIEVEMENT_GOLDEN_BATTERY = 615
+local ACHIEVEMENT_GOLD_BOMB = 226
 
 local goldPickupPriceIncrease = {
     [PickupVariant.PICKUP_BOMB] = 8,
@@ -14,7 +18,7 @@ local goldPickupPriceIncrease = {
 
 local MIN_COIN_SPAWN_COUNT = 2
 local MAX_COIN_SPAWN_COUNT = 4
-local skipNextShovelUse = false
+--local skipNextShovelUse = false
 
 
 TSIL.SaveManager.AddPersistentVariable(
@@ -133,7 +137,7 @@ local function TrySpawnSecretMemberShop(position)
 
     --Because we update the room, the Use Item callback will trigger again
     --We need to use a flag to keep track of this
-    skipNextShovelUse = true
+    --skipNextShovelUse = true
     TSIL.GridEntities.SpawnGridEntity(
         GridEntityType.GRID_STAIRS,
         TSIL.Enums.CrawlSpaceVariant.SECRET_SHOP,
@@ -150,7 +154,7 @@ local function TrySpawnSecretMemberShop(position)
     return true
 end
 
--- ---@param pickup EntityPickup
+---@param pickup EntityPickup
 local function SetGoldenPrice(pickup)
     local newPickupPrice = goldPickupPriceIncrease[pickup.Variant]
     if newPickupPrice then
@@ -194,6 +198,7 @@ local function ReplaceCheapestWithGoldenKey()
         goldenKey.AutoUpdatePrice = false
         goldenKey.Price = cheapestPickup.Price
         SetGoldenPrice(goldenKey)
+        goldenKey.Price = math.min(goldenKey.Price, 14)
     end
 end
 
@@ -202,6 +207,7 @@ local function IsGoldenShovelShop()
     local goldenShovelShopCreated = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "GoldenShovelSecretShopCreated")
     local room = Game():GetRoom()
     local isSecretShop = room:GetType() == RoomType.ROOM_SHOP and room:GetBackdropType() == BackdropType.SECRET
+    print(room:GetBackdropType())
     return goldenShovelShopCreated and isSecretShop
 end
 
@@ -212,34 +218,51 @@ function goldenShovel:PostPickupUpdate(pickup)
         return
     end
     local newPickup
+    local goldenHeartUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_HEART)
 
     if pickup.Variant == PickupVariant.PICKUP_HEART then
-        if pickup.SubType == HeartSubType.HEART_BLACK then
+        if pickup.SubType == HeartSubType.HEART_BLACK
+        and goldenHeartUnlocked then
             newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN}
 
         elseif pickup.SubType == HeartSubType.HEART_ETERNAL then
-            newPickup = {PickupVariant.PICKUP_PILL, PillColor.PILL_GOLD}
+
+            if MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_PILL) then
+                newPickup = {PickupVariant.PICKUP_PILL, PillColor.PILL_GOLD}
+            else
+                newPickup = {PickupVariant.PICKUP_PILL, PillColor.PILL_GOLD}--RANDOM POILL
+            end
 
         elseif pickup.SubType == HeartSubType.HEART_ROTTEN then
-            newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN}
+            if goldenHeartUnlocked then
+                newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN}
+            else
+                newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL}
+            end
 
         elseif pickup.SubType == HeartSubType.HEART_BONE then
-            newPickup = {PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_GOLDEN}
+            if MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_BATTERY) then
+                newPickup = {PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_GOLDEN}
+            else
+                newPickup = {PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_NORMAL}
+            end
         end
 
     elseif pickup.Variant == PickupVariant.PICKUP_TAROTCARD then
-        if pickup.SubType <= 31 or (pickup.SubType >= 40 and pickup.SubType <= 77) then --Is a Card
+        if pickup.SubType <= 31 or (pickup.SubType >= 40 and pickup.SubType <= 77) then--Is a card
             newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
 
-        elseif (pickup.SubType >= 32 and pickup.SubType <= 41) then --Is a Rune
-            newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN}
+        elseif (pickup.SubType >= 32 and pickup.SubType <= 41) --Is a rune
+        or (pickup.SubType >= 81 and pickup.SubType <= 97) then-- Is a soulstone
 
-        elseif (pickup.SubType >= 81 and pickup.SubType <= 97) then --Is a Soulstone
-            newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN}
+            if MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_BOMB) then
+                newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN}
+            else
+                newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL}
+            end
 
         else
             newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
-
         end
     end
 
@@ -271,10 +294,10 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPic
 ---@param rng RNG
 ---@param player EntityPlayer
 function goldenShovel:onUse(_, rng, player)
-    if skipNextShovelUse then
+    --[[if skipNextShovelUse then
         skipNextShovelUse = false
         return
-    end
+    end]]
 
     if not player then return end
 

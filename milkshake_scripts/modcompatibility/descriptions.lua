@@ -1729,8 +1729,8 @@ descriptions.Trinkets = {
             description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
         },
         pl = {
-            name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+            name = "Przyrząd Śledzący Stan Odblokowania Alternatywnego Zestawu Pięter",
+            description = "Automatycznie otwiera drzwi do Zalewu, Kopalni i Mauzoleum po pokonaniu bossa.",
         },
         ko_kr = {
             name = "알트 루트 해금 여부 추적기",
@@ -2167,7 +2167,7 @@ descriptions.Cards = {
             description = "#{{Collectible712}}Призывает случайный предметный огонёк"
         },
         pl = {
-            name = "Porwana Strona",
+            name = "Wydarta Strona",
             description = "#Przywołuje losowego ognika z {{Collectible712}} Lemegetonu"
         },
         ko_kr = {

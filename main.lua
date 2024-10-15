@@ -38,8 +38,8 @@ include("milkshake_scripts.items.collectibles.passive.blackeye")
 include("milkshake_scripts.items.collectibles.familiars.spiritbum")
 include("milkshake_scripts.items.collectibles.active.dicedice")
 include("milkshake_scripts.items.collectibles.active.emptyslot")
-include("milkshake_scripts.items.collectibles.familiars.fingore")
--- include("milkshake_scripts.items.collectibles.familiars.fingore_v2")
+--include("milkshake_scripts.items.collectibles.familiars.fingore")
+include("milkshake_scripts.items.collectibles.familiars.fingore_v2")
 include("milkshake_scripts.items.collectibles.passive.firecrackerrose")
 include("milkshake_scripts.items.collectibles.familiars.fragilemirror")
 include("milkshake_scripts.items.collectibles.passive.glassheart")
@@ -104,7 +104,6 @@ include("milkshake_scripts.items.pick ups.unholyorb")
 include("milkshake_scripts.items.pick ups.rockorb")
 include("milkshake_scripts.items.pick ups.orbder")
 
-
 --Pools
 include("milkshake_scripts.pools.glasspool")
 
@@ -120,6 +119,8 @@ include("milkshake_scripts.wisps.brendaholywisp")
 include("milkshake_scripts.wisps.brendanaturewisp")
 include("milkshake_scripts.wisps.brendapoisonwisp")
 include("milkshake_scripts.wisps.brendawaterwisp")
+include("milkshake_scripts.wisps.brendaunholywisp")
+include("milkshake_scripts.wisps.brendaundeadwisp")
 include("milkshake_scripts.wisps.globininabucket")
 include("milkshake_scripts.wisps.goldenshovel")
 include("milkshake_scripts.wisps.leviticus")
@@ -152,11 +153,7 @@ include("milkshake_scripts.shardrockoverlay")
 include("milkshake_scripts.brgascloud")
 include("milkshake_scripts.nonreplaceabletnt")
 include("milkshake_scripts.spindowndicehiddenitems")
-
--- Check if Spirit Sage can be played
-MilkshakeVol1.AchievementChecker = include("milkshake_scripts.achievementchecker")
-MilkshakeVol1.AchievementChecker:AddTrackerTrinket(MilkshakeVol1.enums.Trinkets.TRACK_ALT_PATH_UNLOCK)
-MilkshakeVol1.AchievementChecker:AddTrackerTrinket(MilkshakeVol1.enums.Trinkets.TRACK_MEGA_CHEST_UNLOCK)
+include("milkshake_scripts.setachievementtrackers")
 
 --- Shader crash fix
 --- Credits to Cucco

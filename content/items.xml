@@ -58,9 +58,16 @@
     <passive id="505" name="BRENDA CUSTOM POISON WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
     <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="508" name="BRENDA CUSTOM UNHOLY WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="509" name="BRENDA CUSTOM UNDEAD WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
 
     <trinket name="Alt Path Unlock Tracker" description="Please stop reporting this to the Milkshake devs" gfx="trinkets_alt_path_unlock_tracker.png" achievement="407" tags="nogreed"/>
-    <trinket name="MEGA CHEST UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs" achievement="601" tags="nogreed" />
+    <trinket name="MEGA CHEST UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs, IF NO REPORTS EXIST" achievement="601" tags="nogreed" />
+    <trinket name="GOLD BOMB UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs, IF NO REPORTS EXIST" achievement="226" tags="nogreed" />
+    <trinket name="GOLDEN BATTERY UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs, IF NO REPORTS EXIST" achievement="615" tags="nogreed" />
+    <trinket name="GOLDEN HEART UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs, IF NO REPORTS EXIST" achievement="224" tags="nogreed" />
+    <trinket name="GOLD PILL UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs, IF NO REPORTS EXIST" achievement="603" tags="nogreed" />
+    <trinket name="GOLDEN TRINKET UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs, IF NO REPORTS EXIST" achievement="617" tags="nogreed" />
 
     <!-- unused -->
     <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true" craftquality="-1"/> 

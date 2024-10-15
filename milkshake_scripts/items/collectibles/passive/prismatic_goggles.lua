@@ -10,7 +10,7 @@ local DIFFRACTION_LUCK_INCREASE = 0.025
 
 local MAX_DIFFRACTED_BOSS_HEALTH = 200
 
-local LASER_DAMAGE = 1
+local LASER_DAMAGE = 0
 local LASER_DAMAGE_SCALING = 1
 local LASER_DURATION = 8
 local LASER_ONE_HIT = false
@@ -114,6 +114,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_INIT, prismaticGoggles.NPCIni
 
 ---@param npc EntityNPC
 function prismaticGoggles:DiffractionRender(npc)
+    if not npc.Visible then return end
     local source = utility:GetData(npc, "DiffractionSource")
     if not source then return end
 
@@ -124,7 +125,7 @@ function prismaticGoggles:DiffractionRender(npc)
     for index, tint in ipairs(TINTS) do
         -- I REALLY REALLY wanted to use table.unpack here, but for some reason it wasn't working correctly.
         sprite.Color = Color(tint[1], tint[2], tint[3], REFLECTION_ALPHA, tint[4], tint[5], tint[6])
-        local drawPos = Isaac.WorldToScreen(npc.Position + offsetVector:Rotated(120*index))
+        local drawPos = Isaac.WorldToScreen(npc.Position + npc.PositionOffset + offsetVector:Rotated(120*index))
         sprite:Render(drawPos)
     end
 
@@ -138,7 +139,7 @@ function prismaticGoggles:LasersOnDeath(npc)
     ---@cast source EntityPlayer
     if not source then return end
 
-    local damage = (LASER_DAMAGE + LASER_DAMAGE_SCALING * game:GetLevel():GetAbsoluteStage()) + ((source.Damage)/2)
+    local damage = (LASER_DAMAGE + LASER_DAMAGE_SCALING * MilkshakeVol1.utility:GetCurrentChapter()) + ((source.Damage))
     local offsetVector = Vector(math.random(-1, 1) + math.random(), math.random(-1, 1) + math.random())
     local initialAngle = 0
     for index, tint in ipairs(TINTS) do
