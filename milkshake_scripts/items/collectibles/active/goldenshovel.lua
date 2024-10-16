@@ -203,6 +203,7 @@ local function ReplaceCheapestWithGoldenKey()
 end
 
 ---Checks if the current room is a secret shop, and Golden Shovel has been used
+---@return boolean
 local function IsGoldenShovelShop()
     local goldenShovelShopCreated = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "GoldenShovelSecretShopCreated")
     local room = Game():GetRoom()
