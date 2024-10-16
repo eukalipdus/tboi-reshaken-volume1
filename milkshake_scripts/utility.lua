@@ -563,4 +563,15 @@ function MilkshakeVol1:GetData(entity, identifier)
     return data
 end
 
+---Returns a table which allows us to reidentify a specific EntitySlot
+---@param slot Entity
+---@return table<number, number>
+function utility:GetSlotIndex(slot)
+    local currentRoomIndex = Game():GetLevel():GetCurrentRoomIndex()
+    return {
+        InitSeed = slot.InitSeed,
+        RoomIndex = currentRoomIndex
+    }
+end
+
 MilkshakeVol1.utility = utility
