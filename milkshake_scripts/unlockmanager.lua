@@ -279,11 +279,11 @@ function unlockableManager:PostNewLevel()
      for challengeId, achievementId in pairs(challengeToAchievement) do
         if Isaac.IsChallengeDone(challengeId)
         and not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(achievementId) then
-            Isaac.CreateTimer(function ()
-                local spriteFilePath  = MilkshakeVol1.UnlockManager:GetAchievementFilePath(achievementId)
-                MilkshakeVol1.UnlockManager:UpdateAchievement(achievementId, true)
-                MilkshakeVol1.UnlockManager:AddToAchievementQueue(spriteFilePath)
-            end, 1, 1, true)
+            TSIL.Utils.Functions.RunInFrames(function ()
+                    local spriteFilePath  = MilkshakeVol1.UnlockManager:GetAchievementFilePath(achievementId)
+                    MilkshakeVol1.UnlockManager:UpdateAchievement(achievementId, true)
+                    MilkshakeVol1.UnlockManager:AddToAchievementQueue(spriteFilePath)
+                end, 1, {})
         end
     end
 end
