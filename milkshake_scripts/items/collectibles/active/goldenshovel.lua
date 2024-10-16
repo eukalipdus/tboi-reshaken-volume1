@@ -1,6 +1,5 @@
 local goldenShovel = {}
 local enums = MilkshakeVol1.enums
-local utility = MilkshakeVol1.utility
 
 local CHEST_VELOCITY_MULTIPLIER = 15
 local ACHIEVEMENT_GOLDEN_HEART = 224
