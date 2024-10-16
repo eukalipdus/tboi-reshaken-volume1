@@ -256,9 +256,11 @@ descriptions.Collectibles = {
     [enums.Collectibles.GOLDEN_SHOVEL] = {
         en_us = {
             name = "Golden Shovel",
-            description = "Digs up 1-2 golden chests and a random golden pickup." ..
-            "#{{LadderRoom}} Opens up a member card trapdoor if used on a decorative floor tile.",
-            book_of_virtues = "Middle ring wisp#High HP wisp#10% chance for {{Collectible202}} Midas' Touch tears"
+            description = "Digs up a golden chest and 2-4 pennies." ..
+            "#{{LadderRoom}} Opens up a golden trapdoor if used on a decorative floor tile. " ..
+            "#The trapdoor leads to an underground shop that sells various golden pickups and items from any pool.",
+            book_of_virtues = "Middle ring wisp#High HP wisp#10% chance for {{Collectible202}} Midas' Touch tears",
+            book_of_belial = "Digs up 2 red chests and a black heart instead"
         },
         spa = {
             name = "Pala Dorada",
@@ -816,9 +818,8 @@ descriptions.Collectibles = {
         en_us = {
             name = "Leviticus",
             description = "{{SoulHeart}} Must be charged by picking up soul hearts" ..
-            "#{{EternalHeart}} +1 Eternal Heart" ..
-            "#{{AngelRoom}} Using the item before a boss fight makes the boss reward an angel item" ..
-            "#{{DevilRoom}} The angel item will cost money if a devil deal was taken previously",
+            "#{{AngelRoom}} Takes Isaac to a unique Angel Room for the floor" ..
+            "#The angel room offers a free angel item and some pickups for sale",
             book_of_virtues = "Inner ring wisp#High HP wisp#+10% {{AngelRoom}} Angel Room chance per Leviticus wisp",
             abyss = "Blue, glowing locust that can spawn beams of light that deal 3x Isaac's damage",
         },
@@ -2196,11 +2197,12 @@ descriptions.Entities = {
     [BRENDA] = {
         en_us = {
             name = "Spirit Kiln", -- Kiln
-            description = "{{HalfSoulHeart}}Takes half a soul heart in exchange for various rewards:" ..
+            description = "{{Blank}} {{HalfSoulHeart}} Takes half a soul heart in exchange for various rewards:" ..
             "#{{SpiritOrb}} A random Spirit Orb" ..
             "#{{Burning}} A random elemental wisp" ..
-            "#{{Trinket}} A random glass or gem trinket" ..
-            "#{{Rune}} A random soul stone"
+            "#{{Rune}} A random soul stone" ..
+            "#{{Trinket".. 139 .."}} A random glass or gem trinket" ..
+            "#{{Collectible"..enums.Collectibles.FRAGILE_MIRROR .."}} Low chance for a random glass item after 3 hearts"
         },
         spa = {
             name = "Brenda la Forja Espiritual",
