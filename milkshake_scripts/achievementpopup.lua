@@ -6,9 +6,9 @@ local UPDATE_DELAY = 2
 local ACHIEVEMENT_LAYER = 3
 local IDLE_TIME = 60
 
-local gamePaused
+--local gamePaused
 local soundPlayed = false
-local forceUnpause
+--local forceUnpause
 local popupSprite = Sprite()
 popupSprite:Load("gfx/ui/achievement/achievements.anm2", true)
 popupSprite:Play("Appear")
@@ -35,12 +35,18 @@ function MilkshakeVol1.UnlockManager:AddToAchievementQueue(filePath)
 end
 
 function achievementPopup:PostRender()
-    if #achievementQueue == 0 then return end
-    gamePaused = true
-    Isaac.GetPlayer():UseActiveItem(CollectibleType.COLLECTIBLE_PAUSE, UseFlag.USE_NOANIM)
+    if #achievementQueue == 0 then
+        return
+    end
+
+    --gamePaused = true
+
+    TSIL.Pause.Pause()
+
     for i = 0, Game():GetNumPlayers() - 1 do
         Isaac.GetPlayer(i).ControlsEnabled = false
     end
+
     popupSprite:ReplaceSpritesheet(ACHIEVEMENT_LAYER, achievementQueue[1])
     popupSprite:LoadGraphics()
     popupSprite:Render(Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) / 2)
@@ -62,54 +68,54 @@ function achievementPopup:PostRender()
         table.remove(achievementQueue, 1)
         popupSprite:Play("Appear")
         soundPlayed = false
+
         if #achievementQueue == 0 then
             for i = 0, Game():GetNumPlayers() - 1 do
                 Isaac.GetPlayer(i).ControlsEnabled = true
             end
-            forceUnpause = true
+            TSIL.Pause.Unpause()
         end
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER, achievementPopup.PostRender)
 
----@param buttonAction integer
----@return number
-function achievementPopup:InputAction(_, _, buttonAction)
-    if gamePaused
-    and forceUnpause
-    and buttonAction == ButtonAction.ACTION_SHOOTLEFT then
-        gamePaused = false
-        return 0.75
-    end
-end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_INPUT_ACTION,
-    achievementPopup.InputAction,
-    InputHook.GET_ACTION_VALUE
-)
+-- ---@param buttonAction integer
+-- ---@return number
+-- function achievementPopup:InputAction(_, _, buttonAction)
+--     if TSIL.Pause.IsPaused()
+--     and forceUnpause
+--     and buttonAction == ButtonAction.ACTION_SHOOTLEFT then
+--         return 0.75
+--     end
+-- end
+-- MilkshakeVol1:AddCallback(
+--     ModCallbacks.MC_INPUT_ACTION,
+--     achievementPopup.InputAction,
+--     InputHook.GET_ACTION_VALUE
+-- )
 
----@param projectile EntityProjectile
-function achievementPopup:PostProjectileUpdate(projectile)
-    if gamePaused then
-        projectile.Position = utility:GetData(projectile, "OriginalPosition")
-    end
-end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_PROJECTILE_UPDATE,
-    achievementPopup.PostProjectileUpdate
-)
+-- ---@param projectile EntityProjectile
+-- function achievementPopup:PostProjectileUpdate(projectile)
+--     if gamePaused then
+--         projectile.Position = utility:GetData(projectile, "OriginalPosition")
+--     end
+-- end
+-- MilkshakeVol1:AddCallback(
+--     ModCallbacks.MC_POST_PROJECTILE_UPDATE,
+--     achievementPopup.PostProjectileUpdate
+-- )
 
-function achievementPopup:PostPEffectUpdate()
-    if gamePaused then
-        for _, entity in pairs(Isaac.GetRoomEntities()) do
-            if entity.Type == EntityType.ENTITY_PROJECTILE
-            and not utility:GetData(entity, "OriginalPosition") then
-                utility:SetData(entity, "OriginalPosition", entity.Position)
-            end
-        end
-    end
-end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_PEFFECT_UPDATE,
-    achievementPopup.PostPEffectUpdate
-)
+-- function achievementPopup:PostPEffectUpdate()
+--     if gamePaused then
+--         for _, entity in pairs(Isaac.GetRoomEntities()) do
+--             if entity.Type == EntityType.ENTITY_PROJECTILE
+--             and not utility:GetData(entity, "OriginalPosition") then
+--                 utility:SetData(entity, "OriginalPosition", entity.Position)
+--             end
+--         end
+--     end
+-- end
+-- MilkshakeVol1:AddCallback(
+--     ModCallbacks.MC_POST_PEFFECT_UPDATE,
+--     achievementPopup.PostPEffectUpdate
+-- )
