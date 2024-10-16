@@ -19,6 +19,13 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "BrendasPerFloor",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+
 local function hasChargedSoulChargeItem(player)
    if (player:HasCollectible(enums.Collectibles.LEVITICUS)
    or player:HasCollectible(enums.Collectibles.LEVITICUS_ALADAR)
@@ -47,6 +54,28 @@ local function isLostForm(player)
     return false
 end
 
+---@param brenda Entity
+local function GetTrackedBrendaIndex(brenda)
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    local currentRoomIdx = Game():GetLevel():GetCurrentRoomIndex()
+
+    if #brendasPerFloor == 0 then
+        return -1
+    end
+
+    for idx, entry in pairs(brendasPerFloor) do
+        if entry.InitSeed == brenda.InitSeed
+        and currentRoomIdx == entry.RoomIndex then
+            return idx
+        end
+    end
+
+    return -1
+end
 
 local soulStones = {
     Card.CARD_SOUL_ISAAC,
@@ -466,6 +495,27 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
         "PlayerIndexUsingSlot",
         TSIL.Players.GetPlayerIndex(player)
     )
+
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    local brendaIndex = GetTrackedBrendaIndex(brenda)
+
+    if brendaIndex == -1 then
+        table.insert(
+            brendasPerFloor,
+            MilkshakeVol1.utility:GetSlotIndex(brenda)
+        )
+
+        brendaIndex = GetTrackedBrendaIndex(brenda)
+        brendasPerFloor[brendaIndex].PaymentsReceived = 1
+    else
+        local prevPayments = brendasPerFloor[brendaIndex].PaymentsReceived
+        brendasPerFloor[brendaIndex].PaymentsReceived = prevPayments + 1
+        print(prevPayments+1)
+    end
 end
 
 MilkshakeVol1:AddCallback(
