@@ -25,7 +25,7 @@ TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
     "GoldenShovelSecretShopCreated",
     false,
-    TSIL.Enums.VariablePersistenceMode.RESET_FLOOR
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
 
 ---@param position Vector
