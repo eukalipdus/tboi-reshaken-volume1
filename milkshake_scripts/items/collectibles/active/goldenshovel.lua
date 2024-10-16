@@ -7,6 +7,7 @@ local ACHIEVEMENT_GOLDEN_HEART = 224
 local ACHIEVEMENT_GOLD_PILL = 603
 local ACHIEVEMENT_GOLDEN_BATTERY = 615
 local ACHIEVEMENT_GOLD_BOMB = 226
+local ACHIEVEMENT_GOLDEN_TRINKET = 617
 
 local goldPickupPriceIncrease = {
     [PickupVariant.PICKUP_BOMB] = 8,
@@ -275,7 +276,8 @@ function goldenShovel:PostPickupUpdate(pickup)
         )
 
     elseif pickup.Variant == PickupVariant.PICKUP_TRINKET
-    and not TSIL.Trinkets.IsGoldenTrinket(pickup.SubType) then
+    and not TSIL.Trinkets.IsGoldenTrinket(pickup.SubType)
+    and MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_TRINKET) then
         pickup:Morph(
             EntityType.ENTITY_PICKUP,
             PickupVariant.PICKUP_TRINKET,
