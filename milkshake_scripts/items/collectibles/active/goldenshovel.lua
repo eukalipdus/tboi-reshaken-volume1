@@ -207,7 +207,6 @@ local function IsGoldenShovelShop()
     local goldenShovelShopCreated = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "GoldenShovelSecretShopCreated")
     local room = Game():GetRoom()
     local isSecretShop = room:GetType() == RoomType.ROOM_SHOP and room:GetBackdropType() == BackdropType.SECRET
-    print(room:GetBackdropType())
     return goldenShovelShopCreated and isSecretShop
 end
 
