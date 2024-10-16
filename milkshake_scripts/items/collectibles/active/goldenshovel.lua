@@ -210,7 +210,7 @@ local function IsGoldenShovelShop()
     return goldenShovelShopCreated and isSecretShop
 end
 
--- ---@param pickup EntityPickup
+---@param pickup EntityPickup
 function goldenShovel:PostPickupUpdate(pickup)
     if not IsGoldenShovelShop()
     or not pickup:IsShopItem() then
