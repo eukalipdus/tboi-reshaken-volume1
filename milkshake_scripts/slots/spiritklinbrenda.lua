@@ -427,10 +427,6 @@ MilkshakeVol1:AddCallback(
     enums.Slots.SPIRIT_KLIN_BRENDA
 )
 
-local function spiritKilnPayout()
-    
-end
-
 ---@param brenda Entity
 ---@param player EntityPlayer
 function SpiritKlin:OnBrendaCollision(brenda, player)
