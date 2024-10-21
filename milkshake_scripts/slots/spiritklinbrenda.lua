@@ -143,9 +143,9 @@ local possibleWisps = {
 local COLLECTIBLE_PAYMENT_CHANCE = 4
 local MIN_PAYMENTS_FOR_COLLECTIBLE = 6
 
----Plays Brenda's death animation and pays out with a random Glass pool item
+---Plays Brenda's death animation
 ---@param brenda Entity
-local function BrendaCollectiblePayout(brenda)
+local function KillBrenda(brenda)
     brenda:Remove()
     SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
     Game():ShakeScreen(10)
@@ -174,6 +174,12 @@ local function BrendaCollectiblePayout(brenda)
             spawnVel
         )
     end
+end
+
+---Pays out with a random Glass pool item
+---@param brenda Entity
+local function BrendaCollectiblePayout(brenda)
+    Killbrenda(brenda)
 
     local collectible = TSIL.CustomItemPools.GetCollectible(
         enums.ItemPools.GLASS,
@@ -408,7 +414,7 @@ local function OnSlotBroken(slot)
         pickup:Remove()
     end
     --]]
-
+    --[[
     local newSlot = TSIL.EntitySpecific.SpawnSlot(
         enums.Slots.SPIRIT_KLIN_BRENDA,
         0,
@@ -442,6 +448,7 @@ local function OnSlotBroken(slot)
             --newSprite:SetFrame(oldSprite:GetFrame())
         end
     end
+    ]]
     slot:Remove()
     local gemTrinket = TSIL.Random.GetRandomElementsFromTable(gemtrinkets, 1, slot:GetDropRNG())[1]
     TSIL.EntitySpecific.SpawnPickup(
@@ -451,6 +458,7 @@ local function OnSlotBroken(slot)
         RandomVector(),
         slot
     )
+    KillBrenda(slot)
 end
 
 
