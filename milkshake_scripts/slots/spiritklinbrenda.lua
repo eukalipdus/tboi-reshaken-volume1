@@ -128,6 +128,54 @@ local possibleWisps = {
     enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP,
 }
 
+local COLLECTIBLE_PAYMENT_CHANCE = 4
+local MIN_PAYMENTS_FOR_COLLECTIBLE = 6
+
+---Plays Brenda's death animation and pays out with a random Glass pool item
+---@param brenda Entity
+local function BrendaCollectiblePayout(brenda)
+    brenda:Remove()
+    SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
+    Game():ShakeScreen(10)
+    Game():MakeShockwave(brenda.Position, 0.03, 0.025, 10)
+
+    local dustCloud = TSIL.EntitySpecific.SpawnEffect(
+        EffectVariant.DUST_CLOUD,
+        1,
+        brenda.Position
+    )
+    dustCloud.SpriteScale = Vector(1.5, 1.5)
+    dustCloud:SetTimeout(15)
+
+    local rng = TSIL.RNG.NewRNG(brenda.InitSeed)
+    local numParticles = TSIL.Random.GetRandomInt(10, 16, rng)
+
+    for _ = 1, numParticles, 1 do
+        local angle = rng:RandomInt(360)
+        local velocity = TSIL.Random.GetRandomFloat(6, 8, rng)
+        local spawnVel = Vector.FromAngle(angle):Resized(velocity)
+
+        TSIL.EntitySpecific.SpawnEffect(
+            EffectVariant.ROCK_PARTICLE,
+            0,
+            brenda.Position,
+            spawnVel
+        )
+    end
+
+    local collectible = TSIL.CustomItemPools.GetCollectible(
+        enums.ItemPools.GLASS,
+        true,
+        brenda:GetDropRNG(),
+        enums.Collectibles.MILKSHAKE
+    )
+    TSIL.EntitySpecific.SpawnPickup(
+        PickupVariant.PICKUP_COLLECTIBLE,
+        collectible,
+        brenda.Position
+    )
+end
+
 ---Adds a custom character's soul stone to the Spirit Klin's reward pool.
 ---@param card Card
 ---@param isUnlocked? fun(): boolean
@@ -149,7 +197,7 @@ end
 ---Adds a new reward possibility to the Spirit Klin.
 ---
 ---The weight can just be a regular integer or a function that will get called when the machine is trying to pay out.
----@param weight number | fun(player: EntityPlayer): number
+---@param weight number | fun(player: EntityPlayer, brenda: Entity): number
 ---@param rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
 function MilkshakeVol1.API:AddSpiritKlinReward(weight, rewardFun)
     brendaRewards[#brendaRewards + 1] = {
@@ -293,8 +341,31 @@ end, function(slot, player, position)
     player:AddWisp(wispToAdd, position)
 end)
 
+MilkshakeVol1.API:AddSpiritKlinReward(function (_, brenda)
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+    local brendaIndex = GetTrackedBrendaIndex(brenda)
 
-local function RemoveRecentRewards(pos)
+    if brendasPerFloor[brendaIndex].PaymentsReceived >= MIN_PAYMENTS_FOR_COLLECTIBLE then
+        return COLLECTIBLE_PAYMENT_CHANCE * brendasPerFloor[brendaIndex].PaymentsReceived - (MIN_PAYMENTS_FOR_COLLECTIBLE - 1)
+    else
+        return 0
+    end
+
+end, function (slot)
+    local collectible = TSIL.CustomItemPools.GetCollectible(
+        enums.ItemPools.GLASS,
+        true,
+        slot:GetDropRNG()
+    )
+
+    BrendaCollectiblePayout(slot)
+end)
+
+
+local function RemveRecentRewards(pos)
     for _, pickup in ipairs(Isaac.FindByType(EntityType.ENTITY_PICKUP)) do
         if pickup.FrameCount <= 1 and pickup.SpawnerType == EntityType.ENTITY_NULL
         and pickup.Position:DistanceSquared(pos) <= 400 then
@@ -359,7 +430,7 @@ local function OnSlotBroken(slot)
             --newSprite:SetFrame(oldSprite:GetFrame())
         end
     end
-    slot:Remove()
+    slot:Roemove()
 end
 
 
@@ -390,46 +461,7 @@ end
 ---@param brenda Entity
 function SpiritKlin:OnBrendaUpdate(brenda)
     if CheckCollisionWithChaosCard(brenda) then
-        brenda:Remove()
-        SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
-        Game():ShakeScreen(10)
-        Game():MakeShockwave(brenda.Position, 0.03, 0.025, 10)
-
-        local dustCloud = TSIL.EntitySpecific.SpawnEffect(
-            EffectVariant.DUST_CLOUD,
-            1,
-            brenda.Position
-        )
-        dustCloud.SpriteScale = Vector(1.5, 1.5)
-        dustCloud:SetTimeout(15)
-
-        local rng = TSIL.RNG.NewRNG(brenda.InitSeed)
-        local numParticles = TSIL.Random.GetRandomInt(10, 16, rng)
-
-        for _ = 1, numParticles, 1 do
-            local angle = rng:RandomInt(360)
-            local velocity = TSIL.Random.GetRandomFloat(6, 8, rng)
-            local spawnVel = Vector.FromAngle(angle):Resized(velocity)
-
-            TSIL.EntitySpecific.SpawnEffect(
-                EffectVariant.ROCK_PARTICLE,
-                0,
-                brenda.Position,
-                spawnVel
-            )
-        end
-
-        local collectible = TSIL.CustomItemPools.GetCollectible(
-            enums.ItemPools.GLASS,
-            true,
-            brenda:GetDropRNG(),
-            enums.Collectibles.MILKSHAKE
-        )
-        TSIL.EntitySpecific.SpawnPickup(
-            PickupVariant.PICKUP_COLLECTIBLE,
-            collectible,
-            brenda.Position
-        )
+        BrendaCollectiblePayout(brenda)
     end
 
     local sprite = brenda:GetSprite()
@@ -546,7 +578,7 @@ function SpiritKlin:OnBrendaPrize(brenda)
     local rewards = TSIL.Utils.Tables.Map(brendaRewards, function(_, reward)
         local endChance = reward.chance
         if type(endChance) == "function" then
-            endChance = reward.chance(player)
+            endChance = reward.chance(player, brenda)
         end
 
         return {
