@@ -364,8 +364,8 @@ end, function (slot)
     BrendaCollectiblePayout(slot)
 end)
 
---[[
-local function RemveRecentRewards(pos)
+
+local function RemoveRecentRewards(pos)
     for _, pickup in ipairs(Isaac.FindByType(EntityType.ENTITY_PICKUP)) do
         if pickup.FrameCount <= 1 and pickup.SpawnerType == EntityType.ENTITY_NULL
         and pickup.Position:DistanceSquared(pos) <= 400 then
@@ -380,7 +380,7 @@ local function RemveRecentRewards(pos)
         end
     end
 end
-]]
+
 
 ---@param slot Entity
 local function OnSlotBroken(slot)
@@ -430,7 +430,7 @@ local function OnSlotBroken(slot)
             --newSprite:SetFrame(oldSprite:GetFrame())
         end
     end
-    slot:Roemove()
+    slot:Remove()
 end
 
 
