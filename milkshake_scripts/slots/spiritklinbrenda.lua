@@ -77,6 +77,18 @@ local function GetTrackedBrendaIndex(brenda)
     return -1
 end
 
+local gemtrinkets = {
+    enums.Trinkets.AMETHYST_SHARD,
+    enums.Trinkets.RUBY_SHARD,
+    enums.Trinkets.TOURMALINE_SHARD,
+    enums.Trinkets.EMERALD_SHARD,
+    enums.Trinkets.PERIDOT_SHARD,
+    enums.Trinkets.GARNET_SHARD,
+    enums.Trinkets.ONYX_SHARD,
+    enums.Trinkets.DIAMOND_SHARD,
+    enums.Trinkets.SAPPHIRE_SHARD,
+    enums.Trinkets.AMBER_SHARD
+}
 local soulStones = {
     Card.CARD_SOUL_ISAAC,
     Card.CARD_SOUL_MAGDALENE,
@@ -431,6 +443,14 @@ local function OnSlotBroken(slot)
         end
     end
     slot:Remove()
+    local gemTrinket = TSIL.Random.GetRandomElementsFromTable(gemtrinkets, 1, slot:GetDropRNG())[1]
+    TSIL.EntitySpecific.SpawnPickup(
+        PickupVariant.PICKUP_TRINKET,
+        gemTrinket,
+        slot.Position,
+        RandomVector(),
+        slot
+    )
 end
 
 
