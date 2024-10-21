@@ -229,7 +229,7 @@ MilkshakeVol1.API:AddSpiritKlinReward(function(_)
         return 0
     end
 
-    return 3
+    return 1
 end, function(slot, _, position, velocity)
     local rng = slot:GetDropRNG()
     local spawnedTrinkets = TSIL.SaveManager.GetPersistentVariable(
