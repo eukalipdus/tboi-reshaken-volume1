@@ -116,7 +116,7 @@ local function HandleBreakfast(collectible, shatteredCollectible, quality, count
             spawnPosition,
             Vector(0,0),
             nil
-        ):ToPickup()    
+        ):ToPickup()
 
         if i == 0 then
             shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
@@ -134,11 +134,14 @@ end
 ---@param collectible EntityPickup
 ---@param quality number
 ---@param originalQuality number | nil
-function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality)
+---@param forceItems table<CollectibleType, CollectibleType>
+---@param colors table<table<Color, Color>, table<Color, Color>>
+function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality, forceItems, colors)
     local newCollectibleID
     local shatteredCollectible
     local itemPool = Game():GetItemPool()
-    if quality - 1 >= 0 then
+    if quality - 1 >= 0
+    and not forceItems then
         for i = 0, 1 do
             local counter = 0
             repeat
@@ -195,7 +198,7 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
                 end
             end
 
-            PlaySplitAnimation(i, shatteredCollectible, CYAN_COLORS, PINK_COLORS)
+            PlaySplitAnimation(i, shatteredCollectible, colors[1], colors[2])
 
             if shatteredCollectible and collectible:IsShopItem() then
                 shatteredCollectible.AutoUpdatePrice = false
@@ -218,7 +221,7 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
                 end
             end
         end
-    else
+    elseif not forceItems then
         local rng = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE)
         local seed = rng:GetSeed()
         local roomType = Game():GetRoom():GetType()
@@ -227,6 +230,28 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
             pickupAmount = originalQuality - (quality - 1)
         end
         utility:RecycleCollectible(collectible.Position, player, roomType, itemPool, seed, rng, false, pickupAmount)
+    else
+        for idx = 0, 1 do
+            local spawnPosition = GetSplitPosition(idx, 1, 2, collectible)
+            ---@diagnostic disable-next-line: param-type-mismatch
+            shatteredCollectible = Isaac.Spawn(
+                EntityType.ENTITY_PICKUP,
+                PickupVariant.PICKUP_COLLECTIBLE,
+                forceItems[idx + 1],
+                spawnPosition,
+                Vector.Zero,
+                nil
+            ):ToPickup()
+    
+            if idx == 0 then
+                shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
+            elseif idx == 1 then
+                if collectible.OptionsPickupIndex > 0 then
+                    shatteredCollectible.OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
+                end
+            end
+            PlaySplitAnimation(idx, shatteredCollectible, colors[1], colors[2])
+        end
     end
 end
 
@@ -274,15 +299,15 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
                     if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
                         local roll = 4 + rng:RandomInt(2)
                         for _ = 1, roll do
-                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - roll, collectibleQuality)
+                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - roll, collectibleQuality, nil, {PINK_COLORS, CYAN_COLORS})
                         end
 
                     elseif player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
                          for _ = 1, 2 do
-                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - 1, collectibleQuality)
+                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - 1, collectibleQuality, nil, {PINK_COLORS, CYAN_COLORS})
                          end
                      else
-                        MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality, nil)
+                        MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - 1, collectibleQuality, nil, {PINK_COLORS, CYAN_COLORS})
                      end
                  end
     
