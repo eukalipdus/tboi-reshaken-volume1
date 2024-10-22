@@ -13,6 +13,10 @@ local COLORS = {
     {GREEN, SOLID_GREEN}
 }
 
+local function ScaledCosine(num)
+    return math.ceil(math.abs(CollectibleType.NUM_COLLECTIBLES * math.cos(num)))
+end
+
 ---@param player EntityPlayer
 ---@param useFlags integer
 ---@return boolean
@@ -35,11 +39,13 @@ function PrismaticSpinupDice:UseItem(_, _, player, useFlags)
             collectible:Remove()
             SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT, 1, 2, false, 0.5)
 
-            local spunUpCollectibleType = collectible.SubType + math.ceil(collectible.SubType / 2)
+            local absoluteStage = Game():GetLevel():GetAbsoluteStage()
+            local someUselessNumber = collectible.SubType + player:GetPlayerType() - absoluteStage
+            local newCollectibleId = ScaledCosine(someUselessNumber)
 
             local forcedCollectibles = {
-                spunUpCollectibleType,
-                spunUpCollectibleType + 1
+                newCollectibleId,
+                ScaledCosine(newCollectibleId)
             }
 
             MilkshakeVol1.API:SplitCollectible(player, collectible, -1, nil, forcedCollectibles, COLORS)
