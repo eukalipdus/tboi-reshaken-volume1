@@ -2,7 +2,7 @@ local SpiritKlin = {}
 local enums = MilkshakeVol1.enums
 
 ---@class BrendaReward
----@field chance number | fun(player: EntityPlayer): number
+---@field chance number | fun(player: EntityPlayer, brenda: Entity): number
 ---@field value fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
 
 TSIL.SaveManager.AddPersistentVariable(
@@ -143,7 +143,7 @@ local possibleWisps = {
 local COLLECTIBLE_PAYMENT_CHANCE = 4
 local MIN_PAYMENTS_FOR_COLLECTIBLE = 6
 
----Plays Brenda's death animation
+---Plays Brenda's death animation and removes the given Brenda
 ---@param brenda Entity
 local function KillBrenda(brenda)
     brenda:Remove()

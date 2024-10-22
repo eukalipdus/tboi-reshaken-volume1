@@ -180,8 +180,8 @@ MilkshakeVol1.API:AddGlassTrinkets(trinket TrinketType, isUnlocked? fun(): boole
 
 --------------------------------------------------------------------------------------------------------------------------------------
 
-MilkshakeVol1.API:AddSpiritKlinReward(number weight | fun(player: EntityPlayer): number, rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector))
-* Defined in line 105 of milkshake_scripts/slots/spiritklinbrenda.lua
+MilkshakeVol1.API:AddSpiritKlinReward(number weight | fun(player: EntityPlayer, brenda: Entity): number, rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector))
+* Defined in line 220 of milkshake_scripts/slots/spiritklinbrenda.lua
 
     Allows for adding custom rewards of any type to Spirit Kiln's reward pool.
 
