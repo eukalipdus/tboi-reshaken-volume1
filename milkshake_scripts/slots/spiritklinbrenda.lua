@@ -179,7 +179,7 @@ end
 ---Pays out with a random Glass pool item
 ---@param brenda Entity
 local function BrendaCollectiblePayout(brenda)
-    Killbrenda(brenda)
+    KillBrenda(brenda)
 
     local collectible = TSIL.CustomItemPools.GetCollectible(
         enums.ItemPools.GLASS,
