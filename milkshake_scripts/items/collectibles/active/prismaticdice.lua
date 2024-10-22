@@ -25,6 +25,17 @@ local SHATTERED_COLOR_FRAMES = 20
 local SCHEDULE_FRAMES = 2
 local JUDAS_REROLL_CHANCE = 30
 
+local CYAN_COLORS = {SOLID_CYAN, CYAN}
+local PINK_COLORS = {SOLID_PINK, PINK}
+
+local breakfastsByQuality = {
+    enums.Collectibles.SPOILED_BREAKFAST,
+    CollectibleType.COLLECTIBLE_BREAKFAST,
+    enums.Collectibles.BALANCED_BREAKFAST,
+    enums.Collectibles.HEARTY_BREAKFAST,
+    CollectibleType.COLLECTIBLE_BINGE_EATER,
+    enums.Collectibles.GOLDEN_BREAKFAST
+}
 
 --- Gets a spawn position for a split collectible
 ---@param index number
@@ -50,33 +61,35 @@ end
 
 --- Plays the color flash animations on the newly spawned collectibles
 ---@param index number
+---@param colorsOne table<Color, Color>
+---@param colorsTwo table<Color, Color>
 ---@param currentCollecible EntityPickup
-local function PlaySplitAnimation(index, currentCollecible, colors)
+local function PlaySplitAnimation(index, currentCollecible, colorsOne, colorsTwo)
     if index == 0 then
         --SOLID_CYAN:SetColorize(0, 2, 2, 3)
-        currentCollecible:SetColor(SOLID_CYAN, SHATTERED_SOLID_FRAMES, 2, false, false)
+        currentCollecible:SetColor(colorsOne[1], SHATTERED_SOLID_FRAMES, 2, false, false)
         local lastCollectible = currentCollecible
 
         TSIL.Utils.Functions.RunInFramesTemporary(function ()
         --CYAN:SetColorize(0, 2, 2, 3)
-        lastCollectible:SetColor(CYAN, SHATTERED_COLOR_FRAMES, 2, true, false)
+        lastCollectible:SetColor(colorsOne[2], SHATTERED_COLOR_FRAMES, 2, true, false)
         end, SHATTERED_SOLID_FRAMES)
 
     elseif index == 1 then
         --SOLID_PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
-        currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
+        currentCollecible:SetColor(colorsTwo[1], SHATTERED_SOLID_FRAMES, 2, false, false)
 
         TSIL.Utils.Functions.RunInFramesTemporary(function ()
         --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
-        currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
+        currentCollecible:SetColor(colorsTwo[2], SHATTERED_COLOR_FRAMES, 2, true, false)
         end, SHATTERED_SOLID_FRAMES)
 
     elseif index == 2 then
-        currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
+        currentCollecible:SetColor(colorsTwo[1], SHATTERED_SOLID_FRAMES, 2, false, false)
 
         TSIL.Utils.Functions.RunInFramesTemporary(function ()
         --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
-        currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
+        currentCollecible:SetColor(colorsTwo[2], SHATTERED_COLOR_FRAMES, 2, true, false)
         end, SHATTERED_SOLID_FRAMES)
     end
 end
@@ -92,14 +105,6 @@ local function SplitAnimationSingle(collectible, colorOne, colorTwo)
     end, SHATTERED_SOLID_FRAMES)
 end
 
-local breakfastsByQuality = {
-    enums.Collectibles.SPOILED_BREAKFAST,
-    CollectibleType.COLLECTIBLE_BREAKFAST,
-    enums.Collectibles.BALANCED_BREAKFAST,
-    enums.Collectibles.HEARTY_BREAKFAST,
-    CollectibleType.COLLECTIBLE_BINGE_EATER,
-    enums.Collectibles.GOLDEN_BREAKFAST
-}
 local function HandleBreakfast(collectible, shatteredCollectible, quality, count)
     for i = 0, count do
         local spawnPosition = GetSplitPosition(i, 1, 2, collectible)
@@ -111,8 +116,7 @@ local function HandleBreakfast(collectible, shatteredCollectible, quality, count
             spawnPosition,
             Vector(0,0),
             nil
-        ):ToPickup()
-            
+        ):ToPickup()    
 
         if i == 0 then
             shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
@@ -121,7 +125,7 @@ local function HandleBreakfast(collectible, shatteredCollectible, quality, count
                 shatteredCollectible.OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
             end
         end
-        PlaySplitAnimation(i, shatteredCollectible)
+        PlaySplitAnimation(i, shatteredCollectible, CYAN_COLORS, PINK_COLORS)
     end
 end
 
@@ -191,7 +195,7 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
                 end
             end
 
-            PlaySplitAnimation(i, shatteredCollectible)
+            PlaySplitAnimation(i, shatteredCollectible, CYAN_COLORS, PINK_COLORS)
 
             if shatteredCollectible and collectible:IsShopItem() then
                 shatteredCollectible.AutoUpdatePrice = false
