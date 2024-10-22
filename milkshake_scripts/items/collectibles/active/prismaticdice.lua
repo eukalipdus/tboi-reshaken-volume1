@@ -92,35 +92,27 @@ local function SplitAnimationSingle(collectible, colorOne, colorTwo)
     end, SHATTERED_SOLID_FRAMES)
 end
 
+local breakfastsByQuality = {
+    enums.Collectibles.SPOILED_BREAKFAST,
+    CollectibleType.COLLECTIBLE_BREAKFAST,
+    enums.Collectibles.BALANCED_BREAKFAST,
+    enums.Collectibles.HEARTY_BREAKFAST,
+    CollectibleType.COLLECTIBLE_BINGE_EATER,
+    enums.Collectibles.GOLDEN_BREAKFAST
+}
 local function HandleBreakfast(collectible, shatteredCollectible, quality, count)
     for i = 0, count do
-        local splitQuality = quality - 1
         local spawnPosition = GetSplitPosition(i, 1, 2, collectible)
-
-        if splitQuality == 0 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
+        ---@diagnostic disable-next-line: param-type-mismatch
+        shatteredCollectible = Isaac.Spawn(
+            EntityType.ENTITY_PICKUP,
+            PickupVariant.PICKUP_COLLECTIBLE,
+            breakfastsByQuality[quality],
+            spawnPosition,
+            Vector(0,0),
+            nil
+        ):ToPickup()
             
-        elseif splitQuality == 1 then
-             ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-        elseif splitQuality == 2 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-        elseif splitQuality == 3 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-        elseif splitQuality == 4 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BINGE_EATER, spawnPosition, Vector(0,0), nil):ToPickup()
-
-        elseif splitQuality == 5 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.GOLDEN_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-        end
 
         if i == 0 then
             shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
