@@ -40,7 +40,7 @@ function PrismaticSpinupDice:UseItem(_, _, player, useFlags)
             SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT, 1, 2, false, 0.5)
 
             local absoluteStage = Game():GetLevel():GetAbsoluteStage()
-            local someUselessNumber = collectible.SubType + player:GetPlayerType() - absoluteStage
+            local someUselessNumber = collectible.SubType + (player:GetPlayerType() * 10) - (absoluteStage * 10)
             local newCollectibleId = ScaledCosine(someUselessNumber)
 
             local forcedCollectibles = {
