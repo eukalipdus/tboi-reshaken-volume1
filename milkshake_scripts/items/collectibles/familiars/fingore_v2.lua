@@ -8,13 +8,16 @@ fingore.item = enums.Collectibles.FINGORE
 fingore.head = enums.Familiars.FINGORE_HEAD
 fingore.finger = enums.Familiars.FINGORE_FINGER
 fingore.detect = 5000
-fingore.baitDuration = 15
+fingore.baitDuration = 62
 fingore.orbit = 40 -- 1 tile
-fingore.distance = 40 -- head distance
+fingore.innerorbit = 20
+fingore.distance = 80 -- head distance
+fingore.innerdistance = 40
 fingore.cooldown = 30 * 5 -- 5 seconds
 fingore.delayFrames = 60
-fingore.velocity = 0.8
-fingore.speed = 1
+fingore.velocity = 0.9
+fingore.speed = 0.5
+fingore.knockPower = 10
 
 -- fingore -  entering new room: spawn at the room center
 -- room with enemy - spawn finger, follow finger
@@ -50,12 +53,19 @@ function fingore:HeadUpdate(familiar)
 
 	if familiar.Target then
 		local targetPos = familiar.Target.Position
+		local targetVel = familiar.Target.Velocity
 		-- follow it's finger in some distance
 		if (familiar.Position - targetPos):Length() > fingore.distance then
 			familiar:FollowPosition(targetPos)
 		else
+			if (familiar.Position - targetPos):Length() < fingore.innerdistance then
+				local vel = (familiar.Position-targetPos):Normalized(fingore.knockPower)
+				familiar:AddVelocity(vel)
+			end
 			familiar.Velocity = familiar.Velocity*fingore.velocity
 		end
+
+		if targetVel.X ~= 0 then familiar.FlipX = targetVel.X < 0 end
 	else
 		if data.cooldown then
 			if data.cooldown > 0 then
@@ -70,7 +80,7 @@ function fingore:HeadUpdate(familiar)
 			local enemies = Isaac.FindInRadius(familiar.Position, fingore.detect, EntityPartition.ENEMY)
 			if #enemies > 0 then
 				local target = enemies[rng:RandomInt(#enemies)+1]
-				if target then
+				if target and target:IsVulnerableEnemy() then
 					--familiar.Target = target
 					local finger = Isaac.Spawn(3, fingore.finger, 0, familiar.Position, Vector.Zero, player)
 					finger.Parent = familiar
@@ -86,8 +96,8 @@ function fingore:HeadUpdate(familiar)
 			--]
 		end
 		-- AI wandering -- placeholder
-		familiar:MoveDelayed(fingore.delayFrames)
-		--familiar:MoveDiagonally(fingore.speed)
+		familiar:GetPathFinder():MoveRandomly(true)
+		familiar.Velocity = familiar.Velocity*fingore.velocity
 	end
 end
 mod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, fingore.HeadUpdate, fingore.head)
@@ -98,17 +108,27 @@ function fingore:FingerUpdate(familiar)
 	-- in orbit distance
 	local player = familiar.Player
 	local parent = familiar.Parent
-	local data = familiar:GetData()
-	local rng = familiar:GetDropRNG()
+
 	if familiar.Target then
 		local target = familiar.Target
 		local targetPos = target.Position
+
+		familiar.FlipX = familiar.Position.X > targetPos.X
+
 		-- follow it's finger in some distance
 		if (familiar.Position - targetPos):Length() > fingore.orbit then
 			familiar:FollowPosition(targetPos)
+
 		else
-			target:AddBaited(EntityRef(player), fingore.baitDuration)
-			familiar.Velocity = familiar.Velocity*fingore.velocity
+			if not target:HasEntityFlags(EntityFlag.FLAG_BAITED) then
+				target:AddBaited(EntityRef(player), fingore.baitDuration)
+			end
+			if (familiar.Position - targetPos):Length() <= fingore.innerorbit then
+				local vel = (familiar.Position - targetPos):Normalized(fingore.knockPower)
+				familiar:AddVelocity(vel)
+			else
+				familiar.Velocity = familiar.Velocity*fingore.velocity
+			end
 		end
 	else
 		parent:GetData().cooldown = fingore.cooldown
