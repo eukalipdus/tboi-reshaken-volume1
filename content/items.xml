@@ -74,7 +74,7 @@
     <passive id="2" name="Black Eye" description="Owchie + tears up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true" craftquality="-1"/>
     <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip noeden" quality="2" gfx="collectibles_glassheart.png" hidden="true" craftquality="-1"/>
     <passive id="31" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" hidden="true" tags="nocantrip noeden" quality="5" craftquality="-1"/>
-    <passive id="50" name="Saataa Andagii" description="Saataa Andagii" tags="nocantrip nolostbr noeden" quality="6" maxhearts="1" hearts="4" gfx="sata_andagi.png" hidden="true" craftquality="-1"/>
+    <passive id="50" name="Saataa Andagii" description="Saataa andagii" tags="nocantrip nolostbr noeden" quality="6" maxhearts="1" hearts="4" gfx="sata_andagi.png" hidden="true" craftquality="-1"/>
     <passive id="32" name="Water With Food Coloring" description="Wish granted" cache="all" quality="6" gfx="collectibles_waterwithfoodcoloring.png" hidden="true" tags="noeden" craftquality="-1"/>
-    <active id="34" name="Prismatic Cosine Dice" description="Trigonometric Terror" quality="6" gfx="collectibles_prismaticspinupdice.png" maxcharges="1" hidden="true" tags="noeden" craftquality="-1" />
+    <active id="34" name="Prismatic Cosine Dice" description="Trigonometric terror" quality="6" gfx="collectibles_prismaticspinupdice.png" maxcharges="1" hidden="true" tags="noeden" craftquality="-1" />
 </items>
