@@ -3,15 +3,8 @@ local enums = MilkshakeVol1.enums
 
 local SCHEDULE_FRAMES = 2
 local SPLIT_COLOR_FRAMES = 2
+local COLOR_ALPHA = 0.5
 local WHITE = Color(1, 1, 1, 1, 255, 255, 255)
-local ORANGE = Color(242/255, 174/255, 0, 0.5)
-local SOLID_ORANGE = Color(242/255, 174/255, 0, 1)
-local GREEN = Color(32/255, 135/255, 79/255, 0.5)
-local SOLID_GREEN = Color(32/255, 135/255, 79/255, 1)
-local COLORS = {
-    {ORANGE, SOLID_ORANGE},
-    {GREEN, SOLID_GREEN}
-}
 
 ---Returns Cos(x), scaling by the number of collectibles, then rounded up
 ---@param num number
@@ -24,7 +17,7 @@ end
 ---@param player EntityPlayer
 ---@param useFlags integer
 ---@return boolean
-function PrismaticSpinupDice:UseItem(_, _, player, useFlags)
+function PrismaticSpinupDice:UseItem(_, rng, player, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then
         return true
     end
@@ -51,7 +44,20 @@ function PrismaticSpinupDice:UseItem(_, _, player, useFlags)
                 secondSplitCollectible
             }
 
-            MilkshakeVol1.API:SplitCollectible(player, collectible, -1, nil, forcedCollectibles, COLORS)
+            local colorOne = TSIL.Color.GetRandomColor(rng)
+            local colorOneTrans = colorOne
+            colorOneTrans.A = COLOR_ALPHA
+
+            local colorTwo = TSIL.Color.GetRandomColor(rng)
+            local colorTwoTrans = colorTwo
+            colorTwoTrans.A = COLOR_ALPHA
+
+            local colors = {
+                {colorOne, colorOneTrans},
+                {colorTwo, colorTwoTrans}
+            }
+
+            MilkshakeVol1.API:SplitCollectible(player, collectible, -1, nil, forcedCollectibles, colors)
         end, SCHEDULE_FRAMES)
     end
     return true
