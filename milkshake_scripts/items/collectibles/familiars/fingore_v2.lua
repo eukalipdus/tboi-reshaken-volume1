@@ -117,6 +117,10 @@ function fingore:FingerUpdate(familiar)
 	local player = familiar.Player
 	local parent = familiar.Parent
 
+	if not parent then
+		familiar:Remove()
+	end
+
 	if familiar.Target then
 		-- get target npc
 		local target = familiar.Target
