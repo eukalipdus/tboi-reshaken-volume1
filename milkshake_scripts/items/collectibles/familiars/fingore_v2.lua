@@ -47,9 +47,6 @@ function fingore:HeadUpdate(familiar)
 	local player = familiar.Player
 	local data = familiar:GetData()
 	local rng = familiar:GetDropRNG()
-	--local room = game:GetRoom()
-
-	if familiar.Velocity.X ~= 0 then familiar.FlipX = familiar.Velocity.X < 0 end
 
 	if familiar.Target then
 		local targetPos = familiar.Target.Position
@@ -65,8 +62,12 @@ function fingore:HeadUpdate(familiar)
 			familiar.Velocity = familiar.Velocity*fingore.velocity
 		end
 
-		if targetVel.X ~= 0 then familiar.FlipX = targetVel.X < 0 end
+		--if targetVel.X ~= 0 then familiar.FlipX = targetVel.X < 0 end
+		familiar.FlipX = familiar.Position.X > targetPos.X
 	else
+
+		if familiar.Velocity.X ~= 0 then familiar.FlipX = familiar.Velocity.X < 0 end
+
 		if data.cooldown then
 			if data.cooldown > 0 then
 				data.cooldown = data.cooldown - 1
@@ -95,7 +96,6 @@ function fingore:HeadUpdate(familiar)
 			end
 			--]
 		end
-		-- AI wandering -- placeholder
 		familiar:GetPathFinder():MoveRandomly(true)
 		familiar.Velocity = familiar.Velocity*fingore.velocity
 	end
