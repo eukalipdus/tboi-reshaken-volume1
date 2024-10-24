@@ -141,6 +141,16 @@ local collectibleToAchievement = {
     [enums.Collectibles.PRISMATIC_GOGGLES] = enums.Achievements.PRISMATIC_GOGGLES
 }
 
+---Unlocks all achievements or locks all of them
+---@param unlock boolean true to unlock everything, false to lock everything
+function MilkshakeVol1.UnlockManager:UpdateAllAchievements(unlock)
+    for _, achievement in pairs(enums.Achievements) do
+        local spriteFilePath  = MilkshakeVol1.UnlockManager:GetAchievementFilePath(achievement)
+        MilkshakeVol1.UnlockManager:UpdateAchievement(achievement, unlock)
+        MilkshakeVol1.UnlockManager:AddToAchievementQueue(spriteFilePath)
+    end
+end
+
 ---Gets the acheivement ID associated with a given collectible
 ---@param collectibleType number
 ---@return integer | nil

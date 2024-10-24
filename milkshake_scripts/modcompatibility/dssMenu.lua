@@ -428,6 +428,17 @@ local exampledirectory = {
     special_settings = {
         title = "extra settings",
         buttons = {
+            {
+                str = 'unlock all items',
+                tooltip = { strset = {
+                     'do you', 'solemnly', 'swear you are',
+                     'not cheating', 'and are using ', 'this for',
+                     'data', 'restoration?'
+                } },
+                changefunc = function ()
+                    MilkshakeVol1.UnlockManager:UpdateAllAchievements(true)
+                end
+            },
             -- SANCHO MODE
             {
                 str = 'sancho mode',
