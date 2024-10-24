@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="9/5/2024 1:03:18 AM" Version="4" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="23.10.2024 22:36:23" Version="5" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="familiar\familiar_fingore.png" Id="0"/>

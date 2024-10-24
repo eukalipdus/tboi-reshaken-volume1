@@ -140,8 +140,8 @@ local possibleWisps = {
     enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP,
 }
 
-local COLLECTIBLE_PAYMENT_CHANCE = 4
-local MIN_PAYMENTS_FOR_COLLECTIBLE = 6
+local COLLECTIBLE_PAYMENT_CHANCE = 1.2
+local MIN_PAYMENTS_FOR_COLLECTIBLE = 7
 
 ---Plays Brenda's death animation and removes the given Brenda
 ---@param brenda Entity
