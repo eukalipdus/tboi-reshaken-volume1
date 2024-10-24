@@ -36,7 +36,7 @@ enums.Collectibles = {
     GOLDEN_BREAKFAST = Isaac.GetItemIdByName("Golden Breakfast"),
     PRISMATIC_GOGGLES = Isaac.GetItemIdByName("Chromatic Prism"),
     WATER_WITH_FOOD_COLORING = Isaac.GetItemIdByName("Water With Food Coloring"),
-    PRISMATIC_SPINUP_DICE = Isaac.GetItemIdByName("Prismatic Spinup Dice"),
+    PRISMATIC_SPINUP_DICE = Isaac.GetItemIdByName("Prismatic Cosine Dice"),
 
     SPECIAL_BRENDA_FIRE_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM FIRE WISP"),
     SPECIAL_BRENDA_PSYCHIC_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM PSYCHIC WISP"),

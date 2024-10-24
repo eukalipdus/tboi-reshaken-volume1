@@ -14,7 +14,13 @@ local COLORS = {
 }
 
 local function ScaledCosine(num)
-    return math.ceil(math.abs(CollectibleType.NUM_COLLECTIBLES * math.cos(num)))
+    local totalCollectibleCount = #TSIL.Collectibles.GetCollectibles()
+    return math.ceil(math.abs(totalCollectibleCount * math.cos(num)))
+end
+
+local function GetUselessNumber(player, collectibleID)
+    local absoluteStage = Game():GetLevel():GetAbsoluteStage()
+    return collectibleID + (player:GetPlayerType() * 10) - (absoluteStage * 10)
 end
 
 ---@param player EntityPlayer
@@ -39,13 +45,12 @@ function PrismaticSpinupDice:UseItem(_, _, player, useFlags)
             collectible:Remove()
             SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT, 1, 2, false, 0.5)
 
-            local absoluteStage = Game():GetLevel():GetAbsoluteStage()
-            local someUselessNumber = collectible.SubType + (player:GetPlayerType() * 10) - (absoluteStage * 10)
-            local newCollectibleId = ScaledCosine(someUselessNumber)
+            local firstSplitCollectible = ScaledCosine(GetUselessNumber(player, collectible.SubType))
+            local secondSplitCollectible = ScaledCosine(GetUselessNumber(player, firstSplitCollectible))
 
             local forcedCollectibles = {
-                newCollectibleId,
-                ScaledCosine(newCollectibleId)
+                firstSplitCollectible,
+                secondSplitCollectible
             }
 
             MilkshakeVol1.API:SplitCollectible(player, collectible, -1, nil, forcedCollectibles, COLORS)
