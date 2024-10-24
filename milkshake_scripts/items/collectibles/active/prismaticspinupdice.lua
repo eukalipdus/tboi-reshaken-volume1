@@ -13,14 +13,12 @@ local COLORS = {
     {GREEN, SOLID_GREEN}
 }
 
+---Returns Cos(x), scaling by the number of collectibles, then rounded up
+---@param num number
+---@return integer
 local function ScaledCosine(num)
     local totalCollectibleCount = #TSIL.Collectibles.GetCollectibles()
     return math.ceil(math.abs(totalCollectibleCount * math.cos(num)))
-end
-
-local function GetUselessNumber(player, collectibleID)
-    local absoluteStage = Game():GetLevel():GetAbsoluteStage()
-    return collectibleID + (player:GetPlayerType() * 10) - (absoluteStage * 10)
 end
 
 ---@param player EntityPlayer
@@ -45,8 +43,8 @@ function PrismaticSpinupDice:UseItem(_, _, player, useFlags)
             collectible:Remove()
             SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT, 1, 2, false, 0.5)
 
-            local firstSplitCollectible = ScaledCosine(GetUselessNumber(player, collectible.SubType))
-            local secondSplitCollectible = ScaledCosine(GetUselessNumber(player, firstSplitCollectible))
+            local firstSplitCollectible = ScaledCosine(collectible.SubType)
+            local secondSplitCollectible = ScaledCosine(firstSplitCollectible)
 
             local forcedCollectibles = {
                 firstSplitCollectible,
