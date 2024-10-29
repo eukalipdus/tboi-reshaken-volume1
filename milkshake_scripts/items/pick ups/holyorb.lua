@@ -31,6 +31,7 @@ local GRID_DESTRUCTION_WHITELIST = TSIL.Utils.Tables.ConstructDictionaryFromTabl
     GridEntityType.GRID_ROCK_SPIKED,
     GridEntityType.GRID_ROCK_SS,
     GridEntityType.GRID_TNT,
+    GridEntityType.GRID_STATUE,
 })
 
 local function getLaserDamagePerTick()
