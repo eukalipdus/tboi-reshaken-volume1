@@ -35,7 +35,8 @@ function PrismaticSpinupDice:UseItem(_, rng, player, useFlags)
         local collectible = entity:ToPickup()
 
         TSIL.Utils.Functions.RunInFramesTemporary(function ()
-            if collectible.SubType == CollectibleType.COLLECTIBLE_DADS_NOTE then
+            if collectible.SubType == CollectibleType.COLLECTIBLE_DADS_NOTE
+            or collectible.SubType == CollectibleType.COLLECTIBLE_NULL then
                 return
             end
 
