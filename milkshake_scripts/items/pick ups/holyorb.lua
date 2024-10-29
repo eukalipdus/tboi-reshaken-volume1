@@ -103,9 +103,11 @@ function HolyOrb:BeamCollision(laser)
             local pointOffset = Vector.One:Rotated(angle) * ROCK_SEARCH_RANGE
             DestroyGridAtPosition(point + pointOffset, laser)
         end
-        for _, pickup in ipairs(Isaac.FindInRadius(point, ROCK_SEARCH_RANGE, EntityPartition.PICKUP)) do
-            if pickup.Type == EntityType.ENTITY_PICKUP and pickup.Variant == PickupVariant.PICKUP_BOMBCHEST and pickup.SubType == ChestSubType.CHEST_CLOSED then
-                pickup:ToPickup():TryOpenChest((laser.SpawnerEntity and laser.SpawnerEntity:ToPlayer()) or Isaac.GetPlayer())
+        for _, entity in ipairs(Isaac.FindInRadius(point, ROCK_SEARCH_RANGE)) do
+            if entity.Type == EntityType.ENTITY_PICKUP and entity.Variant == PickupVariant.PICKUP_BOMBCHEST and entity.SubType == ChestSubType.CHEST_CLOSED then
+                entity:ToPickup():TryOpenChest((laser.SpawnerEntity and laser.SpawnerEntity:ToPlayer()) or Isaac.GetPlayer())
+            elseif entity.Type == EntityType.ENTITY_FIREPLACE then
+                entity:Die()
             end
         end
     end
