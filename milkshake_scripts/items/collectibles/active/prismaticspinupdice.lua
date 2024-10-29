@@ -22,6 +22,25 @@ local function ScaledCosine(num)
     return math.ceil(math.abs(totalCollectibleCount * math.cos(num)))
 end
 
+---Removes all collectibles created by Prismatic Cosine Dice
+local function RemoveAllCosineDiceCollectibles()
+    local cosineCollectibles = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "CosineCollectibles")
+
+    if not cosineCollectibles then
+        return
+    end
+
+    local collectibles = TSIL.PickupSpecific.GetCollectibles()
+
+    for _, currentCollectible in pairs(collectibles) do
+        local pickupIndex = tonumber(TSIL.Pickups.GetPickupIndex(currentCollectible))
+        if TSIL.Utils.Tables.IsIn(cosineCollectibles, pickupIndex) then
+            currentCollectible:Remove()
+        end
+    end
+    cosineCollectibles = {}
+end
+
 ---@param player EntityPlayer
 ---@param useFlags integer
 ---@return boolean
@@ -177,24 +196,6 @@ MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_PICKUP_COLLISION,
     PrismaticSpinupDice.PrePickupCollision
 )
-
-local function RemoveAllCosineDiceCollectibles()
-    local cosineCollectibles = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "CosineCollectibles")
-
-    if not cosineCollectibles then
-        return
-    end
-
-    local collectibles = TSIL.PickupSpecific.GetCollectibles()
-
-    for _, currentCollectible in pairs(collectibles) do
-        local pickupIndex = tonumber(TSIL.Pickups.GetPickupIndex(currentCollectible))
-        if TSIL.Utils.Tables.IsIn(cosineCollectibles, pickupIndex) then
-            currentCollectible:Remove()
-        end
-    end
-    cosineCollectibles = {}
-end
 
 function PrismaticSpinupDice:PostNewRoom()
     RemoveAllCosineDiceCollectibles()
