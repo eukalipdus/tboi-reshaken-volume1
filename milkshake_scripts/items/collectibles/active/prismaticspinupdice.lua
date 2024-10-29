@@ -98,10 +98,17 @@ function PrismaticSpinupDice:UseItem(_, rng, player, useFlags)
             )
 
             utility:SetData(
+                splitCollectibles[1],
+                "CosineCollectibleTwin",
+                splitCollectibles[2]
+            )
+
+            utility:SetData(
                 splitCollectibles[2],
                 "CosineCollectibleTwin",
                 splitCollectibles[1]
             )
+
         end, SCHEDULE_FRAMES)
     end
     return true
@@ -118,6 +125,10 @@ function PrismaticSpinupDice:PrePickupCollision(pickup, collider)
     local player = collider:ToPlayer()
 
     if not collider then
+        return
+    end
+
+    if utility:GetData(pickup, "CosineCollectibleEffects") then
         return
     end
 
@@ -141,7 +152,25 @@ function PrismaticSpinupDice:PrePickupCollision(pickup, collider)
 
         player:AnimateSad()
         return true
+
+    elseif utility:GetData(pickup, "CosineCollectible") == true then
+        local decoyPickup = utility:GetData(pickup, "CosineCollectibleTwin")
+
+        if not decoyPickup then
+            return
+        end
+
+        decoyPickup:Remove()
+        TSIL.EntitySpecific.SpawnEffect(
+            EffectVariant.POOF01,
+            0,
+            decoyPickup.Position,
+            Vector.Zero,
+            pickup
+        )
     end
+
+    utility:SetData(pickup, "CosineCollectibleEffects", true)
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_PICKUP_COLLISION,
