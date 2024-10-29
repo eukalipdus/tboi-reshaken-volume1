@@ -105,11 +105,11 @@ local function SplitAnimationSingle(collectible, colorOne, colorTwo)
     end, SHATTERED_SOLID_FRAMES)
 end
 
-local function HandleBreakfast(collectible, shatteredCollectible, quality, count)
-    for i = 0, count do
+local function HandleBreakfast(collectible, shatteredCollectibles, quality, count)
+    for i = 1, count + 1 do
         local spawnPosition = GetSplitPosition(i, 1, 2, collectible)
         ---@diagnostic disable-next-line: param-type-mismatch
-        shatteredCollectible = Isaac.Spawn(
+        shatteredCollectibles[i] = Isaac.Spawn(
             EntityType.ENTITY_PICKUP,
             PickupVariant.PICKUP_COLLECTIBLE,
             breakfastsByQuality[quality],
@@ -118,15 +118,16 @@ local function HandleBreakfast(collectible, shatteredCollectible, quality, count
             nil
         ):ToPickup()
 
-        if i == 0 then
-            shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
-        elseif i == 1 then
+        if i == 1 then
+            shatteredCollectibles[i].OptionsPickupIndex = collectible.OptionsPickupIndex
+        elseif i == 2 then
             if collectible.OptionsPickupIndex > 0 then
-                shatteredCollectible.OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
+                shatteredCollectibles[i].OptionsPickupIndex = shatteredCollectibles[i].OptionsPickupIndex + 1
             end
         end
-        PlaySplitAnimation(i, shatteredCollectible, CYAN_COLORS, PINK_COLORS)
+        PlaySplitAnimation(i, shatteredCollectibles[i], CYAN_COLORS, PINK_COLORS)
     end
+    return shatteredCollectibles
 end
 
 ---Actives the prismatic dice effect of giving you two items for one, of lower quality
@@ -136,13 +137,14 @@ end
 ---@param originalQuality number | nil
 ---@param forceItems table<CollectibleType, CollectibleType>
 ---@param colors table<table<Color, Color>, table<Color, Color>>
+---@return table<EntityPickup, EntityPickup>
 function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality, forceItems, colors)
     local newCollectibleID
-    local shatteredCollectible
+    local shatteredCollectibles = {}
     local itemPool = Game():GetItemPool()
     if quality - 1 >= 0
     and not forceItems then
-        for i = 0, 1 do
+        for i = 1, 2 do
             local counter = 0
             repeat
                 counter = counter + 1
@@ -175,8 +177,8 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
                     else
                         count = 1
                     end
-                    HandleBreakfast(collectible, shatteredCollectible, quality, count)
-                    return
+                    
+                    return HandleBreakfast(collectible, shatteredCollectibles, quality, count)
                 end
 
             until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == quality - 1
@@ -184,40 +186,40 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
             local spawnPosition = GetSplitPosition(i, 0, 1, collectible)
 
             ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
+            shatteredCollectibles[i] = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
             itemPool:RemoveCollectible(newCollectibleID)
 
 
-            if i == 0 then
-                shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
-            elseif i == 1 then
+            if i == 1 then
+                shatteredCollectibles[i].OptionsPickupIndex = collectible.OptionsPickupIndex
+            elseif i == 2 then
                 if collectible.OptionsPickupIndex > 0 then
-                    shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
+                    shatteredCollectibles[i].OptionsPickupIndex = collectible.OptionsPickupIndex + 1
                 else
-                    shatteredCollectible.OptionsPickupIndex = 0
+                    shatteredCollectibles[i].OptionsPickupIndex = 0
                 end
             end
 
-            PlaySplitAnimation(i, shatteredCollectible, colors[1], colors[2])
+            PlaySplitAnimation(i, shatteredCollectibles[i], colors[1], colors[2])
 
-            if shatteredCollectible and collectible:IsShopItem() then
-                shatteredCollectible.AutoUpdatePrice = false
+            if shatteredCollectibles[i] and collectible:IsShopItem() then
+                shatteredCollectibles[i].AutoUpdatePrice = false
 
                 if collectible.Price == PickupPrice.PRICE_THREE_SOULHEARTS then
-                    shatteredCollectible.Price = PickupPrice.PRICE_TWO_SOUL_HEARTS
+                    shatteredCollectibles[i].Price = PickupPrice.PRICE_TWO_SOUL_HEARTS
 
                 elseif collectible.Price == PickupPrice.PRICE_ONE_SOUL_HEART
                 or collectible.Price == PickupPrice.PRICE_TWO_SOUL_HEARTS then
-                    shatteredCollectible.Price = PickupPrice.PRICE_ONE_SOUL_HEART
+                    shatteredCollectibles[i].Price = PickupPrice.PRICE_ONE_SOUL_HEART
 
                 elseif collectible.Price == PickupPrice.PRICE_ONE_HEART_AND_TWO_SOULHEARTS
                 or collectible.Price == PickupPrice.PRICE_TWO_HEARTS
                 or collectible.Price == PickupPrice.PRICE_ONE_HEART_AND_ONE_SOUL_HEART
                 or collectible.Price == PickupPrice.PRICE_ONE_HEART then
-                    shatteredCollectible.Price = PickupPrice.PRICE_ONE_HEART
+                    shatteredCollectibles[i].Price = PickupPrice.PRICE_ONE_HEART
                 
                 else
-                    shatteredCollectible.Price = math.floor(collectible.Price / 2)
+                    shatteredCollectibles[i].Price = math.floor(collectible.Price / 2)
                 end
             end
         end
@@ -231,28 +233,29 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
         end
         utility:RecycleCollectible(collectible.Position, player, roomType, itemPool, seed, rng, false, pickupAmount)
     else
-        for idx = 0, 1 do
+        for idx = 1, 2 do
             local spawnPosition = GetSplitPosition(idx, 1, 2, collectible)
             ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(
+            shatteredCollectibles[idx] = Isaac.Spawn(
                 EntityType.ENTITY_PICKUP,
                 PickupVariant.PICKUP_COLLECTIBLE,
-                forceItems[idx + 1],
+                forceItems[idx],
                 spawnPosition,
                 Vector.Zero,
                 nil
             ):ToPickup()
     
-            if idx == 0 then
-                shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
-            elseif idx == 1 then
+            if idx == 1 then
+                shatteredCollectibles[idx].OptionsPickupIndex = collectible.OptionsPickupIndex
+            elseif idx == 2 then
                 if collectible.OptionsPickupIndex > 0 then
-                    shatteredCollectible.OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
+                    shatteredCollectibles[idx].OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
                 end
             end
-            PlaySplitAnimation(idx, shatteredCollectible, colors[1], colors[2])
+            PlaySplitAnimation(idx, shatteredCollectibles[idx], colors[1], colors[2])
         end
     end
+    return shatteredCollectibles
 end
 
 --- Spawns a collectible but only allows you to modify the SubType and position

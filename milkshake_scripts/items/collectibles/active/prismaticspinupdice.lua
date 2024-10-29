@@ -1,10 +1,18 @@
 local PrismaticSpinupDice = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local SCHEDULE_FRAMES = 2
 local SPLIT_COLOR_FRAMES = 2
 local COLOR_ALPHA = 0.5
 local WHITE = Color(1, 1, 1, 1, 255, 255, 255)
+
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "CosineCollectibles",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_RUN
+)
 
 ---Returns Cos(x), scaling by the number of collectibles, then rounded up
 ---@param num number
@@ -57,9 +65,119 @@ function PrismaticSpinupDice:UseItem(_, rng, player, useFlags)
                 {colorTwo, colorTwoTrans}
             }
 
-            MilkshakeVol1.API:SplitCollectible(player, collectible, -1, nil, forcedCollectibles, colors)
+            local splitCollectibles = MilkshakeVol1.API:SplitCollectible(
+                player,
+                collectible,
+                -1,
+                nil,
+                forcedCollectibles,
+                colors
+            )
+
+            local cosineCollectibles = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "CosineCollectibles")
+
+            for _, currentCollectible in pairs(splitCollectibles) do
+                local pickupIndex = TSIL.Pickups.GetPickupIndex(currentCollectible)
+                table.insert(cosineCollectibles, pickupIndex)
+            end
+
+            if not splitCollectibles then
+                return
+            end
+
+            utility:SetData(
+                splitCollectibles[1],
+                "CosineCollectible",
+                true
+            )
+
+            utility:SetData(
+                splitCollectibles[2],
+                "CosineCollectible",
+                false
+            )
+
+            utility:SetData(
+                splitCollectibles[2],
+                "CosineCollectibleTwin",
+                splitCollectibles[1]
+            )
         end, SCHEDULE_FRAMES)
     end
     return true
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, PrismaticSpinupDice.UseItem, enums.Collectibles.PRISMATIC_SPINUP_DICE)
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_USE_ITEM,
+    PrismaticSpinupDice.UseItem,
+    enums.Collectibles.PRISMATIC_SPINUP_DICE
+)
+
+---@param pickup EntityPickup
+---@param collider Entity
+function PrismaticSpinupDice:PrePickupCollision(pickup, collider)
+    local player = collider:ToPlayer()
+
+    if not collider then
+        return
+    end
+
+    if utility:GetData(pickup, "CosineCollectible") == false then
+        local correctPickup = utility:GetData(pickup, "CosineCollectibleTwin")
+
+        if not correctPickup then
+            return
+        end
+
+        for _, currentPickup in pairs({pickup, correctPickup}) do
+            currentPickup:Remove()
+            TSIL.EntitySpecific.SpawnEffect(
+                EffectVariant.POOF01,
+                0,
+                currentPickup.Position,
+                Vector.Zero,
+                pickup
+            )
+        end
+
+        player:AnimateSad()
+        return true
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_PRE_PICKUP_COLLISION,
+    PrismaticSpinupDice.PrePickupCollision
+)
+
+local function RemoveAllCosineDiceCollectibles()
+    local cosineCollectibles = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "CosineCollectibles")
+
+    if not cosineCollectibles then
+        return
+    end
+
+    local collectibles = TSIL.PickupSpecific.GetCollectibles()
+
+    for _, currentCollectible in pairs(collectibles) do
+        local pickupIndex = tonumber(TSIL.Pickups.GetPickupIndex(currentCollectible))
+        if TSIL.Utils.Tables.IsIn(cosineCollectibles, pickupIndex) then
+            currentCollectible:Remove()
+        end
+    end
+    cosineCollectibles = {}
+end
+
+function PrismaticSpinupDice:PostNewRoom()
+    RemoveAllCosineDiceCollectibles()
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_NEW_ROOM,
+    PrismaticSpinupDice.PostNewRoom
+)
+
+function PrismaticSpinupDice:PreGameExit()
+    RemoveAllCosineDiceCollectibles()
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_PRE_GAME_EXIT,
+    PrismaticSpinupDice.PreGameExit
+)
