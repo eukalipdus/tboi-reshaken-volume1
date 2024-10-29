@@ -156,3 +156,63 @@ function fingore:FingerUpdate(familiar)
 	end
 end
 mod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, fingore.FingerUpdate, fingore.finger)
+
+local fingoreCollectiblesInRoom = {}
+
+---Gets the location of a stored ptrHash in the table fingoreCollectiblesInRoom
+---@param ptrHash integer
+---@return unknown
+local function FindFingoreKey(ptrHash)
+	for key, storedPtrHash in pairs(fingoreCollectiblesInRoom) do
+		if ptrHash == storedPtrHash then
+			return key
+		end
+	end
+	return -1
+end
+
+---Displays an easter egg message using a random player's name
+---@param rng RNG
+local function FingoreHiddenMessage(rng)
+	local players = TSIL.Players.GetPlayers()
+	local randomPlayer = TSIL.Random.GetRandomElementsFromTable(players, 1, rng)
+	local chosenName = randomPlayer[1]:GetName()
+	Game():GetHUD():ShowFortuneText(
+		"You cannot",
+		"ignore me",
+		"forever, " .. chosenName
+	)
+end
+
+---@param pickup EntityPickup
+function fingore:PostPickupInit(pickup)
+	local ptrHash = GetPtrHash(pickup)--TSIL.Collectibles.GetCollectibleIndex(pickup)
+	if pickup.SubType == enums.Collectibles.FINGORE then
+		table.insert(fingoreCollectiblesInRoom, ptrHash)
+
+	elseif TSIL.Utils.Tables.IsIn(fingoreCollectiblesInRoom, ptrHash) then
+		local tableKey = FindFingoreKey(ptrHash)
+		if tableKey ~= -1 then
+			table.remove(fingoreCollectiblesInRoom, tableKey)
+		end
+		FingoreHiddenMessage(pickup:GetDropRNG())
+	end
+end
+MilkshakeVol1:AddCallback(
+	ModCallbacks.MC_POST_PICKUP_INIT,
+	fingore.PostPickupInit,
+	PickupVariant.PICKUP_COLLECTIBLE
+)
+
+---@param pickup Entity
+function fingore:PostEntityRemove(pickup)
+	if pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE
+	and pickup.SubType == enums.Collectibles.FINGORE then
+		FingoreHiddenMessage(pickup:GetDropRNG())
+	end
+end
+MilkshakeVol1:AddCallback(
+	ModCallbacks.MC_POST_ENTITY_REMOVE,
+	fingore.PostEntityRemove,
+	EntityType.ENTITY_PICKUP
+)
