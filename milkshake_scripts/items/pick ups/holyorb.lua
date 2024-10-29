@@ -5,6 +5,7 @@ local utility = MilkshakeVol1.utility
 local LASER_DURATION = 60
 
 --Extra measure for catching rocks on edges of lasers.
+local ROCK_SEARCH_POSITION_STEP = 40
 local ROCK_SEARCH_RANGE = 15
 local ROCK_SEARCH_ANGLE_STEP = 45
 
@@ -89,9 +90,13 @@ function HolyOrb:BeamCollision(laser)
 
     -- check for collisions by getting the samples of a laser
     -- dont let the method name spook you. this is the only way.
-    local samples = laser:GetNonOptimizedSamples()
-    for i = 0, #samples - 1 do
-        local point = samples:Get(i)
+    local samples = laser:GetSamples()
+    local startPos = samples:Get(0)
+    local endPos = samples:Get(#samples-1)
+    local step = (endPos-startPos):Resized(ROCK_SEARCH_POSITION_STEP)
+    local stepCount = math.ceil((endPos-startPos):Length()/ROCK_SEARCH_POSITION_STEP)
+    for i = 0, stepCount do
+        local point = startPos + (step*i)
         DestroyGridAtPosition(point, laser)
         for angle = 0, 360, ROCK_SEARCH_ANGLE_STEP do
             local pointOffset = Vector.One:Rotated(angle) * ROCK_SEARCH_RANGE
