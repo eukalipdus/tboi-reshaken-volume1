@@ -29,6 +29,11 @@ local nonPlayerColliders = {
         SubType = -1
     },
     {
+        Type = EntityType.ENTITY_FAMILIAR,
+        Variant = FamiliarVariant.SUPER_BUM,
+        SubType = -1
+    },
+    {
         Type = EntityType.ENTITY_ULTRA_GREED,
         Variant = -1,
         SubType = -1
