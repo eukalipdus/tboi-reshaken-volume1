@@ -257,7 +257,7 @@ function potOfGold:PrePickupCollision(pickup, collider)
     if IsRainbowPenny(pickup)
     and not pickup:IsShopItem()
     and CanPickupRainbowPenny(collider) then
-            pickup.SubType = CoinSubType.COIN_PENNY
+        pickup.SubType = CoinSubType.COIN_PENNY
     else
         local player = collider:ToPlayer()
         if not player
