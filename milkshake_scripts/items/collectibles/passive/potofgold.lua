@@ -204,7 +204,8 @@ function potOfGold:PrePickupCollision(pickup, collider)
         local player = collider:ToPlayer()
         if not player
         or player:GetNumCoins() < pickup.Price
-        or player.Variant ~= 0 then
+        or player.Variant ~= 0
+        or player:IsHoldingItem() then
             return true
         end
 
