@@ -205,7 +205,7 @@ function potOfGold:PrePickupCollision(pickup, collider)
         if not player
         or player:GetNumCoins() < pickup.Price
         or player.Variant ~= 0 then
-            return
+            return true
         end
 
         local rainbowPenny = TSIL.Utils.Tables.FindFirst(rainbowPennies, function (_, rainbowPenny)
