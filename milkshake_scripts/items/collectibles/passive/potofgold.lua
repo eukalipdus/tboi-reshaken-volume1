@@ -202,8 +202,11 @@ function potOfGold:PrePickupCollision(pickup, collider)
             pickup.SubType = CoinSubType.COIN_PENNY
     else
         local player = collider:ToPlayer()
-        if not player then return end
-        if player:GetNumCoins() < pickup.Price then return end
+        if not player
+        or player:GetNumCoins() < pickup.Price
+        or player.Variant ~= 0 then
+            return
+        end
 
         local rainbowPenny = TSIL.Utils.Tables.FindFirst(rainbowPennies, function (_, rainbowPenny)
             return rainbowPenny.variant == pickup.Variant and rainbowPenny.subtype == pickup.SubType
