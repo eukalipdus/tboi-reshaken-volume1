@@ -226,3 +226,15 @@ MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max)
     max float - The maximum for the multipliers
 
 --------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API.AddEntityCanCollideRainbowPenny(type, ?variant, ?subtype)
+* Defined in line 79 of milkshake_scripts/items/collectibles/passive/potofgold.lua
+
+    Allows an entity to collide with Rainbow Pennies. Useful for entities like Bum Friend or Ultra Greed who
+    can pick up coins.
+
+    type EntityType
+    ?variant number : -1
+    ?subtype number : -1
+
+--------------------------------------------------------------------------------------------------------------------------------------
