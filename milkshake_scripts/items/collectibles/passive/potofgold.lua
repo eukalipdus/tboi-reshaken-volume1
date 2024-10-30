@@ -72,6 +72,29 @@ if FiendFolio then
     )
 end
 
+---Allows an entity to collide with Rainbow Pennies
+---@param type EntityType
+---@param variant integer? @Default: -1
+---@param subtype integer? @Default: -1
+function MilkshakeVol1.API.AddEntityCanCollideRainbowPenny(type, variant, subtype)
+    if variant == nil then
+        variant = -1
+    end
+
+    if subtype == nil then
+        subtype = -1
+    end
+
+    table.insert(
+        nonPlayerColliders,
+        {
+            Type = type,
+            Variant = variant,
+            SubType = subtype
+        }
+    )
+end
+
 ---Checks if a specified entity is in nonPlayerColliders
 ---@param entity Entity
 ---@return boolean
