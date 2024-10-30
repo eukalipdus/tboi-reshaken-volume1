@@ -215,12 +215,12 @@ function potOfGold:PrePickupCollision(pickup, collider)
 
         if not rainbowPenny then return end
 
-        rainbowPenny.onPickup(pickup, player)
-
         pickup:Die()
-
         MilkshakeVol1.utility:SetData(pickup, "IsRainbowPenny", true)
         pickup.SubType = CoinSubType.COIN_PENNY
+
+        -- NOTE: This should be changed to RunInFramesTemporary once the TSIL bug involving it is fixed
+        TSIL.Utils.Functions.RunInFrames(rainbowPenny.onPickup, 1, pickup, player)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.PrePickupCollision)
