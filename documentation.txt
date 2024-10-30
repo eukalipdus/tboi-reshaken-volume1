@@ -205,7 +205,7 @@ MilkshakeVol1.API:HasAnyUnbrokenMirror(EntityPlayer player)
 --------------------------------------------------------------------------------------------------------------------------------------
 
 MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(EntityPickup pickup, number chance, boolean isNatural)
-* Defined in line 119 of milkshake_scripts/items/collectibles/familiars/potofgold.lua
+* Defined in line 119 of milkshake_scripts/items/collectibles/passive/potofgold.lua
 
     Tells if a given pickup can be converted to a Rainbow Penny.
 
@@ -216,7 +216,7 @@ MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(EntityPickup pickup, number c
 --------------------------------------------------------------------------------------------------------------------------------------
 
 MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max)
-* Defined in line 24 of milkshake_scripts/items/collectibles/familiars/milkshake.lua
+* Defined in line 24 of milkshake_scripts/items/collectibles/passive/milkshake.lua
 
     Gets a set of stat multipliers. Used for Milkshake and Water With Food Coloring
 
