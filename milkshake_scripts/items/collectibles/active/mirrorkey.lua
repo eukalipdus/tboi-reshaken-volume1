@@ -556,10 +556,17 @@ function MirrorKey:OnNewRoom()
             "IsInMirrorRoom",
             false
         )
- 
-        local currentRoomType = Game():GetRoom():GetType()
-        if currentRoomType == RoomType.ROOM_DEVIL
-        or currentRoomType == RoomType.ROOM_ANGEL then
+
+        local room = Game():GetRoom()
+        local doorCount = 0
+
+        for slot = 1, DoorSlot.NUM_DOOR_SLOTS do
+            if room:GetDoor(slot) ~= nil then
+                doorCount = doorCount + 1
+            end
+        end
+
+        if doorCount == 0 then
             local doors = TSIL.Doors.GetDoors()
             local prevRoomIndex = TSIL.SaveManager.GetPersistentVariable(
                 MilkshakeVol1,
