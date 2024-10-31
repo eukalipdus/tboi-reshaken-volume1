@@ -12,12 +12,12 @@ fingore.baitDuration = 10*30
 fingore.boredTimeout = 10*30
 fingore.orbit = 40 -- 1 tile
 fingore.innerorbit = 20
-fingore.distance = 80 -- head distance
+fingore.distance = 60 -- head distance
 fingore.innerdistance = 40
 fingore.cooldown = 30 * 5 -- 5 seconds
 fingore.delayFrames = 60
 fingore.velocity = 0.9
-fingore.speed = 0.5
+fingore.speed = 20
 fingore.knockPower = 10
 
 -- fingore -  entering new room: spawn at the room center
@@ -86,6 +86,7 @@ function fingore:FingerUpdate(familiar)
 	local data = familiar:GetData()
 	local player = familiar.Player
 	local parent = familiar.Parent
+	local rng = familiar:GetDropRNG()
 
 	-- remove if no head
 	if not parent then
@@ -150,7 +151,7 @@ function fingore:FingerUpdate(familiar)
 			if #enemies > 0 then
 				local target = enemies[rng:RandomInt(#enemies)+1]
 				if target and target:IsVulnerableEnemy() then --- (would be funny to target any enemy lol)
-					finger.Target = target
+					familiar.Target = target
 				end
 			end
 		end
@@ -159,7 +160,10 @@ function fingore:FingerUpdate(familiar)
 	-- move randomly, speed multiplied
 	--familiar:GetPathFinder():MoveRandomly(true)
 	local pos = game:GetRoom():GetRandomPosition(0)
-	familiar:FollowPosition(pos)
+	if familiar.Velocity:Length() < 0.01 then
+		familiar:FollowPosition(pos)
+		familiar.Velocity = familiar.Velocity:Normalized()*fingore.speed
+	end
 	familiar.Velocity = familiar.Velocity*fingore.velocity
 
 	-- flip finger direction regarding own velocity
