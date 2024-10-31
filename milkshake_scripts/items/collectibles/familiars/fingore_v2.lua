@@ -8,7 +8,8 @@ fingore.item = enums.Collectibles.FINGORE
 fingore.head = enums.Familiars.FINGORE_HEAD
 fingore.finger = enums.Familiars.FINGORE_FINGER
 fingore.detect = 5000
-fingore.baitDuration = 62
+fingore.baitDuration = 10*30
+fingore.boredTimeout = 10*30
 fingore.orbit = 40 -- 1 tile
 fingore.innerorbit = 20
 fingore.distance = 80 -- head distance
@@ -37,15 +38,11 @@ function fingore:EvaluateCache(player)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, fingore.EvaluateCache, CacheFlag.CACHE_FAMILIARS)
 
---[[
 function fingore:FamiliarInit(familiar)
-	-- spawn finger?
-	--local data = familiar:GetData()
-	-- res
-	familiar.Velocity = Vector.Zero
+	local data = familiar:GetData()
+	data.bored = 0
 end
-mod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, fingore.FamiliarInit, fingore.head)
---]]
+mod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, fingore.FamiliarInit, fingore.finger)
 
 function fingore:HeadUpdate(familiar)
 	local player = familiar.Player
@@ -76,87 +73,100 @@ function fingore:HeadUpdate(familiar)
 		--if targetVel.X ~= 0 then familiar.FlipX = targetVel.X < 0 end
 		familiar.FlipX = familiar.Position.X > targetPos.X
 	else
-		-- logic if not following finger
-		-- flip head direction regarding own velocity
-		if familiar.Velocity.X ~= 0 then familiar.FlipX = familiar.Velocity.X < 0 end
-
-		-- cooldown between targeting new enemy
-		if data.cooldown then
-			if data.cooldown > 0 then
-				data.cooldown = data.cooldown - 1
-			else
-				data.cooldown = nil
-			end
-		else
-			--familiar.PickEnemyTarget(fingore.detect, 13, 16, Vector.Zero, 0) -- idk if it gets familiar.Target
-			--return
-			--[
-			-- get target and spawn finger
-			local enemies = Isaac.FindInRadius(familiar.Position, fingore.detect, EntityPartition.ENEMY)
-			if #enemies > 0 then
-				local target = enemies[rng:RandomInt(#enemies)+1]
-				if target and target:IsVulnerableEnemy() then
-					local finger = Isaac.Spawn(3, fingore.finger, 0, familiar.Position, Vector.Zero, player)
-					finger.Parent = familiar
-					finger.Target = target
-					familiar.Target = finger
-					return
-				end
-			end
-			--]
-		end
-		-- move randomly, speed multiplied
-		familiar:GetPathFinder():MoveRandomly(true)
-		familiar.Velocity = familiar.Velocity*fingore.velocity
+		-- spawn finger if no finger
+		local finger = Isaac.Spawn(3, fingore.finger, 0, familiar.Position, Vector.Zero, player)
+		finger.Parent = familiar
+		familiar.Target = finger
 	end
 end
 mod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, fingore.HeadUpdate, fingore.head)
 
 function fingore:FingerUpdate(familiar)
 	-- line between head and enemy (TODO)
+	local data = familiar:GetData()
 	local player = familiar.Player
 	local parent = familiar.Parent
 
+	-- remove if no head
 	if not parent then
 		familiar:Remove()
 	end
 
-	if familiar.Target then
-		-- get target npc
-		local target = familiar.Target
-		local targetPos = target.Position
-
-		-- flip head direction regarding npc positiop
-		familiar.FlipX = familiar.Position.X > targetPos.X
-
-		-- follow it's finger in some distance
-		if (familiar.Position - targetPos):Length() > fingore.orbit then
-			familiar:FollowPosition(targetPos)
+	-- cooldown between targeting new enemy
+	if data.cooldown then
+		if data.cooldown > 0 then
+			data.cooldown = data.cooldown - 1
 		else
-			-- get if npc has baited status, if not - add
-			if not target:HasEntityFlags(EntityFlag.FLAG_BAITED) then
-				target:AddBaited(EntityRef(player), fingore.baitDuration)
-			end
-			-- follow npc position at some distance
-			if (familiar.Position - targetPos):Length() <= fingore.innerorbit then
-				local vel = (familiar.Position - targetPos):Normalized(fingore.knockPower)
-				familiar:AddVelocity(vel)
-			else
-				-- speed multiplied
-				familiar.Velocity = familiar.Velocity*fingore.velocity
-			end
+			data.cooldown = nil
 		end
 	else
-		-- set cooldown to targeting next enemy
-		parent:GetData().cooldown = fingore.cooldown
-		-- reset target entity
-		parent.Target = nil
-		-- remove finger
-		familiar:Remove()
+		-- get target if not bored
+		-- if has enemy to follow
+		if familiar.Target then
+			local target = familiar.Target
+			local targetPos = target.Position
+			familiar.FlipX = familiar.Position.X > targetPos.X
+			-- follow target
+			if (familiar.Position - targetPos):Length() > fingore.orbit then
+				familiar:FollowPosition(targetPos)
+			else
+				-- get if npc has baited status, if not - add
+				if not target:HasEntityFlags(EntityFlag.FLAG_BAITED) then
+					target:AddEntityFlags(EntityFlag.FLAG_BAITED)-- fingore.baitDuration)
+					-- set bored timeout to stop targeting enemy
+					data.bored = fingore.boredTimeout
+				end
+				-- follow npc position at some distance
+				if (familiar.Position - targetPos):Length() <= fingore.innerorbit then
+					local vel = (familiar.Position - targetPos):Normalized(fingore.knockPower)
+					familiar:AddVelocity(vel)
+				else
+					-- speed multiplied
+					familiar.Velocity = familiar.Velocity*fingore.velocity
+				end
+			end
+			-- gets bored after timeout
+			if data.bored then
+				data.bored = data.bored - 1
+				if data.bored <= 0 then
+					data.bored = nil
+					data.cooldown = fingore.cooldown
+					target:ClearEntityFlags(EntityFlag.FLAG_BAITED)
+					familiar.Target = nil
+				end
+			end
+			-- prevents randomly moving logic
+			return
+		else
+			-- if enemy died before fingore getting bored
+			if data.bored then
+				data.bored = nil
+				data.cooldown = fingore.cooldown
+				familiar.Target = nil
+				return
+			end
+			-- get target enemy
+			local enemies = Isaac.FindInRadius(familiar.Position, fingore.detect, EntityPartition.ENEMY)
+			if #enemies > 0 then
+				local target = enemies[rng:RandomInt(#enemies)+1]
+				if target and target:IsVulnerableEnemy() then --- (would be funny to target any enemy lol)
+					finger.Target = target
+				end
+			end
+		end
 	end
+
+	-- move randomly, speed multiplied
+	familiar:GetPathFinder():MoveRandomly(true)
+	familiar.Velocity = familiar.Velocity*fingore.velocity
+
+	-- flip finger direction regarding own velocity
+	if familiar.Velocity.X ~= 0 then familiar.FlipX = familiar.Velocity.X < 0 end
 end
 mod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, fingore.FingerUpdate, fingore.finger)
 
+
+--- EASTER EGG
 local fingoreCollectiblesInRoom = {}
 
 ---Gets the location of a stored ptrHash in the table fingoreCollectiblesInRoom
