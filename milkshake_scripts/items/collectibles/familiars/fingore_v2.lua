@@ -72,6 +72,7 @@ function fingore:HeadUpdate(familiar)
 		-- flip head direction regarding finger position
 		--if targetVel.X ~= 0 then familiar.FlipX = targetVel.X < 0 end
 		familiar.FlipX = familiar.Position.X > targetPos.X
+		-- rotate based on direction?
 	else
 		-- spawn finger if no finger
 		local finger = Isaac.Spawn(3, fingore.finger, 0, familiar.Position, Vector.Zero, player)
@@ -159,8 +160,8 @@ function fingore:FingerUpdate(familiar)
 
 	-- move randomly, speed multiplied
 	--familiar:GetPathFinder():MoveRandomly(true)
-	local pos = game:GetRoom():GetRandomPosition(0)
 	if familiar.Velocity:Length() < 0.01 then
+		local pos = game:GetRoom():GetRandomPosition(0)
 		familiar:FollowPosition(pos)
 		familiar.Velocity = familiar.Velocity:Normalized()*fingore.speed
 	end
