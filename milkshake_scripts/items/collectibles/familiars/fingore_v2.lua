@@ -157,7 +157,9 @@ function fingore:FingerUpdate(familiar)
 	end
 
 	-- move randomly, speed multiplied
-	familiar:GetPathFinder():MoveRandomly(true)
+	--familiar:GetPathFinder():MoveRandomly(true)
+	local pos = game:GetRoom():GetRandomPosition(0)
+	familiar:FollowPosition(pos)
 	familiar.Velocity = familiar.Velocity*fingore.velocity
 
 	-- flip finger direction regarding own velocity
