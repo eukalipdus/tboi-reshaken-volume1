@@ -9,11 +9,11 @@ fingore.head = enums.Familiars.FINGORE_HEAD
 fingore.finger = enums.Familiars.FINGORE_FINGER
 fingore.detect = 5000
 fingore.baitDuration = 10*30
-fingore.boredTimeout = 10*30
-fingore.orbit = 40 -- 1 tile
-fingore.innerorbit = 20
-fingore.distance = 60 -- head distance
-fingore.innerdistance = 40
+fingore.boredTimeout = 10000*30
+fingore.orbit = 60 -- 1 tile
+fingore.innerorbit = 40
+fingore.distance = 40 -- head distance
+fingore.innerdistance = 20
 fingore.cooldown = 30 * 5 -- 5 seconds
 fingore.delayFrames = 60
 fingore.velocity = 0.9
@@ -46,14 +46,14 @@ mod:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, fingore.FamiliarInit, fingore.fin
 
 function fingore:HeadUpdate(familiar)
 	local player = familiar.Player
-	local data = familiar:GetData()
-	local rng = familiar:GetDropRNG()
+	--local data = familiar:GetData()
+	--local rng = familiar:GetDropRNG()
 
 	-- if familiar has target (finger)
 	if familiar.Target then
 		-- get finger position and velocity
 		local targetPos = familiar.Target.Position
-		local targetVel = familiar.Target.Velocity
+		--local targetVel = familiar.Target.Velocity
 		local vector3 = (familiar.Position - targetPos)
 		-- follow it's finger at some distance
 		if vector3:Length() > fingore.distance then
@@ -71,8 +71,13 @@ function fingore:HeadUpdate(familiar)
 
 		-- flip head direction regarding finger position
 		--if targetVel.X ~= 0 then familiar.FlipX = targetVel.X < 0 end
-		familiar.FlipX = familiar.Position.X > targetPos.X
-		-- rotate based on direction?
+        --if familiar.Target.Target then
+        --
+        --else
+        --    familiar.FlipX = familiar.Position.X > targetPos.X
+        --end
+        familiar.FlipX = familiar.Target.FlipX
+
 	else
 		-- spawn finger if no finger
 		local finger = Isaac.Spawn(3, fingore.finger, 0, familiar.Position, Vector.Zero, player)
@@ -85,7 +90,7 @@ mod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, fingore.HeadUpdate, fingore.hea
 function fingore:FingerUpdate(familiar)
 	-- line between head and enemy (TODO)
 	local data = familiar:GetData()
-	local player = familiar.Player
+	--local player = familiar.Player
 	local parent = familiar.Parent
 	local rng = familiar:GetDropRNG()
 
@@ -130,13 +135,18 @@ function fingore:FingerUpdate(familiar)
 			end
 
 			local angle = (targetPos-familiar.Position):GetAngleDegrees()
-			print(angle)
+            if angle > 90 or angle < -90 then
+                angle = 180 - angle
+            end
+			--if angle >= 3 * math.pi / 4 and angle < 5 * math.pi / 4 then
+			--	familiar.FlipX = familiar.Position.X > targetPos.X
+			--end
 
-			familiar.SpriteRotation = angle
-			if angle >= 3 * math.pi / 4 and angle < 5 * math.pi / 4 then
-				familiar.FlipX = familiar.Position.X > targetPos.X
-			end
-			--familiar.FlipX = familiar.Position.X > targetPos.X
+            familiar.FlipX = familiar.Position.X > targetPos.X
+
+            familiar.SpriteRotation = angle
+
+
 
 			-- gets bored after timeout
 			if data.bored then
@@ -151,9 +161,6 @@ function fingore:FingerUpdate(familiar)
 			-- prevents randomly moving logic
 			return
 		else
-			if familiar.SpriteRotation ~= 90 then -- huh
-				familiar.SpriteRotation = 90
-			end
 			-- if enemy died before fingore getting bored
 			if data.bored then
 				data.bored = nil
@@ -182,6 +189,11 @@ function fingore:FingerUpdate(familiar)
 	familiar.Velocity = familiar.Velocity*fingore.velocity
 
 	-- flip finger direction regarding own velocity
+
+    if familiar.SpriteRotation ~= 0 then -- huh
+        familiar.SpriteRotation = 0
+    end
+
 	if familiar.Velocity.X ~= 0 then familiar.FlipX = familiar.Velocity.X < 0 end
 end
 mod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, fingore.FingerUpdate, fingore.finger)
