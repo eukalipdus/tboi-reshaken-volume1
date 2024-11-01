@@ -133,9 +133,10 @@ function fingore:FingerUpdate(familiar)
 			print(angle)
 
 			familiar.SpriteRotation = angle
-			if angle < 3 * math.pi / 4 and angle >= 5 * math.pi / 4 then
+			if angle >= 3 * math.pi / 4 and angle < 5 * math.pi / 4 then
 				familiar.FlipX = familiar.Position.X > targetPos.X
 			end
+			--familiar.FlipX = familiar.Position.X > targetPos.X
 
 			-- gets bored after timeout
 			if data.bored then
