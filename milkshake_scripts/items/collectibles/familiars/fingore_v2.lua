@@ -54,15 +54,15 @@ function fingore:HeadUpdate(familiar)
 		-- get finger position and velocity
 		local targetPos = familiar.Target.Position
 		local targetVel = familiar.Target.Velocity
-
+		local vector3 = (familiar.Position - targetPos)
 		-- follow it's finger at some distance
-		if (familiar.Position - targetPos):Length() > fingore.distance then
+		if vector3:Length() > fingore.distance then
 			familiar:FollowPosition(targetPos)
 		else
 			-- if passed some distance, stop following
 			-- move back if head gets too close to finger (TODO)
-			if (familiar.Position - targetPos):Length() < fingore.innerdistance then
-				local vel = (familiar.Position-targetPos):Normalized(fingore.knockPower)
+			if vector3:Length() < fingore.innerdistance then
+				local vel = vector3:Normalized(fingore.knockPower)
 				familiar:AddVelocity(vel)
 			end
 			-- velocity decrease, stoppping
@@ -107,9 +107,10 @@ function fingore:FingerUpdate(familiar)
 		if familiar.Target then
 			local target = familiar.Target
 			local targetPos = target.Position
+			local vector3 = (familiar.Position - targetPos)
 			familiar.FlipX = familiar.Position.X > targetPos.X
 			-- follow target
-			if (familiar.Position - targetPos):Length() > fingore.orbit then
+			if vector3:Length() > fingore.orbit then
 				familiar:FollowPosition(targetPos)
 			else
 				-- get if npc has baited status, if not - add
@@ -119,14 +120,18 @@ function fingore:FingerUpdate(familiar)
 					data.bored = fingore.boredTimeout
 				end
 				-- follow npc position at some distance
-				if (familiar.Position - targetPos):Length() <= fingore.innerorbit then
-					local vel = (familiar.Position - targetPos):Normalized(fingore.knockPower)
+				if vector3:Length() <= fingore.innerorbit then
+					local vel = vector3:Normalized(fingore.knockPower)
 					familiar:AddVelocity(vel)
 				else
 					-- speed multiplied
 					familiar.Velocity = familiar.Velocity*fingore.velocity
 				end
 			end
+
+			local angle = vector3:GetAngleDegrees()
+			familiar.SpriteRotation = angle
+
 			-- gets bored after timeout
 			if data.bored then
 				data.bored = data.bored - 1
