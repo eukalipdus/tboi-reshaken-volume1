@@ -129,7 +129,7 @@ function fingore:FingerUpdate(familiar)
 				end
 			end
 
-			local angle = vector3:GetAngleDegrees()
+			local angle = (targetPos-familiar.Position):GetAngleDegrees()
 			familiar.SpriteRotation = angle
 
 			-- gets bored after timeout
