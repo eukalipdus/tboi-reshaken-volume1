@@ -151,8 +151,8 @@ function fingore:FingerUpdate(familiar)
 			-- prevents randomly moving logic
 			return
 		else
-			if familiar.SpriteRotation > 0 then
-				familiar.SpriteRotation = 0
+			if familiar.SpriteRotation ~= 90 then -- huh
+				familiar.SpriteRotation = 90
 			end
 			-- if enemy died before fingore getting bored
 			if data.bored then
