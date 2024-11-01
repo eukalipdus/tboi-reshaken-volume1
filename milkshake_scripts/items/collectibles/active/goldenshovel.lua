@@ -294,13 +294,16 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPic
 
 ---@param rng RNG
 ---@param player EntityPlayer
-function goldenShovel:onUse(_, rng, player)
+function goldenShovel:onUse(_, rng, player, useFlags)
     if skipNextShovelUse then
         skipNextShovelUse = false
         return
     end
 
-    if not player then return end
+    if not player
+    or useFlags & UseFlag.USE_CARBATTERY ~= 0 then
+        return
+    end
 
     local shouldBelialSynergy = player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE)
     SpawnGoldEffects(player.Position, shouldBelialSynergy)
