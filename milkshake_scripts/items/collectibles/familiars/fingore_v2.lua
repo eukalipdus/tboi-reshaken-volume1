@@ -108,7 +108,7 @@ function fingore:FingerUpdate(familiar)
 			local target = familiar.Target
 			local targetPos = target.Position
 			local vector3 = (familiar.Position - targetPos)
-			familiar.FlipX = familiar.Position.X > targetPos.X
+
 			-- follow target
 			if vector3:Length() > fingore.orbit then
 				familiar:FollowPosition(targetPos)
@@ -130,7 +130,12 @@ function fingore:FingerUpdate(familiar)
 			end
 
 			local angle = (targetPos-familiar.Position):GetAngleDegrees()
+			print(angle)
+
 			familiar.SpriteRotation = angle
+			if angle < 3 * math.pi / 4 and angle >= 5 * math.pi / 4 then
+				familiar.FlipX = familiar.Position.X > targetPos.X
+			end
 
 			-- gets bored after timeout
 			if data.bored then
