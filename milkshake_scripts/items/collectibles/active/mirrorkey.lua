@@ -556,10 +556,10 @@ function MirrorKey:OnNewRoom()
             "IsInMirrorRoom",
             false
         )
- 
+
         local currentRoomType = Game():GetRoom():GetType()
-        if currentRoomType == RoomType.ROOM_DEVIL
-        or currentRoomType == RoomType.ROOM_ANGEL then
+        --if currentRoomType == RoomType.ROOM_DEVIL
+        --or currentRoomType == RoomType.ROOM_ANGEL then
             local doors = TSIL.Doors.GetDoors()
             local prevRoomIndex = TSIL.SaveManager.GetPersistentVariable(
                 MilkshakeVol1,
@@ -567,7 +567,7 @@ function MirrorKey:OnNewRoom()
             )
             TSIL.Doors.RemoveDoors(doors)
             SpawnFakeMirrorDoor(doors[1].Slot, prevRoomIndex, TSIL.Enums.Dimension.CURRENT, false)
-        end
+        --end
 
         SetMirrorShaderActive(false)
         Game():GetHUD():SetVisible(true)
