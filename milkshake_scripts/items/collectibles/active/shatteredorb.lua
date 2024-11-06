@@ -501,27 +501,33 @@ function ShatteredOrb:OnPlayerUpdate(player)
 
     if shootingDir == Direction.NO_DIRECTION then return end
 
+    ---@type ActiveSlot?
     local activeSlot = GetShatteredOrbActiveSlotFromPlayer(player)
-    if player:GetActiveItem(activeSlot) ~= enums.Collectibles.SHATTERED_ORB then
+    ---@diagnostic disable-next-line: cast-local-type
+    activeSlot = activeSlot > -1 and activeSlot
+
+    if activeSlot and player:GetActiveItem(activeSlot) ~= enums.Collectibles.SHATTERED_ORB then
         player:AnimateCollectible(enums.Collectibles.SHATTERED_ORB, "HideItem", "PlayerPickup")
         RemovePlayerUsingShatteredOrb(player)
         return
     end
 
-    local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
-    local newCharge = math.max(0, charge - 4)
+    if activeSlot then
+        local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
+        local newCharge = math.max(0, charge - 4)
 
-    if charge < 4 then
-        local chargeDiff = math.abs(charge - 4)
+        if charge < 4 then
+            local chargeDiff = math.abs(charge - 4)
 
-        if player:GetPlayerType() == PlayerType.PLAYER_BETHANY then
-            player:AddSoulCharge(-chargeDiff)
-        elseif player:GetPlayerType() == PlayerType.PLAYER_BETHANY_B then
-            player:AddBloodCharge(-chargeDiff)
+            if player:GetPlayerType() == PlayerType.PLAYER_BETHANY then
+                player:AddSoulCharge(-chargeDiff)
+            elseif player:GetPlayerType() == PlayerType.PLAYER_BETHANY_B then
+                player:AddBloodCharge(-chargeDiff)
+            end
         end
-    end
 
-    player:SetActiveCharge(newCharge, activeSlot)
+        player:SetActiveCharge(newCharge, activeSlot)
+    end
     player:PlayExtraAnimation("HideItem")
     RemovePlayerUsingShatteredOrb(player)
 
