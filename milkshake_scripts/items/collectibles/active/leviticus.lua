@@ -451,6 +451,19 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
 
     -- light:FollowParent(player)
 
+    local usedLeviticus = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "UsedLeviticus"
+    )
+    
+    if usedLeviticus == true then return true end
+
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "UsedLeviticus",
+        true
+    )
+
     local data = MilkshakeVol1:GetData(player, "LeviticusBeam")
 
     data.Used = true
