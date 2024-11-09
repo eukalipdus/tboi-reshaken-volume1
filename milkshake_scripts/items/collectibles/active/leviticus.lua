@@ -455,8 +455,14 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
         MilkshakeVol1,
         "UsedLeviticus"
     )
-    
-    if usedLeviticus == true then return true end
+
+    if usedLeviticus == true then 
+        return {
+            Discharge = false,
+            Remove = false,
+            ShowAnim = true,
+        } 
+    end
 
     TSIL.SaveManager.SetPersistentVariable(
         MilkshakeVol1,
