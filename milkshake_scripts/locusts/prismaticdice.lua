@@ -2,7 +2,7 @@ local prismaticDice = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local DOWNGRADE_CHANCE = 10
+local DOWNGRADE_CHANCE = 20
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0) -- Should move these colors to enums
@@ -23,6 +23,8 @@ local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
         Vector.Zero,
         baseEnemy
     )
+    local baseEnemyHPPercent = baseEnemy.HitPoints / baseEnemy.MaxHitPoints
+    newEnemy.HitPoints = baseEnemyHPPercent * newEnemy.MaxHitPoints
     local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, 0, 0, newEnemy.Position, Vector.Zero, player):ToTear()
     tear.TearFlags = tear.TearFlags | TearFlags.TEAR_REROLL_ENEMY
     newEnemy:SetColor(solidColor, SHATTERED_SOLID_FRAMES, PRIORITY, false, false)
