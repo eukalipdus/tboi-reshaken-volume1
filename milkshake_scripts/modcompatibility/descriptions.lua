@@ -464,7 +464,7 @@ descriptions.Collectibles = {
             "#Quality {{Quality0}} items are split into random pickups",
             book_of_virtues = "Middle ring wisp#Cannot shoot tears#Splits Isaac's tears into 4 {{Collectible528}} angelic prism tears",
             book_of_belial = "30% chance for split items to be {{DevilRoom}} Devil items",
-            abyss = "Large, fast, locust that has a 20% chance to split enemies into 2 weaker enemies on contact."
+            abyss = "Glowing pink locust that has a 20% chance to split enemies into 2 weaker enemies on contact."
         },
         spa = {
             name = "Dado Prismático",
