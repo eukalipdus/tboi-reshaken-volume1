@@ -165,7 +165,12 @@ function utility:GetCurrentChapter()
 
     if levelStage <= LevelStage.STAGE4_2 then
         ---@type number
-        local chapter = math.floor(levelStage / 2)
+        local chapter
+        if Game():IsGreedMode() then 
+            chapter = levelStage
+        else
+            chapter = math.ceil(levelStage / 2)
+        end
 
         if TSIL.Stage.OnRepentanceStage() then
             chapter = chapter + 0.5
