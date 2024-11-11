@@ -437,7 +437,7 @@ MilkshakeVol1:AddCallback(
 
 -- This is probably bad to do
 local LEVITICUS_ANGEL_ROOMS = {
-    29004,
+    29009,
     29005,
     29006,
     29007,
