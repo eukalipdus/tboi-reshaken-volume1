@@ -35,8 +35,8 @@ local GRID_DESTRUCTION_WHITELIST = TSIL.Utils.Tables.ConstructDictionaryFromTabl
 })
 
 local function getLaserDamagePerTick()
-    local stage = MilkshakeVol1.utility:GetCurrentChapter()
-    return 2.93 * math.max(math.ceil(stage / 2.5), 1)
+    local chapter = MilkshakeVol1.utility:GetCurrentChapter()
+    return 1 + (chapter)
 end
 
 ---@param player EntityPlayer
