@@ -6,6 +6,8 @@ local DSSModName = "Dead Sea Scrolls (Milkshake Vol1)"
 -- handle menu save data.
 local MenuProvider = {}
 
+local enums = MilkshakeVol1.enums
+
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
     "DSSMenuConfig",
@@ -313,7 +315,8 @@ local exampledirectory = {
 
             -- SPECIAL SETTINGS DEST
             { str = 'extra settings',    dest = 'special_settings' },
-        }
+            { str = 'unlocks',    dest = 'unlocks' },
+        },
     },
 
     enemy_settings = {
@@ -428,7 +431,7 @@ local exampledirectory = {
     special_settings = {
         title = "extra settings",
         buttons = {
-            {
+            --[[{
                 str = 'unlock all items',
                 tooltip = { strset = {
                      'do you', 'solemnly', 'swear you are',
@@ -438,7 +441,7 @@ local exampledirectory = {
                 changefunc = function ()
                     MilkshakeVol1.UnlockManager:UpdateAllAchievements(true)
                 end
-            },
+            },]]
             -- SANCHO MODE
             {
                 str = 'sancho mode',
@@ -535,6 +538,96 @@ local exampledirectory = {
             {str = "kiln was here", fsize = 2, nosel = true}
         }
     },
+    unlocks = {
+        title = 'unlocks',
+
+        buttons = {
+            -- Spirit of Order
+            {
+                str = "spirit of order",
+                setting = 1,
+                variable = "",
+                choices = {"locked", "unlocked"},
+                tooltip = {strset = { 'unlocked by',  'clearing', 'spirit sage' }},
+                load = function ()
+                    if MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.SPIRIT_OF_ORDER) then
+                        return 2
+                    else
+                        return 1
+                    end
+                end,
+                changefunc = function (button)
+                    if button.setting == 1 then
+                        MilkshakeVol1.UnlockManager:UpdateAchievement(
+                            enums.Achievements.SPIRIT_OF_ORDER,
+                            false
+                        )
+                    elseif button.setting == 2 then
+                        MilkshakeVol1.UnlockManager:UpdateAchievement(
+                            enums.Achievements.SPIRIT_OF_ORDER,
+                            true
+                        )
+                    end
+                end
+            },
+            -- Golden Cookie
+            {
+                str = "rainbow cookie",
+                setting = 1,
+                variable = "",
+                choices = {"locked", "unlocked"},
+                tooltip = {strset = { 'unlocked by',  'clearing', 'isaac clicker' }},
+                load = function ()
+                    if MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.GOLDEN_COOKIE) then
+                        return 2
+                    else
+                        return 1
+                    end
+                end,
+                changefunc = function (button)
+                    if button.setting == 1 then
+                        MilkshakeVol1.UnlockManager:UpdateAchievement(
+                            enums.Achievements.GOLDEN_COOKIE,
+                            false
+                        )
+                    elseif button.setting == 2 then
+                        MilkshakeVol1.UnlockManager:UpdateAchievement(
+                            enums.Achievements.GOLDEN_COOKIE,
+                            true
+                        )
+                    end
+                end
+            },
+            -- Chromatic Prism
+            {
+                str = "chromatic prism",
+                setting = 1,
+                variable = "",
+                choices = {"locked", "unlocked"},
+                tooltip = {strset = { 'unlocked by',  'clearing', 'world of', 'light' }},
+                load = function ()
+                    if MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.PRISMATIC_GOGGLES) then
+                        return 2
+                    else
+                        return 1
+                    end
+                end,
+                changefunc = function (button)
+                    if button.setting == 1 then
+                        MilkshakeVol1.UnlockManager:UpdateAchievement(
+                            enums.Achievements.PRISMATIC_GOGGLES,
+                            false
+                        )
+                    elseif button.setting == 2 then
+                        MilkshakeVol1.UnlockManager:UpdateAchievement(
+                            enums.Achievements.PRISMATIC_GOGGLES,
+                            true
+                        )
+                    end
+                end
+            },
+        },
+    }
 }
 
 local exampledirectorykey = {
