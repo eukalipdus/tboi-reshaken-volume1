@@ -200,7 +200,7 @@ enums.Hearts = {
 }
 
 enums.Slots = {
-    SPIRIT_KLIN_BRENDA = Isaac.GetEntityVariantByName("Spirit Klin Brenda")
+    SPIRIT_KLIN_BRENDA = Isaac.GetEntityVariantByName("Spirit Kiln Brenda")
 }
 
 enums.Coins = {

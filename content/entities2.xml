@@ -225,7 +225,7 @@
     </entity>
 
     <entity anm2path="spirit_klin_brenda.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0"
-    collisionMass="10" collisionRadius="12" friction="1" name="Spirit Klin Brenda"
+    collisionMass="10" collisionRadius="12" friction="1" name="Spirit Kiln Brenda"
     numGridCollisionPoints="24" shadowSize="33" stageHP="0" id="6" variant="504">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
     </entity>

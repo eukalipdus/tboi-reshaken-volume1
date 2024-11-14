@@ -14,5 +14,5 @@
     <card type="object" pickup="485" description="Controlled Chaos" name="Spirit Of Order" hud="Spirit Of Order" mimiccharge="6" />
     
     <!-- Tattered Page -->
-    <card type="special" pickup="473" description="Discarded Archive" name="Tattered Page" hud="Tattered Page" mimiccharge="3" />
+    <card type="special" pickup="473" description="Discarded Archive" name="Tattered Page" hud="Tattered Page" mimiccharge="4" />
 </pocketitems>
