@@ -67,6 +67,19 @@ local function TryGetCollectible(poolType, itemPool, forceQuality)
         end
     end
 
+    local treasurePool = GetProperPool(ItemPoolType.POOL_TREASURE)
+
+    for _ = 1, TIMES_CAN_FAIL do
+        antiRecursion = true
+        newCollectibleID = itemPool:GetCollectible(treasurePool, false)
+        antiRecursion = false
+
+        if Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == forceQuality then
+            finalCollectibleId = newCollectibleID
+            break
+        end
+    end
+
     itemPool:RemoveCollectible(finalCollectibleId)
 
     return finalCollectibleId
