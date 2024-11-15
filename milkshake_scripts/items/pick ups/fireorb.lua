@@ -256,6 +256,14 @@ function CheckExhaling(player)
 	local info = GetExhalingInfo(player)
 	if not info then return end
 
+	-- new room fire orb cancel
+	if Game():GetRoom():GetFrameCount() == 0 then
+		RemoveExhalingInfo(player)
+		player:TryRemoveNullCostume(enums.Costumes.INFERNO_ORB)
+		utility:SetBlindfold(player, false)
+		return
+	end
+
 	info.timer = info.timer - 1
 	if info.timer > 0 then return end
 
@@ -426,7 +434,7 @@ MilkshakeVol1:AddCallback(
 	EntityType.ENTITY_TEAR
 )
 
---[
+--[[
 function RubyOrb:OnNewRoomEarly()
 	for _, player in ipairs(TSIL.Players.GetPlayers()) do
 		if GetExhalingInfo(player) then
