@@ -24,6 +24,23 @@ local breakfastsByQuality = {
     enums.Collectibles.GOLDEN_BREAKFAST
 }
 
+local oneHeart = math.abs(PickupPrice.PRICE_ONE_HEART)
+local twoHearts = math.abs(PickupPrice.PRICE_TWO_HEARTS)
+local threeSoulHearts = math.abs(PickupPrice.PRICE_THREE_SOULHEARTS)
+local oneHeartTwoSoulHearts = math.abs(PickupPrice.PRICE_ONE_HEART_AND_TWO_SOULHEARTS)
+local oneSoulHeart = math.abs(PickupPrice.PRICE_ONE_SOUL_HEART)
+local twoSoulHearts = math.abs(PickupPrice.PRICE_TWO_SOUL_HEARTS)
+local oneHeartOneSoulHeart = math.abs(PickupPrice.PRICE_ONE_HEART_AND_ONE_SOUL_HEART)
+
+local heartPriceToHalf = {
+    [oneHeart] = oneHeart,
+    [twoHearts] = oneHeart,
+    [threeSoulHearts] = twoSoulHearts,
+    [oneHeartTwoSoulHearts] = oneHeartOneSoulHeart,
+    [oneSoulHeart] = oneSoulHeart,
+    [twoSoulHearts] = oneSoulHeart
+}
+
 local splitColors = {
     CYAN,
     PINK
@@ -47,6 +64,27 @@ local effectPerGodheadSplit = {
     },
 }
 
+---Returns the regular or greed version of an ItemPoolType
+---@param poolType ItemPoolType
+---@return ItemPoolType
+local function GetProperPool(poolType)
+    local isGreedMode = Game():IsGreedMode()
+
+    if not isGreedMode then
+        return poolType
+    end
+
+    if poolType == ItemPoolType.POOL_TREASURE then
+        return ItemPoolType.POOL_GREED_TREASURE
+
+    elseif poolType == poolType.POOL_DEVIL then
+        return poolType.POOL_GREED_DEVIL
+
+    else
+        return poolType
+    end
+end
+
 ---Attempts to find a collectible that satisfies the given pool and quality. Returns nil on failure
 ---@param poolType ItemPoolType
 ---@param itemPool ItemPool
@@ -67,43 +105,24 @@ local function TryGetCollectible(poolType, itemPool, forceQuality)
         end
     end
 
-    local treasurePool = GetProperPool(ItemPoolType.POOL_TREASURE)
+    if not finalCollectibleId then
+        local treasurePool = GetProperPool(ItemPoolType.POOL_TREASURE)
 
-    for _ = 1, TIMES_CAN_FAIL do
-        antiRecursion = true
-        newCollectibleID = itemPool:GetCollectible(treasurePool, false)
-        antiRecursion = false
+        for _ = 1, TIMES_CAN_FAIL do
+            antiRecursion = true
+            newCollectibleID = itemPool:GetCollectible(treasurePool, false)
+            antiRecursion = false
 
-        if Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == forceQuality then
-            finalCollectibleId = newCollectibleID
-            break
+            if Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == forceQuality then
+                finalCollectibleId = newCollectibleID
+                break
+            end
         end
     end
 
     itemPool:RemoveCollectible(finalCollectibleId)
 
     return finalCollectibleId
-end
-
----Returns the regular or greed version of an ItemPoolType
----@param poolType ItemPoolType
----@return ItemPoolType
-local function GetProperPool(poolType)
-    local isGreedMode = Game():IsGreedMode()
-
-    if not isGreedMode then
-        return poolType
-    end
-
-    if poolType == ItemPoolType.POOL_TREASURE then
-        return ItemPoolType.POOL_GREED_TREASURE
-
-    elseif poolType == poolType.POOL_DEVIL then
-        return poolType.POOL_GREED_DEVIL
-
-    else
-        return poolType
-    end
 end
 
 ---Splits a collectible into two of 1 less quality
@@ -175,7 +194,14 @@ local function SplitCollectible(iteration, player, collectible, itemPool, poolTy
 
     if collectible:IsShopItem() then
         splitCollectible.AutoUpdatePrice = false
-        splitCollectible.Price = math.ceil(collectible.Price / 2)
+        if collectible.Price > 0 then
+            splitCollectible.Price = math.ceil(collectible.Price / 2)
+        else
+            local positivePrice = math.abs(collectible.Price)
+            if heartPriceToHalf[positivePrice] then
+                splitCollectible.Price = -heartPriceToHalf[positivePrice]
+            end
+        end
     end
 
     return splitCollectible
