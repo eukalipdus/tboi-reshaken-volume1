@@ -96,7 +96,7 @@ end
 ---@param player EntityPlayer
 ---@param collectible EntityPickup
 ---@param itemPool ItemPool
----@param poolType PoolType
+---@param poolType ItemPoolType
 ---@param quality integer
 ---@return EntityPickup
 local function SplitCollectible(iteration, player, collectible, itemPool, poolType, quality)
