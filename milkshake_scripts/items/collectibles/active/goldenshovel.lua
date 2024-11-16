@@ -295,13 +295,15 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPic
 ---@param rng RNG
 ---@param player EntityPlayer
 function goldenShovel:onUse(_, rng, player, useFlags)
+    if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return end
+    
+    print("Skip: " .. tostring(skipNextShovelUse) .. " Car: " .. tostring(isCarBattery))
     if skipNextShovelUse then
         skipNextShovelUse = false
         return
     end
 
-    if not player
-    or useFlags & UseFlag.USE_CARBATTERY ~= 0 then
+    if not player then
         return
     end
 
@@ -309,6 +311,16 @@ function goldenShovel:onUse(_, rng, player, useFlags)
     SpawnGoldEffects(player.Position, shouldBelialSynergy)
 
     if not TrySpawnSecretMemberShop(player.Position) then
+        
+        SpawnDirtPile(player.Position, shouldBelialSynergy)
+        SpawnChest(
+            rng,
+            player.Position,
+            shouldBelialSynergy
+        )
+    end
+
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
         SpawnDirtPile(player.Position, shouldBelialSynergy)
         SpawnChest(
             rng,
