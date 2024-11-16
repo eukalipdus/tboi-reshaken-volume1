@@ -297,7 +297,6 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPic
 function goldenShovel:onUse(_, rng, player, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return end
     
-    print("Skip: " .. tostring(skipNextShovelUse) .. " Car: " .. tostring(isCarBattery))
     if skipNextShovelUse then
         skipNextShovelUse = false
         return
