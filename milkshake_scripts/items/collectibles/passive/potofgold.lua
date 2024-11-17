@@ -254,6 +254,9 @@ MilkshakeVol1:AddCallback(
 ---@param pickup EntityPickup
 ---@param collider Entity
 function potOfGold:PrePickupCollision(pickup, collider)
+    if not IsRainbowPenny(pickup) then
+        return
+      end
     if IsRainbowPenny(pickup)
     and not pickup:IsShopItem()
     and CanPickupRainbowPenny(collider) then
