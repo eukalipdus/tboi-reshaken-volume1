@@ -2,7 +2,7 @@ local PrismaticDice = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local TIMES_CAN_FAIL = 5000
+local TIMES_CAN_FAIL = 1000
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220/255, 1, 0, 0, 0)
 local RED = Color(141 / 255, 2 / 255, 0, 1, 141 / 255, 2 / 255, 0)
