@@ -298,6 +298,7 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
                     false,
                     1
                 )
+                break
             end
         end
     end
