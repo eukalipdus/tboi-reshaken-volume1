@@ -238,7 +238,7 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
 
     local itemPool = Game():GetItemPool()
     local roomType = Game():GetRoom():GetType()
-    local seed = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE):GetSeed()
+    local seed = rng:GetSeed()
     local poolType = itemPool:GetPoolForRoom(roomType, seed)
 
     if poolType == ItemPoolType.POOL_NULL then
@@ -293,7 +293,7 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
                     player,
                     roomType,
                     itemPool,
-                    seed,
+                    collectible.DropSeed,
                     rng,
                     false,
                     1
