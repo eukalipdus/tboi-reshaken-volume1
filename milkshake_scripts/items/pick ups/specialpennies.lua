@@ -1,3 +1,4 @@
+local SpecialPennies = {}
 local enums = MilkshakeVol1.enums
 
 local REPLACE_CHANCE = 0.01
@@ -12,6 +13,29 @@ local positivePillCollectibles = {
     CollectibleType.COLLECTIBLE_PHD,
     CollectibleType.COLLECTIBLE_LUCKY_FOOT,
     CollectibleType.COLLECTIBLE_VIRGO
+}
+
+local nonPlayerColliders = {
+    {
+        Type = EntityType.ENTITY_FAMILIAR,
+        Variant = FamiliarVariant.BUMBO,
+        SubType = -1
+    },
+    {
+        Type = EntityType.ENTITY_FAMILIAR,
+        Variant = FamiliarVariant.BUM_FRIEND,
+        SubType = -1
+    },
+    {
+        Type = EntityType.ENTITY_FAMILIAR,
+        Variant = FamiliarVariant.SUPER_BUM,
+        SubType = -1
+    },
+    {
+        Type = EntityType.ENTITY_ULTRA_GREED,
+        Variant = -1,
+        SubType = -1
+    }
 }
 
 ---Returns how many pennies should be spawned
@@ -123,6 +147,55 @@ local function CrystalPennyPickupEffect(player, rng)
     end, CARDPILL_USE_DELAY, {})
 end
 
+---Checks if a specified entity is in nonPlayerColliders
+---@param entity Entity
+---@return boolean
+local function CanPickupRainbowPenny(entity)
+    for _, entityData in pairs(nonPlayerColliders) do
+        if entity.Type == entityData.Type
+        and (entity.Variant == entityData.Variant or entityData.Variant == -1)
+        and (entity.SubType == entityData.SubType or entityData.SubType == -1) then
+            return true
+        end
+    end
+    return false
+end
+
+--- Returns if a penny is any kind of rainbow penny
+---@param pickup EntityPickup
+---@return boolean
+local function IsRainbowPenny(pickup)
+    for _, pennyType in pairs(MilkshakeVol1.WeightedRainbowPennies) do
+        if pickup.SubType == pennyType.subtype then
+            return true
+        end
+    end
+    return false
+end
+
+---Allows an entity to collide with Rainbow Pennies
+---@param type EntityType
+---@param variant integer? @Default: -1
+---@param subtype integer? @Default: -1
+function MilkshakeVol1.API.AddEntityCanCollideRainbowPenny(type, variant, subtype)
+    if variant == nil then
+        variant = -1
+    end
+
+    if subtype == nil then
+        subtype = -1
+    end
+
+    table.insert(
+        nonPlayerColliders,
+        {
+            Type = type,
+            Variant = variant,
+            SubType = subtype
+        }
+    )
+end
+
 MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.ACID_PENNY, function (_, player)
     local timesToActivate = 1
     if player:HasTrinket(enums.Trinkets.RAINBOW_COOKIE) then
@@ -215,7 +288,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_RENDER, function (_, picku
     end
 end)
 
-function MilkshakeVol1:PostPickupInit(pickup)
+function SpecialPennies:PostPickupInit(pickup)
     --if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.RAINBOW_PENNIES)
     if (Game().Difficulty == Difficulty.DIFFICULTY_GREED or Game().Difficulty == Difficulty.DIFFICULTY_GREEDIER)
     or MilkshakeVol1.utility:DidEntityExist()
@@ -225,4 +298,39 @@ function MilkshakeVol1:PostPickupInit(pickup)
     local chance = GetRainbowPennySpawnChance()
     MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, true)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, MilkshakeVol1.PostPickupInit)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, SpecialPennies.PostPickupInit)
+
+---@param pickup EntityPickup
+---@param collider Entity
+function SpecialPennies:PrePickupCollision(pickup, collider)
+    if not IsRainbowPenny(pickup) then
+        return
+      end
+    if IsRainbowPenny(pickup)
+    and not pickup:IsShopItem()
+    and CanPickupRainbowPenny(collider) then
+        pickup.SubType = CoinSubType.COIN_PENNY
+    else
+        local player = collider:ToPlayer()
+        if not player
+        or player:GetNumCoins() < pickup.Price
+        or player.Variant ~= 0
+        or player:IsHoldingItem() then
+            return true
+        end
+
+        local rainbowPenny = TSIL.Utils.Tables.FindFirst(MilkshakeVol1.RainbowPennies, function (_, rainbowPenny)
+            return rainbowPenny.variant == pickup.Variant and rainbowPenny.subtype == pickup.SubType
+        end)
+
+        if not rainbowPenny then return end
+
+        pickup:Die()
+        MilkshakeVol1.utility:SetData(pickup, "IsRainbowPenny", true)
+        pickup.SubType = CoinSubType.COIN_PENNY
+
+        -- NOTE: This should be changed to RunInFramesTemporary once the TSIL bug involving it is fixed
+        TSIL.Utils.Functions.RunInFrames(rainbowPenny.onPickup, 1, pickup, player)
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, SpecialPennies.PrePickupCollision)
