@@ -62,7 +62,7 @@ local function PillEffectToPillColor(player, pillEffect)
             return colorId
         end
     end
-    return -1
+    return PillColor.PILL_NULL
 end
 
 ---Activate per Acid Penny activation
@@ -87,6 +87,10 @@ local function AcidPennyPickupEffect(player, rng)
     elseif realPhd and not falsePhd then
         pillEffect = TSIL.Pills.GetPHDPillEffect(pillColor)
         pillColor = PillEffectToPillColor(player, pillEffect)
+    end
+
+    if pillColor == PillColor.PILL_NULL then
+        pillColor = PillColor.PILL_BLUE_BLUE
     end
 
     player:AnimatePill(pillColor, "Pickup")
