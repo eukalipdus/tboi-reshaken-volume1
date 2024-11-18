@@ -307,7 +307,7 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
         end
     end
     return {
-        Discharge = false,
+        Discharge = true,
         Remove = false,
         ShowAnim = true,
     }
