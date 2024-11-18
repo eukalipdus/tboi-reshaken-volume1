@@ -195,7 +195,11 @@ local function SplitCollectible(iteration, player, collectible, itemPool, poolTy
     if collectible:IsShopItem() then
         splitCollectible.AutoUpdatePrice = false
         if collectible.Price > 0 then
-            splitCollectible.Price = math.ceil(collectible.Price / 2)
+            if iteration == 1 then
+                splitCollectible.Price = math.ceil(collectible.Price / 2)
+            else
+                splitCollectible.Price = math.floor(collectible.Price / 2)
+            end
         else
             local positivePrice = math.abs(collectible.Price)
             if heartPriceToHalf[positivePrice] then
