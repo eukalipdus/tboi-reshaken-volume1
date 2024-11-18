@@ -54,7 +54,8 @@ local function GetRainbowCookieBonus(player)
     return 0
 end
 
-local function PillEffectToPillColor(pillEffect)
+local function PillEffectToPillColor(player, pillEffect)
+    local itemPool = Game():GetItemPool()
     for colorId = 1, PillColor.NUM_STANDARD_PILLS do
         local currentPillEffect = itemPool:GetPillEffect(colorId, player)
         if currentPillEffect == pillEffect then
@@ -82,10 +83,10 @@ local function AcidPennyPickupEffect(player, rng)
 
     if falsePhd and not realPhd then
         pillEffect = TSIL.Pills.GetFalsePHDPillEffect(pillColor)
-        pillColor = PillEffectToPillColor(pillEffect)
+        pillColor = PillEffectToPillColor(player, pillEffect)
     elseif realPhd and not falsePhd then
         pillEffect = TSIL.Pills.GetPHDPillEffect(pillColor)
-        pillColor = PillEffectToPillColor(pillEffect)
+        pillColor = PillEffectToPillColor(player, pillEffect)
     end
 
     player:AnimatePill(pillColor, "Pickup")
