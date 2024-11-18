@@ -24,6 +24,11 @@ local breakfastsByQuality = {
     enums.Collectibles.GOLDEN_BREAKFAST
 }
 
+local forbiddenSplitItems = {
+    CollectibleType.COLLECTIBLE_NULL,
+    CollectibleType.COLLECTIBLE_DADS_NOTE
+}
+
 local oneHeart = math.abs(PickupPrice.PRICE_ONE_HEART)
 local twoHearts = math.abs(PickupPrice.PRICE_TWO_HEARTS)
 local threeSoulHearts = math.abs(PickupPrice.PRICE_THREE_SOULHEARTS)
@@ -151,8 +156,9 @@ local function SplitCollectible(iteration, player, collectible, itemPool, poolTy
         quality
     )
 
-    if not newCollectibleID then
-        newCollectibleID = breakfastsByQuality[quality]
+    if not newCollectibleID
+    and breakfastsByQuality[quality + 1] then
+        newCollectibleID = breakfastsByQuality[quality + 1]
     end
 
     local spawnPosition
@@ -252,6 +258,10 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
     end
 
     for _, collectible in pairs(roomCollectibles) do
+        if TSIL.Utils.Tables.IsIn(forbiddenSplitItems, collectible.SubType) then
+            break
+        end
+
         collectible:Remove()
         local newQuality = -1
 
@@ -272,6 +282,7 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
                         player
                     )
                     splitCollectible:SetColor(itemData.COLOR, COLOR_FRAMES, 2, true, false)
+                    break
                 end
 
             elseif newQuality >= 0 then
