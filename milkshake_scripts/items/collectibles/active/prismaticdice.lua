@@ -120,7 +120,9 @@ local function TryGetCollectible(poolType, itemPool, forceQuality)
         end
     end
 
-    itemPool:RemoveCollectible(finalCollectibleId)
+    if finalCollectibleId then
+        itemPool:RemoveCollectible(finalCollectibleId)
+    end
 
     return finalCollectibleId
 end
