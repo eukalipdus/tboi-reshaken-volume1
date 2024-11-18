@@ -14,6 +14,9 @@ local positivePillCollectibles = {
     CollectibleType.COLLECTIBLE_VIRGO
 }
 
+---Returns how many pennies should be spawned
+---@param player EntityPlayer
+---@return integer
 local function GetSpawnCount(player)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE) then return 1 end
     local rng = player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_HUMBLEING_BUNDLE)
@@ -54,6 +57,10 @@ local function GetRainbowCookieBonus(player)
     return 0
 end
 
+---Gets the PillColor of a PillEffect in a given run
+---@param player EntityPlayer
+---@param pillEffect PillEffect
+---@return integer
 local function PillEffectToPillColor(player, pillEffect)
     local itemPool = Game():GetItemPool()
     for colorId = 1, PillColor.NUM_STANDARD_PILLS do
@@ -66,6 +73,8 @@ local function PillEffectToPillColor(player, pillEffect)
 end
 
 ---Activate per Acid Penny activation
+---@param player EntityPlayer
+---@param rng RNG
 local function AcidPennyPickupEffect(player, rng)
     local itemPool = Game():GetItemPool()
     local pillColor = rng:RandomInt(VANILLA_PILLCOLOR_COUNT) + 1
