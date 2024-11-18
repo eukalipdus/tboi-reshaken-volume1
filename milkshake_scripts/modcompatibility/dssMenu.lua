@@ -185,6 +185,7 @@ local exampledirectory = {
         buttons = {
             { str = 'resume game', action = 'resume' },
             { str = 'settings',    dest = 'settings' },
+            { str = 'unlocks',    dest = 'unlocks' },
             dssmod.changelogsButton,
         },
         tooltip = dssmod.menuOpenToolTip
@@ -315,7 +316,6 @@ local exampledirectory = {
 
             -- SPECIAL SETTINGS DEST
             { str = 'extra settings',    dest = 'special_settings' },
-            { str = 'unlocks',    dest = 'unlocks' },
         },
     },
 
