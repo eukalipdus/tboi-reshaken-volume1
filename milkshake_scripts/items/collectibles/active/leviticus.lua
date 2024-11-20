@@ -470,7 +470,7 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
         true
     )
 
-    local data = MilkshakeVol1:GetData(player, "LeviticusBeam")
+    local data = MilkshakeVol1.utility:GetDataEx(player, "LeviticusBeam")
 
     data.Used = true
 
@@ -507,7 +507,7 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
         end
 
         for i, v in ipairs(filtered) do
-            local data = MilkshakeVol1:GetData(v, "LeviticusBeam")
+            local data = MilkshakeVol1.utility:GetDataEx(v, "LeviticusBeam")
 
             data.Queued = true
 
@@ -536,7 +536,7 @@ end
 
 ---@param player EntityPlayer
 local function Cancel(player)
-    local data = MilkshakeVol1:GetData(player, "LeviticusBeam")
+    local data = MilkshakeVol1.utility:GetDataEx(player, "LeviticusBeam")
 
     data.State = nil
     data.LightTravelPos = nil
@@ -552,7 +552,7 @@ end
 
 ---@param player EntityPlayer
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function (_, player)
-    local data = MilkshakeVol1:GetData(player, "LeviticusBeam") if not data.LightTravelPos then return end
+    local data = MilkshakeVol1.utility:GetDataEx(player, "LeviticusBeam") if not data.LightTravelPos then return end
 
     if player:IsDead() then
         Cancel(player)
@@ -570,7 +570,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function (_, play
         local players = Isaac.FindByType(EntityType.ENTITY_PLAYER)
 
         for i, v in ipairs(players) do
-            local vData = MilkshakeVol1:GetData(v, "LeviticusBeam") if vData.Queued then
+            local vData = MilkshakeVol1.utility:GetDataEx(v, "LeviticusBeam") if vData.Queued then
                 ---@diagnostic disable-next-line: cast-local-type
                 v = v:ToPlayer() ---@cast v EntityPlayer
 
@@ -604,7 +604,7 @@ end)
 ---@param hook InputHook
 MilkshakeVol1:AddCallback(ModCallbacks.MC_INPUT_ACTION, function (_, entity, hook)
     if not entity then return end
-    local data = MilkshakeVol1:GetData(entity, "LeviticusBeam") if not (data.Used or data.LightTravelPos) then return end
+    local data = MilkshakeVol1.utility:GetDataEx(entity, "LeviticusBeam") if not (data.Used or data.LightTravelPos) then return end
 
     if hook ~= InputHook.GET_ACTION_VALUE then
         return false
@@ -615,19 +615,19 @@ end)
 
 ---@param entity Entity
 MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, function (_, entity)
-    if not MilkshakeVol1:GetData(entity, "LeviticusBeam").DisableDamage then return end
+    if not MilkshakeVol1.utility:GetDataEx(entity, "LeviticusBeam").DisableDamage then return end
     return false
 end)
 
 ---@param player EntityPlayer
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, function (_, player)
-    if not MilkshakeVol1:GetData(player, "LeviticusBeam").DisableDamage then return end
+    if not MilkshakeVol1.utility:GetDataEx(player, "LeviticusBeam").DisableDamage then return end
     return true
 end)
 
 ---@param player EntityPlayer
 MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function (_, player)
-    if not MilkshakeVol1:GetData(player, "LeviticusBeam").LightTravelPos then return end
+    if not MilkshakeVol1.utility:GetDataEx(player, "LeviticusBeam").LightTravelPos then return end
     player.CanFly = true
 end, CacheFlag.CACHE_FLYING)
 
@@ -635,7 +635,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function ()
     for _, v in ipairs(Isaac.FindByType(EntityType.ENTITY_PLAYER)) do
         local player = v:ToPlayer() ---@cast player EntityPlayer
 
-        local data = MilkshakeVol1:GetData(player, "LeviticusBeam")
+        local data = MilkshakeVol1.utility:GetDataEx(player, "LeviticusBeam")
         
         data.Used = false
 

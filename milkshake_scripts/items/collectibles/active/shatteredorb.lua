@@ -426,7 +426,6 @@ local function GetShatteredOrbData(effect)
     return directionsPerShatteredOrb[tostring(ptrHash)]
 end
 
-
 ---@param player EntityPlayer
 ---@param useFlags UseFlag
 ---@param activeSlot ActiveSlot
@@ -464,6 +463,37 @@ MilkshakeVol1:AddCallback(
     enums.Collectibles.SHATTERED_ORB
 )
 
+-- nvm
+-- ---@param entity Entity?
+-- ---@param action ButtonAction
+-- function ShatteredOrb:InputAction(entity, _, action)
+--     local player = entity and entity:ToPlayer() if not (player and player:HasCollectible(enums.Collectibles.SHATTERED_ORB)) then return end
+
+--     if not ((action == ButtonAction.ACTION_ITEM or action == ButtonAction.ACTION_PILLCARD) and Input.IsActionTriggered(action, player.ControllerIndex)) then return end
+
+--     local slot = action == ButtonAction.ACTION_ITEM and ActiveSlot.SLOT_PRIMARY or ActiveSlot.SLOT_PRIMARY
+
+--     if player:GetActiveItem(slot) == enums.Collectibles.SHATTERED_ORB then
+--         local animToPlay
+
+--         if IsPlayerUsingShatteredOrb(player) then
+--             RemovePlayerUsingShatteredOrb(player)
+--             animToPlay = "HideItem"
+--         else
+--             AddPlayerUsingShatteredOrb(player, slot)
+--             animToPlay = "LiftItem"
+--         end
+
+--         player:AnimateCollectible(enums.Collectibles.SHATTERED_ORB, animToPlay, "PlayerPickup")
+
+--         return false
+--     end
+-- end
+-- MilkshakeVol1:AddCallback(
+--     ModCallbacks.MC_INPUT_ACTION,
+--     ShatteredOrb.InputAction,
+--     InputHook.IS_ACTION_TRIGGERED
+-- )
 
 ---@param player EntityPlayer
 ---@param direction Vector

@@ -292,7 +292,7 @@ MilkshakeVol1.API:AddSpiritKlinReward(function()
 --Spawn orb
 MilkshakeVol1.API:AddSpiritKlinReward(10, function(slot, _, position, velocity)
     local rng = slot:GetDropRNG()
-    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
+    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(0, rng)
 
     TSIL.EntitySpecific.SpawnPickup(
         PickupVariant.PICKUP_TAROTCARD,

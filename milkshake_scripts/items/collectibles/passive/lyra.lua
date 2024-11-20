@@ -164,7 +164,7 @@ function Lyra:OnOrbUse(orb, player, flags)
     end)
 
     if orb == enums.Orbs.ORDER then
-        orb = MilkshakeVol1:GetSelectedOrderOrb(player)
+        orb = MilkshakeVol1.enums.OrbsExcludingOrder[MilkshakeVol1.API:GetSelectedOrderOrb(player)]
     end
 
     ---@type UsingLyraData
@@ -411,7 +411,7 @@ function Lyra:OnClearAwardSpawn(rng, pos)
     if hasContract and rng:RandomFloat() < 0.33 then return true end
 
     pos = room:FindFreePickupSpawnPosition(pos)
-    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
+    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(0, rng)
     TSIL.EntitySpecific.SpawnPickup(
         PickupVariant.PICKUP_TAROTCARD,
         orb,
@@ -420,7 +420,7 @@ function Lyra:OnClearAwardSpawn(rng, pos)
 
     if hasContract then
         pos = room:FindFreePickupSpawnPosition(pos)
-        orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
+        orb = MilkshakeVol1.utility:GetRandomSpiritOrb(0, rng)
         TSIL.EntitySpecific.SpawnPickup(
             PickupVariant.PICKUP_TAROTCARD,
             orb,
@@ -440,7 +440,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, Lyra.OnClearAwa
 ---@param rng RNG
 ---@param position Vector
 local function SpawnRewardOrb(rng, position)
-    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
+    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(0, rng)
 
     local angle = rng:RandomInt(360)
     local speed = TSIL.Random.GetRandomFloat(4, 6, rng)

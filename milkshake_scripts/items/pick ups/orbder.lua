@@ -1,115 +1,65 @@
-local mod = MilkshakeVol1
+local sprite = Sprite()
 
-local ORB_CHANCE = 1
-
-local TrueTrueOrbs = {}; for k, v in pairs(mod.enums.Orbs) do
-    if v ~= mod.enums.Orbs.RANDOM then
-        TrueTrueOrbs[k] = v
-    end
-end
-
-local ORBS = {}
-local idx = 1
-for _, v in pairs(TrueTrueOrbs) do
-    ORBS[idx] = v
-    idx = idx + 1
-end
-
-local NUM_ORBS = #ORBS - 1
-
-local SELECTION_TO_FRAME = {
-    0,
-    1,
-    2,
-    3,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10
-}
-
-local FRAME_TO_ORB = {
-    mod.enums.Orbs.FIRE,
-    mod.enums.Orbs.ELECTRIC,
-    mod.enums.Orbs.NATURE,
-    mod.enums.Orbs.PSYCHIC,
-    mod.enums.Orbs.RANDOM,
-    mod.enums.Orbs.HOLY,
-    mod.enums.Orbs.UNHOLY,
-    mod.enums.Orbs.POISON,
-    mod.enums.Orbs.UNDEAD,
-    mod.enums.Orbs.WATER,
-    mod.enums.Orbs.ROCK,
-}
-
-local sprite = Sprite(); sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true); sprite:Play(sprite:GetDefaultAnimation(), true)
+sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true); sprite:Play(sprite:GetDefaultAnimation(), true)
 
 ---@param player EntityPlayer
-function MilkshakeVol1:GetSelectedOrderOrb(player)
-    return FRAME_TO_ORB[SELECTION_TO_FRAME[mod:GetData(player, "SpiritOfOrder").Selected] + 1]
+function MilkshakeVol1.API:GetSelectedOrderOrb(player)
+    return MilkshakeVol1.utility:GetDataEx(player, "SpiritOfOrder").SelectedOrb or 1
 end
 
 ---@param player EntityPlayer
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
-    if player:GetCard(0) ~= mod.enums.Orbs.ORDER then return end
-    local data = mod:GetData(player, "SpiritOfOrder"); data.Selected = data.Selected or 1
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
+    if player:GetCard(0) ~= MilkshakeVol1.enums.Orbs.ORDER then return end
+
+    local data = MilkshakeVol1.utility:GetDataEx(player, "SpiritOfOrder")
+
+    data.SelectedOrb = data.SelectedOrb or 1
+
     if not Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex) then return end
 
-    data.Selected = data.Selected + 1; if data.Selected > NUM_ORBS then data.Selected = 1 end
-    SFXManager():Play(SoundEffect.SOUND_GOLD_HEART_DROP, 1, 2, false, 1 + data.Selected * 0.1)
+    data.SelectedOrb = data.SelectedOrb + 1
+
+    if data.SelectedOrb > #MilkshakeVol1.enums.OrbsExcludingOrder then
+        data.SelectedOrb = 1
+    end
+
+    SFXManager():Play(SoundEffect.SOUND_GOLD_HEART_DROP, 1, 2, false, 1 + data.SelectedOrb * 0.1)
 end)
 
-local function GetCallback()
-    if REPENTOGON then
-        return ModCallbacks.MC_POST_HUD_RENDER
-    end
-    return ModCallbacks.MC_GET_SHADER_PARAMS
-end
-
-mod:AddCallback(GetCallback(), function ()
+---@diagnostic disable-next-line: undefined-field
+MilkshakeVol1:AddCallback(REPENTOGON and ModCallbacks.MC_POST_HUD_RENDER or ModCallbacks.MC_GET_SHADER_PARAMS, function ()
+    ---@diagnostic disable-next-line: undefined-global
     if REPENTOGON and RoomTransition.IsRenderingBossIntro() then return end
-    local player = Isaac.GetPlayer() if player:GetCard(0) ~= mod.enums.Orbs.ORDER then return end
 
-    local renderPos = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight())
-    + Vector(-16, -12)
-    + Vector(-16, -6) * Options.HUDOffset
+    local player = Isaac.GetPlayer() if player:GetCard(0) ~= MilkshakeVol1.enums.Orbs.ORDER then return end
 
+    local renderPos = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) + Vector(-16, -12) + Vector(-16, -6) * Options.HUDOffset
+    print(MilkshakeVol1.API:GetSelectedOrderOrb(player))
     sprite:Render(renderPos)
-    sprite:SetFrame(SELECTION_TO_FRAME[mod:GetData(player, "SpiritOfOrder").Selected or 1])
+    sprite:SetFrame(MilkshakeVol1.API:GetSelectedOrderOrb(player) - 1)
 end)
 
 ---@param player EntityPlayer
 ---@param flags UseFlag
-mod:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player, flags)
-    SFXManager():Play(mod.enums.Sounds.ORB_CAPTURE)
-    SFXManager():Play(mod.enums.Sounds.SPIRIT_ORDER)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player, flags)
+    SFXManager():Play(MilkshakeVol1.enums.Sounds.ORB_CAPTURE)
+    SFXManager():Play(MilkshakeVol1.enums.Sounds.SPIRIT_ORDER)
 
-    if not player:HasCollectible(mod.enums.Collectibles.LYRA) then
-        MilkshakeVol1:UseSpiritOrb(MilkshakeVol1:GetSelectedOrderOrb(player), player, mod.enums.UseOrbFlags.NO_SOUND)
+    if not player:HasCollectible(MilkshakeVol1.enums.Collectibles.LYRA) then
+        MilkshakeVol1:UseSpiritOrb(MilkshakeVol1.enums.OrbsExcludingOrder[MilkshakeVol1.API:GetSelectedOrderOrb(player)], player, MilkshakeVol1.enums.UseOrbFlags.NO_SOUND)
     end
-end, mod.enums.Orbs.ORDER)
+end, MilkshakeVol1.enums.Orbs.ORDER)
 
-local orbRNG = RNG()
+local CHANCE = 4 / 100
 
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function ()
-    orbRNG:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
-end)
+---@param pickup EntityPickup
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, function (_, pickup)
+    if not MilkshakeVol1.utility:IsSpiritOrb(pickup.SubType) then return end
+    if pickup.SubType == MilkshakeVol1.enums.Orbs.ORDER then return end
+    if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(MilkshakeVol1.enums.Achievements.SPIRIT_OF_ORDER) then return end
+    if Game():GetRoom():GetFrameCount() < 0 and not Game():GetRoom():IsFirstVisit() then return end
 
----@param variant PickupVariant
----@param subtype integer
-mod:AddCallback(ModCallbacks.MC_POST_PICKUP_SELECTION, function (_, _, variant, subtype)
-    if not (Game():GetRoom():IsFirstVisit() and Game():GetRoom():GetFrameCount() < 4) then return end
-    if variant == PickupVariant.PICKUP_TAROTCARD and MilkshakeVol1.utility:IsSpiritOrb(subtype) then
-        if MilkshakeVol1.UnlockManager:IsAchievementUnlocked(MilkshakeVol1.enums.Achievements.SPIRIT_OF_ORDER) then
-            if orbRNG:RandomFloat() <= ORB_CHANCE then
-                return {PickupVariant.PICKUP_TAROTCARD, MilkshakeVol1.enums.Orbs.ORDER}
-            end
+    local rng = TSIL.RNG.NewRNG(pickup.InitSeed) if rng:RandomFloat() > CHANCE then return end
 
-            if subtype == MilkshakeVol1.enums.Orbs.ORDER then
-                return {PickupVariant.PICKUP_TAROTCARD, MilkshakeVol1.utility:GetRandomSpiritOrb(true)}
-            end
-        end
-    end
-end)
+    pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, MilkshakeVol1.enums.Orbs.ORDER, true, true)
+end, PickupVariant.PICKUP_TAROTCARD)

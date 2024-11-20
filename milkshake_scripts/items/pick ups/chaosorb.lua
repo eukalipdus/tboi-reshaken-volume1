@@ -48,7 +48,7 @@ local frame = 1
 function ChaosOrb:OnChaosOrbUse(_, player, flags)
     local rng = player:GetCardRNG(enums.Orbs.RANDOM)
 
-    local orbToUse = MilkshakeVol1.utility:GetRandomSpiritOrb(false, rng)
+    local orbToUse = MilkshakeVol1.utility:GetRandomSpiritOrb(MilkshakeVol1.enums.GetOrbFlag.NO_RANDOM | MilkshakeVol1.enums.GetOrbFlag.NO_ORDER, rng)
 
     MilkshakeVol1:UseSpiritOrb(orbToUse, player, flags | enums.UseOrbFlags.NO_SOUND)
 
@@ -91,6 +91,7 @@ function ChaosOrb:PostRender()
     end
 end
 if REPENTOGON then
+    ---@diagnostic disable-next-line: undefined-field
     MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_HUD_RENDER, ChaosOrb.PostRender)
 else
     MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, ChaosOrb.PostRender)

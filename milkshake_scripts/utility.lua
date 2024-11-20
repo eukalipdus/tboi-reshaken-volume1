@@ -339,18 +339,6 @@ function utility:AnyPlayerIsCharacter(character)
     end)
 end
 
-
-local SPIRIT_ORBS = {}
-local SPIRIT_ORBS_NO_RANDOM = {}
-local SPIRIT_ORBS_MAP = {}
-for _, orb in pairs(enums.TrueOrbs) do
-    SPIRIT_ORBS_MAP[orb] = true
-    SPIRIT_ORBS[#SPIRIT_ORBS+1] = orb
-    if orb ~= enums.Orbs.RANDOM then
-        SPIRIT_ORBS_NO_RANDOM[#SPIRIT_ORBS_NO_RANDOM+1] = orb
-    end
-end
-
 ---Checks if a given card is a spirit orb
 ---@param card Card
 function utility:IsSpiritOrb(card)
@@ -379,20 +367,31 @@ local function UpdateSpiritOfOrderUnlocked(orbList)
 end
 
 ---Helper function to get a random orb
----@param includeChaos? boolean @Default: true
+---@param getOrbFlags? integer
 ---@param seedOrRNG? integer | RNG
 ---@return Card
-function utility:GetRandomSpiritOrb(includeChaos, seedOrRNG)
-    if includeChaos == nil then includeChaos = true end
+function utility:GetRandomSpiritOrb(getOrbFlags, seedOrRNG)
+    getOrbFlags = getOrbFlags or 0
 
-    local orbs = SPIRIT_ORBS
-    if not includeChaos then
-        orbs = SPIRIT_ORBS_NO_RANDOM
+    local orbs
+    local noRandom = TSIL.Utils.Flags.HasFlags(getOrbFlags, MilkshakeVol1.enums.GetOrbFlag.NO_ORDER)
+    local noOrder = TSIL.Utils.Flags.HasFlags(getOrbFlags, MilkshakeVol1.enums.GetOrbFlag.NO_ORDER)
+
+    if noRandom and noOrder then
+        orbs = MilkshakeVol1.enums.OrbsExcludingBoth
+    elseif noRandom and not noOrder then
+        orbs = MilkshakeVol1.enums.OrbsExcludingRandom
+    elseif not noRandom and noOrder then
+        orbs = MilkshakeVol1.enums.OrbsExcludingOrder
+    else
+        orbs = MilkshakeVol1.enums.OrbsUnkeyed
     end
 
-    UpdateSpiritOfOrderUnlocked(orbs)
+    local orbsCopy = TSIL.Utils.Tables.Copy(orbs)
 
-    return TSIL.Random.GetRandomElementsFromTable(orbs, 1, seedOrRNG)[1]
+    UpdateSpiritOfOrderUnlocked(orbsCopy)
+
+    return TSIL.Random.GetRandomElementsFromTable(orbsCopy, 1, seedOrRNG)[1]
 end
 
 --- To be used when entities are initialized, returns true if this entity was previously seen by the player, false if it is the first time it ever spawned
@@ -548,7 +547,7 @@ end
 ---@param entity Entity
 ---@param identifier string | nil
 ---@return any
-function MilkshakeVol1:GetData(entity, identifier)
+function utility:GetDataEx(entity, identifier)
     local data = TSIL.Entities.GetEntityData(
         MilkshakeVol1,
         entity,
