@@ -12,6 +12,7 @@ local BLUE = Color(4 / 255, 99 / 255, 147 / 255, 1, 4 / 255, 99 / 255, 147 / 255
 local BELIAL_DEVIL_CHANCE = 30
 local COLOR_FRAMES = 15
 local COLLECTIBLE_DIST_SHIFT = 40
+local INITIAL_BREAKFAST_CHECK = 15
 
 local antiRecursion = false
 
@@ -99,29 +100,18 @@ local function TryGetCollectible(poolType, itemPool, forceQuality)
     local newCollectibleID
     local finalCollectibleId
 
-    for _ = 1, TIMES_CAN_FAIL do
+    for itr = 1, TIMES_CAN_FAIL do
         antiRecursion = true
         newCollectibleID = itemPool:GetCollectible(poolType, false)
         antiRecursion = false
 
+        if itr > INITIAL_BREAKFAST_CHECK then
+            poolType = GetProperPool(ItemPoolType.POOL_TREASURE)
+        end
+
         if Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == forceQuality then
             finalCollectibleId = newCollectibleID
             break
-        end
-    end
-
-    if not finalCollectibleId then
-        local treasurePool = GetProperPool(ItemPoolType.POOL_TREASURE)
-
-        for _ = 1, TIMES_CAN_FAIL do
-            antiRecursion = true
-            newCollectibleID = itemPool:GetCollectible(treasurePool, false)
-            antiRecursion = false
-
-            if Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == forceQuality then
-                finalCollectibleId = newCollectibleID
-                break
-            end
         end
     end
 
