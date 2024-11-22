@@ -248,64 +248,62 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
     end
 
     for _, collectible in pairs(roomCollectibles) do
-        if TSIL.Utils.Tables.IsIn(forbiddenSplitItems, collectible.SubType) then
-            break
-        end
+        if not TSIL.Utils.Tables.IsIn(forbiddenSplitItems, collectible.SubType) then
+            collectible:Remove()
+            local newQuality = -1
 
-        collectible:Remove()
-        local newQuality = -1
+            if collectible.SubType
+            and Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality ~= nil then
+                newQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality - 1
+            end
 
-        if collectible.SubType
-        and Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality ~= nil then
-            newQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality - 1
-        end
+            for idx = 1, 2 do
+                if collectible.SubType == CollectibleType.COLLECTIBLE_GODHEAD then
+                    for _, itemData in pairs(effectPerGodheadSplit) do
+                        local splitCollectible = Isaac.Spawn(
+                            EntityType.ENTITY_PICKUP,
+                            PickupVariant.PICKUP_COLLECTIBLE,
+                            itemData.COLLECTIBLE,
+                            collectible.Position + itemData.OFFSET,
+                            Vector.Zero,
+                            player
+                        )
+                        splitCollectible:SetColor(itemData.COLOR, COLOR_FRAMES, 2, true, false)
+                        break
+                    end
 
-        for idx = 1, 2 do
-            if collectible.SubType == CollectibleType.COLLECTIBLE_GODHEAD then
-                for _, itemData in pairs(effectPerGodheadSplit) do
-                    local splitCollectible = Isaac.Spawn(
-                        EntityType.ENTITY_PICKUP,
-                        PickupVariant.PICKUP_COLLECTIBLE,
-                        itemData.COLLECTIBLE,
-                        collectible.Position + itemData.OFFSET,
-                        Vector.Zero,
-                        player
+                elseif newQuality >= 0 then
+                    local splitTimes = 0
+
+                    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+                        splitTimes = 2
+                    end
+
+                    if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
+                        splitTimes = splitTimes + 4 + rng:RandomInt(2)
+                    end
+
+                    if splitTimes == 0 then
+                        splitTimes = 1
+                    end
+
+                    for _ = 1, splitTimes do
+                        local splitCollectible = SplitCollectible(idx, player, collectible, itemPool, poolType, newQuality)
+                        splitCollectible:SetColor(splitColors[idx], COLOR_FRAMES, 2, true, false)
+                    end
+                else
+                    utility:RecycleCollectible(
+                        collectible.Position,
+                        player,
+                        roomType,
+                        itemPool,
+                        collectible.DropSeed,
+                        rng,
+                        false,
+                        1
                     )
-                    splitCollectible:SetColor(itemData.COLOR, COLOR_FRAMES, 2, true, false)
                     break
                 end
-
-            elseif newQuality >= 0 then
-                local splitTimes = 0
-
-                if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
-                    splitTimes = 2
-                end
-
-                if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
-                    splitTimes = splitTimes + 4 + rng:RandomInt(2)
-                end
-
-                if splitTimes == 0 then
-                    splitTimes = 1
-                end
-
-                for _ = 1, splitTimes do
-                    local splitCollectible = SplitCollectible(idx, player, collectible, itemPool, poolType, newQuality)
-                    splitCollectible:SetColor(splitColors[idx], COLOR_FRAMES, 2, true, false)
-                end
-            else
-                utility:RecycleCollectible(
-                    collectible.Position,
-                    player,
-                    roomType,
-                    itemPool,
-                    collectible.DropSeed,
-                    rng,
-                    false,
-                    1
-                )
-                break
             end
         end
     end
