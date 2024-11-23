@@ -299,7 +299,9 @@ function goldenShovel:onUse(_, rng, player, useFlags)
     
     if skipNextShovelUse then
         skipNextShovelUse = false
-        return
+        return {
+            Discharge = false
+        }
     end
 
     if not player then
