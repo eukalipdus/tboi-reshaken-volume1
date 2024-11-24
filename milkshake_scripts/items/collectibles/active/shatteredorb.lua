@@ -542,6 +542,7 @@ local function ThrowShatteredOrb(player, direction)
     AddShatteredOrbData(shatteredOrb, direction)
 end
 
+local emptySprite = Sprite()
 
 ---@param player EntityPlayer
 function ShatteredOrb:OnPlayerUpdate(player)
@@ -586,7 +587,8 @@ function ShatteredOrb:OnPlayerUpdate(player)
 
     --     player:SetActiveCharge(newCharge, activeSlot)
     -- end
-    player:PlayExtraAnimation("HideItem")
+    player:AnimatePickup(emptySprite, true, "HideItem")
+    -- player:PlayExtraAnimation("HideItem")
     RemovePlayerUsingShatteredOrb(player)
 
     local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + (player.Velocity * 0.9)
