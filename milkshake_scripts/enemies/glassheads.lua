@@ -465,3 +465,22 @@ function GlassHeads:GlassHead_EffectUpdate(effect)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlassHeads.GlassHead_EffectUpdate)
+
+local D10 = {
+    [CollectibleType.COLLECTIBLE_D10] = true,
+    [CollectibleType.COLLECTIBLE_D100] = true,
+}
+
+---@param id CollectibleType
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, function (_, id)
+    if not D10[id] then return end
+
+    for _, v in ipairs(Isaac.FindByType(MilkshakeVol1.enums.Enemies.GLASS_HEAD, 0)) do
+        v:Remove()
+
+        local bomb = TSIL.EntitySpecific.SpawnBomb(0, 0, v.Position)
+        bomb:AddTearFlags(TearFlags.TEAR_BLOOD_BOMB)
+
+        TSIL.EntitySpecific.SpawnEffect(EffectVariant.POOF01, 0, v.Position)
+    end
+end)
