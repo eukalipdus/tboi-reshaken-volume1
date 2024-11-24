@@ -23,6 +23,9 @@ local moveOrbHudPerPlayer = {
 
 local playerAnchor = {
     "bottomright",
+    "topright",
+    "bottomleft",
+    "bottomright",
 }
 
 local function CreateOrbOverlay()
