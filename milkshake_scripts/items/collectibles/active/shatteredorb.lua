@@ -430,6 +430,13 @@ end
 ---@param useFlags UseFlag
 ---@param activeSlot ActiveSlot
 function ShatteredOrb:OnShatteredOrbUse(_, _, player, useFlags, activeSlot)
+    local data = MilkshakeVol1.utility:GetDataEx(player, "ShatteredOrb")
+
+    if data.UseThat then
+        data.UseThat = nil
+        return
+    end
+
     if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then
         return {
             Discharge = false,
@@ -495,6 +502,27 @@ MilkshakeVol1:AddCallback(
 --     InputHook.IS_ACTION_TRIGGERED
 -- )
 
+---@param entity Entity?
+---@param action ButtonAction
+function ShatteredOrb:InputAction(entity, _, action)
+    local player = entity and entity:ToPlayer() if not player then return end
+
+    if not (action == ButtonAction.ACTION_ITEM or action == ButtonAction.ACTION_PILLCARD) then return end
+
+    local data = MilkshakeVol1.utility:GetDataEx(player, "ShatteredOrb") if not data.UseThat then return end
+
+    if data.UseThat == ActiveSlot.SLOT_PRIMARY and action == ButtonAction.ACTION_ITEM then
+        return true
+    elseif data.UseThat == ActiveSlot.SLOT_POCKET and action == ButtonAction.ACTION_PILLCARD then
+        return true
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_INPUT_ACTION,
+    ShatteredOrb.InputAction,
+    InputHook.IS_ACTION_TRIGGERED
+)
+
 ---@param player EntityPlayer
 ---@param direction Vector
 local function ThrowShatteredOrb(player, direction)
@@ -542,22 +570,22 @@ function ShatteredOrb:OnPlayerUpdate(player)
         return
     end
 
-    if activeSlot then
-        local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
-        local newCharge = math.max(0, charge - 4)
+    -- if activeSlot then
+    --     local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
+    --     local newCharge = math.max(0, charge - 4)
 
-        if charge < 4 then
-            local chargeDiff = math.abs(charge - 4)
+    --     if charge < 4 then
+    --         local chargeDiff = math.abs(charge - 4)
 
-            if player:GetPlayerType() == PlayerType.PLAYER_BETHANY then
-                player:AddSoulCharge(-chargeDiff)
-            elseif player:GetPlayerType() == PlayerType.PLAYER_BETHANY_B then
-                player:AddBloodCharge(-chargeDiff)
-            end
-        end
+    --         if player:GetPlayerType() == PlayerType.PLAYER_BETHANY then
+    --             player:AddSoulCharge(-chargeDiff)
+    --         elseif player:GetPlayerType() == PlayerType.PLAYER_BETHANY_B then
+    --             player:AddBloodCharge(-chargeDiff)
+    --         end
+    --     end
 
-        player:SetActiveCharge(newCharge, activeSlot)
-    end
+    --     player:SetActiveCharge(newCharge, activeSlot)
+    -- end
     player:PlayExtraAnimation("HideItem")
     RemovePlayerUsingShatteredOrb(player)
 
@@ -574,6 +602,10 @@ function ShatteredOrb:OnPlayerUpdate(player)
 
         ThrowShatteredOrb(player, direction)
     end
+
+    local data = MilkshakeVol1.utility:GetDataEx(player, "ShatteredOrb")
+
+    data.UseThat = activeSlot
 end
 
 MilkshakeVol1:AddCallback(
