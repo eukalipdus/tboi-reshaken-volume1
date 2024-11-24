@@ -488,6 +488,9 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
 
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         light = TSIL.EntitySpecific.SpawnEffect(MilkshakeVol1.enums.Effects.LEVITICUS_LIGHT, 0, player.Position)
+        if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) then
+            light.Color = Color(1, 0, 0)
+        end
         light:FollowParent(player)
     end, 3)
 
@@ -532,7 +535,11 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
         end
     end, 15)
 
-    SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) then
+        SFXManager():Play(SoundEffect.SOUND_UNHOLY)
+    else
+        SFXManager():Play(SoundEffect.SOUND_SUPERHOLY)
+    end
 
     return true
 end

@@ -6688,7 +6688,7 @@
 			<entity type="6" variant="5" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29005" name="[RE] - ConBoi - Reshaken Item Rework #32903421320" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
+	<room variant="29100" name="[RE] - ConBoi - Reshaken Item Rework #32903421320" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
 		<door exists="False" x="-1" y="3"/>
 		<door exists="False" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -6724,7 +6724,7 @@
 			<entity type="33" variant="2" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29006" name="[RE] - ConBoi - Cool Angel Room!" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
+	<room variant="29101" name="[RE] - ConBoi - Cool Angel Room!" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
 		<door exists="False" x="-1" y="3"/>
 		<door exists="False" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -6754,7 +6754,7 @@
 			<entity type="33" variant="2" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29007" name="[RE] - ConBoi - No Holy Card Today" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
+	<room variant="29102" name="[RE] - ConBoi - No Holy Card Today" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
 		<door exists="False" x="-1" y="3"/>
 		<door exists="False" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -6799,7 +6799,7 @@
 			<entity type="33" variant="2" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29008" name="[RE] - ConBoi - Item Is Coming" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
+	<room variant="29103" name="[RE] - ConBoi - Item Is Coming" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
 		<door exists="False" x="-1" y="3"/>
 		<door exists="False" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -6838,7 +6838,7 @@
 			<entity type="33" variant="2" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="29009" name="[RE] - ConBoi - Jarvis, Ponder My Orb" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
+	<room variant="29104" name="[RE] - ConBoi - Jarvis, Ponder My Orb" type="15" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="0.0">
 		<door exists="False" x="-1" y="3"/>
 		<door exists="False" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -6928,9 +6928,6 @@
 			<entity type="5" variant="150" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
-			<entity type="5" variant="150" subtype="0" weight="1.0"/>
-		</spawn>
-		<spawn x="6" y="4">
 			<entity type="5" variant="100" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
@@ -6960,10 +6957,7 @@
 		<spawn x="8" y="3">
 			<entity type="5" variant="150" subtype="0" weight="1.0"/>
 		</spawn>
-		<spawn x="5" y="4">
-			<entity type="5" variant="100" subtype="0" weight="1.0"/>
-		</spawn>
-		<spawn x="7" y="4">
+		<spawn x="6" y="4">
 			<entity type="5" variant="100" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
@@ -7038,13 +7032,10 @@
 		<spawn x="6" y="2">
 			<entity type="5000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
-		<spawn x="4" y="3">
+		<spawn x="5" y="4">
 			<entity type="5" variant="100" subtype="0" weight="1.0"/>
 		</spawn>
-		<spawn x="8" y="3">
-			<entity type="5" variant="100" subtype="0" weight="1.0"/>
-		</spawn>
-		<spawn x="6" y="4">
+		<spawn x="7" y="4">
 			<entity type="618" variant="124" subtype="7" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="5">
