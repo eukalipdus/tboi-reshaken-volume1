@@ -591,11 +591,7 @@ function MirrorKey:OnNewRoom()
     AddLostCurse()
     UpdateDamageBonusCache()
     RemoveTallLadder()
-
-    if prevRoomIndex == level:GetCurrentRoomIndex() then
-        RespawnSavedPickups()
-    end
-
+    RespawnSavedPickups()
     SavePickupData()
 
     if EID then
@@ -1067,18 +1063,4 @@ MilkshakeVol1:AddCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     MirrorKey.EvaluateCache,
     CacheFlag.CACHE_DAMAGE
-)
-
-function MirrorKey:PostGameStarted()
-    local roomIndex = Game():GetLevel():GetCurrentRoomIndex()
-
-    TSIL.SaveManager.SetPersistentVariable(
-        MilkshakeVol1,
-        "PreviousRoomIndex",
-        roomIndex
-    )
-end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_GAME_STARTED,
-    MirrorKey.PostGameStarted
 )
