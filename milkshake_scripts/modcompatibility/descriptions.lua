@@ -1320,7 +1320,8 @@ descriptions.Trinkets = {
     [enums.Trinkets.AMETHYST_SHARD] = {
         en_us = {
             name = "Clairvoyant Amethyst",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Clairvoyance when destroyed",
+            description = "Tinted rocks have a unique gem colored visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Clairvoyance when destroyed",
             double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Clairvoyance when destroyed",
             triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Clairvoyance when destroyed",
         },
