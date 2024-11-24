@@ -326,6 +326,7 @@ end
 
 ---@param player EntityPlayer
 function MirrorKey:OnMirrorKeyUse(_, _, player)
+    if not player or player.Variant ~= 0 then return end
     if not CanUseMirrorKey() then
         UpdateMirrorKeyChargeState()
 
