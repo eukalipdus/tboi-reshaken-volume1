@@ -438,11 +438,11 @@ MilkshakeVol1:AddCallback(
 
 -- This is probably bad to do
 local LEVITICUS_ANGEL_ROOMS = {
-    29004,
-    29005,
-    29006,
-    29007,
-    29008,
+    29100,
+    29101,
+    29102,
+    29103,
+    29104,
 }
 
 ---@param player EntityPlayer
