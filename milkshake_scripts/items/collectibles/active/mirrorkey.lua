@@ -91,6 +91,12 @@ TSIL.SaveManager.AddPersistentVariable(
 )
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
+    "PreviousRoomIndexForExitGame",
+    -1,
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
     "MirrorRoomDesc",
     "",
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
@@ -582,6 +588,10 @@ function MirrorKey:OnNewRoom()
         MilkshakeVol1,
         "PreviousRoomIndex"
     )
+    local lastRoomIndexIn = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "PreviousRoomIndexForExitGame"
+    )
 
     TSIL.Doors.RemoveDoors(TSIL.Doors.GetDoors())
     SpawnFakeMirrorDoor(doorSlot, prevRoomIndex, TSIL.Enums.Dimension.CURRENT)
@@ -591,7 +601,9 @@ function MirrorKey:OnNewRoom()
     AddLostCurse()
     UpdateDamageBonusCache()
     RemoveTallLadder()
-    RespawnSavedPickups()
+    if lastRoomIndexIn == currentRoomIndex then
+        RespawnSavedPickups()
+    end
     SavePickupData()
 
     if EID then
@@ -1063,4 +1075,16 @@ MilkshakeVol1:AddCallback(
     ModCallbacks.MC_EVALUATE_CACHE,
     MirrorKey.EvaluateCache,
     CacheFlag.CACHE_DAMAGE
+)
+
+function MirrorKey:PostNewRoom()
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "PreviousRoomIndexForExitGame",
+        Game():GetLevel():GetCurrentRoomIndex()
+    )
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_NEW_ROOM,
+    MirrorKey.PostNewRoom
 )
