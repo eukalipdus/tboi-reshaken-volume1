@@ -7,6 +7,7 @@ local ACHIEVEMENT_GOLD_PILL = 603
 local ACHIEVEMENT_GOLDEN_BATTERY = 615
 local ACHIEVEMENT_GOLD_BOMB = 226
 local ACHIEVEMENT_GOLDEN_TRINKET = 617
+local DEFAULT_PRICE = 5
 
 local goldPickupPriceIncrease = {
     [PickupVariant.PICKUP_BOMB] = 8,
@@ -165,7 +166,7 @@ local function SetGoldenPrice(pickup)
                 steamSaleCount = steamSaleCount + Isaac.GetPlayer(i):GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE)
             end
         end
-        pickup.Price = math.floor(pickup.Price + (newPickupPrice/steamSaleCount))
+        pickup.Price = math.floor(DEFAULT_PRICE + (newPickupPrice/steamSaleCount))
     end
 end
 
@@ -353,5 +354,19 @@ function goldenShovel:PostNewRoom()
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, goldenShovel.PostNewRoom)
+
+---@param pickup EntityPickup
+function goldenShovel:PostPickupUpdate(pickup)
+    if not IsGoldenShovelShop() then
+        return
+    end
+
+    if not TSIL.Players.DoesAnyPlayerHasTrinket(TrinketType.TRINKET_STORE_CREDIT) then
+        SetGoldenPrice(pickup)
+    else
+        pickup.AutoUpdatePrice = true
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, goldenShovel.PostPickupUpdate)
 
 return goldenShovel
