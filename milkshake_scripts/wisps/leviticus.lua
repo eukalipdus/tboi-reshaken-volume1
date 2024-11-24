@@ -52,9 +52,15 @@ MilkshakeVol1:AddCallback(
     LeviticusWisp.OnUpdate
 )
 
+local levitici = {
+    [MilkshakeVol1.enums.Collectibles.LEVITICUS] = true,
+    [MilkshakeVol1.enums.Collectibles.LEVITICUS_ALADAR] = true,
+    [MilkshakeVol1.enums.Collectibles.LEVITICUS_FANCY] = true,
+}
+
 ---@param wisp EntityFamiliar
 function LeviticusWisp:OnWispUpdate(wisp)
-    if wisp.SubType ~= MilkshakeVol1.enums.Collectibles.LEVITICUS then return end
+    if not levitici[wisp.SubType] then return end
 
     if not CanChangeChance() then return end
 
@@ -78,7 +84,7 @@ MilkshakeVol1:AddCallback(
 ---@param entity Entity
 function LeviticusWisp:OnFamiliarRemove(entity)
     if entity.Variant ~= FamiliarVariant.WISP then return end
-    if entity.SubType ~= MilkshakeVol1.enums.Collectibles.LEVITICUS then return end
+    if not levitici[entity.SubType] then return end
 
     if not CanChangeChance() then return end
 

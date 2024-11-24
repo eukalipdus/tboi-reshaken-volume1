@@ -20,8 +20,8 @@
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" tags="lazarussharedglobal nocantrip offensive summonable" quality="3" gfx="potofgold.png" craftquality="3"/>
     <familiar id="22" name="Glass Idol" description="Shattering resurgance" tags="summonable" quality="2" gfx="glass_idol.png" />
     <active id="23" name="Leviticus" description="Purify your soul" tags="book angel offensive" quality="4" craftquality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true"/>
-    <active id="23" name="Leviticus " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true"/>
-    <active id="23" name="Leviticus  " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true"/>
+    <active id="100" name="Leviticus " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true"/>
+    <active id="101" name="Leviticus  " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true"/>
     <passive id="24" name="Battery Acid" description="PH down" tags="battery nocantrip offensive summonable" quality="3" gfx="collectibles_batteryacid.png" craftquality="3"/>
     <familiar id="25" name="Doggy Bag" description="Clean up after yourself" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive nolostbr poop summonable" quality="1" craftquality="1"/>
     <passive id="26" name="Dad's Mitt" description="Curve ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2" craftquality="2"/>
