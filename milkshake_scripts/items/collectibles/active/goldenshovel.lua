@@ -212,7 +212,7 @@ local function IsGoldenShovelShop()
 end
 
 ---@param pickup EntityPickup
-function goldenShovel:PostPickupUpdate(pickup)
+function goldenShovel:PostPickupInit(pickup)
     if not IsGoldenShovelShop()
     or not pickup:IsShopItem() then
         return
@@ -286,10 +286,8 @@ function goldenShovel:PostPickupUpdate(pickup)
     else
         return
     end
-
-    SetGoldenPrice(pickup)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPickupUpdate)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPickupInit)
 
 
 ---@param rng RNG
