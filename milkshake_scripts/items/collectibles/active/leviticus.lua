@@ -445,6 +445,15 @@ local LEVITICUS_ANGEL_ROOMS = {
     29104,
 }
 
+-- This is also probably bad to do
+local LEVITICUS_DEVIL_ROOMS = {
+    29100,
+    29101,
+    29102,
+    29103,
+    29104,
+}
+
 ---@param player EntityPlayer
 ---@param useFlags UseFlag
 function Leviticus:onLeviticusUse(_, _, player, useFlags)
@@ -590,7 +599,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function (_, play
                         leviticusTransitioning = true
                         Isaac.ExecuteCommand("goto s.angel." .. LEVITICUS_ANGEL_ROOMS[v:GetCollectibleRNG(MilkshakeVol1.enums.Collectibles.LEVITICUS):RandomInt(#LEVITICUS_ANGEL_ROOMS) + 1])
                     else
-                        -- Devil room
+                        Isaac.ExecuteCommand("goto s.devil." .. LEVITICUS_DEVIL_ROOMS[v:GetCollectibleRNG(MilkshakeVol1.enums.Collectibles.LEVITICUS):RandomInt(#LEVITICUS_DEVIL_ROOMS) + 1])
                     end
                 end
             end
@@ -648,9 +657,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function ()
     end
 
     if leviticusTransitioning then
-        if Game():GetRoom():GetType() == RoomType.ROOM_ANGEL then
-            local holyCard
-
+        local type = Game():GetRoom():GetType()
+        if type == RoomType.ROOM_ANGEL or type == RoomType.ROOM_DEVIL then
             local pickups = Isaac.FindByType(EntityType.ENTITY_PICKUP)
             local truePickups = {}
             local itemIdx
@@ -707,4 +715,4 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function ()
 
     leviticusTransitioning = nil
 end)
-        -- https://tenor.com/view/sneedmode-sneed-sneedgang-gif-19457380
+-- https://tenor.com/view/sneedmode-sneed-sneedgang-gif-19457380
