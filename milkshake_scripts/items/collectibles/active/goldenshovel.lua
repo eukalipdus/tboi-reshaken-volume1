@@ -357,7 +357,8 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, goldenShovel.PostNewRoo
 
 ---@param pickup EntityPickup
 function goldenShovel:PostPickupUpdate(pickup)
-    if not IsGoldenShovelShop() then
+    if not IsGoldenShovelShop()
+    or not pickup:IsShopItem() then
         return
     end
 
