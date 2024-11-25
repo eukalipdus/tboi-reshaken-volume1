@@ -48,7 +48,9 @@ local function SplitEnemy(enemy, player)
 end
 
 function prismaticDice:EntityTakeDmg(entity, _, _, source)
-    if not source.Entity then
+    if not source.Entity
+    or entity:IsBoss()
+    or not entity:IsVulnerableEnemy() then
         return
     end
 
