@@ -225,6 +225,7 @@ Additions
 
 Changes
 -Secret shops spawned by Golden Shovel now convert pickups for sale to their golden variants, with increased prices
+-Reworked Leviticus, still charged with soul hearts, now teleports Isaac to a special Angel room upon activation
 -Acid Penny now shows the assigned pill color when activating a pill instead of a random one
 -Mirror Key can no longer be used in Error Rooms
 -Modified some room layouts
