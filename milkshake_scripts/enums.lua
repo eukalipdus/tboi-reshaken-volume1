@@ -69,6 +69,7 @@ enums.Trinkets = {
     SAPPHIRE_SHARD = Isaac.GetTrinketIdByName("Torrential Sapphire"),
     AMBER_SHARD = Isaac.GetTrinketIdByName("Terrestrial Amber"),
     RAINBOW_COOKIE = Isaac.GetTrinketIdByName("Golden Cookie"),
+    PRISMATIC_LACEWING = Isaac.GetTrinketIdByName("Prismatic Lacewing"),
 
     TRACK_ALT_PATH_UNLOCK = Isaac.GetTrinketIdByName("Alt Path Unlock Tracker"),
     TRACK_MEGA_CHEST_UNLOCK = Isaac.GetTrinketIdByName("MEGA CHEST UNLOCK TRACKER"),
