@@ -217,7 +217,7 @@ Fixes
 ================================================
 Additions
 -Added four achievements, three of which grant unlocks
--Added three new items, a collectible, a trinket, and a spirit orb
+-Added four new items, a collectible, two trinkets, and a spirit orb
 -Added crafting qualities
 -Added Belial (Judas' Birthright) synergies for Golden Shovel and Mirror Key
 -Added Book of Virtues synergy for Mirror Key
@@ -230,6 +230,7 @@ Changes
 -Reduce weight for Spirit Klins to payout with trinkets
 -After receiving 4 payments, Brenda now has a chance to payout with a collectible from the Glass pool
 -MilkshakeVol1.API:AddSpiritKlinReward's first argument now accepts a second parameter, an entity (Spirit Klin slot)
+-Modified Prismatic Dice splitting animation/collectible positions
 
 Fixes
 -Fixed error resulting from Witch Doctor Mask being activated by a NULL pill color
@@ -251,3 +252,5 @@ Fixes
 -Fixed Acid and Crystal pennies not being removed and Isaac being unable to collide with them after if purchased from a shop
 -Fixed rainbow pennies being purchasable while Isaac is holding an item
 -Fixed Super Bum not properly colliding with rainbow pennies
+-Fixed Prismatic Dice Godhead easter egg not spawning items with the proper colors
+-Fixed Prismatic Dice locust duplicating bosses
