@@ -257,3 +257,4 @@ Fixes
 -Fixed Super Bum not properly colliding with rainbow pennies
 -Fixed Prismatic Dice Godhead easter egg not spawning items with the proper colors
 -Fixed Prismatic Dice locust duplicating bosses
+-Fixed Witch Doctor Mask not spawning a pill on pick up if it was taken by another player after being dropped by Tainted Isaac
