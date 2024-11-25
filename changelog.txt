@@ -224,13 +224,16 @@ Additions
 -Added API function, MilkshakeVol1.API.AddEntityCanCollideRainbowPenny
 
 Changes
+-Secret shops spawned by Golden Shovel now convert pickups for sale to their golden variants, with increased prices
 -Acid Penny now shows the assigned pill color when activating a pill instead of a random one
 -Mirror Key can no longer be used in Error Rooms
 -Modified some room layouts
 -Reduce weight for Spirit Klins to payout with trinkets
 -After receiving 4 payments, Brenda now has a chance to payout with a collectible from the Glass pool
+-Modified Prismatic Dice splitting animation and collectible spawn positions
+
+API Changes
 -MilkshakeVol1.API:AddSpiritKlinReward's first argument now accepts a second parameter, an entity (Spirit Klin slot)
--Modified Prismatic Dice splitting animation/collectible positions
 
 Fixes
 -Fixed error resulting from Witch Doctor Mask being activated by a NULL pill color
