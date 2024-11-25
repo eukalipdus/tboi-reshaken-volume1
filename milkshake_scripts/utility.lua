@@ -578,4 +578,11 @@ function utility:GetSlotIndex(slot)
     }
 end
 
+---Compare two floating point numbers
+---@param numOne number
+---@param numTwo number
+function utility:MaybeEqual(numOne, numTwo, epsilon)
+    return math.abs(numOne - numTwo) < epsilon
+end
+
 MilkshakeVol1.utility = utility
