@@ -1320,10 +1320,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.AMETHYST_SHARD] = {
         en_us = {
             name = "Clairvoyant Amethyst",
-            description = "Tinted rocks have a unique gem colored visual" ..
+            description = "Tinted rocks have a unique gem covered visual" ..
             "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Clairvoyance when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Clairvoyance when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Clairvoyance when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Clairvoyance when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Clairvoyance when destroyed",
         },
         spa = {
             name = "Amatista Premonitoria",
@@ -1361,9 +1363,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.RUBY_SHARD] = {
         en_us = {
             name = "Infernal Ruby",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Inferno when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Inferno when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Inferno when destroyed",
+            description = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Inferno when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Inferno when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Inferno when destroyed",
         },
         spa = {
             name = "Rubí Infernal",
@@ -1401,9 +1406,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.TOURMALINE_SHARD] = {
         en_us = {
             name = "Conductive Tourmaline",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Conductivity when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Conductivity when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Conductivity when destroyed",
+            description = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Conductivity when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Conductivity when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Conductivity when destroyed",
         },
         spa = {
             name = "Turmalina Conductora",
@@ -1441,9 +1449,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.EMERALD_SHARD] = {
         en_us = {
             name = "Druidic Emerald",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Druidity when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Druidity when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Druidity when destroyed",
+            description = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Druidity when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Druidity when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Druidity when destroyed",
         },
         spa = {
             name = "Esmeralda Druídica",
@@ -1481,9 +1492,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.PERIDOT_SHARD] = {
         en_us = {
             name = "Virulent Peridot",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Virulence when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Virulence when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Virulence when destroyed",
+            description = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Virulence when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Virulence when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Virulence when destroyed",
         },
         spa = {
             name = "Peridoto Virulento",
@@ -1521,9 +1535,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.GARNET_SHARD] = {
         en_us = {
             name = "Sacrilegious Garnet",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Sacrilege when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Sacrilege when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Sacrilege when destroyed",
+            description = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Sacrilege when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Sacrilege when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Sacrilege when destroyed",
         },
         spa = {
             name = "Granate Sacrílego",
@@ -1561,9 +1578,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.ONYX_SHARD] = {
         en_us = {
             name = "Revenant Onyx",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Revenance when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Revenance when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Revenance when destroyed",
+            description = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Revenance when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Revenance when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Revenance when destroyed",
         },
         spa = {
             name = "Ónix Renacido",
@@ -1601,9 +1621,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.DIAMOND_SHARD] = {
         en_us = {
             name = "Sacred Jacinth",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Salvation when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Salvation when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Salvation when destroyed",
+            description = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Salvation when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Salvation when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Salvation when destroyed",
         },
         spa = {
             name = "Jacinto Sagrado",
@@ -1641,9 +1664,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.SAPPHIRE_SHARD] = {
         en_us = {
             name = "Torrential Sapphire",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Deluge when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Deluge when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Deluge when destroyed",
+            description = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Deluge when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Deluge when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Deluge when destroyed",
         },
         spa = {
             name = "Zafiro Torrencial",
@@ -1681,9 +1707,12 @@ descriptions.Trinkets = {
     [enums.Trinkets.AMBER_SHARD] = {
         en_us = {
             name = "Terrestrial Amber",
-            description = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Terrastrium when destroyed",
-            double = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Terrastrium when destroyed",
-            triple = "{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Terrastrium when destroyed",
+            description = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop a Spirit of Terrastrium when destroyed",
+            double = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}1-2 {{CR}}Spirits of Terrastrium when destroyed",
+            triple = "Tinted rocks have a unique gem covered visual" ..
+            "#{{SpiritOrb}} Tinted rocks have a 75% chance to drop {{ColorGold}}2-3 {{CR}}Spirits of Terrastrium when destroyed",
         },
         spa = {
             name = "Ámbar Terrestre",
