@@ -47,7 +47,7 @@
     <trinket name="Crystal Penny" description="Wealth of knowledge"  gfx="trinkets_crystalpenny.png" />
     <trinket name="Rock Wheel"    description="Stone aged allies"    gfx="rock_wheel.png" cache="speed" tags="nogreed"/>
     <trinket name="Terrestrial Amber" description="Hidden terrastrial power..." gfx="trinkets_terrestrialamber.png" tags="nogreed"/>
-    <trinket name="Golden Cookie" description="Golden rainbow pennies!" gfx="trinkets_rainbowcookie.png" tags="nogreed"/>
+    <trinket name="Rainbow Cookie" description="More rainbow pennies" gfx="trinkets_rainbowcookie.png" tags="nogreed"/>
     <trinket name="Prismatic Lacewing" description="Devolution tears" gfx="trinkets_prismaticlacewing.png" />
 
     <!-- Hidden items -->
