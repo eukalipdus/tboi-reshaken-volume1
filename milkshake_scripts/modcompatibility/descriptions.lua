@@ -1173,6 +1173,7 @@ descriptions.Collectibles = {
             name = "Mirror Key (Uncharged)",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
+            "#{{Player10}} Isaac becomes the Lost for the room.",
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
             book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
@@ -1825,7 +1826,7 @@ descriptions.Trinkets = {
     [enums.Trinkets.TRACK_ALT_PATH_UNLOCK] = {
         en_us = {
             name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the floor boss.",
+            description = "Automatically unlocks the doors to downpour, mines, mausoleum, and corpse after defeating the floor boss.",
         },
         spa = {
             name = "Alt Path Unlock Tracker",
