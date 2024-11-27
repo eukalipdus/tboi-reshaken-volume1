@@ -1852,31 +1852,55 @@ descriptions.Trinkets = {
         en_us = {
             name = "Rainbow Cookie",
             description = "10% Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
             "#The secondary effect of rainbow pennies is doubled on pickup."
         },
         spa = {
             name = "Rainbow Cookie",
             description = "10% Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
             "#The secondary effect of rainbow pennies is doubled on pickup."
         },
         ru = {
             name = "Rainbow Cookie",
             description = "10% Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
             "#The secondary effect of rainbow pennies is doubled on pickup."
         },
         pl = {
             name = "Rainbow Cookie",
             description = "10% Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
             "#The secondary effect of rainbow pennies is doubled on pickup."
         },
         ko_kr = {
             name = "Rainbow Cookie",
             description = "10% Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
             "#The secondary effect of rainbow pennies is doubled on pickup."
         },
         zh_cn = {
             name = "Rainbow Cookie",
             description = "10% Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
+            "#The secondary effect of rainbow pennies is doubled on pickup.",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
             "#The secondary effect of rainbow pennies is doubled on pickup."
         },
     },
@@ -2290,6 +2314,44 @@ descriptions.Cards = {
             name = "混沌之灵",
             description = "#触发随机宝珠效果",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. "双倍选择的效果"
+        },
+    },
+    [enums.Orbs.ORDER] = {
+        en_us = {
+            name = "Spirit of Order",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
+            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
+        },
+        spa = {
+            name = "Spirit of Order",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
+            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
+        },
+        ru = {
+            name = "Spirit of Order",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
+            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
+        },
+        pl = {
+            name = "Spirit of Order",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
+            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect" 
+        },
+        ko_kr = {
+            name = "Spirit of Order",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
+            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
+        },
+        zh_cn = {
+            name = "Spirit of Order",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
+            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
     },
     [enums.Cards.TATTERED_PAGE] = {
