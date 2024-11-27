@@ -276,8 +276,11 @@ descriptions.Collectibles = {
         },
         pl = {
             name = "Złota Łopata",
-            description = "Wykopuje 1-2 złote skrzynie oraz losowy złoty pickup" ..
-            "#{{LadderRoom}} Po użyciu nad dekoracją podłogi otwiera sklep Karty Członkowskiej",
+            description = "Wykopuje złotą skrzynie i 2-4 monety" ..
+            "#{{LadderRoom}} Otwiera złotą zapadnie po użyciu na dekoracji piętra" ..
+            "#Zapadnie prowadzi do sklepu, który sprzedaje rozmaite złote pickupy i przedmioty z dowolnych pól",
+            book_of_virtues = "Ognik w śrowkowym kręgu#Zwiększone zdrowie ognika#10% szansy na wystrzelenie łzy z {{Collectible202}} Dotykiem Midasa",
+            book_of_belial = "Zamiast tego wykopuje 2 czerwone skzrynie i czarne serduszko"
         },
         ko_kr = {
             name = "황금 삽",
@@ -845,9 +848,8 @@ descriptions.Collectibles = {
         pl = {
             name = "Księga Kapłańska",
             description = "{{SoulHeart}} Musi być naładowana poprzez zbieranie serc dusz" ..
-            "#{{EternalHeart}} +1 Wieczne serce" ..
-            "#{{AngelRoom}} Użycie tego przedmiotu przed bossem zamieni nagrodę za bossa w przedmiot od anioła" ..
-            "#{{DevilRoom}} Przedmiot od anioła będzie kosztował pieniądze jeżeli zawarto wcześniej pakt z diabłem",
+            "#{{AngelRoom}} Teleportacja do unikatowego Anielskiego Pokoju" ..
+            "#Pokój zawiera darmowy anielski przedmiot oraz kilka pickupów na sprzedaż",
             book_of_virtues = "Ogniki w wewnętrznym kręgu#Duże zdrowie ognika#+10% szansy na {{AngelRoom}} Anielski Pokój za każdego ognika Księgi Kapłańskiej",
             abyss = "Niebieska, świecąca szarańcza, która czasami przywołuje promień światła, zadający obrażenia Izaaka x 3",
         },
@@ -1116,10 +1118,10 @@ descriptions.Collectibles = {
         },
         pl = {
             name = "Chromatic Primski",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
-            "#{{Luck}} +2.5% chance per luck"
+            description = "Nowi przeciwnicy mają 20% na zostanie rozszczepionymi" ..
+            "#Rozszcepienie przeciwnicy wystrzeliwują 3 tęczowy promienie po śmierci" ..
+            "#Promienie zadają 16x obrażeń właściciela rozłożonych w 4 instancjach" ..
+            "#{{Luck}} +2.5% szansy za każdy punkt szczęścia"
         },
         ko_kr = {
             name = "Chromatic Prism",
@@ -1198,6 +1200,7 @@ descriptions.Collectibles = {
             name = "Lusztrzany Klucz (Rozładowany)",
             description = "{{MirrorRoom}} Raz na pokój może stworzyć wejście do lustrzanego pokoju poprzez stworzenie drzwi na pustej ścianie" ..
             "#Lustrzane pokoje zawierają kopie wszystkich pickupów, przeszkód i przeciwników z oryginalnego pokoju" ..
+            "#{{Player10}} Transformacja w Zagubionego podczas przebywania w lustrzanym pokoju" ..
             "#{{Warning}} Przedmioty nie są kopiowane" ..
             "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot.",
             book_of_belial = "↑ {{Damage}} +2.5 Obrażen w lustrzanym wymiarze",
@@ -1417,7 +1420,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Ametystu",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Jasnowidzenia po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Jasnowidzenia po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Jasnowidzenia po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Jasnowidzenia po zniszczeniu",
         },
@@ -1460,7 +1464,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Rubinu",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Pożogi po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Pożogi po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Pożogi po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Pożogi po zniszczeniu",
         },
@@ -1503,7 +1508,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Turmalinu",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Elektryczności po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Elektryczności po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Elektryczności po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Elektryczności po zniszczeniu",
         },
@@ -1546,7 +1552,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Szmaragdu",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Przyrody po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Przyrody po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Przyrody po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Przyrody po zniszczeniu",
         },
@@ -1589,7 +1596,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Perydotu",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Skażenia po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Skażenia po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Skażenia po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Skażenia po zniszczeniu",
         },
@@ -1632,7 +1640,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Granatu",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Świętokradztwa po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Świętokradztwa po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Świętokradztwa po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Świętokradztwa po zniszczeniu",
         },
@@ -1675,7 +1684,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Onyksu",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Zaświatów po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Zaświatów po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Zaświatów po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Zaświatów po zniszczeniu",
         },
@@ -1718,7 +1728,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Diamentu",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Zbawienia po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Zbawienia po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Zbawienia po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Zbawienia po zniszczeniu",
         },
@@ -1761,7 +1772,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Szafiru",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Potopu po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Potopu po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Potopu po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Potopu po zniszczeniu",
         },
@@ -1804,7 +1816,8 @@ descriptions.Trinkets = {
         },
         pl = {
             name = "Odłamek Bursztynu",
-            description = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Podziemi po zniszczeniu",
+            description = "Oznaczone skały są pokryte kryształami" ..
+            "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Podziemi po zniszczeniu",
             double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Podziemi po zniszczeniu",
             triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Podziemi po zniszczeniu",
         },
@@ -1837,7 +1850,7 @@ descriptions.Trinkets = {
             description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
         },
         pl = {
-            name = "Przyrząd Śledzący Stan Odblokowania Alternatywnego Zestawu Pięter",
+            name = "Przyrząd Specjalistyczny ds. Śledzenia Stanu Odblokowania Alternatywnego Zestawu Pięter",
             description = "Automatycznie otwiera drzwi do Zalewu, Kopalni i Mauzoleum po pokonaniu bossa.",
         },
         ko_kr = {
@@ -1878,13 +1891,13 @@ descriptions.Trinkets = {
             "#The secondary effect of rainbow pennies is doubled on pickup."
         },
         pl = {
-            name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            name = "Złote Ciasteczko",
+            description = "10% szansy na zastąpienie monet tęczowymi monetami" ..
+            "#Dodatkowe efekty tęczowych monet są podwojone",
+            double = "{{ColorGold}}15% {{CR}} szansy na zastąpienie monet tęczowymi monetami" ..
+            "#Dodatkowe efekty tęczowych monet są podwojone",
+            triple = "{{ColorGold}}20% {{CR}} szansy na zastąpienie monet tęczowymi monetami" ..
+            "#Dodatkowe efekty tęczowych monet są podwojone",
         },
         ko_kr = {
             name = "Rainbow Cookie",
@@ -2337,10 +2350,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         pl = {
-            name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
-            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect" 
+            name = "Widmo Porządku",
+            description = "{{SpiritOrb}} Może działać jako dowolna inna widmowa kula" ..
+            "#Efekt może być wybrany przyciskiem upuszczenia ({{ButtonRT}})",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " podwaja wybrany efekt" 
         },
         ko_kr = {
             name = "Spirit of Order",
@@ -2418,8 +2431,9 @@ descriptions.Entities = {
             description = "{{HalfSoulHeart}}Zabiera pół serca dusz w zamian za rozmaite nagrody:" ..
             "#{{SpiritOrb}} Losowa widmowa kula" ..
             "#{{Burning}} Ognik o losowym żywiole" ..
-            "#{{Trinket}} Losowy szklany lub kryształowy trynkiet" ..
-            "#{{Rune}} Dusza losowej postaci"
+            "#{{Rune}} Dusza losowej postaci" ..
+            "#{{Trinket".. 139 .."}} Losowy szklany lub kryształowy trynkiet" ..
+            "#{{Collectible"..enums.Collectibles.FRAGILE_MIRROR .."}} Mała szansa na losowy szklany przedmiot po 3 sercach"
         },
         ru = {
             name = "Духовка", -- joke, real translation is Духовая печька Бренда
