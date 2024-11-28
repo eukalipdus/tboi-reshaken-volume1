@@ -487,6 +487,9 @@ descriptions.Collectibles = {
             name = "Pryzmatyczna Kostka",
             description = "Rozdziela każdy przedmiot w pokoju na 2 przedmioty o jakości o 1 mniejszej" ..
             "#Przedmioty o jakości {{Quality0}} zamiast tego są rozdzielane na pickupy",
+            book_of_virtues = "Ognik w środkowym kręgu#Nie wystrzeliwuje łez#Rozbija inne łzy w 4 {{Collectible528}} łzy z Anielskego Pryzmatu",
+            book_of_belial = "30% szansy na rozbicie przedmiotów w {{DevilRoom}} diabelskie przedmioty",
+            abyss = "Świecąca różowa szarańcza, która ma 20% szansy na rozbicie trafionego przeciwnika w dwóch słabszych przeciwników"
         },
         ko_kr = {
             name = "프리즘 주사위",
@@ -1155,9 +1158,9 @@ descriptions.Collectibles = {
             "#Marked enemies are targetted by other enemies."
         },
         pl = {
-            name = "Scripulous Fingore",
-            description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            name = "Skripulatny Palcioch",
+            description = "{{Bait}} Wskazuje na losowego przeciwnika, tym samym go naznaczając"..
+            "#Naznaczeni przeciwnicy są atakowani przez innych przeciwników"
         },
         ko_kr = {
             name = "Scripulous Fingore",
