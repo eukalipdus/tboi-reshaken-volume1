@@ -40,7 +40,7 @@ end
 local function isLostForm(player)
     local playerType = player:GetPlayerType()
     local soulHearts = player:GetSoulHearts()
-    local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
+    local allotherhearts = player:GetHearts()  + player:GetBoneHearts() --player:GetRottenHearts()
     local isGhost = player:GetEffects():HasNullEffect(NullItemID.ID_LOST_CURSE)
 
     if (playerType == PlayerType.PLAYER_THELOST
@@ -578,7 +578,7 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
 
     local soulCharge = player:GetSoulCharge()
     local soulHearts = player:GetSoulHearts()
-    local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
+    local allotherhearts = player:GetHearts() + player:GetBoneHearts() -- + player:GetRottenHearts()
 
     if isLostForm(player) and (not hasChargedSoulChargeItem(player)) and soulCharge < 1 then return end
     if soulCharge + soulHearts == 0 and (not hasChargedSoulChargeItem(player)) then return end
