@@ -433,7 +433,7 @@ descriptions.Collectibles = {
             name = "Orbe Fragmentado",
             description = "Puede arrojarse a los enemigos para capturar sus almas" ..
             "#{{SpiritOrb}} Los enemigos capturados se convierten en orbes espirituales que corresponden al elemento de su alma",
-            book_of_virtues = "Al romperse, genera 3 orbitales de fuego elementales, con efectos diversos",
+            book_of_virtues = "Al romperse, genera un orbital de fuego elemental, con efectos diversos",
             book_of_belial = "50% de probabilidad de reemplazar {{SpiritOrb}} Espíritu del Caos con Espíritu de Sacrilegio",
         },
         ru = {
@@ -477,7 +477,8 @@ descriptions.Collectibles = {
             description = "Divide los pedestales en la habitación en dos pedestales de 1 calidad inferior" ..
             "#Los objetos de calidad {{Quality0}} se dividen en objetos aleatorios",
             book_of_virtues = "Anillo medio#No dispara#Divide las lágrimas de Isaac en 4 lágrimas de {{Collectible528}} Prisma Angelical",
-            book_of_belial = "30% de posibilidad de reemplazar los pedestales divididos por {{DevilRoom}} objetos del demonio"
+            book_of_belial = "30% de posibilidad de reemplazar los pedestales divididos por {{DevilRoom}} objetos del demonio",
+            abyss = "Langusta rosa y brillante, que tiene un 20% de probabilidad de dividir a los enemigos en 2 más débiles"
         },
         ru = {
             name = "Призматический Кубик",
@@ -1150,9 +1151,9 @@ descriptions.Collectibles = {
             "#Marked enemies are targetted by other enemies"
         },
         spa = {
-            name = "Scripulous Fingore",
-            description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies"
+            name = "Dedoso Escrupuloso",
+            description = "{{Bait}} Señala a un enemigo aleatorio en la sala hasta que muerte, marcándolo durante 10 segundos"..
+            "#Los enemigos marcados son atacados por otros enemigos"
         },
         ru = {
             name = "Scripulous Fingore",
