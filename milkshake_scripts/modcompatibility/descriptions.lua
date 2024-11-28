@@ -1176,13 +1176,13 @@ descriptions.Collectibles = {
             name = "Mirror Key",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
-            "#{{Player10}} Isaac becomes the Lost for the room."..
+            "#{{Player10}} Isaac becomes the Lost for the room.".. --The NEW
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
             book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
         },
         spa = {
-            name = "Llave de Espejo (Sin Cargar)",
+            name = "Llave de Espejo",
             description = "{{MirrorRoom}} Crea una puerta a la dimensión espejo en la pared, indicada por un contorno de puerta" ..
             "#Las habitaciones reflejadas regeneran todas los objetos, obstáculos y enemigos" ..
             "#{{Warning}} Los pedestales no se regeneran" ..
@@ -1190,7 +1190,7 @@ descriptions.Collectibles = {
             book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
         },
         ru = {
-            name = "Зеркальный Ключ (Незаряженный)",
+            name = "Зеркальный Ключ",
             description = "{{MirrorRoom}} Один раз за комнату, можно создать зеркальную дверь на стене, обозначенную контуром двери" ..
             "#Зеркальные комнаты воссоздают все предметы, препятствия и врагов" ..
             "#{{Warning}} Пьедесталы предметов не воссоздаются" ..
@@ -1198,7 +1198,7 @@ descriptions.Collectibles = {
             book_of_belial = "↑ {{Damage}} +2.5 урона в зеркальном мире",
         },
         pl = {
-            name = "Lusztrzany Klucz (Rozładowany)",
+            name = "Lustrzany Klucz",
             description = "{{MirrorRoom}} Raz na pokój może stworzyć wejście do lustrzanego pokoju poprzez stworzenie drzwi na pustej ścianie" ..
             "#Lustrzane pokoje zawierają kopie wszystkich pickupów, przeszkód i przeciwników z oryginalnego pokoju" ..
             "#{{Player10}} Transformacja w Zagubionego podczas przebywania w lustrzanym pokoju" ..
@@ -1208,13 +1208,13 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "거울 열쇠",
-            description = "{{MirrorRoom}} 문 테두리 근처에서 사용 시 사용한 방과 같은 구조를 가진 거울방이 생성됩니다.(이 방에서 이미 사용됨)" ..
+            description = "{{MirrorRoom}} 문 테두리 근처에서 사용 시 사용한 방과 같은 구조를 가진 거울방이 생성됩니다.(방 당 1회)" ..
             "#{{Warning}} 아이템은 생성되지 않습니다." ..
             "#{{BossRoom}} 보스방의 경우 다시 클리어할 수 있으며 보상을 추가로 드랍합니다.",
             book_of_belial = "↑ 거울방 안에서 {{DamageSmall}}공격력 +2.5",
         },
         zh_cn = {
-            name = "镜像密钥(未充能)",
+            name = "镜像密钥",
             description =
                 "{{MirrorRoom}} 一个房间，如果可以在墙上创建镜像的门，出现门的轮廓" ..
                 "#镜像房间重新生成所有掉落物、障碍物和敌人" ..
@@ -1253,6 +1253,7 @@ descriptions.Collectibles = {
             name = "Lusztrzany Klucz (Rozładowany)",
             description = "{{MirrorRoom}} Raz na pokój może stworzyć wejście do lustrzanego pokoju poprzez stworzenie drzwi na pustej ścianie" ..
             "#Lustrzane pokoje zawierają kopie wszystkich pickupów, przeszkód i przeciwników z oryginalnego pokoju" ..
+            "#{{Player10}} Transformacja w Zagubionego podczas przebywania w lustrzanym pokoju" ..
             "#{{Warning}} Przedmioty nie są kopiowane" ..
             "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot.",
             book_of_belial = "↑ {{Damage}} +2.5 Obrażen w lustrzanym wymiarze",
