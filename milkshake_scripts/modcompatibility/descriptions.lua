@@ -1170,12 +1170,12 @@ descriptions.Collectibles = {
             "#Marked enemies are targetted by other enemies."
         },
     },
-    [enums.Collectibles.UNCHARGED_MIRROR_KEY] = {
+    [enums.Collectibles.MIRROR_KEY] = {
         en_us = {
-            name = "Mirror Key (Uncharged)",
+            name = "Mirror Key",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
-            "#{{Player10}} Isaac becomes the Lost for the room.",
+            "#{{Player10}} Isaac becomes the Lost for the room."..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
             book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
@@ -1227,6 +1227,7 @@ descriptions.Collectibles = {
             name = "Mirror Key (Uncharged)",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
+            "#{{Player10}} Isaac becomes the Lost for the room."..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
             book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
