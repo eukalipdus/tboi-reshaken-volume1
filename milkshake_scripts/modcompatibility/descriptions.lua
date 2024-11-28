@@ -256,16 +256,16 @@ descriptions.Collectibles = {
     [enums.Collectibles.GOLDEN_SHOVEL] = {
         en_us = {
             name = "Golden Shovel",
-            description = "Digs up a golden chest and 2-4 pennies." ..
+            description = "Digs up a golden chest and 2-4 pennies" ..
             "#{{LadderRoom}} Opens up a golden trapdoor if used on a decorative floor tile. " ..
-            "#The trapdoor leads to an underground shop that sells various golden pickups and items from any pool.",
+            "#The trapdoor leads to an underground shop that sells various golden pickups and items from any pool",
             book_of_virtues = "Middle ring wisp#High HP wisp#10% chance for {{Collectible202}} Midas' Touch tears",
             book_of_belial = "Digs up 2 red chests and a black heart instead"
         },
         spa = {
             name = "Pala Dorada",
-            description = "Desentierra de 1 a 2 cofres dorados y un pickup dorado al azar." ..
-            "#{{LadderRoom}} Abre una trampilla de tarjeta de miembro si se usa en una baldosa decorativa del suelo.",
+            description = "Desentierra de 1 a 2 cofres dorados y un pickup dorado al azar" ..
+            "#{{LadderRoom}} Abre una trampilla de tarjeta de miembro si se usa en una baldosa decorativa del suelo",
             book_of_virtues = "Anillo medio con mucha vida#10% de probabilidad de disparar lágrimas de {{Collectible202}} Toque de Midas"
         },
         ru = {
@@ -334,14 +334,14 @@ descriptions.Collectibles = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
             "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destroyed machines" ..
-            "#\1 Using a spirit orb starts a short rhythm mini game." ..
+            "#\1 Using a spirit orb starts a short rhythm mini game" ..
             "#{{Blank}} Successful completion activates the spirit orb with double effect",
         },
         spa = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% de probabilidad de que la recompensa por completar la habitación sea un orbe espiritual aleatorio" ..
             "#{{SpiritOrb}} Posibilidad de obtener un orbe espiritual adicional de cofres, rocas marcadas y al destruir máquinas" ..
-            "#\1 Usar un orbe espiritual inicia un minijuego de ritmo corto." ..
+            "#\1 Usar un orbe espiritual inicia un minijuego de ritmo corto" ..
             "#{{Blank}} Completarlo con éxito activa el orbe espiritual con efecto doble",
         },
         ru = {
@@ -425,7 +425,7 @@ descriptions.Collectibles = {
             name = "Shattered Orb",
             description = "Can be thrown at enemies to capture their soul" ..
             "#{{SpiritOrb}} Captured enemies are turned into spirit orbs corresponding to their soul's element",
-            book_of_virtues = "Upon shattering, spawns 3 random elemental wisps of varying effects",
+            book_of_virtues = "Upon shattering, spawns 1 random elemental wisp of varying effect",
             book_of_belial = "50% chance to replace spawned {{SpiritOrb}} Spirit of Chaos with Spirit of Sacrilege"
         },
         spa = {
@@ -469,7 +469,7 @@ descriptions.Collectibles = {
             "#Quality {{Quality0}} items are split into random pickups",
             book_of_virtues = "Middle ring wisp#Cannot shoot tears#Splits Isaac's tears into 4 {{Collectible528}} angelic prism tears",
             book_of_belial = "30% chance for split items to be {{DevilRoom}} Devil items",
-            abyss = "Glowing pink locust that has a 20% chance to split enemies into 2 weaker enemies on contact."
+            abyss = "Glowing pink locust that has a 20% chance to split enemies into 2 weaker enemies on contact"
         },
         spa = {
             name = "Dado Prismático",
@@ -1098,23 +1098,23 @@ descriptions.Collectibles = {
     [enums.Collectibles.PRISMATIC_GOGGLES] = {
         en_us = {
             name = "Chromatic Prism",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
+            description = "Enemies have a 20% chance to spawn diffracted" ..
+            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
+            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
             "#{{Luck}} +2.5% chance per luck"
         },
         spa = {
             name = "Prism de Chromatic",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
+            description = "Enemies have a 20% chance to spawn diffracted" ..
+            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
+            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
             "#{{Luck}} +2.5% chance per luck"
         },
         ru = {
             name = "Kromatic Prism",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
+            description = "Enemies have a 20% chance to spawn diffracted" ..
+            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
+            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
             "#{{Luck}} +2.5% chance per luck"
         },
         pl = {
@@ -1126,49 +1126,49 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "Chromatic Prism",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
+            description = "Enemies have a 20% chance to spawn diffracted" ..
+            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
+            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
             "#{{Luck}} +2.5% chance per luck"
         },
         zh_cn = {
             name = "Chromatic Prism",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
+            description = "Enemies have a 20% chance to spawn diffracted" ..
+            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
+            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
             "#{{Luck}} +2.5% chance per luck"
         },
     },
     [enums.Collectibles.FINGORE] = {
         en_us = {
             name = "Scripulous Fingore",
-            description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            description = "{{Bait}} Points at random enemies in the room, marking them for 10 seconds at a time."..
+            "#Marked enemies are targetted by other enemies"
         },
         spa = {
             name = "Scripulous Fingore",
             description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            "#Marked enemies are targetted by other enemies"
         },
         ru = {
             name = "Scripulous Fingore",
             description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            "#Marked enemies are targetted by other enemies"
         },
         pl = {
             name = "Scripulous Fingore",
             description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            "#Marked enemies are targetted by other enemies"
         },
         ko_kr = {
             name = "Scripulous Fingore",
             description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            "#Marked enemies are targetted by other enemies"
         },
         zh_cn = {
             name = "Scripulous Fingore",
             description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            "#Marked enemies are targetted by other enemies"
         },
     },
     [enums.Collectibles.MIRROR_KEY] = {
@@ -1176,7 +1176,7 @@ descriptions.Collectibles = {
             name = "Mirror Key",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
-            "#{{Player10}} Isaac becomes the Lost for the room.".. --The NEW
+            "#{{Player10}} Isaac becomes the Lost for the room".. --The NEW
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
             book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
@@ -1203,7 +1203,7 @@ descriptions.Collectibles = {
             "#Lustrzane pokoje zawierają kopie wszystkich pickupów, przeszkód i przeciwników z oryginalnego pokoju" ..
             "#{{Player10}} Transformacja w Zagubionego podczas przebywania w lustrzanym pokoju" ..
             "#{{Warning}} Przedmioty nie są kopiowane" ..
-            "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot.",
+            "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot",
             book_of_belial = "↑ {{Damage}} +2.5 Obrażen w lustrzanym wymiarze",
         },
         ko_kr = {
@@ -1228,7 +1228,7 @@ descriptions.Collectibles = {
             name = "Mirror Key (Uncharged)",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
-            "#{{Player10}} Isaac becomes the Lost for the room."..
+            "#{{Player10}} Isaac becomes the Lost for the room"..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
             book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
@@ -1255,7 +1255,7 @@ descriptions.Collectibles = {
             "#Lustrzane pokoje zawierają kopie wszystkich pickupów, przeszkód i przeciwników z oryginalnego pokoju" ..
             "#{{Player10}} Transformacja w Zagubionego podczas przebywania w lustrzanym pokoju" ..
             "#{{Warning}} Przedmioty nie są kopiowane" ..
-            "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot.",
+            "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot",
             book_of_belial = "↑ {{Damage}} +2.5 Obrażen w lustrzanym wymiarze",
         },
         ko_kr = {
@@ -1842,19 +1842,19 @@ descriptions.Trinkets = {
     [enums.Trinkets.TRACK_ALT_PATH_UNLOCK] = {
         en_us = {
             name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, mausoleum, and corpse after defeating the floor boss.",
+            description = "Automatically unlocks the doors to downpour, mines, mausoleum, and corpse after defeating the floor boss",
         },
         spa = {
             name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss",
         },
         ru = {
             name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss",
         },
         pl = {
             name = "Przyrząd Specjalistyczny ds. Śledzenia Stanu Odblokowania Alternatywnego Zestawu Pięter",
-            description = "Automatycznie otwiera drzwi do Zalewu, Kopalni i Mauzoleum po pokonaniu bossa.",
+            description = "Automatycznie otwiera drzwi do Zalewu, Kopalni i Mauzoleum po pokonaniu bossa",
         },
         ko_kr = {
             name = "알트 루트 해금 여부 추적기",
@@ -1868,30 +1868,30 @@ descriptions.Trinkets = {
     [enums.Trinkets.RAINBOW_COOKIE] = {
         en_us = {
             name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            description = "10% Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup"
         },
         spa = {
             name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            description = "10% Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup"
         },
         ru = {
             name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            description = "10% Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup"
         },
         pl = {
             name = "Złote Ciasteczko",
@@ -1904,21 +1904,21 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            description = "10% Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup"
         },
         zh_cn = {
             name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            description = "10% Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup"
         },
     },
 }
@@ -2336,20 +2336,20 @@ descriptions.Cards = {
     [enums.Orbs.ORDER] = {
         en_us = {
             name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
+            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         spa = {
             name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
+            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         ru = {
             name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
+            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         pl = {
@@ -2360,14 +2360,14 @@ descriptions.Cards = {
         },
         ko_kr = {
             name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
+            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         zh_cn = {
             name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
+            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
     },
