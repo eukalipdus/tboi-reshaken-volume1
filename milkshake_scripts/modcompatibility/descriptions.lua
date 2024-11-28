@@ -257,15 +257,16 @@ descriptions.Collectibles = {
         en_us = {
             name = "Golden Shovel",
             description = "Digs up a golden chest and 2-4 pennies" ..
-            "#{{LadderRoom}} Opens up a golden trapdoor if used on a decorative floor tile. " ..
+            "#{{LadderRoom}} Opens up a golden trapdoor if used on a decorative floor tile" ..
             "#The trapdoor leads to an underground shop that sells various golden pickups and items from any pool",
             book_of_virtues = "Middle ring wisp#High HP wisp#10% chance for {{Collectible202}} Midas' Touch tears",
             book_of_belial = "Digs up 2 red chests and a black heart instead"
         },
         spa = {
             name = "Pala Dorada",
-            description = "Desentierra de 1 a 2 cofres dorados y un pickup dorado al azar" ..
-            "#{{LadderRoom}} Abre una trampilla de tarjeta de miembro si se usa en una baldosa decorativa del suelo",
+            description = "Desentierra un cofre dorado y 2-4 monedas" ..
+            "#{{LadderRoom}} Abre una trampilla dorada si se usa en una baldosa decorativa del suelo" ..
+            "#La trampilla lleva a una tienda subterránea que vende consumibles dorados y objetos de cualquier pool",
             book_of_virtues = "Anillo medio con mucha vida#10% de probabilidad de disparar lágrimas de {{Collectible202}} Toque de Midas"
         },
         ru = {
@@ -836,9 +837,8 @@ descriptions.Collectibles = {
         spa = {
             name = "Levítico",
             description = "{{SoulHeart}} Debe ser cargado usando corazones de alma" ..
-            "#{{EternalHeart}} +1 Corazón Eterno" ..
-            "#{{AngelRoom}} Usar el objeto antes de la pelea contra el jefe hace que la recompensa sea un objeto de ángel" ..
-            "#{{DevilRoom}} El objeto costará dinerp si se ha tomado un pacto con el diablo",
+            "#{{AngelRoom}} Lleva a Isaac a una Sala de Ángel única para el piso" ..
+            "#La sala contiene un objeto gratis y algunos consumibles a la venta",
             book_of_virtues = "Anillo interior con mucha vida#+10% {{AngelRoom}} de pacto de Ángel",
             abyss = "Langosta azul y brillante que puede generar rayos de luz que hace 3x el daño de Isaac"
         },
@@ -1108,11 +1108,11 @@ descriptions.Collectibles = {
             "#{{Luck}} +2.5% chance per luck"
         },
         spa = {
-            name = "Prism de Chromatic",
-            description = "Enemies have a 20% chance to spawn diffracted" ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
-            "#{{Luck}} +2.5% chance per luck"
+            name = "Prisma Cromático", -- who the fuck wrote prism de chromatic i will kill you
+            description = "Los enemigos tiene un 20% de generarse difractados" ..
+            "#Los enemigos difractados crean 3 rayos de luz arcoíris al morir" ..
+            "#Los rayos hacen 16 veces el daño de Isaac durante 4 tics" ..
+            "#{{Luck}} +2.5% de posibilidad por cada punto de suerte"
         },
         ru = {
             name = "Хроматическая призма",
@@ -1189,6 +1189,7 @@ descriptions.Collectibles = {
             name = "Llave de Espejo",
             description = "{{MirrorRoom}} Crea una puerta a la dimensión espejo en la pared, indicada por un contorno de puerta" ..
             "#Las habitaciones reflejadas regeneran todas los objetos, obstáculos y enemigos" ..
+            "#{{Player10}} Isaac se convierte en The Lost en la habitación" .. --El NUEVO
             "#{{Warning}} Los pedestales no se regeneran" ..
             "#{{BossRoom}} Permite volver a luchar contra el jefe para obtener una recompensa adicional",
             book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
@@ -1242,6 +1243,7 @@ descriptions.Collectibles = {
             name = "Llave de Espejo (Sin Cargar)",
             description = "{{MirrorRoom}} Crea una puerta a la dimensión espejo en la pared, indicada por un contorno de puerta" ..
             "#Las habitaciones reflejadas regeneran todas los objetos, obstáculos y enemigos" ..
+            "#{{Player10}} Isaac se convierte en The Lost en la habitación" .. --El NUEVO
             "#{{Warning}} Los pedestales no se regeneran" ..
             "#{{BossRoom}} Permite volver a luchar contra el jefe para obtener una recompensa adicional",
             book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
@@ -1417,9 +1419,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Amatista Premonitoria",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Premonición",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Premonición",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Premonición",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Premonición",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Premonición",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Premonición",
         },
         ru = {
             name = "Осколок Аметиста",
@@ -1464,9 +1469,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Rubí Infernal",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Infernal",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus Infernales",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus Infernales",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Infernal",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus Infernales",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus Infernales",
         },
         ru = {
             name = "Осколок Рубина",
@@ -1511,9 +1519,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Turmalina Conductora",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Conductividad",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Conductividad",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Conductividad",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Conductividad",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Conductividad",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Conductividad",
         },
         ru = {
             name = "Осколок Турмалина",
@@ -1558,9 +1569,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Esmeralda Druídica",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Druídico",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus Druídicos",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus Druídicos",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu Druídico",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus Druídicos",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus Druídicos",
         },
         ru = {
             name = "Осколок Изумруда",
@@ -1605,9 +1619,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Peridoto Virulento",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Virulencia",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Virulencia",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Virulencia",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Virulencia",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Virulencia",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Virulencia",
         },
         ru = {
             name = "Осколок Перидота",
@@ -1652,9 +1669,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Granate Sacrílego",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Sacrilegio",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Sacrilegio",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Sacrilegio",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Sacrilegio",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Sacrilegio",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Sacrilegio",
         },
         ru = {
             name = "Осколок Граната",
@@ -1699,9 +1719,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Ónix Renacido",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Renacido",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus del Renacido",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus del Renacido",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Renacido",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus del Renacido",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus del Renacido",
         },
         ru = {
             name = "Осколок Оникса",
@@ -1746,9 +1769,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Jacinto Sagrado",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Salvación",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Salvación",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Salvación",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Salvación",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Salvación",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Salvación",
         },
         ru = {
             name = "Осколок Алмаза",
@@ -1793,9 +1819,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Zafiro Torrencial",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Diluvio",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus del Diluvio",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus del Diluvio",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu del Diluvio",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus del Diluvio",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus del Diluvio",
         },
         ru = {
             name = "Осколок Сапфира",
@@ -1840,9 +1869,12 @@ descriptions.Trinkets = {
         },
         spa = {
             name = "Ámbar Terrestre",
-            description = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Terrastrium",
-            double = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Terrastrium",
-            triple = "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Terrastrium",
+            description = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear un Espíritu de Terrastrium",
+            double = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}1-2 {{CR}}Espíritus de Terrastrium",
+            triple = "Las rocas marcadas se cubren de gemas" ..
+            "{{SpiritOrb}} Destruir rocas marcadas tiene un 75% de probabilidad de crear {{ColorGold}}2-3 {{CR}}Espíritus de Terrastrium",
         },
         ru = {
             name = "Осколок Янтаря",
@@ -1881,8 +1913,8 @@ descriptions.Trinkets = {
             description = "Automatically unlocks the doors to downpour, mines, mausoleum, and corpse after defeating the floor boss",
         },
         spa = {
-            name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss",
+            name = "Seguimiento del Logro del Camino Alternativo",
+            description = "Desbloquea automáticamente las puertas al aguacero, las minas y el mausoleo tras derrotar al jefe",
         },
         ru = {
             name = "Трекер разблокировки альтернативного пути",
@@ -1912,13 +1944,13 @@ descriptions.Trinkets = {
             "#The secondary effect of rainbow pennies is doubled on pickup"
         },
         spa = {
-            name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies" ..
-            "#The secondary effect of rainbow pennies is doubled on pickup",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
-            "#The secondary effect of rainbow pennies is doubled on pickup",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
-            "#The secondary effect of rainbow pennies is doubled on pickup"
+            name = "Galleta Arcoíris",
+            description = "Las monedas tienen un 10% de probabilidad de transformarse en monedas arcoíris" ..
+            "#Duplica el efecto secundario de las monedas arcoíris",
+            double = "Las monedas tienen un {{ColorGold}}15% {{CR}} de probabilidad de transformarse en monedas arcoíris" ..
+            "#Duplica el efecto secundario de las monedas arcoíris",
+            triple = "Las monedas tienen un {{ColorGold}}20% {{CR}} de probabilidad de transformarse en monedas arcoíris" ..
+            "#Duplica el efecto secundario de las monedas arcoíris"
         },
         ru = {
             name = "Радужное печенье",
@@ -2377,10 +2409,10 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         spa = {
-            name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
-            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
-            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
+            name = "Espíritu de Orden",
+            description = "{{SpiritOrb}} Puede ser transformado en cualquier orbe espiritual" ..
+            "#El orbe seleccionado puede ser cambiado usando el botón de soltar ({{ButtonRT}})",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Duplica el efecto elegido"
         },
         ru = {
             name = "Дух Порядка",
@@ -2449,7 +2481,7 @@ local BRENDA = EntityType.ENTITY_SLOT .. "." .. MilkshakeVol1.enums.Slots.SPIRIT
 descriptions.Entities = {
     [BRENDA] = {
         en_us = {
-            name = "Spirit Kiln", -- Kiln
+            name = "Spirit Kiln", -- Kiln bitch
             description = "{{Blank}} {{HalfSoulHeart}} Takes half a soul heart in exchange for various rewards:" ..
             "#{{SpiritOrb}} A random Spirit Orb" ..
             "#{{Burning}} A random elemental wisp" ..
@@ -2458,12 +2490,12 @@ descriptions.Entities = {
             "#{{Collectible"..enums.Collectibles.FRAGILE_MIRROR .."}} Low chance for a random glass item after 3 hearts"
         },
         spa = {
-            name = "Brenda la Forja Espiritual",
-            description = "{{HalfSoulHeart}}Paga medio corazón de alma para conseguir recompensas:" ..
+            name = "Forja Espiritual",
+            description = "{{Blank}} {{HalfSoulHeart}} Paga medio corazón de alma para conseguir recompensas:" ..
             "#{{SpiritOrb}} Un orbe espiritual aleatorio" ..
             "#{{Burning}} Un fuego fatuo elemental aleatorio" ..
-            "#{{Trinket}} Una baratija de cristal o de gema aleatoria" ..
-            "#{{Rune}} Una piedra de alma aleatoria"
+            "#{{Rune}} Una piedra de alma aleatoria" ..
+            "#{{Trinket".. 139 .."}} Una baratija de cristal o de gema aleatoria"
         },
         pl = {
             name = "Kuźnia Dusz",
