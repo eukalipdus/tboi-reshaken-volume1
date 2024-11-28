@@ -1123,7 +1123,7 @@ descriptions.Collectibles = {
             "#{{Luck}} +2.5% шанса за удачу"
         },
         pl = {
-            name = "Chromatic Primski",
+            name = "Chromatyczny Pryzmat",
             description = "Nowi przeciwnicy mają 20% na zostanie rozszczepionymi" ..
             "#Rozszcepienie przeciwnicy wystrzeliwują 3 tęczowy promienie po śmierci" ..
             "#Promienie zadają 16x obrażeń właściciela rozłożonych w 4 instancjach" ..
@@ -1440,8 +1440,10 @@ descriptions.Trinkets = {
             name = "Odłamek Ametystu",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Jasnowidzenia po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Jasnowidzenia po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Jasnowidzenia po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Jasnowidzenia po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Jasnowidzenia po zniszczeniu",
         },
         ko_kr = {
             name = "예지의 자수정",
@@ -1490,8 +1492,10 @@ descriptions.Trinkets = {
             name = "Odłamek Rubinu",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Pożogi po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Pożogi po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Pożogi po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Pożogi po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Pożogi po zniszczeniu",
         },
         ko_kr = {
             name = "지옥의 루비",
@@ -1540,8 +1544,10 @@ descriptions.Trinkets = {
             name = "Odłamek Turmalinu",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Elektryczności po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Elektryczności po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Elektryczności po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Elektryczności po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Elektryczności po zniszczeniu",
         },
         ko_kr = {
             name = "전도의 전기석",
@@ -1590,8 +1596,10 @@ descriptions.Trinkets = {
             name = "Odłamek Szmaragdu",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Przyrody po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Przyrody po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Przyrody po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Przyrody po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Przyrody po zniszczeniu",
         },
         ko_kr = {
             name = "드루이드 에메랄드",
@@ -1640,8 +1648,10 @@ descriptions.Trinkets = {
             name = "Odłamek Perydotu",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Skażenia po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Skażenia po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Skażenia po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Skażenia po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Skażenia po zniszczeniu",
         },
         ko_kr = {
             name = "맹독의 페리도트",
@@ -1690,8 +1700,10 @@ descriptions.Trinkets = {
             name = "Odłamek Granatu",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Świętokradztwa po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Świętokradztwa po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Świętokradztwa po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Świętokradztwa po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Świętokradztwa po zniszczeniu",
         },
         ko_kr = {
             name = "천벌의 가넷",
@@ -1740,8 +1752,10 @@ descriptions.Trinkets = {
             name = "Odłamek Onyksu",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Zaświatów po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Zaświatów po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Zaświatów po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Zaświatów po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Zaświatów po zniszczeniu",
         },
         ko_kr = {
             name = "망령의 오닉스",
@@ -1790,8 +1804,10 @@ descriptions.Trinkets = {
             name = "Odłamek Diamentu",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Zbawienia po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Zbawienia po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Zbawienia po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Zbawienia po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Zbawienia po zniszczeniu",
         },
         ko_kr = {
             name = "신성의 금강석",
@@ -1840,8 +1856,10 @@ descriptions.Trinkets = {
             name = "Odłamek Szafiru",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Potopu po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Potopu po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Potopu po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Potopu po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Potopu po zniszczeniu",
         },
         ko_kr = {
             name = "흐름의 사파이어",
@@ -1890,8 +1908,10 @@ descriptions.Trinkets = {
             name = "Odłamek Bursztynu",
             description = "Oznaczone skały są pokryte kryształami" ..
             "#{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie Widma Podziemi po zniszczeniu",
-            double = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Podziemi po zniszczeniu",
-            triple = "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Podziemi po zniszczeniu",
+            double = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}1-2 {{CR}}Widma Podziemi po zniszczeniu",
+            triple = "Oznaczone skały są pokryte kryształami" ..
+            "{{SpiritOrb}} Oznaczone skały mają 75% szans na upuszczenie {{ColorGold}}2-3 {{CR}}Widma Podziemi po zniszczeniu",
         },
         ko_kr = {
             name = "땅의 호박",
