@@ -8,6 +8,7 @@ local BEGIN_FLASH = 30 * 5
 local PROJECTILE_REFLECTION_RADIUS = 135
 local PROJECTILE_REFLECTION_INTERVAL = 10
 local FAKE_CENSER_RADIUS = 70
+local BOSS_SLOW_TIME = 30 * 3
 local FLASH_VISIBLE = 1
 local FLASH_HIDE = 2
 local FLASH_FRAMES = 5
@@ -186,6 +187,8 @@ local function FakeCenserEffect(player)
     for _, enemy in ipairs(nearEnemies) do
         if not enemy:IsBoss() then
             enemy:AddSlowing(EntityRef(player), 3, 1, Color(1, 1, 1))
+        else
+            enemy:AddSlowing(EntityRef(player), BOSS_SLOW_TIME, 1, Color(1, 1, 1))
         end
     end
 end

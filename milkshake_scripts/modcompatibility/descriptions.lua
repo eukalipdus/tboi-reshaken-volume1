@@ -256,22 +256,24 @@ descriptions.Collectibles = {
     [enums.Collectibles.GOLDEN_SHOVEL] = {
         en_us = {
             name = "Golden Shovel",
-            description = "Digs up a golden chest and 2-4 pennies." ..
+            description = "Digs up a golden chest and 2-4 pennies" ..
             "#{{LadderRoom}} Opens up a golden trapdoor if used on a decorative floor tile. " ..
-            "#The trapdoor leads to an underground shop that sells various golden pickups and items from any pool.",
+            "#The trapdoor leads to an underground shop that sells various golden pickups and items from any pool",
             book_of_virtues = "Middle ring wisp#High HP wisp#10% chance for {{Collectible202}} Midas' Touch tears",
             book_of_belial = "Digs up 2 red chests and a black heart instead"
         },
         spa = {
             name = "Pala Dorada",
-            description = "Desentierra de 1 a 2 cofres dorados y un pickup dorado al azar." ..
-            "#{{LadderRoom}} Abre una trampilla de tarjeta de miembro si se usa en una baldosa decorativa del suelo.",
+            description = "Desentierra de 1 a 2 cofres dorados y un pickup dorado al azar" ..
+            "#{{LadderRoom}} Abre una trampilla de tarjeta de miembro si se usa en una baldosa decorativa del suelo",
             book_of_virtues = "Anillo medio con mucha vida#10% de probabilidad de disparar lágrimas de {{Collectible202}} Toque de Midas"
         },
         ru = {
             name = "Золотая Зопата",
-            description = "Выкапывает 1-2 золотых сундука и случайный золотой предмет" ..
-            "#{{LadderRoom}} Создаёт люк к магазину членской карты, если использовано на клетке пола с декорацией (трава, маленькие камешки, бумажки, и т.д.)",
+            description = "Выкапывает золотой сундук и 2-4 монеты" ..
+            "#{{LadderRoom}} Создает золотой люк, если использовано на клетке пола с декорацией" ..
+            "#Люк ведет в подземный магазин, где продаются золотые подбираемые предметы и артефакты из любого пула",
+            book_of_belial = "Выкапывает 2 красных сундука и черное сердце",
             book_of_virtues = "Огонёк среднего кольца#Огонёк с высоким здоровьем#10% шанс выстрелить слезы с эффектом {{Collectible202}} Прикосновения Мидаса"
         },
         pl = {
@@ -332,14 +334,14 @@ descriptions.Collectibles = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
             "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destroyed machines" ..
-            "#\1 Using a spirit orb starts a short rhythm mini game." ..
+            "#\1 Using a spirit orb starts a short rhythm mini game" ..
             "#{{Blank}} Successful completion activates the spirit orb with double effect",
         },
         spa = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% de probabilidad de que la recompensa por completar la habitación sea un orbe espiritual aleatorio" ..
             "#{{SpiritOrb}} Posibilidad de obtener un orbe espiritual adicional de cofres, rocas marcadas y al destruir máquinas" ..
-            "#\1 Usar un orbe espiritual inicia un minijuego de ritmo corto." ..
+            "#\1 Usar un orbe espiritual inicia un minijuego de ritmo corto" ..
             "#{{Blank}} Completarlo con éxito activa el orbe espiritual con efecto doble",
         },
         ru = {
@@ -423,7 +425,7 @@ descriptions.Collectibles = {
             name = "Shattered Orb",
             description = "Can be thrown at enemies to capture their soul" ..
             "#{{SpiritOrb}} Captured enemies are turned into spirit orbs corresponding to their soul's element",
-            book_of_virtues = "Upon shattering, spawns 3 random elemental wisps of varying effects",
+            book_of_virtues = "Upon shattering, spawns a random elemental wisp of varying effect",
             book_of_belial = "50% chance to replace spawned {{SpiritOrb}} Spirit of Chaos with Spirit of Sacrilege"
         },
         spa = {
@@ -437,7 +439,7 @@ descriptions.Collectibles = {
             name = "Расколотая Сфера",
             description = "Можно бросить во врагов, чтобы захватить их душу" ..
             "#{{SpiritOrb}} Захваченные враги превращаются в сферы духов с соответствующим им элементом души",
-            book_of_virtues = "При разрушении создает 3 случайных элементальных огонька с различными эффектами",
+            book_of_virtues = "При разрушении создает случайную элементальный огонёк с различными эффектами",
             book_of_belial = "50% шанс заменить сферы {{SpiritOrb}} Духа Хаоса на Духа Святотатства"
         },
         pl = {
@@ -467,7 +469,7 @@ descriptions.Collectibles = {
             "#Quality {{Quality0}} items are split into random pickups",
             book_of_virtues = "Middle ring wisp#Cannot shoot tears#Splits Isaac's tears into 4 {{Collectible528}} angelic prism tears",
             book_of_belial = "30% chance for split items to be {{DevilRoom}} Devil items",
-            abyss = "Glowing pink locust that has a 20% chance to split enemies into 2 weaker enemies on contact."
+            abyss = "Glowing pink locust that has a 20% chance to split enemies into 2 weaker enemies on contact"
         },
         spa = {
             name = "Dado Prismático",
@@ -481,7 +483,8 @@ descriptions.Collectibles = {
             description = "Разделяет предметы в комнате на два пьедестала с качеством меньше на 1" ..
             "#Предметы с качеством {{Quality0}} разделяются на случайные расходники",
             book_of_virtues = "Огоньки среднего кольца#Не может стрелять#Разделяет слезы Исаака на 4 слезы {{Collectible528}} ангельской призмы",
-            book_of_belial = "С вероятностью 30% разделенные предметы будут предметами {{DevilRoom}} дьявола"
+            book_of_belial = "С вероятностью 30% разделенные предметы будут предметами {{DevilRoom}} дьявола",
+            abyss = "Светящаяся розовая саранча, которая с 20% шансом разделяет врагов на двух более слабых врагов при контакте"
         },
         pl = {
             name = "Pryzmatyczna Kostka",
@@ -754,7 +757,7 @@ descriptions.Collectibles = {
         ru = {
             name = "Горшок Золота",
             description = "Преобразует все бомбы, ключи и большинство монет в радужные монеты" ..
-            "#{{Trinket52}} Радужные монеты активируют эффект соответствующих им безделушек",
+            "#{{Trinket52}} Радужные монеты активируют эффект соответствующих им брелоков",
         },
         pl = {
             name = "Kociołek Złota",
@@ -841,10 +844,9 @@ descriptions.Collectibles = {
         },
         ru = {
             name = "Книга Левит",
-            description = "{{SoulHeart}} Заряжается при подборе сердец души" ..
-            "#{{EternalHeart}} +1 Вечное сердце" ..
-            "#{{AngelRoom}} Использование перед битвой с боссом заставляет его наградить предметом ангела" ..
-            "#{{DevilRoom}} Предмет ангела будет стоить денег, если ранее была заключена сделка с дьяволом",
+            description = "{{SoulHeart}} Заряжается подбирая синие сердца" ..
+            "#{{AngelRoom}} При использоавний переносит Исаака в уникальную, для текущего этажа, комнату Ангела" ..
+            "#В комнате ангела продаются подбираемые предметы и бесплатный ангельский артефакт",
             book_of_virtues = "Огонёк внутренного кольца#Огонёк с высоким здоровьем#+10% {{AngelRoom}} шанс на ангела за каждый огонёк",
             abyss = "Синяя светящаяся саранча, которая может бить лучами света, наносящие тройной урон Исаака",
         },
@@ -1038,7 +1040,7 @@ descriptions.Collectibles = {
             name = "Радужный Фрагмент",
             description = "\1 +1 Удача" ..
             "#Создает 4 радужных монеты" ..
-            "#{{Trinket52}} Радужные монеты активируют эффект соответствующих им безделушек",
+            "#{{Trinket52}} Радужные монеты активируют эффект соответствующих им брелоков",
         },
         pl = {
             name = "Kawałek Tęczy",
@@ -1100,24 +1102,24 @@ descriptions.Collectibles = {
     [enums.Collectibles.PRISMATIC_GOGGLES] = {
         en_us = {
             name = "Chromatic Prism",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
+            description = "Enemies have a 20% chance to spawn diffracted" ..
+            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
+            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
             "#{{Luck}} +2.5% chance per luck"
         },
         spa = {
             name = "Prism de Chromatic",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
+            description = "Enemies have a 20% chance to spawn diffracted" ..
+            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
+            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
             "#{{Luck}} +2.5% chance per luck"
         },
         ru = {
-            name = "Kromatic Prism",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
-            "#{{Luck}} +2.5% chance per luck"
+            name = "Хроматическая призма",
+            description = "Враги имеют 20% шанс появиться в состоянии {{ColorRainbow}}преломления{{CR}}" ..
+            "#Преломленные враги создают 3 луча радужного света после смерти" ..
+            "#Лазеры наносят x16 урона Исаака за 4 тика" ..
+            "#{{Luck}} +2.5% шанса за удачу"
         },
         pl = {
             name = "Chromatic Primski",
@@ -1128,34 +1130,34 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "Chromatic Prism",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
+            description = "Enemies have a 20% chance to spawn diffracted" ..
+            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
+            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
             "#{{Luck}} +2.5% chance per luck"
         },
         zh_cn = {
             name = "Chromatic Prism",
-            description = "Enemies have a 20% chance to spawn diffracted." ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death." ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks." ..
+            description = "Enemies have a 20% chance to spawn diffracted" ..
+            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
+            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
             "#{{Luck}} +2.5% chance per luck"
         },
     },
     [enums.Collectibles.FINGORE] = {
         en_us = {
             name = "Scripulous Fingore",
-            description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            description = "{{Bait}} Points at random enemies in the room, marking them for 10 seconds at a time."..
+            "#Marked enemies are targetted by other enemies"
         },
         spa = {
             name = "Scripulous Fingore",
             description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            "#Marked enemies are targetted by other enemies"
         },
         ru = {
             name = "Scripulous Fingore",
-            description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            description = "{{Bait}} Указывает на случайного врага в комнате и отмечает его на 10 секунд"..
+            "#Враги с меткой становятся целью других врагов"
         },
         pl = {
             name = "Skripulatny Palcioch",
@@ -1165,26 +1167,26 @@ descriptions.Collectibles = {
         ko_kr = {
             name = "Scripulous Fingore",
             description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            "#Marked enemies are targetted by other enemies"
         },
         zh_cn = {
             name = "Scripulous Fingore",
             description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies."
+            "#Marked enemies are targetted by other enemies"
         },
     },
-    [enums.Collectibles.UNCHARGED_MIRROR_KEY] = {
+    [enums.Collectibles.MIRROR_KEY] = {
         en_us = {
-            name = "Mirror Key (Uncharged)",
+            name = "Mirror Key",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
-            "#{{Player10}} Isaac becomes the Lost for the room.",
+            "#{{Player10}} Isaac becomes the Lost for the room".. --The NEW
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
             book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
         },
         spa = {
-            name = "Llave de Espejo (Sin Cargar)",
+            name = "Llave de Espejo",
             description = "{{MirrorRoom}} Crea una puerta a la dimensión espejo en la pared, indicada por un contorno de puerta" ..
             "#Las habitaciones reflejadas regeneran todas los objetos, obstáculos y enemigos" ..
             "#{{Warning}} Los pedestales no se regeneran" ..
@@ -1192,31 +1194,32 @@ descriptions.Collectibles = {
             book_of_belial = "↑ {{Damage}} +2.5 Daño mientras Isaac está en la dimensión espejo",
         },
         ru = {
-            name = "Зеркальный Ключ (Незаряженный)",
+            name = "Зеркальный Ключ",
             description = "{{MirrorRoom}} Один раз за комнату, можно создать зеркальную дверь на стене, обозначенную контуром двери" ..
             "#Зеркальные комнаты воссоздают все предметы, препятствия и врагов" ..
+            "#{{Player10}} Исаак становится потерянным на текущую комнату".. --The NEW
             "#{{Warning}} Пьедесталы предметов не воссоздаются" ..
             "#{{BossRoom}} Позволяет сразиться с боссом этажа и получить дополнительную награду",
             book_of_belial = "↑ {{Damage}} +2.5 урона в зеркальном мире",
         },
         pl = {
-            name = "Lusztrzany Klucz (Rozładowany)",
+            name = "Lustrzany Klucz",
             description = "{{MirrorRoom}} Raz na pokój może stworzyć wejście do lustrzanego pokoju poprzez stworzenie drzwi na pustej ścianie" ..
             "#Lustrzane pokoje zawierają kopie wszystkich pickupów, przeszkód i przeciwników z oryginalnego pokoju" ..
             "#{{Player10}} Transformacja w Zagubionego podczas przebywania w lustrzanym pokoju" ..
             "#{{Warning}} Przedmioty nie są kopiowane" ..
-            "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot.",
+            "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot",
             book_of_belial = "↑ {{Damage}} +2.5 Obrażen w lustrzanym wymiarze",
         },
         ko_kr = {
             name = "거울 열쇠",
-            description = "{{MirrorRoom}} 문 테두리 근처에서 사용 시 사용한 방과 같은 구조를 가진 거울방이 생성됩니다.(이 방에서 이미 사용됨)" ..
+            description = "{{MirrorRoom}} 문 테두리 근처에서 사용 시 사용한 방과 같은 구조를 가진 거울방이 생성됩니다.(방 당 1회)" ..
             "#{{Warning}} 아이템은 생성되지 않습니다." ..
             "#{{BossRoom}} 보스방의 경우 다시 클리어할 수 있으며 보상을 추가로 드랍합니다.",
             book_of_belial = "↑ 거울방 안에서 {{DamageSmall}}공격력 +2.5",
         },
         zh_cn = {
-            name = "镜像密钥(未充能)",
+            name = "镜像密钥",
             description =
                 "{{MirrorRoom}} 一个房间，如果可以在墙上创建镜像的门，出现门的轮廓" ..
                 "#镜像房间重新生成所有掉落物、障碍物和敌人" ..
@@ -1230,6 +1233,7 @@ descriptions.Collectibles = {
             name = "Mirror Key (Uncharged)",
             description = "{{MirrorRoom}} Once a room, can create a mirror dimension door on the wall, indicated by a door outline" ..
             "#Mirrored rooms regenerate all pickups, obstacles, and enemies" ..
+            "#{{Player10}} Isaac becomes the Lost for the room"..
             "#{{Warning}} Item pedestals are not regenerated" ..
             "#{{BossRoom}} Allows refighting the floor boss for an extra reward",
             book_of_belial = "↑ {{Damage}} +2.5 Damage while in the mirror world",
@@ -1246,6 +1250,7 @@ descriptions.Collectibles = {
             name = "Зеркальный Ключ (Незаряженный)",
             description = "{{MirrorRoom}} Один раз за комнату, можно создать зеркальную дверь на стене, обозначенную контуром двери" ..
             "#Зеркальные комнаты воссоздают все предметы, препятствия и врагов" ..
+            "#{{Player10}} Исаак становится потерянным на текущую комнату".. --The NEW
             "#{{Warning}} Пьедесталы предметов не воссоздаются" ..
             "#{{BossRoom}} Позволяет сразиться с боссом этажа и получить дополнительную награду",
             book_of_belial = "↑ {{Damage}} +2.5 урона в зеркальном мире",
@@ -1254,8 +1259,9 @@ descriptions.Collectibles = {
             name = "Lusztrzany Klucz (Rozładowany)",
             description = "{{MirrorRoom}} Raz na pokój może stworzyć wejście do lustrzanego pokoju poprzez stworzenie drzwi na pustej ścianie" ..
             "#Lustrzane pokoje zawierają kopie wszystkich pickupów, przeszkód i przeciwników z oryginalnego pokoju" ..
+            "#{{Player10}} Transformacja w Zagubionego podczas przebywania w lustrzanym pokoju" ..
             "#{{Warning}} Przedmioty nie są kopiowane" ..
-            "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot.",
+            "#{{BossRoom}} Pozwala na ponowną walkę z bossem piętra, do daje dodatkowy przedmiot",
             book_of_belial = "↑ {{Damage}} +2.5 Obrażen w lustrzanym wymiarze",
         },
         ko_kr = {
@@ -1417,9 +1423,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Аметиста",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Ясновидения",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Ясновидения",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Ясновидения",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Ясновидения",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Ясновидения",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Ясновидения",
         },
         pl = {
             name = "Odłamek Ametystu",
@@ -1461,9 +1470,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Рубина",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Инферно",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Инферно",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Инферно",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Инферно",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Инферно",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Инферно",
         },
         pl = {
             name = "Odłamek Rubinu",
@@ -1505,9 +1517,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Турмалина",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Электропотока",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Электропотока",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Электропотока",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Электропотока",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Электропотока",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Электропотока",
         },
         pl = {
             name = "Odłamek Turmalinu",
@@ -1549,9 +1564,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Изумруда",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Друидизма",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Друидизма",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Друидизма",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Друидизма",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Друидизма",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Друидизма",
         },
         pl = {
             name = "Odłamek Szmaragdu",
@@ -1593,9 +1611,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Перидота",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Ядовитости",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Ядовитости",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Ядовитости",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Ядовитости",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Ядовитости",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Ядовитости",
         },
         pl = {
             name = "Odłamek Perydotu",
@@ -1637,9 +1658,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Граната",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Святотатства",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Святотатства",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Святотатства",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Святотатства",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Святотатства",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Святотатства",
         },
         pl = {
             name = "Odłamek Granatu",
@@ -1681,9 +1705,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Оникса",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Возврата",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Возврата",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Возврата",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Возврата",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Возврата",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Возврата",
         },
         pl = {
             name = "Odłamek Onyksu",
@@ -1725,9 +1752,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Алмаза",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Спасения",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Спасения",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Спасения",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Спасения",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Спасения",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Спасения",
         },
         pl = {
             name = "Odłamek Diamentu",
@@ -1769,9 +1799,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Сапфира",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Потопа",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Потопа",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Потопа",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Потопа",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духи Потопа",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духи Потопа",
         },
         pl = {
             name = "Odłamek Szafiru",
@@ -1813,9 +1846,12 @@ descriptions.Trinkets = {
         },
         ru = {
             name = "Осколок Янтаря",
-            description = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Террастриума",
-            double = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духа Террастриума",
-            triple = "{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духа Террастриума",
+            description = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадет Дух Террастриума",
+            double = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}1-2 {{CR}}Духа Террастриума",
+            triple = "Помеченные камни имеют уникальный внешний вид с драгоценными камнями"..
+            "#{{SpiritOrb}} При уничтожении отмеченных камней с вероятностью 75% выпадут {{ColorGold}}2-3 {{CR}}Духа Террастриума",
         },
         pl = {
             name = "Odłamek Bursztynu",
@@ -1842,19 +1878,19 @@ descriptions.Trinkets = {
     [enums.Trinkets.TRACK_ALT_PATH_UNLOCK] = {
         en_us = {
             name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, mausoleum, and corpse after defeating the floor boss.",
+            description = "Automatically unlocks the doors to downpour, mines, mausoleum, and corpse after defeating the floor boss",
         },
         spa = {
             name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss",
         },
         ru = {
-            name = "Alt Path Unlock Tracker",
-            description = "Automatically unlocks the doors to downpour, mines, and mausoleum after defeating the boss.",
+            name = "Трекер разблокировки альтернативного пути",
+            description = "Автоматически открывает двери в водосток, шахты, мавзолей и труп после победы над боссом этажа",
         },
         pl = {
             name = "Przyrząd Specjalistyczny ds. Śledzenia Stanu Odblokowania Alternatywnego Zestawu Pięter",
-            description = "Automatycznie otwiera drzwi do Zalewu, Kopalni i Mauzoleum po pokonaniu bossa.",
+            description = "Automatycznie otwiera drzwi do Zalewu, Kopalni i Mauzoleum po pokonaniu bossa",
         },
         ko_kr = {
             name = "알트 루트 해금 여부 추적기",
@@ -1868,30 +1904,30 @@ descriptions.Trinkets = {
     [enums.Trinkets.RAINBOW_COOKIE] = {
         en_us = {
             name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            description = "10% Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup"
         },
         spa = {
             name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            description = "10% Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup"
         },
         ru = {
-            name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            name = "Радужное печенье",
+            description = "10% шанс заменить монеты на случайные радужные монеты" ..
+            "#Вторичный эффект радужных монет удваивается при подборе",
+            double = "{{ColorGold}}15%{{CR}} шанс заменить монеты на случайные радужные монеты" ..
+            "#Вторичный эффект радужных монет удваивается при подборе",
+            triple = "{{ColorGold}}20%{{CR}} шанс заменить монеты на случайные радужные монеты" ..
+            "#Вторичный эффект радужных монет удваивается при подборе"
         },
         pl = {
             name = "Złote Ciasteczko",
@@ -1904,21 +1940,21 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            description = "10% Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup"
         },
         zh_cn = {
             name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup.",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies." ..
-            "#The secondary effect of rainbow pennies is doubled on pickup."
+            description = "10% Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup",
+            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            "#The secondary effect of rainbow pennies is doubled on pickup"
         },
     },
 }
@@ -2336,21 +2372,21 @@ descriptions.Cards = {
     [enums.Orbs.ORDER] = {
         en_us = {
             name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
+            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         spa = {
             name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
+            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         ru = {
-            name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
-            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
+            name = "Дух Порядка",
+            description = "{{SpiritOrb}} Можно использовать как любую сферу духа" ..
+            "#Сферу духа можно переключать через кнопку сброса, CTRL ({{ButtonRT}})",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Двойной эффект выбранной сферы духа"
         },
         pl = {
             name = "Widmo Porządku",
@@ -2360,14 +2396,14 @@ descriptions.Cards = {
         },
         ko_kr = {
             name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
+            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
         zh_cn = {
             name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb." ..
-            "#Spirit Orbs can be chosen with the drop button ({{ButtonRT}})",
+            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
+            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
         },
     },
@@ -2440,11 +2476,13 @@ descriptions.Entities = {
         },
         ru = {
             name = "Духовка", -- joke, real translation is Духовая печька Бренда
-            description = "{{HalfSoulHeart}}Отнимает половинку сердца души взамен различным наградам:" ..
+            description = "{{HalfSoulHeart}}Требует половину синего сердца для взаимодействия" ..
+            "#{{Blank}} Возможные награды:" ..
             "#{{SpiritOrb}} Случайная сфера духов" ..
             "#{{Burning}} Случайный элементальный огонёк" ..
-            "#{{Trinket}} Случайная стеклянная или драгоценная безделушка" ..
-            "#{{Rune}} Случайный камень души"
+            "#{{Rune}} Случайный камень души" ..
+            "#{{Trinket".. 139 .."}} Случайный стеклянный или драгоценный брелок" ..
+            "#{{Collectible"..enums.Collectibles.FRAGILE_MIRROR .."}} Низкий шанс получить случайный стеклянный артефакт после 3 сердец"
         },
         ko_kr = {
             name = "영혼 가마", -- Kiln
