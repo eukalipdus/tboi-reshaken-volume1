@@ -425,7 +425,7 @@ descriptions.Collectibles = {
             name = "Shattered Orb",
             description = "Can be thrown at enemies to capture their soul" ..
             "#{{SpiritOrb}} Captured enemies are turned into spirit orbs corresponding to their soul's element",
-            book_of_virtues = "Upon shattering, spawns 1 random elemental wisp of varying effect",
+            book_of_virtues = "Upon shattering, spawns a random elemental wisp of varying effect",
             book_of_belial = "50% chance to replace spawned {{SpiritOrb}} Spirit of Chaos with Spirit of Sacrilege"
         },
         spa = {
