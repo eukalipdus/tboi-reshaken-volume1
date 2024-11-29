@@ -2516,7 +2516,8 @@ descriptions.Entities = {
             "#{{SpiritOrb}} Un orbe espiritual aleatorio" ..
             "#{{Burning}} Un fuego fatuo elemental aleatorio" ..
             "#{{Rune}} Una piedra de alma aleatoria" ..
-            "#{{Trinket".. 139 .."}} Una baratija de cristal o de gema aleatoria"
+            "#{{Trinket".. 139 .."}} Una baratija de cristal o de gema aleatoria" ..
+            "#{{Collectible"..enums.Collectibles.FRAGILE_MIRROR .."}} Baja probabilidad de soltar un objeto de cristal aleatorio tras 3 corazones"
         },
         pl = {
             name = "Kuźnia Dusz",
