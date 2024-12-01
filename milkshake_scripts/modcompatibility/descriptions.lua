@@ -165,7 +165,7 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "주사위 주사위",
-            description = "사용 시 랜덤한 주사위방 효과를 발동합니다.",
+            description = "사용 시 랜덤 주사위방 효과를 발동합니다.",
         },
         zh_cn = {
             name = "骰骰",
@@ -202,7 +202,7 @@ descriptions.Collectibles = {
             name = "폭탄 플라워",
             description = "{{Burning}} 30%의 확률로 적에게 달라붙는 씨앗 공격이 나갑니다." ..
             "#{{LuckSmall}} 행운 20+ 이상일 때 50% 확률" ..
-            "#적에게 달라붙은 씨앗은 4초 후 공격력 x6 +35의 폭발 피해를 줍니다. (자해 없음)",
+            "#달라붙은 씨앗은 4초 후 적에게 공격력 x6 +35의 폭발 피해를 줍니다. (자해 없음)",
             abyss = "공격한 적에게 10%의 확률로 {{Burning}}폭발성 씨앗을 심습니다."
         },
         zh_cn = {
@@ -243,7 +243,7 @@ descriptions.Collectibles = {
             description = "사용 시 아군 Globin을 소환합니다." ..
             "#스테이지에 따라서 확률적으로 소환되는 Globin의 종류가 달라집니다." ..
             "#{{Blank}} (최대 4마리)",
-            book_of_virtues = "{{ColorYellow}}중앙 x1{{CR}}/{{Heart}}:3#일반 눈물을 발사합니다. ({{DamageSmall}}:3)#불꽃이 꺼지면 50%의 확률로 다시 켜집니다."
+            book_of_virtues = "{{MiddleWisp}} {{ColorYellow}}중앙 x1{{CR}}/{{Heart}}:3#일반 눈물을 발사합니다. ({{DamageSmall}}:3)#불꽃이 꺼지면 50%의 확률로 다시 켜집니다."
         },
         zh_cn = {
             name = "桶中血红尸",
@@ -287,9 +287,10 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "황금 삽",
-            description = "사용 시 {{GoldenChest}}황금상자 1~2개와 랜덤 황금 픽업을 파냅니다." ..
-            "#{{Collectible602}} 치장성 타일(풀, 돌 조각 등) 위에 사용 시 비밀 상점으로 가는 다락문을 생성합니다.",
-            book_of_virtues = "{{ColorYellow}}중앙 x1{{CR}}/{{Heart}}:4#{{Collectible202}}10%의 확률로 황금화 눈물을 발사합니다. ({{DamageSmall}}:3)"
+            description = "사용 시 {{GoldenChest}}황금상자 1개와 {{Coin}}동전 2~4개를 파냅니다." ..
+            "#{{Collectible602}} 치장성 타일(풀, 돌 조각 등) 위에 사용 시 아이템 및 황금 픽업을 파는 비밀 상점으로 가는 다락문을 생성합니다.",
+            book_of_virtues = "{{MiddleWisp}} {{ColorYellow}}중앙 x1{{CR}}/{{Heart}}:4#{{Collectible202}}10%의 확률로 황금화 눈물을 발사합니다. ({{DamageSmall}}:3)",
+            book_of_belial = "{{RedChest}}빨간상자 2개와 {{BlackHeart}}블랙하트 1개를 대신 파냅니다."
         },
         zh_cn = {
             name = "金铲铲",
@@ -409,7 +410,7 @@ descriptions.Collectibles = {
             description = "{{Coin}} 사용 시 동전 1개를 소모합니다." ..
             "#10{{Coin}} 소모 후, 사용할 때마다 1%의 확률로 아이템이 사라지며 소모한 {{Coin}}의 2배만큼의 동전을 드랍합니다." ..
             "#{{Blank}} (100{{Coin}}에서 확정)",
-            book_of_virtues = "{{ColorLime}}내부 x1{{CR}}/{{Heart}}:1#(눈물 발사 불가)",
+            book_of_virtues = "{{InnerWisp}} {{ColorLime}}내부 x1{{CR}}/{{Heart}}:1#(눈물 발사 불가)",
             book_of_belial = "↑ 소지 중일 때 소모한 {{Coin}}만큼 {{Damage}}공격력 +0.066"
         },
         zh_cn = {
@@ -452,7 +453,7 @@ descriptions.Collectibles = {
             name = "연약한 오브",
             description = "사용 시 공격하는 방향으로 오브를 던집니다." ..
             "#{{SpiritOrb}} 오브에 맞은 적은 포획되며 스피릿 오브로 변합니다.",
-            book_of_virtues = "포획 실패 시 랜덤 전용 불꽃을 3개 소환합니다.",
+            book_of_virtues = "포획 실패 시 랜덤 전용 불꽃을 1개 소환합니다.",
             book_of_belial = "{{SpiritOrb}} Spirit of Chaos를 50%의 확률로 Spirit of Sacrilege로 교체합니다."
         },
         zh_cn = {
@@ -498,10 +499,11 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "프리즘 주사위",
-            description = "사용 시 그 방의 아이템을 등급이 낮은 아이템 2개로 바꿉니다." ..
+            description = "사용 시 그 방의 아이템을 등급이 1단계 낮은 아이템 2개로 바꿉니다." ..
             "#{{Quality0}}등급 아이템의 경우 픽업으로 분해됩니다.",
-            book_of_virtues = "{{ColorYellow}}중앙 x1{{CR}}/{{Heart}}:2#(눈물 발사 불가)#{{Collectible528}}공격이 통과하면 4갈래로 갈라져 나갑니다.",
-            book_of_belial = "분해된 아이템이 30%의 확률로 {{DevilRoom}}악마방 아이템으로 바뀝니다."
+            book_of_virtues = "{{MiddleWisp}} {{ColorYellow}}중앙 x1{{CR}}/{{Heart}}:2#(눈물 발사 불가)#{{Collectible528}}공격이 통과하면 4갈래로 갈라져 나갑니다.",
+            book_of_belial = "분해된 아이템이 30%의 확률로 {{DevilRoom}}악마방 아이템으로 바뀝니다.",
+            abyss = "적 공격 시 20%의 확률로 그 적을 2마리로 분열시킵니다.",
         },
         zh_cn = {
             name = "棱镜骰子",
@@ -535,7 +537,7 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "영혼 거지",
-            description = "{{SoulHeart}} 주변의 소울하트를 먹으며" ..
+            description = "{{SoulHeart}} 주변의 소울하트를 먹으며;" ..
             "#{{SpiritOrb}} 2개의 소울하트를 먹으면 스피릿을 드랍합니다.",
         },
         zh_cn = {
@@ -642,8 +644,8 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "엎질러진 아침밥",
-            --description = "↑ {{HalfHeart}}빈 최대 체력 {{ColorOrange}}+0.5{{CR}}",
-            description = "↑ {{HalfHeart}}반칸 채워진 최대 체력 +1",
+            description = "↑ {{EmptyHeart}}빈 최대 체력 +1" ..
+            "#↓ {{HalfHeart}} 빨간하트 -0.5",
         },
         zh_cn = {
             name = "过期的早餐",
@@ -682,8 +684,8 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "평범한 아침밥",
-            description = "↑ {{HalfHeart}}최대 체력 +1"..
-            --"#↑ {{HalfHeart}}빨간하트 +1" .. --Commented this as I'm not sure about for extra red heart heal like vanilla items
+            description = "↑ {{Heart}}최대 체력 +1"..
+            --"#↑ {{HealingRed}}빨간하트 +1" .. --Commented this as I'm not sure about for extra red heart heal like vanilla items
             "#↑ {{SoulHeart}}소울하트 +1" ..
             "#↑ {{LuckSmall}}행운 +1",
         },
@@ -730,8 +732,8 @@ descriptions.Collectibles = {
         },
         ko_kr = {
             name = "풍부한 아침밥",
-            description = "↑ {{HalfHeart}}최대 체력 +1"..
-            "#{{Heart}} 체력을 모두 회복합니다." ..
+            description = "↑ {{Heart}}최대 체력 +1"..
+            "#{{HealingRed}} 체력을 모두 회복합니다." ..
             "#↑ {{TearsSmall}}연사 +0.3" ..
             "#↑ {{DamageSmall}}공격력 +0.5" ..
             "#↑ {{LuckSmall}}행운 +1",
@@ -769,7 +771,7 @@ descriptions.Collectibles = {
         ko_kr = {
             name = "황금의 항아리",
             description = "!!! 모든 {{Bomb}}/{{Key}}/{{Coin}} 픽업을 레인보우 코인으로 바꿉니다." ..
-            "#{{Trinket52}} 레인보우 코인을 주으면 각 색상별 페니류 장신구 효과를 발동합니다.",
+            "#{{Trinket52}} 레인보우 코인 획득 시 각 색상별 페니류 장신구 효과를 발동합니다.",
         },
         zh_cn = {
             name = "金罐",
@@ -862,10 +864,8 @@ descriptions.Collectibles = {
         ko_kr = {
             name = "레위기",
             description = "!!! 방 클리어로 충전 불가, {{SoulHeart}}로만 충전 가능" ..
-            "#{{EternalHeart}} 사용 시 이터널하트 +1" ..
-            "#{{AngelRoom}} {{BossRoom}}보스방 클리어 이전에 사용 시 보스방의 아이템이 천사방 아이템으로 바뀝니다." ..
-            "#!!! 악마방 거래 시 동전 구매 필요",
-            book_of_virtues = "{{ColorLime}}내부 x1{{CR}}/{{Heart}}:8#일반 눈물을 발사합니다. ({{DamageSmall}}:3/{{TearsSmall}}:↓)#불꽃 당 {{AngelChanceSmall}}천사방 확률 +10%",
+            "#{{AngelRoom}} 사용 시 천사방 아이템 및 판매 중인 픽업 여러 개가 있는 특수한 천사방으로 이동합니다.",
+            book_of_virtues = "{{InnerWisp}} {{ColorLime}}내부 x1{{CR}}/{{Heart}}:8#일반 눈물을 발사합니다. ({{DamageSmall}}:3/{{TearsSmall}}:↓)#불꽃 당 {{AngelChanceSmall}}천사방 확률 +10%",
             abyss = "적과 접촉 시 공격력 3배의 빛줄기를 떨어뜨립니다.",
         },
         zh_cn = {
@@ -1053,7 +1053,7 @@ descriptions.Collectibles = {
             name = "무지개 조각",
             description = "↑ {{LuckSmall}}행운 +1" ..
             "#레인보우 코인 4개를 드랍합니다." ..
-            "#{{Trinket52}} 레인보우 코인을 주으면 각 색상별 페니류 장신구 효과를 발동합니다.",
+            "#{{Trinket52}} 레인보우 코인 획득 시 각 색상별 페니류 장신구 효과를 발동합니다.",
         },
         zh_cn = {
             name = "彩虹碎片",
@@ -1130,11 +1130,10 @@ descriptions.Collectibles = {
             "#{{Luck}} +2.5% szansy za każdy punkt szczęścia"
         },
         ko_kr = {
-            name = "Chromatic Prism",
-            description = "Enemies have a 20% chance to spawn diffracted" ..
-            "#Diffracted enemies spawn 3 rainbow light beams on death" ..
-            "#Lasers deal 16x Isaac's damage over 4 ticks" ..
-            "#{{Luck}} +2.5% chance per luck"
+            name = "크로마 프리즘",
+            description = "적들이 20%의 확률로 회절 상태로 등장합니다." ..
+            "#회절 상태 적 처치 시 캐릭터의 공격력 x16의 피해를 주는 무지개 빛줄기 3개를 소환합니다." ..
+            "#{{LuckSmall}} 행운 32+일 때 100% 확률 ({{LuckSmall}} 당 +2.5%p)" -- max luck(32) instead of per luck
         },
         zh_cn = {
             name = "Chromatic Prism",
@@ -1166,9 +1165,9 @@ descriptions.Collectibles = {
             "#Naznaczeni przeciwnicy są atakowani przez innych przeciwników"
         },
         ko_kr = {
-            name = "Scripulous Fingore",
-            description = "{{Bait}} Points at a random enemy in the room until they die, marking them."..
-            "#Marked enemies are targetted by other enemies"
+            name = "꼼꼼한 손가락쟁이",
+            description = "{{Bait}} 랜덤 적 하나를 손가락으로 지정해 처치 시까지 표식을 겁니다."..
+            "#표식에 걸린 적은 다른 적을 유인합니다."
         },
         zh_cn = {
             name = "Scripulous Fingore",
@@ -1216,6 +1215,7 @@ descriptions.Collectibles = {
         ko_kr = {
             name = "거울 열쇠",
             description = "{{MirrorRoom}} 문 테두리 근처에서 사용 시 사용한 방과 같은 구조를 가진 거울방이 생성됩니다.(방 당 1회)" ..
+            "#{{Player10}} 생성된 거울방에서 캐릭터가 Lost로 변합니다." ..
             "#{{Warning}} 아이템은 생성되지 않습니다." ..
             "#{{BossRoom}} 보스방의 경우 다시 클리어할 수 있으며 보상을 추가로 드랍합니다.",
             book_of_belial = "↑ 거울방 안에서 {{DamageSmall}}공격력 +2.5",
@@ -1270,6 +1270,7 @@ descriptions.Collectibles = {
         ko_kr = {
             name = "거울 열쇠",
             description = "{{MirrorRoom}} 문 테두리 근처에서 사용 시 사용한 방과 같은 구조를 가진 거울방이 생성됩니다.(이 방에서 이미 사용됨)" ..
+            "#{{Player10}} 생성된 거울방에서 캐릭터가 Lost로 변합니다." .. -- Don't know if Lost state is immediate for using active, or just inside mirror room
             "#{{Warning}} 아이템은 생성되지 않습니다." ..
             "#{{BossRoom}} 보스방의 경우 다시 클리어할 수 있으며 보상을 추가로 드랍합니다.",
             book_of_belial = "↑ 거울방 안에서 {{DamageSmall}}공격력 +2.5",
@@ -1447,9 +1448,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "예지의 자수정",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Clairvoyance를 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Clairvoyance를 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Clairvoyance를 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Clairvoyance를 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Clairvoyance를 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Clairvoyance를 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "预言紫水晶",
@@ -1499,9 +1503,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "지옥의 루비",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Inferno를 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Inferno를 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Inferno를 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Inferno를 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Inferno를 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Inferno를 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "炼狱红宝石",
@@ -1551,9 +1558,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "전도의 전기석",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Conductivity를 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Conductivity를 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Conductivity를 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Conductivity를 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Conductivity를 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Conductivity를 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "导电电气石",
@@ -1603,9 +1613,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "드루이드 에메랄드",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Druidity를 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Druidity를 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Druidity를 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Druidity를 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Druidity를 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Druidity를 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "德鲁伊翡翠",
@@ -1655,9 +1668,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "맹독의 페리도트",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Virulence를 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Virulence를 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Virulence를 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Virulence를 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Virulence를 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Virulence를 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "剧毒橄榄石",
@@ -1707,9 +1723,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "천벌의 가넷",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Sacrilege를 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Sacrilege를 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Sacrilege를 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Sacrilege를 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Sacrilege를 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Sacrilege를 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "渎神石榴石",
@@ -1759,9 +1778,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "망령의 오닉스",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Revenance를 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Revenance를 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Revenance를 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Revenance를 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Revenance를 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Revenance를 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "荒野玛瑙",
@@ -1811,9 +1833,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "신성의 금강석",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Salvation을 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Salvation을 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Salvation을 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Salvation을 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Salvation을 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Salvation을 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "圣洁紫玛瑙",
@@ -1863,9 +1888,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "흐름의 사파이어",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Deluge를 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Deluge를 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Deluge를 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Deluge를 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Deluge를 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Deluge를 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "激流蓝宝石",
@@ -1915,9 +1943,12 @@ descriptions.Trinkets = {
         },
         ko_kr = {
             name = "땅의 호박",
-            description = "{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Terrastrium을 추가로 드랍합니다.",
-            double = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Terrastrium을 추가로 드랍합니다.",
-            triple = "{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Terrastrium을 추가로 드랍합니다.",
+            description = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 Spirit of Terrastrium을 추가로 드랍합니다.",
+            double = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}1-2{{CR}}개의 Spirit of Terrastrium을 추가로 드랍합니다.",
+            triple = "색돌 등장 시 보석이 박힌 채로 나옵니다."..
+            "#{{SpiritOrb}} 색돌이 75%의 확률로 {{ColorGold}}2-3{{CR}}개의 Spirit of Terrastrium을 추가로 드랍합니다.",
         },
         zh_cn = {
             name = "大地琥珀",
@@ -1946,8 +1977,8 @@ descriptions.Trinkets = {
             description = "Automatycznie otwiera drzwi do Zalewu, Kopalni i Mauzoleum po pokonaniu bossa",
         },
         ko_kr = {
-            name = "알트 루트 해금 여부 추적기",
-            description = "보스 처치 시 알트 루트로 향하는 문을 엽니다.",
+            name = "", -- keep this empty to make same as english
+            description = "!!! 보스방 클리어 시 대체 루트 입구(Downpour, Mines, Mausoleum, Coprse)를 자동으로 열어줍니다.",
         },
         zh_cn = {
             name = "支线解锁追踪器",
@@ -1992,13 +2023,13 @@ descriptions.Trinkets = {
             "#Dodatkowe efekty tęczowych monet są podwojone",
         },
         ko_kr = {
-            name = "Rainbow Cookie",
-            description = "10% Chance to replace pennies with random rainbow pennies" ..
-            "#The secondary effect of rainbow pennies is doubled on pickup",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
-            "#The secondary effect of rainbow pennies is doubled on pickup",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
-            "#The secondary effect of rainbow pennies is doubled on pickup"
+            name = "무지개 쿠키",
+            description = "동전이 10%의 확률로 레인보우 페니로 바뀝니다." ..
+            "#레인보우 페니의 효과 2배",
+            double = "동전이 {{ColorGold}}15%{{CR}}의 확률로 레인보우 페니로 바뀝니다." ..
+            "#레인보우 페니의 효과 2배",
+            triple = "동전이 {{ColorGold}}20%{{CR}}의 확률로 레인보우 페니로 바뀝니다." ..
+            "#레인보우 페니의 효과 2배"
         },
         zh_cn = {
             name = "Rainbow Cookie",
@@ -2448,10 +2479,9 @@ descriptions.Cards = {
             lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " podwaja wybrany efekt" 
         },
         ko_kr = {
-            name = "Spirit of Order",
-            description = "{{SpiritOrb}} Can be made to act as any spirit orb" ..
-            "#Spirit orbs can be cycled between using the drop button ({{ButtonRT}})",
-            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " Doubles chosen effect"
+            name = "질서의 스피릿",
+            description = "{{SpiritOrb}} 사용 시 {{ButtonRT}}로 선택한 스피릿의 효과를 발동합니다.",
+            lyra_extra = "#{{ColorGray}}" ..LyraIcon.. " 선택한 효과 2배"
         },
         zh_cn = {
             name = "Spirit of Order",
@@ -2543,8 +2573,9 @@ descriptions.Entities = {
             description = "{{HalfSoulHeart}} 소울하트 반칸을 소모하여 아래 중 하나를 드랍:" ..
             "#{{SpiritOrb}} 스피릿" ..
             "#{{Burning}} 원소 불꽃" ..
-            "#{{Trinket}} 보석류 장신구" ..
-            "#{{Rune}} 영혼석"
+            "#{{Rune}} 영혼석" ..
+            "#{{Trinket".. 139 .."}} 보석류 장신구" ..
+            "#{{Collectible"..enums.Collectibles.FRAGILE_MIRROR .."}} 3칸 소모 이후 낮은 확률로 유리류 아이템"
         },
         zh_cn = {
             name = "精灵窖炉",
