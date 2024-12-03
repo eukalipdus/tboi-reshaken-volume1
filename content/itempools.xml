@@ -8,7 +8,7 @@
 		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Doggy Bag" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Mirror Key" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-
+		<Item Name="Scripulous Fingore" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Shattered Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Dad's Mitt" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Pot of Gold" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
@@ -95,6 +95,7 @@
 		<Item Name="Doggy Bag" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Dad's Mitt" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Pot of Gold" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Scripulous Fingore" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 
 	</Pool>
 
@@ -173,6 +174,7 @@
 		<Item Name="Spirit Bum" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Lil Bishop" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Glass Idol" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Scripulous Fingore" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 
 	<Pool Name="woodenChest">
