@@ -171,27 +171,91 @@ Additions
     -Spirit Sage challenge will now be locked until you unlock the alt path and Tainted Bethany (RGON only)
     -Add 1 new item (For players who find base Reshaken too easy)
 
+
 ================================================
-    v1.0.13 - May - ??, 2024
+v1.0.13 - May 22, 2024
 ================================================
 Fixes
-	-Fixed Milkshake/Water With Food Coloring multiplier stats attempting to render when they shouldn't
-	-Fixed bum friend, bumbo, and ultra greed treating all coins as being worth only 1 cent.
-	-Fixed glassheads sommetimes not activating their death effects.
-	-Fixed glassheads not dropping coins when killed as tKeeper
-	-Fixed some rooms
-	-Fixed EID typos
-	-Fixed Eclipse Compat
-	-Fixed Milkshake error
+-Fixed crash in rooms with entity 618.125 when you didn't have Repentogon installed
+-Fixed error that would appear on load when you didn't have Repentogon installed
+-Fixed Milkshake/Water With Food Coloring multiplier stats attempting to render when they shouldn't
+-Fixed bum friend, bumbo, and ultra greed treating all coins as being worth only 1 cent.
+-Fixed glassheads sommetimes not activating their death effects.
+-Fixed glassheads not dropping coins when killed as tKeeper
+-Fixed some rooms
+-Fixed EID typos
+-Fixed Eclipse Compat
+-Fixed error with Milkshake
+-Fixed TNT in some glasshead rooms being able to become pushable tnts
+-Fixed error that sometimes occurred when running out of items in a pool (isaac clicker error in log)
 
 Changes
-	-Acid Pennies will now reveal pills upon use if it uses a pill that's in the current pool
-	-Lowered spirit orb room special room weight across the board to not be so common over vanilla rooms
-	-Lowered Celestial Mirror contact damage from 75 to 50 per second
+-Acid Pennies will now reveal pills upon use if it uses a pill that's in the current pool
+-Lowered spirit orb room special room weight across the board to not be so common over vanilla rooms, you'll now find 1-4 per run on average.
+-Lowered Celestial Mirror contact damage from 75 to 50 per second
 
 Additions
-	-Actually added beerhead mines rooms which should've been there the whole time but weren't (oops)
-	-Actually added Leviticus to the angel pool (it was supposed to be how did we miss that)
-	-Added Spirit of Order, a rare spirit orb that can activate any spirit orb effect you chose
-	-Added more rooms to utero and gehenna and stuff
-	-Added new flowey glass idol sprite (feel free to submit more if you want)
+-Actually added beerhead mines rooms which should've been there the whole time but weren't (oops)
+-Actually added Leviticus to the angel pool (it was supposed to be how did we miss that)
+-Added more rooms to utero and gehenna and stuff
+-Added new flowey glass idol sprite (feel free to submit more if you want)
+-Added new art to art folder
+-Updated Mirror Key EID to mention that it turns you into the lost while inside the mirror dimension
+
+
+================================================
+    v1.0.14 - June 9, 2024
+================================================
+Additions
+-Added brenda pre mother chase rooms in mines
+
+Fixes
+-Fixed Lag and bloat oopsies
+
+================================================
+    v1.1.0 - ???, 2024
+================================================
+Additions
+-Added four achievements, three of which grant unlocks
+-Added four new items, a collectible, two trinkets, and a spirit orb
+-Added crafting qualities
+-Added Belial (Judas' Birthright) synergies for Golden Shovel and Mirror Key
+-Added Book of Virtues synergy for Mirror Key
+-Added API function, MilkshakeVol1.API.AddEntityCanCollideRainbowPenny
+
+Changes
+-Secret shops spawned by Golden Shovel now convert pickups for sale to their golden variants, with increased prices
+-Reworked Leviticus, still charged with soul hearts, now teleports Isaac to a special Angel room upon activation
+-Acid Penny now shows the assigned pill color when activating a pill instead of a random one
+-Mirror Key can no longer be used in Error Rooms
+-Modified some room layouts
+-Reduce weight for Spirit Klins to payout with trinkets
+-After receiving 4 payments, Brenda now has a chance to payout with a collectible from the Glass pool
+-Modified Prismatic Dice splitting animation and collectible spawn positions
+
+API Changes
+-MilkshakeVol1.API:AddSpiritKlinReward's first argument now accepts a second parameter, an entity (Spirit Klin slot)
+
+Fixes
+-Fixed error resulting from Witch Doctor Mask being activated by a NULL pill color
+-Fixed error from Globin In A Bucket not checking if the spawner of the Globin exists first
+-Fixed pickups being removed when exiting the game while in a Mirror Key room
+-Fixed Spindown Dice spinning down into hidden Reshaken items
+-Fixed Spirit of Conductivity console error caused by player tear mimicking familiars
+-Fixed Isaac being unable to shoot if Shattered Orb was lost while being used or activated through means other than the item itself
+-Fixed Mirror Key being useable in the boss room containing Dad's Note, which caused a crash
+-Fixed a crash caused by using Mirror Key on Downpour 2 during the Ascent
+-Fixed a softlock caused by teleporting to a room not connected to the map while in a Mirror Key room
+-Fixed ladders spawning in shops created by Mirror Key when exiting and continuing a run within one
+-Fixed Shattered Orb + Belial synergy not having a proper visual effect
+-Fixed cards from Crystal Penny not being seeded
+-Fixed pills from Acid Penny not being seeded
+-Fixed pills from Acid Penny coming from outside of the current pill rotation
+-Fixed Spindown Dice loop caused when spinning down Leviticus on the alternate sprites
+-Fixed error caused by Pot of Gold in rare cases using a seed of 0
+-Fixed Acid and Crystal pennies not being removed and Isaac being unable to collide with them after if purchased from a shop
+-Fixed rainbow pennies being purchasable while Isaac is holding an item
+-Fixed Super Bum not properly colliding with rainbow pennies
+-Fixed Prismatic Dice Godhead easter egg not spawning items with the proper colors
+-Fixed Prismatic Dice locust duplicating bosses
+-Fixed Witch Doctor Mask not spawning a pill on pick up if it was taken by another player after being dropped by Tainted Isaac

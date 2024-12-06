@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-    <name>tboi reshaken DEV BUILD</name>
+    <name>The Binding of Isaac Reshaken - Vol 1: Shattered Souls!</name>
     <directory>tboi-reshaken-vol1</directory>
     <id>3134600246</id>
     <description>Over a year in the making, Team Milkshake presents to you Volume 1 of Isaac Reshaken!
@@ -83,7 +83,7 @@ punchyufo, clownylun, toyrapple, neibusha, Luna, mysterykar, scooperman, ZRWilso
 
 
 Find any bugs? Send them in the Bugs discussion thread below along with a snippet of your log or screenshot of the error. And as always, stay shakey!</description>
-    <version>1.13</version>
+    <version>1.15</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

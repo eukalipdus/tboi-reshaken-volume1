@@ -5,6 +5,7 @@ local utility = MilkshakeVol1.utility
 local LASER_DURATION = 60
 
 --Extra measure for catching rocks on edges of lasers.
+local ROCK_SEARCH_POSITION_STEP = 40
 local ROCK_SEARCH_RANGE = 15
 local ROCK_SEARCH_ANGLE_STEP = 45
 
@@ -30,11 +31,12 @@ local GRID_DESTRUCTION_WHITELIST = TSIL.Utils.Tables.ConstructDictionaryFromTabl
     GridEntityType.GRID_ROCK_SPIKED,
     GridEntityType.GRID_ROCK_SS,
     GridEntityType.GRID_TNT,
+    GridEntityType.GRID_STATUE,
 })
 
 local function getLaserDamagePerTick()
-    local stage = MilkshakeVol1.utility:GetCurrentChapter()
-    return 2.93 * math.max(math.ceil(stage / 2.5), 1)
+    local chapter = MilkshakeVol1.utility:GetCurrentChapter()
+    return 1 + (chapter)
 end
 
 ---@param player EntityPlayer
@@ -89,13 +91,24 @@ function HolyOrb:BeamCollision(laser)
 
     -- check for collisions by getting the samples of a laser
     -- dont let the method name spook you. this is the only way.
-    local samples = laser:GetNonOptimizedSamples()
-    for i = 0, #samples - 1 do
-        local point = samples:Get(i)
+    local samples = laser:GetSamples()
+    local startPos = samples:Get(0)
+    local endPos = samples:Get(#samples-1)
+    local step = (endPos-startPos):Resized(ROCK_SEARCH_POSITION_STEP)
+    local stepCount = math.ceil((endPos-startPos):Length()/ROCK_SEARCH_POSITION_STEP)
+    for i = 0, stepCount do
+        local point = startPos + (step*i)
         DestroyGridAtPosition(point, laser)
         for angle = 0, 360, ROCK_SEARCH_ANGLE_STEP do
             local pointOffset = Vector.One:Rotated(angle) * ROCK_SEARCH_RANGE
             DestroyGridAtPosition(point + pointOffset, laser)
+        end
+        for _, entity in ipairs(Isaac.FindInRadius(point, ROCK_SEARCH_RANGE)) do
+            if entity.Type == EntityType.ENTITY_PICKUP and entity.Variant == PickupVariant.PICKUP_BOMBCHEST and entity.SubType == ChestSubType.CHEST_CLOSED then
+                entity:ToPickup():TryOpenChest((laser.SpawnerEntity and laser.SpawnerEntity:ToPlayer()) or Isaac.GetPlayer())
+            elseif entity.Type == EntityType.ENTITY_FIREPLACE then
+                entity:Die()
+            end
         end
     end
 end

@@ -288,6 +288,18 @@ function WineHead:WineHead_Update(enemy)
             creep:GetSprite().Color = WINE_COLOR
             creep:Update()
 
+            local deathEffect = TSIL.EntitySpecific.SpawnEffect(
+                enums.Effects.WINE_HEAD,
+                0,
+                enemy.Position,
+                nil,
+                enemy
+            )
+
+            local effectData = GetGlassHeadData(deathEffect)
+
+            effectData.creep = creep
+
             for _ = 1, rng:RandomInt(3) + 2 do
                 local mediumExplosion = TSIL.EntitySpecific.SpawnEffect(
                     EffectVariant.BLOOD_EXPLOSION,
@@ -329,19 +341,21 @@ function WineHead:WineHead_Update(enemy)
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, .5, 0, false, 1, 0)
 
-            utility:SpawnGlassHeadDeathEffect(enemy)
-            enemy:Remove()
-        elseif sprite:IsFinished("Death") then
-            enemy.CanShutDoors = false
-            enemy.DepthOffset = -10
+            enemy.Visible = false
+            enemy.SplatColor = Color(0, 0, 0, 0)
+            enemy:Kill()
 
-            if not data.creep or not data.creep:Exists() then
-                sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+        -- elseif sprite:IsFinished("Death") then
+        --     enemy.CanShutDoors = false
+        --     enemy.DepthOffset = -10
 
-                if sprite.Color.A < .1 then
-                    enemy:Remove()
-                end
-            end
+        --     if not data.creep or not data.creep:Exists() then
+        --         sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+
+        --         if sprite.Color.A < .1 then
+        --             enemy:Remove()
+        --         end
+        --     end
         end
 
         enemy.Velocity = enemy.Velocity * .85

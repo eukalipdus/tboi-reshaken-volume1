@@ -13,7 +13,7 @@ local SoundPerOrb = {
     [enums.Orbs.UNDEAD] = enums.Sounds.SPIRIT_REVENANCE,
     [enums.Orbs.UNHOLY] = enums.Sounds.SPIRIT_SACRILEGE,
     [enums.Orbs.WATER] = enums.Sounds.SPIRIT_DELUGE,
-    [enums.Orbs.ORDER] = 0,
+    [enums.Orbs.ORDER] = enums.Sounds.ORB_CAPTURE
 }
 
 ---@param orb Card

@@ -223,7 +223,7 @@ function UnholyOrb:onPEffectUpdate(player)
 						enemy:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT| EntityFlag.FLAG_EXTRA_GORE)
 						enemy:AddEntityFlags(EntityFlag.FLAG_BRIMSTONE_MARKED)
 						enemy:SetColor(Color(1,0.5,0.5), -1, 1, true, true)
-						local damage = UnholyOrb.DamageMultiplier + UnholyOrb.DamageMultiplier*utility:GetCurrentChapter()
+						local damage = UnholyOrb.DamageMultiplier*utility:GetCurrentChapter()
 						enemy:TakeDamage(damage, DamageFlag.DAMAGE_CRUSH, EntityRef(enemy), 1)
 					end
 				else

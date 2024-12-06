@@ -337,7 +337,7 @@ function rockOrb:PostNpcDeath(stalagmite)
         stalagmite.Position,
         Vector.Zero,
         stalagmite
-    )
+    ):Update()
     SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, rockOrb.PostNpcDeath, enums.Enemies.STALAGMITE)

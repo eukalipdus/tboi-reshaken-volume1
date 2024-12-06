@@ -99,6 +99,19 @@ function greedtropies:spawnTrophy(idxOrPos)
   if #Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TROPHY, 0, false, false) == 0 then
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TROPHY, 0, pos, Vector.Zero, nil)
   end
+
+  if Isaac.GetChallenge() == MilkshakeVol1.enums.Challenges.ISAAC_CLICKER
+  and not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(MilkshakeVol1.enums.Achievements.GOLDEN_COOKIE) then
+    MilkshakeVol1.UnlockManager:AddToAchievementQueue(
+      MilkshakeVol1.UnlockManager:GetAchievementFilePath(MilkshakeVol1.enums.Achievements.GOLDEN_COOKIE)
+    )
+    MilkshakeVol1.UnlockManager:UpdateAchievement(
+     MilkshakeVol1.enums.Achievements.GOLDEN_COOKIE,
+     true
+    )
+    local collection = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "Milkshake1Collection")
+    MilkshakeVol1.UnlockManager:ShouldUnlockGlassGod(collection)
+  end
 end
 
 function greedtropies:clearTrapdoorIndexes()

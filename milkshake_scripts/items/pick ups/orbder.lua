@@ -1,96 +1,65 @@
-local mod = MilkshakeVol1
-local utils = mod.utility
-local enums = mod.enums
-local orbs = utils:GetOrbs()
+local sprite = Sprite()
 
-local ORB_ID = enums.Orbs.ORDER
+sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true); sprite:Play(sprite:GetDefaultAnimation(), true)
 
-local game = Game()
-local sfx = SFXManager()
-
-local frameToOrb = {
-    enums.Orbs.FIRE,
-    enums.Orbs.ELECTRIC,
-    enums.Orbs.NATURE,
-    enums.Orbs.PSYCHIC,
-    enums.Orbs.RANDOM,
-    enums.Orbs.HOLY,
-    enums.Orbs.UNHOLY,
-    enums.Orbs.POISON,
-    enums.Orbs.UNDEAD,
-    enums.Orbs.WATER,
-    enums.Orbs.ROCK,
-}
-
----@return Sprite
-local function createSprite()
-    local sprite = Sprite()
-
-    sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true)
-    sprite:Play(sprite:GetDefaultAnimation(), true)
-
-    return sprite
+---@param player EntityPlayer
+function MilkshakeVol1.API:GetSelectedOrderOrb(player)
+    return MilkshakeVol1.utility:GetDataEx(player, "SpiritOfOrder").SelectedOrb or 1
 end
 
----@type Sprite[]
-local sprites = {
-    createSprite(),
-    createSprite(),
-    createSprite(),
-    createSprite(),
-}
-
-local orbsPerPlayer = {}
-
 ---@param player EntityPlayer
-mod:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player)
-    local playerIndex = TSIL.Players.GetPlayerIndex(player)
-    MilkshakeVol1:UseSpiritOrb(frameToOrb[orbsPerPlayer[playerIndex]], player, 0)
-    sfx:Play(enums.Sounds.ORB_CAPTURE)
-end, ORB_ID)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
+    if player:GetCard(0) ~= MilkshakeVol1.enums.Orbs.ORDER then return end
 
----@param player EntityPlayer
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
-    if player:GetCard(0) == ORB_ID then
-        local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local data = MilkshakeVol1.utility:GetDataEx(player, "SpiritOfOrder")
 
-        if orbsPerPlayer[playerIndex] and Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex) then
-            orbsPerPlayer[playerIndex] = orbsPerPlayer[playerIndex] + 1
+    data.SelectedOrb = data.SelectedOrb or 1
 
-            if orbsPerPlayer[playerIndex] > #orbs - 1 then
-                orbsPerPlayer[playerIndex] = 1
-            end
+    if not Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex) then return end
 
-            sfx:Play(SoundEffect.SOUND_GOLD_HEART_DROP, 1, 2, false, 1 + orbsPerPlayer[playerIndex] * 0.1)
-        end
+    data.SelectedOrb = data.SelectedOrb + 1
+
+    if data.SelectedOrb > #MilkshakeVol1.enums.OrbsExcludingOrder then
+        data.SelectedOrb = 1
     end
+
+    SFXManager():Play(SoundEffect.SOUND_GOLD_HEART_DROP, 1, 2, false, 1 + data.SelectedOrb * 0.1)
 end)
 
-local function onRender()
-    for i = 0, game:GetNumPlayers() do
-        local player = Isaac.GetPlayer(i)
+---@diagnostic disable-next-line: undefined-field
+MilkshakeVol1:AddCallback(REPENTOGON and ModCallbacks.MC_POST_HUD_RENDER or ModCallbacks.MC_GET_SHADER_PARAMS, function ()
+    ---@diagnostic disable-next-line: undefined-global
+    if REPENTOGON and RoomTransition.IsRenderingBossIntro() then return end
 
-        if player:GetCard(0) == ORB_ID then
-            local controllerIndex = player.ControllerIndex + 1
-            local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    local player = Isaac.GetPlayer() if player:GetCard(0) ~= MilkshakeVol1.enums.Orbs.ORDER then return end
 
-            if not orbsPerPlayer[playerIndex] then
-                orbsPerPlayer[playerIndex] = 1
-            end
+    local renderPos = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) + Vector(-16, -12) + Vector(-16, -6) * Options.HUDOffset
+    print(MilkshakeVol1.API:GetSelectedOrderOrb(player))
+    sprite:Render(renderPos)
+    sprite:SetFrame(MilkshakeVol1.API:GetSelectedOrderOrb(player) - 1)
+end)
 
-            local sprite = sprites[controllerIndex]
+---@param player EntityPlayer
+---@param flags UseFlag
+MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player, flags)
+    SFXManager():Play(MilkshakeVol1.enums.Sounds.ORB_CAPTURE)
+    SFXManager():Play(MilkshakeVol1.enums.Sounds.SPIRIT_ORDER)
 
-            local renderPos = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight())
-            + Vector(-16, -12)
-            + Vector(-16, -6) * Options.HUDOffset
-
-            sprite:Render(renderPos)
-            sprite:SetFrame(orbsPerPlayer[playerIndex] - 1)
-        end
+    if not player:HasCollectible(MilkshakeVol1.enums.Collectibles.LYRA) then
+        MilkshakeVol1:UseSpiritOrb(MilkshakeVol1.enums.OrbsExcludingOrder[MilkshakeVol1.API:GetSelectedOrderOrb(player)], player, MilkshakeVol1.enums.UseOrbFlags.NO_SOUND)
     end
-end
-if REPENTOGON then
-    mod:AddCallback(ModCallbacks.MC_POST_HUD_RENDER, onRender)
-else
-    mod:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, onRender)
-end
+end, MilkshakeVol1.enums.Orbs.ORDER)
+
+local CHANCE = 4 / 100
+
+---@param pickup EntityPickup
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, function (_, pickup)
+    if not MilkshakeVol1.utility:IsSpiritOrb(pickup.SubType) then return end
+    if pickup.SubType == MilkshakeVol1.enums.Orbs.ORDER then return end
+    if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(MilkshakeVol1.enums.Achievements.SPIRIT_OF_ORDER) then return end
+    if Game():GetRoom():GetFrameCount() < 0 and not Game():GetRoom():IsFirstVisit() then return end
+
+    local rng = TSIL.RNG.NewRNG(pickup.InitSeed) if rng:RandomFloat() > CHANCE then return end
+
+    pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, MilkshakeVol1.enums.Orbs.ORDER, true, true)
+end, PickupVariant.PICKUP_TAROTCARD)

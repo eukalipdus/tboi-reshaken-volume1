@@ -647,7 +647,16 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
                     FiendFolio.ACHIEVEMENT.SNOW_GLOBE:IsUnlocked(false)
             end
         },
-        { Collectible = FiendFolio.ITEM.COLLECTIBLE.EXCELSIOR, Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
+        {
+            Collectible = FiendFolio.ITEM.COLLECTIBLE.GOLEMS_ORB,
+            Weight = 1,
+            DecreaseBy = 1,
+            RemoveOn = 0.1,
+            IsUnlocked = function()
+                return
+                    FiendFolio.ACHIEVEMENT.GOLEMS_ORB:IsUnlocked(false)
+            end
+        },
         {
             Collectible = FiendFolio.ITEM.COLLECTIBLE.HEART_OF_CHINA,
             Weight = 1,
@@ -672,7 +681,7 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         },
 
         Trinkets = {
-
+            {ID = MilkshakeVol1.enums.Trinkets.RAINBOW_COOKIE, Reference = "Cookie Clicker"},
         }
     }
 
@@ -707,12 +716,6 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         FiendFolio.ITEM.TRINKET.CURSED_URN,
         function()
             return FiendFolio.ACHIEVEMENT.CHINAS_BELONGINGS:IsUnlocked(false)
-        end
-    )
-    MilkshakeVol1.API:AddGlassTrinkets(
-        FiendFolio.ITEM.TRINKET.SHARD_OF_CHINA,
-        function()
-            return FiendFolio.ACHIEVEMENT.SHARD_OF_CHINA:IsUnlocked(false)
         end
     )
     MilkshakeVol1.API:AddGlassTrinkets(
@@ -775,4 +778,23 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
     for key, datatable in pairs(FiendBeggars) do
         MilkshakeVol1.API:AddUnholyOrbBeggar(key, datatable)
     end
+
+    FiendFolio:AddStackableItems({
+        MilkshakeVol1.enums.Collectibles.BATTERY_ACID,
+        MilkshakeVol1.enums.Collectibles.BALANCED_BREAKFAST,
+        MilkshakeVol1.enums.Collectibles.DADS_MITT,
+        MilkshakeVol1.enums.Collectibles.DOGGY_BAG,
+        MilkshakeVol1.enums.Collectibles.FINGORE,
+        MilkshakeVol1.enums.Collectibles.FRAGILE_MIRROR,
+        MilkshakeVol1.enums.Collectibles.HEARTY_BREAKFAST,
+        MilkshakeVol1.enums.Collectibles.INNER_REFLECTION,
+        MilkshakeVol1.enums.Collectibles.LA_CHANCLA,
+        MilkshakeVol1.enums.Collectibles.LIL_BISHOP,
+        MilkshakeVol1.enums.Collectibles.MILKSHAKE,
+        MilkshakeVol1.enums.Collectibles.RAINBOW_FRAGMENT,
+        MilkshakeVol1.enums.Collectibles.SHARP_CURSOR,
+        MilkshakeVol1.enums.Collectibles.SPOILED_BREAKFAST,
+        MilkshakeVol1.enums.Collectibles.WATER_WITH_FOOD_COLORING
+
+    })
 end)

@@ -180,8 +180,8 @@ MilkshakeVol1.API:AddGlassTrinkets(trinket TrinketType, isUnlocked? fun(): boole
 
 --------------------------------------------------------------------------------------------------------------------------------------
 
-MilkshakeVol1.API:AddSpiritKlinReward(number weight | fun(player: EntityPlayer): number, rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector))
-* Defined in line 105 of milkshake_scripts/slots/spiritklinbrenda.lua
+MilkshakeVol1.API:AddSpiritKlinReward(number weight | fun(player: EntityPlayer, brenda: Entity): number, rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector))
+* Defined in line 220 of milkshake_scripts/slots/spiritklinbrenda.lua
 
     Allows for adding custom rewards of any type to Spirit Kiln's reward pool.
 
@@ -205,7 +205,7 @@ MilkshakeVol1.API:HasAnyUnbrokenMirror(EntityPlayer player)
 --------------------------------------------------------------------------------------------------------------------------------------
 
 MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(EntityPickup pickup, number chance, boolean isNatural)
-* Defined in line 119 of milkshake_scripts/items/collectibles/familiars/potofgold.lua
+* Defined in line 119 of milkshake_scripts/items/collectibles/passive/potofgold.lua
 
     Tells if a given pickup can be converted to a Rainbow Penny.
 
@@ -216,7 +216,7 @@ MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(EntityPickup pickup, number c
 --------------------------------------------------------------------------------------------------------------------------------------
 
 MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max)
-* Defined in line 24 of milkshake_scripts/items/collectibles/familiars/milkshake.lua
+* Defined in line 24 of milkshake_scripts/items/collectibles/passive/milkshake.lua
 
     Gets a set of stat multipliers. Used for Milkshake and Water With Food Coloring
 
@@ -224,5 +224,17 @@ MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max)
     itemNum integer - How many of the item granting the multiplier the player has
     min float - The minimum for the multipliers
     max float - The maximum for the multipliers
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API.AddEntityCanCollideRainbowPenny(type, ?variant, ?subtype)
+* Defined in line 79 of milkshake_scripts/items/collectibles/passive/potofgold.lua
+
+    Allows an entity to collide with Rainbow Pennies. Useful for entities like Bum Friend or Ultra Greed who
+    can pick up coins.
+
+    type EntityType
+    ?variant number : -1
+    ?subtype number : -1
 
 --------------------------------------------------------------------------------------------------------------------------------------

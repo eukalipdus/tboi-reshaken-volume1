@@ -48,7 +48,7 @@ function EmptySlot:OnEmptySlotUse(_, rng, player, useFlags)
     playerCoins = playerCoins + 1
     emptySlotCoinsPerPlayer[playerIndex] = playerCoins
 
-    if utility:IsJudasBirthright(player) then
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) then
         UpdateCoinDMGBonus(player)
     end
 
@@ -122,7 +122,7 @@ MilkshakeVol1:AddCallback(
 
 function EmptySlot:EvaluateCache(player, cacheFlag)
     if cacheFlag == CacheFlag.CACHE_DAMAGE
-    and utility:IsJudasBirthright(player)
+    and player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE)
     and player:HasCollectible(enums.Collectibles.EMPTY_SLOT) then
         local emptySlotCoinsPerPlayer = TSIL.SaveManager.GetPersistentVariable(
             MilkshakeVol1,

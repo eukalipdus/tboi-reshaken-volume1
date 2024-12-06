@@ -1,5 +1,6 @@
 local MirrorKey = {}
 
+local BELIAL_DMG_BONUS = 2.5
 --- Max distance the player has to be from a door slot to be able to use the key
 local DOOR_TRIGGER_DISTANCE = 120
 local ROTATION_PER_DOOR_SLOT = {
@@ -49,6 +50,12 @@ local MIRRORED_INPUTS = {
     [ButtonAction.ACTION_SHOOTLEFT] = ButtonAction.ACTION_SHOOTRIGHT,
     [ButtonAction.ACTION_SHOOTRIGHT] = ButtonAction.ACTION_SHOOTLEFT,
 }
+--[[
+local roomTypeToSprite = {
+    [RoomType.ROOM_DEVIL] = "gfx/grid/door_mirror_challenge_devil",
+    [RoomType.ROOM_ANGEL] = ""
+}
+]]
 --- A mirror door with this index as target will travel to the mirror version of the room
 local MIRROR_DOOR_INDEX = 9999
 
@@ -84,6 +91,12 @@ TSIL.SaveManager.AddPersistentVariable(
 )
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
+    "PreviousRoomIndexForExitGame",
+    -1,
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
     "MirrorRoomDesc",
     "",
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
@@ -94,7 +107,12 @@ TSIL.SaveManager.AddPersistentVariable(
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
-
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "MirrorRoomPickupData",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_NONE
+)
 
 ---Helper function to check if the players are currently in the mirror key room.
 ---@return boolean
@@ -125,6 +143,16 @@ local function CanUseMirrorKey()
     --Can only use on main dimension and mirror world
     local room = Game():GetRoom()
     if not TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.MAIN) and not room:IsMirrorWorld() then
+        return false
+    end
+
+    local roomDesc = level:GetCurrentRoomDesc()
+    local roomData = roomDesc.Data
+    local roomType = room:GetType()
+
+    if (roomData.Variant == 1
+    and roomType == RoomType.ROOM_BOSS)
+    or roomType == RoomType.ROOM_ERROR then
         return false
     end
 
@@ -246,6 +274,7 @@ end
 ---@param target integer
 ---@param targetDimension Dimension
 ---@param canSpawnOtherDoor boolean?
+-----@param roomType RoomType? | The mirror door will use the door sprite of the given RoomType
 local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension, canSpawnOtherDoor)
     if canSpawnOtherDoor == nil then
         canSpawnOtherDoor = true
@@ -260,6 +289,14 @@ local function SpawnFakeMirrorDoor(doorSlot, target, targetDimension, canSpawnOt
         doorSlotPos
     )
     local sprite = fakeDoor:GetSprite()
+
+    --[[if roomType then
+        for idx = 0, 5 do
+            sprite:ReplaceSpritesheet(idx, roomTypeToSprite[roomType])
+        end
+        sprite:LoadGraphics()
+    end]]
+
     local rotation = ROTATION_PER_DOOR_SLOT[doorSlot]
     sprite.Offset = Vector(0, 15):Rotated(rotation)
     sprite.Rotation = rotation
@@ -295,6 +332,7 @@ end
 
 ---@param player EntityPlayer
 function MirrorKey:OnMirrorKeyUse(_, _, player)
+    if not player or player.Variant ~= 0 then return end
     if not CanUseMirrorKey() then
         UpdateMirrorKeyChargeState()
 
@@ -334,7 +372,8 @@ function MirrorKey:OnMirrorKeyUse(_, _, player)
 
     local level = Game():GetLevel()
     if level:GetStage() == LevelStage.STAGE1_2
-    and TSIL.Stage.OnRepentanceStage() then
+    and TSIL.Stage.OnRepentanceStage()
+    and not level:IsAscent() then
         target = level:GetCurrentRoomIndex()
 
         if TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.SECONDARY) then
@@ -438,14 +477,67 @@ local function RemoveLostCurse()
 end
 
 
-local function UpdateInnerReflectionCache()
-    local players = TSIL.Players.GetPlayersByCollectible(MilkshakeVol1.enums.Collectibles.INNER_REFLECTION)
-    for _, player in ipairs(players) do
+local function UpdateDamageBonusCache()
+    local innerReflectionPlayers = TSIL.Players.GetPlayersByCollectible(MilkshakeVol1.enums.Collectibles.INNER_REFLECTION)
+    for _, player in ipairs(innerReflectionPlayers) do
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+        player:EvaluateItems()
+    end
+
+    local belialPlayers = TSIL.Players.GetPlayersByCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE)
+    for _, player in ipairs(belialPlayers) do
         player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
         player:EvaluateItems()
     end
 end
 
+local function SavePickupData()
+    local pickups = TSIL.EntitySpecific.GetPickups()
+    local pickupData = {}
+
+    pickups = TSIL.Utils.Tables.Filter(pickups, function (_, pickup)
+        return pickup.SubType ~= 0
+    end)
+
+    for _, currentPickup in pairs(pickups) do
+        local info = {
+            VARIANT = currentPickup.Variant,
+            SUBTYPE = currentPickup.SubType,
+            POSITION = currentPickup.Position
+        }
+        table.insert(pickupData, info)
+    end
+
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "MirrorRoomPickupData",
+        pickupData
+    )
+end
+
+local function RespawnSavedPickups()
+    local savedPickupData = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "MirrorRoomPickupData"
+    )
+
+    for _, pickupInfo in pairs(savedPickupData) do
+        Isaac.Spawn(
+            EntityType.ENTITY_PICKUP,
+            pickupInfo.VARIANT,
+            pickupInfo.SUBTYPE,
+            pickupInfo.POSITION,
+            Vector.Zero,
+            nil
+        )
+    end
+
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "MirrorRoomPickupData",
+        {}
+    )
+end
 
 function MirrorKey:OnNewRoom()
     UpdateMirrorKeyChargeState()
@@ -472,10 +564,18 @@ function MirrorKey:OnNewRoom()
             false
         )
 
+        local doors = TSIL.Doors.GetDoors()
+        local prevRoomIndex = TSIL.SaveManager.GetPersistentVariable(
+            MilkshakeVol1,
+            "PreviousRoomIndex"
+        )
+        TSIL.Doors.RemoveDoors(doors)
+        SpawnFakeMirrorDoor(doors[1].Slot, prevRoomIndex, TSIL.Enums.Dimension.CURRENT, false)
+
         SetMirrorShaderActive(false)
         Game():GetHUD():SetVisible(true)
         RemoveLostCurse()
-        UpdateInnerReflectionCache()
+        UpdateDamageBonusCache()
 
         return
     end
@@ -488,6 +588,10 @@ function MirrorKey:OnNewRoom()
         MilkshakeVol1,
         "PreviousRoomIndex"
     )
+    local lastRoomIndexIn = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "PreviousRoomIndexForExitGame"
+    )
 
     TSIL.Doors.RemoveDoors(TSIL.Doors.GetDoors())
     SpawnFakeMirrorDoor(doorSlot, prevRoomIndex, TSIL.Enums.Dimension.CURRENT)
@@ -495,7 +599,12 @@ function MirrorKey:OnNewRoom()
     SetMirrorShaderActive(true)
     PlacePlayersInDoorSlot(doorSlot)
     AddLostCurse()
-    UpdateInnerReflectionCache()
+    UpdateDamageBonusCache()
+    RemoveTallLadder()
+    if lastRoomIndexIn == currentRoomIndex then
+        RespawnSavedPickups()
+    end
+    SavePickupData()
 
     if EID then
         EID.isMirrorRoom = true
@@ -504,6 +613,23 @@ end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_NEW_ROOM,
     MirrorKey.OnNewRoom
+)
+
+function MirrorKey:PostUpdate()
+    local isInMirrorRoom = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "IsInMirrorRoom"
+    )
+
+    if not isInMirrorRoom then
+        return
+    end
+
+    SavePickupData()
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_UPDATE,
+    MirrorKey.PostUpdate
 )
 
 
@@ -686,7 +812,7 @@ local function CheckIfPlayerEnters(door)
                     RemoveAllPickups()
                     RemoveTallLadder()
                     AddLostCurse()
-                    UpdateInnerReflectionCache()
+                    UpdateDamageBonusCache()
                 end
             )
 
@@ -739,7 +865,7 @@ local function CheckIfPlayerEnters(door)
                         Game():GetHUD():SetVisible(true)
                         PlacePlayersInDoorSlot(doorSlot)
                         RemoveLostCurse()
-                        UpdateInnerReflectionCache()
+                        UpdateDamageBonusCache()
                     end
                 )
             elseif dimension == TSIL.Enums.Dimension.MAIN then
@@ -939,3 +1065,26 @@ if EID then
         end
     end)
 end
+
+function MirrorKey:EvaluateCache(player)
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) and MilkshakeVol1.API:IsInMirrorRoom() then
+        player.Damage = player.Damage + BELIAL_DMG_BONUS
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_EVALUATE_CACHE,
+    MirrorKey.EvaluateCache,
+    CacheFlag.CACHE_DAMAGE
+)
+
+function MirrorKey:PostNewRoom()
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "PreviousRoomIndexForExitGame",
+        Game():GetLevel():GetCurrentRoomIndex()
+    )
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_NEW_ROOM,
+    MirrorKey.PostNewRoom
+)

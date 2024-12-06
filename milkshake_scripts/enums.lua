@@ -34,7 +34,9 @@ enums.Collectibles = {
     UNCHARGED_MIRROR_KEY = Isaac.GetItemIdByName("Mirror Key "),
     SATA_ANDAGI = Isaac.GetItemIdByName("Saataa Andagii"),
     GOLDEN_BREAKFAST = Isaac.GetItemIdByName("Golden Breakfast"),
+    PRISMATIC_GOGGLES = Isaac.GetItemIdByName("Chromatic Prism"),
     WATER_WITH_FOOD_COLORING = Isaac.GetItemIdByName("Water With Food Coloring"),
+    PRISMATIC_SPINUP_DICE = Isaac.GetItemIdByName("Prismatic Cosine Dice"),
 
     SPECIAL_BRENDA_FIRE_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM FIRE WISP"),
     SPECIAL_BRENDA_PSYCHIC_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM PSYCHIC WISP"),
@@ -44,6 +46,8 @@ enums.Collectibles = {
     SPECIAL_BRENDA_POISON_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM POISON WISP"),
     SPECIAL_BRENDA_HOLY_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM HOLY WISP"),
     SPECIAL_BRENDA_TERRA_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM TERRA WISP"),
+    SPECIAL_BRENDA_UNHOLY_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM UNHOLY WISP"),
+    SPECIAL_BRENDA_UNDEAD_WISP = Isaac.GetItemIdByName("BRENDA CUSTOM UNDEAD WISP"),
 
     LEVITICUS_ALADAR = Isaac.GetItemIdByName("Leviticus  "),
     LEVITICUS_FANCY = Isaac.GetItemIdByName("Leviticus ")
@@ -64,8 +68,16 @@ enums.Trinkets = {
     DIAMOND_SHARD = Isaac.GetTrinketIdByName("Sacred Jacinth"),
     SAPPHIRE_SHARD = Isaac.GetTrinketIdByName("Torrential Sapphire"),
     AMBER_SHARD = Isaac.GetTrinketIdByName("Terrestrial Amber"),
+    RAINBOW_COOKIE = Isaac.GetTrinketIdByName("Rainbow Cookie"),
+    PRISMATIC_LACEWING = Isaac.GetTrinketIdByName("Prismatic Lacewing"),
 
-    TRACK_ALT_PATH_UNLOCK = Isaac.GetTrinketIdByName("Alt Path Unlock Tracker")
+    TRACK_ALT_PATH_UNLOCK = Isaac.GetTrinketIdByName("Alt Path Unlock Tracker"),
+    TRACK_MEGA_CHEST_UNLOCK = Isaac.GetTrinketIdByName("MEGA CHEST UNLOCK TRACKER"),
+    TRACK_GOLD_BOMB_UNLOCK = Isaac.GetTrinketIdByName("GOLD BOMB UNLOCK TRACKER"),
+    TRACK_GOLDEN_BATTERY_UNLOCK = Isaac.GetTrinketIdByName("GOLDEN BATTERY UNLOCK TRACKER"),
+    TRACK_GOLDEN_HEART_UNLOCK = Isaac.GetTrinketIdByName("GOLDEN HEART UNLOCK TRACKER"),
+    TRACK_GOLD_PILL_UNLOCK = Isaac.GetTrinketIdByName("GOLD PILL UNLOCK TRACKER"),
+    TRACK_GOLDEN_TRINKET_UNLOCK = Isaac.GetTrinketIdByName("GOLDEN TRINKET UNLOCK TRACKER"),
 }
 
 enums.Cards = {
@@ -75,6 +87,8 @@ enums.Cards = {
 enums.Familiars = {
     SPIRIT_BUM = Isaac.GetEntityVariantByName("Spirit Bum Familiar"),
     FINGORE = Isaac.GetEntityVariantByName("Scripulous Fingore"),
+    FINGORE_HEAD = Isaac.GetEntityVariantByName("Scripulous Fingore Head"),
+    FINGORE_FINGER = Isaac.GetEntityVariantByName("Scripulous Fingore Finger"),
     SHARP_CURSOR = Isaac.GetEntityVariantByName("Sharp Cursor"),
     FRAGILE_MIRROR = Isaac.GetEntityVariantByName("Fragile Mirror"),
     INNER_REFLECTION = Isaac.GetEntityVariantByName("Inner Reflection"),
@@ -106,7 +120,15 @@ enums.Effects = {
     SACRILEGE_PENTAGRAM = Isaac.GetEntityVariantByName("Sacrilege Pentagram Overlay"),
 
     FIRE_OVERLAY = Isaac.GetEntityVariantByName("Fire Screen Overlay"),
-    FIRE_PARTICLE = Isaac.GetEntityVariantByName("Fire Particle Overlay")
+    FIRE_PARTICLE = Isaac.GetEntityVariantByName("Fire Particle Overlay"),
+
+    GLASS_HEAD = Isaac.GetEntityVariantByName("Glass Head Death Effect"),
+    BEER_HEAD = Isaac.GetEntityVariantByName("Beer Head Death Effect"),
+    FLASK_HEAD_BODY = Isaac.GetEntityVariantByName("Flask Head Death Effect 1"),
+    FLASK_HEAD_HEAD = Isaac.GetEntityVariantByName("Flask Head Death Effect 2"),
+    WINE_HEAD = Isaac.GetEntityVariantByName("Wine Head Death Effect"),
+
+    LEVITICUS_LIGHT = Isaac.GetEntityVariantByName("Leviticus Light")
 }
 
 enums.Enemies = {
@@ -147,6 +169,7 @@ enums.Sounds = {
     SATA_ANDAGI = Isaac.GetSoundIdByName("Sata Andagi"),
     BRENDA_HURT = Isaac.GetSoundIdByName("Brenda Hurt"),
     BRENDA_ACTIVATE = Isaac.GetSoundIdByName("Brenda Activate"),
+    SOULHEART_LOSE = Isaac.GetSoundIdByName("lose soul heart"),
 
     SPIRIT_CHAOS = Isaac.GetSoundIdByName("Spirit Of Chaos"),
     SPIRIT_CLAIRVOYANCE = Isaac.GetSoundIdByName("Spirit Of Clairvoyance"),
@@ -159,6 +182,7 @@ enums.Sounds = {
     SPIRIT_SALVATION = Isaac.GetSoundIdByName("Spirit Of Salvation"),
     SPIRIT_TERRASTRIUM = Isaac.GetSoundIdByName("Spirit Of Terrastrium"),
     SPIRIT_VIRULENCE = Isaac.GetSoundIdByName("Spirit Of Virulence"),
+    SPIRIT_ORDER = Isaac.GetSoundIdByName("Spirit Of Order"),
 
     ORB_DROP = Isaac.GetSoundIdByName("Spirit Orb Drop"),
     ORB_PICKUP = Isaac.GetSoundIdByName("Spirit Orb Pickup"),
@@ -177,7 +201,7 @@ enums.Hearts = {
 }
 
 enums.Slots = {
-    SPIRIT_KLIN_BRENDA = Isaac.GetEntityVariantByName("Spirit Klin Brenda")
+    SPIRIT_KLIN_BRENDA = Isaac.GetEntityVariantByName("Spirit Kiln Brenda")
 }
 
 enums.Coins = {
@@ -213,6 +237,66 @@ enums.Orbs = {
     ORDER = Isaac.GetCardIdByName("Spirit Of Order"),
 }
 
+enums.OrbsUnkeyed = {
+    enums.Orbs.FIRE,
+    enums.Orbs.ELECTRIC,
+    enums.Orbs.NATURE,
+    enums.Orbs.PSYCHIC,
+    enums.Orbs.RANDOM,
+    enums.Orbs.HOLY,
+    enums.Orbs.UNHOLY,
+    enums.Orbs.POISON,
+    enums.Orbs.UNDEAD,
+    enums.Orbs.WATER,
+    enums.Orbs.ROCK,
+    enums.Orbs.ORDER,
+}
+
+enums.OrbsExcludingChaos = {
+    enums.Orbs.FIRE,
+    enums.Orbs.ELECTRIC,
+    enums.Orbs.NATURE,
+    enums.Orbs.PSYCHIC,
+    enums.Orbs.HOLY,
+    enums.Orbs.UNHOLY,
+    enums.Orbs.POISON,
+    enums.Orbs.UNDEAD,
+    enums.Orbs.WATER,
+    enums.Orbs.ROCK,
+    enums.Orbs.ORDER,
+}
+
+enums.OrbsExcludingOrder = {
+    enums.Orbs.FIRE,
+    enums.Orbs.ELECTRIC,
+    enums.Orbs.NATURE,
+    enums.Orbs.PSYCHIC,
+    enums.Orbs.RANDOM,
+    enums.Orbs.HOLY,
+    enums.Orbs.UNHOLY,
+    enums.Orbs.POISON,
+    enums.Orbs.UNDEAD,
+    enums.Orbs.WATER,
+    enums.Orbs.ROCK,
+}
+
+enums.OrbsExcludingBoth = {
+    enums.Orbs.FIRE,
+    enums.Orbs.ELECTRIC,
+    enums.Orbs.NATURE,
+    enums.Orbs.PSYCHIC,
+    enums.Orbs.HOLY,
+    enums.Orbs.UNHOLY,
+    enums.Orbs.POISON,
+    enums.Orbs.UNDEAD,
+    enums.Orbs.WATER,
+    enums.Orbs.ROCK,
+}
+
+enums.GetOrbFlag = {
+    NO_RANDOM = 1 << 1,
+    NO_ORDER = 1 << 2,
+}
 
 enums.CardSpawnerSubtypePerCard = {
     [0] = enums.Cards.TATTERED_PAGE,
@@ -282,12 +366,11 @@ enums.Challenges = {
     WORLD_OF_LIGHT = Isaac.GetChallengeIdByName("[Reshaken] World of Light")
 }
 
-enums.GlassHeadDeathEffectVariant = {
-    SPHERE = Isaac.GetEntityVariantByName("Glass Head Corpse"),
-    FLASK = Isaac.GetEntityVariantByName("Flask Head Corpse"),
-    FLASK_PROJECTILE = Isaac.GetEntityVariantByName("Flask Head Projectile Corpse"),
-    BEER = Isaac.GetEntityVariantByName("Beer Head Corpse"),
-    WINE = Isaac.GetEntityVariantByName("Wine Head Corpse"),
+enums.Achievements = {
+    PRISMATIC_GOGGLES = 1,
+    GOLDEN_COOKIE = 2,
+    SPIRIT_OF_ORDER = 3,
+    GLASS_GOD = 4,
 }
 
 MilkshakeVol1.enums = enums

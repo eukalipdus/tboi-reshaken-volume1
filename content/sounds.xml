@@ -21,6 +21,10 @@
         <sample weight="1" path="electrocute_machine.wav"/>
     </sound>
 
+    <sound name="lose soul heart">
+        <sample weight="1" path="soulheart_lose.wav"/>
+    </sound>
+
     <sound name="Spirit Of Chaos">
         <sample weight="1" path="Spirit Of Chaos.wav"/>
     </sound>
@@ -63,6 +67,10 @@
 
     <sound name="Spirit Of Virulence">
         <sample weight="1" path="Spirit Of Virulence.wav"/>
+    </sound>
+
+    <sound name="Spirit Of Order">
+        <sample weight="1" path="Spirit Of Order 2.wav"/>
     </sound>
 
     <sound name="Im sory">

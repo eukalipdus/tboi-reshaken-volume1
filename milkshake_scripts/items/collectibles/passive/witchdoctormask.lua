@@ -207,7 +207,8 @@ function witchDoctorMask:UsePill(_, player)
             spiritOrb = enums.Orbs.RANDOM
         end
         local flags = enums.UseOrbFlags.NO_SOUND
-        if pillColor > PillColor.PILL_GIANT_FLAG then
+        if pillColor
+        and pillColor > PillColor.PILL_GIANT_FLAG then
             flags = flags | enums.UseOrbFlags.DOUBLE_POWER
         end
         MilkshakeVol1:UseSpiritOrb(spiritOrb, player, flags)
@@ -287,8 +288,10 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.Get
 
 function witchDoctorMask:PostPlayerCollectibleAdded(player, collectible, firstTime)
     if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK
-    or ((firstTime == false) and #(TSIL.Players.GetPlayersOfType(PlayerType.PLAYER_ISAAC_B)) > 0)
-    or player.Variant == 1 then return end
+    or (player:GetPlayerType() == PlayerType.PLAYER_ISAAC_B and firstTime == false)
+    or player.Variant == 1 then
+        return
+    end
     local roll = TSIL.Random.GetRandomInt(1, PillColor.NUM_PILLS)
     local spawnPos = Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE)
     TSIL.PickupSpecific.SpawnPill(roll, spawnPos)

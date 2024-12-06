@@ -10,7 +10,11 @@ if StageAPI then
     StageAPI.UnregisterCallbacks(MilkshakeVol1.Name)
 end
 
---include("milkshake_scripts.bumAPI.core")
+--include("milkshake_scripts.bumAPI.core") test
+-- Unlock Manager
+MilkshakeVol1.UnlockManager = {}
+include("milkshake_scripts.unlockmanager")
+include("milkshake_scripts.achievementpopup")
 
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
@@ -34,7 +38,8 @@ include("milkshake_scripts.items.collectibles.passive.blackeye")
 include("milkshake_scripts.items.collectibles.familiars.spiritbum")
 include("milkshake_scripts.items.collectibles.active.dicedice")
 include("milkshake_scripts.items.collectibles.active.emptyslot")
-include("milkshake_scripts.items.collectibles.familiars.fingore")
+--include("milkshake_scripts.items.collectibles.familiars.fingore")
+include("milkshake_scripts.items.collectibles.familiars.fingore_v2")
 include("milkshake_scripts.items.collectibles.passive.firecrackerrose")
 include("milkshake_scripts.items.collectibles.familiars.fragilemirror")
 include("milkshake_scripts.items.collectibles.passive.glassheart")
@@ -61,7 +66,9 @@ include("milkshake_scripts.items.collectibles.passive.witchdoctormask")
 include("milkshake_scripts.items.collectibles.passive.rainbowfragment")
 include("milkshake_scripts.items.collectibles.active.mirrorkey")
 include("milkshake_scripts.items.collectibles.passive.sataandagi")
+include("milkshake_scripts.items.collectibles.passive.prismatic_goggles")
 include("milkshake_scripts.items.collectibles.passive.waterwithfoodcoloring")
+include("milkshake_scripts.items.collectibles.active.prismaticspinupdice")
 
 -- Trinkets
 include("milkshake_scripts.items.trinkets.amethystshard")
@@ -78,6 +85,8 @@ include("milkshake_scripts.items.trinkets.diamondshard")
 include("milkshake_scripts.items.trinkets.tourmalineshard")
 include("milkshake_scripts.items.trinkets.ambershard")
 include("milkshake_scripts.items.trinkets.rockwheel")
+include("milkshake_scripts.items.trinkets.prismaticlacewing")
+
 
 --Pick ups
 include("milkshake_scripts.items.pick ups.cardspawner")
@@ -98,7 +107,6 @@ include("milkshake_scripts.items.pick ups.unholyorb")
 include("milkshake_scripts.items.pick ups.rockorb")
 include("milkshake_scripts.items.pick ups.orbder")
 
-
 --Pools
 include("milkshake_scripts.pools.glasspool")
 
@@ -108,10 +116,14 @@ include("milkshake_scripts.slots.spiritklinbrenda")
 --Wisps
 include("milkshake_scripts.wisps.brendaelectricwisp")
 include("milkshake_scripts.wisps.brendafirewisp")
+include("milkshake_scripts.wisps.brendaterrawisp")
+include("milkshake_scripts.wisps.brendapsychicwisp")
 include("milkshake_scripts.wisps.brendaholywisp")
 include("milkshake_scripts.wisps.brendanaturewisp")
 include("milkshake_scripts.wisps.brendapoisonwisp")
 include("milkshake_scripts.wisps.brendawaterwisp")
+include("milkshake_scripts.wisps.brendaunholywisp")
+include("milkshake_scripts.wisps.brendaundeadwisp")
 include("milkshake_scripts.wisps.globininabucket")
 include("milkshake_scripts.wisps.goldenshovel")
 include("milkshake_scripts.wisps.leviticus")
@@ -128,7 +140,6 @@ include("milkshake_scripts.enemies.beerhead")
 include("milkshake_scripts.enemies.flaskhead")
 include("milkshake_scripts.enemies.glassheads")
 include("milkshake_scripts.enemies.winehead")
-include("milkshake_scripts.enemies.glassheaddeatheffects")
 
 --Challenges
 include("milkshake_scripts.challenges.isaacclicker")
@@ -144,10 +155,8 @@ include("milkshake_scripts.room_decorations.fire")
 include("milkshake_scripts.shardrockoverlay")
 include("milkshake_scripts.brgascloud")
 include("milkshake_scripts.nonreplaceabletnt")
-
--- Check if Spirit Sage can be played
-MilkshakeVol1.AchievementChecker = include("milkshake_scripts.achievementchecker")
-MilkshakeVol1.AchievementChecker:AddTrackerTrinket(MilkshakeVol1.enums.Trinkets.TRACK_ALT_PATH_UNLOCK)
+include("milkshake_scripts.spindowndicehiddenitems")
+include("milkshake_scripts.setachievementtrackers")
 
 --- Shader crash fix
 --- Credits to Cucco
@@ -156,3 +165,31 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function()
         Isaac.ExecuteCommand("reloadshaders")
     end
 end)
+
+-- ---@param player EntityPlayer
+-- MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
+--     if Input.IsButtonTriggered(Keyboard.KEY_5, player.ControllerIndex) then
+--         local ref = EntityRef(player)
+
+--         for _, v in ipairs(Isaac.FindInRadius(player.Position, 9999, EntityPartition.ENEMY)) do
+--             v:TakeDamage(v.MaxHitPoints - 1, 0, ref, 0)
+--             v:TakeDamage(1, 0, ref, 0)
+--         end
+--     end
+
+--     if Input.IsButtonTriggered(Keyboard.KEY_1, player.ControllerIndex) then
+--         TSIL.EntitySpecific.SpawnNPC(MilkshakeVol1.enums.Enemies.GLASS_HEAD, MilkshakeVol1.enums.GlassHeadVariant.GLASS_HEAD, 0, Game():GetRoom():GetCenterPos())
+--     end
+
+--     if Input.IsButtonTriggered(Keyboard.KEY_2, player.ControllerIndex) then
+--         TSIL.EntitySpecific.SpawnNPC(MilkshakeVol1.enums.Enemies.GLASS_HEAD, MilkshakeVol1.enums.GlassHeadVariant.BEER_HEAD, 0, Game():GetRoom():GetCenterPos())
+--     end
+
+--     if Input.IsButtonTriggered(Keyboard.KEY_3, player.ControllerIndex) then
+--         TSIL.EntitySpecific.SpawnNPC(MilkshakeVol1.enums.Enemies.GLASS_HEAD, MilkshakeVol1.enums.GlassHeadVariant.FLASK_HEAD, 0, Game():GetRoom():GetCenterPos())
+--     end
+
+--     if Input.IsButtonTriggered(Keyboard.KEY_4, player.ControllerIndex) then
+--         TSIL.EntitySpecific.SpawnNPC(MilkshakeVol1.enums.Enemies.GLASS_HEAD, MilkshakeVol1.enums.GlassHeadVariant.WINE_HEAD, 0, Game():GetRoom():GetCenterPos())
+--     end
+-- end)

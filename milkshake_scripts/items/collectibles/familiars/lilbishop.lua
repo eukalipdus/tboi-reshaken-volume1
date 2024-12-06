@@ -2,8 +2,8 @@ local lilBishop = {}
 local enums = MilkshakeVol1.enums
 local sfx = SFXManager()
 
-lilBishop.BlockCooldown = 150 -- 5*30
-lilBishop.BlockChance = 0.2
+lilBishop.BlockCooldown = 180 -- 6*30
+lilBishop.BlockChance = 0.1
 --lilBishop.ShieldTimeout = 120
 lilBishop.LaserFade = 10
 lilBishop.FadeCounter = 15
@@ -16,7 +16,7 @@ lilBishop.DepthOffset = 100
 lilBishop.AlternativeSprite = "gfx/familiar/familiar_lilbishop_alt.png"
 lilBishop.BaseSprite = "gfx/familiar/familiar_lilbishop.png"
 
---local game = Game()
+local game = Game()
 
 function lilBishop:OnFamiliarCache(player, cacheFlag)
     TSIL.Familiars.CheckFamiliarFromCollectibles(
@@ -44,7 +44,7 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 					ignore = true -- to play animation for all active lil bishops
 					local sprite = lilBishopFam:GetSprite()
 					if sprite:GetAnimation() == "Active" or sprite:GetAnimation() == "Sleep" then
-						sfx:Play(SoundEffect.SOUND_BISHOP_HIT)
+						sfx:Play(SoundEffect.SOUND_BISHOP_HIT, 10)
 						if sprite:GetAnimation() == "Active" then
 							sprite:Play("Block")
 						end
@@ -105,6 +105,7 @@ function lilBishop:onFamiliarInit(familiar)
 	local famData = familiar:GetData()
 	local sprite = familiar:GetSprite()
 	famData.Active = nil
+	famData.FirstBlock = nil
 	sprite:Play("FloatDown")
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, lilBishop.onFamiliarInit, enums.Familiars.LIL_BISHOP)
@@ -126,6 +127,10 @@ function lilBishop:onFamiliarUpdate(familiar)
 		sprite:LoadGraphics()
 	end
 
+	if famData.FirstBlock and famData.FirstBlock == game:GetFrameCount() then
+		sfx:Play(SoundEffect.SOUND_DOGMA_BLACKHOLE_LOOP, 10, 2, true, 10)
+	end
+
 	if famData.Active then
 		famData.Active = famData.Active - 1
 		if famData.Active < 0 and sprite:IsFinished("Sleep") then
@@ -145,6 +150,8 @@ function lilBishop:onFamiliarUpdate(familiar)
     	    sprite:Play("Active")
     	else
     	    sprite:Play("Sleep")
+    	    famData.FirstBlock = nil
+    	    sfx:Stop(SoundEffect.SOUND_DOGMA_BLACKHOLE_LOOP)
     	end
     end
 	--print(famData.Active, sprite:GetAnimation(), sprite:IsFinished("Sleep"))
@@ -166,11 +173,15 @@ function lilBishop:onFamiliarCollision(familiar, collider)
 				famData.Active = lilBishop.BlockCooldown * lilBishop.bffsMultiplier
 			end
 			sprite:Play("Block")
+			sfx:Play(SoundEffect.SOUND_LIGHTBOLT_CHARGE, 10)
+			if not famData.FirstBlock then
+				famData.FirstBlock = game:GetFrameCount() + 30 -- so play it 1 second later
+			end
+    	    --sfx:Play(SoundEffect.SOUND_DOGMA_BLACKHOLE_LOOP, 10, 2, true, 10) -- idk?
 		end
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, lilBishop.onFamiliarCollision, enums.Familiars.LIL_BISHOP)
-
 
 --[[
 ---TEST

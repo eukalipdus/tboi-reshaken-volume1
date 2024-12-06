@@ -10,14 +10,14 @@ local PENNY_CONVERT_CHANCE = 0.35
 ---@field weight number
 
 ---@type RainbowPenny[]
-local rainbowPennies = {}
+MilkshakeVol1.RainbowPennies = {}
 
 local coinBlacklist = {
     CoinSubType.COIN_LUCKYPENNY,
     CoinSubType.COIN_GOLDEN
 }
 
-local weightedRainbowPennies = { -- Workaround to the other table making items added first being more common
+MilkshakeVol1.WeightedRainbowPennies = { -- Workaround to the other table making items added first being more common
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.ROTTEN_PENNY, weight = 0.25},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.FLAT_PENNY, weight = 0.45},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BURNT_PENNY, weight = 0.45},
@@ -32,33 +32,21 @@ local weightedRainbowPennies = { -- Workaround to the other table making items a
 }
 
 if FiendFolio then
-    table.insert(weightedRainbowPennies,
+    table.insert(MilkshakeVol1.WeightedRainbowPennies,
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.SHARP_PENNY, weight = 0.15}
     )
 
-    table.insert(weightedRainbowPennies,
+    table.insert(MilkshakeVol1.WeightedRainbowPennies,
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.EGG_PENNY, weight = 0.10}
     )
 
-    table.insert(weightedRainbowPennies,
+    table.insert(MilkshakeVol1.WeightedRainbowPennies,
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.FUZZY_PENNY, weight = 0.25}
     )
 
-        table.insert(weightedRainbowPennies,
+        table.insert(MilkshakeVol1.WeightedRainbowPennies,
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.MOLTEN_PENNY, weight = 0.05}
     )
-end
-
---- Returns if a penny is any kind of rainbow penny
----@param pickup EntityPickup
----@return boolean
-local function IsRainbowPenny(pickup)
-    for _, pennyType in pairs(weightedRainbowPennies) do
-        if pickup.SubType == pennyType.subtype then
-            return true
-        end
-    end
-    return false
 end
 
 --- Returns the proper chance to convert a penny
@@ -78,7 +66,7 @@ end
 ---@param subtype integer
 ---@param onPickup fun(pickup: EntityPickup, player: EntityPlayer)
 function MilkshakeVol1.API:AddRainbowPenny(variant, subtype, onPickup, weight)
-    rainbowPennies[#rainbowPennies+1] = {
+    MilkshakeVol1.RainbowPennies[#MilkshakeVol1.RainbowPennies+1] = {
         variant = variant,
         subtype = subtype,
         onPickup = onPickup,
@@ -91,7 +79,7 @@ end
 ---@param rng RNG
 ---@return RainbowPenny
 function MilkshakeVol1.API:GetRainbowPenny(rng)
-    return TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
+    return TSIL.Random.GetRandomElementsFromTable(MilkshakeVol1.RainbowPennies, 1, rng)[1]
 end
 
 ---Gives you a random rainbow penny, selecting them through their weight
@@ -99,23 +87,29 @@ end
 ---@return RainbowPenny
 function MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
     local total = 0
-    for i = 1, #weightedRainbowPennies do
-        total = total + weightedRainbowPennies[i].weight
+    for i = 1, #MilkshakeVol1.WeightedRainbowPennies do
+        total = total + MilkshakeVol1.WeightedRainbowPennies[i].weight
     end
     local randomFloat = TSIL.Random.GetRandomFloat(0, total, rng)
-    for i = 1, #weightedRainbowPennies do
-        if randomFloat < weightedRainbowPennies[i].weight then
-            return weightedRainbowPennies[i]
+    for i = 1, #MilkshakeVol1.WeightedRainbowPennies do
+        if randomFloat < MilkshakeVol1.WeightedRainbowPennies[i].weight then
+            return MilkshakeVol1.WeightedRainbowPennies[i]
         end
-        randomFloat = randomFloat - weightedRainbowPennies[i].weight
+        randomFloat = randomFloat - MilkshakeVol1.WeightedRainbowPennies[i].weight
     end
 
-    return weightedRainbowPennies[1]
+    return MilkshakeVol1.WeightedRainbowPennies[1]
 end
 
 ---@param pickup EntityPickup
 local function CanPickupBeReplaced(pickup, convertChance, isNatural)
-    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+    local pickupSeed = pickup.InitSeed
+
+    if pickupSeed == 0 then
+        pickupSeed = 1
+    end
+
+    local rng = TSIL.RNG.NewRNG(pickupSeed)
     local roll = rng:RandomFloat()
     if (not isNatural and (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB))
     or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType))
@@ -124,7 +118,6 @@ local function CanPickupBeReplaced(pickup, convertChance, isNatural)
     end
     return false
 end
-
 
 ---@param pickup EntityPickup
 function MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, isNatural)
@@ -145,8 +138,6 @@ function MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, isNa
         false
     )
 end
-
-
 
 ---@param pickup EntityPickup
 function potOfGold:OnPickupUpdate(pickup)
@@ -175,7 +166,7 @@ MilkshakeVol1:AddCallback(
 --     for _, pickup in pairs(pickups) do
 --         if pickup.Variant == PickupVariant.PICKUP_KEY
 --         or pickup.Variant == PickupVariant.PICKUP_BOMB then
---             local chosenCoin = TSIL.Random.GetRandomElementsFromTable(rainbowPennies, 1, rng)[1]
+--             local chosenCoin = TSIL.Random.GetRandomElementsFromTable(MilkshakeVol1.RainbowPennies, 1, rng)[1]
 --             pickup:Remove()
 --             local coin = TSIL.EntitySpecific.SpawnPickup(chosenCoin.variant, chosenCoin.subtype, pickup.Position, Vector.Zero, player):ToPickup()
 --             coin.AutoUpdatePrice = false
@@ -184,35 +175,5 @@ MilkshakeVol1:AddCallback(
 --     end
 -- end
 -- MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, potOfGold.PostPEffectUpdate)
-
----@param pickup EntityPickup
----@param collider Entity
-function potOfGold:PrePickupCollision(pickup, collider)
-    if IsRainbowPenny(pickup)
-    and not pickup:IsShopItem()
-    and (collider.Type == EntityType.ENTITY_ULTRA_GREED
-    or (collider.Type == EntityType.ENTITY_FAMILIAR
-        and collider.Variant == FamiliarVariant.BUMBO or collider.Variant == FamiliarVariant.BUM_FRIEND)) then
-            pickup.SubType = CoinSubType.COIN_PENNY
-    else
-        local player = collider:ToPlayer()
-        if not player then return end
-        if player:GetNumCoins() < pickup.Price then return end
-
-        local rainbowPenny = TSIL.Utils.Tables.FindFirst(rainbowPennies, function (_, rainbowPenny)
-            return rainbowPenny.variant == pickup.Variant and rainbowPenny.subtype == pickup.SubType
-        end)
-
-        if not rainbowPenny then return end
-
-        rainbowPenny.onPickup(pickup, player)
-
-        pickup:Die()
-
-        MilkshakeVol1.utility:SetData(pickup, "IsRainbowPenny", true)
-        pickup.SubType = CoinSubType.COIN_PENNY
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, potOfGold.PrePickupCollision)
 
 return potOfGold

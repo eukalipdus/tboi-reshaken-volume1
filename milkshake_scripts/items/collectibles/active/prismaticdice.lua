@@ -1,302 +1,320 @@
-local prismaticDice = {}
+local PrismaticDice = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local SHIFT_RIGHT = 40
-local SHIFT_LEFT = -40
-local SHIFT_DOWN = Vector(0, 20)
 local TIMES_CAN_FAIL = 1000
-local INITIAL_BREAKFAST_CHECK = 10
-local WHITE = Color(1, 1, 1, 1, 255, 255, 255)
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220/255, 1, 0, 0, 0)
-
 local RED = Color(141 / 255, 2 / 255, 0, 1, 141 / 255, 2 / 255, 0)
+local BELIAL_RED = Color(1, 0.2, 0, 0.6)
 local YELLOW = Color(135 / 255, 140 / 255, 20 / 255, 1, 135 / 255, 140 / 255, 20 / 255)
 local BLUE = Color(4 / 255, 99 / 255, 147 / 255, 1, 4 / 255, 99 / 255, 147 / 255)
-local SOLID_RED = Color(1, 0, 0, 1, 1, 0, 0)
-local SOLID_YELLOW = Color(1, 1, 0, 1, 1, 1, 0)
-local SOLID_BLUE = Color(0, 0, 1, 1, 0, 0, 1)
-local SOLID_CYAN = Color(0, 1, 1, 1, 0, 255, 255)
-local SOLID_PINK = Color(1, 192/255, 203/255, 1, 255, 192/255, 203/255)
-local SPLIT_COLOR_FRAMES = 2
-local SHATTERED_SOLID_FRAMES = 7
-local SHATTERED_COLOR_FRAMES = 20
-local SCHEDULE_FRAMES = 2
-local JUDAS_REROLL_CHANCE = 30
+local BELIAL_DEVIL_CHANCE = 30
+local COLOR_FRAMES = 15
+local COLLECTIBLE_DIST_SHIFT = 40
+local INITIAL_BREAKFAST_CHECK = 15
 
+local antiRecursion = false
 
---- Gets a spawn position for a split collectible
----@param index number
----@param first number
----@param second number
----@param collectible EntityPickup
----@return Vector
-local function GetSplitPosition(index, first, second, collectible)
-    local spawnPosition
-  
-    if index == first then
-        spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
-    elseif index == second then
-        spawnPosition = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
+local breakfastsByQuality = {
+    enums.Collectibles.SPOILED_BREAKFAST,
+    CollectibleType.COLLECTIBLE_BREAKFAST,
+    enums.Collectibles.BALANCED_BREAKFAST,
+    enums.Collectibles.HEARTY_BREAKFAST,
+    CollectibleType.COLLECTIBLE_BINGE_EATER,
+    enums.Collectibles.GOLDEN_BREAKFAST
+}
+
+local forbiddenSplitItems = {
+    CollectibleType.COLLECTIBLE_NULL,
+    CollectibleType.COLLECTIBLE_DADS_NOTE
+}
+
+local oneHeart = math.abs(PickupPrice.PRICE_ONE_HEART)
+local twoHearts = math.abs(PickupPrice.PRICE_TWO_HEARTS)
+local threeSoulHearts = math.abs(PickupPrice.PRICE_THREE_SOULHEARTS)
+local oneHeartTwoSoulHearts = math.abs(PickupPrice.PRICE_ONE_HEART_AND_TWO_SOULHEARTS)
+local oneSoulHeart = math.abs(PickupPrice.PRICE_ONE_SOUL_HEART)
+local twoSoulHearts = math.abs(PickupPrice.PRICE_TWO_SOUL_HEARTS)
+local oneHeartOneSoulHeart = math.abs(PickupPrice.PRICE_ONE_HEART_AND_ONE_SOUL_HEART)
+
+local heartPriceToHalf = {
+    [oneHeart] = oneHeart,
+    [twoHearts] = oneHeart,
+    [threeSoulHearts] = twoSoulHearts,
+    [oneHeartTwoSoulHearts] = oneHeartOneSoulHeart,
+    [oneSoulHeart] = oneSoulHeart,
+    [twoSoulHearts] = oneSoulHeart
+}
+
+local splitColors = {
+    CYAN,
+    PINK
+}
+
+local effectPerGodheadSplit = {
+    {
+        COLOR = YELLOW,
+        OFFSET = Vector(COLLECTIBLE_DIST_SHIFT, 0),
+        COLLECTIBLE = CollectibleType.COLLECTIBLE_MIND
+    },
+    {
+        COLOR = BLUE,
+        OFFSET = Vector(-COLLECTIBLE_DIST_SHIFT, 0),
+        COLLECTIBLE = CollectibleType.COLLECTIBLE_SOUL
+    },
+    {
+        COLOR = RED,
+        OFFSET = Vector(0, COLLECTIBLE_DIST_SHIFT),
+        COLLECTIBLE = CollectibleType.COLLECTIBLE_BODY
+    },
+}
+
+---Returns the regular or greed version of an ItemPoolType
+---@param poolType ItemPoolType
+---@return ItemPoolType
+local function GetProperPool(poolType)
+    local isGreedMode = Game():IsGreedMode()
+
+    if not isGreedMode then
+        return poolType
     end
 
-    if not spawnPosition then
-        spawnPosition = collectible.Position
-    end
+    if poolType == ItemPoolType.POOL_TREASURE then
+        return ItemPoolType.POOL_GREED_TREASURE
 
-    return spawnPosition
-end
+    elseif poolType == poolType.POOL_DEVIL then
+        return poolType.POOL_GREED_DEVIL
 
---- Plays the color flash animations on the newly spawned collectibles
----@param index number
----@param currentCollecible EntityPickup
-local function PlaySplitAnimation(index, currentCollecible, colors)
-    if index == 0 then
-        --SOLID_CYAN:SetColorize(0, 2, 2, 3)
-        currentCollecible:SetColor(SOLID_CYAN, SHATTERED_SOLID_FRAMES, 2, false, false)
-        local lastCollectible = currentCollecible
-
-        TSIL.Utils.Functions.RunInFramesTemporary(function ()
-        --CYAN:SetColorize(0, 2, 2, 3)
-        lastCollectible:SetColor(CYAN, SHATTERED_COLOR_FRAMES, 2, true, false)
-        end, SHATTERED_SOLID_FRAMES)
-
-    elseif index == 1 then
-        --SOLID_PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
-        currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
-
-        TSIL.Utils.Functions.RunInFramesTemporary(function ()
-        --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
-        currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
-        end, SHATTERED_SOLID_FRAMES)
-
-    elseif index == 2 then
-        currentCollecible:SetColor(SOLID_PINK, SHATTERED_SOLID_FRAMES, 2, false, false)
-
-        TSIL.Utils.Functions.RunInFramesTemporary(function ()
-        --PINK:SetColorize(3, 0, (220 / 255) * 3, 1)
-        currentCollecible:SetColor(PINK, SHATTERED_COLOR_FRAMES, 2, true, false)
-        end, SHATTERED_SOLID_FRAMES)
-    end
-end
-
---- Plays a color flash animation for a spawned collectible
----@param collectible EntityPickup
----@param colorOne Color
----@param colorTwo Color
-local function SplitAnimationSingle(collectible, colorOne, colorTwo)
-    collectible:SetColor(colorOne, SHATTERED_SOLID_FRAMES, 2, false, false)
-    TSIL.Utils.Functions.RunInFramesTemporary(function ()
-    collectible:SetColor(colorTwo, SHATTERED_COLOR_FRAMES, 2, true, false)
-    end, SHATTERED_SOLID_FRAMES)
-end
-
-local function HandleBreakfast(collectible, shatteredCollectible, quality, count)
-    for i = 0, count do
-        local splitQuality = quality - 1
-        local spawnPosition = GetSplitPosition(i, 1, 2, collectible)
-
-        if splitQuality == 0 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.SPOILED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-        elseif splitQuality == 1 then
-             ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-        elseif splitQuality == 2 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.BALANCED_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-        elseif splitQuality == 3 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.HEARTY_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-            
-        elseif splitQuality == 4 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BINGE_EATER, spawnPosition, Vector(0,0), nil):ToPickup()
-
-        elseif splitQuality == 5 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, enums.Collectibles.GOLDEN_BREAKFAST, spawnPosition, Vector(0,0), nil):ToPickup()
-        end
-
-        if i == 0 then
-            shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
-        elseif i == 1 then
-            if collectible.OptionsPickupIndex > 0 then
-                shatteredCollectible.OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
-            end
-        end
-        PlaySplitAnimation(i, shatteredCollectible)
-    end
-end
-
----Actives the prismatic dice effect of giving you two items for one, of lower quality
----@param player EntityPlayer
----@param collectible EntityPickup
----@param quality number
----@param originalQuality number | nil
-function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality)
-    local newCollectibleID
-    local shatteredCollectible
-    local didBreakfast = false
-    local itemPool = Game():GetItemPool()
-    if quality - 1 >= 0 then
-        for i = 0, 1 do
-            local counter = 0
-            repeat
-                counter = counter + 1
-                local roomType = Game():GetRoom():GetType()
-                local seed = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE):GetSeed()
-                local roomPool = itemPool:GetPoolForRoom(roomType, seed)
-
-                if utility:IsJudasBirthright(player) then
-                    local roll = TSIL.Random.GetRandomInt(1, 100)
-                    if roll <= JUDAS_REROLL_CHANCE then
-                        roomPool = ItemPoolType.POOL_DEVIL
-                    end
-                end
-
-                if roomPool == ItemPoolType.POOL_NULL
-                or counter >= INITIAL_BREAKFAST_CHECK then
-                    roomPool = itemPool:GetPoolForRoom(RoomType.ROOM_TREASURE, seed)
-                end
-
-                newCollectibleID = itemPool:GetCollectible(roomPool, false)
-
-                if counter == TIMES_CAN_FAIL
-                or newCollectibleID == CollectibleType.COLLECTIBLE_NULL
-                or (newCollectibleID == CollectibleType.COLLECTIBLE_BREAKFAST
-                    and (itemPool ~= ItemPoolType.POOL_BOSS and itemPool ~= ItemPoolType.POOL_GREED_BOSS))
-                or counter == TIMES_CAN_FAIL then
-                    local count = 0
-                    if i == 1 then
-                        count = 0
-                    else
-                        count = 1
-                    end
-                    HandleBreakfast(collectible, shatteredCollectible, quality, count)
-                    return
-                end
-
-            until Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == quality - 1
-
-            local spawnPosition = GetSplitPosition(i, 0, 1, collectible)
-
-            ---@diagnostic disable-next-line: param-type-mismatch
-            shatteredCollectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, newCollectibleID, spawnPosition, Vector(0,0), nil):ToPickup()
-            itemPool:RemoveCollectible(newCollectibleID)
-
-
-            if i == 0 then
-                shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex
-            elseif i == 1 then
-                if collectible.OptionsPickupIndex > 0 then
-                    shatteredCollectible.OptionsPickupIndex = collectible.OptionsPickupIndex + 1
-                else
-                    shatteredCollectible.OptionsPickupIndex = 0
-                end
-            end
-
-            PlaySplitAnimation(i, shatteredCollectible)
-
-            if shatteredCollectible and collectible:IsShopItem() then
-                shatteredCollectible.AutoUpdatePrice = false
-
-                if collectible.Price == PickupPrice.PRICE_THREE_SOULHEARTS then
-                    shatteredCollectible.Price = PickupPrice.PRICE_TWO_SOUL_HEARTS
-
-                elseif collectible.Price == PickupPrice.PRICE_ONE_SOUL_HEART
-                or collectible.Price == PickupPrice.PRICE_TWO_SOUL_HEARTS then
-                    shatteredCollectible.Price = PickupPrice.PRICE_ONE_SOUL_HEART
-
-                elseif collectible.Price == PickupPrice.PRICE_ONE_HEART_AND_TWO_SOULHEARTS
-                or collectible.Price == PickupPrice.PRICE_TWO_HEARTS
-                or collectible.Price == PickupPrice.PRICE_ONE_HEART_AND_ONE_SOUL_HEART
-                or collectible.Price == PickupPrice.PRICE_ONE_HEART then
-                    shatteredCollectible.Price = PickupPrice.PRICE_ONE_HEART
-                
-                else
-                    shatteredCollectible.Price = math.floor(collectible.Price / 2)
-                end
-            end
-        end
     else
-        local rng = player:GetCollectibleRNG(enums.Collectibles.PRISMATIC_DICE)
-        local seed = rng:GetSeed()
-        local roomType = Game():GetRoom():GetType()
-        local pickupAmount = 1
-        if originalQuality then
-            pickupAmount = originalQuality - (quality - 1)
-        end
-        utility:RecycleCollectible(collectible.Position, player, roomType, itemPool, seed, rng, false, pickupAmount)
+        return poolType
     end
 end
 
---- Spawns a collectible but only allows you to modify the SubType and position
----@param collectibleType integer
----@param position Vector
+---Attempts to find a collectible that satisfies the given pool and quality. Returns nil on failure
+---@param poolType ItemPoolType
+---@param itemPool ItemPool
+---@param forceQuality number
+---@return integer | nil
+local function TryGetCollectible(poolType, itemPool, forceQuality)
+    local newCollectibleID
+    local finalCollectibleId
+
+    for itr = 1, TIMES_CAN_FAIL do
+        antiRecursion = true
+        newCollectibleID = itemPool:GetCollectible(poolType, false)
+        antiRecursion = false
+
+        if itr > INITIAL_BREAKFAST_CHECK then
+            poolType = GetProperPool(ItemPoolType.POOL_TREASURE)
+        end
+
+        if Isaac.GetItemConfig():GetCollectible(newCollectibleID).Quality == forceQuality then
+            finalCollectibleId = newCollectibleID
+            break
+        end
+    end
+
+    if finalCollectibleId then
+        itemPool:RemoveCollectible(finalCollectibleId)
+    end
+
+    return finalCollectibleId
+end
+
+---Splits a collectible into two of 1 less quality
+---@param iteration integer
 ---@param player EntityPlayer
-local function SpawnCollectible(collectibleType, position, player)
-    return Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectibleType, position, Vector.Zero, player):ToPickup()
-end
-
-function prismaticDice:UseItem(_, rng, player, useFlags)
-    if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return true end
-    for _, entity in pairs(Isaac.GetRoomEntities()) do
-        if entity.Type == EntityType.ENTITY_PICKUP
-        and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
-        and entity.SubType ~= CollectibleType.COLLECTIBLE_NULL then
-            local collectible = entity:ToPickup()
-            local collectibleType = collectible.SubType
-            local collectibleQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality
-
-            --local posLeft = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_LEFT)
-            --local posRight = Isaac.GetFreeNearPosition(collectible.Position, SHIFT_RIGHT)
-
-
-            TSIL.Utils.Functions.RunInFramesTemporary(function ()
-                
-                if collectible.SubType == CollectibleType.COLLECTIBLE_DADS_NOTE then
-                    return
-                end
-
-                collectible:Remove()
-
-                if collectibleType == CollectibleType.COLLECTIBLE_GODHEAD then
-                    local topPosition = Vector((collectible.Position).X, (collectible.Position).Y) + SHIFT_DOWN
-                    local leftPosition = Vector((collectible.Position).X, (collectible.Position).Y) + Vector(SHIFT_LEFT, 0)
-                    local rightPosition = Vector((collectible.Position).X, (collectible.Position).Y) + Vector(SHIFT_RIGHT, 0)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_MIND, leftPosition, player), SOLID_YELLOW, YELLOW)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_SOUL, rightPosition, player), SOLID_BLUE, BLUE)
-                    SplitAnimationSingle(SpawnCollectible(CollectibleType.COLLECTIBLE_BODY, topPosition, player), SOLID_RED, RED)
-
-                 else
-                     collectible:SetColor(WHITE, SPLIT_COLOR_FRAMES, 1, false, false)
-                     collectible:Remove()
-                    if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
-                        local roll = 4 + rng:RandomInt(2)
-                        for _ = 1, roll do
-                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - roll, collectibleQuality)
-                        end
-
-                    elseif player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
-                         for _ = 1, 2 do
-                            MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality - 1, collectibleQuality)
-                         end
-                     else
-                        MilkshakeVol1.API:SplitCollectible(player, collectible, collectibleQuality, nil)
-                     end
-                 end
-    
-                SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
-            end, SCHEDULE_FRAMES)
+---@param collectible EntityPickup
+---@param itemPool ItemPool
+---@param poolType ItemPoolType
+---@param quality integer
+---@return EntityPickup
+local function SplitCollectible(iteration, player, collectible, itemPool, poolType, quality)
+    local belialConversion = false
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) then
+        local roll = TSIL.Random.GetRandomInt(1, 100)
+        if roll <= BELIAL_DEVIL_CHANCE then
+            poolType = GetProperPool(ItemPoolType.POOL_DEVIL)
+            belialConversion = true
         end
     end
-    return true
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, prismaticDice.UseItem, enums.Collectibles.PRISMATIC_DICE)
 
-return prismaticDice
+    local newCollectibleID = TryGetCollectible(
+        poolType,
+        itemPool,
+        quality
+    )
+
+    if not newCollectibleID
+    and breakfastsByQuality[quality + 1] then
+        newCollectibleID = breakfastsByQuality[quality + 1]
+    end
+
+    local spawnPosition
+    local optionsIndex = collectible.OptionsPickupIndex
+
+    if iteration == 1 then
+        spawnPosition = Isaac.GetFreeNearPosition(
+            collectible.Position,
+            COLLECTIBLE_DIST_SHIFT
+        )
+        optionsIndex = collectible.OptionsPickupIndex
+    else
+        spawnPosition = Isaac.GetFreeNearPosition(
+            collectible.Position,
+            -COLLECTIBLE_DIST_SHIFT
+        )
+        if collectible.OptionsPickupIndex > 0 then
+            optionsIndex = collectible.OptionsPickupIndex + 1
+        end
+    end
+
+    local splitCollectible = Isaac.Spawn(
+        EntityType.ENTITY_PICKUP,
+        PickupVariant.PICKUP_COLLECTIBLE,
+        newCollectibleID,
+        spawnPosition,
+        Vector.Zero,
+        player
+    ):ToPickup()
+
+    if belialConversion then
+        local effect = TSIL.EntitySpecific.SpawnEffect(
+            EffectVariant.POOF02,
+            2,
+            splitCollectible.Position
+        )
+        effect:GetSprite().Color = BELIAL_RED
+    end
+
+    splitCollectible.OptionsPickupIndex = optionsIndex
+
+    if collectible:IsShopItem() then
+        splitCollectible.AutoUpdatePrice = false
+        if collectible.Price > 0 then
+            if iteration == 1 then
+                splitCollectible.Price = math.ceil(collectible.Price / 2)
+            else
+                splitCollectible.Price = math.floor(collectible.Price / 2)
+            end
+        else
+            local positivePrice = math.abs(collectible.Price)
+            if heartPriceToHalf[positivePrice] then
+                splitCollectible.Price = -heartPriceToHalf[positivePrice]
+            end
+        end
+    end
+
+    return splitCollectible
+end
+
+---@param collectibleType CollectibleType
+---@param poolType ItemPoolType
+function PrismaticDice:PostGetCollectible()
+    if antiRecursion then
+        return
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_GET_COLLECTIBLE,
+    PrismaticDice.PostGetCollectible
+)
+
+---@param rng RNG
+---@param player EntityPlayer
+---@param useFlags UseFlag
+---@return table | nil
+function PrismaticDice:UseItem(_, rng, player, useFlags)
+    if useFlags & UseFlag.USE_CARBATTERY ~= 0 then
+        return
+    end
+
+    SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
+
+    local roomCollectibles = TSIL.EntitySpecific.GetPickups(PickupVariant.PICKUP_COLLECTIBLE)
+
+    if #roomCollectibles == 0 then
+        return
+    end
+
+    local itemPool = Game():GetItemPool()
+    local roomType = Game():GetRoom():GetType()
+    local seed = rng:GetSeed()
+    local poolType = itemPool:GetPoolForRoom(roomType, seed)
+
+    if poolType == ItemPoolType.POOL_NULL then
+        poolType = GetProperPool(ItemPoolType.POOL_TREASURE)
+    end
+
+    for _, collectible in pairs(roomCollectibles) do
+        if not TSIL.Utils.Tables.IsIn(forbiddenSplitItems, collectible.SubType) then
+            collectible:Remove()
+            local newQuality = -1
+
+            if collectible.SubType
+            and Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality ~= nil then
+                newQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality - 1
+            end
+
+            for idx = 1, 2 do
+                if collectible.SubType == CollectibleType.COLLECTIBLE_GODHEAD then
+                    for _, itemData in pairs(effectPerGodheadSplit) do
+                        local splitCollectible = Isaac.Spawn(
+                            EntityType.ENTITY_PICKUP,
+                            PickupVariant.PICKUP_COLLECTIBLE,
+                            itemData.COLLECTIBLE,
+                            collectible.Position + itemData.OFFSET,
+                            Vector.Zero,
+                            player
+                        )
+                        splitCollectible:SetColor(itemData.COLOR, COLOR_FRAMES, 2, true, false)
+                        break
+                    end
+
+                elseif newQuality >= 0 then
+                    local splitTimes = 0
+
+                    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+                        splitTimes = 2
+                    end
+
+                    if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
+                        splitTimes = splitTimes + 4 + rng:RandomInt(2)
+                    end
+
+                    if splitTimes == 0 then
+                        splitTimes = 1
+                    end
+
+                    for _ = 1, splitTimes do
+                        local splitCollectible = SplitCollectible(idx, player, collectible, itemPool, poolType, newQuality)
+                        splitCollectible:SetColor(splitColors[idx], COLOR_FRAMES, 2, true, false)
+                    end
+                else
+                    utility:RecycleCollectible(
+                        collectible.Position,
+                        player,
+                        roomType,
+                        itemPool,
+                        collectible.DropSeed,
+                        rng,
+                        false,
+                        1
+                    )
+                    break
+                end
+            end
+        end
+    end
+    return {
+        Discharge = true,
+        Remove = false,
+        ShowAnim = true,
+    }
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_USE_ITEM,
+    PrismaticDice.UseItem,
+    enums.Collectibles.PRISMATIC_DICE
+)

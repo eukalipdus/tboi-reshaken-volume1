@@ -128,7 +128,8 @@ function GlobinInABucket:OnGlobinBucketUse(_, rng, player)
 
     local count = 0
     for i = 1, #globinsAndEffects do
-        if GetPtrHash(globinsAndEffects[i].SpawnerEntity) == GetPtrHash(player) then
+        if globinsAndEffects[i].SpawnerEntity
+        and GetPtrHash(globinsAndEffects[i].SpawnerEntity) == GetPtrHash(player) then
             count = count + 1
         end
     end

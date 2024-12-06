@@ -165,7 +165,12 @@ function utility:GetCurrentChapter()
 
     if levelStage <= LevelStage.STAGE4_2 then
         ---@type number
-        local chapter = math.floor(levelStage / 2)
+        local chapter
+        if Game():IsGreedMode() then 
+            chapter = levelStage
+        else
+            chapter = math.ceil(levelStage / 2)
+        end
 
         if TSIL.Stage.OnRepentanceStage() then
             chapter = chapter + 0.5
@@ -334,37 +339,59 @@ function utility:AnyPlayerIsCharacter(character)
     end)
 end
 
-
-local SPIRIT_ORBS = {}
-local SPIRIT_ORBS_NO_RANDOM = {}
-local SPIRIT_ORBS_MAP = {}
-for _, orb in pairs(enums.Orbs) do
-    SPIRIT_ORBS_MAP[orb] = true
-    SPIRIT_ORBS[#SPIRIT_ORBS+1] = orb
-    if orb ~= enums.Orbs.RANDOM then
-        SPIRIT_ORBS_NO_RANDOM[#SPIRIT_ORBS_NO_RANDOM+1] = orb
-    end
-end
-
 ---Checks if a given card is a spirit orb
 ---@param card Card
 function utility:IsSpiritOrb(card)
-    return SPIRIT_ORBS_MAP[card] ~= nil
+    return TSIL.Utils.Tables.IsIn(MilkshakeVol1.enums.Orbs, card)
+end
+
+---When a random spirit orb is needed, checks if Spirit of Order should be removed or added from the list based on unlock status
+---@param orbList table
+local function UpdateSpiritOfOrderUnlocked(orbList)
+    local orderOrbKey = -1
+    for key, orbType in pairs(orbList) do
+        if orbType == enums.Orbs.ORDER then
+            orderOrbKey = key
+            break
+        end
+    end
+
+    if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.SPIRIT_OF_ORDER) then
+        if orbList[orderOrbKey] then
+            table.remove(orbList, orderOrbKey)
+        end
+
+    elseif orderOrbKey == -1 then
+        table.insert(orbList, enums.Orbs.ORDER)
+    end
 end
 
 ---Helper function to get a random orb
----@param includeChaos? boolean @Default: true
+---@param getOrbFlags? integer
 ---@param seedOrRNG? integer | RNG
 ---@return Card
-function utility:GetRandomSpiritOrb(includeChaos, seedOrRNG)
-    if includeChaos == nil then includeChaos = true end
+function utility:GetRandomSpiritOrb(getOrbFlags, seedOrRNG)
+    getOrbFlags = getOrbFlags or 0
 
-    local orbs = SPIRIT_ORBS
-    if not includeChaos then
-        orbs = SPIRIT_ORBS_NO_RANDOM
+    local orbs
+    local noRandom = TSIL.Utils.Flags.HasFlags(getOrbFlags, MilkshakeVol1.enums.GetOrbFlag.NO_ORDER)
+    local noOrder = TSIL.Utils.Flags.HasFlags(getOrbFlags, MilkshakeVol1.enums.GetOrbFlag.NO_ORDER)
+
+    if noRandom and noOrder then
+        orbs = MilkshakeVol1.enums.OrbsExcludingBoth
+    elseif noRandom and not noOrder then
+        orbs = MilkshakeVol1.enums.OrbsExcludingRandom
+    elseif not noRandom and noOrder then
+        orbs = MilkshakeVol1.enums.OrbsExcludingOrder
+    else
+        orbs = MilkshakeVol1.enums.OrbsUnkeyed
     end
 
-    return TSIL.Random.GetRandomElementsFromTable(orbs, 1, seedOrRNG)[1]
+    local orbsCopy = TSIL.Utils.Tables.Copy(orbs)
+
+    UpdateSpiritOfOrderUnlocked(orbsCopy)
+
+    return TSIL.Random.GetRandomElementsFromTable(orbsCopy, 1, seedOrRNG)[1]
 end
 
 --- To be used when entities are initialized, returns true if this entity was previously seen by the player, false if it is the first time it ever spawned
@@ -467,14 +494,6 @@ function utility:HUDOffset(x, y, anchor)
     return math.floor(xoffset + 0.5), math.floor(yoffset + 0.5)
 end
 
---- Returns if the player is Judas or Dark Judas and if they have birthright
----@param player EntityPlayer
----@return boolean
-function utility:IsJudasBirthright(player)
-    return (player:GetPlayerType() == PlayerType.PLAYER_JUDAS or player:GetPlayerType() == PlayerType.PLAYER_BLACKJUDAS) and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
-end
-
-
 ---Checks if the boss versus screen is currently playing.
 ---@return boolean
 function utility:IsVersusScreenPlaying()
@@ -495,30 +514,75 @@ function utility:GetOrbs(noRandom)
     end
 end
 
-local variantToDeathEffect = {
-    [enums.GlassHeadVariant.GLASS_HEAD] = enums.GlassHeadDeathEffectVariant.SPHERE,
-    [enums.GlassHeadVariant.FLASK_HEAD] = enums.GlassHeadDeathEffectVariant.FLASK,
-    [enums.GlassHeadVariant.BEER_HEAD] = enums.GlassHeadDeathEffectVariant.BEER,
-    [enums.GlassHeadVariant.WINE_HEAD] = enums.GlassHeadDeathEffectVariant.WINE,
+local playerTearFamiliars = {
+    FamiliarVariant.INCUBUS,
+    FamiliarVariant.TWISTED_BABY,
+    FamiliarVariant.FATES_REWARD
+
 }
 
----@param entity Entity
-function utility:SpawnGlassHeadDeathEffect(entity)
-    local variant = enums.GlassHeadDeathEffectVariant.FLASK_PROJECTILE
-
-    if entity.SubType == 0 then
-        variant = variantToDeathEffect[entity.Variant]
+---Gets the player from a tear, including familiars who mimic player shots
+---@param tear EntityTear
+---@return EntityPlayer | nil
+function utility:GetPlayerFromTear(tear)
+    if not tear.Parent then
+        return
     end
 
-    local effect = TSIL.EntitySpecific.SpawnEffect(
-        variant,
-        0,
-        entity.Position
+    local tearParent = tear.Parent
+
+    if tearParent.Type == EntityType.ENTITY_PLAYER then
+        return tearParent:ToPlayer()
+
+    elseif tearParent:ToFamiliar()
+    and TSIL.Utils.Table.IsIn(playerTearFamiliars, tearParent.Variant) then
+        local player = tearParent:ToFamiliar().Player
+
+        if player then
+            return player
+        end
+    end
+end
+
+---@param entity Entity
+---@param identifier string | nil
+---@return any
+function utility:GetDataEx(entity, identifier)
+    local data = TSIL.Entities.GetEntityData(
+        MilkshakeVol1,
+        entity,
+        identifier or ""
     )
 
-    effect.FlipX = entity.FlipX
+    if not data then
+        data = {}
+        TSIL.Entities.SetEntityData(
+            MilkshakeVol1,
+            entity,
+            identifier or "",
+            data
+        )
+    end
 
-    return effect
+    return data
+end
+
+---Returns a table which allows us to reidentify a specific EntitySlot
+---@param slot Entity
+---@return table<number, number>
+function utility:GetSlotIndex(slot)
+    local currentRoomIndex = Game():GetLevel():GetCurrentRoomIndex()
+    return {
+        InitSeed = slot.InitSeed,
+        RoomIndex = currentRoomIndex
+    }
+end
+
+---Compare two floating point numbers
+---@param numOne number
+---@param numTwo number
+function utility:MaybeEqual(numOne, numTwo, epsilon)
+    return math.abs(numOne - numTwo) < epsilon
 end
 
 MilkshakeVol1.utility = utility

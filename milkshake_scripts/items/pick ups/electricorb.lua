@@ -1,5 +1,6 @@
 local SapphireOrb = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
 
 local SAPPHIRE_ORB_DURATION = 25
 local CONDUCTIVITY_TEAR_LIFESPAN = 30
@@ -343,11 +344,16 @@ local function SpawnConductiveTear(player, rng)
     )
 end
 
-
 ---@param tear EntityTear
 ---@param velocity Vector
 local function SpawnFakeParasiteTear(tear, velocity)
-    local parasiteTear = SpawnConductiveTearWithVelocity(tear.SpawnerEntity:ToPlayer(), velocity)
+    local player = utility:GetPlayerFromTear(tear)
+
+    if not player then
+        return
+    end
+
+    local parasiteTear = SpawnConductiveTearWithVelocity(player, velocity)
 
     TSIL.Entities.SetEntityData(
         MilkshakeVol1,

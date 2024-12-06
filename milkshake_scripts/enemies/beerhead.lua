@@ -305,7 +305,18 @@ function BeerHead:BeerHead_Update(enemy)
             GetGlassHeadData(creep).BeerHead = true
             creep.Timeout = 300
             creep:Update()
-            data.creep = creep
+
+            local deathEffect = TSIL.EntitySpecific.SpawnEffect(
+                enums.Effects.BEER_HEAD,
+                0,
+                enemy.Position,
+                nil,
+                enemy
+            )
+
+            local effectData = GetGlassHeadData(deathEffect)
+
+            effectData.creep = creep
 
             for _ = 1, 5 do
                 local dist = rng:RandomInt(40) + 40
@@ -359,24 +370,26 @@ function BeerHead:BeerHead_Update(enemy)
                 projectile:GetSprite().Color = BEER_PROJECTILE_COLOR
 
                 sfx:Play(SoundEffect.SOUND_BLOODSHOOT, 1, 0, false, 1)
+
+                enemy.Visible = false
+                enemy.SplatColor = Color(0, 0, 0, 0)
+                enemy:Kill()
             end
 
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 1, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
 
-            utility:SpawnGlassHeadDeathEffect(enemy)
-            enemy:Remove()
-        elseif sprite:IsFinished("Death") then
-            enemy.CanShutDoors = false
-            enemy.DepthOffset = -10
+        -- elseif sprite:IsFinished("Death") then
+        --     enemy.CanShutDoors = false
+        --     enemy.DepthOffset = -10
 
-            if not data.creep or not data.creep:Exists() then
-                sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+        --     if not data.creep or not data.creep:Exists() then
+        --         sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
 
-                if sprite.Color.A < .1 then
-                    enemy:Remove()
-                end
-            end
+        --         if sprite.Color.A < .1 then
+        --             enemy:Remove()
+        --         end
+        --     end
         end
 
         enemy.Velocity = enemy.Velocity * .85

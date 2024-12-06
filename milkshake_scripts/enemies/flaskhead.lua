@@ -151,22 +151,32 @@ function FlaskHead:FlaskHeadUpdate(enemy)
                 (targpos - enemy.Position):Resized(targpos:Distance(enemy.Position) * .075),
                 enemy
             )
-            data.head = head
+
+            local deathEffect = TSIL.EntitySpecific.SpawnEffect(
+                enums.Effects.FLASK_HEAD_BODY,
+                0,
+                enemy.Position,
+                nil,
+                enemy
+            )
+
+            local effectData = GetGlassHeadData(deathEffect)
+
+            effectData.creep = head
             sfx:Play(SoundEffect.SOUND_SHELLGAME, .5, 0, false, 1, 0)
             sfx:Play(enums.Sounds.GLASSHEAD_LIQUID, 4, 0, false, 2, 0)
-
-            utility:SpawnGlassHeadDeathEffect(enemy)
-            enemy:Remove()
-        elseif sprite:IsFinished("Throw") then
-            enemy.CanShutDoors = false
+        -- elseif sprite:IsFinished("Throw") then
+        --     enemy.CanShutDoors = false
             
-            if not data.head or not data.head:Exists() then
-                sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+        --     if not data.head or not data.head:Exists() then
+        --         sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
 
-                if sprite.Color.A < .1 then
-                    enemy:Remove()
-                end
-            end
+        --         if sprite.Color.A < .1 then
+        --             enemy:Remove()
+        --         end
+        --     end
+
+            enemy:Remove()
         end
 
         enemy.Velocity = enemy.Velocity * .85
@@ -204,7 +214,7 @@ MilkshakeVol1:AddCallback(
     }
 )
 
-
+---@param enemy EntityNPC
 function FlaskHead:FlaskHeadProjectile_Update(enemy)
     local sprite = enemy:GetSprite()
     local data = GetGlassHeadData(enemy)
@@ -290,7 +300,18 @@ function FlaskHead:FlaskHeadProjectile_Update(enemy)
             creep.SpriteScale = Vector(3, 3)
             creep.Timeout = 400
             creep:Update()
-            data.creep = creep
+
+            local deathEffect = TSIL.EntitySpecific.SpawnEffect(
+                enums.Effects.FLASK_HEAD_HEAD,
+                0,
+                enemy.Position,
+                nil,
+                enemy
+            )
+
+            local effectData = GetGlassHeadData(deathEffect)
+
+            effectData.creep = creep
 
             for _ = 1, 3 do
                 local dist = rng:RandomInt(40) + 20
@@ -345,24 +366,26 @@ function FlaskHead:FlaskHeadProjectile_Update(enemy)
 
             sfx:Play(enums.Sounds.GLASSHEAD_SHATTER, 4, 0, false, 1, 0)
             sfx:Play(SoundEffect.SOUND_HEARTOUT, 1, 0, false, 1, 0)
+
+            enemy.Visible = false
+            enemy.SplatColor = Color(0, 0, 0, 0)
+            enemy:Kill()
         else
             sprite:Play("Throw_Head")
             enemy.SpriteOffset = Vector(0, -data.Height)
         end
         enemy.Velocity = enemy.Velocity * .95
-    else
-        utility:SpawnGlassHeadDeathEffect(enemy)
-        enemy:Remove()
-        -- sprite:Play("Death")
-        enemy.Velocity = Vector.Zero
+    -- else
+    --     sprite:Play("Death")
+    --     enemy.Velocity = Vector.Zero
 
-        if not data.creep or not data.creep:Exists() then
-            sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
+    --     if not data.creep or not data.creep:Exists() then
+    --         sprite.Color = Color.Lerp(sprite.Color, Color(0,0,0,0,0,0,0), .2)
 
-            if sprite.Color.A < .1 then
-                enemy:Remove()
-            end
-        end
+    --         if sprite.Color.A < .1 then
+    --             enemy:Remove()
+    --         end
+    --     end
     end
 end
 

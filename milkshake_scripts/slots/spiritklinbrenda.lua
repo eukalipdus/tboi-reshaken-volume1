@@ -2,7 +2,7 @@ local SpiritKlin = {}
 local enums = MilkshakeVol1.enums
 
 ---@class BrendaReward
----@field chance number | fun(player: EntityPlayer): number
+---@field chance number | fun(player: EntityPlayer, brenda: Entity): number
 ---@field value fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
 
 TSIL.SaveManager.AddPersistentVariable(
@@ -19,6 +19,13 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "BrendasPerFloor",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+
 local function hasChargedSoulChargeItem(player)
    if (player:HasCollectible(enums.Collectibles.LEVITICUS)
    or player:HasCollectible(enums.Collectibles.LEVITICUS_ALADAR)
@@ -29,15 +36,17 @@ local function hasChargedSoulChargeItem(player)
    return false
 end
 
+---@param player EntityPlayer
 local function isLostForm(player)
     local playerType = player:GetPlayerType()
     local soulHearts = player:GetSoulHearts()
-    local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
+    local allotherhearts = player:GetHearts()  + player:GetBoneHearts() --player:GetRottenHearts()
     local isGhost = player:GetEffects():HasNullEffect(NullItemID.ID_LOST_CURSE)
 
     if (playerType == PlayerType.PLAYER_THELOST
     or playerType == PlayerType.PLAYER_THELOST_B
-    or (EclipsedMod and playerType == EclipsedMod.enums.Characters.UnbiddenB)) then return true end
+    or (EclipsedMod and playerType == EclipsedMod.enums.Characters.UnbiddenB))
+    or (REPENTOGON and (player:GetHealthType() == HealthType.LOST)) then return true end
 
 
     if isGhost and soulHearts == 1 and allotherhearts == 0 then return true end --lost curse checking
@@ -45,7 +54,64 @@ local function isLostForm(player)
     return false
 end
 
+---@param brenda Entity
+local function GetTrackedBrendaIndex(brenda)
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
 
+    local currentRoomIdx = Game():GetLevel():GetCurrentRoomIndex()
+
+    if #brendasPerFloor == 0 then
+        return -1
+    end
+
+    for idx, entry in pairs(brendasPerFloor) do
+        if entry.InitSeed == brenda.InitSeed
+        and currentRoomIdx == entry.RoomIndex then
+            return idx
+        end
+    end
+
+    return -1
+end
+
+---Stores needed information about a given Brenda slot
+---@param brenda Entity
+local function InitBrendaData(brenda)
+    if GetTrackedBrendaIndex(brenda) ~= -1 then
+        return
+    end
+
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    table.insert(
+        brendasPerFloor,
+        MilkshakeVol1.utility:GetSlotIndex(brenda)
+    )
+
+    local brendaIndex = GetTrackedBrendaIndex(brenda)
+
+    brendasPerFloor[brendaIndex].PaymentsReceived = 0
+    brendasPerFloor[brendaIndex].HasDied = false
+end
+
+local gemtrinkets = {
+    enums.Trinkets.AMETHYST_SHARD,
+    enums.Trinkets.RUBY_SHARD,
+    enums.Trinkets.TOURMALINE_SHARD,
+    enums.Trinkets.EMERALD_SHARD,
+    enums.Trinkets.PERIDOT_SHARD,
+    enums.Trinkets.GARNET_SHARD,
+    enums.Trinkets.ONYX_SHARD,
+    enums.Trinkets.DIAMOND_SHARD,
+    enums.Trinkets.SAPPHIRE_SHARD,
+    enums.Trinkets.AMBER_SHARD
+}
 local soulStones = {
     Card.CARD_SOUL_ISAAC,
     Card.CARD_SOUL_MAGDALENE,
@@ -92,10 +158,64 @@ local possibleWisps = {
     enums.Collectibles.SPECIAL_BRENDA_WATER_WISP,
     enums.Collectibles.SPECIAL_BRENDA_POISON_WISP,
     enums.Collectibles.SPECIAL_BRENDA_HOLY_WISP,
-    CollectibleType.COLLECTIBLE_BOOK_OF_THE_DEAD,
-    CollectibleType.COLLECTIBLE_SATANIC_BIBLE,
+    enums.Collectibles.SPECIAL_BRENDA_UNHOLY_WISP,
+    enums.Collectibles.SPECIAL_BRENDA_UNDEAD_WISP,
     enums.Collectibles.SPECIAL_BRENDA_TERRA_WISP,
 }
+
+local COLLECTIBLE_PAYMENT_CHANCE = 1.2
+local MIN_PAYMENTS_FOR_COLLECTIBLE = 7
+
+---Plays Brenda's death animation and removes the given Brenda
+---@param brenda Entity
+local function KillBrenda(brenda)
+    brenda:Remove()
+    SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
+    Game():ShakeScreen(10)
+    Game():MakeShockwave(brenda.Position, 0.03, 0.025, 10)
+
+    local dustCloud = TSIL.EntitySpecific.SpawnEffect(
+        EffectVariant.DUST_CLOUD,
+        1,
+        brenda.Position
+    )
+    dustCloud.SpriteScale = Vector(1.5, 1.5)
+    dustCloud:SetTimeout(15)
+
+    local rng = TSIL.RNG.NewRNG(brenda.InitSeed)
+    local numParticles = TSIL.Random.GetRandomInt(10, 16, rng)
+
+    for _ = 1, numParticles, 1 do
+        local angle = rng:RandomInt(360)
+        local velocity = TSIL.Random.GetRandomFloat(6, 8, rng)
+        local spawnVel = Vector.FromAngle(angle):Resized(velocity)
+
+        TSIL.EntitySpecific.SpawnEffect(
+            EffectVariant.ROCK_PARTICLE,
+            0,
+            brenda.Position,
+            spawnVel
+        )
+    end
+end
+
+---Pays out with a random Glass pool item
+---@param brenda Entity
+local function BrendaCollectiblePayout(brenda)
+    KillBrenda(brenda)
+
+    local collectible = TSIL.CustomItemPools.GetCollectible(
+        enums.ItemPools.GLASS,
+        true,
+        brenda:GetDropRNG(),
+        enums.Collectibles.MILKSHAKE
+    )
+    TSIL.EntitySpecific.SpawnPickup(
+        PickupVariant.PICKUP_COLLECTIBLE,
+        collectible,
+        brenda.Position
+    )
+end
 
 ---Adds a custom character's soul stone to the Spirit Klin's reward pool.
 ---@param card Card
@@ -118,7 +238,7 @@ end
 ---Adds a new reward possibility to the Spirit Klin.
 ---
 ---The weight can just be a regular integer or a function that will get called when the machine is trying to pay out.
----@param weight number | fun(player: EntityPlayer): number
+---@param weight number | fun(player: EntityPlayer, brenda: Entity): number
 ---@param rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
 function MilkshakeVol1.API:AddSpiritKlinReward(weight, rewardFun)
     brendaRewards[#brendaRewards + 1] = {
@@ -172,7 +292,7 @@ MilkshakeVol1.API:AddSpiritKlinReward(function()
 --Spawn orb
 MilkshakeVol1.API:AddSpiritKlinReward(10, function(slot, _, position, velocity)
     local rng = slot:GetDropRNG()
-    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(true, rng)
+    local orb = MilkshakeVol1.utility:GetRandomSpiritOrb(0, rng)
 
     TSIL.EntitySpecific.SpawnPickup(
         PickupVariant.PICKUP_TAROTCARD,
@@ -198,7 +318,7 @@ MilkshakeVol1.API:AddSpiritKlinReward(function(_)
         return 0
     end
 
-    return 3
+    return 1
 end, function(slot, _, position, velocity)
     local rng = slot:GetDropRNG()
     local spawnedTrinkets = TSIL.SaveManager.GetPersistentVariable(
@@ -262,6 +382,29 @@ end, function(slot, player, position)
     player:AddWisp(wispToAdd, position)
 end)
 
+MilkshakeVol1.API:AddSpiritKlinReward(function (_, brenda)
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+    local brendaIndex = GetTrackedBrendaIndex(brenda)
+
+    if brendasPerFloor[brendaIndex].PaymentsReceived >= MIN_PAYMENTS_FOR_COLLECTIBLE then
+        return COLLECTIBLE_PAYMENT_CHANCE * brendasPerFloor[brendaIndex].PaymentsReceived - (MIN_PAYMENTS_FOR_COLLECTIBLE - 1)
+    else
+        return 0
+    end
+
+end, function (slot)
+    local collectible = TSIL.CustomItemPools.GetCollectible(
+        enums.ItemPools.GLASS,
+        true,
+        slot:GetDropRNG()
+    )
+
+    BrendaCollectiblePayout(slot)
+end)
+
 
 local function RemoveRecentRewards(pos)
     for _, pickup in ipairs(Isaac.FindByType(EntityType.ENTITY_PICKUP)) do
@@ -281,9 +424,10 @@ end
 
 
 ---@param slot Entity
-local function OnSlotBroken(slot)
+---@param skipDeathAnimation? boolean
+local function OnSlotBroken(slot, skipDeathAnimation)
     RemoveRecentRewards(slot.Position)
-    --[[local pickups = TSIL.EntitySpecific.GetPickups()
+    local pickups = TSIL.EntitySpecific.GetPickups()
     local slotPosLastFrame = slot.Position - slot.Velocity
     local rewardPickups = TSIL.Utils.Tables.Filter(pickups, function(_, pickup)
         local pickupPosLastFrame = pickup.Position - pickup.Velocity
@@ -293,8 +437,6 @@ local function OnSlotBroken(slot)
     for _, pickup in ipairs(rewardPickups) do
         pickup:Remove()
     end
-    --]]
-
     local newSlot = TSIL.EntitySpecific.SpawnSlot(
         enums.Slots.SPIRIT_KLIN_BRENDA,
         0,
@@ -315,20 +457,51 @@ local function OnSlotBroken(slot)
         end
     end
 
-    SFXManager():Play(enums.Sounds.BRENDA_HURT)
-
     local oldSprite = slot:GetSprite()
     local newSprite = newSlot:GetSprite()
-    if oldSprite:IsPlaying("Inactive") then
-        newSprite:Play("Death")
-    else
-        newSprite:Play("Death")
-        if oldSprite:IsPlaying("Death") then
-            newSprite:Play("Inactive")
-            --newSprite:SetFrame(oldSprite:GetFrame())
+
+    if not skipDeathAnimation then
+        SFXManager():Play(enums.Sounds.BRENDA_HURT)
+
+        if oldSprite:IsPlaying("Inactive") then
+            newSprite:Play("Death")
+        else
+            newSprite:Play("Death")
+            if oldSprite:IsPlaying("Death") then
+                newSprite:Play("Inactive")
+                --newSprite:SetFrame(oldSprite:GetFrame())
+            end
         end
+    else
+        newSprite:Play("Inactive")
     end
     slot:Remove()
+
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    InitBrendaData(newSlot)
+
+    local oldBrendaIndex = GetTrackedBrendaIndex(slot)
+    local newBrendaIndex = GetTrackedBrendaIndex(newSlot)
+
+    if not brendasPerFloor[oldBrendaIndex].HasDied then
+        local gemTrinket = TSIL.Random.GetRandomElementsFromTable(gemtrinkets, 1, slot:GetDropRNG())[1]
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_TRINKET,
+            gemTrinket,
+            slot.Position,
+            RandomVector(),
+            slot
+        )
+        --KillBrenda(slot)
+    end
+    brendasPerFloor[newBrendaIndex].HasDied = true
+    if brendasPerFloor[oldBrendaIndex].DeathReapplied then
+        brendasPerFloor[newBrendaIndex].DeathReapplied = true
+    end
 end
 
 
@@ -359,54 +532,28 @@ end
 ---@param brenda Entity
 function SpiritKlin:OnBrendaUpdate(brenda)
     if CheckCollisionWithChaosCard(brenda) then
-        brenda:Remove()
-        SFXManager():Play(SoundEffect.SOUND_ROCK_CRUMBLE)
-        Game():ShakeScreen(10)
-        Game():MakeShockwave(brenda.Position, 0.03, 0.025, 10)
-
-        local dustCloud = TSIL.EntitySpecific.SpawnEffect(
-            EffectVariant.DUST_CLOUD,
-            1,
-            brenda.Position
-        )
-        dustCloud.SpriteScale = Vector(1.5, 1.5)
-        dustCloud:SetTimeout(15)
-
-        local rng = TSIL.RNG.NewRNG(brenda.InitSeed)
-        local numParticles = TSIL.Random.GetRandomInt(10, 16, rng)
-
-        for _ = 1, numParticles, 1 do
-            local angle = rng:RandomInt(360)
-            local velocity = TSIL.Random.GetRandomFloat(6, 8, rng)
-            local spawnVel = Vector.FromAngle(angle):Resized(velocity)
-
-            TSIL.EntitySpecific.SpawnEffect(
-                EffectVariant.ROCK_PARTICLE,
-                0,
-                brenda.Position,
-                spawnVel
-            )
-        end
-
-        local collectible = TSIL.CustomItemPools.GetCollectible(
-            enums.ItemPools.GLASS,
-            true,
-            brenda:GetDropRNG(),
-            enums.Collectibles.MILKSHAKE
-        )
-        TSIL.EntitySpecific.SpawnPickup(
-            PickupVariant.PICKUP_COLLECTIBLE,
-            collectible,
-            brenda.Position
-        )
+        BrendaCollectiblePayout(brenda)
     end
 
     local sprite = brenda:GetSprite()
 
     if brenda.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND then
-        OnSlotBroken(brenda)
+        local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+            MilkshakeVol1,
+            "BrendasPerFloor"
+        )
+
+        local brendaIndex = GetTrackedBrendaIndex(brenda)
+
+        if brendasPerFloor[brendaIndex].HasDied then
+            OnSlotBroken(brenda, true)
+        else
+            OnSlotBroken(brenda, false)
+        end
         return
     end
+
+    brenda.SizeMulti = Vector(2.2, 1)
 
     if sprite:IsFinished("Prize") then
         sprite:Play("Idle")
@@ -423,10 +570,6 @@ MilkshakeVol1:AddCallback(
     enums.Slots.SPIRIT_KLIN_BRENDA
 )
 
-local function spiritKilnPayout()
-    
-end
-
 ---@param brenda Entity
 ---@param player EntityPlayer
 function SpiritKlin:OnBrendaCollision(brenda, player)
@@ -435,7 +578,7 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
 
     local soulCharge = player:GetSoulCharge()
     local soulHearts = player:GetSoulHearts()
-    local allotherhearts = player:GetHearts() + player:GetRottenHearts() + player:GetBoneHearts()
+    local allotherhearts = player:GetHearts() + player:GetBoneHearts() -- + player:GetRottenHearts()
 
     if isLostForm(player) and (not hasChargedSoulChargeItem(player)) and soulCharge < 1 then return end
     if soulCharge + soulHearts == 0 and (not hasChargedSoulChargeItem(player)) then return end
@@ -457,6 +600,7 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
     end
 
     SFXManager():Play(enums.Sounds.BRENDA_ACTIVATE)
+    SFXManager():Play(enums.Sounds.SOULHEART_LOSE, 0.7)
 
     sprite:Play("Prize", true)
     TSIL.Entities.SetEntityData(
@@ -465,6 +609,15 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
         "PlayerIndexUsingSlot",
         TSIL.Players.GetPlayerIndex(player)
     )
+
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    local brendaIndex = GetTrackedBrendaIndex(brenda)
+    local prevPayments = brendasPerFloor[brendaIndex].PaymentsReceived
+    brendasPerFloor[brendaIndex].PaymentsReceived = prevPayments + 1
 end
 
 MilkshakeVol1:AddCallback(
@@ -495,7 +648,7 @@ function SpiritKlin:OnBrendaPrize(brenda)
     local rewards = TSIL.Utils.Tables.Map(brendaRewards, function(_, reward)
         local endChance = reward.chance
         if type(endChance) == "function" then
-            endChance = reward.chance(player)
+            endChance = reward.chance(player, brenda)
         end
 
         return {
@@ -512,6 +665,31 @@ MilkshakeVol1:AddCallback(
     SpiritKlin.OnBrendaPrize,
     enums.Slots.SPIRIT_KLIN_BRENDA
 )
+
+
+---@param brenda Entity
+function SpiritKlin:PostSlotInit(brenda)
+    InitBrendaData(brenda)
+
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    local brendaIndex = GetTrackedBrendaIndex(brenda)
+
+    if brendasPerFloor[brendaIndex].HasDied
+    and not brendasPerFloor[brendaIndex].DeathReapplied then
+        brendasPerFloor[brendaIndex].DeathReapplied = true
+        OnSlotBroken(brenda, true)
+    end
+end
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_SLOT_INIT,
+    SpiritKlin.PostSlotInit,
+    enums.Slots.SPIRIT_KLIN_BRENDA
+)
+
 
 
 ---@param trinket TrinketType
@@ -541,6 +719,15 @@ MilkshakeVol1:AddCallback(
 
 
 function SpiritKlin:OnNewRoom()
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    for _, currentBrendaData in pairs(brendasPerFloor) do
+        currentBrendaData.DeathReapplied = false
+    end
+
     local shouldCheck = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "ShouldCheckUnlockedGlassTrinketsNextRoom"
