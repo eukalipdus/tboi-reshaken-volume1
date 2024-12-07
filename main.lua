@@ -3,8 +3,29 @@ MilkshakeVol1 = RegisterMod("Milkshake Vol1!", 1)
 include("milkshake_scripts.enums")
 include("milkshake_scripts.utility")
 
+-- Libraries
 require("loi_milkshake.TSIL").Init("loi_milkshake")
 MilkshakeVol1.API = {}
+
+MilkshakeVol1.HiddenItemManager = include("milkshake_scripts.hiddenitemmanager")
+MilkshakeVol1.HiddenItemManager:Init(MilkshakeVol1)
+
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "HiddenItemData",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_RUN
+)
+
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function ()
+    TSIL.SaveManager.SetPersistentVariable(MilkshakeVol1, "HiddenItemData", MilkshakeVol1.HiddenItemManager:GetSaveData())
+end)
+
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function ()
+    MilkshakeVol1.HiddenItemManager:LoadData(TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "HiddenItemData"))
+end)
+
+include("milkshake_scripts.throwableitemlib"):Init()
 
 if StageAPI then
     StageAPI.UnregisterCallbacks(MilkshakeVol1.Name)

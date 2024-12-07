@@ -321,76 +321,12 @@ local OrbsPerEnemy = {
 }
 MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(OrbsPerEnemy)
 
-
-TSIL.SaveManager.AddPersistentVariable(
-    MilkshakeVol1,
-    "PlayersUsingShatteredOrb",
-    {},
-    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
-)
-
-
 TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
     "DataPerShatteredOrb",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
-
-
----@param player EntityPlayer
----@param slot ActiveSlot
-local function AddPlayerUsingShatteredOrb(player, slot)
-    local playerIndex = TSIL.Players.GetPlayerIndex(player)
-
-    local playersUsingShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "PlayersUsingShatteredOrb"
-    )
-
-    playersUsingShatteredOrb[tostring(playerIndex)] = slot
-end
-
-
----@param player EntityPlayer
----@return boolean
-local function IsPlayerUsingShatteredOrb(player)
-    local playerIndex = TSIL.Players.GetPlayerIndex(player)
-
-    local playersUsingShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "PlayersUsingShatteredOrb"
-    )
-
-    return playersUsingShatteredOrb[tostring(playerIndex)] ~= nil
-end
-
-
----@param player EntityPlayer
----@return ActiveSlot
-local function GetShatteredOrbActiveSlotFromPlayer(player)
-    local playerIndex = TSIL.Players.GetPlayerIndex(player)
-
-    local playersUsingShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "PlayersUsingShatteredOrb"
-    )
-
-    return playersUsingShatteredOrb[tostring(playerIndex)]
-end
-
-
----@param player EntityPlayer
-local function RemovePlayerUsingShatteredOrb(player)
-    local playerIndex = TSIL.Players.GetPlayerIndex(player)
-
-    local playersUsingShatteredOrb = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "PlayersUsingShatteredOrb"
-    )
-
-    playersUsingShatteredOrb[tostring(playerIndex)] = nil
-end
 
 ---@class ShatteredOrbData
 ---@field direction Vector
@@ -412,7 +348,6 @@ local function AddShatteredOrbData(effect, direction)
     }
 end
 
-
 ---@param effect EntityEffect
 ---@return ShatteredOrbData
 local function GetShatteredOrbData(effect)
@@ -426,199 +361,36 @@ local function GetShatteredOrbData(effect)
     return directionsPerShatteredOrb[tostring(ptrHash)]
 end
 
----@param player EntityPlayer
----@param useFlags UseFlag
----@param activeSlot ActiveSlot
-function ShatteredOrb:OnShatteredOrbUse(_, _, player, useFlags, activeSlot)
-    local data = MilkshakeVol1.utility:GetDataEx(player, "ShatteredOrb")
+ThrowableItemLib:RegisterThrowableItem({
+    Type = ThrowableItemLib.Type.ACTIVE,
+    ID = MilkshakeVol1.enums.Collectibles.SHATTERED_ORB,
+    ---@param player EntityPlayer
+    ---@param vect Vector
+    ThrowFn = function (player, vect)
+        TSIL.Utils.Functions.RunInFramesTemporary(function ()
+            player:AnimatePickup(Sprite(), true, "HideItem")
+        end, 1)
 
-    if data.UseThat then
-        data.UseThat = nil
-        return
+        local shatteredOrb = TSIL.EntitySpecific.SpawnEffect(
+            enums.Effects.SHATTERED_ORB,
+            0,
+            player.Position,
+            Vector.Zero,
+            player
+        )
+
+        shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
+        shatteredOrb:GetSprite():Play("Thrown", true)
+
+        SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
+
+        AddShatteredOrbData(shatteredOrb, vect * SHATTERED_ORB_THROW_SPEED + (player.Velocity * 0.9))
     end
-
-    if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then
-        return {
-            Discharge = false,
-            Remove = false,
-            ShowAnim = false
-        }
-    end
-
-    local animToPlay
-
-    if IsPlayerUsingShatteredOrb(player) then
-        RemovePlayerUsingShatteredOrb(player)
-        animToPlay = "HideItem"
-    else
-        AddPlayerUsingShatteredOrb(player, activeSlot)
-        animToPlay = "LiftItem"
-    end
-
-    player:AnimateCollectible(enums.Collectibles.SHATTERED_ORB, animToPlay, "PlayerPickup")
-
-    return {
-        Discharge = false,
-        Remove = false,
-        ShowAnim = false
-    }
-end
-
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_USE_ITEM,
-    ShatteredOrb.OnShatteredOrbUse,
-    enums.Collectibles.SHATTERED_ORB
-)
-
--- nvm
--- ---@param entity Entity?
--- ---@param action ButtonAction
--- function ShatteredOrb:InputAction(entity, _, action)
---     local player = entity and entity:ToPlayer() if not (player and player:HasCollectible(enums.Collectibles.SHATTERED_ORB)) then return end
-
---     if not ((action == ButtonAction.ACTION_ITEM or action == ButtonAction.ACTION_PILLCARD) and Input.IsActionTriggered(action, player.ControllerIndex)) then return end
-
---     local slot = action == ButtonAction.ACTION_ITEM and ActiveSlot.SLOT_PRIMARY or ActiveSlot.SLOT_PRIMARY
-
---     if player:GetActiveItem(slot) == enums.Collectibles.SHATTERED_ORB then
---         local animToPlay
-
---         if IsPlayerUsingShatteredOrb(player) then
---             RemovePlayerUsingShatteredOrb(player)
---             animToPlay = "HideItem"
---         else
---             AddPlayerUsingShatteredOrb(player, slot)
---             animToPlay = "LiftItem"
---         end
-
---         player:AnimateCollectible(enums.Collectibles.SHATTERED_ORB, animToPlay, "PlayerPickup")
-
---         return false
---     end
--- end
--- MilkshakeVol1:AddCallback(
---     ModCallbacks.MC_INPUT_ACTION,
---     ShatteredOrb.InputAction,
---     InputHook.IS_ACTION_TRIGGERED
--- )
-
----@param entity Entity?
----@param action ButtonAction
-function ShatteredOrb:InputAction(entity, _, action)
-    local player = entity and entity:ToPlayer() if not player then return end
-
-    if not (action == ButtonAction.ACTION_ITEM or action == ButtonAction.ACTION_PILLCARD) then return end
-
-    local data = MilkshakeVol1.utility:GetDataEx(player, "ShatteredOrb") if not data.UseThat then return end
-
-    if data.UseThat == ActiveSlot.SLOT_PRIMARY and action == ButtonAction.ACTION_ITEM then
-        return true
-    elseif data.UseThat == ActiveSlot.SLOT_POCKET and action == ButtonAction.ACTION_PILLCARD then
-        return true
-    end
-end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_INPUT_ACTION,
-    ShatteredOrb.InputAction,
-    InputHook.IS_ACTION_TRIGGERED
-)
-
----@param player EntityPlayer
----@param direction Vector
-local function ThrowShatteredOrb(player, direction)
-    local shatteredOrb = TSIL.EntitySpecific.SpawnEffect(
-        enums.Effects.SHATTERED_ORB,
-        0,
-        player.Position,
-        Vector.Zero,
-        player
-    )
-
-    shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
-    shatteredOrb:GetSprite():Play("Thrown", true)
-
-    SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
-
-    AddShatteredOrbData(shatteredOrb, direction)
-end
-
-local emptySprite = Sprite()
-
----@param player EntityPlayer
-function ShatteredOrb:OnPlayerUpdate(player)
-    if not IsPlayerUsingShatteredOrb(player) then return end
-
-    --If the player is not playing the lift item anim, they're not using the item anymore
-    local sprite = player:GetSprite()
-    if sprite:IsPlaying("Hit") then
-        RemovePlayerUsingShatteredOrb(player)
-        player:AnimateCollectible(enums.Collectibles.SHATTERED_ORB, "HideItem", "PlayerPickup")
-        return
-    end
-
-    local shootingDir = player:GetFireDirection()
-
-    if shootingDir == Direction.NO_DIRECTION then return end
-
-    ---@type ActiveSlot?
-    local activeSlot = GetShatteredOrbActiveSlotFromPlayer(player)
-    ---@diagnostic disable-next-line: cast-local-type
-    activeSlot = activeSlot > -1 and activeSlot
-
-    if activeSlot and player:GetActiveItem(activeSlot) ~= enums.Collectibles.SHATTERED_ORB then
-        player:AnimateCollectible(enums.Collectibles.SHATTERED_ORB, "HideItem", "PlayerPickup")
-        RemovePlayerUsingShatteredOrb(player)
-        return
-    end
-
-    -- if activeSlot then
-    --     local charge = TSIL.Charge.GetTotalCharge(player, activeSlot)
-    --     local newCharge = math.max(0, charge - 4)
-
-    --     if charge < 4 then
-    --         local chargeDiff = math.abs(charge - 4)
-
-    --         if player:GetPlayerType() == PlayerType.PLAYER_BETHANY then
-    --             player:AddSoulCharge(-chargeDiff)
-    --         elseif player:GetPlayerType() == PlayerType.PLAYER_BETHANY_B then
-    --             player:AddBloodCharge(-chargeDiff)
-    --         end
-    --     end
-
-    --     player:SetActiveCharge(newCharge, activeSlot)
-    -- end
-    player:AnimatePickup(emptySprite, true, "HideItem")
-    -- player:PlayExtraAnimation("HideItem")
-    RemovePlayerUsingShatteredOrb(player)
-
-    local direction = TSIL.Direction.DirectionToVector(shootingDir) * SHATTERED_ORB_THROW_SPEED + (player.Velocity * 0.9)
-    ThrowShatteredOrb(player, direction)
-
-    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
-        local rng = player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB)
-        local angleOffset = TSIL.Random.GetRandomInt(10, 20, rng)
-        if rng:RandomInt(2) == 0 then
-            angleOffset = -angleOffset
-        end
-        direction = direction:Rotated(angleOffset)
-
-        ThrowShatteredOrb(player, direction)
-    end
-
-    local data = MilkshakeVol1.utility:GetDataEx(player, "ShatteredOrb")
-
-    data.UseThat = activeSlot
-end
-
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_PLAYER_UPDATE,
-    ShatteredOrb.OnPlayerUpdate
-)
-
+})
 
 ---@param entity Entity
 ---@return Card
-function GetEntityOrb(entity)
+local function GetEntityOrb(entity)
     local orb
     local orbsPerType = ORBS_PER_ENEMY[entity.Type]
 
@@ -736,7 +508,7 @@ function ShatteredOrb:OnShatteredOrbUpdate(shatteredOrb)
             local orbToSpawn = GetEntityOrb(npc)
             local belialConversion = false
 
-            local player = shatteredOrb.SpawnerEntity:ToPlayer()
+            local player = shatteredOrb.SpawnerEntity and shatteredOrb.SpawnerEntity:ToPlayer() if not player then return end
             if orbToSpawn == enums.Orbs.RANDOM
             and player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL_PASSIVE) then
                 local roll = TSIL.Random.GetRandomInt(1, 100, player:GetCollectibleRNG(enums.Collectibles.SHATTERED_ORB))
