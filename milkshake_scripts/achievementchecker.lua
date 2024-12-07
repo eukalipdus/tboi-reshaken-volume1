@@ -96,10 +96,10 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, function (rng, 
     if roomType ~= RoomType.ROOM_BOSS then return end
     if not TSIL.Players.DoesAnyPlayerHasTrinket(MilkshakeVol1.enums.Trinkets.TRACK_ALT_PATH_UNLOCK) then return end
     TSIL.Utils.Functions.RunInFrames(function ()
-        Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_DADS_KEY, UseFlag.USE_NOANIM, -1)
+        Isaac.GetPlayer(0):UseCard(Card.CARD_SOUL_CAIN, UseFlag.USE_NOANIM)
     end, 20)
 
-end, PickupVariant.PICKUP_TRINKET)
+end)
 
 
 return AchievementChecker
