@@ -484,6 +484,9 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
 
     data.Used = true
 
+    TSIL.Pause.Pause()
+    TSIL.Pause.Unpause()
+
     local light
 
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
