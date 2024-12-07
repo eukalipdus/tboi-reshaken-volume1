@@ -148,6 +148,7 @@
             collisionMass="10" collisionRadius="13" friction="1" name="Glass Head"
             numGridCollisionPoints="12" shadowSize="14" stageHP="0" variant="0" portrait="0">
             <bestiary transform="0,0,1" anim="WalkVert" />
+            <devolve id="962.0.0" weight="1"/>
             <!-- <gibs amount="2" blood="1" bone="0" eye="0" gut="0" large="0" /> -->
     </entity>
 
