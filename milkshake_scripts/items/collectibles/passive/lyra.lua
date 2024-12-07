@@ -499,3 +499,16 @@ MilkshakeVol1:AddCallback(
     MilkshakeVol1.enums.Callbacks.POST_CHEST_OPENED,
     Lyra.OnChestOpened
 )
+
+MilkshakeVol1.HiddenItemManager:HideCostumes("RESHAKEN_LYRA")
+
+---@param player EntityPlayer
+function Lyra:CheckStack(player)
+    MilkshakeVol1.HiddenItemManager:CheckStack(
+        player,
+        CollectibleType.COLLECTIBLE_POLYDACTYLY,
+        player:HasCollectible(MilkshakeVol1.enums.Collectibles.LYRA) and 1 or 0,
+        "RESHAKEN_LYRA"
+    )
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Lyra.CheckStack)
