@@ -1023,32 +1023,32 @@ descriptions.Collectibles = {
         en_us = {
             name = "Lil Bishop",
             description = "Blocks projectiles" ..
-                "#When hit, 20% chance to shield Isaac for 5 seconds",
+                "#When hit, 10% chance to shield Isaac for 5 seconds",
         },
         spa = {
             name = "Pequeño Obispo",
             description = "Bloquea proyectiles" ..
-                "#Cuando recibe un golpe, 20% de probabilidad de proteger a Isaac durante 5 segundos",
+                "#Cuando recibe un golpe, 21% de probabilidad de proteger a Isaac durante 5 segundos",
         },
         ru = {
             name = "Малютка Епископ",
             description = "Блокирует вражеские снаряды" ..
-                "#При попадании вражеского снаряда, есть 20% шанс защитить Исаака щитом на 5 секунд",
+                "#При попадании вражеского снаряда, есть 10% шанс защитить Исаака щитом на 5 секунд",
         },
         pl = {
             name = "Tyci Biskup",
             description = "Blokuje pociski" ..
-                "#Po trafieniu ma 20% szansy na osłonienie Isaaka na 5 sekund",
+                "#Po trafieniu ma 10% szansy na osłonienie Isaaka na 5 sekund",
         },
         ko_kr = {
             name = "리틀 비숍",
             description = "적의 탄환을 막아주며;" ..
-                "#20%의 확률로 5초동안 캐릭터의 피격을 막아줍니다.",
+                "#10%의 확률로 5초동안 캐릭터의 피격을 막아줍니다.",
         },
         zh_cn = {
             name = "主教宝宝",
             description = "阻挡投射物" ..
-                "#命中时，有20%的几率保护玩家5秒",
+                "#命中时，有10%的几率保护玩家5秒",
         },
     },
     [enums.Collectibles.RAINBOW_FRAGMENT] = {
