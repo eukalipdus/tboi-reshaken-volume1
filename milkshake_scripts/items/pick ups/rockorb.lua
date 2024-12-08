@@ -84,7 +84,7 @@ end
 --- Changes the sprite of the stalagmite depending on the floor or room and sets various other members, and begins the Windup animation
 ---@param stalagmite Entity
 ---@param backdropType integer
----@param forcePosition Vector - A position that the stalagmite will be forced into every frame
+---@param forcePosition? Vector - A position that the stalagmite will be forced into every frame
 local function SetStalagmiteInfo(stalagmite, backdropType, forcePosition)
     if forcePosition then
         utility:SetData(stalagmite, "ForcePosition", forcePosition)
@@ -122,7 +122,7 @@ end
 local function DelayedDestroyGridEntity(gridEntity, remove)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         if remove then
-            TSIL.GridEntities.RemoveGridEntity(gridEntity)
+            TSIL.GridEntities.RemoveGridEntity(gridEntity, false)
         else
             gridEntity:Destroy()
         end
@@ -138,7 +138,7 @@ local function DestroyNearbyGridEntities(stalagmite)
         if canDestroy
         and TSIL.Utils.Tables.IsIn(nearbyGridEntities, grid) then
             if TSIL.Utils.Tables.IsIn(removeRequired, grid) then
-                TSIL.GridEntities.RemoveGridEntity(grid)
+                TSIL.GridEntities.RemoveGridEntity(grid, false)
             elseif canDestroy then
                 grid:Destroy()
             end
@@ -172,7 +172,7 @@ end
 ---@param player EntityPlayer
 ---@param rng RNG
 ---@param isGrid boolean - Is it a GridEntity?
----@param targetTable table - Table of entities to randomly select a target from for the stalagmite
+---@param targetTable? table - Table of entities to randomly select a target from for the stalagmite
 local function SpawnStalagmite(player, rng, isGrid, targetTable)
     local stalagmite
     if targetTable and #targetTable > 0 then

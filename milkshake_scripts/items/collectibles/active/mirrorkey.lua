@@ -111,7 +111,7 @@ TSIL.SaveManager.AddPersistentVariable(
     MilkshakeVol1,
     "MirrorRoomPickupData",
     {},
-    TSIL.Enums.VariablePersistenceMode.RESET_NONE
+    TSIL.Enums.VariablePersistenceMode.NONE
 )
 
 ---Helper function to check if the players are currently in the mirror key room.
@@ -1010,7 +1010,7 @@ local function TryPlayBossMusic()
     if musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER
     or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER2
     or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER3 then
-        musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS_OUTRO)
+        musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS_OUTRO, 1)
         musicManager:Queue(Music.MUSIC_BOSS_OVER)
 
         return
@@ -1018,7 +1018,7 @@ local function TryPlayBossMusic()
 
     if musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS
     and musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS_OUTRO then
-        musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS)
+        musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS, 1)
     end
 end
 
@@ -1037,6 +1037,7 @@ if EID then
     local renderCallback = ModCallbacks.MC_POST_RENDER
     if REPENTOGON then
         -- with repentogon they use the hud render callback to render on top of the vanilla hud
+        ---@diagnostic disable-next-line: undefined-field
         renderCallback = ModCallbacks.MC_HUD_RENDER
     end
     EID:RemoveCallback(renderCallback, EID.OnRender)

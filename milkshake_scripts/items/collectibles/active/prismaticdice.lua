@@ -83,8 +83,8 @@ local function GetProperPool(poolType)
     if poolType == ItemPoolType.POOL_TREASURE then
         return ItemPoolType.POOL_GREED_TREASURE
 
-    elseif poolType == poolType.POOL_DEVIL then
-        return poolType.POOL_GREED_DEVIL
+    elseif poolType == ItemPoolType.POOL_DEVIL then
+        return ItemPoolType.POOL_GREED_DEVIL
 
     else
         return poolType
@@ -209,8 +209,6 @@ local function SplitCollectible(iteration, player, collectible, itemPool, poolTy
     return splitCollectible
 end
 
----@param collectibleType CollectibleType
----@param poolType ItemPoolType
 function PrismaticDice:PostGetCollectible()
     if antiRecursion then
         return

@@ -462,7 +462,7 @@ MilkshakeVol1:AddCallback(
 
 
 ---@param player EntityPlayer
----@param itemInfo ItemConfig_Item
+---@param itemInfo ItemConfigItem
 local function CheckIfPlayerWillDieFromItem(player, itemInfo)
     --The lost can pick up free devil deals
     if TSIL.Players.IsTheLost(player) then return end
