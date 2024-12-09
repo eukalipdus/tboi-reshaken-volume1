@@ -20,16 +20,16 @@
     <passive id="21" name="Pot of Gold" description="Rainbow pennies!" tags="lazarussharedglobal nocantrip offensive summonable" quality="3" gfx="potofgold.png" craftquality="3"/>
     <familiar id="22" name="Glass Idol" description="Shattering resurgance" tags="summonable" quality="2" gfx="glass_idol.png" />
     <active id="23" name="Leviticus" description="Purify your soul" tags="book angel offensive" quality="4" craftquality="4" gfx="leviticus.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true"/>
-    <active id="100" name="Leviticus " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true"/>
-    <active id="101" name="Leviticus  " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true"/>
+    <active id="100" name="Leviticus " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true" customtags="nometronome"/>
+    <active id="101" name="Leviticus  " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true" customtags="nometronome"/>
     <passive id="24" name="Battery Acid" description="PH down" tags="battery nocantrip offensive summonable" quality="3" gfx="collectibles_batteryacid.png" craftquality="3"/>
     <familiar id="25" name="Doggy Bag" description="Clean up after yourself" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive nolostbr poop summonable" quality="1" craftquality="1"/>
     <passive id="26" name="Dad's Mitt" description="Curve ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2" craftquality="2"/>
     <familiar id="27" name="Lil Bishop" description="Shielding friend" gfx="collectibles_lilbishop.png" tags="monstermanual summonable" quality="2" craftquality="2"/>
     <passive id="28" name="Rainbow Fragment" description="Taste the rainbow" cache="luck" gfx="collectibles_rainbowfragment.png" tags="offensive summonable" quality="1" craftquality="1"/>
     <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" tags="offensive summonable lazarussharedglobal" quality="2" craftquality="2" />
-    <active id="30" name="Mirror Key" description="Otherside" quality="3" gfx="mirror_key.png" maxcharges="4" tags="lazarussharedglobal nocantrip nogreed offensive" craftquality="3"/>
-    <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" tags="noeden" />
+    <active id="30" name="Mirror Key" description="Otherside" quality="3" gfx="mirror_key.png" maxcharges="4" tags="lazarussharedglobal nocantrip nogreed offensive" craftquality="3" customtags="nometronome"/>
+    <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" tags="noeden" customtags="nometronome"/>
     <passive id="33" name="Chromatic Prism" description="Diffracted enemies" quality="2" gfx="collectibles_prismatic_triangle.png" tags="summonable offensive" craftquality="2" />
 
     <!-- Trinkets -->
@@ -51,16 +51,16 @@
     <trinket name="Prismatic Lacewing" description="Devolution tears" gfx="trinkets_prismaticlacewing.png" />
 
     <!-- Hidden items -->
-    <passive id="500" name="BRENDA CUSTOM FIRE WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="501" name="BRENDA CUSTOM PSYCHIC WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="502" name="BRENDA CUSTOM NATURE WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="503" name="BRENDA CUSTOM ELECTRIC WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="504" name="BRENDA CUSTOM WATER WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="505" name="BRENDA CUSTOM POISON WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="508" name="BRENDA CUSTOM UNHOLY WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
-    <passive id="509" name="BRENDA CUSTOM UNDEAD WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" />
+    <passive id="500" name="BRENDA CUSTOM FIRE WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
+    <passive id="501" name="BRENDA CUSTOM PSYCHIC WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
+    <passive id="502" name="BRENDA CUSTOM NATURE WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
+    <passive id="503" name="BRENDA CUSTOM ELECTRIC WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
+    <passive id="504" name="BRENDA CUSTOM WATER WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
+    <passive id="505" name="BRENDA CUSTOM POISON WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
+    <passive id="506" name="BRENDA CUSTOM HOLY WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
+    <passive id="507" name="BRENDA CUSTOM TERRA WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
+    <passive id="508" name="BRENDA CUSTOM UNHOLY WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
+    <passive id="509" name="BRENDA CUSTOM UNDEAD WISP" description="[VOL1]Report this to the Milkshake devs" hidden="true" tags="noeden" customtags="nometronome"/>
 
     <trinket name="Alt Path Unlock Tracker" description="Please stop reporting this to the Milkshake devs" gfx="trinkets_alt_path_unlock_tracker.png" achievement="407" tags="nogreed"/>
     <trinket name="MEGA CHEST UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs, IF NO REPORTS EXIST" achievement="601" tags="nogreed" />
@@ -71,11 +71,11 @@
     <trinket name="GOLDEN TRINKET UNLOCK TRACKER" description="[VOL1]Report this to the Milkshake devs, IF NO REPORTS EXIST" achievement="617" tags="nogreed" />
 
     <!-- unused -->
-    <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true" craftquality="-1"/> 
-    <passive id="2" name="Black Eye" description="Owchie + tears up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true" craftquality="-1"/>
-    <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip noeden" quality="2" gfx="collectibles_glassheart.png" hidden="true" craftquality="-1"/>
-    <passive id="31" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" hidden="true" tags="nocantrip noeden" quality="5" craftquality="-1"/>
-    <passive id="50" name="Saataa Andagii" description="Saataa andagii" tags="nocantrip nolostbr noeden" quality="6" maxhearts="1" hearts="4" gfx="sata_andagi.png" hidden="true" craftquality="-1"/>
-    <passive id="32" name="Water With Food Coloring" description="Wish granted" cache="all" quality="6" gfx="collectibles_waterwithfoodcoloring.png" hidden="true" tags="noeden" craftquality="-1"/>
-    <active id="34" name="Prismatic Cosine Dice" description="Trigonometric terror" quality="6" gfx="collectibles_prismaticspinupdice.png" maxcharges="1" hidden="true" tags="noeden" craftquality="-1" />
+    <active id="4" name="Dice Dice" description="Paradice?" gfx="collectibles_dicedice.png" maxcharges="6" tags="noeden" quality="1" hidden="true" craftquality="-1" customtags="nometronome"/> 
+    <passive id="2" name="Black Eye" description="Owchie + tears up!"  cache="firedelay" gfx="collectibles_blackeye.png" tags="noeden" quality="3" hidden="true" craftquality="-1" customtags="nometronome"/>
+    <passive id="12" name="Glass Heart" description="Glassy" tags="nocantrip noeden" quality="2" gfx="collectibles_glassheart.png" hidden="true" craftquality="-1" customtags="nometronome"/>
+    <passive id="31" name="Golden Breakfast" description="HP up * 12!!!" maxhearts="24" hearts="-24" gfx="collectibles_goldenbreakfast.png" hidden="true" tags="nocantrip noeden" quality="5" craftquality="-1" customtags="nometronome"/>
+    <passive id="50" name="Saataa Andagii" description="Saataa andagii" tags="nocantrip nolostbr noeden" quality="6" maxhearts="1" hearts="4" gfx="sata_andagi.png" hidden="true" craftquality="-1" customtags="nometronome"/>
+    <passive id="32" name="Water With Food Coloring" description="Wish granted" cache="all" quality="6" gfx="collectibles_waterwithfoodcoloring.png" hidden="true" tags="noeden" craftquality="-1" customtags="nometronome"/>
+    <active id="34" name="Prismatic Cosine Dice" description="Trigonometric terror" quality="6" gfx="collectibles_prismaticspinupdice.png" maxcharges="1" hidden="true" tags="noeden" craftquality="-1" customtags="nometronome"/>
 </items>
