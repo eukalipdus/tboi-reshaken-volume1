@@ -348,6 +348,7 @@ descriptions.Collectibles = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% chance for the room clear reward to be a random spirit orb" ..
                 "#{{SpiritOrb}} Chance for a bonus spirit orb from chests, tinted rocks, and destroyed machines" ..
+                "#Allows Isaac to carry 2 spirit orbs/cards",
                 "#\1 Using a spirit orb starts a short rhythm mini game" ..
                 "#{{Blank}} Successful completion activates the spirit orb with double effect",
         },
