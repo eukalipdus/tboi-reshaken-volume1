@@ -10,6 +10,7 @@ local JUDAS_CONVERT_CHANCE = 50
 local BELIAL_PARTICLE_COUNT = 15
 local BELIAL_PARTICLE_SPEED = 8
 local BELIAL_PARTICLE_COLOR = Color(1,0,0,1)
+local MULTISHOT_SPREAD = 20
 
 --TODO: Find a better place to put this in so it's not repeated
 local PossibleWisps = {
@@ -364,27 +365,28 @@ end
 ThrowableItemLib:RegisterThrowableItem({
     Type = ThrowableItemLib.Type.ACTIVE,
     ID = MilkshakeVol1.enums.Collectibles.SHATTERED_ORB,
+    Flags = ThrowableItemLib.Flag.EMPTY_THROW,
     ---@param player EntityPlayer
     ---@param vect Vector
     ThrowFn = function (player, vect)
-        TSIL.Utils.Functions.RunInFramesTemporary(function ()
-            player:AnimatePickup(Sprite(), true, "HideItem")
-        end, 1)
+        local num = player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) and 2 or 1
 
-        local shatteredOrb = TSIL.EntitySpecific.SpawnEffect(
-            enums.Effects.SHATTERED_ORB,
-            0,
-            player.Position,
-            Vector.Zero,
-            player
-        )
+        for i = 1, num do
+            local shatteredOrb = TSIL.EntitySpecific.SpawnEffect(
+                enums.Effects.SHATTERED_ORB,
+                0,
+                player.Position,
+                Vector.Zero,
+                player
+            )
 
-        shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
-        shatteredOrb:GetSprite():Play("Thrown", true)
+            shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
+            shatteredOrb:GetSprite():Play("Thrown", true)
+
+            AddShatteredOrbData(shatteredOrb, (vect * SHATTERED_ORB_THROW_SPEED + (player.Velocity * 0.9)):Rotated(num == 1 and 0 or -MULTISHOT_SPREAD - MULTISHOT_SPREAD / num + MULTISHOT_SPREAD * i))
+        end
 
         SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
-
-        AddShatteredOrbData(shatteredOrb, vect * SHATTERED_ORB_THROW_SPEED + (player.Velocity * 0.9))
     end
 })
 
