@@ -779,6 +779,74 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         MilkshakeVol1.API:AddUnholyOrbBeggar(key, datatable)
     end
 
+    MilkshakeVol1.API:AddConductivityOrbSlotPayout(FiendFolio.FF.RobotTeller.Var, {
+        {
+            chance = 100,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = 0,
+                weight = 1
+            }
+        },
+        {
+            chance = 50,
+            value = {
+                variant = PickupVariant.PICKUP_TAROTCARD,
+                subtype = 0,
+                weight = 3
+            }
+        }
+    })
+
+    MilkshakeVol1.API:AddConductivityOrbSlotPayout(FiendFolio.FF.GoldenSlotMachine.Var, {
+        {
+            chance = 100,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = CoinSubType.COIN_GOLDEN,
+                weight = 0.1
+            }
+        },
+        {
+            chance = 50,
+            value = {
+                variant = PickupVariant.PICKUP_KEY,
+                subtype = KeySubType.KEY_GOLDEN,
+                weight = 3
+            }
+        },
+        {
+            chance = 50,
+            value = {
+                variant = PickupVariant.PICKUP_BOMB,
+                subtype = BombSubType.BOMB_GOLDEN,
+                weight = 3
+            }
+        }
+    })
+
+    MilkshakeVol1.API:AddConductivityOrbSlotPayout(FiendFolio.FF.VendingMachine.Var, {
+        {
+            chance = 100,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = 0,
+                weight = 3
+            }
+        },
+    })
+
+    MilkshakeVol1.API:AddConductivityOrbSlotPayout(FiendFolio.FF.VendingMachineFF.Var, {
+        {
+            chance = 100,
+            value = {
+                variant = PickupVariant.PICKUP_COIN,
+                subtype = 0,
+                weight = 3
+            }
+        },
+    })
+
     FiendFolio:AddStackableItems({
         MilkshakeVol1.enums.Collectibles.BATTERY_ACID,
         MilkshakeVol1.enums.Collectibles.BALANCED_BREAKFAST,
