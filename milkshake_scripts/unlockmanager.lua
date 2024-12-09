@@ -198,7 +198,6 @@ MilkshakeVol1:AddCallback(
     unlockableManager.PostNpcDeath
 )
 
----@param player EntityPlayer
 function unlockableManager:PostItemAdded(_, collectibleType)
     if not TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "Milkshake1Collection") then
         InitializeCollection()
@@ -268,11 +267,11 @@ function unlockableManager:PostGameStarted(isContinued)
 
     local itemPool = Game():GetItemPool()
 
-    if not MilkshakeVol1.UnlockManager.IsAchievementUnlocked(enums.Achievements.PRISMATIC_GOGGLES) then
+    if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.PRISMATIC_GOGGLES) then
         itemPool:RemoveCollectible(enums.Collectibles.PRISMATIC_GOGGLES)
     end
 
-    if not MilkshakeVol1.UnlockManager.IsAchievementUnlocked(enums.Achievements.GOLDEN_COOKIE) then
+    if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.GOLDEN_COOKIE) then
         itemPool:RemoveTrinket(enums.Trinkets.RAINBOW_COOKIE)
     end
 end
@@ -287,6 +286,7 @@ function unlockableManager:PostNewLevel()
     end
 
      for challengeId, achievementId in pairs(challengeToAchievement) do
+        ---@diagnostic disable-next-line: undefined-field
         if Isaac.IsChallengeDone(challengeId)
         and not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(achievementId) then
             TSIL.Utils.Functions.RunInFrames(function ()

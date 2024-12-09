@@ -136,7 +136,7 @@ end
 
 ---Activate per Crystal Penny activation
 ---@param player EntityPlayer
----@param rng Rng
+---@param rng RNG
 local function CrystalPennyPickupEffect(player, rng)
     local roll = rng:RandomInt(Card.CARD_WORLD) + 1
     player:AnimateCard(roll, "Pickup")
@@ -257,7 +257,7 @@ MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, enums.Coins.CRYSTAL
             TSIL.Utils.Functions.RunInFrames(CrystalPennyPickupEffect, delay, player, rng)
             delay = delay + BASE_DELAY_NEXT_CARDPILL
         else
-            CrystalPennyPickupEffect(player, rng, delay)
+            CrystalPennyPickupEffect(player, rng)
         end
     end
     --local cardName = Isaac.GetItemConfig():GetCard(randomCard).Name

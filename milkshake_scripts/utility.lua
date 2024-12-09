@@ -409,7 +409,7 @@ end
 
 ---Helper function to make a player able/unable to shoot.
 ---@param player EntityPlayer
----@param canShoot boolean
+---@param enabled boolean
 function utility:SetBlindfold(player, enabled) -- true is blind, false for cry
 	---Blindfold
     local challenge = Isaac.GetChallenge()
@@ -502,16 +502,6 @@ function utility:IsVersusScreenPlaying()
         and room:GetFrameCount() == 0
         and room:GetType() == RoomType.ROOM_BOSS
         and not room:IsClear()
-end
-
----@param noRandom boolean | nil
----@return table
-function utility:GetOrbs(noRandom)
-    if noRandom then
-        return SPIRIT_ORBS_NO_RANDOM
-    else
-        return SPIRIT_ORBS
-    end
 end
 
 local playerTearFamiliars = {
