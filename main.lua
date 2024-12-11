@@ -37,6 +37,8 @@ MilkshakeVol1.UnlockManager = {}
 include("milkshake_scripts.unlockmanager")
 include("milkshake_scripts.achievementpopup")
 
+include("milkshake_scripts.optimizer")
+
 --Mod compatibility
 include("milkshake_scripts.modcompatibility.modCompat")
 include("milkshake_scripts.modcompatibility.crabbyCretins")
