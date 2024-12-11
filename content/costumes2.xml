@@ -12,6 +12,7 @@
 	<costume id="28" anm2path="rainbowfragment.anm2" type="passive" hasSkinAlt="true" />
 	<costume id="26" anm2path="dadsmitt.anm2" type="passive" hasSkinAlt="false" />
 	<costume id="29" anm2path="witchdoctormask.anm2" type="passive" hasSkinAlt="true" />
+	<costume id="33" anm2path="chromaticprism.anm2" type="passive" hasSkinAlt="false" />
 
 	<!-- OTHER COSTUMES -->
 	<costume anm2path="clairvoyance_orb.anm2" priority="30" type="none" hasSkinAlt="false" hasOverlay="true" />
