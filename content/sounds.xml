@@ -101,6 +101,10 @@
         <sample weight="1" path="orb_capture.wav"/>
     </sound>
 
+    <sound name="Celeste Death">
+        <sample weight="1" path="celeste_death.wav"/>
+    </sound>
+
     <sound name="deadseascrolls_pop">
         <sample weight="1" path="deadseascrolls/pop.wav" />
     </sound>

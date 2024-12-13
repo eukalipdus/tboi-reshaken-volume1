@@ -155,3 +155,50 @@ function innerreflection:PostNewRoom()
 	end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, innerreflection.PostNewRoom)
+
+
+function innerreflection:PlayerDie(player)
+	if not player:HasCollectible(enums.Collectibles.INNER_REFLECTION) then return end
+	local sprite = player:GetSprite()
+
+	if not player:IsDead() then return end
+	if sprite:GetFrame() ~= 1 then return end
+
+	SFXManager():Play(enums.Sounds.CELESTE_DEATH)
+
+	TSIL.Utils.Functions.RunInFrames(function ()
+		local DeathEffect = TSIL.EntitySpecific.SpawnEffect(
+			enums.Effects.CELESTE_DEATH,
+			0,
+			player.Position + (Vector(0, -30))
+		)
+		DeathEffect.SpriteScale = Vector(2, 2)
+
+	end, 10)
+
+	player.Color = Color(1, 1, 1, 1, 1, 1, 1)
+	player.Velocity = Vector(15, -15)
+end
+
+
+function innerreflection:PostUpdate()
+	for i = 0, Game():GetNumPlayers() - 1 do
+		local player = Isaac.GetPlayer(i)
+        innerreflection:PlayerDie(player)
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_UPDATE, innerreflection.PostUpdate)
+
+---@param effect EntityEffect
+function innerreflection:CelesteDeathEffectUpdate(effect)
+    local sprite = effect:GetSprite()
+
+    if effect.Variant == enums.Effects.CELESTE_DEATH and 
+	sprite:IsFinished("Idle") then
+        effect:Remove()
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_EFFECT_UPDATE,
+    innerreflection.CelesteDeathEffectUpdate
+)

@@ -219,6 +219,10 @@
     <entity name="Glass Idol Shatter" anm2path="glass_idol_shatter.anm2" id="1000">
 	</entity>
 
+    <entity
+        name="Celeste Death" anm2path="celeste_death.anm2" id="1000" friction="1">
+    </entity>
+
     <entity name="Shattered Orb" anm2path="shattered_orb.anm2" id="1000" shadowSize="8"
     collisionMass="1" friction="1">
 	</entity>

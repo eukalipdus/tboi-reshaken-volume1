@@ -104,6 +104,7 @@ enums.Effects = {
     GLOBIN_IN_A_BUCKET = Isaac.GetEntityVariantByName("Globin In A Bucket"),
     DELUGE_LASER = Isaac.GetEntityVariantByName("Deluge Laser"),
     GLASS_IDOL_SHATTER = Isaac.GetEntityVariantByName("Glass Idol Shatter"),
+    CELESTE_DEATH = Isaac.GetEntityVariantByName("Celeste Death"),
     TOXIC_GAS = Isaac.GetEntityVariantByName("Toxic Gasso"),
     FLASK_HEAD_HEAD_PUFF = Isaac.GetEntityVariantByName("Flask Head Head Puff"),
     FLASK_HEAD_PUFF = Isaac.GetEntityVariantByName("Flask Head Puff"),
@@ -170,6 +171,7 @@ enums.Sounds = {
     BRENDA_HURT = Isaac.GetSoundIdByName("Brenda Hurt"),
     BRENDA_ACTIVATE = Isaac.GetSoundIdByName("Brenda Activate"),
     SOULHEART_LOSE = Isaac.GetSoundIdByName("lose soul heart"),
+    CELESTE_DEATH = Isaac.GetSoundIdByName("Celeste Death"),
 
     SPIRIT_CHAOS = Isaac.GetSoundIdByName("Spirit Of Chaos"),
     SPIRIT_CLAIRVOYANCE = Isaac.GetSoundIdByName("Spirit Of Clairvoyance"),
