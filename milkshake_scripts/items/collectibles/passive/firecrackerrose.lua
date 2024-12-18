@@ -195,7 +195,9 @@ function FirecrackerRose:OnNPCUpdate(npc)
     if crackerInfo == nil then return end
 
     if crackerInfo.timer > 0 then
-        crackerInfo.timer = crackerInfo.timer - 1
+		if npc:IsInvincible() then -- can't take damage (prob)
+			crackerInfo.timer = crackerInfo.timer - 1
+		end
 
         ---@type Sprite
         local seedSpr = CrackerSeedSprites[npcPtr]
@@ -212,6 +214,8 @@ function FirecrackerRose:OnNPCUpdate(npc)
 
         return
     end
+
+	if npc:IsInvincible() then return end -- don't explode if invincible (prob)
 
     CrackerSeedSprites[npcPtr] = nil
 
@@ -239,6 +243,11 @@ function FirecrackerRose:OnNPCRender(npc)
 
     ---@type Sprite
     local seedSpr = CrackerSeedSprites[npcPtr]
+
+    --print(npc.SpriteOffset)
+    --if npc.SpriteOffset.Y < 0 then  --maybe if hides underground?
+    --npc.SpriteOffset -- do some y axis shenanigans with npc.SpriteOffset also npc height?
+
     local renderPos = Isaac.WorldToScreen(npc.Position) - Vector(0, 10)
     seedSpr:Render(renderPos + Vector(TSIL.Random.GetRandomInt(-6, 6, rng), TSIL.Random.GetRandomInt(-2, 5, rng)))
 
