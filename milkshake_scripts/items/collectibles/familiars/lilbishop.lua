@@ -43,12 +43,12 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 				if lilBishopFam:GetData().Active then -- and lilBishopFam:GetSprite():GetAnimation() == "Active" then
 					ignore = true -- to play animation for all active lil bishops
 					local sprite = lilBishopFam:GetSprite()
-					if sprite:GetAnimation() == "Active" then or sprite:GetAnimation() == "Sleep" then
+					if sprite:GetAnimation() == "Active" then or (sprite:GetAnimation() == "Sleep" and not lilBishopFam:GetData().SleepFix ) then
 						sfx:Play(SoundEffect.SOUND_BISHOP_HIT, 10)
 						if sprite:GetAnimation() == "Active" then
 							sprite:Play("Block")
 						else
-							lilBishopFam:GetData().Active = false
+							lilBishopFam:GetData().SleepFix = true
 						end
 						local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
 						sfx:Stop(SoundEffect.SOUND_LASERRING)
@@ -143,8 +143,10 @@ function lilBishop:onFamiliarUpdate(familiar)
 		end
 	elseif sprite:IsFinished("Sleep") then
 		sprite:Play("FloatDown")
+		famData.SleepFix = false
 	elseif sprite:GetAnimation() == "Active" then
 		sprite:Play("Sleep")
+		famData.SleepFix = false
 	end
 
     if sprite:IsFinished("Block") then
