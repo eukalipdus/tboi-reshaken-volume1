@@ -259,6 +259,7 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
             for idx = 1, 2 do
                 if collectible.SubType == CollectibleType.COLLECTIBLE_GODHEAD then
                     for _, itemData in pairs(effectPerGodheadSplit) do
+                        print(collectible.Position + itemData.OFFSET)
                         local splitCollectible = Isaac.Spawn(
                             EntityType.ENTITY_PICKUP,
                             PickupVariant.PICKUP_COLLECTIBLE,
@@ -268,8 +269,8 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
                             player
                         )
                         splitCollectible:SetColor(itemData.COLOR, COLOR_FRAMES, 2, true, false)
-                        break
                     end
+                    break
 
                 elseif newQuality >= 0 then
                     local splitTimes = 0
