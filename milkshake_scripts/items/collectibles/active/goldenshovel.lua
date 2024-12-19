@@ -191,6 +191,11 @@ end
 
 ---@param pickup EntityPickup
 local function SetGoldenPrice(pickup)
+    if not goldPickupPriceIncrease[pickup.Variant] then
+        return
+    end
+
+
     SaveGoldenShovelPickup(pickup)
 
     local savedPickups = TSIL.SaveManager.GetPersistentVariable(
@@ -210,7 +215,7 @@ local function SetGoldenPrice(pickup)
                 steamSaleCount = steamSaleCount + Isaac.GetPlayer(i):GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE)
             end
         end
-        
+
         pickup.Price = math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
     end
 end
