@@ -29,6 +29,13 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
 
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "GoldenShovelShopOriginalPrices",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+
 ---@param position Vector
 ---@param shouldBelialSynergy boolean
 local function SpawnGoldEffects(position, shouldBelialSynergy)
@@ -155,9 +162,46 @@ local function TrySpawnSecretMemberShop(position)
     return true
 end
 
+---Stores the original price of a pickup, if it doesn't exist in the table
+---@param pickup EntityPickup
+local function SaveGoldenShovelPickup(pickup)
+    local savedPickups = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "GoldenShovelShopOriginalPrices"
+    )
+
+    local strId = tostring(pickup.ShopItemId)
+
+    if not savedPickups[strId] then
+        savedPickups[strId] = pickup.Price
+    end
+end
+
+---Stores the original price of a pickup, updates it if it already exists in the table
+---@param pickup EntityPickup
+local function UpdateGoldenShovelPickup(pickup)
+    local savedPickups = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "GoldenShovelShopOriginalPrices"
+    )
+
+    local strId = tostring(pickup.ShopItemId)
+    savedPickups[strId] = pickup.Price
+end
+
 ---@param pickup EntityPickup
 local function SetGoldenPrice(pickup)
-    local newPickupPrice = goldPickupPriceIncrease[pickup.Variant]
+    SaveGoldenShovelPickup(pickup)
+
+    local savedPickups = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "GoldenShovelShopOriginalPrices"
+    )
+
+    local originalPrice = savedPickups[tostring(pickup.ShopItemId)]
+    local priceIncrease =  goldPickupPriceIncrease[pickup.Variant] or 0
+    local newPickupPrice = originalPrice + priceIncrease
+
     if newPickupPrice then
         pickup.AutoUpdatePrice = false
         local steamSaleCount = 1
@@ -166,7 +210,8 @@ local function SetGoldenPrice(pickup)
                 steamSaleCount = steamSaleCount + Isaac.GetPlayer(i):GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE)
             end
         end
-        pickup.Price = math.floor(DEFAULT_PRICE + (newPickupPrice/steamSaleCount))
+        
+        pickup.Price = math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
     end
 end
 
@@ -194,7 +239,7 @@ local function ReplaceCheapestWithGoldenKey()
             KeySubType.KEY_GOLDEN,
             cheapestPickup.Position,
             Vector.Zero
-        )
+        ):ToPickup()
 
         goldenKey.AutoUpdatePrice = false
         goldenKey.Price = cheapestPickup.Price
@@ -275,6 +320,8 @@ function goldenShovel:PostPickupInit(pickup)
             true
         )
 
+        UpdateGoldenShovelPickup(pickup)
+
     elseif pickup.Variant == PickupVariant.PICKUP_TRINKET
     and not TSIL.Trinkets.IsGoldenTrinket(pickup.SubType)
     and MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_TRINKET) then
@@ -284,6 +331,8 @@ function goldenShovel:PostPickupInit(pickup)
             TSIL.Trinkets.GetGoldenTrinketType(pickup.SubType),
             true
         )
+
+        UpdateGoldenShovelPickup(pickup)
     else
         return
     end
@@ -295,7 +344,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPic
 ---@param player EntityPlayer
 function goldenShovel:onUse(_, rng, player, useFlags)
     if useFlags & UseFlag.USE_CARBATTERY ~= 0 then return end
-    
+
     if skipNextShovelUse then
         skipNextShovelUse = false
         return {
