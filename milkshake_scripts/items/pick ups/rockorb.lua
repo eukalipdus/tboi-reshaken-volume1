@@ -298,8 +298,12 @@ local function SpawnSetStalagmites(player, backdropType, rng, isLyra)
     end
 end
 
-function rockOrb:OnOrbUse(orb, player, _, isLyra)
-    if orb ~= enums.Orbs.ROCK then return end
+function rockOrb:OnOrbUse(orb, player, flags)
+    if orb ~= enums.Orbs.ROCK then
+        return
+    end
+
+    local isLyra = TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.DOUBLE_POWER)
 
     Game():ShakeScreen(SHAKE_TIMEOUT)
     local backdropType = Game():GetRoom():GetBackdropType()
