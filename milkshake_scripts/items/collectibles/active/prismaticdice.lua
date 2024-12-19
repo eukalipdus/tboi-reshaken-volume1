@@ -188,6 +188,7 @@ local function SplitCollectible(iteration, player, collectible, itemPool, poolTy
         effect:GetSprite().Color = BELIAL_RED
     end
 
+    splitCollectible.ShopItemId = collectible.ShopItemId
     splitCollectible.OptionsPickupIndex = optionsIndex
 
     if collectible:IsShopItem() then
