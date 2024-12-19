@@ -401,6 +401,7 @@ function Lyra:OnClearAwardSpawn(rng, pos)
     local room = Game():GetRoom()
     local roomType = room:GetType()
     if roomType == RoomType.ROOM_BOSS then return end
+    if roomConfigRoom.StageID == 35 and roomType == RoomType.ROOM_DUNGEON then return end --check if fighting beast
 
     if not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.LYRA) then return end
 
