@@ -324,7 +324,7 @@ enums.Callbacks = {
     --
     -- * orb - Card
     -- * player - EntityPlayer
-    -- * isLyra - boolean
+    -- * flags - UseOrbFlags
     --
     --Optional args:
     --
