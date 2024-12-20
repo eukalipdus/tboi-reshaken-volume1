@@ -135,7 +135,7 @@ end
 ---@param collectible EntityPickup
 ---@param quality number
 ---@param originalQuality number | nil
----@param forceItems table<CollectibleType, CollectibleType>
+---@param forceItems table<CollectibleType, CollectibleType>?
 ---@param colors table<table<Color, Color>, table<Color, Color>>
 ---@return table<EntityPickup, EntityPickup>
 function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, originalQuality, forceItems, colors)
@@ -249,7 +249,7 @@ function MilkshakeVol1.API:SplitCollectible(player, collectible, quality, origin
                 shatteredCollectibles[idx].OptionsPickupIndex = collectible.OptionsPickupIndex
             elseif idx == 2 then
                 if collectible.OptionsPickupIndex > 0 then
-                    shatteredCollectibles[idx].OptionsPickupIndex = shatteredCollectible.OptionsPickupIndex + 1
+                    shatteredCollectibles[idx].OptionsPickupIndex = collectible.OptionsPickupIndex + 1
                 end
             end
             PlaySplitAnimation(idx, shatteredCollectibles[idx], colors[1], colors[2])
@@ -273,6 +273,10 @@ function prismaticDice:UseItem(_, rng, player, useFlags)
         and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
         and entity.SubType ~= CollectibleType.COLLECTIBLE_NULL then
             local collectible = entity:ToPickup()
+
+            -- Impossible but the lua extension is complaining
+            if not collectible then return end
+
             local collectibleType = collectible.SubType
             local collectibleQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality
 

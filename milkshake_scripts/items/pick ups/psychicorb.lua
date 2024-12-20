@@ -171,7 +171,7 @@ local function FakeCenserEffect(player)
     for _, entity in ipairs(nearProjectiles) do
         local projectile = entity:ToProjectile()
 
-        if not projectile:HasProjectileFlags(
+        if projectile and not projectile:HasProjectileFlags(
         ProjectileFlags.HIT_ENEMIES |
         ProjectileFlags.CANT_HIT_PLAYER) then
             projectile:AddProjectileFlags(ProjectileFlags.SLOWED)
@@ -379,6 +379,7 @@ function SapphireOrb:OnReflectedProjectileGlowUpdate(glow)
     end
 
     local projectile = glow.Parent:ToProjectile()
+    if not projectile then return end
     glow.Position = projectile.Position + Vector(0, projectile.Height)
 
     if glow:GetSprite():IsFinished("Idle") then

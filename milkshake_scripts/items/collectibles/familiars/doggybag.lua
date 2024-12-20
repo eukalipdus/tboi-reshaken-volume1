@@ -7,6 +7,7 @@ local HOLD_RADIUS = 20
 local POOP_STEP = 20
 local EMPTY_PATH = "gfx/familiar_doggy_bag_empty.anm2"
 
+---@type table<string, PoopGridEntityVariant | PoopEntityVariant>
 local safePoops = {
     ["Normal"] = TSIL.Enums.PoopEntityVariant.NORMAL,
     ["Golden"] = TSIL.Enums.PoopEntityVariant.GOLDEN,
@@ -60,14 +61,15 @@ local function SpawnPoop(bag)
 
     if poopType ~= "Rainbow" and poopType ~= "Charming" then
         poop = Isaac.Spawn(EntityType.ENTITY_POOP, safePoops[poopType], 0, bag.Position, Vector.Zero, bag)
+        utility:SetData(poop, "DoggyBagPoop", true)
     else
+        ---@diagnostic disable-next-line: param-type-mismatch
         poop = TSIL.GridSpecific.SpawnPoop(safePoops[poopType], Isaac.GetFreeNearPosition(bag.Position, POOP_STEP), false)
     end
     SFXManager():Play(SoundEffect.SOUND_POOPITEM_THROW)
-    
+
     utility:SetData(bag, "PoopType", nil)
     utility:SetData(bag, "PlayerHit", true)
-    utility:SetData(poop, "DoggyBagPoop", true)
 end
 
 local function FindSetIndex(allSets, playerIndex)
@@ -85,11 +87,14 @@ local function ApplyPoopType(bag, sprite, type)
     sprite:Play("Idle")
 end
 
-local function TrackDoggyBagPoop(player, poopType)
-    if not TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags") then
-        TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "TrackedDoggyBags", {})
-    end
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "TrackedDoggyBags",
+    {},
+    TSIL.Enums.VariablePersistenceMode.NONE
+)
 
+local function TrackDoggyBagPoop(player, poopType)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
     local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
     local playerAndBags = {
@@ -148,9 +153,9 @@ function doggyBag:PostPEffectUpdate(player)
     for _, poop in ipairs(gridPoops) do
         if (player.Position):Distance(poop.Position) <= (HOLD_RADIUS * 1.5) then
             local canHold =  (not player:IsHoldingItem() and poop.State ~= TSIL.Enums.PoopState.DESTROYED and playerSprite:GetFrame() > 0)
-            if poop.Variant == TSIL.Enums.PoopGridEntityVariant.CORN
+            if poop:GetVariant() == TSIL.Enums.PoopGridEntityVariant.CORN
             and canHold then
-                poop:Remove()
+                TSIL.GridEntities.RemoveGridEntity(poop, false)
                 player:UsePoopSpell(PoopSpellType.SPELL_CORNY)
             elseif canHold then
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)

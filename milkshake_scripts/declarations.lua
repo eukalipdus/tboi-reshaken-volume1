@@ -9,6 +9,10 @@
 ]]
 
 
+---@alias ItemConfig_Item ItemConfigItem
+---@alias RoomConfig_Room RoomConfigRoom
+
+
 ---Adds a callback to be executed
 ---@param callback ModCallbacks | CustomCallback | MilkshakeCallbacks
 ---@param funct function
