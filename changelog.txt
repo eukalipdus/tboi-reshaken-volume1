@@ -222,6 +222,7 @@ Additions
 -Added Belial (Judas' Birthright) synergies for Golden Shovel and Mirror Key
 -Added Book of Virtues synergy for Mirror Key
 -Added API function, MilkshakeVol1.API.AddEntityCanCollideRainbowPenny
+-Added Blast Processing
 
 Changes
 -Secret shops spawned by Golden Shovel now convert pickups for sale to their golden variants, with increased prices
