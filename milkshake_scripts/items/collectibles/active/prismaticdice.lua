@@ -256,6 +256,22 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
                 newQuality = Isaac.GetItemConfig():GetCollectible(collectible.SubType).Quality - 1
             end
 
+            local splitTimes = 0
+
+            if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
+                splitTimes = 2
+                newQuality = newQuality - 1
+            end
+
+            if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
+                splitTimes = splitTimes + 4 + rng:RandomInt(2)
+                newQuality = newQuality - 1
+            end
+
+            if splitTimes == 0 then
+                splitTimes = 1
+            end
+
             for idx = 1, 2 do
                 if collectible.SubType == CollectibleType.COLLECTIBLE_GODHEAD then
                     for _, itemData in pairs(effectPerGodheadSplit) do
@@ -273,19 +289,7 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
                     break
 
                 elseif newQuality >= 0 then
-                    local splitTimes = 0
 
-                    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then
-                        splitTimes = 2
-                    end
-
-                    if FiendFolio and player:HasTrinket(FiendFolio.ITEM.TRINKET.ETERNAL_CAR_BATTERY) then
-                        splitTimes = splitTimes + 4 + rng:RandomInt(2)
-                    end
-
-                    if splitTimes == 0 then
-                        splitTimes = 1
-                    end
 
                     for _ = 1, splitTimes do
                         local splitCollectible = SplitCollectible(idx, player, collectible, itemPool, poolType, newQuality)
