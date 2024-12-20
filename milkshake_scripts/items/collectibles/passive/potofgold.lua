@@ -102,59 +102,62 @@ function MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
 end
 
 ---@param pickup EntityPickup
-local function CanPickupBeReplaced(pickup, convertChance, isNatural)
-    local pickupSeed = pickup.InitSeed
+local function CanPickupBeReplaced(rng, variant, subtype, convertChance, isNatural)
+    --[[local pickupSeed = pickup.InitSeed
 
     if pickupSeed == 0 then
         pickupSeed = 1
-    end
+    end]]
 
-    local rng = TSIL.RNG.NewRNG(pickupSeed)
     local roll = rng:RandomFloat()
-    if (not isNatural and (pickup.Variant == PickupVariant.PICKUP_KEY or pickup.Variant == PickupVariant.PICKUP_BOMB))
-    or (pickup.Variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, pickup.SubType))
-    or (not isNatural and (pickup.Variant == PickupVariant.PICKUP_COIN and (pickup.SubType == CoinSubType.COIN_NICKEL or pickup.SubType == CoinSubType.COIN_DIME or pickup.SubType == CoinSubType.COIN_STICKYNICKEL))) then
+    if (not isNatural and (variant == PickupVariant.PICKUP_KEY or variant == PickupVariant.PICKUP_BOMB))
+    or (variant == PickupVariant.PICKUP_COIN and roll <= convertChance and not TSIL.Utils.Tables.IsIn(coinBlacklist, subtype))
+    or (not isNatural and (variant == PickupVariant.PICKUP_COIN and (subtype == CoinSubType.COIN_NICKEL or subtype == CoinSubType.COIN_DIME or subtype == CoinSubType.COIN_STICKYNICKEL))) then
         return true
     end
     return false
 end
 
----@param pickup EntityPickup
-function MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, isNatural)
-    if not CanPickupBeReplaced(pickup, chance, isNatural)
+---Attempts to "replace" a pickup with a rainbow penny, but instead of morphing will return a table with the variant and subtype if successful to be done manually
+---@param rng RNG
+---@param variant PickupVariant - Variant of pickup to convert
+---@param subtype integer - SubType of pickup to convert
+---@param conversionChance number
+---@param isNatural boolean - False if converted by Pot of Gold, true for anything else
+---@return table<PickupVariant><CoinSubType> | nil
+function MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(rng, variant, subtype, conversionChance, isNatural)
+    if not CanPickupBeReplaced(rng, variant, subtype, conversionChance, isNatural)
     or (not TSIL.Players.DoesAnyPlayerHasItem(MilkshakeVol1.enums.Collectibles.POT_OF_GOLD)
         and not isNatural)
     then return end
 
     --local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
-    local rng = pickup:GetDropRNG()
+    --local rng = pickup:GetDropRNG()
     local chosenCoin = MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
-
-    pickup:Morph(
-        pickup.Type,
-        chosenCoin.variant,
-        chosenCoin.subtype,
-        true,
-        false
-    )
+    return {chosenCoin.variant, chosenCoin.subtype}
 end
 
+--[[
 ---@param pickup EntityPickup
 function potOfGold:OnPickupUpdate(pickup)
-    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, GetConversionChance())
+    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup.Variant, pickup.SubType, GetConversionChance())
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_PICKUP_UPDATE,
     potOfGold.OnPickupUpdate
-)
+)]]
 
 
-function potOfGold:PostPickupInit(pickup)
-    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, GetConversionChance())
+function potOfGold:PostPickupSelection(_, variant, subtype)
+    local rng = TSIL.RNG.NewRNG(Random() + 1)
+    local pickupData = MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(rng, variant, subtype, GetConversionChance())
+    if pickupData then
+        return pickupData
+    end
 end
 MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_PICKUP_INIT,
-    potOfGold.PostPickupInit
+    ModCallbacks.MC_POST_PICKUP_SELECTION,
+    potOfGold.PostPickupSelection
 )
 
 
