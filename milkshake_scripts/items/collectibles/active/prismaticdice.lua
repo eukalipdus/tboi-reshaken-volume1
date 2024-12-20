@@ -289,8 +289,6 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
                     break
 
                 elseif newQuality >= 0 then
-
-
                     for _ = 1, splitTimes do
                         local splitCollectible = SplitCollectible(idx, player, collectible, itemPool, poolType, newQuality)
                         splitCollectible:SetColor(splitColors[idx], COLOR_FRAMES, 2, true, false)
