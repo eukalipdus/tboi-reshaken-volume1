@@ -400,6 +400,9 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Lyra.OnNewRoom)
 function Lyra:OnClearAwardSpawn(rng, pos)
     local room = Game():GetRoom()
     local roomType = room:GetType()
+    local level = Game():GetLevel()
+    local roomDesc = level:GetCurrentRoomDesc()
+    local roomConfigRoom = roomDesc.Data
     if roomType == RoomType.ROOM_BOSS then return end
     if roomConfigRoom.StageID == 35 and roomType == RoomType.ROOM_DUNGEON then return end --check if fighting beast
 
