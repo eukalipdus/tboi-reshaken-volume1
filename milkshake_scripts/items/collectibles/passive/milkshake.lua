@@ -136,7 +136,7 @@ MilkshakeVol1:AddCallback(
 ---@param pos Vector
 local function RenderStat(mult, pos, alpha)
     local value = string.format("x%.2f", mult)
-    pos = pos + (Options.HUDOffset * Vector(18, 12))
+    pos = pos + (Options.HUDOffset * Vector(20, 12))
     pos = pos + Game().ScreenShakeOffset
 
     StatsFont:DrawString(
@@ -191,7 +191,10 @@ local function RenderMultiplier(player, startingFrame, collectibleType)
     }
 
     local baseXPos = 75
-    local baseYPos = 90
+    local baseYPos = 87
+    if REPENTANCE_PLUS then
+        baseYPos = 90
+    end
     local alpha = 0.5
 
     if IsDisplayingMultiplayerStats() then
