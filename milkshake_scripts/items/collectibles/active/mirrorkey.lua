@@ -113,6 +113,16 @@ TSIL.SaveManager.AddPersistentVariable(
     {},
     TSIL.Enums.VariablePersistenceMode.NONE
 )
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "IsRoomViableForMirrorKey",
+    nil,
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM,
+    false,
+    function ()
+        return false
+    end
+)
 
 ---Helper function to check if the players are currently in the mirror key room.
 ---@return boolean
@@ -133,26 +143,47 @@ end
 
 
 local function CanUseMirrorKey()
-    local level = Game():GetLevel()
-    local roomIndex = level:GetCurrentRoomIndex()
-    --If we use goto in a grid room, we'll end up in an infinite loop.
-    if roomIndex < 0 then
-        return false
+    local isRoomViableCache = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "IsRoomViableForMirrorKey"
+    )
+
+    -- Cache all the shit that shouldn't change while in the middle of a room.
+    if isRoomViableCache == nil then
+        isRoomViableCache = true
+
+        local level = Game():GetLevel()
+        local roomIndex = level:GetCurrentRoomIndex()
+        --If we use goto in a grid room, we'll end up in an infinite loop.
+        if roomIndex < 0 then
+            isRoomViableCache = false
+        else
+            --Can only use on main dimension and mirror world
+            local room = Game():GetRoom()
+            if not TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.MAIN) and not room:IsMirrorWorld() then
+                isRoomViableCache = false
+            else
+                local roomDesc = level:GetCurrentRoomDesc()
+                local roomData = roomDesc.Data
+                local roomType = room:GetType()
+
+                if (roomData.Variant == 1
+                and roomType == RoomType.ROOM_BOSS)
+                or roomType == RoomType.ROOM_ERROR then
+                    isRoomViableCache = false
+                end
+            end
+        end
+
+        TSIL.SaveManager.SetPersistentVariable(
+            MilkshakeVol1,
+            "IsRoomViableForMirrorKey",
+            isRoomViableCache,
+            true
+        )
     end
 
-    --Can only use on main dimension and mirror world
-    local room = Game():GetRoom()
-    if not TSIL.Dimensions.InDimension(TSIL.Enums.Dimension.MAIN) and not room:IsMirrorWorld() then
-        return false
-    end
-
-    local roomDesc = level:GetCurrentRoomDesc()
-    local roomData = roomDesc.Data
-    local roomType = room:GetType()
-
-    if (roomData.Variant == 1
-    and roomType == RoomType.ROOM_BOSS)
-    or roomType == RoomType.ROOM_ERROR then
+    if not isRoomViableCache then
         return false
     end
 
@@ -163,6 +194,7 @@ local function CanUseMirrorKey()
     local roomListIndex = GetCurrentRoomIndex()
 
     local wasMirrorKeyUsed = roomsMirrorKeyWasUsed[roomListIndex]
+
     return not wasMirrorKeyUsed
 end
 
