@@ -367,15 +367,14 @@ MilkshakeVol1:AddCallback(
     SharpCursor.OnPlayerRender
 )
 
+local sharpCursorFont = Font()
+sharpCursorFont:Load("font/pftempestasevencondensed.fnt")
 
 function SharpCursor:OnRender()
-    local font = Font()
-    font:Load("font/pftempestasevencondensed.fnt")
-
     TSIL.Utils.Tables.ForEach(SharpCursorDamageTexts, function (_, sharpCursorText)
         local color = KColor(1, 0.7, 0.7, sharpCursorText.alpha)
 
-        font:DrawStringScaled(
+        sharpCursorFont:DrawStringScaled(
             sharpCursorText.text,
             sharpCursorText.position.X + math.sin(sharpCursorText.frame/6) * 1.6,
             sharpCursorText.position.Y,
