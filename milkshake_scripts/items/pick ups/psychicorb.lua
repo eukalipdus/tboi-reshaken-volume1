@@ -125,12 +125,12 @@ local function TryReflectProjectile(player)
     Utilities:SetData(laser, "LinkedProjectile", projectileToReflect)
 
     Utilities:SetData(projectileToReflect, "ReflectedVelocity", -projectileToReflect.Velocity)
-    projectileToReflect.SpawnerEntity = nil
+    projectileToReflect.SpawnerEntity = player
     projectileToReflect.FallingSpeed = 0
     projectileToReflect.FallingAccel = -0.1
     projectileToReflect:AddProjectileFlags(
-        ProjectileFlags.CANT_HIT_PLAYER |
-        ProjectileFlags.SMART
+        ProjectileFlags.CANT_HIT_PLAYER
+        | ProjectileFlags.SMART
     )
     projectileToReflect:ClearProjectileFlags(
         ProjectileFlags.SLOWED
