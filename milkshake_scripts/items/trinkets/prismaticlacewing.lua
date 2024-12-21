@@ -3,6 +3,8 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local CHANCE_TEAR = 5
+local CHANCE_FETUS = 10
+local EXPLOSION_RADIUS = 20
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220/255, 1, 0, 0, 0)
 local LERP_AMOUNT = 0.1
@@ -59,6 +61,46 @@ local function ShouldActivate(player, baseOdds)
     local rng = player:GetTrinketRNG(enums.Trinkets.PRISMATIC_LACEWING)
     local chance = baseOdds * player:GetTrinketMultiplier(enums.Trinkets.PRISMATIC_LACEWING)
     return TSIL.Random.GetRandomInt(1, 100, rng) <= chance
+end
+
+---Used for the Dr. Fetus and Epic Fetus synergy
+---@param player EntityPlayer
+---@param entity Entity
+local function ExplosionDevolve(player, entity)
+    if not ShouldActivate(player, CHANCE_FETUS) then
+        return
+    end
+
+    local explosionEffect = TSIL.EntitySpecific.SpawnEffect(
+        EffectVariant.BOMB_EXPLOSION,
+        0,
+        entity.Position,
+        Vector.Zero,
+        entity
+    )
+
+    local rng = player:GetTrinketRNG(enums.Trinkets.PRISMATIC_LACEWING)
+    local roll = TSIL.Random.GetRandomInt(0, 1, rng)
+
+    if roll == 0 then
+        explosionEffect.Color = CYAN
+    else
+        explosionEffect.Color = PINK
+    end
+
+    local nearEnemies = Isaac.FindInRadius(
+        entity.Position,
+        EXPLOSION_RADIUS,
+        EntityPartition.ENEMY
+    )
+
+    nearEnemies = TSIL.Utils.Tables.Filter(nearEnemies, function (_, enemy)
+        return enemy:IsVulnerableEnemy() and not enemy:IsBoss()
+    end)
+
+    for _, curEnemy in pairs(nearEnemies) do
+        MilkshakeVol1.API.SplitEnemy(curEnemy, player)
+    end
 end
 
 ---@param tear EntityTear
@@ -137,4 +179,25 @@ end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_ENTITY_TAKE_DMG,
     PrismaticLacewing.OnEntityDamage
+)
+
+---@param bomb EntityBomb
+function PrismaticLacewing:PostBombExploded(bomb)
+    if not bomb.IsFetus
+    or not bomb.SpawnerEntity then
+        return
+    end
+
+    local player = bomb.SpawnerEntity:ToPlayer()
+
+    if not player
+    or not player:HasTrinket(enums.Trinkets.PRISMATIC_LACEWING) then
+        return
+    end
+
+    ExplosionDevolve(player, bomb)
+end
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_BOMB_EXPLODED,
+    PrismaticLacewing.PostBombExploded
 )
