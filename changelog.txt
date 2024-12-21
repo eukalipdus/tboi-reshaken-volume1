@@ -221,7 +221,6 @@ Additions
 -Added crafting qualities
 -Added Belial (Judas' Birthright) synergies for Golden Shovel and Mirror Key
 -Added Book of Virtues synergy for Mirror Key
--Added API function, MilkshakeVol1.API.AddEntityCanCollideRainbowPenny
 -Added Blast Processing (optimization improvements)
 
 Changes
@@ -233,9 +232,6 @@ Changes
 -Reduce weight for Spirit Klins to payout with trinkets
 -After receiving 4 payments, Brenda now has a chance to payout with a collectible from the Glass pool
 -Modified Prismatic Dice splitting animation and collectible spawn positions
-
-API Changes
--MilkshakeVol1.API:AddSpiritKlinReward's first argument now accepts a second parameter, an entity (Spirit Klin slot)
 
 Fixes
 -Fixed error resulting from Witch Doctor Mask being activated by a NULL pill color
@@ -260,3 +256,8 @@ Fixes
 -Fixed Prismatic Dice Godhead easter egg not spawning items with the proper colors
 -Fixed Prismatic Dice locust duplicating bosses
 -Fixed Witch Doctor Mask not spawning a pill on pick up if it was taken by another player after being dropped by Tainted Isaac
+
+API Changes
+-MilkshakeVol1.API:AddSpiritKlinReward's first argument now accepts a second parameter, an entity (Spirit Klin slot)
+-Added MilkshakeVol1.API.AddEntityCanCollideRainbowPenny
+-Added MilkshakeVol1.API.SplitEnemy
