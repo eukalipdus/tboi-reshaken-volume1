@@ -3,7 +3,6 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
 local CHANCE_TEAR = 5
-local CHANCE_LASER = 100
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220/255, 1, 0, 0, 0)
 local LERP_AMOUNT = 0.1
@@ -107,7 +106,7 @@ function PrismaticLacewing:OnEntityDamage(entity, _, flags, source)
 
     if TSIL.Utils.Flags.HasFlags(flags, DamageFlag.DAMAGE_LASER) then
         local rng = player:GetTrinketRNG(enums.Trinkets.PRISMATIC_LACEWING)
-        local currentChance = CHANCE_LASER * player:GetTrinketMultiplier(enums.Trinkets.PRISMATIC_LACEWING)
+        local currentChance = CHANCE_TEAR * player:GetTrinketMultiplier(enums.Trinkets.PRISMATIC_LACEWING)
 
         if TSIL.Random.GetRandomInt(1, 100, rng) <= currentChance then
             MilkshakeVol1.API.SplitEnemy(entity, player)
