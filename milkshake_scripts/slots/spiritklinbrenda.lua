@@ -82,6 +82,29 @@ local function GetTrackedBrendaIndex(brenda)
     return -1
 end
 
+---Stores needed information about a given Brenda slot
+---@param brenda Entity
+local function InitBrendaData(brenda)
+    if GetTrackedBrendaIndex(brenda) ~= -1 then
+        return
+    end
+
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    table.insert(
+        brendasPerFloor,
+        MilkshakeVol1.utility:GetSlotIndex(brenda)
+    )
+
+    local brendaIndex = GetTrackedBrendaIndex(brenda)
+
+    brendasPerFloor[brendaIndex].PaymentsReceived = 0
+    brendasPerFloor[brendaIndex].HasDied = false
+end
+
 local gemtrinkets = {
     enums.Trinkets.AMETHYST_SHARD,
     enums.Trinkets.RUBY_SHARD,
@@ -406,7 +429,8 @@ end
 
 
 ---@param slot Entity
-local function OnSlotBroken(slot)
+---@param skipDeathAnimation? boolean
+local function OnSlotBroken(slot, skipDeathAnimation)
     RemoveRecentRewards(slot.Position)
 
     local gemTrinket = TSIL.Random.GetRandomElementsFromTable(gemtrinkets, 1, slot:GetDropRNG())[1]
@@ -551,20 +575,8 @@ function SpiritKlin:OnBrendaCollision(brenda, player)
     )
 
     local brendaIndex = GetTrackedBrendaIndex(brenda)
-
-    if brendaIndex == -1 then
-        table.insert(
-            brendasPerFloor,
-            MilkshakeVol1.utility:GetSlotIndex(brenda)
-        )
-
-        brendaIndex = GetTrackedBrendaIndex(brenda)
-        brendasPerFloor[brendaIndex].PaymentsReceived = 1
-    else
-        local prevPayments = brendasPerFloor[brendaIndex].PaymentsReceived
-        brendasPerFloor[brendaIndex].PaymentsReceived = prevPayments + 1
-        print(prevPayments+1)
-    end
+    local prevPayments = brendasPerFloor[brendaIndex].PaymentsReceived
+    brendasPerFloor[brendaIndex].PaymentsReceived = prevPayments + 1
 end
 
 MilkshakeVol1:AddCallback(
@@ -614,6 +626,31 @@ MilkshakeVol1:AddCallback(
 )
 
 
+---@param brenda Entity
+function SpiritKlin:PostSlotInit(brenda)
+    InitBrendaData(brenda)
+
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    local brendaIndex = GetTrackedBrendaIndex(brenda)
+
+    if brendasPerFloor[brendaIndex].HasDied
+    and not brendasPerFloor[brendaIndex].DeathReapplied then
+        brendasPerFloor[brendaIndex].DeathReapplied = true
+        OnSlotBroken(brenda, true)
+    end
+end
+MilkshakeVol1:AddCallback(
+    TSIL.Enums.CustomCallback.POST_SLOT_INIT,
+    SpiritKlin.PostSlotInit,
+    enums.Slots.SPIRIT_KLIN_BRENDA
+)
+
+
+
 ---@param trinket TrinketType
 ---@return boolean
 local function DefaultIsTrinketUnlocked(trinket)
@@ -641,6 +678,15 @@ MilkshakeVol1:AddCallback(
 
 
 function SpiritKlin:OnNewRoom()
+    local brendasPerFloor = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "BrendasPerFloor"
+    )
+
+    for _, currentBrendaData in pairs(brendasPerFloor) do
+        currentBrendaData.DeathReapplied = false
+    end
+
     local shouldCheck = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "ShouldCheckUnlockedGlassTrinketsNextRoom"
