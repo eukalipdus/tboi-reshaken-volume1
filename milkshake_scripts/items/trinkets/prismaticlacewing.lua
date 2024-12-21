@@ -201,3 +201,25 @@ MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_BOMB_EXPLODED,
     PrismaticLacewing.PostBombExploded
 )
+
+---@param effect EntityEffect
+function PrismaticLacewing:PostEntityRemove(effect)
+    if effect.Variant ~= EffectVariant.ROCKET
+    or not effect.SpawnerEntity then
+        return
+    end
+
+    local player = effect.SpawnerEntity:ToPlayer()
+
+    if not player
+    or not player:HasTrinket(enums.Trinkets.PRISMATIC_LACEWING) then
+        return
+    end
+
+    ExplosionDevolve(player, effect)
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_ENTITY_REMOVE,
+    PrismaticLacewing.PostEntityRemove,
+    EntityType.ENTITY_EFFECT
+)
