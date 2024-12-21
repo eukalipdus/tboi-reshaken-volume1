@@ -438,7 +438,7 @@ local function OnSlotBroken(slot)
         PickupVariant.PICKUP_TRINKET,
         gemTrinket,
         slot.Position,
-        RandomVector(),
+        RandomVector() * 2,
         slot
     )
 
