@@ -429,7 +429,6 @@ end
 
 
 ---@param slot Entity
----@param skipDeathAnimation? boolean
 local function OnSlotBroken(slot)
     RemoveRecentRewards(slot.Position)
 
