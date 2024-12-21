@@ -107,7 +107,8 @@ function PrismaticLacewing:OnEntityDamage(entity, _, flags, source)
 
         local player = TSIL.Players.GetPlayerFromEntity(source.Entity)
 
-        if not player then
+        if not player
+        or not player:HasTrinket(enums.Trinkets.PRISMATIC_LACEWING) then
             return
         end
 
