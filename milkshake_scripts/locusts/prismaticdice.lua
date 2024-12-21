@@ -5,7 +5,7 @@ local utility = MilkshakeVol1.utility
 local DOWNGRADE_CHANCE = 20
 local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
-local CYAN = Color(0, 1, 1, 1, 0, 0, 0) -- Should move these colors to enums
+local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220 / 255, 1, 0, 0, 0)
 local SOLID_CYAN = Color(0, 1, 1, 1, 0, 255, 255)
 local SOLID_PINK = Color(1, 192 / 255, 203 / 255, 1, 255, 192 / 255, 203 / 255)
@@ -14,6 +14,12 @@ local SHATTERED_COLOR_FRAMES = 30
 local PRIORITY = 2
 local DOWNGRADE_COOLDOWN = 90
 
+---Spawns a devolved enemy by using a D10 wisp to force devolving the enemy
+---@param player EntityPlayer
+---@param baseEnemy Entity
+---@param position Vector
+---@param solidColor Color
+---@param color Color
 local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
     local newEnemy = TSIL.EntitySpecific.SpawnNPC(
         baseEnemy.Type,
@@ -45,6 +51,9 @@ local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
     end, SHATTERED_SOLID_FRAMES)
 end
 
+---Remove an enemy and spawn two devolved versions of itself, also changing their colors temporarily
+---@param enemy Entity
+---@param player EntityPlayer
 function MilkshakeVol1.API.SplitEnemy(enemy, player)
     if utility:GetData(enemy, "ForbidEnemySplit") then
         return
@@ -62,6 +71,8 @@ function MilkshakeVol1.API.SplitEnemy(enemy, player)
     end, DOWNGRADE_COOLDOWN)
 end
 
+---@param entity Entity
+---@param source Entity
 function prismaticDice:EntityTakeDmg(entity, _, _, source)
     if not source.Entity
     or entity:IsBoss()

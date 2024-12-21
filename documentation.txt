@@ -238,3 +238,13 @@ MilkshakeVol1.API.AddEntityCanCollideRainbowPenny(type, ?variant, ?subtype)
     ?subtype number : -1
 
 --------------------------------------------------------------------------------------------------------------------------------------
+
+ MilkshakeVol1.API.SplitEnemy(enemy, player)
+ * Defined in line 57 of milkshake_scripts/locusts/prismaticdice.lua
+
+    Uses the D10 effect on a single enemy, and clones it. Also does a brief color swap animation on the enemies involved.
+
+    enemy Entity
+    player EntityPlayer
+
+--------------------------------------------------------------------------------------------------------------------------------------
