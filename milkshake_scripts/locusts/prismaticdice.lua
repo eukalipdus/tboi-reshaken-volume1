@@ -23,17 +23,32 @@ local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
         Vector.Zero,
         baseEnemy
     )
+
+    utility:SetData(newEnemy, "ForbidEnemySplit", true)
+
     local baseEnemyHPPercent = baseEnemy.HitPoints / baseEnemy.MaxHitPoints
+
     newEnemy.HitPoints = baseEnemyHPPercent * newEnemy.MaxHitPoints
-    local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, 0, 0, newEnemy.Position, Vector.Zero, player):ToTear()
-    tear.TearFlags = tear.TearFlags | TearFlags.TEAR_REROLL_ENEMY
+
+    local wisp = Isaac.Spawn(
+        EntityType.ENTITY_FAMILIAR,
+        FamiliarVariant.WISP,
+        CollectibleType.COLLECTIBLE_D10,
+        newEnemy.Position,
+        Vector.Zero,
+        player)
+    wisp:Remove()
+
     newEnemy:SetColor(solidColor, SHATTERED_SOLID_FRAMES, PRIORITY, false, false)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         newEnemy:SetColor(color, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
     end, SHATTERED_SOLID_FRAMES)
 end
 
-local function SplitEnemy(enemy, player)
+function MilkshakeVol1.API.SplitEnemy(enemy, player)
+    if utility:GetData(enemy, "ForbidEnemySplit") then
+        return
+    end
     utility:SetData(player, "LocustSplit", true)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
@@ -66,7 +81,7 @@ function prismaticDice:EntityTakeDmg(entity, _, _, source)
             return
         end
 
-        SplitEnemy(entity, player)
+        MilkshakeVol1.API.SplitEnemy(entity, player)
 
     elseif isPrismaticLocust then
         local familiar = sourceEntity:ToFamiliar()
@@ -80,7 +95,7 @@ function prismaticDice:EntityTakeDmg(entity, _, _, source)
         local roll = TSIL.Random.GetRandomInt(1, 100, rng)
         if roll <= DOWNGRADE_CHANCE
         and not utility:GetData(player, "LocustSplit") then
-            SplitEnemy(entity, player)
+            MilkshakeVol1.API.SplitEnemy(entity, player)
         end
     end
 end
