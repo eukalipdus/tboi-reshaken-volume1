@@ -10,12 +10,16 @@ local LERP_PINK = 1
 local LERP_CYAN = 2
 local EPSILON = 0.01
 
+---Sets an entity to lerp between cyan and pink
+---@param entity any
 local function PrismaticColorLerpBegin(entity)
     utility:SetData(entity, "ShouldSplitDowngrade", true)
     entity.Color = CYAN
     utility:SetData(entity, "PrismaticLacewingLerpType", LERP_PINK)
 end
 
+---Updates the color lerping for a given entity
+---@param entity any
 local function PrismaticColorLerpUpdate(entity)
     local originalColor = entity.Color
     local newR, newG, newB
@@ -47,6 +51,16 @@ local function PrismaticColorLerpUpdate(entity)
     entity.Color = Color(newR, newG, newB, entity.Color.A)
 end
 
+---Calculates and returns the chance for Prismatic Lacewing to activate
+---@param player EntityPlayer
+---@param baseOdds number
+---@return boolean
+local function ShouldActivate(player, baseOdds)
+    local rng = player:GetTrinketRNG(enums.Trinkets.PRISMATIC_LACEWING)
+    local chance = baseOdds * player:GetTrinketMultiplier(enums.Trinkets.PRISMATIC_LACEWING)
+    return TSIL.Random.GetRandomInt(1, 100, rng) <= chance
+end
+
 ---@param tear EntityTear
 function PrismaticLacewing:PostFireTear(tear)
     local player = utility:GetPlayerFromTear(tear)
@@ -56,10 +70,7 @@ function PrismaticLacewing:PostFireTear(tear)
         return
     end
 
-    local rng = player:GetTrinketRNG(enums.Trinkets.PRISMATIC_LACEWING)
-    local currentChance = CHANCE_TEAR * player:GetTrinketMultiplier(enums.Trinkets.PRISMATIC_LACEWING)
-
-    if TSIL.Random.GetRandomInt(1, 100, rng) <= currentChance then
+    if ShouldActivate(player, CHANCE_TEAR) then
         PrismaticColorLerpBegin(tear)
     end
 end
@@ -77,12 +88,10 @@ MilkshakeVol1:AddCallback(
     PrismaticLacewing.PostTearUpdate
 )
 
+---@param entity Entity
+---@param flags DamageFlag
+---@param source Entity
 function PrismaticLacewing:OnEntityDamage(entity, _, flags, source)
-    if not source.Entity
-    or source.Type ~= EntityType.ENTITY_PLAYER then
-        return
-    end
-
     local npc = entity:ToNPC()
 
     if not npc
@@ -90,17 +99,36 @@ function PrismaticLacewing:OnEntityDamage(entity, _, flags, source)
         return
     end
 
-    local player = TSIL.Players.GetPlayerFromEntity(source.Entity)
-
-    if not player then
-        return
-    end
-
     if TSIL.Utils.Flags.HasFlags(flags, DamageFlag.DAMAGE_LASER) then
-        local rng = player:GetTrinketRNG(enums.Trinkets.PRISMATIC_LACEWING)
-        local currentChance = CHANCE_TEAR * player:GetTrinketMultiplier(enums.Trinkets.PRISMATIC_LACEWING)
+        if not source.Entity
+        or source.Type ~= EntityType.ENTITY_PLAYER then
+            return
+        end
 
-        if TSIL.Random.GetRandomInt(1, 100, rng) <= currentChance then
+        local player = TSIL.Players.GetPlayerFromEntity(source.Entity)
+
+        if not player then
+            return
+        end
+
+        if ShouldActivate(player, CHANCE_TEAR) then
+            MilkshakeVol1.API.SplitEnemy(entity, player)
+        end
+
+    elseif source.Type == EntityType.ENTITY_KNIFE then
+        if source.SpawnerType ~= EntityType.ENTITY_PLAYER
+        or not source.Entity then
+            return
+        end
+
+        local player = source.Entity.SpawnerEntity:ToPlayer()
+
+        if not player
+        or not player:HasTrinket(enums.Trinkets.PRISMATIC_LACEWING) then
+            return
+        end
+
+        if ShouldActivate(player, CHANCE_TEAR) then
             MilkshakeVol1.API.SplitEnemy(entity, player)
         end
     end
