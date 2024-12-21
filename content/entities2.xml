@@ -238,6 +238,12 @@
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
     </entity>
 
+        <entity anm2path="spirit_klin_frenda.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0"
+    collisionMass="10" collisionRadius="12" friction="1" name="Spirit Kiln Frenda"
+    numGridCollisionPoints="24" shadowSize="33" stageHP="0" id="6" variant="505">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+    </entity>
+
     <entity anm2path="rotten_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
     friction="1" id="5" name="Rotten Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3405">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />

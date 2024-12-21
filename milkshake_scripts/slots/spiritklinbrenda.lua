@@ -1,6 +1,11 @@
 local SpiritKlin = {}
 local enums = MilkshakeVol1.enums
 
+local brendas = {
+    enums.Slots.SPIRIT_KLIN_BRENDA,
+    enums.Slots.SPIRIT_KLIN_FRENDA
+}
+
 ---@class BrendaReward
 ---@field chance number | fun(player: EntityPlayer, brenda: Entity): number
 ---@field value fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector)
@@ -403,54 +408,9 @@ end
 ---@param slot Entity
 local function OnSlotBroken(slot)
     RemoveRecentRewards(slot.Position)
-    --[[local pickups = TSIL.EntitySpecific.GetPickups()
-    local slotPosLastFrame = slot.Position - slot.Velocity
-    local rewardPickups = TSIL.Utils.Tables.Filter(pickups, function(_, pickup)
-        local pickupPosLastFrame = pickup.Position - pickup.Velocity
-        return pickup.FrameCount == 1
-            and TSIL.Vector.VectorFuzzyEquals(slotPosLastFrame, pickupPosLastFrame)
-    end)
-    for _, pickup in ipairs(rewardPickups) do
-        pickup:Remove()
-    end
-    --]]
-    --[[
-    local newSlot = TSIL.EntitySpecific.SpawnSlot(
-        enums.Slots.SPIRIT_KLIN_BRENDA,
-        0,
-        slot.Position - slot.Velocity,
-        Vector.Zero,
-        slot.SpawnerEntity
-    )
 
-    newSlot:AddEntityFlags(slot:GetEntityFlags())
-    newSlot:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-
-    local oldData = slot:GetData()
-    local newData = newSlot:GetData()
-    --Im not letting GetData mess with my code
-    if type(oldData) == "table" and type(newData) == "table" then
-        for key, value in pairs(oldData) do
-            newData[key] = value
-        end
-    end
-
-    SFXManager():Play(enums.Sounds.BRENDA_HURT)
-
-    local oldSprite = slot:GetSprite()
-    local newSprite = newSlot:GetSprite()
-    if oldSprite:IsPlaying("Inactive") then
-        newSprite:Play("Death")
-    else
-        newSprite:Play("Death")
-        if oldSprite:IsPlaying("Death") then
-            newSprite:Play("Inactive")
-            --newSprite:SetFrame(oldSprite:GetFrame())
-        end
-    end
-    ]]
-    slot:Remove()
     local gemTrinket = TSIL.Random.GetRandomElementsFromTable(gemtrinkets, 1, slot:GetDropRNG())[1]
+
     TSIL.EntitySpecific.SpawnPickup(
         PickupVariant.PICKUP_TRINKET,
         gemTrinket,
@@ -458,7 +418,17 @@ local function OnSlotBroken(slot)
         RandomVector(),
         slot
     )
-    KillBrenda(slot)
+
+    slot:Remove()
+    local frenda = TSIL.EntitySpecific.SpawnSlot(
+        enums.Slots.SPIRIT_KLIN_FRENDA,
+        0,
+        slot.Position - slot.Velocity,
+        Vector.Zero,
+        slot.SpawnerEntity
+    )
+
+    frenda:GetSprite():Play("Death")
 end
 
 
@@ -485,24 +455,44 @@ local function CheckCollisionWithChaosCard(slot)
     end)
 end
 
-
 ---@param brenda Entity
 function SpiritKlin:OnBrendaUpdate(brenda)
-    if CheckCollisionWithChaosCard(brenda) then
-        BrendaCollectiblePayout(brenda)
+    if not TSIL.Utils.Tables.IsIn(brendas, brenda.Variant) then
+        return
     end
 
     local sprite = brenda:GetSprite()
 
-    if brenda.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND then
-        OnSlotBroken(brenda)
-        return
-    end
+    if brenda.Variant == enums.Slots.SPIRIT_KLIN_BRENDA then
+        if CheckCollisionWithChaosCard(brenda) then
+            BrendaCollectiblePayout(brenda)
+        end
 
-    brenda.SizeMulti = Vector(2.2, 1)
+        if brenda.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND
+        and not sprite:IsPlaying("Death") then
+            OnSlotBroken(brenda)
+            --return
+        else
 
-    if sprite:IsFinished("Prize") then
-        sprite:Play("Idle")
+            brenda.SizeMulti = Vector(2.2, 1)
+
+            if sprite:IsFinished("Prize") then
+                sprite:Play("Idle")
+            end
+        end
+    
+    elseif brenda.Variant == enums.Slots.SPIRIT_KLIN_FRENDA then
+        if brenda.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND then
+            RemoveRecentRewards(brenda.Position)
+            brenda:Remove()
+            TSIL.EntitySpecific.SpawnSlot(
+                enums.Slots.SPIRIT_KLIN_FRENDA,
+                0,
+                brenda.Position - brenda.Velocity,
+                Vector.Zero,
+                brenda.SpawnerEntity
+            )
+        end
     end
 
     if sprite:IsFinished("Death") then
@@ -512,8 +502,7 @@ end
 
 MilkshakeVol1:AddCallback(
     TSIL.Enums.CustomCallback.POST_SLOT_UPDATE,
-    SpiritKlin.OnBrendaUpdate,
-    enums.Slots.SPIRIT_KLIN_BRENDA
+    SpiritKlin.OnBrendaUpdate
 )
 
 ---@param brenda Entity
