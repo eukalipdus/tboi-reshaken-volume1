@@ -430,7 +430,7 @@ end
 
 ---@param slot Entity
 ---@param skipDeathAnimation? boolean
-local function OnSlotBroken(slot, skipDeathAnimation)
+local function OnSlotBroken(slot)
     RemoveRecentRewards(slot.Position)
 
     local gemTrinket = TSIL.Random.GetRandomElementsFromTable(gemtrinkets, 1, slot:GetDropRNG())[1]
