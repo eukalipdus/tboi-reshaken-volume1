@@ -36,14 +36,15 @@ local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
 
     newEnemy.HitPoints = baseEnemyHPPercent * newEnemy.MaxHitPoints
 
-    local wisp = Isaac.Spawn(
-        EntityType.ENTITY_FAMILIAR,
-        FamiliarVariant.WISP,
-        CollectibleType.COLLECTIBLE_D10,
+    local tear = Isaac.Spawn(
+        EntityType.ENTITY_TEAR,
+        0,
+        0,
         newEnemy.Position,
         Vector.Zero,
-        player)
-    wisp:Remove()
+        player):ToTear()
+
+    tear.TearFlags = TearFlags.TEAR_REROLL_ENEMY
 
     newEnemy:SetColor(solidColor, SHATTERED_SOLID_FRAMES, PRIORITY, false, false)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
@@ -55,7 +56,9 @@ end
 ---@param enemy Entity
 ---@param player EntityPlayer
 function MilkshakeVol1.API.SplitEnemy(enemy, player)
-    if utility:GetData(enemy, "ForbidEnemySplit") then
+    if utility:GetData(player, "LocustSplit")
+    or utility:GetData(enemy, "ForbidEnemySplit")
+    or enemy:IsBoss() then
         return
     end
     utility:SetData(player, "LocustSplit", true)
@@ -66,7 +69,7 @@ function MilkshakeVol1.API.SplitEnemy(enemy, player)
         SpawnDowngrade(player, enemy, Isaac.GetFreeNearPosition(enemy.Position, SHIFT_RIGHT), SOLID_PINK, PINK)
     end, 1)
 
-    TSIL.Utils.Functions.RunInFramesTemporary(function ()
+    TSIL.Utils.Functions.RunInFrames(function ()
         utility:SetData(player, "LocustSplit", false)
     end, DOWNGRADE_COOLDOWN)
 end
