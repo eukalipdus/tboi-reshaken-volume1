@@ -77,14 +77,6 @@ MilkshakeVol1:AddCallback(
     PrismaticLacewing.PostTearUpdate
 )
 
-function PrismaticLacewing:PostLaserInit(laser)
-    
-end
-MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_LASER_INIT,
-    PrismaticLacewing.PostLaserInit
-)
-
 function PrismaticLacewing:OnEntityDamage(entity, _, flags, source)
     if not source.Entity
     or source.Type ~= EntityType.ENTITY_PLAYER then
