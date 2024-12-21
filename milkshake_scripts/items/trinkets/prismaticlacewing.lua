@@ -4,7 +4,7 @@ local utility = MilkshakeVol1.utility
 
 local CHANCE_TEAR = 5
 local CHANCE_FETUS = 10
-local EXPLOSION_RADIUS = 20
+local EXPLOSION_RADIUS = 40
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220/255, 1, 0, 0, 0)
 local LERP_AMOUNT = 0.1
