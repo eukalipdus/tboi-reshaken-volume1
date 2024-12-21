@@ -88,9 +88,21 @@ local function ExplosionDevolve(player, entity)
         explosionEffect.Color = PINK
     end
 
+    local radius = EXPLOSION_RADIUS
+
+    if entity.Type == EntityType.ENTITY_BOMB then
+        local bomb = entity:ToBomb()
+
+        if not bomb then
+            return
+        end
+
+        radius = radius * bomb.RadiusMultiplier
+    end
+
     local nearEnemies = Isaac.FindInRadius(
         entity.Position,
-        EXPLOSION_RADIUS,
+        radius,
         EntityPartition.ENEMY
     )
 
