@@ -486,11 +486,11 @@ function SpiritKlin:OnBrendaUpdate(brenda)
 
     local sprite = brenda:GetSprite()
 
-    if brenda.Variant == enums.Slots.SPIRIT_KLIN_BRENDA then
-        if CheckCollisionWithChaosCard(brenda) then
-            BrendaCollectiblePayout(brenda)
-        end
+    if CheckCollisionWithChaosCard(brenda) then
+        BrendaCollectiblePayout(brenda)
+    end
 
+    if brenda.Variant == enums.Slots.SPIRIT_KLIN_BRENDA then
         if brenda.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND
         and not sprite:IsPlaying("Death") then
             OnSlotBroken(brenda)
