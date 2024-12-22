@@ -2,7 +2,7 @@ local PrismaticLacewing = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local CHANCE_TEAR = 100--5
+local CHANCE_TEAR = 5
 local CHANCE_FETUS = 10
 local EXPLOSION_RADIUS = 40
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
