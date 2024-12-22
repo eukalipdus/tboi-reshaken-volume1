@@ -34,12 +34,11 @@ local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
     newEnemy.HitPoints = baseEnemyHPPercent * newEnemy.MaxHitPoints
 
     utility:DevolveEnemy(player, newEnemy)
-
-    newEnemy:SetColor(solidColor, SHATTERED_SOLID_FRAMES, PRIORITY, false, false)
-    TSIL.Utils.Functions.RunInFramesTemporary(function ()
+    newEnemy:SetColor(color, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
+    --[[TSIL.Utils.Functions.RunInFramesTemporary(function ()
         newEnemy:SetColor(color, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
         utility:SetData(newEnemy, "ForbidEnemySplit", true)
-    end, SHATTERED_SOLID_FRAMES)
+    end, SHATTERED_SOLID_FRAMES)]]
 end
 
 ---Remove an enemy and spawn two devolved versions of itself, also changing their colors temporarily
@@ -52,7 +51,10 @@ function MilkshakeVol1.API.SplitEnemy(enemy, player, ignoreCooldown)
         return
     end
 
-    utility:SetData(player, "LocustSplit", true)
+    if not ignoreCooldown then
+        utility:SetData(player, "LocustSplit", true)
+    end
+
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
         enemy:Remove()
@@ -86,7 +88,11 @@ function prismaticDice:EntityTakeDmg(entity, _, _, source)
             return
         end
 
-        MilkshakeVol1.API.SplitEnemy(entity, player)
+        if sourceEntity.Type == EntityType.ENTITY_TEAR then
+            MilkshakeVol1.API.SplitEnemy(entity, player, true)
+        else
+            MilkshakeVol1.API.SplitEnemy(entity, player)
+        end
 
     elseif isPrismaticLocust then
         local familiar = sourceEntity:ToFamiliar()
