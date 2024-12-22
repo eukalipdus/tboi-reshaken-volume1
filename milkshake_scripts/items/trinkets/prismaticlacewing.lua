@@ -2,8 +2,9 @@ local PrismaticLacewing = {}
 local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 
-local CHANCE_TEAR = 5
-local CHANCE_FETUS = 10
+local MAX_CHANCE = 0.2
+local CHANCE_TEAR = 0.05
+local CHANCE_FETUS = 0.10
 local EXPLOSION_RADIUS = 40
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220/255, 1, 0, 0, 0)
@@ -59,8 +60,9 @@ end
 ---@return boolean
 local function ShouldActivate(player, baseOdds)
     local rng = player:GetTrinketRNG(enums.Trinkets.PRISMATIC_LACEWING)
-    local chance = baseOdds * player:GetTrinketMultiplier(enums.Trinkets.PRISMATIC_LACEWING)
-    return TSIL.Random.GetRandomInt(1, 100, rng) <= chance
+    local trinketMultiplier = player:GetTrinketMultiplier(enums.Trinkets.PRISMATIC_LACEWING)
+    local chance = TSIL.Utils.Math.Clamp((baseOdds * trinketMultiplier) + 0.015 * player.Luck, 0.015, MAX_CHANCE)
+    return TSIL.Random.GetRandomFloat(0, 1, rng) <= chance
 end
 
 ---Used for the Dr. Fetus and Epic Fetus synergy
