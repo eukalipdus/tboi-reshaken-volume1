@@ -575,4 +575,41 @@ function utility:MaybeEqual(numOne, numTwo, epsilon)
     return math.abs(numOne - numTwo) < epsilon
 end
 
+local toNotDevolve = {}
+
+function utility:DevolveEnemy(player, enemy)
+    local enemyToDevolvePtr = GetPtrHash(enemy)
+
+    local enemies = TSIL.EntitySpecific.GetNPCs()
+
+    enemies = TSIL.Utils.Tables.Filter(enemies, function (_, curEnemy)
+        return GetPtrHash(curEnemy) ~= enemyToDevolvePtr
+               and curEnemy:IsVulnerableEnemy()
+               and not curEnemy:IsBoss()
+    end)
+
+    for _, curEnemy in pairs(enemies) do
+        table.insert(toNotDevolve, GetPtrHash(curEnemy))
+    end
+
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_D10, UseFlag.USE_NOANIM)
+end
+
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_ENTITY_DEVOLVE, function (_, entity)
+    if #toNotDevolve == 0 then
+        return
+    end
+
+    local ptrHash = GetPtrHash(entity)
+
+    for idx, storedPtrHash in pairs(toNotDevolve) do
+        if storedPtrHash == ptrHash then
+            table.remove(toNotDevolve, idx)
+            return true
+        end
+    end
+
+    return false
+end)
+
 MilkshakeVol1.utility = utility

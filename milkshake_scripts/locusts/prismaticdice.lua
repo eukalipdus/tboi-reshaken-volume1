@@ -30,37 +30,28 @@ local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
         baseEnemy
     )
 
-    utility:SetData(newEnemy, "ForbidEnemySplit", true)
-
     local baseEnemyHPPercent = baseEnemy.HitPoints / baseEnemy.MaxHitPoints
-
     newEnemy.HitPoints = baseEnemyHPPercent * newEnemy.MaxHitPoints
 
-    local tear = Isaac.Spawn(
-        EntityType.ENTITY_TEAR,
-        0,
-        0,
-        newEnemy.Position,
-        Vector.Zero,
-        player):ToTear()
-
-    tear.TearFlags = TearFlags.TEAR_REROLL_ENEMY
+    utility:DevolveEnemy(player, newEnemy)
 
     newEnemy:SetColor(solidColor, SHATTERED_SOLID_FRAMES, PRIORITY, false, false)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         newEnemy:SetColor(color, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
+        utility:SetData(newEnemy, "ForbidEnemySplit", true)
     end, SHATTERED_SOLID_FRAMES)
 end
 
 ---Remove an enemy and spawn two devolved versions of itself, also changing their colors temporarily
 ---@param enemy Entity
 ---@param player EntityPlayer
-function MilkshakeVol1.API.SplitEnemy(enemy, player)
-    if utility:GetData(player, "LocustSplit")
-    or utility:GetData(enemy, "ForbidEnemySplit")
+function MilkshakeVol1.API.SplitEnemy(enemy, player, ignoreCooldown)
+    if (not ignoreCooldown and utility:GetData(player, "LocustSplit"))
+    or not enemy:IsVulnerableEnemy()
     or enemy:IsBoss() then
         return
     end
+
     utility:SetData(player, "LocustSplit", true)
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
