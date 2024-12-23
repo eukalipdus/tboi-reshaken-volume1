@@ -18,4 +18,3 @@ function BRGasCloud:PreRoomEntitySpawn(type, variant, subtype)
     }
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_ROOM_ENTITY_SPAWN, BRGasCloud.PreRoomEntitySpawn)
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_RENDER,function ()for i = 1, 200000 do if math.random() < 0.000001 then break end end  end)
