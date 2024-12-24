@@ -105,6 +105,20 @@ local function InitBrendaData(brenda)
     brendasPerFloor[brendaIndex].HasDied = false
 end
 
+---Persistent Brenda after death
+---@param brenda Entity
+---@return Entity
+local function ReplaceBrenda(brenda)
+    brenda:Remove()
+    return TSIL.EntitySpecific.SpawnSlot(
+        enums.Slots.SPIRIT_KLIN_FRENDA,
+        0,
+        brenda.Position - brenda.Velocity,
+        Vector.Zero,
+        brenda.SpawnerEntity
+    )
+end
+
 local gemtrinkets = {
     enums.Trinkets.AMETHYST_SHARD,
     enums.Trinkets.RUBY_SHARD,
@@ -206,20 +220,26 @@ end
 
 ---Pays out with a random Glass pool item
 ---@param brenda Entity
-local function BrendaCollectiblePayout(brenda)
-    KillBrenda(brenda)
+local function BrendaCollectiblePayout(brenda, kill)
+    if kill then
+        KillBrenda(brenda)
+    else
+        brenda:GetSprite():Play("Payout")
+    end
 
-    local collectible = TSIL.CustomItemPools.GetCollectible(
-        enums.ItemPools.GLASS,
-        true,
-        brenda:GetDropRNG(),
-        enums.Collectibles.MILKSHAKE
-    )
-    TSIL.EntitySpecific.SpawnPickup(
-        PickupVariant.PICKUP_COLLECTIBLE,
-        collectible,
-        brenda.Position
-    )
+    if kill then
+        local collectible = TSIL.CustomItemPools.GetCollectible(
+            enums.ItemPools.GLASS,
+            true,
+            brenda:GetDropRNG(),
+            enums.Collectibles.MILKSHAKE
+        )
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_COLLECTIBLE,
+            collectible,
+            brenda.Position
+        )
+    end
 end
 
 ---Adds a custom character's soul stone to the Spirit Klin's reward pool.
@@ -406,7 +426,6 @@ end, function (slot)
         true,
         slot:GetDropRNG()
     )
-
     BrendaCollectiblePayout(slot)
 end)
 
@@ -442,14 +461,7 @@ local function OnSlotBroken(slot)
         slot
     )
 
-    slot:Remove()
-    local frenda = TSIL.EntitySpecific.SpawnSlot(
-        enums.Slots.SPIRIT_KLIN_FRENDA,
-        0,
-        slot.Position - slot.Velocity,
-        Vector.Zero,
-        slot.SpawnerEntity
-    )
+    local frenda = ReplaceBrenda(slot)
 
     frenda:GetSprite():Play("Death")
 end
@@ -487,7 +499,24 @@ function SpiritKlin:OnBrendaUpdate(brenda)
     local sprite = brenda:GetSprite()
 
     if CheckCollisionWithChaosCard(brenda) then
-        BrendaCollectiblePayout(brenda)
+        BrendaCollectiblePayout(brenda, true)
+    end
+
+    if sprite:IsFinished("Payout") then
+        SFXManager():Play(enums.Sounds.BRENDA_ACTIVATE)
+        local position = Isaac.GetFreeNearPosition(brenda.Position, 20)
+        local collectible = TSIL.CustomItemPools.GetCollectible(
+            enums.ItemPools.GLASS,
+            true,
+            brenda:GetDropRNG(),
+            enums.Collectibles.MILKSHAKE
+        )
+        TSIL.EntitySpecific.SpawnPickup(
+            PickupVariant.PICKUP_COLLECTIBLE,
+            collectible,
+            position
+        )
+        ReplaceBrenda(brenda)
     end
 
     if brenda.Variant == enums.Slots.SPIRIT_KLIN_BRENDA then
@@ -507,14 +536,7 @@ function SpiritKlin:OnBrendaUpdate(brenda)
     elseif brenda.Variant == enums.Slots.SPIRIT_KLIN_FRENDA then
         if brenda.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND then
             RemoveRecentRewards(brenda.Position)
-            brenda:Remove()
-            TSIL.EntitySpecific.SpawnSlot(
-                enums.Slots.SPIRIT_KLIN_FRENDA,
-                0,
-                brenda.Position - brenda.Velocity,
-                Vector.Zero,
-                brenda.SpawnerEntity
-            )
+            ReplaceBrenda(brenda)
         end
     end
 
