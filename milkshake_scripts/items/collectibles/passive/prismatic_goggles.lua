@@ -104,6 +104,7 @@ end
 
 ---@param npc EntityNPC
 function prismaticGoggles:NPCInit(npc)
+    if npc.FrameCount > 1 then return end
     for index = 0, game:GetNumPlayers()-1 do
         local player = Isaac.GetPlayer(index)
         if player:HasCollectible(PRISMATIC_GOGGLES) then
@@ -111,7 +112,7 @@ function prismaticGoggles:NPCInit(npc)
         end
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_INIT, prismaticGoggles.NPCInit)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, prismaticGoggles.NPCInit)
 
 ---@param npc EntityNPC
 function prismaticGoggles:DiffractionRender(npc)
