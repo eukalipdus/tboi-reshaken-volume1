@@ -236,8 +236,6 @@ end
 
 ---@param pickup EntityPickup
 local function SetGoldenPrice(pickup, rng)
-    SaveGoldenShovelPickup(pickup)
-
     local savedPickups = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "GoldenShovelShopOriginalPrices"
@@ -261,7 +259,9 @@ local function SetGoldenPrice(pickup, rng)
             end
         end
 
-        pickup.Price = math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
+        local finalPrice = math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
+        pickup.Price = finalPrice
+        SaveGoldenShovelPickup(pickup)
     end
 end
 
