@@ -251,6 +251,7 @@ local function SetGoldenPrice(pickup, rng)
 
     if newPickupPrice < 1 then
         newPickupPrice = goldPickupBasePrice[pickup.Variant]
+        return
     end
 
     if newPickupPrice then
@@ -263,7 +264,6 @@ local function SetGoldenPrice(pickup, rng)
         end
 
         local finalPrice = math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
-        print(finalPrice)
         pickup.Price = finalPrice
         --SaveGoldenShovelPickup(pickup)
     end
