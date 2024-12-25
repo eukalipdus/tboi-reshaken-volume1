@@ -275,7 +275,7 @@ local function ReplaceCheapestWithGoldenKey()
     local cheapestPickup
 
     pickups = TSIL.Utils.Tables.Filter(pickups, function (_, currentPickup)
-        return currentPickup:IsShopItem()
+        return currentPickup:IsShopItem() and currentPickup.Variant ~= PickupVariant.PICKUP_TRINKET
     end)
 
     for _, currentPickup in pairs(pickups) do
