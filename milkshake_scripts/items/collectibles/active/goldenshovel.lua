@@ -236,14 +236,16 @@ end
 
 ---@param pickup EntityPickup
 local function SetGoldenPrice(pickup, rng)
-    SaveGoldenShovelPickup(pickup)
-
     local savedPickups = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "GoldenShovelShopOriginalPrices"
     )
 
-    local originalPrice = savedPickups[tostring(pickup.ShopItemId)]
+    if not goldPickupBasePrice[pickup.Variant] then
+        return
+    end
+
+    local originalPrice = savedPickups[tostring(pickup.ShopItemId)] or 0
     local priceModifier = TSIL.Random.GetRandomInt(-10, 10, rng)
     local priceChange = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
     local newPickupPrice = originalPrice + priceChange
@@ -261,7 +263,9 @@ local function SetGoldenPrice(pickup, rng)
             end
         end
 
-        pickup.Price = math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
+        local finalPrice = math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
+        pickup.Price = finalPrice
+        SaveGoldenShovelPickup(pickup)
     end
 end
 
@@ -311,9 +315,22 @@ end
 ---@param pickup EntityPickup
 function goldenShovel:PostPickupInit(pickup)
     if not IsGoldenShovelShop()
-    or not pickup:IsShopItem() then
+    or not pickup:IsShopItem()
+    or pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE then
         return
     end
+
+    if pickup.Variant == PickupVariant.PICKUP_TRINKET
+    and MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_TRINKET) then
+        pickup:Morph(
+            EntityType.ENTITY_PICKUP,
+            PickupVariant.PICKUP_TRINKET,
+            TSIL.Trinkets.GetGoldenTrinketType(pickup.SubType),
+            true
+        )
+        return
+    end
+
 
     local newPickup
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
@@ -462,6 +479,7 @@ function goldenShovel:PostGridEntityUpdate(gridEntity)
     if not IsGoldenShovelShop() then
         return
     end
+
     if gridEntity:GetType() == GridEntityType.GRID_ROCK then
         gridEntity:SetType(GridEntityType.GRID_ROCK_GOLD)
         local seed = gridEntity.Desc.SpawnSeed
