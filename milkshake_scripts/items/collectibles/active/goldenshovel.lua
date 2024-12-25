@@ -7,14 +7,36 @@ local ACHIEVEMENT_GOLD_PILL = 603
 local ACHIEVEMENT_GOLDEN_BATTERY = 615
 local ACHIEVEMENT_GOLD_BOMB = 226
 local ACHIEVEMENT_GOLDEN_TRINKET = 617
-local DEFAULT_PRICE = 5
 
-local goldPickupPriceIncrease = {
-    [PickupVariant.PICKUP_BOMB] = 8,
-    [PickupVariant.PICKUP_KEY] = 7,
-    [PickupVariant.PICKUP_PILL] = 15,
+local goldPickupBasePrice = {
+    [PickupVariant.PICKUP_KEY] = 13,
+    [PickupVariant.PICKUP_BOMB] = 15,
     [PickupVariant.PICKUP_LIL_BATTERY] = 20,
+    [PickupVariant.PICKUP_PILL] = 15,
     [PickupVariant.PICKUP_HEART] = 0,
+}
+local goldPickupVariants = {
+    PickupVariant.PICKUP_KEY,
+    PickupVariant.PICKUP_BOMB,
+    PickupVariant.PICKUP_LIL_BATTERY,
+    PickupVariant.PICKUP_PILL,
+    PickupVariant.PICKUP_HEART
+}
+
+local pickupVariantToGoldSubType = {
+    [PickupVariant.PICKUP_KEY] = KeySubType.KEY_GOLDEN,
+    [PickupVariant.PICKUP_BOMB] = BombSubType.BOMB_GOLDEN,
+    [PickupVariant.PICKUP_LIL_BATTERY] = BatterySubType.BATTERY_GOLDEN,
+    [PickupVariant.PICKUP_PILL] = PillColor.PILL_GOLD,
+    [PickupVariant.PICKUP_HEART] = HeartSubType.HEART_GOLDEN
+}
+
+local goldPickupWeights = {
+    [PickupVariant.PICKUP_KEY] = 10,
+    [PickupVariant.PICKUP_BOMB] = 10,
+    [PickupVariant.PICKUP_LIL_BATTERY] = 2,
+    [PickupVariant.PICKUP_PILL] = 3,
+    [PickupVariant.PICKUP_HEART] = 5
 }
 
 local MIN_COIN_SPAWN_COUNT = 2
@@ -35,6 +57,29 @@ TSIL.SaveManager.AddPersistentVariable(
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
 )
+
+---Checks if a given pickup is one that is sold in Golden Shovel Shops
+---@param pickup EntityPickup
+---@return boolean
+local function IsSoldGoldenPickup(pickup)
+    if (pickup.Variant == PickupVariant.PICKUP_KEY
+    and pickup.SubType == KeySubType.KEY_GOLDEN)
+
+    or (pickup.Variant == PickupVariant.PICKUP_BOMB
+    and pickup.SubType == BombSubType.BOMB_GOLDEN)
+
+    or (pickup.Variant == PickupVariant.PICKUP_LIL_BATTERY
+    and pickup.SubType == BatterySubType.BATTERY_GOLDEN)
+
+    or (pickup.Variant == PickupVariant.PICKUP_PILL
+    and pickup.SubType == PillColor.PILL_GOLD)
+
+    or (pickup.Variant == PickupVariant.PICKUP_HEART
+    and pickup.SubType == HeartSubType.HEART_GOLDEN) then
+        return true
+    end
+    return false
+end
 
 ---@param position Vector
 ---@param shouldBelialSynergy boolean
@@ -190,12 +235,7 @@ local function UpdateGoldenShovelPickup(pickup)
 end
 
 ---@param pickup EntityPickup
-local function SetGoldenPrice(pickup)
-    if not goldPickupPriceIncrease[pickup.Variant] then
-        return
-    end
-
-
+local function SetGoldenPrice(pickup, rng)
     SaveGoldenShovelPickup(pickup)
 
     local savedPickups = TSIL.SaveManager.GetPersistentVariable(
@@ -204,8 +244,13 @@ local function SetGoldenPrice(pickup)
     )
 
     local originalPrice = savedPickups[tostring(pickup.ShopItemId)]
-    local priceIncrease =  goldPickupPriceIncrease[pickup.Variant] or 0
-    local newPickupPrice = originalPrice + priceIncrease
+    local priceModifier = TSIL.Random.GetRandomInt(-10, 10, rng)
+    local priceChange = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
+    local newPickupPrice = originalPrice + priceChange
+
+    if newPickupPrice < 1 then
+        newPickupPrice = goldPickupBasePrice[pickup.Variant]
+    end
 
     if newPickupPrice then
         pickup.AutoUpdatePrice = false
@@ -248,7 +293,8 @@ local function ReplaceCheapestWithGoldenKey()
 
         goldenKey.AutoUpdatePrice = false
         goldenKey.Price = cheapestPickup.Price
-        SetGoldenPrice(goldenKey)
+        local rng = TSIL.RNG.NewRNG(cheapestPickup.InitSeed)
+        SetGoldenPrice(goldenKey, rng)
         goldenKey.Price = math.min(goldenKey.Price, 14)
     end
 end
@@ -268,53 +314,54 @@ function goldenShovel:PostPickupInit(pickup)
     or not pickup:IsShopItem() then
         return
     end
+
     local newPickup
+    local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+    local goldBombUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_BOMB)
+    local goldenBatteryUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_BATTERY)
+    local goldenPillUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_PILL)
     local goldenHeartUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_HEART)
 
-    if pickup.Variant == PickupVariant.PICKUP_HEART then
-        if pickup.SubType == HeartSubType.HEART_BLACK
-        and goldenHeartUnlocked then
-            newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN}
+    local achievementToVariant = {
+        true,
+        goldBombUnlocked,
+        goldenBatteryUnlocked,
+        goldenPillUnlocked,
+        goldenHeartUnlocked
+    }
 
-        elseif pickup.SubType == HeartSubType.HEART_ETERNAL then
+    local roomPickups = TSIL.EntitySpecific.GetPickups()
+    local pickupVariantsNotToSell = {}
+    local weightedGoldPickups = {}
 
-            if MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_PILL) then
-                newPickup = {PickupVariant.PICKUP_PILL, PillColor.PILL_GOLD}
-            else
-                newPickup = {PickupVariant.PICKUP_PILL, PillColor.PILL_GOLD}--RANDOM POILL
-            end
-
-        elseif pickup.SubType == HeartSubType.HEART_ROTTEN then
-            if goldenHeartUnlocked then
-                newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN}
-            else
-                newPickup = {PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL}
-            end
-
-        elseif pickup.SubType == HeartSubType.HEART_BONE then
-            if MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_BATTERY) then
-                newPickup = {PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_GOLDEN}
-            else
-                newPickup = {PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_NORMAL}
-            end
+    for _, currentPickup in pairs(roomPickups) do
+        if currentPickup:IsShopItem()
+        and IsSoldGoldenPickup(currentPickup) then
+            table.insert(pickupVariantsNotToSell, currentPickup.Variant)
         end
+    end
 
-    elseif pickup.Variant == PickupVariant.PICKUP_TAROTCARD then
-        if pickup.SubType <= 31 or (pickup.SubType >= 40 and pickup.SubType <= 77) then--Is a card
-            newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
-
-        elseif (pickup.SubType >= 32 and pickup.SubType <= 41) --Is a rune
-        or (pickup.SubType >= 81 and pickup.SubType <= 97) then-- Is a soulstone
-
-            if MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_BOMB) then
-                newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_GOLDEN}
-            else
-                newPickup = {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL}
-            end
-
-        else
-            newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
+    for idx, pickupVariant in pairs(goldPickupVariants) do
+        if not TSIL.Utils.Tables.IsIn(pickupVariantsNotToSell, pickupVariant)
+        and achievementToVariant[idx] then
+           table.insert(
+            weightedGoldPickups,
+            {
+                chance = goldPickupWeights[pickupVariant],
+                value = {pickupVariant, pickupVariantToGoldSubType[pickupVariant]}
+            }
+           )
         end
+    end
+
+    if #weightedGoldPickups == 0 then
+        return
+
+    elseif #weightedGoldPickups == 1 then
+        newPickup = weightedGoldPickups[1].value
+
+    else
+        newPickup = TSIL.Random.GetRandomElementFromWeightedList(rng, weightedGoldPickups)
     end
 
     if newPickup then
@@ -326,20 +373,6 @@ function goldenShovel:PostPickupInit(pickup)
         )
 
         UpdateGoldenShovelPickup(pickup)
-
-    elseif pickup.Variant == PickupVariant.PICKUP_TRINKET
-    and not TSIL.Trinkets.IsGoldenTrinket(pickup.SubType)
-    and MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_TRINKET) then
-        pickup:Morph(
-            EntityType.ENTITY_PICKUP,
-            PickupVariant.PICKUP_TRINKET,
-            TSIL.Trinkets.GetGoldenTrinketType(pickup.SubType),
-            true
-        )
-
-        UpdateGoldenShovelPickup(pickup)
-    else
-        return
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPickupInit)
@@ -365,7 +398,6 @@ function goldenShovel:onUse(_, rng, player, useFlags)
     SpawnGoldEffects(player.Position, shouldBelialSynergy)
 
     if not TrySpawnSecretMemberShop(player.Position) then
-        
         SpawnDirtPile(player.Position, shouldBelialSynergy)
         SpawnChest(
             rng,
@@ -417,11 +449,31 @@ function goldenShovel:PostPickupUpdate(pickup)
     end
 
     if not TSIL.Players.DoesAnyPlayerHasTrinket(TrinketType.TRINKET_STORE_CREDIT) then
-        SetGoldenPrice(pickup)
+        local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
+        SetGoldenPrice(pickup, rng)
     else
         pickup.AutoUpdatePrice = true
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, goldenShovel.PostPickupUpdate)
+
+---@param gridEntity GridEntity
+function goldenShovel:PostGridEntityUpdate(gridEntity)
+    if not IsGoldenShovelShop() then
+        return
+    end
+    if gridEntity:GetType() == GridEntityType.GRID_ROCK then
+        gridEntity:SetType(GridEntityType.GRID_ROCK_GOLD)
+        local seed = gridEntity.Desc.SpawnSeed
+        gridEntity:Init(seed)
+
+    elseif gridEntity:GetType() == GridEntityType.GRID_POOP
+    and gridEntity:GetVariant() == TSIL.Enums.PoopGridEntityVariant.NORMAL then
+        gridEntity:SetVariant(TSIL.Enums.PoopGridEntityVariant.GOLDEN)
+        local seed = gridEntity.Desc.SpawnSeed
+        gridEntity:Init(seed)
+    end
+end
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GRID_ENTITY_INIT, goldenShovel.PostGridEntityUpdate)
 
 return goldenShovel
