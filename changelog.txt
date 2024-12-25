@@ -213,11 +213,11 @@ Fixes
 -Fixed Lag and bloat oopsies
 
 ================================================
-    v1.1.0 - ???, 2024
+    v1.1.0 - December 25, 2024
 ================================================
 Additions
 -Added four achievements, three of which grant unlocks
--Added four new items, a collectible, two trinkets, and a spirit orb
+-Added five new items, two collectibles, two trinkets, and a spirit orb
 -Added crafting qualities
 -Added Belial (Judas' Birthright) synergies for Golden Shovel and Mirror Key
 -Added Book of Virtues synergy for Mirror Key
