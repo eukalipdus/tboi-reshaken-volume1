@@ -1,6 +1,6 @@
 --[[
     Throwable item library by Kerkel
-    Version 1.0.2
+    Version 1.0.3.1
 ]]
 
 ---@class ThrowableItemConfig
@@ -12,7 +12,7 @@
 ---@field Flags? ThrowableItemFlag | integer
 ---@field HoldCondition? fun(player: EntityPlayer, config: ThrowableItemConfig): HoldConditionReturnType
 
-local VERSION = 1.03
+local VERSION = 1.06
 
 return {Init = function ()
     local configs = {}
@@ -97,15 +97,8 @@ return {Init = function ()
     ---@param disableClamp? boolean
     ---@return Vector
     function ThrowableItemLib.Utility:GetAimVect(player, disableClamp)
-        local returnVect
-
-        if player.ControllerIndex == 0 and Options.MouseControl then
-            if Input.IsMouseBtnPressed(0) then
-                returnVect = (Input.GetMousePosition(true) - player.Position):Normalized()
-            end
-        end
-
-        returnVect = returnVect or player:GetShootingInput()
+        local vect = player:GetAimDirection()
+        local returnVect = Vector(vect.X, vect.Y)
 
         if not disableClamp then
             if returnVect:Length() > 0.001 then
@@ -145,6 +138,15 @@ return {Init = function ()
     ---@return string
     function ThrowableItemLib.Internal:GetHeldConfigKey(id, type)
         return (type == ThrowableItemLib.Type.ACTIVE and "ACTIVE_" or "CARD_") .. id
+    end
+
+    ---@param player EntityPlayer
+    ---@param slot ActiveSlot
+    function ThrowableItemLib.Utility:NeedsCharge(player, slot)
+        local item = player:GetActiveItem(slot) if not item or item == 0 then return end
+        local charges = Isaac.GetItemConfig():GetCollectible(item).MaxCharges
+
+        return player:GetActiveCharge(slot) + player:GetBloodCharge() + player:GetSoulCharge() < charges
     end
 
     ---@param player EntityPlayer
@@ -215,12 +217,12 @@ return {Init = function ()
                     player:SetActiveCharge(player:GetActiveCharge(data.ActiveSlot) - Isaac.GetItemConfig():GetCollectible(data.HeldConfig.ID).MaxCharges, data.ActiveSlot)
                 end
             else
-                local item = card and player:GetActiveItem(ActiveSlot.SLOT_PRIMARY) or data.HeldConfig.ID
+                local item = card and player:GetActiveItem(data.ActiveSlot) or data.HeldConfig.ID
 
                 player:UseActiveItem(item)
 
                 if not ThrowableItemLib.Utility:HasFlags(data.HeldConfig.Flags, ThrowableItemLib.Flag.NO_DISCHARGE) then
-                    player:DischargeActiveItem(ActiveSlot.SLOT_PRIMARY)
+                    player:DischargeActiveItem(data.ActiveSlot)
                 end
             end
         end
@@ -402,7 +404,7 @@ return {Init = function ()
 
             if ThrowableItemLib.Utility:IsItemLifted(player) and data.ActiveSlot == slot then
                 data.ScheduleHide = true
-            elseif (player:GetActiveCharge(slot) >= Isaac.GetItemConfig():GetCollectible(item).MaxCharges or ThrowableItemLib.Utility:HasFlags(config.Flags, ThrowableItemLib.Flag.USABLE_ANY_CHARGE)) and ThrowableItemLib.Utility:ShouldLiftThrowableItem(player, config) == ThrowableItemLib.HoldConditionReturnType.ALLOW_HOLD then
+            elseif (not ThrowableItemLib.Utility:NeedsCharge(player, slot) or ThrowableItemLib.Utility:HasFlags(config.Flags, ThrowableItemLib.Flag.USABLE_ANY_CHARGE)) and ThrowableItemLib.Utility:ShouldLiftThrowableItem(player, config) == ThrowableItemLib.HoldConditionReturnType.ALLOW_HOLD then
                 ThrowableItemLib.Utility:LiftItem(player, item, ThrowableItemLib.Type.ACTIVE, slot)
             end
         end
@@ -434,7 +436,7 @@ return {Init = function ()
 
             local item = player:GetActiveItem(ActiveSlot.SLOT_PRIMARY)
 
-            if (player:GetActiveCharge() >= Isaac.GetItemConfig():GetCollectible(item).MaxCharges
+            if (not ThrowableItemLib.Utility:NeedsCharge(player, ActiveSlot.SLOT_PRIMARY)
             or ThrowableItemLib.Utility:HasFlags(config.Flags, ThrowableItemLib.Flag.USABLE_ANY_CHARGE))
             and Input.IsActionTriggered(ButtonAction.ACTION_ITEM, player.ControllerIndex) then
                 local itemConfig = Isaac.GetItemConfig():GetCard(card)
