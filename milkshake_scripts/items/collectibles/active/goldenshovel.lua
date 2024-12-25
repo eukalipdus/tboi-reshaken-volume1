@@ -250,7 +250,7 @@ local function SetGoldenPrice(pickup, rng)
     local newPickupPrice = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
 
     if newPickupPrice < 1 then
-        newPickupPrice = goldPickupBasePrice[pickup.Variant]
+        pickup.Price = goldPickupBasePrice[pickup.Variant]
         return
     end
 
