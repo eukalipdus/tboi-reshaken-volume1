@@ -13,7 +13,7 @@ local goldPickupBasePrice = {
     [PickupVariant.PICKUP_BOMB] = 15,
     [PickupVariant.PICKUP_LIL_BATTERY] = 20,
     [PickupVariant.PICKUP_PILL] = 15,
-    [PickupVariant.PICKUP_HEART] = 0,
+    [PickupVariant.PICKUP_HEART] = 5,
 }
 local goldPickupVariants = {
     PickupVariant.PICKUP_KEY,
@@ -240,15 +240,14 @@ local function SetGoldenPrice(pickup, rng)
         return
     end
 
-    local savedPickups = TSIL.SaveManager.GetPersistentVariable(
+    --[[local savedPickups = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "GoldenShovelShopOriginalPrices"
-    )
+    )]]
 
-    local originalPrice = savedPickups[tostring(pickup.ShopItemId)] or 0
+    --local originalPrice = savedPickups[tostring(pickup.ShopItemId)] or 0
     local priceModifier = TSIL.Random.GetRandomInt(-10, 10, rng)
-    local priceChange = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
-    local newPickupPrice = originalPrice + priceChange
+    local newPickupPrice = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
 
     if newPickupPrice < 1 then
         newPickupPrice = goldPickupBasePrice[pickup.Variant]
@@ -264,8 +263,9 @@ local function SetGoldenPrice(pickup, rng)
         end
 
         local finalPrice = math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
+        print(finalPrice)
         pickup.Price = finalPrice
-        SaveGoldenShovelPickup(pickup)
+        --SaveGoldenShovelPickup(pickup)
     end
 end
 
@@ -389,7 +389,7 @@ function goldenShovel:PostPickupInit(pickup)
             true
         )
 
-        UpdateGoldenShovelPickup(pickup)
+        --UpdateGoldenShovelPickup(pickup)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPickupInit)
