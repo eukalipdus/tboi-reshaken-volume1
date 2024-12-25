@@ -236,14 +236,14 @@ end
 
 ---@param pickup EntityPickup
 local function SetGoldenPrice(pickup, rng)
+    if not goldPickupBasePrice[pickup.Variant] then
+        return
+    end
+
     local savedPickups = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
         "GoldenShovelShopOriginalPrices"
     )
-
-    if not goldPickupBasePrice[pickup.Variant] then
-        return
-    end
 
     local originalPrice = savedPickups[tostring(pickup.ShopItemId)] or 0
     local priceModifier = TSIL.Random.GetRandomInt(-10, 10, rng)
@@ -287,19 +287,17 @@ local function ReplaceCheapestWithGoldenKey()
     end
 
     if cheapestPickup then
-        cheapestPickup:Remove()
+        cheapestPickup:Morph(
+            EntityType.ENTITY_PICKUP,
+            PickupVariant.PICKUP_KEY,
+            KeySubType.KEY_GOLDEN
+        )
 
-        local goldenKey = TSIL.PickupSpecific.SpawnKey(
-            KeySubType.KEY_GOLDEN,
-            cheapestPickup.Position,
-            Vector.Zero
-        ):ToPickup()
+        cheapestPickup.AutoUpdatePrice = false
+        cheapestPickup.Price = goldPickupBasePrice[PickupVariant.PICKUP_KEY]
 
-        goldenKey.AutoUpdatePrice = false
-        goldenKey.Price = cheapestPickup.Price
         local rng = TSIL.RNG.NewRNG(cheapestPickup.InitSeed)
-        SetGoldenPrice(goldenKey, rng)
-        goldenKey.Price = math.min(goldenKey.Price, 14)
+        SetGoldenPrice(cheapestPickup, rng)
     end
 end
 
@@ -320,17 +318,19 @@ function goldenShovel:PostPickupInit(pickup)
         return
     end
 
-    if pickup.Variant == PickupVariant.PICKUP_TRINKET
-    and MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_TRINKET) then
-        pickup:Morph(
-            EntityType.ENTITY_PICKUP,
-            PickupVariant.PICKUP_TRINKET,
-            TSIL.Trinkets.GetGoldenTrinketType(pickup.SubType),
-            true
-        )
-        return
+    if pickup.Variant == PickupVariant.PICKUP_TRINKET then
+        if MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_TRINKET) then
+            pickup:Morph(
+                EntityType.ENTITY_PICKUP,
+                PickupVariant.PICKUP_TRINKET,
+                TSIL.Trinkets.GetGoldenTrinketType(pickup.SubType),
+                true
+            )
+            return
+        else
+            return
+        end
     end
-
 
     local newPickup
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
