@@ -311,7 +311,8 @@ end
 ---@param pickup EntityPickup
 function goldenShovel:PostPickupInit(pickup)
     if not IsGoldenShovelShop()
-    or not pickup:IsShopItem() then
+    or not pickup:IsShopItem()
+    or pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE then
         return
     end
 
@@ -462,6 +463,7 @@ function goldenShovel:PostGridEntityUpdate(gridEntity)
     if not IsGoldenShovelShop() then
         return
     end
+
     if gridEntity:GetType() == GridEntityType.GRID_ROCK then
         gridEntity:SetType(GridEntityType.GRID_ROCK_GOLD)
         local seed = gridEntity.Desc.SpawnSeed
