@@ -288,27 +288,17 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_RENDER, function (_, picku
     end
 end)
 
-function SpecialPennies:PostPickupSelection(_, variant, subtype)
+function SpecialPennies:PostPickupInit(pickup)
     --if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.RAINBOW_PENNIES)
     if (Game().Difficulty == Difficulty.DIFFICULTY_GREED or Game().Difficulty == Difficulty.DIFFICULTY_GREEDIER)
     or MilkshakeVol1.utility:DidEntityExist()
     or (Epiphany and MilkshakeVol1.utility:AnyPlayerIsCharacter(Epiphany.PlayerType.KEEPER)) then
         return
     end
-    local rng = TSIL.RNG.NewRNG(Random() + 1)
     local chance = GetRainbowPennySpawnChance()
-    local pickupData = MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(
-        rng,
-        variant,
-        subtype,
-        chance,
-        true
-    )
-    if pickupData then
-        return pickupData
-    end
+    MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, true)
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_SELECTION, SpecialPennies.PostPickupSelection)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, SpecialPennies.PostPickupInit)
 
 ---@param pickup EntityPickup
 ---@param collider Entity
