@@ -241,6 +241,10 @@ local function SetGoldenPrice(pickup, rng)
         "GoldenShovelShopOriginalPrices"
     )
 
+    if not goldPickupBasePrice[pickup.Variant] then
+        return
+    end
+
     local originalPrice = savedPickups[tostring(pickup.ShopItemId)] or 0
     local priceModifier = TSIL.Random.GetRandomInt(-10, 10, rng)
     local priceChange = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
