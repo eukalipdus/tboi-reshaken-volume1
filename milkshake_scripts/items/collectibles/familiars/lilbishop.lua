@@ -43,33 +43,37 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 				if lilBishopFam:GetData().Active then -- and lilBishopFam:GetSprite():GetAnimation() == "Active" then
 					ignore = true -- to play animation for all active lil bishops
 					local sprite = lilBishopFam:GetSprite()
-					if sprite:GetAnimation() == "Active" or (sprite:GetAnimation() == "Sleep" and not lilBishopFam:GetData().SleepFix ) then
+					if sprite:GetAnimation() == "Active" or sprite:GetAnimation() == "Sleep" then
 						sfx:Play(SoundEffect.SOUND_BISHOP_HIT, 10)
 						if sprite:GetAnimation() == "Active" then
 							sprite:Play("Block")
 						else
-							lilBishopFam:GetData().SleepFix = true
+							if not lilBishopFam:GetData().SleepFix then lilBishopFam:GetData().SleepFix = lilBishopFam.FrameCount + 16 end
 						end
-						local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
-						sfx:Stop(SoundEffect.SOUND_LASERRING)
-						laser:GetData().BishopLaser = player
-						laser:SetTimeout(lilBishop.LaserFade)
-						laser.CollisionDamage = 0
-						laser.Mass = 0
-						local distance = lilBishopFam.Position:Distance(player.Position)
-						laser.Parent = lilBishopFam
-						laser:SetMaxDistance(distance)
-						local pos = player.Position - lilBishopFam.Position
-						laser.Angle = pos:GetAngleDegrees() -- lilBishopFam.Velocity
-						laser:SetColor(Color(2,2,2), 15, 1, false, false)
-						local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil):ToEffect()
-						effect.Parent = player
-						effect:FollowParent(effect.Parent)
-						effect.SpriteOffset = lilBishop.ShieldOffset * player.SpriteScale.X
-						effect.SpriteScale = player.SpriteScale
-						effect:SetTimeout(lilBishop.FadeCounter)
-						effect.DepthOffset = lilBishop.DepthOffset
-						effect:GetSprite():Play("Fade")
+						if not lilBishopFam:GetData().SleepFix or lilBishopFam:GetData().SleepFix > lilBishopFam.FrameCount then
+							if lilBishopFam:GetData().SleepFix then lilBishopFam:GetData().SleepFix = nil end
+							local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
+							sfx:Stop(SoundEffect.SOUND_LASERRING)
+							laser:GetData().BishopLaser = player
+							laser:SetTimeout(lilBishop.LaserFade)
+							laser.CollisionDamage = 0
+							laser.Mass = 0
+							local distance = lilBishopFam.Position:Distance(player.Position)
+							laser.Parent = lilBishopFam
+							laser:SetMaxDistance(distance)
+							local pos = player.Position - lilBishopFam.Position
+							laser.Angle = pos:GetAngleDegrees() -- lilBishopFam.Velocity
+							laser:SetColor(Color(2,2,2), 15, 1, false, false)
+							local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, lilBishop.ShieldEffect, 0, player.Position, Vector.Zero, nil):ToEffect()
+							effect.Parent = player
+							effect:FollowParent(effect.Parent)
+							effect.SpriteOffset = lilBishop.ShieldOffset * player.SpriteScale.X
+							effect.SpriteScale = player.SpriteScale
+							effect:SetTimeout(lilBishop.FadeCounter)
+							effect.DepthOffset = lilBishop.DepthOffset
+							effect:GetSprite():Play("Fade")
+
+						end
 					end
 				end
 			end
@@ -143,10 +147,10 @@ function lilBishop:onFamiliarUpdate(familiar)
 		end
 	elseif sprite:IsFinished("Sleep") then
 		sprite:Play("FloatDown")
-		famData.SleepFix = false
+		famData.SleepFix = nil
 	elseif sprite:GetAnimation() == "Active" then
 		sprite:Play("Sleep")
-		famData.SleepFix = false
+		famData.SleepFix = nil
 	end
 
     if sprite:IsFinished("Block") then
