@@ -20,6 +20,13 @@ fingore.velocity = 0.9
 fingore.speed = 20
 fingore.knockPower = 10
 
+TSIL.SaveManager.AddPersistentVariable(
+	MilkshakeVol1,
+	"FingoreHiddenMessageDisplayed",
+	false,
+	TSIL.Enums.VariablePersistenceMode.RESET_RUN
+)
+
 -- fingore -  entering new room: spawn at the room center
 -- room with enemy - spawn finger, follow finger
 -- room without enemy - remove finger, wander in the room
@@ -225,10 +232,19 @@ local function FingoreHiddenMessage(rng)
 		"ignore me",
 		"forever, " .. chosenName
 	)
+	TSIL.SaveManager.SetPersistentVariable(
+		MilkshakeVol1,
+		"FingoreHiddenMessageDisplayed",
+		true
+	)
 end
 
 ---@param pickup EntityPickup
 function fingore:PostPickupInit(pickup)
+	if TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "FingoreHiddenMessageDisplayed") then
+		return
+	end
+
 	local ptrHash = GetPtrHash(pickup)--TSIL.Collectibles.GetCollectibleIndex(pickup)
 	if pickup.SubType == enums.Collectibles.FINGORE then
 		table.insert(fingoreCollectiblesInRoom, ptrHash)
