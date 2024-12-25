@@ -457,4 +457,20 @@ function goldenShovel:PostPickupUpdate(pickup)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, goldenShovel.PostPickupUpdate)
 
+---@param gridEntity GridEntity
+function goldenShovel:PostGridEntityUpdate(gridEntity)
+    if gridEntity:GetType() == GridEntityType.GRID_ROCK then
+        gridEntity:SetType(GridEntityType.GRID_ROCK_GOLD)
+        local seed = gridEntity.Desc.SpawnSeed
+        gridEntity:Init(seed)
+
+    elseif gridEntity:GetType() == GridEntityType.GRID_POOP
+    and gridEntity:GetVariant() == TSIL.Enums.PoopGridEntityVariant.NORMAL then
+        gridEntity:SetVariant(TSIL.Enums.PoopGridEntityVariant.GOLDEN)
+        local seed = gridEntity.Desc.SpawnSeed
+        gridEntity:Init(seed)
+    end
+end
+MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GRID_ENTITY_INIT, goldenShovel.PostGridEntityUpdate)
+
 return goldenShovel
