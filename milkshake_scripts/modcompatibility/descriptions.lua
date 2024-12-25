@@ -2092,6 +2092,17 @@ descriptions.Trinkets = {
                 "#彩虹硬币的次要效果在拾取时翻倍",
         },
     },
+    [enums.Trinkets.PRISMATIC_LACEWING] = {
+        en_us = {
+            name = "Prismatic Lacewing",
+            description = "5% chance to shoot a prismatic tear that splits enemies into two devolved enemies with less HP"..
+            "#{{Luck}} 20% chance at 15 luck",
+            double = "{{ColorGold}}10% {{CR}}chance to shoot a prismatic tear that splits enemies into two devolved enemies with less HP"..
+            "#{{Luck}} 20% chance at 15 luck",
+            triple = "{{ColorGold}}15% {{CR}}chance to shoot a prismatic tear that splits enemies into two devolved enemies with less HP"..
+            "#{{Luck}} 20% chance at 15 luck",
+        },
+    },
 }
 
 --CARD DESCRIPTIONS
