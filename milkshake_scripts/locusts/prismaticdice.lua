@@ -31,7 +31,7 @@ local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
     )
 
     local baseEnemyHPPercent = baseEnemy.HitPoints / baseEnemy.MaxHitPoints
-    newEnemy.HitPoints = baseEnemyHPPercent * newEnemy.MaxHitPoints
+    newEnemy.HitPoints = baseEnemyHPPercent * newEnemy.MaxHitPoints * 0.75
 
     utility:DevolveEnemy(player, newEnemy)
     newEnemy:SetColor(color, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
