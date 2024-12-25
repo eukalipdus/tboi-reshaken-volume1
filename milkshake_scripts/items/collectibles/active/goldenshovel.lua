@@ -459,6 +459,9 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, goldenShovel.PostP
 
 ---@param gridEntity GridEntity
 function goldenShovel:PostGridEntityUpdate(gridEntity)
+    if not IsGoldenShovelShop() then
+        return
+    end
     if gridEntity:GetType() == GridEntityType.GRID_ROCK then
         gridEntity:SetType(GridEntityType.GRID_ROCK_GOLD)
         local seed = gridEntity.Desc.SpawnSeed
