@@ -50,7 +50,7 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 						else
 							if not lilBishopFam:GetData().SleepFix then lilBishopFam:GetData().SleepFix = lilBishopFam.FrameCount + 16 end
 						end
-						if not lilBishopFam:GetData().SleepFix or lilBishopFam:GetData().SleepFix > lilBishopFam.FrameCount then
+						if not lilBishopFam:GetData().SleepFix or lilBishopFam:GetData().SleepFix < lilBishopFam.FrameCount then
 							if lilBishopFam:GetData().SleepFix then lilBishopFam:GetData().SleepFix = nil end
 							local laser = Isaac.Spawn(EntityType.ENTITY_LASER, LaserVariant.ELECTRIC, 0, lilBishopFam.Position, Vector.Zero, nil):ToLaser()
 							sfx:Stop(SoundEffect.SOUND_LASERRING)
