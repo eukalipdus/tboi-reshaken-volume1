@@ -240,12 +240,8 @@ local function SetGoldenPrice(pickup, rng)
         return
     end
 
-    --[[local savedPickups = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "GoldenShovelShopOriginalPrices"
-    )]]
+    pickup.AutoUpdatePrice = false
 
-    --local originalPrice = savedPickups[tostring(pickup.ShopItemId)] or 0
     local priceModifier = TSIL.Random.GetRandomInt(-10, 10, rng)
     local newPickupPrice = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
 
@@ -255,7 +251,6 @@ local function SetGoldenPrice(pickup, rng)
     end
 
     if newPickupPrice then
-        pickup.AutoUpdatePrice = false
         local steamSaleCount = 1
         for i = 0, Game():GetNumPlayers() - 1 do
             if Isaac.GetPlayer(i) then
@@ -263,7 +258,7 @@ local function SetGoldenPrice(pickup, rng)
             end
         end
 
-        local finalPrice = math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
+        local finalPrice = goldPickupBasePrice[pickup.Variant] + math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
         pickup.Price = finalPrice
         --SaveGoldenShovelPickup(pickup)
     end
