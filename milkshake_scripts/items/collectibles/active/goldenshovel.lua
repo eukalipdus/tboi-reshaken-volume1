@@ -316,6 +316,18 @@ function goldenShovel:PostPickupInit(pickup)
         return
     end
 
+    if pickup.Variant == PickupVariant.PICKUP_TRINKET
+    and MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_TRINKET) then
+        pickup:Morph(
+            EntityType.ENTITY_PICKUP,
+            PickupVariant.PICKUP_TRINKET,
+            TSIL.Trinkets.GetGoldenTrinketType(pickup.SubType),
+            true
+        )
+        return
+    end
+
+
     local newPickup
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local goldBombUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_BOMB)
