@@ -245,6 +245,7 @@ Changes
 -Reduce weight for Spirit Klins to payout with trinkets
 -Modified Prismatic Dice splitting animation and collectible spawn positions
 -Increase Tatterd Page's Blank Card cost from 3 to 4
+-Glass heads now devolve properly with D10
 
 Fixes
 -Fixed softlock when using a death button on Glass Head enemies
