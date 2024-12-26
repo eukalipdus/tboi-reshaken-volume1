@@ -301,7 +301,6 @@ local function SetGoldenPrice(pickup)
     end
 
     local finalPrice = math.ceil(goldPickupPrice/(steamSaleCount + 1))
-    print("stored offset for current pickup: " .. tostring(GetGoldenShovelRestockOffset(pickup)))
     pickup.Price = math.min(99, finalPrice + GetGoldenShovelRestockOffset(pickup))
 end
 
