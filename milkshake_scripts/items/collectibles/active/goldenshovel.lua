@@ -13,8 +13,8 @@ local ACHIEVEMENT_GOLDEN_TRINKET = 617
 local goldPickupBasePrice = {
     [PickupVariant.PICKUP_KEY] = 13,
     [PickupVariant.PICKUP_BOMB] = 15,
-    [PickupVariant.PICKUP_LIL_BATTERY] = 20,
-    [PickupVariant.PICKUP_PILL] = 15,
+    [PickupVariant.PICKUP_LIL_BATTERY] = 15,
+    [PickupVariant.PICKUP_PILL] = 20,
     [PickupVariant.PICKUP_HEART] = 5,
 }
 local goldPickupVariants = {
@@ -448,6 +448,7 @@ function goldenShovel:PostPickupInit(pickup)
         )
 
         StoreGoldenShovelRestockOffsets(pickup, restockPriceOffset)
+        SetGoldenPrice(pickup)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPickupInit)
