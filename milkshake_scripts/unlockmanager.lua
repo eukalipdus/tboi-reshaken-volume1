@@ -179,7 +179,8 @@ function unlockableManager:PostNpcDeath(npc)
     end
 
     if stage == LevelStage.STAGE4_2
-    and npc.Type == EntityType.ENTITY_MOTHER then
+    and npc.Type == EntityType.ENTITY_MOTHER
+    and npc.Variant == 10 then
         if challenge == enums.Challenges.SPIRIT_SAGE
         and not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(enums.Achievements.SPIRIT_OF_ORDER) then
             local filePath = MilkshakeVol1.UnlockManager:GetAchievementFilePath(enums.Achievements.SPIRIT_OF_ORDER)
