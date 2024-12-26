@@ -213,7 +213,7 @@ Fixes
 -Fixed Lag and bloat oopsies
 
 ================================================
-    v1.1.0 - December 25, 2024
+    v1.1.0 - The Big Repentance+ Vol 1.5 Update! - December 25, 2024 
 ================================================
 Additions
 -Now compatible with Rep+!
@@ -248,6 +248,7 @@ Changes
 -Glass heads now devolve properly with D10
 
 Fixes
+-Fixed incompatibility with giga bomb synergies mod
 -Fixed softlock when using a death button on Glass Head enemies
 -Fixed rare crash that could happen when Flask Heads exploded
 -Fixed Shattered Orb not working with 'M, 9 Volt, Expansion Pack, and various other items
