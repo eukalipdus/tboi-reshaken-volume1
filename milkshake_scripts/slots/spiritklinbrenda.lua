@@ -183,7 +183,7 @@ local possibleWisps = {
 }
 
 local COLLECTIBLE_PAYMENT_CHANCE = 1.2
-local MIN_PAYMENTS_FOR_COLLECTIBLE = 7
+local MIN_PAYMENTS_FOR_COLLECTIBLE = 5
 
 ---Plays Brenda's death animation and removes the given Brenda
 ---@param brenda Entity
