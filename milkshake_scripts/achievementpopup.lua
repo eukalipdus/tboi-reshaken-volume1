@@ -1,6 +1,5 @@
 local achievementPopup = {}
 local enums = MilkshakeVol1.enums
-local utility = MilkshakeVol1.Utility
 
 local UPDATE_DELAY = 2
 local ACHIEVEMENT_LAYER = 3
@@ -17,7 +16,7 @@ local achievementQueue = {}
 
 local achievementFilePaths = {
     [enums.Achievements.PRISMATIC_GOGGLES] = "gfx/ui/achievement/achievement_prismaticgoggles.png",
-    [enums.Achievements.GOLDEN_COOKIE] = "gfx/ui/achievement/achievement_rainbowpennies.png",
+    [enums.Achievements.GOLDEN_COOKIE] = "gfx/ui/achievement/achievement_rainbowcookie.png",
     [enums.Achievements.SPIRIT_OF_ORDER] = "gfx/ui/achievement/achievement_spiritoforder.png",
     [enums.Achievements.GLASS_GOD] = "gfx/ui/achievement/achievement_glassgod.png",
 }
