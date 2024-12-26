@@ -256,6 +256,9 @@ local function TrySpawnSecretMemberShop(position)
     return true
 end
 
+---Stores a shop slot's restock offset
+---@param pickup EntityPickup
+---@param offset number
 local function StoreGoldenShovelRestockOffsets(pickup, offset)
     local savedPickups = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
@@ -267,6 +270,9 @@ local function StoreGoldenShovelRestockOffsets(pickup, offset)
     savedPickups[strId] = offset
 end
 
+---Gets a shop slot's restock offset
+---@param pickup EntityPickup
+---@return number
 local function GetGoldenShovelRestockOffset(pickup)
     local savedPickups = TSIL.SaveManager.GetPersistentVariable(
         MilkshakeVol1,
@@ -281,7 +287,6 @@ local function GetGoldenShovelRestockOffset(pickup)
 
     return 0
 end
-
 
 ---@param pickup EntityPickup
 local function SetGoldenPrice(pickup)
