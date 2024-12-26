@@ -394,7 +394,12 @@ function goldenShovel:PostPickupInit(pickup)
     )
     if #restockMachines + #goldenKeys == 0 and Game():GetRoom():IsFirstVisit() and firstTimeGoldKeySpawned == false then
         newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
-        firstTimeGoldKeySpawned = true
+
+        TSIL.SaveManager.SetPersistentVariable(
+            MilkshakeVol1,
+            "GoldenShovelShopFirstTimeGoldKeySpawned",
+            true
+        )
     else
 
         local roomPickups = TSIL.EntitySpecific.GetPickups()
