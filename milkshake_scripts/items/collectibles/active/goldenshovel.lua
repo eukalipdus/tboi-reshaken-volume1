@@ -268,8 +268,7 @@ local function StoreGoldenShovelRestockOffsets(pickup, offset)
     and savedPickups[strId] <= 99 then
         savedPickups[strId] = savedPickups[strId] + offset
 
-    elseif savedPickups[strId]
-    and savedPickups[strId] <= 99 then
+    else
         savedPickups[strId] = offset
     end
 end
@@ -308,6 +307,7 @@ local function SetGoldenPrice(pickup)
     end
 
     local finalPrice = math.ceil(goldPickupPrice/(steamSaleCount + 1))
+    print("stored offset for current pickup: " .. tostring(GetGoldenShovelRestockOffset(pickup)))
     pickup.Price = math.min(99, finalPrice + GetGoldenShovelRestockOffset(pickup))
 end
 
