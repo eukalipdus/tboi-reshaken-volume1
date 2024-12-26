@@ -100,6 +100,13 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
 
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "GoldenShovelRestockOffsets",
+    {},
+    TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+
 ---Checks if a given pickup is one that is sold in Golden Shovel Shops
 ---@param pickup EntityPickup
 ---@return boolean
@@ -249,9 +256,39 @@ local function TrySpawnSecretMemberShop(position)
     return true
 end
 
+local function StoreGoldenShovelRestockOffsets(pickup, offset)
+    local savedPickups = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "GoldenShovelRestockOffsets"
+    )
+
+    local strId = tostring(pickup.ShopItemId)
+
+    if savedPickups[strId] then
+        savedPickups[strId] = savedPickups[strId] + offset
+    else
+        savedPickups[strId] = offset
+    end
+end
+
+local function GetGoldenShovelRestockOffset(pickup)
+    local savedPickups = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "GoldenShovelRestockOffsets"
+    )
+
+    local strId = tostring(pickup.ShopItemId)
+
+    if savedPickups[strId] ~= nil then
+        return savedPickups[strId]
+    end
+
+    return 0
+end
+
 
 ---@param pickup EntityPickup
-local function SetGoldenPrice(pickup, rng)
+local function SetGoldenPrice(pickup)
     local goldPickupPrice = goldPickupBasePrice[pickup.Variant]
 
     if not goldPickupPrice then
@@ -260,27 +297,15 @@ local function SetGoldenPrice(pickup, rng)
 
     pickup.AutoUpdatePrice = false
 
-    local newPickupPrice = 0
-
-    -- local priceModifier = TSIL.Random.GetRandomInt(-10, 10, rng)
-    -- newPickupPrice = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
-
-    if newPickupPrice < 1 then
-        pickup.Price = goldPickupBasePrice[pickup.Variant]
-    end
-
-    if newPickupPrice then
-        local steamSaleCount = 0
-        for i = 0, Game():GetNumPlayers() - 1 do
-            if Isaac.GetPlayer(i) then
-                steamSaleCount = steamSaleCount + Isaac.GetPlayer(i):GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE)
-            end
+    local steamSaleCount = 0
+    for i = 0, Game():GetNumPlayers() - 1 do
+        if Isaac.GetPlayer(i) then
+            steamSaleCount = steamSaleCount + Isaac.GetPlayer(i):GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE)
         end
-
-        local finalPrice = math.ceil(goldPickupPrice/(steamSaleCount + 1))
-        pickup.Price = finalPrice
-        --SaveGoldenShovelPickup(pickup)
     end
+
+    local finalPrice = math.ceil(goldPickupPrice/(steamSaleCount + 1))
+    pickup.Price = finalPrice + GetGoldenShovelRestockOffset(pickup)
 end
 
 
@@ -292,7 +317,6 @@ local function IsGoldenShovelShop()
     local isSecretShop = room:GetType() == RoomType.ROOM_SHOP and room:GetBackdropType() == BackdropType.SECRET
     return goldenShovelShopCreated and isSecretShop
 end
-
 
 ---@param pickup EntityPickup
 function goldenShovel:PostPickupInit(pickup)
@@ -320,7 +344,7 @@ function goldenShovel:PostPickupInit(pickup)
     local subtype = pickup.SubType
 
     local originalPickupBasePrice = (VANILLA_PICKUP_PRICES[variant] and VANILLA_PICKUP_PRICES[variant][subtype]) or (VANILLA_PICKUP_PRICES[variant] and VANILLA_PICKUP_PRICES[variant][0]) or 5
-    print("Original pickup base price: " .. originalPickupBasePrice)
+    --print("Original pickup base price: " .. originalPickupBasePrice)
 
 
     local steamSaleCount = 0
@@ -331,10 +355,10 @@ function goldenShovel:PostPickupInit(pickup)
     end
 
     originalPickupBasePrice = math.ceil(originalPickupBasePrice/(1 + steamSaleCount))
-    print("Original pickup base price + modifier: " .. originalPickupBasePrice)
-    print("spawned pickup price: " .. pickup.Price)
+    --print("Original pickup base price + modifier: " .. originalPickupBasePrice)
+    --print("spawned pickup price: " .. pickup.Price)
     local restockPriceOffset = math.max(0, pickup.Price - originalPickupBasePrice)
-    print("Restock offset: " .. restockPriceOffset)
+    --print("Restock offset: " .. restockPriceOffset)
 
     ----SaveGoldenShovelPickup(pickup)
 
@@ -415,8 +439,8 @@ function goldenShovel:PostPickupInit(pickup)
             newPickup[2],
             true
         )
-        
-        --UpdateGoldenShovelPickup(pickup)
+
+        StoreGoldenShovelRestockOffsets(pickup, restockPriceOffset)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, goldenShovel.PostPickupInit)
@@ -472,8 +496,7 @@ function goldenShovel:PostPickupUpdate(pickup)
     end
 
     if not TSIL.Players.DoesAnyPlayerHasTrinket(TrinketType.TRINKET_STORE_CREDIT) then
-        local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
-        SetGoldenPrice(pickup, rng)
+        SetGoldenPrice(pickup)
     else
         pickup.AutoUpdatePrice = true
     end
