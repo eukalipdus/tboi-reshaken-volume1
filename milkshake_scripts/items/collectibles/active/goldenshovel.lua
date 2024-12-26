@@ -268,7 +268,8 @@ local function StoreGoldenShovelRestockOffsets(pickup, offset)
     and savedPickups[strId] <= 99 then
         savedPickups[strId] = savedPickups[strId] + offset
 
-    elseif savedPickups[strId] <= 99 then
+    elseif savedPickups[strId]
+    and savedPickups[strId] <= 99 then
         savedPickups[strId] = offset
     end
 end
