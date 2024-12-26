@@ -1,5 +1,7 @@
 local goldenShovel = {}
 local enums = MilkshakeVol1.enums
+local utility = MilkshakeVol1.utility
+
 
 local CHEST_VELOCITY_MULTIPLIER = 15
 local ACHIEVEMENT_GOLDEN_HEART = 224
@@ -39,6 +41,39 @@ local goldPickupWeights = {
     [PickupVariant.PICKUP_HEART] = 5
 }
 
+local VANILLA_PICKUP_PRICES = {
+    [PickupVariant.PICKUP_HEART] = {
+        [0] = 5, -- Default value if the subtype does not have an entry
+        [HeartSubType.HEART_SOUL] = 5,
+        [HeartSubType.HEART_ETERNAL] = 15,
+        [HeartSubType.HEART_BLACK] = 8,
+        [HeartSubType.HEART_BONE] = 8,
+        [HeartSubType.HEART_ROTTEN] = 5,
+    },
+
+    [PickupVariant.PICKUP_KEY] = {
+        [0] = 5,
+    },
+
+    [PickupVariant.PICKUP_BOMB] = {
+        [0] = 5,
+    },
+
+
+    [PickupVariant.PICKUP_LIL_BATTERY] = {
+        [0] = 5,
+    },
+
+
+    [PickupVariant.PICKUP_PILL] = {
+        [0] = 5
+    },
+
+    [PickupVariant.PICKUP_TAROTCARD] = {
+        [0] = 6
+    },
+}
+
 local MIN_COIN_SPAWN_COUNT = 2
 local MAX_COIN_SPAWN_COUNT = 4
 local skipNextShovelUse = false
@@ -56,6 +91,13 @@ TSIL.SaveManager.AddPersistentVariable(
     "GoldenShovelShopOriginalPrices",
     {},
     TSIL.Enums.VariablePersistenceMode.RESET_LEVEL
+)
+
+TSIL.SaveManager.AddPersistentVariable(
+    MilkshakeVol1,
+    "GoldenShovelShopFirstTimeGoldKeySpawned",
+    false,
+    TSIL.Enums.VariablePersistenceMode.RESET_ROOM
 )
 
 ---Checks if a given pickup is one that is sold in Golden Shovel Shops
@@ -207,94 +249,40 @@ local function TrySpawnSecretMemberShop(position)
     return true
 end
 
----Stores the original price of a pickup, if it doesn't exist in the table
----@param pickup EntityPickup
-local function SaveGoldenShovelPickup(pickup)
-    local savedPickups = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "GoldenShovelShopOriginalPrices"
-    )
-
-    local strId = tostring(pickup.ShopItemId)
-
-    if not savedPickups[strId] then
-        savedPickups[strId] = pickup.Price
-    end
-end
-
----Stores the original price of a pickup, updates it if it already exists in the table
----@param pickup EntityPickup
-local function UpdateGoldenShovelPickup(pickup)
-    local savedPickups = TSIL.SaveManager.GetPersistentVariable(
-        MilkshakeVol1,
-        "GoldenShovelShopOriginalPrices"
-    )
-
-    local strId = tostring(pickup.ShopItemId)
-    savedPickups[strId] = pickup.Price
-end
 
 ---@param pickup EntityPickup
 local function SetGoldenPrice(pickup, rng)
-    if not goldPickupBasePrice[pickup.Variant] then
+    local goldPickupPrice = goldPickupBasePrice[pickup.Variant]
+
+    if not goldPickupPrice then
         return
     end
 
     pickup.AutoUpdatePrice = false
 
-    local priceModifier = TSIL.Random.GetRandomInt(-10, 10, rng)
-    local newPickupPrice = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
+    local newPickupPrice = 0
+
+    -- local priceModifier = TSIL.Random.GetRandomInt(-10, 10, rng)
+    -- newPickupPrice = math.floor(goldPickupBasePrice[pickup.Variant] / priceModifier)
 
     if newPickupPrice < 1 then
         pickup.Price = goldPickupBasePrice[pickup.Variant]
-        return
     end
 
     if newPickupPrice then
-        local steamSaleCount = 1
+        local steamSaleCount = 0
         for i = 0, Game():GetNumPlayers() - 1 do
             if Isaac.GetPlayer(i) then
                 steamSaleCount = steamSaleCount + Isaac.GetPlayer(i):GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE)
             end
         end
 
-        local finalPrice = goldPickupBasePrice[pickup.Variant] + math.floor(newPickupPrice + (newPickupPrice/steamSaleCount))
+        local finalPrice = math.ceil(goldPickupPrice/(steamSaleCount + 1))
         pickup.Price = finalPrice
         --SaveGoldenShovelPickup(pickup)
     end
 end
 
----Replaces the cheapest pickup for sale with a Golden Key
-local function ReplaceCheapestWithGoldenKey()
-    local pickups = TSIL.EntitySpecific.GetPickups()
-    local cheapestPickup
-
-    pickups = TSIL.Utils.Tables.Filter(pickups, function (_, currentPickup)
-        return currentPickup:IsShopItem() and currentPickup.Variant ~= PickupVariant.PICKUP_TRINKET
-    end)
-
-    for _, currentPickup in pairs(pickups) do
-        if not cheapestPickup then
-            cheapestPickup = currentPickup
-        elseif currentPickup.Price < cheapestPickup.Price then
-            cheapestPickup = currentPickup
-        end
-    end
-
-    if cheapestPickup then
-        cheapestPickup:Morph(
-            EntityType.ENTITY_PICKUP,
-            PickupVariant.PICKUP_KEY,
-            KeySubType.KEY_GOLDEN
-        )
-
-        cheapestPickup.AutoUpdatePrice = false
-        cheapestPickup.Price = goldPickupBasePrice[PickupVariant.PICKUP_KEY]
-
-        local rng = TSIL.RNG.NewRNG(cheapestPickup.InitSeed)
-        SetGoldenPrice(cheapestPickup, rng)
-    end
-end
 
 ---Checks if the current room is a secret shop, and Golden Shovel has been used
 ---@return boolean
@@ -305,10 +293,10 @@ local function IsGoldenShovelShop()
     return goldenShovelShopCreated and isSecretShop
 end
 
+
 ---@param pickup EntityPickup
 function goldenShovel:PostPickupInit(pickup)
-    if not IsGoldenShovelShop()
-    or not pickup:IsShopItem()
+    if not pickup:IsShopItem()
     or pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE then
         return
     end
@@ -327,6 +315,29 @@ function goldenShovel:PostPickupInit(pickup)
         end
     end
 
+
+    local variant = pickup.Variant
+    local subtype = pickup.SubType
+
+    local originalPickupBasePrice = (VANILLA_PICKUP_PRICES[variant] and VANILLA_PICKUP_PRICES[variant][subtype]) or (VANILLA_PICKUP_PRICES[variant] and VANILLA_PICKUP_PRICES[variant][0]) or 5
+    print("Original pickup base price: " .. originalPickupBasePrice)
+
+
+    local steamSaleCount = 0
+    for i = 0, Game():GetNumPlayers() - 1 do
+        if Isaac.GetPlayer(i) then
+            steamSaleCount = steamSaleCount + Isaac.GetPlayer(i):GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE)
+        end
+    end
+
+    originalPickupBasePrice = math.ceil(originalPickupBasePrice/(1 + steamSaleCount))
+    print("Original pickup base price + modifier: " .. originalPickupBasePrice)
+    print("spawned pickup price: " .. pickup.Price)
+    local restockPriceOffset = math.max(0, pickup.Price - originalPickupBasePrice)
+    print("Restock offset: " .. restockPriceOffset)
+
+    ----SaveGoldenShovelPickup(pickup)
+
     local newPickup
     local rng = TSIL.RNG.NewRNG(pickup.InitSeed)
     local goldBombUnlocked = MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLD_BOMB)
@@ -342,38 +353,59 @@ function goldenShovel:PostPickupInit(pickup)
         goldenHeartUnlocked
     }
 
-    local roomPickups = TSIL.EntitySpecific.GetPickups()
-    local pickupVariantsNotToSell = {}
-    local weightedGoldPickups = {}
 
-    for _, currentPickup in pairs(roomPickups) do
-        if currentPickup:IsShopItem()
-        and IsSoldGoldenPickup(currentPickup) then
-            table.insert(pickupVariantsNotToSell, currentPickup.Variant)
-        end
-    end
-
-    for idx, pickupVariant in pairs(goldPickupVariants) do
-        if not TSIL.Utils.Tables.IsIn(pickupVariantsNotToSell, pickupVariant)
-        and achievementToVariant[idx] then
-           table.insert(
-            weightedGoldPickups,
-            {
-                chance = goldPickupWeights[pickupVariant],
-                value = {pickupVariant, pickupVariantToGoldSubType[pickupVariant]}
-            }
-           )
-        end
-    end
-
-    if #weightedGoldPickups == 0 then
-        return
-
-    elseif #weightedGoldPickups == 1 then
-        newPickup = weightedGoldPickups[1].value
-
+    local firstTimeGoldKeySpawned = TSIL.SaveManager.GetPersistentVariable(
+        MilkshakeVol1,
+        "GoldenShovelShopFirstTimeGoldKeySpawned"
+    )
+    local restockMachines = Isaac.FindByType(
+            EntityType.ENTITY_SLOT,
+            TSIL.Enums.SlotVariant.RESTOCK_MACHINE
+        )
+    local goldenKeys = Isaac.FindByType(
+        EntityType.ENTITY_PICKUP,
+        PickupVariant.PICKUP_KEY,
+        KeySubType.KEY_GOLDEN
+    )
+    if #restockMachines + #goldenKeys == 0 and Game():GetRoom():IsFirstVisit() and firstTimeGoldKeySpawned == false then
+        newPickup = {PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN}
+        firstTimeGoldKeySpawned = true
     else
-        newPickup = TSIL.Random.GetRandomElementFromWeightedList(rng, weightedGoldPickups)
+
+        local roomPickups = TSIL.EntitySpecific.GetPickups()
+        local pickupVariantsNotToSell = {}
+        local weightedGoldPickups = {}
+
+        for _, currentPickup in pairs(roomPickups) do
+            if currentPickup:IsShopItem()
+            and IsSoldGoldenPickup(currentPickup) then
+                table.insert(pickupVariantsNotToSell, currentPickup.Variant)
+            end
+        end
+
+        for idx, pickupVariant in pairs(goldPickupVariants) do
+            if not TSIL.Utils.Tables.IsIn(pickupVariantsNotToSell, pickupVariant)
+            and achievementToVariant[idx] then
+            table.insert(
+                weightedGoldPickups,
+                {
+                    chance = goldPickupWeights[pickupVariant],
+                    value = {pickupVariant, pickupVariantToGoldSubType[pickupVariant]}
+                }
+            )
+            end
+        end
+
+        if #weightedGoldPickups == 0 then
+            return
+
+        elseif #weightedGoldPickups == 1 then
+            newPickup = weightedGoldPickups[1].value
+
+        else
+            newPickup = TSIL.Random.GetRandomElementFromWeightedList(rng, weightedGoldPickups)
+        end
+
     end
 
     if newPickup then
@@ -383,7 +415,7 @@ function goldenShovel:PostPickupInit(pickup)
             newPickup[2],
             true
         )
-
+        
         --UpdateGoldenShovelPickup(pickup)
     end
 end
@@ -431,27 +463,6 @@ function goldenShovel:onUse(_, rng, player, useFlags)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, goldenShovel.onUse, enums.Collectibles.GOLDEN_SHOVEL)
 
-function goldenShovel:PostNewRoom()
-    local room = Game():GetRoom()
-    if IsGoldenShovelShop()
-    and room:IsFirstVisit() then
-        local restockMachines = Isaac.FindByType(
-            EntityType.ENTITY_SLOT,
-            TSIL.Enums.SlotVariant.RESTOCK_MACHINE
-        )
-        local goldenKeys = Isaac.FindByType(
-            EntityType.ENTITY_PICKUP,
-            PickupVariant.PICKUP_KEY,
-            KeySubType.KEY_GOLDEN
-        )
-
-
-        if #restockMachines + #goldenKeys == 0 then
-            ReplaceCheapestWithGoldenKey()
-        end
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, goldenShovel.PostNewRoom)
 
 ---@param pickup EntityPickup
 function goldenShovel:PostPickupUpdate(pickup)
