@@ -325,6 +325,7 @@ function goldenShovel:PostPickupInit(pickup)
     or pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE then
         return
     end
+    if not IsGoldenShovelShop() then return end
 
     if pickup.Variant == PickupVariant.PICKUP_TRINKET then
         if MilkshakeVol1.AchievementChecker:IsAchievementUnlocked(ACHIEVEMENT_GOLDEN_TRINKET) then
