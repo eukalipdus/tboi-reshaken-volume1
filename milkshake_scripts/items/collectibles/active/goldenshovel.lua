@@ -264,13 +264,7 @@ local function StoreGoldenShovelRestockOffsets(pickup, offset)
 
     local strId = tostring(pickup.ShopItemId)
 
-    if savedPickups[strId]
-    and savedPickups[strId] <= 99 then
-        savedPickups[strId] = savedPickups[strId] + offset
-
-    else
-        savedPickups[strId] = offset
-    end
+    savedPickups[strId] = offset
 end
 
 local function GetGoldenShovelRestockOffset(pickup)
