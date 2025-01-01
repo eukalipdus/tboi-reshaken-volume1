@@ -187,6 +187,28 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function()
     end
 end)
 
+local playerHearts = 0
+local playerRedHearts = 0
+function MilkshakeVol1:FFPrePotatoPeelerFix(item, rng, player)
+    if FiendFolio then
+        playerHearts = player:GetMaxHearts()
+        playerRedHearts = player:GetHearts()
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, MilkshakeVol1.FFPrePotatoPeelerFix, CollectibleType.COLLECTIBLE_POTATO_PEELER)
+
+function MilkshakeVol1:FFPotatoPeelerFix(item, rng, player)
+    if FiendFolio then
+        if player:GetMaxHearts() < (playerHearts - 2) then
+            player:AddMaxHearts(2)
+        end
+        if player:GetHearts() < (playerRedHearts - 2) then
+            player:AddHearts(2)
+        end
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, MilkshakeVol1.FFPotatoPeelerFix, CollectibleType.COLLECTIBLE_POTATO_PEELER)
+
 -- ---@param player EntityPlayer
 -- MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
 --     if Input.IsButtonTriggered(Keyboard.KEY_5, player.ControllerIndex) then
