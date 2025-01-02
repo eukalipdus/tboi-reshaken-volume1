@@ -50,6 +50,7 @@ include("milkshake_scripts.modcompatibility.immortalHearts")
 include("milkshake_scripts.modcompatibility.minimapi")
 include("milkshake_scripts.modcompatibility.retribution")
 include("milkshake_scripts.modcompatibility.revelations")
+include("milkshake_scripts.modcompatibility.chapi")
 
 -- Custom callbacks
 include("milkshake_scripts.custom_callbacks.chest_opened")
@@ -186,53 +187,3 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function()
         Isaac.ExecuteCommand("reloadshaders")
     end
 end)
-
-local playerHearts = 0
-local playerRedHearts = 0
-function MilkshakeVol1:FFPrePotatoPeelerFix(item, rng, player)
-    if FiendFolio then
-        playerHearts = player:GetMaxHearts()
-        playerRedHearts = player:GetHearts()
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, MilkshakeVol1.FFPrePotatoPeelerFix, CollectibleType.COLLECTIBLE_POTATO_PEELER)
-
-function MilkshakeVol1:FFPotatoPeelerFix(item, rng, player)
-    if FiendFolio then
-        if player:GetMaxHearts() < (playerHearts - 2) then
-            player:AddMaxHearts(2)
-        end
-        if player:GetHearts() < (playerRedHearts - 2) then
-            player:AddHearts(2)
-        end
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_ITEM, MilkshakeVol1.FFPotatoPeelerFix, CollectibleType.COLLECTIBLE_POTATO_PEELER)
-
--- ---@param player EntityPlayer
--- MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
---     if Input.IsButtonTriggered(Keyboard.KEY_5, player.ControllerIndex) then
---         local ref = EntityRef(player)
-
---         for _, v in ipairs(Isaac.FindInRadius(player.Position, 9999, EntityPartition.ENEMY)) do
---             v:TakeDamage(v.MaxHitPoints - 1, 0, ref, 0)
---             v:TakeDamage(1, 0, ref, 0)
---         end
---     end
-
---     if Input.IsButtonTriggered(Keyboard.KEY_1, player.ControllerIndex) then
---         TSIL.EntitySpecific.SpawnNPC(MilkshakeVol1.enums.Enemies.GLASS_HEAD, MilkshakeVol1.enums.GlassHeadVariant.GLASS_HEAD, 0, Game():GetRoom():GetCenterPos())
---     end
-
---     if Input.IsButtonTriggered(Keyboard.KEY_2, player.ControllerIndex) then
---         TSIL.EntitySpecific.SpawnNPC(MilkshakeVol1.enums.Enemies.GLASS_HEAD, MilkshakeVol1.enums.GlassHeadVariant.BEER_HEAD, 0, Game():GetRoom():GetCenterPos())
---     end
-
---     if Input.IsButtonTriggered(Keyboard.KEY_3, player.ControllerIndex) then
---         TSIL.EntitySpecific.SpawnNPC(MilkshakeVol1.enums.Enemies.GLASS_HEAD, MilkshakeVol1.enums.GlassHeadVariant.FLASK_HEAD, 0, Game():GetRoom():GetCenterPos())
---     end
-
---     if Input.IsButtonTriggered(Keyboard.KEY_4, player.ControllerIndex) then
---         TSIL.EntitySpecific.SpawnNPC(MilkshakeVol1.enums.Enemies.GLASS_HEAD, MilkshakeVol1.enums.GlassHeadVariant.WINE_HEAD, 0, Game():GetRoom():GetCenterPos())
---     end
--- end)

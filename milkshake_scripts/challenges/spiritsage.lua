@@ -11,17 +11,20 @@ popupSprite:Play("Appear")
 
 function spiritSage:PostPlayerInit(player)
     if Game().Challenge == enums.Challenges.SPIRIT_SAGE then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_POLYDACTYLY, 0, false)
         player:AddCollectible(enums.Collectibles.LYRA)
-        TSIL.Utils.Functions.RunInFrames(function ()
-            player:RemoveCollectible(CollectibleType.COLLECTIBLE_LEMEGETON, true, ActiveSlot.SLOT_POCKET)
-            player:SetPocketActiveItem(enums.Collectibles.SHATTERED_ORB)
-            local shatteredOrbCharges = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.SHATTERED_ORB).MaxCharges
-            player:SetActiveCharge(shatteredOrbCharges)
-        end, 1, {})
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, spiritSage.PostPlayerInit)
+
+---@param player EntityPlayer
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function (_, player)
+    if player.FrameCount == 0 and Game().Challenge == enums.Challenges.SPIRIT_SAGE and player:GetActiveItem(ActiveSlot.SLOT_POCKET) == CollectibleType.COLLECTIBLE_LEMEGETON then
+        player:RemoveCollectible(CollectibleType.COLLECTIBLE_LEMEGETON, true, ActiveSlot.SLOT_POCKET)
+        player:SetPocketActiveItem(enums.Collectibles.SHATTERED_ORB)
+        local shatteredOrbCharges = Isaac.GetItemConfig():GetCollectible(enums.Collectibles.SHATTERED_ORB).MaxCharges
+        player:SetActiveCharge(shatteredOrbCharges)
+    end
+end)
 
 function spiritSage:PostRender()
     if Game().Challenge == enums.Challenges.SPIRIT_SAGE
