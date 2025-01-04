@@ -387,7 +387,8 @@ ThrowableItemLib:RegisterThrowableItem({
         end
 
         SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
-    end
+    end,
+    Identifier = "RE_SHATTERED_ORB"
 })
 
 ---@param entity Entity
