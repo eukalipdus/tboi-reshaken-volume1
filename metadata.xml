@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-    <name>The Binding of Isaac Reshaken - Vol 1: Shattered Souls!</name>
+    <name>[REP(+)] The Binding of Isaac Reshaken - Vol 1.5: Shattered Souls+!</name>
     <directory>tboi-reshaken-vol1</directory>
     <id>3134600246</id>
     <description>Over a year in the making, Team Milkshake presents to you Volume 1 of Isaac Reshaken!
@@ -16,14 +16,15 @@ Isaac Reshaken is a content pack MOD that adds over 40 new high quality items, t
 [*] 1 mystical new machine type
 [*] 1000+ new rooms to explore
 [*] 1 banger new music track
-[*] 3 creative new challenges
+[*] 3 creative new challenges with unlocks
 [/list]
 
-and loads more surprises! Check out the [url=https://tboireshaken.wiki.gg/wiki/Main_Page]Milkshake Wiki[/url] (WIP) for a full* list!
+and loads more surprises! Check out the [url=https://tboireshaken.wiki.gg/wiki/Main_Page]Milkshake Wiki[/url] (WIP) or the [url=https://isaacguru.com/mod/reshaken]Reshaken Isaac Guru Page[/url] for a full list!
 
 [h1] Compatibility! [/h1]
 Alongside all this, we also feature full compatibility with Fiend Folio and several other MODs, creating exciting interactions with them:
 [list]
+[*] Fullly functional on Repentance, Repentogon, and Repentance+
 [*] External Item Descriptions in English, Spanish, Chinese, Russian, Polish, and Korean!
 [*] DSS setting menu accessible by pressing C
 [*] Fiend Folio (Full shattered orb enemy elemental support, exclusive FF based rainbow pennies, custom beggar and slot machine interactions with spirit orbs, a full slew of spirit pills matching FF pill colors, fuzzy pickle trinket support, and FF items are available in custom item pools)
@@ -33,7 +34,6 @@ Alongside all this, we also feature full compatibility with Fiend Folio and seve
 [*] Eclipsed (Spirit orb beggar interactions)
 [*] Retribution (Full shattered orb enemy element support, spirit orb beggar interactions)
 [*] Crabby's Cretins (Full shattered orb enemy element support)
-[*] Immortal Hearts (Custom interaction with leviticus)
 [*] Library Expanded (Leviticus support)
 [/list]
 
@@ -73,18 +73,18 @@ ConBoi - Assisting Room Designer
 Nelly - Lead Musician
 Nihil - Sound Design
 ShanePatSmith - Voice Acting
-foiled again - Concepts
+foiled again - Concepts, Spriting
 Notespooky - Concepts, Coding, and Room Support
 susukethereal - Concepts and Concept Art
 catinsurance - Code Support and Video Editing
 skykittenpuppy - Logo Design and Emotional Support
 
 And a special thanks to
-punchyufo, clownylun, toyrapple, neibusha, Luna, mysterykar, scooperman, ZRWilson, siphernil, Bagley, Split, spoop, zer0pointtime, Stlkngne, bazus, Harvester, Erfly, wofsauge, TheTurtleMelon, youduckboom, and kohashiwakaba for their various helpful contributions!
+punchyufo, clownylun, toyrapple, neibusha, Luna, mysterykar, scooperman, ZRWilson, siphernil, Bagley, Split, spoop, zer0pointtime, Stlkngne, bazus, Harvester, Erfly, wofsauge, TheTurtleMelon, youduckboom, Conboi, Pikaperson and kohashiwakaba for their various helpful contributions!
 
 
 Find any bugs? Send them in the Bugs discussion thread below along with a snippet of your log or screenshot of the error. And as always, stay shakey!</description>
-    <version>1.15</version>
+    <version>1.16</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

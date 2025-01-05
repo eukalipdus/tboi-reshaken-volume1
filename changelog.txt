@@ -213,34 +213,55 @@ Fixes
 -Fixed Lag and bloat oopsies
 
 ================================================
-    v1.1.0 - December 25, 2024
+    v1.1.0 - The Big Repentance+ Vol 1.5 Update! - December 25, 2024 
 ================================================
 Additions
--Added four achievements, three of which grant unlocks
--Added five new items, two collectibles, two trinkets, and a spirit orb
--Added crafting qualities
--Added Belial (Judas' Birthright) synergies for Golden Shovel and Mirror Key
+-Now compatible with Rep+!
+-Added three new achievments and their unlocks for completing the Reshaken's three challenges, and a fourth bonus achievment for 100%ing the mod
+-Added an unlock manager in dead sea scrolls settings, if you beat the challenges with Repentogon enabled then the unlocks should automatically be granted on first startup, but if not, then you can manually unlock them here
+-Added two flashy collectibles, two colorful trinkets, and a new ultimate spirit orb
+-Completely reworked golden shovel, leviticus, and Brenda the spirit kiln
+-Added crafting qualities to all items for proper bag of crafting support
+-Added Belial (Judas' Birthright) synergies for Golden Shovel, Leviticus, and Mirror Key
 -Added Book of Virtues synergy for Mirror Key
--Added Blast Processing (optimization improvements)
+-Added huge optimaztions and performance increases (Should run at full 60 fps on steam deck!)
 
 Changes
--Secret shops spawned by Golden Shovel now convert pickups for sale to their golden variants, with increased prices
--Reworked Leviticus, still charged with soul hearts, now teleports Isaac to a special Angel room upon activation
+-Golden Shovel charges reduced to 6. Now only spawns one gold chest and a handful of pennies, but the member card shop it can spawn now sells golden pickups
+-Leviticus, still charged with soul hearts, now teleports Isaac to a special Angel room upon activation for a free item and holy card for sale
+-Spirit Kiln Brenda wisps will now drop their ccorresponding spirit orb when destroyed, and after 4 payouts, Brenda will now have a chance to payout with a random glass item
+-Brenda now plays a lose soul heart sound effect on use for better loss communication
+-Lyra now grants an extra consumable slot so you can hold two spirit orbs at once
+-Lil bishop now plays a sound effect to indicate when it enters shielding mode, proc chance reduced to 10% from 20%
+-Alt Path Unlock Tracker now open the door to corpse as well (please don't report this to the Milkshake Devs)
+-Spirit Orb gem trinkets now mention that they give tinted rocks a unique appearance in their EIDs
+-Shattered orb + book of virtues synergy now only spawns 1 wisp instead of 4 to compensate for the wisps dropping spirit orbs rework
+-Changed behavior of Spirit Kiln/Shattered orb Sacrilege and Revenance wisps to have a bleed and compound fracture effect respectively
 -Acid Penny now shows the assigned pill color when activating a pill instead of a random one
 -Mirror Key can no longer be used in Error Rooms
--Modified some room layouts
+-Modified some room layouts to be more fair (and made that one bad angel room much less common)
+-Spirit of Virulence now turns pennies into rotten pennies
+-Spirit bum now moves slightly slower so player has a better chance of grabbing soul hearts before it can steal them
 -Reduce weight for Spirit Klins to payout with trinkets
--After receiving 4 payments, Brenda now has a chance to payout with a collectible from the Glass pool
 -Modified Prismatic Dice splitting animation and collectible spawn positions
+-Increase Tatterd Page's Blank Card cost from 3 to 4
+-Glass heads now devolve properly with D10
 
 Fixes
+-Fixed incompatibility with giga bomb synergies mod
+-Fixed softlock when using a death button on Glass Head enemies
+-Fixed rare crash that could happen when Flask Heads exploded
+-Fixed Shattered Orb not working with 'M, 9 Volt, Expansion Pack, and various other items
+-Fixe Shattered Orb not working if activated through Metronome or Void
+-Fixed Isaac being unable to shoot if Shattered Orb was lost while being used or activated through means other than the item itself
 -Fixed error resulting from Witch Doctor Mask being activated by a NULL pill color
 -Fixed error from Globin In A Bucket not checking if the spawner of the Globin exists first
 -Fixed pickups being removed when exiting the game while in a Mirror Key room
 -Fixed Spindown Dice spinning down into hidden Reshaken items
 -Fixed Spirit of Conductivity console error caused by player tear mimicking familiars
--Fixed Isaac being unable to shoot if Shattered Orb was lost while being used or activated through means other than the item itself
 -Fixed Mirror Key being useable in the boss room containing Dad's Note, which caused a crash
+-Fixed Mirror Key mirror world pickups being deleted when exiting and continuing the run
+-Fixed Mirror Key being usable infintely if you had found soul 
 -Fixed a crash caused by using Mirror Key on Downpour 2 during the Ascent
 -Fixed a softlock caused by teleporting to a room not connected to the map while in a Mirror Key room
 -Fixed ladders spawning in shops created by Mirror Key when exiting and continuing a run within one
@@ -254,8 +275,12 @@ Fixes
 -Fixed rainbow pennies being purchasable while Isaac is holding an item
 -Fixed Super Bum not properly colliding with rainbow pennies
 -Fixed Prismatic Dice Godhead easter egg not spawning items with the proper colors
+-Fixed Prismatic Dice making deal items in the dark room cost 99 cents if split with glitched crown
+-Fixed Prismatic Dice not correctly inheriting deal price if resulting split item was a special breakfast
+-Fixed Prismatic Dice sometimes spawning more items than it should
 -Fixed Prismatic Dice locust duplicating bosses
 -Fixed Witch Doctor Mask not spawning a pill on pick up if it was taken by another player after being dropped by Tainted Isaac
+-Fixed Spirit of Terra stalagmites showing a rock for a split second when destroyed
 
 API Changes
 -MilkshakeVol1.API:AddSpiritKlinReward's first argument now accepts a second parameter, an entity (Spirit Klin slot)
