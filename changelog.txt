@@ -286,3 +286,20 @@ API Changes
 -MilkshakeVol1.API:AddSpiritKlinReward's first argument now accepts a second parameter, an entity (Spirit Klin slot)
 -Added MilkshakeVol1.API.AddEntityCanCollideRainbowPenny
 -Added MilkshakeVol1.API.SplitEnemy
+
+================================================
+    v1.1.1 - January X, 2025
+================================================
+Additions
+-Added Golden Shovel locust
+
+Changes
+-Prismatic Dice locusts and Prismatic Lacewing now only allow enemies to be split once (i.e, when a globin is split,
+the clotties from that globin cannot be split)
+-Prismatic Dice locusts and Prismatic Lacewing will not devolve enemies that do not have devolve entries in their
+XML data if REPENTOGON is installed (if you have a mod which uses custom devolve code, check out MilkshakeVol1.API.AllowSplitWithFakeDevolve)
+
+API Changes
+-Added MilkshakeVol1.API.ForbidEnemySplit
+-Added MilkshakeVol1.API.AllowSplitWithFakeDevolve
+-Added MilkshakeVol1.API.IsEntityDataIn
