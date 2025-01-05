@@ -60,6 +60,10 @@ function MilkshakeVol1.API.AllowSplitWithFakeDevolve(entityData)
     table.insert(MilkshakeVol1.entitiesFakeDevolve, entityData)
 end
 
+---Compares an entity data table
+---@param entityData table
+---@param dataTable table
+---@return table | boolean
 function MilkshakeVol1.API.IsEntityDataIn(entityData, dataTable)
     for _, storedData in pairs(dataTable) do
         if entityData.type == storedData.type
@@ -123,9 +127,9 @@ function prismaticDice:NpcUpdate(npc)
     if nextEnemiesSplit > 0 then
 
         if nextEnemiesSplit == 2 then
-            npc:SetColor(PINK, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
+            npc:SetColor(PINK, SHATTERED_COLOR_FRAMES, PRIORITY, true, false)
         else
-            npc:SetColor(CYAN, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
+            npc:SetColor(CYAN, SHATTERED_COLOR_FRAMES, PRIORITY, true, false)
         end
 
         nextEnemiesSplit = nextEnemiesSplit - 1
