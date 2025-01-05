@@ -598,6 +598,7 @@ function utility:DevolveEnemy(player, enemy)
     wasFakeActivation = false
 end
 
+---@param entity Entity
 MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_ENTITY_DEVOLVE, function (_, entity)
     if not wasFakeActivation then
         return

@@ -7,20 +7,17 @@ local SHIFT_RIGHT = 40
 local SHIFT_LEFT = -40
 local CYAN = Color(0, 1, 1, 1, 0, 0, 0)
 local PINK = Color(1, 0, 220 / 255, 1, 0, 0, 0)
-local SOLID_CYAN = Color(0, 1, 1, 1, 0, 255, 255)
-local SOLID_PINK = Color(1, 192 / 255, 203 / 255, 1, 255, 192 / 255, 203 / 255)
-local SHATTERED_SOLID_FRAMES = 7
 local SHATTERED_COLOR_FRAMES = 30
 local PRIORITY = 2
 local DOWNGRADE_COOLDOWN = 90
+
+local nextEnemiesSplit = 0
 
 ---Spawns a devolved enemy by using a D10 wisp to force devolving the enemy
 ---@param player EntityPlayer
 ---@param baseEnemy Entity
 ---@param position Vector
----@param solidColor Color
----@param color Color
-local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
+local function SpawnDowngrade(player, baseEnemy, position)
     local newEnemy = TSIL.EntitySpecific.SpawnNPC(
         baseEnemy.Type,
         baseEnemy.Variant,
@@ -34,38 +31,62 @@ local function SpawnDowngrade(player, baseEnemy, position, solidColor, color)
     newEnemy.HitPoints = baseEnemyHPPercent * newEnemy.MaxHitPoints * 0.75
 
     utility:DevolveEnemy(player, newEnemy)
-    newEnemy:SetColor(color, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
-    --[[TSIL.Utils.Functions.RunInFramesTemporary(function ()
-        newEnemy:SetColor(color, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
-        utility:SetData(newEnemy, "ForbidEnemySplit", true)
-    end, SHATTERED_SOLID_FRAMES)]]
 end
 
 ---Remove an enemy and spawn two devolved versions of itself, also changing their colors temporarily
 ---@param enemy Entity
 ---@param player EntityPlayer
 function MilkshakeVol1.API.SplitEnemy(enemy, player, ignoreCooldown)
-    if (not ignoreCooldown and utility:GetData(player, "LocustSplit"))
+    if utility:GetData(enemy, "PrismaticHasSplit")
+    or (not ignoreCooldown and utility:GetData(player, "LocustSplit"))
     or not enemy:IsVulnerableEnemy()
     or enemy:IsBoss() then
         return
+    end
+
+    if REPENTOGON then
+        local entry = XMLData.GetEntryFromEntity(enemy, true, true)
+        local entityIdString = tostring(enemy.Type) .. "." .. tostring(enemy.Variant) .. "." .. tostring(enemy.SubType)
+
+        if entry.devolve[1].id == nil
+        or entry.devolve[1].id == entityIdString then
+            return
+        end
     end
 
     if not ignoreCooldown then
         utility:SetData(player, "LocustSplit", true)
     end
 
+    nextEnemiesSplit = 2
+
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
         enemy:Remove()
-        SpawnDowngrade(player, enemy, Isaac.GetFreeNearPosition(enemy.Position, SHIFT_LEFT), SOLID_CYAN, CYAN)
-        SpawnDowngrade(player, enemy, Isaac.GetFreeNearPosition(enemy.Position, SHIFT_RIGHT), SOLID_PINK, PINK)
+        SpawnDowngrade(player, enemy, Isaac.GetFreeNearPosition(enemy.Position, SHIFT_LEFT))
+        SpawnDowngrade(player, enemy, Isaac.GetFreeNearPosition(enemy.Position, SHIFT_RIGHT))
     end, 1)
 
     TSIL.Utils.Functions.RunInFrames(function ()
         utility:SetData(player, "LocustSplit", false)
     end, DOWNGRADE_COOLDOWN)
 end
+
+---@param npc EntityNPC
+function prismaticDice:NpcUpdate(npc)
+    if nextEnemiesSplit > 0 then
+
+        if nextEnemiesSplit == 2 then
+            npc:SetColor(PINK, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
+        else
+            npc:SetColor(CYAN, SHATTERED_COLOR_FRAMES, PRIORITY, false, false)
+        end
+
+        nextEnemiesSplit = nextEnemiesSplit - 1
+        utility:SetData(npc, "PrismaticHasSplit", true)
+    end
+end
+MilkshakeVol1:AddCallback(ModCallbacks.MC_NPC_UPDATE, prismaticDice.NpcUpdate)
 
 ---@param entity Entity
 ---@param source Entity
