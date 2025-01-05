@@ -248,3 +248,56 @@ MilkshakeVol1.API.AddEntityCanCollideRainbowPenny(type, ?variant, ?subtype)
     player EntityPlayer
 
 --------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API.ForbidEnemySplit(entityData)
+* Defined in line 52 of milkshake_scripts/locusts/prismaticdice.lua
+
+    Forbid a specific entity from being split
+
+    entityData table
+
+    Tables must be in the following format:
+    {
+        type = myEntityType,
+        variant = myEntityVariant,
+        subtype = myEntitySubtype
+    }
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API.AllowSplitWithFakeDevolve(entityData)
+* Defined in line 59 of milkshake_scripts/locusts/prismaticdice.lua
+
+    If your custom entity has its own code written for devolving,
+    i.e, it doesn't devolve into another enemy, but instead you remove it
+    then spawn another type of entity on MC_POST_ENTITY_DEVOLVE, you must
+    add it to this table to avoid the REPENTOGON fallback where an enemy will
+    not be split if it doesn't have an xml entry for devolving that is different
+    from the base entity.
+
+    entityData table
+
+    Tables must be in the following format:
+    {
+        type = myEntityType,
+        variant = myEntityVariant,
+        subtype = myEntitySubtype,
+        ActivationFunction = myFunction(entity)
+    }
+
+    The activation function is the code to be ran on MC_POST_ENTITY_DEVOLVE, for
+    an example, check out line 16 at line 52 of milkshake_scripts/locusts/prismaticdice.lua
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API.IsEntityDataIn(entityData, dataTable)
+* Defined in line 67 of milkshake_scripts/locusts/prismaticdice.lua
+
+    Primarily to be used with the two functions documented above here. Compares
+    a table of type, variant, and subtype to a table of tables with the same entries to
+    find that specific entry. Returns the found table if successful, false otherwise.
+
+    entityData table
+    dataTable table
+
+--------------------------------------------------------------------------------------------------------------------------------------
