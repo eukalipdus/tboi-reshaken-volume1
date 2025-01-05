@@ -11,6 +11,20 @@ local SHATTERED_COLOR_FRAMES = 30
 local PRIORITY = 2
 local DOWNGRADE_COOLDOWN = 90
 
+MilkshakeVol1.entitiesForbidSplit = {}
+
+MilkshakeVol1.entitiesFakeDevolve = {
+    {
+        type = enums.Enemies.GLASS_HEAD,
+        variant = 0,
+        subtype = 0,
+        ActivationFunction = function (entity)
+            entity:Remove()
+            local bomb = TSIL.EntitySpecific.SpawnBomb(0, 0, entity.Position)
+            bomb:AddTearFlags(TearFlags.TEAR_BLOOD_BOMB)
+            TSIL.EntitySpecific.SpawnEffect(EffectVariant.POOF01, 0, entity.Position)
+    end}
+}
 local nextEnemiesSplit = 0
 
 ---Spawns a devolved enemy by using a D10 wisp to force devolving the enemy
@@ -33,14 +47,45 @@ local function SpawnDowngrade(player, baseEnemy, position)
     utility:DevolveEnemy(player, newEnemy)
 end
 
+---Forbid a specific entity from being split
+---@param entityData table
+function MilkshakeVol1.API.ForbidEnemySplit(entityData)
+    table.insert(MilkshakeVol1.entitiesForbidSplit, entityData)
+end
+
+---If an entity has its own code written for devolving, it must be added here
+---to avoid the Repentogon fallback preventing a split on enemies with no devolve id
+---@param entityData table
+function MilkshakeVol1.API.AllowSplitWithFakeDevolve(entityData)
+    table.insert(MilkshakeVol1.entitiesFakeDevolve, entityData)
+end
+
+function MilkshakeVol1.API.IsEntityDataIn(entityData, dataTable)
+    for _, storedData in pairs(dataTable) do
+        if entityData.type == storedData.type
+        and entityData.variant == storedData.variant
+        and entityData.subtype == storedData.subtype then
+            return storedData
+        end
+    end
+    return false
+end
+
 ---Remove an enemy and spawn two devolved versions of itself, also changing their colors temporarily
 ---@param enemy Entity
 ---@param player EntityPlayer
 function MilkshakeVol1.API.SplitEnemy(enemy, player, ignoreCooldown)
+    local entityData = {
+        type = enemy.Type,
+        variant = enemy.Variant,
+        subtype = enemy.SubType
+    }
+
     if utility:GetData(enemy, "PrismaticHasSplit")
     or (not ignoreCooldown and utility:GetData(player, "LocustSplit"))
     or not enemy:IsVulnerableEnemy()
-    or enemy:IsBoss() then
+    or enemy:IsBoss()
+    or MilkshakeVol1.API.IsEntityDataIn(entityData, MilkshakeVol1.entitiesForbidSplit) then
         return
     end
 
@@ -49,7 +94,8 @@ function MilkshakeVol1.API.SplitEnemy(enemy, player, ignoreCooldown)
         local entityIdString = tostring(enemy.Type) .. "." .. tostring(enemy.Variant) .. "." .. tostring(enemy.SubType)
 
         if entry.devolve[1].id == nil
-        or entry.devolve[1].id == entityIdString then
+        or entry.devolve[1].id == entityIdString
+        and not MilkshakeVol1.API.IsEntityDataIn(entityData, MilkshakeVol1.entitiesFakeDevolve) then
             return
         end
     end

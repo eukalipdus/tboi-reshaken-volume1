@@ -465,17 +465,3 @@ function GlassHeads:GlassHead_EffectUpdate(effect)
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, GlassHeads.GlassHead_EffectUpdate)
-
----@param entity Entity
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_ENTITY_DEVOLVE, function (_, entity)
-    if not (entity.Type == MilkshakeVol1.enums.Enemies.GLASS_HEAD and entity.Variant == 0) then return end
-
-    entity:Remove()
-
-    local bomb = TSIL.EntitySpecific.SpawnBomb(0, 0, entity.Position)
-    bomb:AddTearFlags(TearFlags.TEAR_BLOOD_BOMB)
-
-    TSIL.EntitySpecific.SpawnEffect(EffectVariant.POOF01, 0, entity.Position)
-
-    return true
-end)

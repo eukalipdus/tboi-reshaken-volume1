@@ -614,6 +614,20 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_ENTITY_DEVOLVE, function (_, entit
             end
         end
 
+        local entityData = {
+            type = entity.Type,
+            variant = entity.Variant,
+            subtype = entity.SubType
+        }
+
+        local storedData = MilkshakeVol1.API.IsEntityDataIn(entityData, MilkshakeVol1.entitiesFakeDevolve)
+
+        if storedData
+        and storedData.ActivationFunction then
+            storedData.ActivationFunction(entity)
+            return true
+        end
+
         return false
     end
 end)
