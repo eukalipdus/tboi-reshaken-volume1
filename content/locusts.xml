@@ -31,4 +31,7 @@
 
     <!-- Dad's Mitt -->
     <locust id="26" color="default" gfx="locust_dadsmitt.png" damageMultiplier="1.2" speed="0.8"/>
+
+    <!-- Golden Shovel -->
+    <locust id="3" color="fly_yellow" tearFlags2="53" damageMultiplier="0.8" procChance="0.05" />
 </locusts>
