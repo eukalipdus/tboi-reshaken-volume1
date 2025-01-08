@@ -384,7 +384,7 @@ ThrowableItemLib:RegisterThrowableItem({
             shatteredOrb.SpriteOffset = Vector(0, -36) * player.SpriteScale
             shatteredOrb:GetSprite():Play("Thrown", true)
 
-            AddShatteredOrbData(shatteredOrb, (vect * SHATTERED_ORB_THROW_SPEED + (player.Velocity * 0.9)):Rotated(num == 1 and 0 or -MULTISHOT_SPREAD - MULTISHOT_SPREAD / num + MULTISHOT_SPREAD * i))
+            AddShatteredOrbData(shatteredOrb, (vect * SHATTERED_ORB_THROW_SPEED + (player.Velocity * 0.9)):Rotated(num == 1 and 0 or (i - (num / 2) - 0.5) * MULTISHOT_SPREAD / (num - 1)))
         end
 
         SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
