@@ -362,10 +362,11 @@ local function GetShatteredOrbData(effect)
     return directionsPerShatteredOrb[tostring(ptrHash)]
 end
 
+local emptySprite = Sprite()
+
 ThrowableItemLib:RegisterThrowableItem({
     Type = ThrowableItemLib.Type.ACTIVE,
     ID = MilkshakeVol1.enums.Collectibles.SHATTERED_ORB,
-    Flags = ThrowableItemLib.Flag.EMPTY_THROW,
     ---@param player EntityPlayer
     ---@param vect Vector
     ThrowFn = function (player, vect)
@@ -388,7 +389,13 @@ ThrowableItemLib:RegisterThrowableItem({
 
         SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
     end,
-    Identifier = "RE_SHATTERED_ORB"
+    Identifier = "RE_SHATTERED_ORB",
+    AnimateFn = function (player, state)
+        if state == ThrowableItemLib.State.THROW then
+            player:AnimatePickup(emptySprite, true, "HideItem")
+            return true
+        end
+    end
 })
 
 ---@param entity Entity
