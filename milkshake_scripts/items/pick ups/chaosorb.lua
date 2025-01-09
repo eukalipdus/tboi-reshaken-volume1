@@ -49,7 +49,7 @@ end)
 
 HudHelper.RegisterHUDElement({
     Name = "RE1_CHAOS",
-	Priority = HudHelper.Priority.NORMAL,
+	Priority = HudHelper.Priority.HIGH,
 	Condition = function(player)
 		return player:GetCard(0) == MilkshakeVol1.enums.Orbs.RANDOM
 	end,
@@ -59,7 +59,6 @@ HudHelper.RegisterHUDElement({
         end
 
         orbHud.Color = Color(1, 1, 1, alpha)
-        orbHud.Scale = Vector(scale, scale)
         orbHud:Render(position)
 	end,
 }, HudHelper.HUDType.POCKET)
