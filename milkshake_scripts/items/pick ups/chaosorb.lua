@@ -53,7 +53,11 @@ HudHelper.RegisterHUDElement({
 	Condition = function(player)
 		return player:GetCard(0) == MilkshakeVol1.enums.Orbs.RANDOM
 	end,
-	OnRender = function(player, _, _, position, alpha, scale)
+	OnRender = function(player, _, layout, position, alpha, scale)
+        if layout == HudHelper.HUDLayout.P1 or layout == HudHelper.HUDLayout.P1_OTHER_TWIN then
+            position = position + Vector(-1, 0)
+        end
+
         orbHud.Color = Color(1, 1, 1, alpha)
         orbHud.Scale = Vector(scale, scale)
         orbHud:Render(position)
