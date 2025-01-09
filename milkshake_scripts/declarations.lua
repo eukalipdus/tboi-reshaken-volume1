@@ -38,3 +38,9 @@ DetailedRespawnGlobalAPI = {}
 Epiphany = {}
 EclipsedMod = {}
 MMC = {}
+REPENTANCE_PLUS = true
+---@diagnostic disable-next-line: inject-field
+KColor.White = KColor(1, 1, 1, 1)
+ModConfigMenu = {}
+TheFuture = {}
+Options.JacobEsauControls = true

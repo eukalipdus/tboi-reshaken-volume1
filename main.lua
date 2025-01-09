@@ -26,6 +26,7 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function ()
 end)
 
 include("milkshake_scripts.throwableitemlib"):Init()
+include("milkshake_scripts.hudhelper")
 
 if StageAPI then
     StageAPI.UnregisterCallbacks(MilkshakeVol1.Name)

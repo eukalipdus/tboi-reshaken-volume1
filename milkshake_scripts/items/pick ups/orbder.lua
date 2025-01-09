@@ -1,6 +1,6 @@
 local sprite = Sprite()
-
-sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true); sprite:Play(sprite:GetDefaultAnimation(), true)
+sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true)
+sprite:Play(sprite:GetDefaultAnimation(), true)
 
 ---@param player EntityPlayer
 function MilkshakeVol1.API:GetSelectedOrderOrb(player)
@@ -24,19 +24,6 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, playe
     end
 
     SFXManager():Play(SoundEffect.SOUND_GOLD_HEART_DROP, 1, 2, false, 1 + data.SelectedOrb * 0.1)
-end)
-
----@diagnostic disable-next-line: undefined-field
-MilkshakeVol1:AddCallback(REPENTOGON and ModCallbacks.MC_POST_HUD_RENDER or ModCallbacks.MC_GET_SHADER_PARAMS, function ()
-    ---@diagnostic disable-next-line: undefined-global
-    if REPENTOGON and RoomTransition.IsRenderingBossIntro() then return end
-
-    local player = Isaac.GetPlayer() if player:GetCard(0) ~= MilkshakeVol1.enums.Orbs.ORDER then return end
-
-    local renderPos = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) + Vector(-16, -12) + Vector(-16, -6) * Options.HUDOffset
-    print(MilkshakeVol1.API:GetSelectedOrderOrb(player))
-    sprite:Render(renderPos)
-    sprite:SetFrame(MilkshakeVol1.API:GetSelectedOrderOrb(player) - 1)
 end)
 
 ---@param player EntityPlayer
@@ -63,3 +50,17 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, function (_, pickup)
 
     pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, MilkshakeVol1.enums.Orbs.ORDER, true, true)
 end, PickupVariant.PICKUP_TAROTCARD)
+
+HudHelper.RegisterHUDElement({
+    Name = "RE1_ORDER",
+	Priority = HudHelper.Priority.NORMAL,
+	Condition = function(player)
+		return player:GetCard(0) == MilkshakeVol1.enums.Orbs.ORDER
+	end,
+	OnRender = function(player, _, _, position, alpha, scale)
+        sprite.Color = Color(1, 1, 1, alpha)
+        sprite.Scale = Vector(scale, scale)
+        sprite:SetFrame(MilkshakeVol1.API:GetSelectedOrderOrb(player) - 1)
+        sprite:Render(position)
+	end,
+}, HudHelper.HUDType.POCKET)

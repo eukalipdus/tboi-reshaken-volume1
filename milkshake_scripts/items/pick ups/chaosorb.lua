@@ -16,35 +16,9 @@ local SPRITESHEET_PER_ORB = {
     [enums.Orbs.ROCK] = "spirit_ground",
 }
 
-local moveOrbHudPerPlayer = {
-    Vector(-15, -12),
-    Vector(394, 147),
-}
-
-local playerAnchor = {
-    "bottomright",
-    "topright",
-    "bottomleft",
-    "bottomright",
-}
-
-local function CreateOrbOverlay()
-    local orbHud = Sprite()
-    orbHud:Load("gfx/ui/ui_chaosorb.anm2", true)
-    orbHud:Play("Spirit Of Chaos")
-    return orbHud
-end
-
-local orbHuds = {
-    CreateOrbOverlay(),
-    CreateOrbOverlay(),
-    CreateOrbOverlay(),
-    CreateOrbOverlay(),
-}
-
-local NON_P1_SCALE = Vector(0.5, 0.5)
-
-local frame = 1
+local orbHud = Sprite()
+orbHud:Load("gfx/ui/ui_chaosorb.anm2", true)
+orbHud:Play("Spirit Of Chaos")
 
 ---@param player EntityPlayer
 ---@param flags UseOrbFlag
@@ -69,33 +43,19 @@ MilkshakeVol1:AddCallback(
     enums.Orbs.RANDOM
 )
 
-function ChaosOrb:PostRender()
-    frame = frame + 0.3
-    if frame > 60 then frame = 1 end
-    if Game():GetHUD():IsVisible() then
-        for i = 1, Game():GetNumPlayers() do
-            local player = Isaac.GetPlayer(i)
-            if player:GetCard(0) == enums.Orbs.RANDOM then
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_UPDATE, function ()
+    orbHud:Update()
+end)
 
-                if player:GetPlayerType() ~= PlayerType.PLAYER_JACOB
-                and player:GetPlayerType() ~= PlayerType.PLAYER_ESAU then
-                    local position = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) + moveOrbHudPerPlayer[i]
-                    local x, y = utility:HUDOffset(position.X, position.Y, playerAnchor[i])
-                    position = Vector(x,y)
-                    orbHuds[i]:Render(position)
-                    orbHuds[i]:SetFrame(math.floor(frame))
-                end
-
-                if i > 1 then
-                    orbHuds[i].Scale = NON_P1_SCALE
-                end
-            end
-        end
-    end
-end
-if REPENTOGON then
-    ---@diagnostic disable-next-line: undefined-field
-    MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_HUD_RENDER, ChaosOrb.PostRender)
-else
-    MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, ChaosOrb.PostRender)
-end
+HudHelper.RegisterHUDElement({
+    Name = "RE1_CHAOS",
+	Priority = HudHelper.Priority.NORMAL,
+	Condition = function(player)
+		return player:GetCard(0) == MilkshakeVol1.enums.Orbs.RANDOM
+	end,
+	OnRender = function(player, _, _, position, alpha, scale)
+        orbHud.Color = Color(1, 1, 1, alpha)
+        orbHud.Scale = Vector(scale, scale)
+        orbHud:Render(position)
+	end,
+}, HudHelper.HUDType.POCKET)

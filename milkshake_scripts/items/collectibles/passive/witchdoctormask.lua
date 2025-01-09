@@ -5,54 +5,17 @@ local utility = MilkshakeVol1.utility
 local NO_PILL = 0
 local FF_PILL_BEGIN = 101
 local FF_PILL_END = 120
-local NON_P1_SCALE = Vector(0.5, 0.5)
 local SPAWN_DISTANCE = 40
 
-local movePillHudPerPlayer = {
-    --Vector(394, 147),
-    Vector(-12, -12), --player 1 bottom right
-    Vector(-151, -318), --player 2 top right
-    Vector(-616, 12), --player 3 bottom left
-    Vector(-155, 5), --player 4 bottom right but slightly less
+local orbPillHud = Sprite()
+orbPillHud:Load("gfx/ui/ui_orbpills.anm2", true)
+orbPillHud:Play("HUD")
 
-}
-
-local function CreatePillOverlay()
-    local orbPillHud = Sprite()
-    orbPillHud:Load("gfx/ui/ui_orbpills.anm2", true)
-    orbPillHud:Play("HUD")
-    return orbPillHud
-end
-
-local function CreateFFPillOverlay()
-    local orbPillHud = Sprite()
-    orbPillHud:Load("gfx/ui/ui_fforbpills.anm2", true)
-    orbPillHud:Play("HUD")
-    return orbPillHud
-end
+local orbPillHudFF = Sprite()
+orbPillHudFF:Load("gfx/ui/ui_fforbpills.anm2", true)
+orbPillHudFF:Play("HUD")
 
 local playersCurrentPills = {}
-
-local orbPillHuds = {
-    CreatePillOverlay(),
-    CreatePillOverlay(),
-    CreatePillOverlay(),
-    CreatePillOverlay(),
-}
-
-local ffOrbPillHuds = {
-    CreateFFPillOverlay(),
-    CreateFFPillOverlay(),
-    CreateFFPillOverlay(),
-    CreateFFPillOverlay(),
-}
-
-local playerAnchor = {
-    "bottomright",
-    "topright",
-    "bottomleft",
-    "bottomright",
-}
 
 local matchingPills = {
     [PillColor.PILL_BLUE_BLUE] = enums.Orbs.WATER,
@@ -245,46 +208,38 @@ function witchDoctorMask:PostPickupUpdate(pickup)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, witchDoctorMask.PostPickupUpdate)
 
-function witchDoctorMask:GetShaderParams()
-    if Game():GetHUD():IsVisible() then
-        local players = TSIL.Players.GetPlayers()
-        for i, player in ipairs(players) do
-            local heldPill = player:GetPill(0)
-            if player:HasCollectible(enums.Collectibles.WITCH_DOCTOR_MASK)
-            and heldPill ~= 0 then
-                local isFiendFolio = IsFiendFolioPill(heldPill)
+HudHelper.RegisterHUDElement({
+    Name = "RE1_SPIRITPILL",
+	Priority = HudHelper.Priority.NORMAL,
+	Condition = function(player)
+		return player:HasCollectible(MilkshakeVol1.enums.Collectibles.WITCH_DOCTOR_MASK) and player:GetPill(0) ~= PillColor.PILL_NULL
+	end,
+	OnRender = function(player, _, layout, position, alpha, scale)
+        local heldPill = player:GetPill(0)
+        local isFiendFolio = IsFiendFolioPill(heldPill)
 
-                if player:GetPlayerType() ~= PlayerType.PLAYER_JACOB
-                and player:GetPlayerType() ~= PlayerType.PLAYER_ESAU then
-                    local position = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight()) + movePillHudPerPlayer[i]
-                    local x, y = utility:HUDOffset(position.X, position.Y, playerAnchor[i])
-                    position = Vector(x,y)
-                    if isFiendFolio then
-                        ffOrbPillHuds[i]:Render(position)
-                        ffOrbPillHuds[i]:SetFrame(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
-                        ffOrbPillHuds[i]:Play("HUD")
-                    else
-                        local frame = GetFrameFromId(heldPill, pillAnimFrames) - 1
-                        if frame then
-                            orbPillHuds[i]:Render(position)
-                            orbPillHuds[i]:SetFrame(frame)
-                            orbPillHuds[i]:Play("HUD")
-                        end
-                    end
-                end
+        if layout == HudHelper.HUDLayout.P1 or layout == HudHelper.HUDLayout.P1_OTHER_TWIN then
+            position = position + Vector(3, 0)
+        end
 
-                if i > 1 then
-                    if isFiendFolio then
-                        ffOrbPillHuds[i].Scale = NON_P1_SCALE
-                    else
-                        orbPillHuds[i].Scale = NON_P1_SCALE
-                    end
-                end
+        if isFiendFolio then
+            orbPillHudFF.Color = Color(1, 1, 1, alpha)
+            orbPillHudFF.Scale = Vector(scale, scale)
+            orbPillHudFF:Render(position)
+            orbPillHudFF:SetFrame(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
+            orbPillHudFF:Play("HUD")
+        else
+            local frame = GetFrameFromId(heldPill, pillAnimFrames) - 1
+            if frame then
+                orbPillHud.Color = Color(1, 1, 1, alpha)
+                orbPillHud.Scale = Vector(scale, scale)
+                orbPillHud:Render(position)
+                orbPillHud:SetFrame(frame)
+                orbPillHud:Play("HUD")
             end
         end
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, witchDoctorMask.GetShaderParams)
+	end,
+}, HudHelper.HUDType.POCKET)
 
 function witchDoctorMask:PostPlayerCollectibleAdded(player, collectible, firstTime)
     if collectible ~= enums.Collectibles.WITCH_DOCTOR_MASK
