@@ -232,6 +232,7 @@ Changes
 -Leviticus, still charged with soul hearts, now teleports Isaac to a special Angel room upon activation for a free item and holy card for sale
 -Spirit Kiln Brenda wisps will now drop their ccorresponding spirit orb when destroyed, and after 4 payouts, Brenda will now have a chance to payout with a random glass item
 -Brenda now plays a lose soul heart sound effect on use for better loss communication
+-Updated sprites for La Chancla, Glass Idol, Balanced Breakfast, Hearty Breakfast, and Golden Breakfast
 -Lyra now grants an extra consumable slot so you can hold two spirit orbs at once
 -Lil bishop now plays a sound effect to indicate when it enters shielding mode, proc chance reduced to 10% from 20%
 -Alt Path Unlock Tracker now open the door to corpse as well (please don't report this to the Milkshake Devs)
@@ -301,7 +302,7 @@ Changes
 the clotties from that globin cannot be split again)
 
 Fixes
--FIXED POTATO PEELER TAKING TWICE THE AMOUNT OF INTENDED HEARTS WHEN FIEND FOLIO IS ENABLED !
+-FIXED POTATO PEELER TAKING TWICE THE AMOUNT OF INTENDED HEARTS WHEN FIEND FOLIO IS ENABLED !!
 -Prismatic Dice locusts and Prismatic Lacewing will not devolve enemies that do not have devolve entries in their
 XML data if REPENTOGON is installed (if you have a mod which uses custom devolve code, check out MilkshakeVol1.API.AllowSplitWithFakeDevolve)
 -Rainbow pennies can now be picked up again when the player is holding an item over their head
@@ -309,8 +310,14 @@ XML data if REPENTOGON is installed (if you have a mod which uses custom devolve
 -Added fiend folio lurkers to prismatic lacewing blacklist
 -Fixed error that would appear when taking damage with doggybag
 
-
 API Changes
 -Added MilkshakeVol1.API.ForbidEnemySplit
 -Added MilkshakeVol1.API.AllowSplitWithFakeDevolve
 -Added MilkshakeVol1.API.IsEntityDataIn
+
+
+================================================
+    v1.1.2 - January 8, 2025
+================================================
+Changes
+-Updated several death item sprites to look nicer
