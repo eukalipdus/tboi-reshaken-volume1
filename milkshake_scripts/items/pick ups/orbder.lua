@@ -63,6 +63,7 @@ HudHelper.RegisterHUDElement({
         end
 
         sprite.Color = Color(1, 1, 1, alpha)
+        sprite.Scale = Vector(scale, scale)
         sprite:SetFrame(MilkshakeVol1.API:GetSelectedOrderOrb(player) - 1)
         sprite:Render(position)
 	end,

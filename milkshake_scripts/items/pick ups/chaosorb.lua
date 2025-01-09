@@ -59,6 +59,7 @@ HudHelper.RegisterHUDElement({
         end
 
         orbHud.Color = Color(1, 1, 1, alpha)
+        orbHud.Scale = Vector(scale, scale)
         orbHud:Render(position)
 	end,
 }, HudHelper.HUDType.POCKET)
