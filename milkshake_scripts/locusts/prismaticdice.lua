@@ -97,8 +97,10 @@ function MilkshakeVol1.API.SplitEnemy(enemy, player, ignoreCooldown)
         local entry = XMLData.GetEntryFromEntity(enemy, true, true)
         local entityIdString = tostring(enemy.Type) .. "." .. tostring(enemy.Variant) .. "." .. tostring(enemy.SubType)
 
-        if entry.devolve[1].id == nil
-        or entry.devolve[1].id == entityIdString
+        if (entry == nil
+        or entry.devolve == nil
+        or entry.devolve[1].id == nil
+        or entry.devolve[1].id == entityIdString)
         and not MilkshakeVol1.API.IsEntityDataIn(entityData, MilkshakeVol1.entitiesFakeDevolve) then
             return
         end
