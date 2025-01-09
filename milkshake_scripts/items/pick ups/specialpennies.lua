@@ -315,7 +315,7 @@ function SpecialPennies:PrePickupCollision(pickup, collider)
         if not player
         or player:GetNumCoins() < pickup.Price
         or player.Variant ~= 0
-        or player:IsHoldingItem() then
+        or (pickup:IsShopItem() and player:IsHoldingItem()) then
             return true
         end
 
