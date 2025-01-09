@@ -847,6 +847,24 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         },
     })
 
+
+    local PrismaticLocustBlacklist = {
+        {type = 750, variant = 260, subtype = 0}, --Lurker corpse pit guy and his parts
+        {type = 750, variant = 261, subtype = 0},
+        {type = 750, variant = 262, subtype = 0},
+        {type = 750, variant = 263, subtype = 0},
+        {type = 750, variant = 264, subtype = 0},
+        {type = 750, variant = 270, subtype = 0},
+        {type = 750, variant = 271, subtype = 0},
+        {type = 750, variant = 272, subtype = 0},
+        {type = 750, variant = 273, subtype = 0},
+        {type = 750, variant = 274, subtype = 0},
+    }
+
+    for _, enemyData in pairs(PrismaticLocustBlacklist) do
+        MilkshakeVol1.API.ForbidEnemySplit(enemyData)
+    end
+
     FiendFolio:AddStackableItems({
         MilkshakeVol1.enums.Collectibles.BATTERY_ACID,
         MilkshakeVol1.enums.Collectibles.BALANCED_BREAKFAST,
