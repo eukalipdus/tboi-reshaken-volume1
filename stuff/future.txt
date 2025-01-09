@@ -1,0 +1,281 @@
+Name: S. Blob
+ID: 15
+Variant: 123
+Subtype: 0
+Element: psychic
+
+Name: Flippant
+ID: 391
+Variant: 123
+Subtype: 0
+Element: psychic
+
+Name: Flippant Inverted
+ID: 391
+Variant: 123
+Subtype: 1
+Element: psychic
+
+Name: Flippant Pacer
+ID: 391
+Variant: 123
+Subtype: 2
+Element: psychic
+
+Name: Flippant Pacer Inverted
+ID: 391
+Variant: 123
+Subtype: 3
+Element: psychic
+
+Name: Flippant Gusher
+ID: 391
+Variant: 123
+Subtype: 4
+Element: psychic
+
+Name: Flippant Gusher Inverted
+ID: 391
+Variant: 123
+Subtype: 5
+Element: psychic
+
+Name: Ogle
+ID: 391
+Variant: 124
+Subtype: 0
+Element: undead
+
+Name: Custom Ogle
+ID: 391
+Variant: 130
+Subtype: 0
+Element: undead
+
+Name: Rubber
+ID: 391
+Variant: 125
+Subtype: 0
+Element: undead
+
+Name: Warp Pipe Head
+ID: 391
+Variant: 126
+Subtype: 0
+Element: undead
+
+Name: Warp Pipe Ass
+ID: 391
+Variant: 127
+Subtype: 0
+Element: undead
+
+Name: Ecomagnet
+ID: 391
+Variant: 128
+Subtype: 0
+Element: psychic
+
+Name: Retinara
+ID: 391
+Variant: 129
+Subtype: 0
+Element: psychic
+
+Name: Fecalection
+ID: 391
+Variant: 131
+Subtype: 0
+Element: psychic
+
+Name: Fecalection Ghost
+ID: 391
+Variant: 132
+Subtype: 0
+Element: psychic
+
+Name: Rewind
+ID: 391
+Variant: 133
+Subtype: 0
+Element: psychic
+
+Name: Spookie
+ID: 391
+Variant: 134
+Subtype: 0
+Element: undead
+
+Name: Wicked Spookie
+ID: 391
+Variant: 134
+Subtype: 1
+Element: undead
+
+Name: Ol' Spookie
+ID: 391
+Variant: 134
+Subtype: 2
+Element: undead
+
+Name: Future Tumor
+ID: 391
+Variant: 135
+Subtype: 0
+Element: undead
+
+Name: Future Tumor Small
+ID: 391
+Variant: 135
+Subtype: 1
+Element: undead
+
+Name: Kuko
+ID: 391
+Variant: 136
+Subtype: 0
+Element: undead
+
+Name: Kuko Jr.
+ID: 391
+Variant: 137
+Subtype: 0
+Element: undead
+
+Name: Wailer (The Future)
+ID: 391
+Variant: 300
+Subtype: 0
+Element: undead
+
+Name: Family Baby
+ID: 391
+Variant: 138
+Subtype: 0
+Element: undead
+
+Name: Mongrel
+ID: 391
+Variant: 140
+Subtype: 0
+Element: undead
+
+Name: Betus
+ID: 391
+Variant: 141
+Subtype: 0
+Element: undead
+
+Name: Metabolite
+ID: 391
+Variant: 142
+Subtype: 0
+Element: undead
+
+Name: Metabulon
+ID: 391
+Variant: 143
+Subtype: 0
+Element: undead
+
+Name: Mantis
+ID: 391
+Variant: 144
+Subtype: 0
+Element: psychic
+
+Name: Pile o' Bones
+ID: 391
+Variant: 145
+Subtype: 0
+Element: undead
+
+Name: Ferryman
+ID: 391
+Variant: 146
+Subtype: 0
+Element: undead
+
+Name: Monger
+ID: 391
+Variant: 147
+Subtype: 0
+Element: undead
+
+Name: Half Monger
+ID: 391
+Variant: 148
+Subtype: 0
+Element: undead
+
+Name: Anchorfish
+ID: 391
+Variant: 149
+Subtype: 0
+Element: undead
+
+Name: Anchorfish Head
+ID: 391
+Variant: 150
+Subtype: 0
+Element: undead
+
+Name: Selfish Knight
+ID: 391
+Variant: 151
+Subtype: 0
+Element: psychic
+
+Name: Selfish Knight Inverted
+ID: 391
+Variant: 151
+Subtype: 1
+Element: psychic
+
+Name: Moretug
+ID: 391
+Variant: 152
+Subtype: 0
+Element: psychic
+
+Name: Future Turret
+ID: 391
+Variant: 153
+Subtype: 0
+Element: psychic
+
+Name: Frayer
+ID: 391
+Variant: 154
+Subtype: 0
+Element: psychic
+
+Name: Oswald
+ID: 391
+Variant: 155
+Subtype: 0
+Element: psychic
+
+Name: Stevis
+ID: 391
+Variant: 156
+Subtype: 0
+Element: psychic
+
+Name: Sisyphus
+ID: 391
+Variant: 157
+Subtype: 0
+Element: undead
+
+Name: Carcinoma Heart
+ID: 391
+Variant: 160
+Subtype: 0
+Element: undead
+
+Name: Carcinoma Mask
+ID: 391
+Variant: 161
+Subtype: 0
+Element: undead

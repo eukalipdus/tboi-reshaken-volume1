@@ -19,8 +19,8 @@ local coinBlacklist = {
 
 MilkshakeVol1.WeightedRainbowPennies = { -- Workaround to the other table making items added first being more common
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.ROTTEN_PENNY, weight = 0.25},
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.FLAT_PENNY, weight = 0.45},
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BURNT_PENNY, weight = 0.45},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.FLAT_PENNY, weight = 0.50},
+    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BURNT_PENNY, weight = 0.50},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.BUTT_PENNY, weight = 0.25},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CHARGED_PENNY, weight = 0.20},
     {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.CURSED_PENNY, weight = 0.10},

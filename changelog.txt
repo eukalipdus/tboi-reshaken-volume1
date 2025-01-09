@@ -212,6 +212,7 @@ Additions
 Fixes
 -Fixed Lag and bloat oopsies
 
+
 ================================================
     v1.1.0 - The Big Repentance+ Vol 1.5 Update! - December 25, 2024 
 ================================================
@@ -287,17 +288,27 @@ API Changes
 -Added MilkshakeVol1.API.AddEntityCanCollideRainbowPenny
 -Added MilkshakeVol1.API.SplitEnemy
 
+
 ================================================
-    v1.1.1 - January X, 2025
+    v1.1.1 - January 8, 2025
 ================================================
 Additions
 -Added Golden Shovel locust
 
 Changes
+-Slightly increased chance for flat pennies and burnt pennies to spawn with pot of gold
 -Prismatic Dice locusts and Prismatic Lacewing now only allow enemies to be split once (i.e, when a globin is split,
-the clotties from that globin cannot be split)
+the clotties from that globin cannot be split again)
+
+Fixes
+-FIXED POTATO PEELER TAKING TWICE THE AMOUNT OF INTENDED HEARTS WHEN FIEND FOLIO IS ENABLED !
 -Prismatic Dice locusts and Prismatic Lacewing will not devolve enemies that do not have devolve entries in their
 XML data if REPENTOGON is installed (if you have a mod which uses custom devolve code, check out MilkshakeVol1.API.AllowSplitWithFakeDevolve)
+-Rainbow pennies can now be picked up again when the player is holding an item over their head
+-Shattered Orb now works properly when in the pocket slot
+-Added fiend folio lurkers to prismatic lacewing blacklist
+-Fixed error that would appear when taking damage with doggybag
+
 
 API Changes
 -Added MilkshakeVol1.API.ForbidEnemySplit
