@@ -102,7 +102,7 @@ local function TrackDoggyBagPoop(player, poopType)
         {}
     }
 
-    if #trackedSets > 0 then
+    if trackedSets and #trackedSets > 0 then
         local index = FindSetIndex(trackedSets, playerIndex)
         if index ~= -1 then
             playerAndBags = trackedSets[index]

@@ -42,6 +42,7 @@ Alongside all this, we also feature full compatibility with Fiend Folio and seve
 Isaac Reshaken is INCOMPATIBLE with the following mods for one reason or another:
 [list]
 [*] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2719437566]Double Spiked Rocks[/url] (Crashes in some rooms for unknown reasons...)
+[*] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2978501842]Giga Bomb Synergies[/url] (Rainbow pennies and various other things stop working due to library Incompatibilities. Working on fix soon, please disable for now though, you probably won't find any gigabombs anyway...)
 [/list]
 
 [h1] Only Volume 1?[/h1]
@@ -84,7 +85,7 @@ punchyufo, clownylun, toyrapple, neibusha, Luna, mysterykar, scooperman, ZRWilso
 
 
 Find any bugs? Send them in the Bugs discussion thread below along with a snippet of your log or screenshot of the error. And as always, stay shakey!</description>
-    <version>1.16</version>
+    <version>1.17</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>
