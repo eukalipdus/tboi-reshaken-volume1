@@ -457,6 +457,12 @@ local LEVITICUS_DEVIL_ROOMS = {
 ---@param player EntityPlayer
 ---@param useFlags UseFlag
 function Leviticus:onLeviticusUse(_, _, player, useFlags)
+    local level = Game():GetLevel()
+    local room = Game():GetRoom()
+    local roomType = room:GetType()
+    local roomDesc = level:GetCurrentRoomDesc()
+    local roomConfigRoom = roomDesc.Data
+
     if TSIL.Utils.Flags.HasFlags(useFlags, UseFlag.USE_CARBATTERY) then return end
 
     -- light:FollowParent(player)
@@ -466,7 +472,7 @@ function Leviticus:onLeviticusUse(_, _, player, useFlags)
         "UsedLeviticus"
     )
 
-    if usedLeviticus == true then 
+    if usedLeviticus == true or (roomConfigRoom.StageID == 35 and roomType == RoomType.ROOM_DUNGEON) then 
         return {
             Discharge = false,
             Remove = false,
