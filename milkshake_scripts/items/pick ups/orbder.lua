@@ -2,6 +2,8 @@ local sprite = Sprite()
 sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true)
 sprite:Play(sprite:GetDefaultAnimation(), true)
 
+local SPIRIT_ORDER_SPAWN_CHANCE = 0.04
+
 ---@param player EntityPlayer
 function MilkshakeVol1.API:GetSelectedOrderOrb(player)
     return MilkshakeVol1.utility:GetDataEx(player, "SpiritOfOrder").SelectedOrb or 1
@@ -37,27 +39,26 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_USE_CARD, function (_, _, player, flag
     end
 end, MilkshakeVol1.enums.Orbs.ORDER)
 
-local CHANCE = 4 / 100
 
 ---@param pickup EntityPickup
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, function (_, pickup)
     if not MilkshakeVol1.utility:IsSpiritOrb(pickup.SubType) then return end
     if pickup.SubType == MilkshakeVol1.enums.Orbs.ORDER then return end
     if not MilkshakeVol1.UnlockManager:IsAchievementUnlocked(MilkshakeVol1.enums.Achievements.SPIRIT_OF_ORDER) then return end
-    if Game():GetRoom():GetFrameCount() < 0 and not Game():GetRoom():IsFirstVisit() then return end
+    if not (Game():GetRoom():GetFrameCount() < 1 and Game():GetRoom():IsFirstVisit()) then return end
 
-    local rng = TSIL.RNG.NewRNG(pickup.InitSeed) if rng:RandomFloat() > CHANCE then return end
+    local rng = TSIL.RNG.NewRNG(pickup.InitSeed) if rng:RandomFloat() > SPIRIT_ORDER_SPAWN_CHANCE then return end
 
     pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, MilkshakeVol1.enums.Orbs.ORDER, true, true)
 end, PickupVariant.PICKUP_TAROTCARD)
 
 HudHelper.RegisterHUDElement({
     Name = "RE1_ORDER",
-	Priority = HudHelper.Priority.NORMAL,
-	Condition = function(player)
-		return player:GetCard(0) == MilkshakeVol1.enums.Orbs.ORDER
-	end,
-	OnRender = function(player, _, layout, position, alpha, scale)
+    Priority = HudHelper.Priority.NORMAL,
+    Condition = function(player)
+        return player:GetCard(0) == MilkshakeVol1.enums.Orbs.ORDER
+    end,
+    OnRender = function(player, _, layout, position, alpha, scale)
         if layout == HudHelper.HUDLayout.P1 or layout == HudHelper.HUDLayout.P1_OTHER_TWIN then
             position = position + Vector(-1, 0)
         end
@@ -66,5 +67,5 @@ HudHelper.RegisterHUDElement({
         sprite.Scale = Vector(scale, scale)
         sprite:SetFrame(MilkshakeVol1.API:GetSelectedOrderOrb(player) - 1)
         sprite:Render(position)
-	end,
+    end,
 }, HudHelper.HUDType.POCKET)
