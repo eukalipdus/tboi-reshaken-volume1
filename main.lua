@@ -52,6 +52,7 @@ include("milkshake_scripts.modcompatibility.minimapi")
 include("milkshake_scripts.modcompatibility.retribution")
 include("milkshake_scripts.modcompatibility.revelations")
 include("milkshake_scripts.modcompatibility.chapi")
+include("milkshake_scripts.modcompatibility.lastJudgement")
 
 -- Custom callbacks
 include("milkshake_scripts.custom_callbacks.chest_opened")

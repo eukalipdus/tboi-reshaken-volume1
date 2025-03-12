@@ -3,10 +3,10 @@ MilkshakeVol1:AddModCompatibility("CustomHealthAPI", function ()
     local playerRedHearts = 0
 
     function MilkshakeVol1:FFPrePotatoPeelerFix(item, rng, player)
-        if FiendFolio then
-            playerHearts = player:GetMaxHearts()
-            playerRedHearts = player:GetHearts()
-        end
+
+        playerHearts = player:GetMaxHearts()
+        playerRedHearts = player:GetHearts()
+
     end
     MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, MilkshakeVol1.FFPrePotatoPeelerFix, CollectibleType.COLLECTIBLE_POTATO_PEELER)
 
