@@ -54,6 +54,7 @@ include("milkshake_scripts.modcompatibility.revelations")
 include("milkshake_scripts.modcompatibility.chapi")
 include("milkshake_scripts.modcompatibility.lastJudgement")
 include("milkshake_scripts.modcompatibility.theFuture")
+include("milkshake_scripts.modcompatibility.fallFromGrace")
 
 -- Custom callbacks
 include("milkshake_scripts.custom_callbacks.chest_opened")
