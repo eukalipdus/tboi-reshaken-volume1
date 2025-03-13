@@ -321,3 +321,16 @@ API Changes
 ================================================
 Changes
 -Updated several death item sprites to look nicer
+
+
+================================================
+    v1.1.3 - March 12, 2025
+================================================
+Additions
+- Added shattered orb enemy support for Fall From Grace, Last Judgement, and THE FUTURE mods! Thanks to wookywok!
+
+Bug Fixes
+- Fixed HUD offset for spirit orbs being off in REP+
+- Made Leviticus unusable during the Beast fight to prevent a softlock
+- Fixed Spirit of Order replacing non-room-layout spirit orbs
+- Updated Throwable Item Lib to fix various bugs related to throwing shattered orb
