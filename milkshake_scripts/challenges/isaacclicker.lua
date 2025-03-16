@@ -11,6 +11,7 @@ local poolsToReplace = {
     ItemPoolType.POOL_GREED_TREASURE,
 }
 
+---@param player EntityPlayer
 function isaacClicker:PostPlayerInit(player)
     if Game().Challenge == enums.Challenges.ISAAC_CLICKER then
         player:AddKeys(1)
@@ -23,6 +24,7 @@ function isaacClicker:PostPlayerInit(player)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, isaacClicker.PostPlayerInit)
 
+---@param isContinued boolean
 function isaacClicker:PostGameStartedReordered(isContinued)
     if Game().Challenge == enums.Challenges.ISAAC_CLICKER
     and not isContinued then
@@ -50,6 +52,7 @@ function isaacClicker:PostGameStartedReordered(isContinued)
 end
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, isaacClicker.PostGameStartedReordered)
 
+---@param poolType ItemPoolType
 function isaacClicker:PostGetCollectible(_, poolType)
     if Game().Challenge == enums.Challenges.ISAAC_CLICKER
     and TSIL.Utils.Tables.IsIn(poolsToReplace, poolType) then
