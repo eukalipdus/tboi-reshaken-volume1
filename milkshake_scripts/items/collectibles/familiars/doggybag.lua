@@ -73,6 +73,10 @@ local function SpawnPoop(bag)
 end
 
 local function FindSetIndex(allSets, playerIndex)
+    if allSets == nil then
+        return -1
+    end
+
     for index, set in ipairs(allSets) do
         if set[1] == playerIndex then
             return index
@@ -101,6 +105,10 @@ local function TrackDoggyBagPoop(player, poopType)
         playerIndex,
         {}
     }
+
+    if not trackedSets then
+        trackedSets = {}
+    end
 
     if trackedSets and #trackedSets > 0 then
         local index = FindSetIndex(trackedSets, playerIndex)
