@@ -6,6 +6,11 @@ local inventory = {
     enums.Collectibles.SHARP_CURSOR
 }
 
+local poolsToReplace = {
+    ItemPoolType.POOL_GREED_SHOP,
+    ItemPoolType.POOL_GREED_TREASURE,
+}
+
 function isaacClicker:PostPlayerInit(player)
     if Game().Challenge == enums.Challenges.ISAAC_CLICKER then
         player:AddKeys(1)
@@ -45,13 +50,11 @@ function isaacClicker:PostGameStartedReordered(isContinued)
 end
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, isaacClicker.PostGameStartedReordered)
 
-function isaacClicker:PreGetCollectible(poolType)
-    if Game().Challenge == enums.Challenges.ISAAC_CLICKER then
-        if poolType == ItemPoolType.POOL_GREED_TREASURE
-        or poolType == ItemPoolType.POOL_TREASURE then
-            return enums.Collectibles.SHARP_CURSOR
-        end
+function isaacClicker:PostGetCollectible(_, poolType)
+    if Game().Challenge == enums.Challenges.ISAAC_CLICKER
+    and TSIL.Utils.Tables.IsIn(poolsToReplace, poolType) then
+        return enums.Collectibles.SHARP_CURSOR
     end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, isaacClicker.PreGetCollectible)
+MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_GET_COLLECTIBLE, isaacClicker.PostGetCollectible)
 return isaacClicker
