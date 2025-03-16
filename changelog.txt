@@ -334,3 +334,10 @@ Bug Fixes
 - Made Leviticus unusable during the Beast fight to prevent a softlock
 - Fixed Spirit of Order replacing non-room-layout spirit orbs
 - Updated Throwable Item Lib to fix various bugs related to throwing shattered orb
+
+================================================
+    v1.1.4 - March XX, 2025
+================================================
+Bug Fixes
+- Fixed Doggy Bag throwing errors when the first player to own the item takes damage
+- Isaac Clicker now affects the proper item pools
