@@ -47,6 +47,8 @@ local spritesheetPaths = {
     ["Charming"] = "gfx/familiar_doggy_bag_charming.anm2",
 }
 
+---Returns all of a player's doggy bag familiars
+---@param player EntityPlayer
 local function GetDoggyBags(player)
     local familiars = TSIL.Familiars.GetPlayerFamiliars(player)
     local doggyBags = TSIL.Utils.Tables.Filter(familiars, function (_, fam)
@@ -55,6 +57,8 @@ local function GetDoggyBags(player)
     return doggyBags
 end
 
+---Spawns a given Doggy Bag's poop
+---@param bag EntityFamiliar
 local function SpawnPoop(bag)
     local poop
     local poopType = utility:GetData(bag, "PoopType")
@@ -72,6 +76,9 @@ local function SpawnPoop(bag)
     utility:SetData(bag, "PlayerHit", true)
 end
 
+---Returns the index of a Doggy Bag set
+---@param allSets table
+---@param playerIndex integer
 local function FindSetIndex(allSets, playerIndex)
     if allSets == nil then
         return -1
@@ -85,6 +92,10 @@ local function FindSetIndex(allSets, playerIndex)
     return -1
 end
 
+---Changes a Doggy Bag's sprite to match a given poop type
+---@param bag EntityFamiliar
+---@param sprite Sprite
+---@param type integer
 local function ApplyPoopType(bag, sprite, type)
     utility:SetData(bag, "PoopType", type)
     sprite:Load(spritesheetPaths[type], true)
@@ -98,6 +109,9 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.NONE
 )
 
+---Tracks a given type of poop for a given player's Doggy Bag
+---@param player EntityPlayer
+---@param poopType integer
 local function TrackDoggyBagPoop(player, poopType)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
     local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
@@ -139,6 +153,7 @@ function doggyBag:PostNewRoomReordered()
 end
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, doggyBag.PostNewRoomReordered)
 
+---@param player EntityPlayer
 function doggyBag:PostPEffectUpdate(player)
     if not player:HasCollectible(enums.Collectibles.DOGGY_BAG) then return end
     local entityPoops = TSIL.Entities.GetEntities(EntityType.ENTITY_POOP)
@@ -174,6 +189,7 @@ function doggyBag:PostPEffectUpdate(player)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, doggyBag.PostPEffectUpdate)
 
+---@param entity Entity
 function doggyBag:EntityTakeDmg(entity)
     if not entity then return end
     local player = entity:ToPlayer()
@@ -241,6 +257,7 @@ function doggyBag:FamiliarUpdate(bag)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, doggyBag.FamiliarUpdate, enums.Familiars.DOGGY_BAG)
 
+---@param isContinued boolean
 function doggyBag:PostGameStartedReordered(isContinued)
     if isContinued then
         local trackedSets = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "TrackedDoggyBags")
