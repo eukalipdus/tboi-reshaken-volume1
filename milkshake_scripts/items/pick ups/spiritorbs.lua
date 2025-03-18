@@ -16,12 +16,30 @@ local SoundPerOrb = {
     [enums.Orbs.ORDER] = enums.Sounds.ORB_CAPTURE
 }
 
+---Returns if the announcer voice should play based on current options
+---@param rng RNG
+local function ShouldAnnouncerSpeak(rng)
+    if Options.AnnouncerVoiceMode == 0 then
+        return rng:RandomInt(2)
+    elseif Options.AnnouncerVoiceMode == 1 then
+        return false
+    elseif Options.AnnouncerVoiceMode == 2 then
+        return true
+    end
+end
+
 ---@param orb Card
 ---@param player EntityPlayer
 ---@param flags UseOrbFlag | integer
 function MilkshakeVol1:UseSpiritOrb(orb, player, flags)
     if not TSIL.Utils.Flags.HasFlags(flags, enums.UseOrbFlags.NO_SOUND) then
-        SFXManager():Play(SoundPerOrb[orb])
+        local rng = player:GetDropRNG()
+        local willAnnouncerSpeak = ShouldAnnouncerSpeak(rng)
+
+        if willAnnouncerSpeak == true
+        or willAnnouncerSpeak == 1 then
+            SFXManager():Play(SoundPerOrb[orb])
+        end
     end
 
     Isaac.RunCallbackWithParam(enums.Callbacks.ON_ORB_USE, orb, orb, player, flags)
