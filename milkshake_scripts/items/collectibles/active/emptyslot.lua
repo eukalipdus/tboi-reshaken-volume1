@@ -11,11 +11,12 @@ TSIL.SaveManager.AddPersistentVariable(
     TSIL.Enums.VariablePersistenceMode.RESET_RUN
 )
 
+---Update the coin bonus damage for Judas' birthright
+--@param player EntityPlayer
 local function UpdateCoinDMGBonus(player)
     player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
     player:EvaluateItems()
 end
-
 
 ---@param rng RNG
 ---@param player EntityPlayer
@@ -129,7 +130,10 @@ function EmptySlot:EvaluateCache(player, cacheFlag)
             "EmptySlotCoinsPerPlayer"
         )
         local playerCoins = emptySlotCoinsPerPlayer[TSIL.Players.GetPlayerIndex(player)]
-        player.Damage = player.Damage + (DMG_BONUS * playerCoins)
+
+        if playerCoins then
+            player.Damage = player.Damage + (DMG_BONUS * playerCoins)
+        end
     end
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, EmptySlot.EvaluateCache)
