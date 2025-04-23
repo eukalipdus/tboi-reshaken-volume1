@@ -3,7 +3,6 @@ local enums = MilkshakeVol1.enums
 
 local REPLACE_CHANCE = 0.01
 local RAINBOW_COOKIE_CHANCE = 0.1
-local RAINBOW_COOKIE_CHANCE_INCREASE = 0.05
 local TIMES_CAN_FAIL = 5000
 local BASE_DELAY_NEXT_CARDPILL = 30
 local CARDPILL_USE_DELAY = 15
@@ -63,8 +62,7 @@ end
 local function GetRainbowPennySpawnChance()
     local spawnChance = REPLACE_CHANCE
     if TSIL.Players.DoesAnyPlayerHasTrinket(enums.Trinkets.RAINBOW_COOKIE) then
-        local trinketMultiplierIncrease = RAINBOW_COOKIE_CHANCE_INCREASE * GetTotalTrinketMultiplier()
-        spawnChance = RAINBOW_COOKIE_CHANCE + trinketMultiplierIncrease
+        spawnChance = spawnChance + (RAINBOW_COOKIE_CHANCE * GetTotalTrinketMultiplier())
     elseif MilkshakeVol1.utility:AnyPlayerIsCharacter(PlayerType.PLAYER_KEEPER_B) then
         spawnChance = 0
     end
