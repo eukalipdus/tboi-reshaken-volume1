@@ -43,6 +43,7 @@ MilkshakeVol1.enums.ItemPools.GLASS = TSIL.CustomItemPools.RegisterCustomItemPoo
     { Collectible = MilkshakeVol1.enums.Collectibles.FRAGILE_MIRROR,   Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
     { Collectible = MilkshakeVol1.enums.Collectibles.PRISMATIC_DICE,   Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
     { Collectible = MilkshakeVol1.enums.Collectibles.INNER_REFLECTION, Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
+    { Collectible = MilkshakeVol1.enums.Collectibles.PRISMATIC_GOGGLES, Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
 })
 ---@type table<CollectibleType, fun():boolean>
 local IsUnlockedPerItem = {}
