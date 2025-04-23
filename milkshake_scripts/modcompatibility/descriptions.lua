@@ -2041,54 +2041,54 @@ descriptions.Trinkets = {
             name = "Rainbow Cookie",
             description = "10% Chance to replace pennies with random rainbow pennies" ..
                 "#The secondary effect of rainbow pennies is doubled on pickup",
-            double = "{{ColorGold}}15% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            double = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
                 "#The secondary effect of rainbow pennies is doubled on pickup",
-            triple = "{{ColorGold}}20% {{CR}}Chance to replace pennies with random rainbow pennies" ..
+            triple = "{{ColorGold}}30% {{CR}}Chance to replace pennies with random rainbow pennies" ..
                 "#The secondary effect of rainbow pennies is doubled on pickup"
         },
         spa = {
             name = "Galleta Arcoíris",
             description = "Las monedas tienen un 10% de probabilidad de transformarse en monedas arcoíris" ..
                 "#Duplica el efecto secundario de las monedas arcoíris",
-            double = "Las monedas tienen un {{ColorGold}}15% {{CR}} de probabilidad de transformarse en monedas arcoíris" ..
+            double = "Las monedas tienen un {{ColorGold}}20% {{CR}} de probabilidad de transformarse en monedas arcoíris" ..
                 "#Duplica el efecto secundario de las monedas arcoíris",
-            triple = "Las monedas tienen un {{ColorGold}}20% {{CR}} de probabilidad de transformarse en monedas arcoíris" ..
+            triple = "Las monedas tienen un {{ColorGold}}30% {{CR}} de probabilidad de transformarse en monedas arcoíris" ..
                 "#Duplica el efecto secundario de las monedas arcoíris"
         },
         ru = {
             name = "Радужное печенье",
             description = "10% шанс заменить монеты на случайные радужные монеты" ..
                 "#Вторичный эффект радужных монет удваивается при подборе",
-            double = "{{ColorGold}}15%{{CR}} шанс заменить монеты на случайные радужные монеты" ..
+            double = "{{ColorGold}}20%{{CR}} шанс заменить монеты на случайные радужные монеты" ..
                 "#Вторичный эффект радужных монет удваивается при подборе",
-            triple = "{{ColorGold}}20%{{CR}} шанс заменить монеты на случайные радужные монеты" ..
+            triple = "{{ColorGold}}30%{{CR}} шанс заменить монеты на случайные радужные монеты" ..
                 "#Вторичный эффект радужных монет удваивается при подборе"
         },
         pl = {
             name = "Złote Ciasteczko",
             description = "10% szansy na zastąpienie monet tęczowymi monetami" ..
                 "#Dodatkowe efekty tęczowych monet są podwojone",
-            double = "{{ColorGold}}15% {{CR}} szansy na zastąpienie monet tęczowymi monetami" ..
+            double = "{{ColorGold}}20% {{CR}} szansy na zastąpienie monet tęczowymi monetami" ..
                 "#Dodatkowe efekty tęczowych monet są podwojone",
-            triple = "{{ColorGold}}20% {{CR}} szansy na zastąpienie monet tęczowymi monetami" ..
+            triple = "{{ColorGold}}30% {{CR}} szansy na zastąpienie monet tęczowymi monetami" ..
                 "#Dodatkowe efekty tęczowych monet są podwojone",
         },
         ko_kr = {
             name = "무지개 쿠키",
             description = "동전이 10%의 확률로 레인보우 페니로 바뀝니다." ..
                 "#레인보우 페니의 효과 2배",
-            double = "동전이 {{ColorGold}}15%{{CR}}의 확률로 레인보우 페니로 바뀝니다." ..
+            double = "동전이 {{ColorGold}}20%{{CR}}의 확률로 레인보우 페니로 바뀝니다." ..
                 "#레인보우 페니의 효과 2배",
-            triple = "동전이 {{ColorGold}}20%{{CR}}의 확률로 레인보우 페니로 바뀝니다." ..
+            triple = "동전이 {{ColorGold}}30%{{CR}}의 확률로 레인보우 페니로 바뀝니다." ..
                 "#레인보우 페니의 효과 2배"
         },
         zh_cn = {
             name = "彩虹饼干",
             description = "10%的几率将硬币替换为随机的彩虹硬币" ..
                 "#彩虹硬币的次要效果在拾取时翻倍",
-            double = "{{ColorGold}}15% {{CR}}的几率将硬币替换为随机的彩虹硬币" ..
+            double = "{{ColorGold}}20% {{CR}}的几率将硬币替换为随机的彩虹硬币" ..
                 "#彩虹硬币的次要效果在拾取时翻倍",
-            triple = "{{ColorGold}}20% {{CR}}的几率将硬币替换为随机的彩虹硬币" ..
+            triple = "{{ColorGold}}30% {{CR}}的几率将硬币替换为随机的彩虹硬币" ..
                 "#彩虹硬币的次要效果在拾取时翻倍",
         },
     },
@@ -2096,11 +2096,11 @@ descriptions.Trinkets = {
         en_us = {
             name = "Prismatic Lacewing",
             description = "5% chance to shoot a prismatic tear that splits enemies into two devolved enemies with less HP"..
-            "#{{Luck}} 20% chance at 15 luck",
+            "#{{Luck}} 20% chance at 10 luck",
             double = "{{ColorGold}}10% {{CR}}chance to shoot a prismatic tear that splits enemies into two devolved enemies with less HP"..
-            "#{{Luck}} 20% chance at 15 luck",
+            "#{{Luck}} 20% chance at 7 luck",
             triple = "{{ColorGold}}15% {{CR}}chance to shoot a prismatic tear that splits enemies into two devolved enemies with less HP"..
-            "#{{Luck}} 20% chance at 15 luck",
+            "#{{Luck}} 20% chance at 4 luck",
         },
     },
 }
