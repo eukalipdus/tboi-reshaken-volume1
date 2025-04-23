@@ -1,0 +1,75 @@
+252.0 --Nulls
+280.0 --Black Globin's Body
+61.2 --Soul Sucker
+23.0.1 --My Shadow
+278.0 --Black Globin
+279.0 --Globin's Head
+259.0 --Imp
+883.0 --Baby Begotten
+834.0 --Whipper
+834.1 --Snapper
+834.2 --Flagellant
+53.1 --Evil Twin
+55.1 --Kamikaze Leech
+60.1 --Bloodshot Eye
+888.0 --Shady
+886.1 --Fetal Demon
+212.3 --Brimstone Death's Head
+225.0 --Black Maw
+251.0 --Begotten
+891.0 --Goat
+891.1 --Black Goat
+885.1 --Blood Cultist
+203.0 --Brimstone Head
+404.1 --Dark Ball
+
+
+FF enemies
+160.660 --Scythe Rider
+750.20 --Moaner
+240.114 --Scowl Creep
+450.18 --Maze Runner
+160.1220 --Aper (diagonal mirror)
+160.1220.1 --Aper (horizontal mirror)
+160.1220.2 --Aper (vertical mirror)
+114.17 ---Gabber
+451.110 --Gamper
+160.1090 --Gutter
+750.200 --Ripcord
+120.226 --Manic Fly
+160.661 --Pitchfork Hitcher
+150.35 --Hitcher's Pitchfork
+450.17 --Kukodemon
+750.230 --Haemo
+450.15 --Lurch
+151.8 --Doomer
+114.29 --Dread Maw
+155.2 --Dread Weaver
+120.236 --Thrall
+160.671 --Dominated
+160.670 --Ms. Dominator
+160.940 --Psi Hunter
+150.23 --Psyeg
+160.941 --Psiling
+160.341 --Psleech
+21.961 --Psionic Knight
+160.34 --Outlier
+960.200 --Crosseyes
+160.340 --Foreseer
+450.1510 --Observer
+160.950 --Umbra
+160.950.1  --Blistered Umbra
+160.950.2 --Blistered Umbra
+160.951 --Eclipse
+112.1 --Sombra
+160.822 --Slim Shady
+160.822.2 --Red Hand
+160.666 --Reaper
+160.711 --Thousand Eyes
+
+
+
+
+
+
+

@@ -1,0 +1,343 @@
+================================================
+    v1.0.1 - January 8th, 2024
+================================================
+Fixes
+	-Crash sometimes caused by Lil' Bishop
+	-Mouse controls being disabled upon starting a run
+	-Changed gem trinket names
+
+Additions
+	-Implement Revelations compatibility
+	-Implemented several sheol and scarred womb rooms
+	-Added sound for picking up poop with doggy bag
+
+
+================================================
+    v1.0.2 - January 9th, 2024
+================================================
+Fixes
+	-Fixed leviticus appearing 3 times in death cert and messing up in library expanded library certificate room
+	-Fixed brenda typo
+	-Fixed error appearing regarding glass item pool
+
+Additions
+	-Added Russian translations!
+	-Changed Leviticus
+
+Changes
+	-Changed leviticus' Library Expanded TBOAB effect to give holy card instead of crack the sky, activates crack the sky on duplicate copies instead
+
+
+================================================
+    v1.0.3 - January 12th, 2024
+================================================
+Fixes
+	-Fixed spirit of conductivity EID being in russian
+
+Additions
+	-Added missing Spanish EIDs
+
+
+================================================
+    v1.0.4 - January 14th, 2024
+================================================
+Fixes
+	-Fixed brenda dropping pickups when bombed
+	-Fixed celestial mirror familiar being bugged when spawned by monster manual
+	-Fixed virulent peridot being invisible
+	-Readded glass head death portraits
+
+Additions
+	-Made godhead prismatic dice easter egg look cooler
+
+Changes
+	-Reduced pot of gold coin replacement rate to 40% fromm 50%
+	-Reduced egg, crystal, and acid penny spawn chance by 5%
+	
+
+================================================
+    v1.0.5 - January 15th, 2024
+================================================
+	-Fixed EID not working when you had Epiphany installed
+	-La chancla now prevents damage from delirium mom stomp
+	-Witch doctor mask hud pills display in co-op now
+	-Wine heads can walk into the player now
+
+
+================================================
+    v1.0.6 - January 30th, 2024
+================================================
+Changes
+	-Reduce Pot of Gold's penny conversion chance to 35% (originally was 40%)
+	-Reduced passive rainbow penny spawn rate to 1% (originally was 2%)
+	-Pot o gold rainbow pennies will always replace nickels and dimes
+	-Reworked Crystal and Acid Rainbow Pennies to activate the card or pill effect instantly on pickup instead of giving them to you 
+	-Passive rainbow pennies can replace any coin type besides lucky and golden now, instead of only 1 cent pennies
+	-tKeeper and trKeeper can no longer find passive rainbow Pennies
+	-tKeeper and trKeeper turn coins into rainbow pennies half as often when they have pot o gold
+	-Made a couple of special room layouts less overpowered
+	-Updated golden shovel and pot o gold sprites
+	-Spirit of Terra can now break through the shell's armor
+
+Fixes
+	-Removed debug print
+	-Added nogreed tag to leviticus
+	-Added warning when trying to play spirit sage challenge before unlocking alt path
+	-Fixed breakfast items giving the incorrect amount of health
+
+Additions
+	-Add API function, MilkshakeVol1.API:TryReplacePickupWithRainbowPenny
+	-Added Korean translations
+	-Added a lot of community made rooms!
+
+
+================================================
+    v1.0.7 - January 31st, 2024
+================================================
+Additions
+	-Added Chinese translations!
+
+
+================================================
+    v1.0.8 - February 3rd, 2024
+================================================
+Changes
+	-Revamped World of Light challenge, now you start with pay to win, but lose items faster the more you have
+	
+Fixes
+	-Tweaked some unfair community rooms
+	-Fixed some spirit orb special rooms not spawning
+
+
+================================================
+	v1.0.9 - February 8th, 2024
+================================================
+Fixes
+	-Fixed La Chancla preventing damage from Mom's eyes and hands
+	-Fixed Prismatic Dice spawning extra items when used on a choice pedestal if the player had breakfasted
+
+Additions
+	-Added some more rooms
+
+
+================================================
+	v1.0.10 - February 11th, 2024
+================================================
+Fixes
+	-Fixed EID toggle not working
+	-Fixed Firecracker Flower seed shootingchance being incorrect
+
+Additions
+	-Added custom backdrops for Infenro and Sacrilege themed special rooms
+
+
+================================================
+	v1.0.11 - February 20th, 2024
+================================================
+Fixes
+	-Fixed crash that would happen when entering certain Corpse rooms
+	-Fixed Spirit Kiln being infinitely playable by tainted unbidden from Eclipsed and other lost-like characters
+
+Additions
+	-Added new curse rooms
+
+Removals
+	-Removed Milkshake from boss pool
+	-Removed food tag from spoiled, balanced, and hearty breakfasts, meaning they can't appear with binge eater anymore
+	-Nerfed fire and electric super secret rooms + lowered fire angel super secret room weight
+
+
+================================================
+    v1.0.12 - March 21, 2024
+================================================
+Fixes
+    -Fixed prismatic dice not properly splitting quality 5 and quality 6 items
+    -Fixed prismatic dice spawning an extra breakfast when breakfasting
+    -Fixed new breakfast items stats not stacking
+    -Fixed Alt Path Unlock Tracker trinket showing up
+    -Fixed Spirit kiln not killing you at half a soul heart
+    -Fixed crash caused by Acid Penny trying to activate a horse pill
+
+Changes
+    -Changed Milkshake's Tear color to a nicer shade of pink
+    -Changed Milkshake's stat ups to be only in increments of 0.1
+    -Made Milkshake's stat boosts stack additively instead of exponentially so you're less likely to get unusable shotspeed if you ever get 20 milkshake's for some reason
+    (for example now if you got a 1.4 damage multiplier from milkshake getting a second one will give you a 1.8 damage multiplier total)
+    -Sticky Nickels will now always be converted to rainbow pennies
+
+Additions
+    -Added quality 5 and 6 icons
+    -Added Alt Path Unlock Tracker trinket: Automatically opens the alt path door upon defeating the floor boss
+    -Spirit Sage challenge will now be locked until you unlock the alt path and Tainted Bethany (RGON only)
+    -Add 1 new item (For players who find base Reshaken too easy)
+
+
+================================================
+v1.0.13 - May 22, 2024
+================================================
+Fixes
+-Fixed crash in rooms with entity 618.125 when you didn't have Repentogon installed
+-Fixed error that would appear on load when you didn't have Repentogon installed
+-Fixed Milkshake/Water With Food Coloring multiplier stats attempting to render when they shouldn't
+-Fixed bum friend, bumbo, and ultra greed treating all coins as being worth only 1 cent.
+-Fixed glassheads sommetimes not activating their death effects.
+-Fixed glassheads not dropping coins when killed as tKeeper
+-Fixed some rooms
+-Fixed EID typos
+-Fixed Eclipse Compat
+-Fixed error with Milkshake
+-Fixed TNT in some glasshead rooms being able to become pushable tnts
+-Fixed error that sometimes occurred when running out of items in a pool (isaac clicker error in log)
+
+Changes
+-Acid Pennies will now reveal pills upon use if it uses a pill that's in the current pool
+-Lowered spirit orb room special room weight across the board to not be so common over vanilla rooms, you'll now find 1-4 per run on average.
+-Lowered Celestial Mirror contact damage from 75 to 50 per second
+
+Additions
+-Actually added beerhead mines rooms which should've been there the whole time but weren't (oops)
+-Actually added Leviticus to the angel pool (it was supposed to be how did we miss that)
+-Added more rooms to utero and gehenna and stuff
+-Added new flowey glass idol sprite (feel free to submit more if you want)
+-Added new art to art folder
+-Updated Mirror Key EID to mention that it turns you into the lost while inside the mirror dimension
+
+
+================================================
+    v1.0.14 - June 9, 2024
+================================================
+Additions
+-Added brenda pre mother chase rooms in mines
+
+Fixes
+-Fixed Lag and bloat oopsies
+
+
+================================================
+    v1.1.0 - The Big Repentance+ Vol 1.5 Update! - December 25, 2024 
+================================================
+Additions
+-Now compatible with Rep+!
+-Added three new achievments and their unlocks for completing the Reshaken's three challenges, and a fourth bonus achievment for 100%ing the mod
+-Added an unlock manager in dead sea scrolls settings, if you beat the challenges with Repentogon enabled then the unlocks should automatically be granted on first startup, but if not, then you can manually unlock them here
+-Added two flashy collectibles, two colorful trinkets, and a new ultimate spirit orb
+-Completely reworked golden shovel, leviticus, and Brenda the spirit kiln
+-Added crafting qualities to all items for proper bag of crafting support
+-Added Belial (Judas' Birthright) synergies for Golden Shovel, Leviticus, and Mirror Key
+-Added Book of Virtues synergy for Mirror Key
+-Added huge optimaztions and performance increases (Should run at full 60 fps on steam deck!)
+
+Changes
+-Golden Shovel charges reduced to 6. Now only spawns one gold chest and a handful of pennies, but the member card shop it can spawn now sells golden pickups
+-Leviticus, still charged with soul hearts, now teleports Isaac to a special Angel room upon activation for a free item and holy card for sale
+-Spirit Kiln Brenda wisps will now drop their ccorresponding spirit orb when destroyed, and after 4 payouts, Brenda will now have a chance to payout with a random glass item
+-Brenda now plays a lose soul heart sound effect on use for better loss communication
+-Updated sprites for La Chancla, Glass Idol, Balanced Breakfast, Hearty Breakfast, and Golden Breakfast
+-Lyra now grants an extra consumable slot so you can hold two spirit orbs at once
+-Lil bishop now plays a sound effect to indicate when it enters shielding mode, proc chance reduced to 10% from 20%
+-Alt Path Unlock Tracker now open the door to corpse as well (please don't report this to the Milkshake Devs)
+-Spirit Orb gem trinkets now mention that they give tinted rocks a unique appearance in their EIDs
+-Shattered orb + book of virtues synergy now only spawns 1 wisp instead of 4 to compensate for the wisps dropping spirit orbs rework
+-Changed behavior of Spirit Kiln/Shattered orb Sacrilege and Revenance wisps to have a bleed and compound fracture effect respectively
+-Acid Penny now shows the assigned pill color when activating a pill instead of a random one
+-Mirror Key can no longer be used in Error Rooms
+-Modified some room layouts to be more fair (and made that one bad angel room much less common)
+-Spirit of Virulence now turns pennies into rotten pennies
+-Spirit bum now moves slightly slower so player has a better chance of grabbing soul hearts before it can steal them
+-Reduce weight for Spirit Klins to payout with trinkets
+-Modified Prismatic Dice splitting animation and collectible spawn positions
+-Increase Tatterd Page's Blank Card cost from 3 to 4
+-Glass heads now devolve properly with D10
+
+Fixes
+-Fixed incompatibility with giga bomb synergies mod
+-Fixed softlock when using a death button on Glass Head enemies
+-Fixed rare crash that could happen when Flask Heads exploded
+-Fixed Shattered Orb not working with 'M, 9 Volt, Expansion Pack, and various other items
+-Fixe Shattered Orb not working if activated through Metronome or Void
+-Fixed Isaac being unable to shoot if Shattered Orb was lost while being used or activated through means other than the item itself
+-Fixed error resulting from Witch Doctor Mask being activated by a NULL pill color
+-Fixed error from Globin In A Bucket not checking if the spawner of the Globin exists first
+-Fixed pickups being removed when exiting the game while in a Mirror Key room
+-Fixed Spindown Dice spinning down into hidden Reshaken items
+-Fixed Spirit of Conductivity console error caused by player tear mimicking familiars
+-Fixed Mirror Key being useable in the boss room containing Dad's Note, which caused a crash
+-Fixed Mirror Key mirror world pickups being deleted when exiting and continuing the run
+-Fixed Mirror Key being usable infintely if you had found soul 
+-Fixed a crash caused by using Mirror Key on Downpour 2 during the Ascent
+-Fixed a softlock caused by teleporting to a room not connected to the map while in a Mirror Key room
+-Fixed ladders spawning in shops created by Mirror Key when exiting and continuing a run within one
+-Fixed Shattered Orb + Belial synergy not having a proper visual effect
+-Fixed cards from Crystal Penny not being seeded
+-Fixed pills from Acid Penny not being seeded
+-Fixed pills from Acid Penny coming from outside of the current pill rotation
+-Fixed Spindown Dice loop caused when spinning down Leviticus on the alternate sprites
+-Fixed error caused by Pot of Gold in rare cases using a seed of 0
+-Fixed Acid and Crystal pennies not being removed and Isaac being unable to collide with them after if purchased from a shop
+-Fixed rainbow pennies being purchasable while Isaac is holding an item
+-Fixed Super Bum not properly colliding with rainbow pennies
+-Fixed Prismatic Dice Godhead easter egg not spawning items with the proper colors
+-Fixed Prismatic Dice making deal items in the dark room cost 99 cents if split with glitched crown
+-Fixed Prismatic Dice not correctly inheriting deal price if resulting split item was a special breakfast
+-Fixed Prismatic Dice sometimes spawning more items than it should
+-Fixed Prismatic Dice locust duplicating bosses
+-Fixed Witch Doctor Mask not spawning a pill on pick up if it was taken by another player after being dropped by Tainted Isaac
+-Fixed Spirit of Terra stalagmites showing a rock for a split second when destroyed
+
+API Changes
+-MilkshakeVol1.API:AddSpiritKlinReward's first argument now accepts a second parameter, an entity (Spirit Klin slot)
+-Added MilkshakeVol1.API.AddEntityCanCollideRainbowPenny
+-Added MilkshakeVol1.API.SplitEnemy
+
+
+================================================
+    v1.1.1 - January 8, 2025
+================================================
+Additions
+-Added Golden Shovel locust
+
+Changes
+-Slightly increased chance for flat pennies and burnt pennies to spawn with pot of gold
+-Prismatic Dice locusts and Prismatic Lacewing now only allow enemies to be split once (i.e, when a globin is split,
+the clotties from that globin cannot be split again)
+
+Fixes
+-FIXED POTATO PEELER TAKING TWICE THE AMOUNT OF INTENDED HEARTS WHEN FIEND FOLIO IS ENABLED !!
+-Prismatic Dice locusts and Prismatic Lacewing will not devolve enemies that do not have devolve entries in their
+XML data if REPENTOGON is installed (if you have a mod which uses custom devolve code, check out MilkshakeVol1.API.AllowSplitWithFakeDevolve)
+-Rainbow pennies can now be picked up again when the player is holding an item over their head
+-Shattered Orb now works properly when in the pocket slot
+-Added fiend folio lurkers to prismatic lacewing blacklist
+-Fixed error that would appear when taking damage with doggybag
+
+API Changes
+-Added MilkshakeVol1.API.ForbidEnemySplit
+-Added MilkshakeVol1.API.AllowSplitWithFakeDevolve
+-Added MilkshakeVol1.API.IsEntityDataIn
+
+
+================================================
+    v1.1.2 - January 8, 2025
+================================================
+Changes
+-Updated several death item sprites to look nicer
+
+
+================================================
+    v1.1.3 - March 12, 2025
+================================================
+Additions
+- Added shattered orb enemy support for Fall From Grace, Last Judgement, and THE FUTURE mods! Thanks to wookywok!
+
+Bug Fixes
+- Fixed HUD offset for spirit orbs being off in REP+
+- Made Leviticus unusable during the Beast fight to prevent a softlock
+- Fixed Spirit of Order replacing non-room-layout spirit orbs
+- Updated Throwable Item Lib to fix various bugs related to throwing shattered orb
+
+================================================
+    v1.1.4 - March XX, 2025
+================================================
+Bug Fixes
+- Fixed Doggy Bag throwing errors when the first player to own the item takes damage
+- Isaac Clicker now affects the proper item pools

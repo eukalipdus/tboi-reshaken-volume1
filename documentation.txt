@@ -1,0 +1,303 @@
+API Functions
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:SplitCollectible(EntityPlayer player, EntityPickup collectible, integer quality, integer originalQuality)
+* Defined in line 92 of milkshake_scripts/items/collectibles/active/prismaticdice.lua
+
+    Actives the prismatic dice effect of giving you two items for one, of lower quality.
+
+    EntityPlayer player - The player to cause the split
+    EntityPickup collectible - The collectible being split 
+    integer quality - The quality that the newly created collectibles should be
+    integer originalQuality - The quality of the collectible being split
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddSpecialGlobin(string anm2, string string anim, EntityType globinType, integer globinVariant, integer globinSubtype, ... BackdropType)
+* Defined in line 38 of milkshake_scripts/items/collectibles/active/globininabucket.lua
+
+    Adds a special globin for the Globin In a Bucket to spawn.
+
+    string anm2 - The path to the anm2 file
+    string anim - The animation to be played
+    EntityType globinType - The type of the Globin
+    integer globinVariant - The variant of the Globin
+    integer globinSubtype - The subtype of the Globin
+    ... BackdropType - The backdrops where it can spawn.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddOrbsPerEnemyForShatteredOrb(table orbsPerEnemy)
+* Defined in line 28 of milkshake_scripts/items/collectibles/active/shatteredorb.lua
+
+    Takes a list of lists of an orb type and an entity.
+    This is to allow custom entities to have their own orb drops from Shattered Orb.
+
+    orbsPerEnemy must be formatted as follows,
+
+    local orbsPerEnemy = {
+        { orb = orbTypeEnum, type = EntityType, variant = EntityVariant },
+        { orb = orbTypeEnum, type = EntityType, variant = EntityVariant },
+    }
+
+    table orbsPerEnemy - A table like specified above
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddCrackered(EntityNPC npc, EntityPlayer player)
+* Defined in line 62 of milkshake_scripts/items/collectibles/passive/firecrackerrose.lua
+
+    Adds the Fire Cracker Flower effect to an EntityNPC
+
+    EntityNPC npc - The enemy to inflict with the effect
+    EntityPlayer player - The source of the effect
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddRainbowPenny(PickupVariant variant, integer subtype, fun onPickup, number weight)
+* Defined in line 56 of milkshake_scripts/items/collectibles/passive/potofgold.lua
+
+    Allows for the creation of custom Rainbow Pennies.
+
+    PickupVariant variant - The penny's variant
+    integer subtype - The penny's subtype
+    fun onPickup - The function to be called which will active its effect from being picked up
+    number weight - The likelyhood of selection, should be less than 1
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:GetRainbowPenny(RNG rng)
+* Defined in line 69 of milkshake_scripts/items/collectibles/passive/potofgold.lua
+
+    Gets a random Rainbow Penny.
+
+    RNG rng - RNG to be used for the randomness
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:GetWeightedRainbowPenny(rng)
+* Defined in line 76 of milkshake_scripts/items/collectibles/passive/potofgold.lua
+
+    Gets a weighted random Rainbow Penny.
+
+    RNG rng - RNG to be used for the randomness
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddOrbsPerPill(PillColor pillColor, number spiritOrb)
+* Defined in line 185 of milkshake_scripts/items/collectibles/passive/witchdoctormask.lua
+
+    Assigns a spirit orb to a pill color for Witch Doctor Mask.
+
+    PillColor pillColor - The color of the pill
+    number spiritOrb - The spirit orb to assign
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddConductivityOrbSlotPayout(any slotVariant, table payouts)
+* Defined in line 262 of milkshake_scripts/items/pick ups/electricorb.lua
+
+    Allows adding custom payouts to Orb of Conductivity.
+
+    any slotVariant - The variant of the slot
+    table payouts - A table with the payouts
+
+    payouts must be formatted as follows,
+
+    local payouts = {
+        chance = integer
+        value = {
+            variant = PickupVariant,
+            subtype = PickupSubType,
+            weight = Weight
+        }
+    }
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddToxicOrbBeggar(integer beggarType)
+* Defined in line 25 of milkshake_scripts/items/pick ups/toxicorb.lua
+
+    Allows adding beggar variants for Orb of Virulence to convert into Rotten Beggars.
+
+    integer beggarType - The type of the beggar
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddUnholyOrbBeggar(integer beggarType, table datatable)
+* Defined in line 16 of milkshake_scripts/items/pick ups/unholyorb.lua
+
+    Allows adding beggar variants with their own respective drops from killing them with Spirit of Spirit Of Sacrilege
+
+    integer beggarType  - The type of the beggar
+    table datatable - A table with reward information
+
+    datatable must be formatted as follows,
+
+    local datatable = {
+		Config = {Count = 1, MinCount = 0, CardRune = nil, IncludeRune = nil, OnlyRune = nil, PlayingCard = nil},
+		{Type = EntityType, Variant = EntityVariant, SubType = EntitySubType},
+		{Type = EntityType , Variant = EntityVariant, SubType = EntitySubType},
+	}
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddItemsToGlassPool(table items)
+* Defined in line 53 of milkshake_scripts/pools/glasspool.lua
+
+    Allows adding collectibles to the Glass Pool.
+
+    table items - The collectibles to be added
+
+    items must be formatted as follows,
+
+    local items = {
+        Collectible: CollectibleType,
+        Weight: number, DecreaseBy: number,
+        RemoveOn: number,
+        IsUnlocked: nil|fun(): boolean
+    }
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddSoulStone(Card card, fun(): boolean isUnlocked)
+* Defined in line 85 of milkshake_scripts/slots/spiritklinbrenda.lua
+
+    Allows for adding a character's soul stone to the Spirit Kiln reward pool.
+
+    Card card - The character's soul stone
+    fun(): boolean isUnlocked - Function that returns if the character is unlocked
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddGlassTrinkets(trinket TrinketType, isUnlocked? fun(): boolean)
+* Defined in line 95 of milkshake_scripts/slots/spiritklinbrenda.lua
+
+    Allows for adding a trinket to the Spirit Kiln glass trinket reward pool.
+
+    trinket TrinketType - The trinket ID to be added
+    fun(): boolean isUnlocked - Function that returns if the character is unlocked
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:AddSpiritKlinReward(number weight | fun(player: EntityPlayer, brenda: Entity): number, rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector))
+* Defined in line 220 of milkshake_scripts/slots/spiritklinbrenda.lua
+
+    Allows for adding custom rewards of any type to Spirit Kiln's reward pool.
+
+    number weight | fun(player: EntityPlayer): number - The chance the reward is selected
+    rewardFun fun(slot: Entity, player: EntityPlayer, position: Vector, velocity: Vector) - The function to spawn the reward
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:IsInMirrorRoom()
+* Defined in line 101 of milkshake_scripts/items/collectibles/active/mirrorkey.lua
+
+    Tells if the player is in a mirror room from Mirror Key.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:HasAnyUnbrokenMirror(EntityPlayer player)
+* Defined in line 125 of milkshake_scripts/items/collectibles/familiars/fragilemirror.lua
+
+    Tells if a player has an unbroken mirror, and returns it.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(EntityPickup pickup, number chance, boolean isNatural)
+* Defined in line 119 of milkshake_scripts/items/collectibles/passive/potofgold.lua
+
+    Tells if a given pickup can be converted to a Rainbow Penny.
+
+    EntityPickup pickup - The pickup to check
+    number chance - The odds out of 100
+    boolean isNatural - false if conversion is due to Pot of Gold, true if not
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API:GetStatMultiplier(rng, itemNum, min, max)
+* Defined in line 24 of milkshake_scripts/items/collectibles/passive/milkshake.lua
+
+    Gets a set of stat multipliers. Used for Milkshake and Water With Food Coloring
+
+    RNG rng
+    itemNum integer - How many of the item granting the multiplier the player has
+    min float - The minimum for the multipliers
+    max float - The maximum for the multipliers
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API.AddEntityCanCollideRainbowPenny(type, ?variant, ?subtype)
+* Defined in line 79 of milkshake_scripts/items/collectibles/passive/potofgold.lua
+
+    Allows an entity to collide with Rainbow Pennies. Useful for entities like Bum Friend or Ultra Greed who
+    can pick up coins.
+
+    type EntityType
+    ?variant number : -1
+    ?subtype number : -1
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+ MilkshakeVol1.API.SplitEnemy(enemy, player)
+ * Defined in line 57 of milkshake_scripts/locusts/prismaticdice.lua
+
+    Uses the D10 effect on a single enemy, and clones it. Also does a brief color swap animation on the enemies involved.
+
+    enemy Entity
+    player EntityPlayer
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API.ForbidEnemySplit(entityData)
+* Defined in line 52 of milkshake_scripts/locusts/prismaticdice.lua
+
+    Forbid a specific entity from being split
+
+    entityData table
+
+    Tables must be in the following format:
+    {
+        type = myEntityType,
+        variant = myEntityVariant,
+        subtype = myEntitySubtype
+    }
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API.AllowSplitWithFakeDevolve(entityData)
+* Defined in line 59 of milkshake_scripts/locusts/prismaticdice.lua
+
+    If your custom entity has its own code written for devolving,
+    i.e, it doesn't devolve into another enemy, but instead you remove it
+    then spawn another type of entity on MC_POST_ENTITY_DEVOLVE, you must
+    add it to this table to avoid the REPENTOGON fallback where an enemy will
+    not be split if it doesn't have an xml entry for devolving that is different
+    from the base entity.
+
+    entityData table
+
+    Tables must be in the following format:
+    {
+        type = myEntityType,
+        variant = myEntityVariant,
+        subtype = myEntitySubtype,
+        ActivationFunction = myFunction(entity)
+    }
+
+    The activation function is the code to be ran on MC_POST_ENTITY_DEVOLVE, for
+    an example, check out line 16 at line 52 of milkshake_scripts/locusts/prismaticdice.lua
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+MilkshakeVol1.API.IsEntityDataIn(entityData, dataTable)
+* Defined in line 67 of milkshake_scripts/locusts/prismaticdice.lua
+
+    Primarily to be used with the two functions documented above here. Compares
+    a table of type, variant, and subtype to a table of tables with the same entries to
+    find that specific entry. Returns the found table if successful, false otherwise.
+
+    entityData table
+    dataTable table
+
+--------------------------------------------------------------------------------------------------------------------------------------
