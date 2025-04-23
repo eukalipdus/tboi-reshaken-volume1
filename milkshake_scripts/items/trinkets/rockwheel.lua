@@ -3,7 +3,6 @@ local enums = MilkshakeVol1.enums
 local utility = MilkshakeVol1.utility
 local RockWheel = {}
 
-local SPEED_BONUS = 0.1
 local STONEY_COLLISION_DAMAGE = 4
 local BASE_TARGET_SEARCH_RADIUS = 120
 
@@ -63,14 +62,6 @@ function RockWheel:NPCInit(npc)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NPC_INIT, RockWheel.NPCInit)
 
----@param player EntityPlayer
----@param flag CacheFlag
-function RockWheel:EvaluateCache(player, flag)
-    if player:HasTrinket(enums.Trinkets.ROCK_WHEEL) then
-        player.MoveSpeed = player.MoveSpeed + SPEED_BONUS * player:GetTrinketMultiplier(enums.Trinkets.ROCK_WHEEL)
-    end
-end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, RockWheel.EvaluateCache, CacheFlag.CACHE_SPEED)
 
 ---@param projectile EntityProjectile
 function RockWheel:PostProjectileInit(projectile)
