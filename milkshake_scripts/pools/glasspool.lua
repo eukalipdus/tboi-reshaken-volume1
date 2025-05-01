@@ -39,10 +39,14 @@ MilkshakeVol1.enums.ItemPools.GLASS = TSIL.CustomItemPools.RegisterCustomItemPoo
     { Collectible = CollectibleType.COLLECTIBLE_COMPASS,               Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
     { Collectible = CollectibleType.COLLECTIBLE_EVIL_CHARM,            Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
     { Collectible = CollectibleType.COLLECTIBLE_SPRINKLER,             Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
+    { Collectible = CollectibleType.COLLECTIBLE_DR_FETUS,              Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
+    { Collectible = CollectibleType.COLLECTIBLE_EPIC_FETUS,            Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
     { Collectible = MilkshakeVol1.enums.Collectibles.MILKSHAKE,        Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
     { Collectible = MilkshakeVol1.enums.Collectibles.FRAGILE_MIRROR,   Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
     { Collectible = MilkshakeVol1.enums.Collectibles.PRISMATIC_DICE,   Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
     { Collectible = MilkshakeVol1.enums.Collectibles.INNER_REFLECTION, Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
+    { Collectible = MilkshakeVol1.enums.Collectibles.SHATTERED_ORB,    Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
+    { Collectible = MilkshakeVol1.enums.Collectibles.MIRROR_KEY,       Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
     { Collectible = MilkshakeVol1.enums.Collectibles.PRISMATIC_GOGGLES, Weight = 1, DecreaseBy = 1, RemoveOn = 0.1 },
 })
 ---@type table<CollectibleType, fun():boolean>
