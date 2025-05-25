@@ -11,6 +11,15 @@ local poolsToReplace = {
     ItemPoolType.POOL_GREED_TREASURE,
 }
 
+if TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting") == nil then
+    TSIL.SaveManager.SetPersistentVariable(
+        MilkshakeVol1,
+        "PreviousMouseSetting",
+        Options.MouseControl,
+        TSIL.Enums.VariablePersistenceMode.NONE
+    )
+end
+
 ---@param player EntityPlayer
 function isaacClicker:PostPlayerInit(player)
     if Game().Challenge == enums.Challenges.ISAAC_CLICKER then
@@ -28,9 +37,10 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, isaacClicker.PostPla
 function isaacClicker:PostGameStartedReordered(isContinued)
     if Game().Challenge == enums.Challenges.ISAAC_CLICKER
     and not isContinued then
-        local prevOption = Options.MouseControl
-        TSIL.SaveManager.AddPersistentVariable(MilkshakeVol1, "PreviousMouseSetting", prevOption, TSIL.Enums.VariablePersistenceMode.NONE)
         Options.MouseControl = true
+
+        print(TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting"))
+
         TSIL.SaveManager.SetPersistentVariable(
             MilkshakeVol1,
             "SharpCursorFollowMouse",
@@ -38,16 +48,20 @@ function isaacClicker:PostGameStartedReordered(isContinued)
         )
     elseif TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting") ~= nil then
         Options.MouseControl = TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting")
+
         local toSet
+
         if TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "PreviousMouseSetting") then
             toSet = true
-        else toSet = false end
+        else
+            toSet = false
+        end
+
         TSIL.SaveManager.SetPersistentVariable(
             MilkshakeVol1,
             "SharpCursorFollowMouse",
             toSet
         )
-        TSIL.SaveManager.RemovePersistentVariable(MilkshakeVol1, "PreviousMouseSetting")
     end
 end
 MilkshakeVol1:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, isaacClicker.PostGameStartedReordered)
