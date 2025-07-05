@@ -156,9 +156,10 @@ function innerreflection:PostNewRoom()
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, innerreflection.PostNewRoom)
 
-
+---@param player EntityPlayer
 function innerreflection:PlayerDie(player)
 	if not player:HasCollectible(enums.Collectibles.INNER_REFLECTION) then return end
+	--if math.random() > 0.1 then return end
 	local sprite = player:GetSprite()
 
 	if not player:IsDead() then return end
@@ -173,10 +174,12 @@ function innerreflection:PlayerDie(player)
 			player.Position + (Vector(0, -30))
 		)
 		DeathEffect.SpriteScale = Vector(2, 2)
+		player:SetColor(Color(1, 1, 1, 0, 1, 1, 1) , 50, 1, false, false)
 
 	end, 10)
 
-	player.Color = Color(1, 1, 1, 1, 1, 1, 1)
+	player:SetColor(Color(1, 1, 1, 1, 1, 1, 1) , 55, 1, false, false)
+	player:SetColor(Color(1, 1, 1, 1, 1, 1, 1) , 70, 1, true, false)
 	player.Velocity = Vector(15, -15)
 end
 
