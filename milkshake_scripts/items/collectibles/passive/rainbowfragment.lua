@@ -1,6 +1,6 @@
 local rainbowFragment = {}
 
-local PENNY_COUNT = 4
+local PENNY_COUNT = 5
 local MAX_ROLL_RETRY_COUNT = 200 --I'm not taking any chances okay.
 local LUCK_BONUS = 1
 
@@ -10,6 +10,41 @@ function rainbowFragment:EvaluateCache(player)
 end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, rainbowFragment.EvaluateCache, CacheFlag.CACHE_LUCK)
 
+if REPENTOGON then
+
+    ---@param player EntityPlayer
+function rainbowFragment:PostItemAddedRGON(type, charge, firstTime, slot, varData, player)
+    if not firstTime then return end
+    local rng = player:GetCollectibleRNG(MilkshakeVol1.enums.Collectibles.RAINBOW_FRAGMENT)
+    local spawnedPennies = {}
+    for i=1,PENNY_COUNT do
+        local penny = MilkshakeVol1.API:GetRainbowPenny(rng)
+        for y=1, MAX_ROLL_RETRY_COUNT do
+            if not spawnedPennies[penny] then
+                break
+            end
+            penny = MilkshakeVol1.API:GetRainbowPenny(rng)
+        end
+        spawnedPennies[penny] = true
+
+        local position = Isaac.GetFreeNearPosition(player.Position, 15)
+        Isaac.Spawn(
+            EntityType.ENTITY_PICKUP,
+            penny.variant,
+            penny.subtype,
+            position,
+            Vector.Zero,
+            player
+        )
+    end
+end
+MilkshakeVol1:AddCallback(
+    ModCallbacks.MC_POST_ADD_COLLECTIBLE,
+    rainbowFragment.PostItemAddedRGON,
+    MilkshakeVol1.enums.Collectibles.RAINBOW_FRAGMENT
+)
+
+else
 ---@param player EntityPlayer
 function rainbowFragment:PostItemAdded(player, _, firstTime)
     if (player:GetPlayerType() == PlayerType.PLAYER_ISAAC_B and firstTime == false) or player.Variant == 1 then
@@ -47,3 +82,4 @@ MilkshakeVol1:AddCallback(
         MilkshakeVol1.enums.Collectibles.RAINBOW_FRAGMENT,
     }
 )
+end
