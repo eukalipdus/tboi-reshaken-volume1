@@ -209,7 +209,7 @@ end
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, witchDoctorMask.PostPickupUpdate)
 
 HudHelper.RegisterHUDElement({
-    Name = "RE1_SPIRITPILL",
+    Name = "RESHAKEN1_SPIRITPILL",
 	Priority = HudHelper.Priority.NORMAL,
 	Condition = function(player)
 		return player:HasCollectible(MilkshakeVol1.enums.Collectibles.WITCH_DOCTOR_MASK) and player:GetPill(0) ~= PillColor.PILL_NULL
@@ -223,7 +223,7 @@ HudHelper.RegisterHUDElement({
         end
 
         if isFiendFolio then
-            orbPillHudFF.Color = Color(1, 1, 1, alpha)
+            orbPillHudFF.Color = Color(alpha, alpha, alpha)
             orbPillHudFF.Scale = Vector(scale, scale)
             orbPillHudFF:Render(position)
             orbPillHudFF:SetFrame(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
@@ -231,7 +231,7 @@ HudHelper.RegisterHUDElement({
         else
             local frame = GetFrameFromId(heldPill, pillAnimFrames) - 1
             if frame then
-                orbPillHud.Color = Color(1, 1, 1, alpha)
+                orbPillHud.Color = Color(alpha, alpha, alpha)
                 orbPillHud.Scale = Vector(scale, scale)
                 orbPillHud:Render(position)
                 orbPillHud:SetFrame(frame)

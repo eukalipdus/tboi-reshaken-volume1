@@ -1,6 +1,7 @@
 local sprite = Sprite()
 sprite:Load("gfx/ui/ui_orderspiritoverlay.anm2", true)
 sprite:Play(sprite:GetDefaultAnimation(), true)
+sprite.Offset = Vector(-1, 0)
 
 local SPIRIT_ORDER_SPAWN_CHANCE = 0.04
 
@@ -53,19 +54,11 @@ MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, function (_, pickup)
 end, PickupVariant.PICKUP_TAROTCARD)
 
 HudHelper.RegisterHUDElement({
-    Name = "RE1_ORDER",
-    Priority = HudHelper.Priority.NORMAL,
-    Condition = function(player)
-        return player:GetCard(0) == MilkshakeVol1.enums.Orbs.ORDER
-    end,
-    OnRender = function(player, _, layout, position, alpha, scale)
-        if layout == HudHelper.HUDLayout.P1 or layout == HudHelper.HUDLayout.P1_OTHER_TWIN then
-            position = position + Vector(-1, 0)
-        end
-
-        sprite.Color = Color(1, 1, 1, alpha)
+    ItemID = MilkshakeVol1.enums.Orbs.ORDER,
+    OnRender = function(player, index, layout, position, alpha, scale)
+        sprite.Color = Color(alpha, alpha, alpha)
         sprite.Scale = Vector(scale, scale)
         sprite:SetFrame(MilkshakeVol1.API:GetSelectedOrderOrb(player) - 1)
         sprite:Render(position)
     end,
-}, HudHelper.HUDType.POCKET)
+}, HudHelper.HUDType.CARD_ID)

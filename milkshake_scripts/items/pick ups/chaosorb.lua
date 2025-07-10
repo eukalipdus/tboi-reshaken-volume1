@@ -16,9 +16,9 @@ local SPRITESHEET_PER_ORB = {
     [enums.Orbs.ROCK] = "spirit_ground",
 }
 
-local orbHud = Sprite()
-orbHud:Load("gfx/ui/ui_chaosorb.anm2", true)
-orbHud:Play("Spirit Of Chaos")
+local hud = Sprite()
+hud:Load("gfx/ui/ui_chaosorb.anm2", true)
+hud:Play("Spirit Of Chaos", true)
 
 ---@param player EntityPlayer
 ---@param flags UseOrbFlag
@@ -44,22 +44,14 @@ MilkshakeVol1:AddCallback(
 )
 
 MilkshakeVol1:AddCallback(ModCallbacks.MC_POST_UPDATE, function ()
-    orbHud:Update()
+    hud:Update()
 end)
 
 HudHelper.RegisterHUDElement({
-    Name = "RE1_CHAOS",
-	Priority = HudHelper.Priority.HIGH,
-	Condition = function(player)
-		return player:GetCard(0) == MilkshakeVol1.enums.Orbs.RANDOM
-	end,
-	OnRender = function(player, _, layout, position, alpha, scale)
-        if layout == HudHelper.HUDLayout.P1 or layout == HudHelper.HUDLayout.P1_OTHER_TWIN then
-            position = position + Vector(-1, 0)
-        end
-
-        orbHud.Color = Color(1, 1, 1, alpha)
-        orbHud.Scale = Vector(scale, scale)
-        orbHud:Render(position)
-	end,
-}, HudHelper.HUDType.POCKET)
+    ItemID = MilkshakeVol1.enums.Orbs.RANDOM,
+    OnRender = function(player, index, layout, position, alpha, scale)
+        hud.Scale = Vector(scale, scale)
+        hud.Color = Color(alpha, alpha, alpha)
+        hud:Render(position)
+    end,
+}, HudHelper.HUDType.CARD_ID)
