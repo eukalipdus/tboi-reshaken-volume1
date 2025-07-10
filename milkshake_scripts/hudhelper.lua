@@ -1,5 +1,5 @@
 local Mod = MilkshakeVol1
-local emptyShaderName = "HudHelperEmptyShader"
+local emptyShaderName = "Milkshake HUD"
 
 local VERSION = 1.14 -- (v1.1.4) do not modify
 local game = Game()
