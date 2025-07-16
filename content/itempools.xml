@@ -79,7 +79,7 @@
 	</Pool>
 
 	<Pool Name="keyMaster">
-		
+		<Item Name="Mirror Key" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 
 	<Pool Name="batteryBum">
@@ -145,16 +145,17 @@
 
 	<Pool Name="craneGame">
 		<Item Name="Sharp Cursor" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Dad's Mitt" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Battery Acid" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Celestial Mirror" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 
 	<Pool Name="ultraSecret">
 		<Item Name="Globin In A Bucket" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Sickle Cell" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Sharp Cursor" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 
 	<Pool Name="bombBum">
@@ -179,18 +180,10 @@
 
 	<Pool Name="woodenChest">
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Witch Doctor Mask" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 
 	<Pool Name="rottenBeggar">
 		
-	</Pool>
-	
-	<!-- CUSTOM POOL! when we get around to it, use the IDs for all of the already in game items-->
-	<Pool Name="glass">
-		<Item Name="Milkshake!" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Chromatic Prism" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Shattered Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
-		<Item Name="Celestial Mirror" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 </ItemPools>
