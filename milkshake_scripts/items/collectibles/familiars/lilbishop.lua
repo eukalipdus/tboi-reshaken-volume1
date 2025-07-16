@@ -80,7 +80,14 @@ function lilBishop:onPlayerTakeDamage(entity, _, flags) --entity, amount, flags,
 		if ignore then return false end
 	end
 end
-MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, lilBishop.onPlayerTakeDamage, EntityType.ENTITY_PLAYER)
+
+if REPENTOGON then
+	MilkshakeVol1:AddCallback(ModCallbacks.MC_PRE_PLAYER_TAKE_DMG, lilBishop.onPlayerTakeDamage)
+else
+	MilkshakeVol1:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, lilBishop.onPlayerTakeDamage, EntityType.ENTITY_PLAYER)
+end
+
+
 
 function lilBishop:onLaserUpdate(laser)
 	local data = laser:GetData()
