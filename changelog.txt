@@ -335,9 +335,39 @@ Bug Fixes
 - Fixed Spirit of Order replacing non-room-layout spirit orbs
 - Updated Throwable Item Lib to fix various bugs related to throwing shattered orb
 
+
+
 ================================================
-    v1.1.4 - March XX, 2025
+    v1.1.4 - August 14, 2025
 ================================================
+
+Additions:
+- Added Shattered Orb, Mirror Key, and Chromatic Prism to the glass pool
+- Added Dr. Fetus and Epic Fetus to the glass pool
+- Rainbow Fragment and Witch Doctor Mask: Will now use RGON post collectible added callbacks if RGON is enabled
+- Lil Bishop: Will now protect your holy mantle when shielding if RGON is enabled
+- Added mirror key to key bum pool.
+- Added Celestial Mirror to crane game
+- Removed Empty Slot from crane game
+- Added Sharp Cursor to red room pool
+- Added Witch Doctor Mask to wood chest pool
+
+Changes
+- Spirit Orb voicelines now respect your options.ini voiceline settings
+- Nerfed some extra strong super secret rooms
+- Fixed various bugs related to throwing shatter orb and spirit of virulence
+- Rainbow Cookie: Increased chance to replace to 10% per trinket after the first
+- Doggy Bag: Changed friendly poop bag familiar sprite
+- Inner Reflection: Death easter egg changed to only 10% chance
+- Updated HUD Helper
+
+Removals:
+- Rock Wheel: Removed speed up
+
 Bug Fixes
 - Fixed Doggy Bag throwing errors when the first player to own the item takes damage
 - Isaac Clicker now affects the proper item pools
+- Fixed error from not checking if player has coins tracked for Empty slot
+- Fixed Prismatice Lacewing EID having incorrect chances
+- Fixed Inner Reflection death easter egg making you invisible on reviving
+- Fixed black chaos spirit pill being the wrong color
