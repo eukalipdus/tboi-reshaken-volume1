@@ -371,3 +371,9 @@ Bug Fixes
 - Fixed Prismatice Lacewing EID having incorrect chances
 - Fixed Inner Reflection death easter egg making you invisible on reviving
 - Fixed black chaos spirit pill being the wrong color
+
+================================================
+    v1.1.5 - X, X, 2025
+================================================
+Bug Fixes
+- Fixed Pot of Gold converting troll bombs into rainbow pennies
