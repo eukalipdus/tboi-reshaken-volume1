@@ -229,13 +229,17 @@ function PrismaticDice:UseItem(_, rng, player, useFlags)
         return
     end
 
-    SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
-
     local roomCollectibles = TSIL.EntitySpecific.GetPickups(PickupVariant.PICKUP_COLLECTIBLE)
 
     if #roomCollectibles == 0 then
-        return
+        return {
+        Discharge = true,
+        Remove = false,
+        ShowAnim = true,
+    }
     end
+
+    SFXManager():Play(SoundEffect.SOUND_MIRROR_EXIT)
 
     local itemPool = Game():GetItemPool()
     local roomType = Game():GetRoom():GetType()
