@@ -87,7 +87,7 @@ descriptions.Collectibles = {
                 "#{{ArrowUp}} {{ArrowUp}}提升 1.1x 到 1.5x 倍的全部属性!",
             abyss = "巨大, 快速, 造成2倍玩家伤害的粉红色蝗虫"
         },
-        pt = {
+        pt_br = {
             name = "Milkshake",
             description = "{{Heart}} +1 Coração de Alma, Coração preto, ou Coração Vermelho aleatoriamente" ..
                 "#{{ArrowUp}} {{ArrowUp}} de 1.1x a 1.5x para todas las estadísticas!",
@@ -132,7 +132,7 @@ descriptions.Collectibles = {
                 "#{{Damage}} 按下射击键会发出咔嗒声，造成玩家10%的伤害" ..
                 "#{{Warning}} 双击ctrl切换鼠标控制模式",
         },
-        pt = {
+        pt_br = {
             name = "Cursor Afiado",
             description = "#Aponta pro inimigo mais distante na sala" ..
                 "#{{Damage}} Pressionar uma tecla de atirar faz isso clicar, dando 10% do dano de Isaac" ..
@@ -164,7 +164,7 @@ descriptions.Collectibles = {
             description =
             "{{Blank}}{{ArrowUp}} +0.7 射速上升 和只能用右眼射击 #目前未使用和未编码，也许稍后会出现（可能不会）",
         },
-        pt = {
+        pt_br = {
            name = "Olho Roxo",
             description =
             "{{Blank}}{{ArrowUp}} +0.7 lágrimas e knockback  só pro olho direito #Atualmente não usado e não programado, talvez apareça depois (Provavelmente não)",
@@ -195,7 +195,7 @@ descriptions.Collectibles = {
             description =
             "激活随机骰子房效果#当前未使用且未编码，也许稍后会显示",
         },
-        pt = {
+        pt_br = {
             name = "Dado Dado",
             description =
             "Ativa um efeito aleatório da sala de dado #Atualmente não usado e não programado, talvez apareça depois",
@@ -239,7 +239,7 @@ descriptions.Collectibles = {
                 "#4秒后种子绽放,爆发花瓣眼泪，造成35+6倍玩家伤害",
             abyss = "Green, burning locust that has a 10% chance to inflict {{Burning}} Kabloom"
         },
-        pt = {
+        pt_br = {
             name = "Flor Foguete",
             description = "{{Burning}} Chance de atirar uma semente que se gruda nos inimigos " ..
                 "#Depois de 4 segundos, as sementes florescem e explodem, atirando lágrimas de pétalas explosivas, dando 35 + 6 x do dano de Isaac",
@@ -287,7 +287,7 @@ descriptions.Collectibles = {
                 "#一次最多可以繁殖4个血红尸",
             book_of_virtues = "中圈灵火#死亡时50%的复活机会"
         },
-        pt = {
+        pt_br = {
             name = "Globin Num Balde",
             description = "Spawna um globin amigável que luta do seu lado" ..
                 "#Chance de spawnar diferentes variantes de goblins dependendo do andar" ..
@@ -345,7 +345,7 @@ descriptions.Collectibles = {
                 "#这个陷阱门通往一个地下商店，出售各种金色的物品",
             book_of_virtues = "中环灵火#高生命灵火#10%几率发射{{Collectible202}} 点金眼泪"
         },
-        pt = {
+        pt_br = {
             name = "Pá dourada",
             description = "Desenterra um baú dourado e 2-4 moedas" ..
                 "#{{LadderRoom}} Abre um alçapão dourado se usado numa decoração do chão" ..
@@ -385,7 +385,7 @@ descriptions.Collectibles = {
             description = "\1 0.3 速度上升" ..
                 "#{{MomBossSmall}}对踩踏攻击免疫",
         },
-        pt = {
+        pt_br = {
             name = "Chinela",
             description = "\1 0.3 velocidade" ..
                 "#Imune aos pisões de {{MomBossSmall}}",
@@ -435,7 +435,7 @@ descriptions.Collectibles = {
                 "#\1 使用宝珠后开始一个短的迷你节奏游戏." ..
                 "#{{Blank}} 成果完成后可以激活宝珠的双倍效果",
         },
-        pt = {
+        pt_br = {
             name = "Lyra",
             description = "{{SpiritOrb}} 15% de chance da recompensa de sala ser um orbe de espírito" ..
                 "#{{SpiritOrb}} Chance de um orbe de espírito bônus de baús, pedras marcadas, e máquinas destruídas" ..
@@ -491,7 +491,7 @@ descriptions.Collectibles = {
             book_of_virtues = "内环灵火#低生命值灵火",
             book_of_belial = "↑ {{Damage}} +0.066 伤害 在投入硬币时"
         },
-        pt = {
+        pt_br = {
             name = "Slot Vazio",
             description = "{{Coin}} Insira uma moeda" ..
                 "#Depois de 10 moedas, tem 1% de chance de explodir e spawnar o dobro de moedas inseridas" ..
@@ -542,7 +542,7 @@ descriptions.Collectibles = {
             book_of_virtues = "破碎时生成一个随机元素灵火",
             book_of_belial = "{{SpiritOrb}}50%的几率用混沌之灵替换产生的亵渎之灵 "
         },
-        pt = {
+        pt_br = {
             name = "Orbe Despedaçado",
             description = "Pode ser jogado nos inimigos para capturar suas almas" ..
                 "#{{SpiritOrb}} Inimigos capturados se tornam orbes de espíritos correspondentes aos seus elementos de alma ",
@@ -609,7 +609,7 @@ descriptions.Collectibles = {
             book_of_belial = "30% 的几率使拆分的物品成为 {{DevilRoom}} 恶魔房物品",
             abyss = "粉红色发光的蝗虫，有20%的几率在接触时将敌人分裂为2个较弱的敌人"
         },
-        pt = {
+        pt_br = {
             name = "Dado Prismático",
             description = "Divide itens em pedestais na sala em dois pedestais de uma qualidade inferior" ..
                 "#Itens de qualidade {{Quality0}} se tornam pickups",
@@ -650,7 +650,7 @@ descriptions.Collectibles = {
             description = "{{SoulHeart}} 拾取附近的魂心" ..
                 "#{{SpiritOrb}} 生成随机精灵宝珠作为回报",
         },
-        pt = {
+        pt_br = {
             name = "Mendigo Espírito",
             description = "{{SoulHeart}} Pega corações de alma por perto" ..
                 "#{{SpiritOrb}} Spawna orbes de espírito aleatórios em retorno",
@@ -692,7 +692,7 @@ descriptions.Collectibles = {
                 "#接触造成每秒75点伤害" ..
                 "#\1 {{MirrorRoom}} 镜世界增加1.7伤害",
         },
-        pt = {
+        pt_br = {
             name = "Espelho Celestial",
             description = "Reflete os movimentos de Isaac" ..
                 "#Dá 50 de dano de contato por segundo" ..
@@ -736,7 +736,7 @@ descriptions.Collectibles = {
                 "#{{BleedingOut}} 眼泪会导致流血，这会使敌人在移动时留下水迹并受到伤害",
             abyss = "造成流血的红蝗虫"
         },
-        pt = {
+        pt_br = {
             name = "Célula Falciforme",
             description = "Lágrimas perfurantes" ..
                 "#{{BleedingOut}} Lágrimas causam sangramento, que faz os inimigos deixarem sangue e tomarem dano quando se movem",
@@ -774,7 +774,7 @@ descriptions.Collectibles = {
             description = "\1 +1 空心之容器" ..
                 "#{{EmptyHeart}} 移除半颗红心",
         },
-        pt = {
+        pt_br = {
             name = "Café da Manhã Estragado",
             description = "\1 +1 Container de coração" ..
                 "#{{EmptyHeart}} Remove meio coração",
@@ -823,7 +823,7 @@ descriptions.Collectibles = {
                 "#{{SoulHeart}} +1 魂心" ..
                 "#{{Heart}} 治疗1红心",
         },
-        pt = {
+        pt_br = {
             name = "Café da Manhã Balanceado",
             description = "\1 +1 Container de coração" ..
                 "#\1 +1 Sorte" ..
@@ -880,7 +880,7 @@ descriptions.Collectibles = {
                 "#\1 +1 幸运" ..
                 "#{{Heart}} 回满红心",
         },
-        pt = {
+        pt_br = {
             name = "Café da Manhã Caloroso",
             description = "\1 +1 Container de coração" ..
                 "#\1 +0.5 Dano" ..
@@ -920,7 +920,7 @@ descriptions.Collectibles = {
             description = "将所有炸弹、钥匙和大多数硬币掉落物转换为彩虹硬币" ..
                 "#{{Trinket52}} ｝彩虹硬币在拾取时激活相应硬币小饰品的效果",
         },
-        pt = {
+        pt_br = {
             name = "Pote de Ouro",
             description = "Converte todas as bombas, chave, e a maioria das moedas em moedas arco-íris" ..
                 "#{{Trinket52}} Moedas arco-íris ativam o efeito de seus correspondentes trinkets de moedas quando coletadas",
@@ -974,7 +974,7 @@ descriptions.Collectibles = {
                 "#在粉碎前拦截3次投射物" ..
                 "#\2 -1 幸运在破碎时",
         },
-        pt = {
+        pt_br = {
             name = "Ídolo de Vidro",
             description = "\1 +1 Vida enquanto intacto" ..
                 "#{{SoulHeart}} Isaac revive com +1 Coração de alma e 10 segundos de invencibilidade ao morrer" ..
@@ -1035,7 +1035,7 @@ descriptions.Collectibles = {
             book_of_virtues = "内环之缕#高生命之缕#+每束利未记之缕10%的{{AngelRoom}}天使房机会",
             abyss = "蓝色发光蝗虫，可以产生光束，造成玩家3倍的伤害",
         },
-        pt = {
+        pt_br = {
             name = "Levítico",
             description = "{{SoulHeart}} Deve ser carregado com corações de alma" ..
                 "#{{AngelRoom}} Leva Isaac para uma Sala de Anjo única do andar" ..
@@ -1081,7 +1081,7 @@ descriptions.Collectibles = {
                 "#\2 每15秒损失1充能" ..
                 "#玩家留下了稀疏的酸液水迹"
         },
-        pt = {
+        pt_br = {
             name = "Ácido de Bateria",
             description = "{{Battery}} Carrega itens ativos duas vezes mais rápido" ..
                 "#\2 Perde uma carga a cada 15 segundos" ..
@@ -1119,7 +1119,7 @@ descriptions.Collectibles = {
             description = "受到伤害会产生随机便便" ..
                 "#可以通过走过便便来捡便便",
         },
-        pt = {
+        pt_br = {
             name = "Bolsa de Cachorro",
             description = "Tomar dano spawna um cocô aleatório" ..
                 "#Isaac pode pegar cocôs ao andar sobre eles",
@@ -1168,7 +1168,7 @@ descriptions.Collectibles = {
                 "#眼泪受到玩家移动的影响",
             abyss = "跟随玩家移动方向的棒球蝗虫",
         },
-        pt = {
+        pt_br = {
             name = "Luva do Pai",
             description = "\1 +10% Velocidade de disparo" ..
                 "#\2 -0.2 Velocidade da lágrima" ..
@@ -1207,7 +1207,7 @@ descriptions.Collectibles = {
             description = "阻挡投射物" ..
                 "#命中时，有10%的几率保护玩家5秒",
         },
-        pt = {
+        pt_br = {
             name = "Pequeno Bispo",
             description = "Bloqueia projéteis" ..
                 "#Quando atingido, 10% de chance de proteger Isaac por 5 segundos",
@@ -1250,7 +1250,7 @@ descriptions.Collectibles = {
                 "#生成 4 个彩虹硬币" ..
                 "#{{Trinket52}} 彩虹硬币在拾取时激活饰品的效果",
         },
-        pt = {
+        pt_br = {
             name = "Fragmento Arco-íris",
             description = "\1 +1 Sorte" ..
                 "#Spawna 4 moedas arco-íris" ..
@@ -1294,7 +1294,7 @@ descriptions.Collectibles = {
                 "#将所有药丸转化为灵药" ..
                 "#{{SpiritOrb}} 灵药在其药丸效果的基础上激活随机宝珠效果",
         },
-        pt = {
+        pt_br = {
             name = "Máscara do Doutor Bruxo",
             description = "{{Pill}} Spawna 1 pílula" ..
                 "#Converte todas as pílulas em pílulas espírito" ..
@@ -1343,7 +1343,7 @@ descriptions.Collectibles = {
                 "#激光在4个刻度内造成16倍伤害" ..
                 "#{{Luck}} 每点幸运+2.5%几率",
         },
-        pt = {
+        pt_br = {
             name = "Prisma Cromático",
             description = "Inimigos tem 20% de chance de spawnar difratados" ..
                 "#Inimigos difratados spawnam 3 raios de luz arco-íris ao morrer" ..
@@ -1383,7 +1383,7 @@ descriptions.Collectibles = {
             description = "{{Bait}} 指向房间内的随机敌人，标记他们10秒" ..
                 "#被标记的敌人会成为其他敌人的目标",
         },
-        pt = {
+        pt_br = {
             name = "Fingore Escrupuloso",
             description = "{{Bait}} Aponta para inimigos aleatórios na sala, marcando eles por 10 segundos por vez." ..
                 "#Inimigos marcados são atacados por outros inimigos"
@@ -1448,7 +1448,7 @@ descriptions.Collectibles = {
                 "#{{BossRoom}} 可以再次挑战boss获得额外奖励",
             book_of_belial = "↑ {{Damage}} ++2.5在镜像世界中的伤害",
         },
-        pt = {
+        pt_br = {
             name = "Chave Espelho",
             description =
                 "{{MirrorRoom}} Uma vez por sala, pode criar um porta para a dimensão do espelho, indicada pelo contorno da porta" ..
@@ -1518,7 +1518,7 @@ descriptions.Collectibles = {
                 "#{{BossRoom}} 可以再次挑战boss获得额外奖励",
             book_of_belial = "↑ {{Damage}} ++2.5在镜像世界中的伤害",
         },
-        pt = {
+        pt_br = {
             name = "Chave Espelho (Sem Carga)",
             description =
                 "{{MirrorRoom}} Uma vez por sala, pode criar um porta para a dimensão do espelho, indicada pelo contorno da porta" ..
@@ -1583,7 +1583,7 @@ descriptions.Trinkets = {
             triple =
             "{{ArrowDown}} -0.2 速度 #丢掉会产生巨大的破坏性冲击波 #{{ColorGold}}三倍伤害",
         },
-        pt = {
+        pt_br = {
             name = "Cubo de Tungstênio",
             description = "{{ArrowDown}} -0.2 Velocidade #Soltar isso cria uma onda de choque que causa muito dano",
             duplo =
@@ -1617,7 +1617,7 @@ descriptions.Trinkets = {
             name = "酸液硬币",
             description = "{{Pill11}} 捡起硬币有8%的几率生成药丸",
         },
-        pt = {
+        pt_br = {
             name = "Moeda Ácida",
             description = "{{Pill11}} Pegar uma moeda tem 8% de chance de spawnar uma pílula"
         },
@@ -1647,7 +1647,7 @@ descriptions.Trinkets = {
             name = "水晶硬币",
             description = "{{Card}} 捡起一枚硬币有8%的机会生成一张卡牌",
         },
-        pt = {
+        pt_br = {
             name = "Moeda de Cristal",
             description = "{{Pill11}} Pegar uma moeda tem 8% de chance de spawnar uma carta"
         },
@@ -1677,7 +1677,7 @@ descriptions.Trinkets = {
             name = "石轮”",
             description = "石像射手和死人头骨以敌对敌人为目标",
         },
-        pt = {
+        pt_br = {
             name = "Roda de Pedra",
             description = "Inimigos rochosos atacam inimigos hostis",
         },
@@ -1736,7 +1736,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}} 隐藏石头在被摧毁时有75%的几率掉落 {{ColorGold}}2-3 {{CR}}个落洞察之灵",
         },
-        pt = {
+        pt_br = {
             name = "Ametista Clarividente",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}} Pedras marcadas tem 75% de chance de dropar um Espírito da Clarividência quando destruídas",
@@ -1800,7 +1800,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}} 隐藏石头在被摧毁时有75%的几率掉落 {{ColorGold}}2-3 {{CR}}炼狱之灵",
         },
-        pt = {
+        pt_br = {
             name = "Rubi Infernal",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}} Pedras marcadas tem 75% de chance de dropar um Espírito do Inferno quando destruídas",
@@ -1864,7 +1864,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}} 隐藏石头在被摧毁时有75%的几率掉落 {{ColorGold}}2-3 {{CR}}雷电之灵",
         },
-        pt = {
+        pt_br = {
             name = "Turmalina Condutiva",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}} Pedras marcadas tem 75% de chance de dropar um Espírito da Condutividade quando destruídas",
@@ -1928,7 +1928,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}} 隐藏石头在被摧毁时有75%的几率掉落 {{ColorGold}}2-3 {{CR}}生命之灵",
         },
-        pt = {
+        pt_br = {
             name = "Esmeralda Druídica",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}} Pedras marcadas tem 75% de chance de dropar um Espírito da Druidez quando destruídas",
@@ -1992,7 +1992,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}} 隐藏石头在被摧毁时有75%的几率掉落 {{ColorGold}}2-3 {{CR}}猛毒之灵",
         },
-        pt = {
+        pt_br = {
             name = "Peridoto Virulento",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}}  Pedras marcadas tem 75% de chance de dropar um Espírito da Virulência quando destruídas",
@@ -2056,7 +2056,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}} 隐藏石头在被摧毁时有75%的几率掉落{{ColorGold}}2-3 {{CR}}亵渎之灵",
         },
-        pt = {
+        pt_br = {
             name = "Granada Sacrílega",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}}  Pedras marcadas tem 75% de chance de dropar um Espírito do Sacrilégio quando destruídas",
@@ -2120,7 +2120,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}}隐藏石头在被摧毁时有75%的几率掉落{{ColorGold}}2-3 {{CR}}复仇之灵",
         },
-        pt = {
+        pt_br = {
             name = "Ônix Retornado",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}}  Pedras marcadas tem 75% de chance de dropar um Espírito do Retorno quando destruídas",
@@ -2184,7 +2184,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}}隐藏石头在被摧毁时有75%的几率掉落{{ColorGold}}2-3 {{CR}}神圣之灵",
         },
-        pt = {
+        pt_br = {
             name = "Jacinto Sagrado",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}}  Pedras marcadas tem 75% de chance de dropar um Espírito da Salvação quando destruídas",
@@ -2248,7 +2248,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}}隐藏石头在被摧毁时有75%的几率掉落{{ColorGold}}2-3 {{CR}}洪流之灵",
         },
-        pt = {
+        pt_br = {
             name = "Safira Torrencial",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}}  Pedras marcadas tem 75% de chance de dropar um Espírito do Dilúvio quando destruídas",
@@ -2312,7 +2312,7 @@ descriptions.Trinkets = {
             triple =
             "隐藏石头具有独特外观#{{SpiritOrb}}隐藏石头在被摧毁时有75%的几率掉落 {{ColorGold}}2-3 {{CR}}巨岩之灵",
         },
-        pt = {
+        pt_br = {
             name = "Âmbar Terrestre",
             description = "Pedras marcadas tem um visual cristalino único" ..
                 "#{{SpiritOrb}}  Pedras marcadas tem 75% de chance de dropar um Espírito do Terrástrio quando destruídas",
@@ -2350,7 +2350,7 @@ descriptions.Trinkets = {
             name = "支线解锁追踪器",
             description = "在击败楼层boss后自动解锁通往下水道、矿井、陵墓的门",
         },
-        pt = {
+        pt_br = {
             name = "Monitoramento de Conquistas do Caminho Alternativo",
             description =
             "Automaticamente abre as portas para o aguaceiro, minas, mausoléu e cadáver após derrotar o boss do andar",
@@ -2411,7 +2411,7 @@ descriptions.Trinkets = {
             triple = "{{ColorGold}}30% {{CR}}的几率将硬币替换为随机的彩虹硬币" ..
                 "#彩虹硬币的次要效果在拾取时翻倍",
         },
-        pt = {
+        pt_br = {
             name = "Biscoito Arco-íris",
             description = "10% de Chance de substituir moedas por moedas arco-íris" ..
                 "#O efeito secundário das moedas arco-íris é dobrado",
@@ -2431,7 +2431,7 @@ descriptions.Trinkets = {
             triple = "{{ColorGold}}15% {{CR}}chance to shoot a prismatic tear that splits enemies into two devolved enemies with less HP"..
             "#{{Luck}} 20% chance at 4 luck",
         },
-        pt = {
+        pt_br = {
             name = "Crisopídeo prismático",
             description = "5% de chance de atirar uma lágrima prismática divide inimigos em dois desevoluídos com menos vida"..
             "#{{Luck}} 20% de chance com 10 de sorte",
@@ -2487,7 +2487,7 @@ descriptions.Cards = {
                 "#{{BlendedHeart}} 水果之心可以治愈半颗红色的心，如果红心已满则可以治愈半颗灵魂之心",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 双倍水果心掉落"
         },
-        pt = {
+        pt_br = {
             name = "Espírito da Druidez",
             description =
                 "Prende todos os inimigos na sala em vinhas por 12 segundos. Inimigos presos dropam um coração de fruta ao morrer" ..
@@ -2533,7 +2533,7 @@ descriptions.Cards = {
                 "#{{ArcadeRoom}} 使半径范围内的所有机器短路，导致它们多次运行并爆炸",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 使电弧持续时间和范围翻倍"
         },
-        pt = {
+        pt_br = {
             name = "Espírito da Condutividade",
             description = "Dispara uma onda de eletricidade em todas as direções, dando dano aos inimigos próximos" ..
                 "#{{ArcadeRoom}} Causa um curto-circuito nas máquinas em raio, fazendo elas pagarem recompensas várias vezes e explodir",
@@ -2576,7 +2576,7 @@ descriptions.Cards = {
                 "#{{BossRoom}} 伤害穿甲",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 双倍火焰"
         },
-        pt = {
+        pt_br = {
             name = "Espírito do Inferno",
             description = "{{Burning}} Atira uma linha de fogo de dano ato na direção selecionada" ..
                 "#{{BossRoom}} Penetra Armadura de Boss",
@@ -2614,7 +2614,7 @@ descriptions.Cards = {
             description = "{{Timer}} 赋予光环，使敌人减速并反射投射物100秒",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 持续时间翻倍，反射速度更快"
         },
-        pt = {
+        pt_br = {
             name = "Espírito da Clarividência",
             description = "{{Timer}} Dá uma aura que desacelera inimigos e reflete projéteis por 100 segundos",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Dobra a duração e reflete mais rápido"
@@ -2658,7 +2658,7 @@ descriptions.Cards = {
                 "#用骨头填满房间里的所有坑",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Doubles spawned graves"
         },
-        pt = {
+        pt_br = {
             name = "Espírito do Retorno",
             description = "Sumona 4-6 lápides na sala que spawnam bonies amigáveis ou fantasmas quando destruídas" ..
                 "#Enche todos os buracos na sala com ossos",
@@ -2715,7 +2715,7 @@ descriptions.Cards = {
                 "#{{RottenHeart}} 将心和乞丐转化为他们腐烂的变体 {{RottenBeggar}}",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 双倍毒云大小"
         },
-        pt = {
+        pt_br = {
             name = "Espírito da Virulência",
             description = "{{Throwable}} Joga um orbe tóxico que explode em uma nuvem de veneno" ..
                 "#{{Slow}} Inimigos na nuvem são desacelerados e tomam dano com o tempo" ..
@@ -2761,7 +2761,7 @@ descriptions.Cards = {
                 "#光束可以摧毁岩石并打开隐藏房",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 射出16发光束"
         },
-        pt = {
+        pt_br = {
             name = "Espírito da Salvação",
             description = "#Atira 8 raios de luz em todas as direções" ..
                 "#Raios podem destruir pedras e abrir salas secretas",
@@ -2810,7 +2810,7 @@ descriptions.Cards = {
                 "#乞丐掉落额外的掉落物",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 砍杀敌人两次"
         },
-        pt = {
+        pt_br = {
             name = "Espírito do Sacrilégio",
             description =
                 "#{{BleedingOut}} Corta através dos inimigos e mendigos na sala, aplicando sangramento e maldição brimstone" ..
@@ -2854,7 +2854,7 @@ descriptions.Cards = {
             "#{{Timer}} 在8秒的时间里，玩家的眼泪被一个可控的水龙卷所代替，它吸入敌人和可拾取物品",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Doubles duration"
         },
-        pt = {
+        pt_br = {
             name = "Espírito do Dilúvio",
             description =
             "#{{Timer}} Por 8 segundos, as lágrimas de Isaac são substituídas por um ciclone da água que suga inimigos e pickups",
@@ -2894,7 +2894,7 @@ descriptions.Cards = {
             description = "#召唤4-5个石柱，刺穿敌人并破坏金属块",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 生成 8-10 石柱"
         },
-        pt = {
+        pt_br = {
             name = "Espírito do Terrástrio",
             description = "#Sumona 4-5 estalagmites que empalam inimigos e quebram blocos de metal",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Spawna 8-10 estalagmites"
@@ -2931,7 +2931,7 @@ descriptions.Cards = {
             description = "#触发随机宝珠效果",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. "双倍选择的效果"
         },
-        pt = {
+        pt_br = {
             name = "Espírito do Caos",
             description = "#Usa um orbe de espírito aleatório",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " Dobra o efeito escolhido"
@@ -2973,7 +2973,7 @@ descriptions.Cards = {
                 "#灵魂宝珠可以通过下落按钮（{{ButtonRT}}）之间循环",
             lyra_extra = "#{{ColorGray}}" .. LyraIcon .. " 双倍选择的效果"
         },
-        pt = {
+        pt_br = {
             name = "Espírito da Ordem",
             description = "{{SpiritOrb}} Pode ser transformado em qualquer orbe de espírito" ..
                 "#Pode selecionar o orbe de espírito apertando o botão de soltar ({{ButtonRT}})",
@@ -3005,7 +3005,7 @@ descriptions.Cards = {
             name = "破烂书页",
             description = "#生成一个随机{{Collectible712}}道具灵火"
         },
-        pt = {
+        pt_br = {
             name = "Página Esfarrapada",
             description = "#Sumona uma wisp de {{Collectible712}} Lemegeton aleatória"
         },
@@ -3081,7 +3081,7 @@ descriptions.Entities = {
                 "#{{Trinket" .. 139 .. "}} 一个随机的玻璃或宝石饰品" ..
                 "#{{Collectible" .. enums.Collectibles.FRAGILE_MIRROR .. "}} 交易3颗心后随机掉落一个玻璃物品"
         },
-        pt = {
+        pt_br = {
             name = "Forja Espiritual",
             description = "{{Blank}} {{HalfSoulHeart}} Pega meio coração de alma em troca de várias recompensas:" ..
                 "#{{SpiritOrb}} Um orbe de espírito aleatório" ..
