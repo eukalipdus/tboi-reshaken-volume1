@@ -10,13 +10,16 @@ function NonReplaceableTNT:PreRoomEntitySpawn(type, variant, subtype, gridIndex)
         return
     end
 
+
     TSIL.Utils.Functions.RunNextRoom(function ()
-        TSIL.GridEntities.SpawnGridEntity(
-            GridEntityType.GRID_TNT,
-            0,
-            gridIndex,
-            true
-        )
+        if Game():GetRoom():IsFirstVisit() then
+            TSIL.GridEntities.SpawnGridEntity(
+                GridEntityType.GRID_TNT,
+                0,
+                gridIndex,
+                true
+            )
+        end
     end)
 
     return {
