@@ -111,7 +111,7 @@
 		<Item Name="La Chancla" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Empty Slot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Golden Shovel" Weight="0.1" DecreaseBy="0.1" RemoveOn="0.01"/>
-		<Item Name="Prismatic Dice" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Prismatic Dice" Weight="0.1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Battery Acid" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<Item Name="Pot of Gold" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
