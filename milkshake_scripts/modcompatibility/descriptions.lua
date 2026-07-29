@@ -1217,43 +1217,43 @@ descriptions.Collectibles = {
         en_us = {
             name = "Rainbow Fragment",
             description = "\1 +1 Luck up" ..
-                "#Spawns 4 rainbow pennies" ..
+                "#Spawns 5 rainbow pennies" ..
                 "#{{Trinket52}} Rainbow pennies activate the effect of their corresponding penny trinkets on pickup",
         },
         spa = {
             name = "Fragmento de Arcoíris",
             description = "\1 +1 Aumento de Suerte" ..
-                "#Genera 4 monedas arcoíris" ..
+                "#Genera 5 monedas arcoíris" ..
                 "#{{Trinket52}} Las monedas arcoíris activan el efecto de sus baratijas correspondientes al recogerlas",
         },
         ru = {
             name = "Радужный Фрагмент",
             description = "\1 +1 Удача" ..
-                "#Создает 4 радужных монеты" ..
+                "#Создает 5 радужных монеты" ..
                 "#{{Trinket52}} Радужные монеты активируют эффект соответствующих им брелоков",
         },
         pl = {
             name = "Kawałek Tęczy",
             description = "\1 +1 Szczęścia" ..
-                "#Tworzy 4 tęczowe monety" ..
+                "#Tworzy 5 tęczowe monety" ..
                 "#{{Trinket52}} Tęczowe monety aktywują efekt wybranego trynkieta Pieniążka po podniesieniu",
         },
         ko_kr = {
             name = "무지개 조각",
             description = "↑ {{LuckSmall}}행운 +1" ..
-                "#레인보우 코인 4개를 드랍합니다." ..
+                "#레인보우 코인 5개를 드랍합니다." ..
                 "#{{Trinket52}} 레인보우 코인 획득 시 각 색상별 페니류 장신구 효과를 발동합니다.",
         },
         zh_cn = {
             name = "彩虹碎片",
             description = "\1 +1 幸运" ..
-                "#生成 4 个彩虹硬币" ..
+                "#生成 5 个彩虹硬币" ..
                 "#{{Trinket52}} 彩虹硬币在拾取时激活饰品的效果",
         },
         pt_br = {
             name = "Fragmento Arco-íris",
             description = "\1 +1 Sorte" ..
-                "#Spawna 4 moedas arco-íris" ..
+                "#Spawna 5 moedas arco-íris" ..
                 "#{{Trinket52}} Moedas arco-íris ativam o efeito de seus correspondentes trinkets de moedas quando coletadas",
         },
     },
