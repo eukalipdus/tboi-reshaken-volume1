@@ -204,7 +204,7 @@ local function ClickDamageEnemies(familiar, player)
             alpha = 1,
             frame = math.random(0, 20),
             text = tostring(damageRounded),
-            position = Isaac.WorldToScreen(familiar.Position) + Vector(4, 4)
+            position = Isaac.WorldToScreen(familiar.Position) + Vector(4, math.random(0, 30))
         }
     end
 end
@@ -264,6 +264,7 @@ end
 
 
 local WasMousePressed = false
+local WasShootPressed = false
 
 ---@param familiar EntityFamiliar
 function SharpCursor:OnSharpCursorRender(familiar)
@@ -291,12 +292,19 @@ function SharpCursor:OnSharpCursorRender(familiar)
     else
         local shootActions = TSIL.Input.GetShootActions()
 
+        local isShootPressed = false
         for _, action in ipairs(shootActions) do
-            if Input.IsActionTriggered(action, player.ControllerIndex) then
-                clickButton = true
+            if Input.IsActionPressed(action, player.ControllerIndex) then
+                isShootPressed = true
                 break
             end
         end
+
+        if not WasShootPressed then
+            clickButton = isShootPressed
+        end
+
+        WasShootPressed = isShootPressed
     end
 
     if not clickButton then return end
@@ -319,7 +327,7 @@ function SharpCursor:OnSharpCursorRender(familiar)
     end
 end
 MilkshakeVol1:AddCallback(
-    ModCallbacks.MC_POST_FAMILIAR_RENDER,
+    ModCallbacks.MC_FAMILIAR_UPDATE,
     SharpCursor.OnSharpCursorRender,
     enums.Familiars.SHARP_CURSOR
 )
