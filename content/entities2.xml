@@ -37,7 +37,7 @@
     <entity anm2path="familiar_lilbishop.anm2" name="Lil Bishop" id="3" tags="cansacrifice"
     collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
     </entity>
-    <entity anm2path="lil_bishop_shield.anm2" name="Lil Bishop Shield" id="1000"
+    <entity anm2path="lil_bishop_shield.anm2" name="Lil Bishop Shield" id="1000" variant="3810"
     collisionMass="5" collisionRadius="10" friction="1" numGridCollisionPoints="40" shadowSize="0">
     </entity>
 	
@@ -114,11 +114,11 @@
     collisionMass="3" collisionRadius="12" friction="1" numGridCollisionPoints="24" shadowSize="16">
     </entity>
 
-    <entity name="Deluge Laser" anm2path="deluge_laser.anm2" id="1000"
+    <entity name="Deluge Laser" anm2path="deluge_laser.anm2" id="1000" variant="3811"
     collisionMass="3" collisionRadius="30" friction="1" >
     </entity>
 
-    <entity name="Toxic Gasso" anm2path="toxic_gas.anm2" id="1000">
+    <entity name="Toxic Gasso" anm2path="toxic_gas.anm2" id="1000" variant="3812"> 
     </entity>
 
     <!--
@@ -152,7 +152,7 @@
             <!-- <gibs amount="2" blood="1" bone="0" eye="0" gut="0" large="0" /> -->
     </entity>
 
-    <entity id="1000" name="Glass Head Death Effect" anm2path="monster_glass_head.anm2" />
+    <entity id="1000" variant="3813" name="Glass Head Death Effect" anm2path="monster_glass_head.anm2" />
 
     <entity anm2path="monster_flask_head.anm2" baseHP="25" boss="0" champion="0" collisionDamage="1"
         id="962" reroll="true"
@@ -163,7 +163,7 @@
         <!-- <gibs amount="2" blood="1" bone="0" eye="0" gut="0" large="0" /> -->
     </entity>
 
-    <entity id="1000" name="Flask Head Death Effect 1" anm2path="monster_flask_head.anm2" />
+    <entity id="1000" variant="3814" name="Flask Head Death Effect 1" anm2path="monster_flask_head.anm2" />
 
     <entity anm2path="monster_flask_head.anm2" baseHP="1" boss="0" champion="0" collisionDamage="0"
         id="962" reroll="false"
@@ -172,7 +172,7 @@
         <!-- <gibs amount="2" blood="1" bone="0" eye="0" gut="0" large="0" /> -->
     </entity>
 
-    <entity id="1000" name="Flask Head Death Effect 2" anm2path="monster_flask_head.anm2" />
+    <entity id="1000" variant="3815" name="Flask Head Death Effect 2" anm2path="monster_flask_head.anm2" />
 
     <entity anm2path="monster_beer_head.anm2" baseHP="40" boss="0" champion="0" collisionDamage="1"
         id="962" reroll="true"
@@ -183,7 +183,7 @@
         <!-- <gibs amount="3" blood="1" bone="0" eye="0" gut="0" large="0" /> -->
     </entity>
 
-    <entity id="1000" name="Beer Head Death Effect" anm2path="monster_beer_head.anm2" />
+    <entity id="1000" variant="3816" name="Beer Head Death Effect" anm2path="monster_beer_head.anm2" />
 
     <entity anm2path="monster_wine_head.anm2" baseHP="40" boss="0" champion="0" collisionDamage="1"
         id="962" reroll="true"
@@ -194,36 +194,36 @@
         <!-- <gibs amount="2" blood="1" bone="0" eye="0" gut="0" large="0" /> -->
     </entity>
 
-    <entity id="1000" name="Wine Head Death Effect" anm2path="monster_wine_head.anm2" />
+    <entity id="1000" variant="3817" name="Wine Head Death Effect" anm2path="monster_wine_head.anm2" />
 
-    <entity name="Flask Head Head Puff" anm2path="monster_flask_head.anm2" id="1000" friction="1">
+    <entity name="Flask Head Head Puff" anm2path="monster_flask_head.anm2" id="1000" variant="3818" friction="1">
 	</entity>
 
-    <entity name="Flask Head Puff" anm2path="monster_flask_head.anm2" id="1000" friction="1">
+    <entity name="Flask Head Puff" anm2path="monster_flask_head.anm2" id="1000" variant="3819" friction="1">
 	</entity>
 
 
-    <entity name="Vine" anm2path="vines.anm2" id="1000">
+    <entity name="Vine" anm2path="vines.anm2" id="1000" variant="3820">
 	</entity>
     
-    <entity name="Globin In A Bucket" anm2path="effect_globin_bucket.anm2" id="1000"
+    <entity name="Globin In A Bucket" anm2path="effect_globin_bucket.anm2" id="1000" variant="3821" 
         friction="1">
 	</entity>
 
-    <entity name="Clairvoyance Aura" anm2path="clairvoyance_aura.anm2" id="1000">
+    <entity name="Clairvoyance Aura" anm2path="clairvoyance_aura.anm2" id="1000" variant="3822">
 	</entity>
 
-    <entity name="Reflected Projectile Glow" anm2path="reflected_projectile_glow.anm2" id="1000">
+    <entity name="Reflected Projectile Glow" anm2path="reflected_projectile_glow.anm2" id="1000" variant="3823">
 	</entity>
 
-    <entity name="Glass Idol Shatter" anm2path="glass_idol_shatter.anm2" id="1000">
+    <entity name="Glass Idol Shatter" anm2path="glass_idol_shatter.anm2" id="1000" variant="3824">
 	</entity>
 
     <entity
-        name="Celeste Death" anm2path="celeste_death.anm2" id="1000" friction="1">
+        name="Celeste Death" anm2path="celeste_death.anm2" id="1000" variant="3825" friction="1">
     </entity>
 
-    <entity name="Shattered Orb" anm2path="shattered_orb.anm2" id="1000" shadowSize="8"
+    <entity name="Shattered Orb" anm2path="shattered_orb.anm2" id="1000" variant="3826" shadowSize="8"
     collisionMass="1" friction="1">
 	</entity>
 
@@ -334,37 +334,37 @@
 	    <preload-snd id="234" />
     </entity>
 
-    <entity name="Salvation Orb" anm2path="salvation_orb_effect.anm2" id="1000" shadowSize="8"
+    <entity name="Salvation Orb" anm2path="salvation_orb_effect.anm2" id="1000" variant="3827" shadowSize="8"
     collisionMass="1" friction="1">
 	</entity>
 
-    <entity name="Effect Replacer" id="1000">
+    <entity name="Effect Replacer" id="1000" variant="3828">
     </entity>
 
-    <entity name="Mirror Key Door" id="1000" anm2path="grid/door_mirror_challenge.anm2">
+    <entity name="Mirror Key Door" id="1000" variant="3829" anm2path="grid/door_mirror_challenge.anm2">
     </entity>
 
-    <entity name="Mirror Key Door Outline" id="1000" anm2path="1000.154_door outline.anm2">
+    <entity name="Mirror Key Door Outline" id="1000" variant="3830" anm2path="1000.154_door outline.anm2">
     </entity>
 
-    <entity name="Sacrilege Wall Overlay" id="1000" anm2path="backdrop/spirit rooms/unholy/sacrilege_wall.anm2">
+    <entity name="Sacrilege Wall Overlay" id="1000" variant="3831" anm2path="backdrop/spirit rooms/unholy/sacrilege_wall.anm2">
     </entity>
 
-    <entity name="Sacrilege Floor Overlay" id="1000" anm2path="backdrop/spirit rooms/unholy/sacrilege_ground.anm2">
+    <entity name="Sacrilege Floor Overlay" id="1000" variant="3832" anm2path="backdrop/spirit rooms/unholy/sacrilege_ground.anm2">
     </entity>
 
-    <entity name="Sacrilege Screen Overlay" id="1000" anm2path="backdrop/spirit rooms/unholy/sacrilege_overlay.anm2">
+    <entity name="Sacrilege Screen Overlay" id="1000" variant="3833" anm2path="backdrop/spirit rooms/unholy/sacrilege_overlay.anm2">
     </entity>
 
-    <entity name="Sacrilege Pentagram Overlay" id="1000" anm2path="backdrop/spirit rooms/unholy/sacrilege_pentagram.anm2">
+    <entity name="Sacrilege Pentagram Overlay" id="1000" variant="3834" anm2path="backdrop/spirit rooms/unholy/sacrilege_pentagram.anm2">
     </entity>
 
-    <entity name="Fire Screen Overlay" id="1000" anm2path="backdrop/spirit rooms/fire/fire_overlay.anm2">
+    <entity name="Fire Screen Overlay" id="1000" variant="3835" anm2path="backdrop/spirit rooms/fire/fire_overlay.anm2">
     </entity>
 
-    <entity name="Fire Particle Overlay" id="1000" anm2path="backdrop/spirit rooms/fire/fire_particle.anm2">
+    <entity name="Fire Particle Overlay" id="1000" variant="3836" anm2path="backdrop/spirit rooms/fire/fire_particle.anm2">
     </entity>
 
-    <entity name="Leviticus Light" anm2path="1000.039_Heaven Door.anm2" id="1000"/>
+    <entity name="Leviticus Light" anm2path="1000.039_Heaven Door.anm2" id="1000" variant="3837"/>
 
 </entities>
