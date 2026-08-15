@@ -232,8 +232,15 @@ local function ClickGridEntities(familiar, player)
     local gridEntity = room:GetGridEntityFromPos(familiar.Position)
 
     if not gridEntity then return end
-
     local gridType = gridEntity:GetType()
+
+    if StageAPI and FiendFolio.RELOADED then
+        local lever = StageAPI.GetCustomGrid(room:GetGridIndex(familiar.Position), "FFTotemLever")
+        if lever then
+            FiendFolio:TryActivateLever(lever)
+            return
+        end
+    end
 
     if BreakableGridEntities[gridType] and player:HasCollectible(CollectibleType.COLLECTIBLE_TERRA) then
         gridEntity:Destroy()
