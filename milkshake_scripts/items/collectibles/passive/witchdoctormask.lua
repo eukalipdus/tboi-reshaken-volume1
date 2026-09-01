@@ -225,17 +225,17 @@ HudHelper.RegisterHUDElement({
         if isFiendFolio then
             orbPillHudFF.Color = Color(alpha, alpha, alpha)
             orbPillHudFF.Scale = Vector(scale, scale)
+            orbPillHudFF:Render(position)
             orbPillHudFF:SetFrame(GetFrameFromId(heldPill, ffPillAnimFrames) - 1)
             orbPillHudFF:Play("HUD")
-            orbPillHudFF:Render(position)
         else
             local frame = GetFrameFromId(heldPill, pillAnimFrames) - 1
             if frame then
                 orbPillHud.Color = Color(alpha, alpha, alpha)
                 orbPillHud.Scale = Vector(scale, scale)
+                orbPillHud:Render(position)
                 orbPillHud:SetFrame(frame)
                 orbPillHud:Play("HUD")
-                orbPillHud:Render(position)
             end
         end
 	end,
@@ -247,6 +247,7 @@ if REPENTOGON then
 function witchDoctorMask:PostItemAddedRGON(type, charge, firstTime, slot, varData, player)
     if not firstTime then return end
     local spawnPos = Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE)
+    -- Spawning a "null" pill makes the game choose randomly on its own
     TSIL.PickupSpecific.SpawnPill(PillColor.PILL_NULL, spawnPos)
 end
 MilkshakeVol1:AddCallback(
