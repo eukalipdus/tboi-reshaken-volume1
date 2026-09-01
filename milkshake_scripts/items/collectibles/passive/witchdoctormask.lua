@@ -246,10 +246,8 @@ if REPENTOGON then
     ---@param player EntityPlayer
 function witchDoctorMask:PostItemAddedRGON(type, charge, firstTime, slot, varData, player)
     if not firstTime then return end
-    print("hi")
-    local roll = TSIL.Random.GetRandomInt(1, PillColor.NUM_PILLS)
     local spawnPos = Isaac.GetFreeNearPosition(player.Position, SPAWN_DISTANCE)
-    TSIL.PickupSpecific.SpawnPill(roll, spawnPos)
+    TSIL.PickupSpecific.SpawnPill(PillColor.PILL_NULL, spawnPos)
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_POST_ADD_COLLECTIBLE,
