@@ -133,7 +133,11 @@ function RevenanceOrb:OnRevenanceOrbUse(card, player, flags) -- useFlag
 	for gridIndex = 1, room:GetGridSize() do
 		local grid = room:GetGridEntity(gridIndex)
 		if grid and grid:ToPit() and grid.State ~= 1 then
-			grid:ToPit():MakeBridge(nil)
+			if REPENTANCE_PLUS then
+				grid:ToPit():MakeBridge(grid:ToPit(), 0)
+			else
+				grid:ToPit():MakeBridge(nil)
+			end
 			grid:GetSprite():ReplaceSpritesheet(1, RevenanceOrb.BoneBridgeGfx)
 			grid:GetSprite():LoadGraphics()
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, grid.Position, Vector.Zero, nil) --- some effects

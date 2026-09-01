@@ -194,6 +194,8 @@ function FirecrackerRose:OnNPCUpdate(npc)
 
     if crackerInfo == nil then return end
 
+    local enemyVisible = npc.Visible and npc.EntityCollisionClass ~= EntityCollisionClass.ENTCOLL_NONE
+
     if crackerInfo.timer > 0 then
 		if not npc:IsInvincible() then -- can't take damage (prob)
 			crackerInfo.timer = crackerInfo.timer - 1
@@ -202,7 +204,12 @@ function FirecrackerRose:OnNPCUpdate(npc)
         ---@type Sprite
         local seedSpr = CrackerSeedSprites[npcPtr]
 
-        seedSpr:Update()
+        if enemyVisible then 
+            seedSpr.Color = Color(1, 1, 1, 1)
+            seedSpr:Update()
+        else
+            seedSpr.Color = Color(1, 1, 1, 0)
+        end
 
         if crackerInfo.timer <= 30 * 3 and seedSpr:IsPlaying("SeedIdle") then
             seedSpr:Play("Bloom", true)
@@ -215,7 +222,7 @@ function FirecrackerRose:OnNPCUpdate(npc)
         return
     end
 
-	if npc:IsInvincible() then return end -- don't explode if invincible (prob)
+	if npc:IsInvincible() or (not enemyVisible)  then return end -- don't explode if invincible (prob)
 
     CrackerSeedSprites[npcPtr] = nil
 

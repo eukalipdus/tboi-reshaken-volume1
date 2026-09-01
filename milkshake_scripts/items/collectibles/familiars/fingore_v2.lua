@@ -224,6 +224,13 @@ end
 ---Displays an easter egg message using a random player's name
 ---@param rng RNG
 local function FingoreHiddenMessage(rng)
+
+	local chance = rng:RandomFloat()
+	if chance > 0.1 then return end
+
+	if TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "FingoreHiddenMessageDisplayed") then
+		return
+	end
 	local players = TSIL.Players.GetPlayers()
 	local randomPlayer = TSIL.Random.GetRandomElementsFromTable(players, 1, rng)
 	local chosenName = randomPlayer[1]:GetName()
@@ -241,9 +248,6 @@ end
 
 ---@param pickup EntityPickup
 function fingore:PostPickupInit(pickup)
-	if TSIL.SaveManager.GetPersistentVariable(MilkshakeVol1, "FingoreHiddenMessageDisplayed") then
-		return
-	end
 
 	local ptrHash = GetPtrHash(pickup)--TSIL.Collectibles.GetCollectibleIndex(pickup)
 	if pickup.SubType == enums.Collectibles.FINGORE then

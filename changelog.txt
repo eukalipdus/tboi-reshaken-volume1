@@ -351,6 +351,7 @@ Additions:
 - Removed Empty Slot from crane game
 - Added Sharp Cursor to red room pool
 - Added Witch Doctor Mask to wood chest pool
+- Buffed rainbow fragment to spawn 5 pennies instead of 4
 
 Changes
 - Spirit Orb voicelines now respect your options.ini voiceline settings
@@ -372,8 +373,35 @@ Bug Fixes
 - Fixed Inner Reflection death easter egg making you invisible on reviving
 - Fixed black chaos spirit pill being the wrong color
 
+
 ================================================
-    v1.1.5 - X, X, 2025
+    v1.1.5 - July, 28, 2026
 ================================================
+
+Additions:
+- Added Brazillian Portuguese translations thanks to chess_mammoth
+
+Changes:
+- Attached firecracker flowers will now wait until an enemy is vulnerable to explode, such as when mom's foot is away or needles are underground
+- Decreased weight of Prismatic Dice in the greed shop pool
+- Decreased the difficulty of a particularly hard caves Flaskhead room
+- Made Doggy Bag quality 0
+- Made Chromatic Prism quality 3
+- Made Fingore's threats only happen 10% of the time and only once per run
+- Lowered weight of some Chest and Dark Room rooms with only rainbow pennies in them
+
+Removals:
+- Removed Chest rooms that had Fiend Folio only rainbow pennies in them
+
 Bug Fixes
+- Assigned manual variant IDs to all Reshaken effect entities. They will now use variants 3810 on. This is to prevent incompatibilities with mods that mess with the vanilla entities2.xml file messing up everything. 
 - Fixed Pot of Gold converting troll bombs into rainbow pennies
+- Fixed Prismatic Dice playing split sound and not being held above Isaac's head when no items are in the room
+- Fixed Spirit of Revenance not creating bridges in REP+
+- Updated HUDHelper and fixed spirit pills rendering incorrectly in some cases
+- Attached firecracker flowers will no longer render if the enemy they are attached to is invisible
+- Fixed spirit orbs spawning duplicates if you leave an active room and come back
+- Fixed spirit orbs spawning in mirror world room layouts
+- Fixed non-replaceable tnt respawning after being destroyed and leaving the room and coming back
+- Fixed Rainbow Fragment EID description not reflecting it now spawning 5 pennies instead of 4
+- Fixed game lagging like crazy when using sharp cursor on a bishop shielded enemy

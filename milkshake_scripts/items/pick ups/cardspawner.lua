@@ -10,15 +10,26 @@ local CARD_SPAWN_VARIANT = 124
 function CardSpawner:PreEntitySpawn(type, variant, subtype, _, _, _, seed)
     if type ~= CARD_SPAWN_TYPE then return end
     if variant ~= CARD_SPAWN_VARIANT then return end
-    local card = MilkshakeVol1.enums.CardSpawnerSubtypePerCard[subtype]
-    if not card then return end
+    local room = Game():GetRoom()
 
-    return {
-        EntityType.ENTITY_PICKUP,
-        PickupVariant.PICKUP_TAROTCARD,
-        card,
-        seed
-    }
+    if room:IsFirstVisit() and (not room:IsMirrorWorld()) and MilkshakeVol1.enums.CardSpawnerSubtypePerCard[subtype] then
+        local card = MilkshakeVol1.enums.CardSpawnerSubtypePerCard[subtype]
+        if not card then return end
+
+        return {
+            EntityType.ENTITY_PICKUP,
+            PickupVariant.PICKUP_TAROTCARD,
+            card,
+            seed
+        }
+    else
+        return {
+            1000,
+            40,
+            0,
+            seed
+        }
+    end
 end
 MilkshakeVol1:AddCallback(
     ModCallbacks.MC_PRE_ENTITY_SPAWN,

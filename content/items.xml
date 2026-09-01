@@ -23,14 +23,14 @@
     <active id="100" name="Leviticus " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus alt.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true" customtags="nometronome"/>
     <active id="101" name="Leviticus  " hidden="true" description="Purify your soul" tags="book angel offensive" quality="4" gfx="leviticus resprite.png" maxcharges="6" chargetype="special" initcharge="0" persistent="true" customtags="nometronome"/>
     <passive id="24" name="Battery Acid" description="PH down" tags="battery nocantrip offensive summonable" quality="3" gfx="collectibles_batteryacid.png" craftquality="3"/>
-    <familiar id="25" name="Doggy Bag" description="Clean up after yourself" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive nolostbr poop summonable" quality="1" craftquality="1"/>
+    <familiar id="25" name="Doggy Bag" description="Clean up after yourself" cache="familiars" gfx="collectibles_doggybag.png" tags="nocantrip offensive nolostbr poop summonable" quality="0" craftquality="0"/>
     <passive id="26" name="Dad's Mitt" description="Curve ball!" cache="shotspeed firedelay" gfx="collectibles_dadsmitt.png" tags="offensive summonable" quality="2" craftquality="2"/>
     <familiar id="27" name="Lil Bishop" description="Shielding friend" gfx="collectibles_lilbishop.png" tags="monstermanual summonable" quality="2" craftquality="2"/>
     <passive id="28" name="Rainbow Fragment" description="Taste the rainbow" cache="luck" gfx="collectibles_rainbowfragment.png" tags="offensive summonable" quality="1" craftquality="1"/>
     <passive id="29" name="Witch Doctor Mask" description="Spiritual medicine" gfx="collectibles_witchdoctormask.png" tags="offensive summonable lazarussharedglobal" quality="2" craftquality="2" />
     <active id="30" name="Mirror Key" description="Otherside" quality="3" gfx="mirror_key.png" maxcharges="4" tags="lazarussharedglobal nocantrip nogreed offensive" craftquality="3" customtags="nometronome"/>
     <active id="30" name="Mirror Key " description="Otherside" quality="3" gfx="mirror_key_uncharged.png" maxcharges="4" hidden="true" tags="noeden" customtags="nometronome"/>
-    <passive id="33" name="Chromatic Prism" description="Diffracted enemies" quality="2" gfx="collectibles_prismatic_triangle.png" tags="summonable offensive" craftquality="2" />
+    <passive id="33" name="Chromatic Prism" description="Diffracted enemies" quality="3" gfx="collectibles_prismatic_triangle.png" tags="summonable offensive" craftquality="3" />
 
     <!-- Trinkets -->
     <trinket name="Clairvoyant Amethyst" description="Hidden clairvoyant power..." gfx="trinkets_clairvoyantamethyst.png" tags="nogreed"/>

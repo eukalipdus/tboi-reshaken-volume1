@@ -293,6 +293,7 @@ function SpecialPennies:PostPickupInit(pickup)
     or (Epiphany and MilkshakeVol1.utility:AnyPlayerIsCharacter(Epiphany.PlayerType.KEEPER)) then
         return
     end
+    if FiendFolio and Isaac.GetChallenge() == Isaac.GetChallengeIdByName("[FF] The Gauntlet") then return end
     local chance = GetRainbowPennySpawnChance()
     MilkshakeVol1.API:TryReplacePickupWithRainbowPenny(pickup, chance, true)
 end
