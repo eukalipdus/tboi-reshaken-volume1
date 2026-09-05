@@ -405,3 +405,17 @@ Bug Fixes
 - Fixed non-replaceable tnt respawning after being destroyed and leaving the room and coming back
 - Fixed Rainbow Fragment EID description not reflecting it now spawning 5 pennies instead of 4
 - Fixed game lagging like crazy when using sharp cursor on a bishop shielded enemy
+
+================================================
+    v1.1.6 - 2026
+================================================
+
+Additions
+- Added Rainbow Penny variants for Scarab Penny, Flaming Penny, and Stack of Penny when playing with Fiend Folio
+- Sharp Cursor can now flip Fiend Folio levers
+
+Changes
+- Rainbow Pennies no longer spawn in the Fiend Folio "Gauntlet" challenge
+
+Bug Fixes
+- Witch Doctor's Mask now uses vanilla pill spawning
