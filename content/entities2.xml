@@ -334,6 +334,24 @@
 	    <preload-snd id="234" />
     </entity>
 
+    <entity anm2path="scarab_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Scarab Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3420">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="flaming_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Flaming Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3421">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
+    <entity anm2path="stacked_penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" 
+    friction="1" id="5" name="Stacked Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="20" subtype="3422">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="234" />
+    </entity>
+
     <entity name="Salvation Orb" anm2path="salvation_orb_effect.anm2" id="1000" variant="3827" shadowSize="8"
     collisionMass="1" friction="1">
 	</entity>

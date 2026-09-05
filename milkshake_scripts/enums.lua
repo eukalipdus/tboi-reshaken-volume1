@@ -223,6 +223,9 @@ enums.Coins = {
     EGG_PENNY = 3417,
     FUZZY_PENNY = 3418,
     MOLTEN_PENNY = 3419,
+    SCARAB_PENNY = 3420,
+    FLAMING_PENNY = 3421,
+    STACKED_PENNY = 3422,
 }
 
 enums.Orbs = {

@@ -1,3 +1,66 @@
+local mod = FiendFolio
+
+local PENNY_MIN = 1
+local PENNY_MAX = 4
+local DIME_MIN = 4
+local DIME_MAX = 12
+
+local isCursedPenny = {
+    [FiendFolio.PICKUP.COIN.CURSED] = true,
+    [FiendFolio.PICKUP.COIN.GOLDENCURSED] = true,
+    [FiendFolio.PICKUP.COIN.MEDLEY] = true,
+}
+
+---Almost does the same effect Penny Stack would have,
+---taken from Fiend Folio
+---@param player EntityPlayer
+---@param pickup EntityPickup
+local function PennyStackPickup(player, pickup)
+    local value = math.max(0, math.min(1, 10))
+    local minSpawn, maxSpawn
+    
+    if value < 1 then
+        minSpawn = 0
+        maxSpawn = math.ceil(value * PENNY_MAX)
+    else
+        local n = (value-1) / 9
+        minSpawn = math.ceil(FiendFolio:Lerp(PENNY_MIN, DIME_MIN, n))
+        maxSpawn = math.ceil(FiendFolio:Lerp(PENNY_MAX, DIME_MAX, n))
+    end
+
+    local numToSpawn = minSpawn + (pickup.InitSeed % (maxSpawn - minSpawn + 1))
+    
+    for i=1, numToSpawn do
+        local speed = 1.5 + 2.5 * pickup:GetDropRNG():RandomFloat()
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, FiendFolio.PICKUP.COIN.LIL_PENNY, pickup.Position, RandomVector() * speed, nil)
+    end
+end
+
+---Pick up effect for Flaming Penny, taken from Fiend Folio
+---@param player EntityPlayer
+---@param pickup EntityPickup
+local function FlamingPennyPickup(player, pickup)
+    local data = FiendFolio:GetEntityData(player)
+    local sdata = data.ffsavedata
+    if sdata.orbitingfireballs and sdata.orbitingfireballs < FiendFolio:GetFireballCap(player) + 3 then
+        local fiendflasheffect = Isaac.Spawn(1000, 668, 0, player.Position, Vector(0,0), player):ToEffect()
+        FiendFolio:GetEntityData(fiendflasheffect).parent = player
+        if FiendFolio:isSuperpositionedPlayer(player) then
+            local flashcolor = Color.Lerp(fiendflasheffect.Color, Color(1,1,1,1,0,0,0), 0)
+            flashcolor.A = flashcolor.A / 4
+            fiendflasheffect.Color = flashcolor
+        end
+        SFXManager():Play(SoundEffect.SOUND_FLAME_BURST, 0.3, 0, false, math.random(150,160)/100)
+
+        sdata.orbitingfireballs = sdata.orbitingfireballs + 1
+        if isCursedPenny[pickup.SubType] then
+            data.nextFireballShouldBeFiendish = true
+        end
+        player:AddCacheFlags(CacheFlag.CACHE_FAMILIARS)
+        player:EvaluateItems()
+    end
+end
+
 MilkshakeVol1:AddModCompatibility("FiendFolio", function()
     --Add coins
     MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.SHARP_PENNY,
@@ -25,6 +88,21 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         function(_, player)
             player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, UseFlag.USE_NOANIM)
             SFXManager():Play(SoundEffect.SOUND_FIREDEATH_HISS)
+        end, 0.05)
+
+    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.SCARAB_PENNY,
+        function(_, player)
+            FiendFolio:ThrowBlueBeetle(player)
+        end, 0.25)
+
+    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.FLAMING_PENNY,
+        function(pickup, player)
+            FlamingPennyPickup(player, pickup)
+        end, 0.05)
+
+    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.STACKED_PENNY,
+        function(pickup, player)
+            PennyStackPickup(player, pickup)
         end, 0.05)
 
     --Add brenda payouts

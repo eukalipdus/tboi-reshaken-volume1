@@ -33,19 +33,59 @@ MilkshakeVol1.WeightedRainbowPennies = { -- Workaround to the other table making
 
 if FiendFolio then
     table.insert(MilkshakeVol1.WeightedRainbowPennies,
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.SHARP_PENNY, weight = 0.15}
+        {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = enums.Coins.SHARP_PENNY,
+            weight = 0.15
+        }
     )
 
     table.insert(MilkshakeVol1.WeightedRainbowPennies,
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.EGG_PENNY, weight = 0.10}
+        {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = enums.Coins.EGG_PENNY,
+            weight = 0.10
+        }
     )
 
     table.insert(MilkshakeVol1.WeightedRainbowPennies,
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.FUZZY_PENNY, weight = 0.25}
+        {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = enums.Coins.FUZZY_PENNY,
+            weight = 0.25
+        }
     )
 
-        table.insert(MilkshakeVol1.WeightedRainbowPennies,
-    {variant = PickupVariant.PICKUP_COIN, subtype = enums.Coins.MOLTEN_PENNY, weight = 0.05}
+    table.insert(MilkshakeVol1.WeightedRainbowPennies,
+        {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = enums.Coins.MOLTEN_PENNY,
+            weight = 0.05
+        }
+    )
+
+    table.insert(MilkshakeVol1.WeightedRainbowPennies,
+        {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = enums.Coins.SCARAB_PENNY,
+            weight = 0.25
+        }
+    )
+
+    table.insert(MilkshakeVol1.WeightedRainbowPennies,
+        {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = enums.Coins.FLAMING_PENNY,
+            weight = 0.05
+        }
+    )
+
+    table.insert(MilkshakeVol1.WeightedRainbowPennies,
+        {
+            variant = PickupVariant.PICKUP_COIN,
+            subtype = enums.Coins.STACKED_PENNY,
+            weight = 0.05
+        }
     )
 end
 
