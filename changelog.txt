@@ -416,6 +416,7 @@ Additions
 
 Changes
 - Rainbow Pennies no longer spawn in the Fiend Folio "Gauntlet" challenge
+- Egg Penny pickups now spawn the new Fragile Bobby subtype when playing on Fiend Folio Reloaded
 
 Bug Fixes
 - Witch Doctor's Mask now uses vanilla pill spawning

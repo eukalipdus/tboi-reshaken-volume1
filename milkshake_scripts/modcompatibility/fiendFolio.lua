@@ -72,7 +72,13 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
 
     MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.EGG_PENNY,
         function(_, player)
-            Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FiendFolio.ITEM.FAMILIAR.FRAGILE_BOBBY, 0, player.Position,
+            local subtype = 0
+
+            if FiendFolio.RELOADED == true then
+                subtype = 1
+            end
+
+            Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FiendFolio.ITEM.FAMILIAR.FRAGILE_BOBBY, subtype, player.Position,
                 Vector.Zero, player)
             SFXManager():Play(SoundEffect.SOUND_DERP)
         end, 0.15)
