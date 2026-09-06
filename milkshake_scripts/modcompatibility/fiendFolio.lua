@@ -90,20 +90,24 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
             SFXManager():Play(SoundEffect.SOUND_FIREDEATH_HISS)
         end, 0.05)
 
-    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.SCARAB_PENNY,
-        function(_, player)
-            FiendFolio:ThrowBlueBeetle(player)
-        end, 0.25)
 
-    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.FLAMING_PENNY,
-        function(pickup, player)
-            FlamingPennyPickup(player, pickup)
-        end, 0.05)
+    if FiendFolio.RELOADED == true then
 
-    MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.STACKED_PENNY,
-        function(pickup, player)
-            PennyStackPickup(player, pickup)
-        end, 0.05)
+        MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.SCARAB_PENNY,
+            function(_, player)
+                FiendFolio:ThrowBlueBeetle(player)
+            end, 0.25)
+
+        MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.FLAMING_PENNY,
+            function(pickup, player)
+                FlamingPennyPickup(player, pickup)
+            end, 0.05)
+
+        MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.STACKED_PENNY,
+            function(pickup, player)
+                PennyStackPickup(player, pickup)
+            end, 0.05)
+    end
 
     --Add brenda payouts
     MilkshakeVol1.API:AddSoulStone(FiendFolio.ITEM.CARD.SOUL_OF_FIEND, function()
