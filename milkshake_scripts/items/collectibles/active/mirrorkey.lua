@@ -1043,6 +1043,7 @@ local function TryPlayBossMusic()
     or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER2
     or musicManager:GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS_OVER3 then
         musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS_OUTRO, 1)
+        musicManager:UpdateVolume()
         musicManager:Queue(Music.MUSIC_BOSS_OVER)
 
         return
@@ -1051,6 +1052,7 @@ local function TryPlayBossMusic()
     if musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS
     and musicManager:GetCurrentMusicID() ~= MilkshakeVol1.enums.Music.GLASS_BOSS_OUTRO then
         musicManager:Play(MilkshakeVol1.enums.Music.GLASS_BOSS, 1)
+        musicManager:UpdateVolume()
     end
 end
 
