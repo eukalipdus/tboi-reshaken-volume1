@@ -107,12 +107,12 @@ MilkshakeVol1:AddModCompatibility("FiendFolio", function()
         MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.FLAMING_PENNY,
             function(pickup, player)
                 FlamingPennyPickup(player, pickup)
-            end, 0.05)
+            end, 0.15)
 
         MilkshakeVol1.API:AddRainbowPenny(PickupVariant.PICKUP_COIN, MilkshakeVol1.enums.Coins.STACKED_PENNY,
             function(pickup, player)
                 PennyStackPickup(player, pickup)
-            end, 0.05)
+            end, 0.25)
     end
 
     --Add brenda payouts
